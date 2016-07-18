@@ -28,17 +28,4 @@
 
         IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds);
     }
-
-    public interface IVacancyWriteRepository
-    {
-        Vacancy Create(Vacancy vacancy);
-
-        void Delete(int vacancyId);
-
-        Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
-
-        void IncrementOfflineApplicationClickThrough(int vacancyId);
-
-        Vacancy Update(Vacancy vacancy);
-    }
 }

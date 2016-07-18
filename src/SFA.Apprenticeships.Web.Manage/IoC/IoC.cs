@@ -6,7 +6,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
-    using Application.Interfaces.VacancyPosting;
     using Application.Provider;
     using Application.UserAccount;
     using Application.UserProfile;
@@ -32,6 +31,8 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
     using StructureMap;
     using StructureMap.Web;
+    using EuCookieDirectiveProvider = Raa.Common.Providers.EuCookieDirectiveProvider;
+    using CookieDetectionProvider = Raa.Common.Providers.CookieDetectionProvider;
 
     public static class IoC
     {

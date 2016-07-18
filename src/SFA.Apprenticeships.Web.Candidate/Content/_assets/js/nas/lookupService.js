@@ -157,15 +157,17 @@ $(document).ready(function () {
         specialCities["London"] = "London";
         specialCities["York"] = "North Yorkshire";
 
-        var county = address.ProvinceName;
+        var provinceName = address.ProvinceName;
 
         if (!address.ProvinceName) {
             if (specialCities[address.City]) {
-                county = specialCities[address.City];
+                provinceName = specialCities[address.City];
             } else {
-                county = "";
+                provinceName = "";
             }
         }
+
+        var county = provinceName || address.AdminAreaName;
 
         $('#Address_AddressLine1').val(address.Line1);
         $('#Address_AddressLine2').val(address.Line2);

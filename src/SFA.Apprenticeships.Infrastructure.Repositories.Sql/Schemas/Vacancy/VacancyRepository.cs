@@ -430,6 +430,7 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
         {
             // Not all the vacancies have CountyId (before being accepted by QA).
             // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
+            
             if (dbVacancy.CountyId > 0)
             {
                 result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
@@ -1011,7 +1012,7 @@ WHERE  CodeName = @FrameworkCodeName",
 
         private void PopulateCountyId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            if (entity.Address?.County != null)
+            if (!string.IsNullOrWhiteSpace(entity.Address?.County))
             {
                 dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT CountyId
@@ -1020,7 +1021,7 @@ WHERE  FullName = @CountyFullName",
                     new
                     {
                         CountyFullName = entity.Address.County
-                    }).Single(); 
+                    }).SingleOrDefault(); 
             }
         }
 
@@ -1326,6 +1327,36 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 $"Called database to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
 
             return MapVacancy(dbVacancy);
+        }
+
+        public void UnReserveVacancyForQa(int vacancyReferenceNumber)
+        {
+            _logger.Debug(
+                $"Calling database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA");
+
+            var dbVacancy = _getOpenConnection.MutatingQuery<Vacancy>(@"
+UPDATE dbo.Vacancy
+SET    QAUserName             = null,
+       VacancyStatusId        = @VacancyStatusId
+WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
+
+SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
+",
+                new
+                {
+                    VacancyStatusId = VacancyStatus.Submitted,
+                    VacancyReferenceNumber = vacancyReferenceNumber
+                })
+                .SingleOrDefault();
+            if (dbVacancy == null)
+            {
+                _logger.Warn(
+                    $"Call to database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA failed");
+                return;
+            }
+
+            _logger.Info(
+                $"Called database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
         }
 
         private void UpdateEntityTimestamps(DomainVacancy entity)

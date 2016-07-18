@@ -38,6 +38,14 @@
             return Convert(provider, providerSites);
         }
 
+        public ProviderViewModel GetProviderViewModel(int providerId)
+        {
+            var provider = _providerService.GetProvider(providerId);
+            var providerSites = _providerService.GetProviderSites(provider.Ukprn);
+
+            return Convert(provider, providerSites);
+        }
+
         public ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn)
         {
             var providerSite = _providerService.GetProviderSite(edsUrn);
@@ -105,13 +113,25 @@
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
             var parameters = new EmployerSearchRequest(providerSiteId);
             var vacancyParties = _providerService.GetVacancyParties(parameters, 1, pageSize);
-            var employers = _employerService.GetEmployers(vacancyParties.Page.Select(vp => vp.EmployerId).Distinct());
-            var result = vacancyParties.ToViewModel(vacancyParties.Page.Select(vp => vp.Convert(employers.Single(e => e.EmployerId == vp.EmployerId)).Employer.ConvertToResult()));
+
+            var employerIds = vacancyParties.Page
+                .Select(vacancyParty => vacancyParty.EmployerId)
+                .Distinct();
+
+            var employers = _employerService.GetEmployers(employerIds);
+
+            var resultsPage = vacancyParties.ToViewModel(vacancyParties.Page
+                // Exclude employers from search results that are NOT returned from Employer Service, status may be 'Suspended' etc.
+                .Where(vacancyParty => employers
+                    .Any(employer => employer.EmployerId == vacancyParty.EmployerId))
+                .Select(vacancyParty => vacancyParty.Convert(employers.Single(employer => employer.EmployerId == vacancyParty.EmployerId))
+                    .Employer
+                    .ConvertToResult()));
 
             return new EmployerSearchViewModel
             {
                 ProviderSiteId = providerSiteId,
-                EmployerResultsPage = result
+                EmployerResultsPage = resultsPage
             };
         }
 
@@ -131,16 +151,28 @@
                     parameters = new EmployerSearchRequest(viewModel.ProviderSiteId);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(viewModel), viewModel.FilterType, "");
+                    throw new ArgumentOutOfRangeException(nameof(viewModel), viewModel.FilterType, string.Empty);
             }
 
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
-
             var vacancyParties = _providerService.GetVacancyParties(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
-            var employers = _employerService.GetEmployers(vacancyParties.Page.Select(vp => vp.EmployerId).Distinct());
 
-            var resultsViewModelPage = vacancyParties.ToViewModel(vacancyParties.Page.Select(vp => vp.Convert(employers.Single(e => e.EmployerId == vp.EmployerId)).Employer.ConvertToResult()));
-            viewModel.EmployerResultsPage = resultsViewModelPage;
+            var employerIds = vacancyParties.Page
+                .Select(vp => vp.EmployerId)
+                .Distinct();
+
+            var employers = _employerService.GetEmployers(employerIds);
+
+            var resultsPage = vacancyParties.ToViewModel(vacancyParties.Page
+                // Exclude employers from search results that are NOT returned from Employer Service, status may be 'Suspended' etc.
+                .Where(vacancyParty => employers
+                    .Any(employer => employer.EmployerId == vacancyParty.EmployerId))
+                .Select(vacancyParty => vacancyParty.Convert(employers.Single(employer => employer.EmployerId == vacancyParty.EmployerId))
+                    .Employer
+                    .ConvertToResult()));
+
+            viewModel.EmployerResultsPage = resultsPage;
+
             return viewModel;
         }
 

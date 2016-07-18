@@ -70,7 +70,7 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
                 return _specialCities[address.City];
             }
 
-            return string.Empty;
+            return address.AdminAreaName;
         }
         
         private static string GetRetrieveServiceUrl()
