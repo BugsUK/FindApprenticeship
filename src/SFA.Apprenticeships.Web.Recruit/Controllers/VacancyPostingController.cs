@@ -212,6 +212,15 @@
 
             switch (response.Code)
             {
+                case VacancyPostingMediatorCodes.GetNewVacancyViewModel.LocationNotSet:
+                    return RedirectToRoute(RecruitmentRouteNames.AddLocations,
+                        new
+                        {
+                            providerSiteId = viewModel.OwnerParty.ProviderSiteId,
+                            employerId = viewModel.OwnerParty.Employer.EmployerId,
+                            vacancyGuid = viewModel.VacancyGuid,
+                            comeFromPreview
+                        });
                 case VacancyPostingMediatorCodes.GetNewVacancyViewModel.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return View("CreateVacancy", viewModel);
