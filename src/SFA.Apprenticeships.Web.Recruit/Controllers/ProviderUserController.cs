@@ -1,8 +1,6 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
-
-namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
+    using Raa.Common.ViewModels.ProviderUser;
     using System.Security.Claims;
     using System.Web.Mvc;
     using Attributes;
@@ -19,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using ViewModels;
     using SFA.Infrastructure.Interfaces;
     using SystemClaimTypes = System.Security.Claims.ClaimTypes;
-    using ClaimTypes = Common.Constants.ClaimTypes;
+    //using ClaimTypes = Common.Constants.ClaimTypes;
 
     [OwinSessionTimeout]
     public class ProviderUserController : RecruitmentControllerBase
@@ -75,7 +73,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case ProviderUserMediatorCodes.Authorize.EmptyUsername:
                 case ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier:
                 case ProviderUserMediatorCodes.Authorize.MissingServicePermission:
-                case ProviderUserMediatorCodes.Authorize.ProviderNotMigrated:
                     _cookieAuthorizationDataProvider.Clear(HttpContext);
 
                     return RedirectToRoute(RecruitmentRouteNames.SignOut, new
@@ -103,7 +100,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     }
 
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
-
+                case ProviderUserMediatorCodes.Authorize.ProviderNotMigrated:
+                    return RedirectToRoute(RecruitmentRouteNames.OnBoardingComplete);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -254,6 +252,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case ProviderUserMediatorCodes.VerifyEmailAddress.InvalidCode:
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View(verifyEmailViewModel);
+                case ProviderUserMediatorCodes.VerifyEmailAddress.OkNotYetMigrated:
+                    _cookieAuthorizationDataProvider.AddClaim(new Claim(SystemClaimTypes.Role, Roles.VerifiedEmail), HttpContext, User.Identity.Name);
+                    return RedirectToRoute(RecruitmentRouteNames.OnBoardingComplete);
                 case ProviderUserMediatorCodes.VerifyEmailAddress.Ok:
                     _cookieAuthorizationDataProvider.AddClaim(new Claim(SystemClaimTypes.Role, Roles.VerifiedEmail), HttpContext, User.Identity.Name);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
@@ -275,6 +276,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             }
 
             return View("VerifyEmail", verifyEmailViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Faa)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+        public ActionResult OnBoardingComplete()
+        {
+            return View();
         }
 
         #region Helpers

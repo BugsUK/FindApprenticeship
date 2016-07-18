@@ -1077,12 +1077,35 @@
 
             if (_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToUnReserve))
             {
-                vacancyToUnReserve.QAUserName = null;
-                vacancyToUnReserve.Status = VacancyStatus.Submitted;
 
-                _vacancyPostingService.UpdateVacancy(vacancyToUnReserve);
+                _vacancyPostingService.UnReserveVacancyForQa(vacancyReferenceNumber);
             }
         }
+
+        public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
+        {
+            var vacancyToReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            if (_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToReserve))
+            {
+                var vacancy = _vacancyPostingService.ReserveVacancyForQA(vacancyReferenceNumber);
+
+                return GetVacancyViewModelFrom(vacancy);
+            }
+
+            var vacancies = GetTeamVacancySummaries();
+
+            var nextAvailableVacancySummary =
+                _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName, vacancies);
+
+            if (nextAvailableVacancySummary == null) return default(VacancyViewModel);
+
+            var nextAvailableVacancy =
+                _vacancyPostingService.ReserveVacancyForQA(nextAvailableVacancySummary.VacancyReferenceNumber);
+
+            return GetVacancyViewModelFrom(nextAvailableVacancy);
+        }
+
 
         private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
         {
@@ -1221,30 +1244,6 @@
             _vacancyPostingService.UpdateVacancy(vacancy);
 
             return QAActionResultCode.Ok;
-        }
-
-        public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
-        {
-            var vacancyToReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-
-            if (_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToReserve))
-            {
-                var vacancy = _vacancyPostingService.ReserveVacancyForQA(vacancyReferenceNumber);
-
-                return GetVacancyViewModelFrom(vacancy);
-            }
-
-            var vacancies = GetTeamVacancySummaries();
-
-            var nextAvailableVacancySummary =
-                _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName, vacancies);
-
-            if (nextAvailableVacancySummary == null) return default(VacancyViewModel);
-
-            var nextAvailableVacancy =
-                _vacancyPostingService.ReserveVacancyForQA(nextAvailableVacancySummary.VacancyReferenceNumber);
-
-            return GetVacancyViewModelFrom(nextAvailableVacancy);
         }
 
         private RegionalTeam GetRegionalTeamForCurrentUser()

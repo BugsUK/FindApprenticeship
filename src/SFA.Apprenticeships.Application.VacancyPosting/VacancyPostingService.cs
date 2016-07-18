@@ -115,6 +115,11 @@
             return _vacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
         }
 
+        public void UnReserveVacancyForQa(int vacancyReferenceNumber)
+        {
+            _vacancyWriteRepository.UnReserveVacancyForQa(vacancyReferenceNumber);
+        }
+
         public List<VacancyLocation> GetVacancyLocations(int vacancyId)
         {
             return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);

@@ -41,6 +41,7 @@
             public const string Ok = "ProviderUser.VerifyEmailAddress.Ok";
             public const string FailedValidation = "ProviderUser.VerifyEmailAddress.FailedValidation";
             public const string InvalidCode = "ProviderUser.VerifyEmailAddress.InvalidCode";
+            public const string OkNotYetMigrated = "ProviderUser.VerifyEmailAddress.OkNotYetMigrated";
         }
 
         public static class ResendVerificationCode

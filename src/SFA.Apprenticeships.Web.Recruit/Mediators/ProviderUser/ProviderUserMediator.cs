@@ -95,11 +95,6 @@
                 return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.NoProviderProfile, viewModel, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Info);
             }
 
-            if (!provider.IsMigrated)
-            {
-                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.ProviderNotMigrated, viewModel, AuthorizeMessages.ProviderNotMigrated, UserMessageLevel.Warning);
-            }
-
             viewModel.ProviderId = provider.ProviderId;
 
             if (provider.ProviderSiteViewModels.Count() < MinProviderSites)
@@ -121,7 +116,13 @@
 
             if (!userProfile.EmailAddressVerified)
             {
-                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.EmailAddressNotVerified, viewModel, AuthorizeMessages.EmailAddressNotVerified, UserMessageLevel.Info);
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.EmailAddressNotVerified, viewModel,
+                    AuthorizeMessages.EmailAddressNotVerified, UserMessageLevel.Info);
+            }
+
+            if (!provider.IsMigrated)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.ProviderNotMigrated, viewModel);
             }
 
             return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.Ok, viewModel);
@@ -205,6 +206,13 @@
             if (!_providerUserProvider.ValidateEmailVerificationCode(username, verifyEmailViewModel.VerificationCode))
             {
                 return GetMediatorResponse(ProviderUserMediatorCodes.VerifyEmailAddress.InvalidCode, VerifyEmailViewModelMessages.VerificationCodeEmailIncorrectMessage, UserMessageLevel.Error);
+            }
+
+            var user = _providerUserProvider.GetProviderUser(username);
+            var provider = _providerProvider.GetProviderViewModel(user.ProviderId);
+            if (!provider.IsMigrated)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.VerifyEmailAddress.OkNotYetMigrated);
             }
 
             return GetMediatorResponse(ProviderUserMediatorCodes.VerifyEmailAddress.Ok);

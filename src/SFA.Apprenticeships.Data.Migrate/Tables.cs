@@ -103,7 +103,7 @@
                 // Seems to be related to applications rather than vacancies
                 // var SubVacancy                     = _tables.AddNew("SubVacancy",                                                                  OwnedByAv, Vacancy);
 
-                var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, Unchanged, OwnedByAVUnlessNegativeNoDeletes, ProviderSiteRelationship);
+                var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, Unchanged, OwnedByAVUnlessNegative, ProviderSiteRelationship);
                 var ProviderSiteFramework             = _tables.AddNew("ProviderSiteFramework",      new string[] { "ProviderSiteFrameworkID" },      Unchanged, OwnedByAVUnlessNegativeAllowDeletes, ProviderSiteRelationship, ApprenticeshipFramework);
 
                 // This isn't really needed, plus records can be deleted (outside of archiving activity) which we don't support yet (also, records get deleted and re-added by the AVMS GUI when editing)

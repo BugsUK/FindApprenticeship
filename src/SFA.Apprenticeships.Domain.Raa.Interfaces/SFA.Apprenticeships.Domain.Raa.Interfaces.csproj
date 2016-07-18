@@ -94,11 +94,12 @@
     <Compile Include="Repositories\IProviderRepository.cs" />
     <Compile Include="Repositories\IVacancyLocationRepository.cs" />
     <Compile Include="Repositories\IVacancyPartyRepository.cs" />
-    <Compile Include="Repositories\IVacancyRepository.cs" />
+    <Compile Include="Repositories\IVacancyReadRepository.cs" />
     <Compile Include="Repositories\IEmployerRepository.cs" />
     <Compile Include="Repositories\IProviderUserRepository.cs" />
     <Compile Include="Repositories\IProviderSiteRepository.cs" />
     <Compile Include="Repositories\IReferenceRepository.cs" />
+    <Compile Include="Repositories\IVacancyWriteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
