@@ -944,6 +944,9 @@
     <Build Include="dbo\Stored Procedures\uspRetrieveFullVacancyXMLDetails2.sql" />
     <Build Include="dbo\Functions\fnGetIdsForApi.sql" />
     <Build Include="dbo\Stored Procedures\uspRetrieveSummaryVacancyXMLDetails2.sql" />
+    <Build Include="dbo\Functions\fnDisplayEthnicity.function.sql" />
+    <Build Include="dbo\Functions\fnPopulateEthnicTempTable.function.sql" />
+    <Build Include="dbo\Stored Procedures\ReportApplicationsReceivedList.proc.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
