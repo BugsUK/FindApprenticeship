@@ -380,6 +380,13 @@
             var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
             viewModel.ComeFromPreview = comeFromPreview ?? false;
 
+            if (viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
+                !viewModel.LocationAddresses.Any())
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.LocationNotSet, viewModel);
+            }
+
             if (validate)
             {
                 var validationResult = _newVacancyViewModelServerValidator.Validate(viewModel);
