@@ -213,13 +213,14 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetNewVacancyViewModel.LocationNotSet:
-                    return RedirectToRoute(RecruitmentRouteNames.AddLocations,
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmEmployer,
                         new
                         {
                             providerSiteId = viewModel.OwnerParty.ProviderSiteId,
-                            employerId = viewModel.OwnerParty.Employer.EmployerId,
+                            edsUrn = viewModel.OwnerParty.Employer.EdsUrn,
                             vacancyGuid = viewModel.VacancyGuid,
-                            comeFromPreview
+                            comeFromPreview,
+                            useEmployerLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation
                         });
                 case VacancyPostingMediatorCodes.GetNewVacancyViewModel.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
