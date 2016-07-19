@@ -61,7 +61,8 @@
                 .Matches(VacancyViewModelMessages.DesiredQualifications.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.DesiredQualifications));
         }
 
         internal static void AddServerRules(this AbstractValidator<VacancyRequirementsProspectsViewModel> validator)
@@ -82,6 +83,7 @@
             validator.RuleFor(x => x.DesiredQualifications)
                 .NotEmpty()
                 .When(x => x.VacancyType != VacancyType.Traineeship)
+                .When(x => x.VacancySource == VacancySource.Raa)
                 .WithMessage(VacancyViewModelMessages.DesiredQualifications.RequiredErrorText);
         }
     }
