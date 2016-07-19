@@ -152,6 +152,49 @@
             }
         }
 
+        [TestCase(VacancySource.Raa, null, false)]
+        [TestCase(VacancySource.Raa, "", false)]
+        [TestCase(VacancySource.Raa, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.Av, null, true)]
+        [TestCase(VacancySource.Av, "", true)]
+        [TestCase(VacancySource.Av, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.Api, null, true)]
+        [TestCase(VacancySource.Api, "", true)]
+        [TestCase(VacancySource.Api, Samples.ValidFreeText, true)]
+        public void FutureProspectsValidation(VacancySource vacancySource, string text, bool expectValid)
+        {
+            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            vacancyViewModel.VacancyRequirementsProspectsViewModel.FutureProspects = text;
+
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel,
+                    vm => vm.VacancyRequirementsProspectsViewModel.FutureProspects, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel,
+                    vm => vm.VacancyRequirementsProspectsViewModel.FutureProspects, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel,
+                    vm => vm.VacancyRequirementsProspectsViewModel.FutureProspects, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel,
+                    vm => vm.VacancyRequirementsProspectsViewModel.FutureProspects, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel,
+                    vm => vm.VacancyRequirementsProspectsViewModel.FutureProspects, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel,
+                    vm => vm.VacancyRequirementsProspectsViewModel.FutureProspects, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel,
+                    vm => vm.VacancyRequirementsProspectsViewModel.FutureProspects, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel,
+                    vm => vm.VacancyRequirementsProspectsViewModel.FutureProspects, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
         private VacancyViewModel BuildValidVacancy(VacancySource vacancySource)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();

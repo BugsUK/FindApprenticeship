@@ -40,9 +40,9 @@
             validator.RuleFor(x => x.FutureProspects)
                 .Matches(VacancyViewModelMessages.FutureProspects.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidCharacterErrorText)
-                .When(x => !string.IsNullOrEmpty(x.FutureProspects)) //Migrated vacancies can contain just the empty string
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.FutureProspects));
 
             validator.RuleFor(x => x.PersonalQualities)
                 .Matches(VacancyViewModelMessages.PersonalQualities.WhiteListHtmlRegularExpression)
@@ -75,6 +75,7 @@
 
             validator.RuleFor(x => x.FutureProspects)
                 .NotEmpty()
+                .When(x => x.VacancySource == VacancySource.Raa)
                 .WithMessage(VacancyViewModelMessages.FutureProspects.RequiredErrorText);
 
             validator.RuleFor(x => x.PersonalQualities)

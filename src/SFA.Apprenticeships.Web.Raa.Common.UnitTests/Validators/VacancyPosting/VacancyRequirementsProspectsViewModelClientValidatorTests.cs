@@ -120,7 +120,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void DesiredQualificationsInvalidCharacters(string desiredQualifications, bool expectValid)

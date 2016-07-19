@@ -73,7 +73,8 @@
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                FutureProspects = futureProspects
+                FutureProspects = futureProspects,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
