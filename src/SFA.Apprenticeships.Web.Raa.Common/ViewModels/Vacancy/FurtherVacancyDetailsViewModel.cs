@@ -76,5 +76,7 @@
         public VacancyType VacancyType { get; set; }
 
         public int AutoSaveTimeoutInSeconds { get; set; }
+
+        public VacancySource VacancySource { get; set; }
     }
 }

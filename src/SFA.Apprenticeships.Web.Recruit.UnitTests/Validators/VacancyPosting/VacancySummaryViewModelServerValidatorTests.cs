@@ -388,7 +388,8 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Duration = duration
+                Duration = duration,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

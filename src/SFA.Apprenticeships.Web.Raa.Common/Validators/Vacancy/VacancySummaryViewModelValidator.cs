@@ -127,17 +127,20 @@
 
             validator.RuleFor(x => x.Duration)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
+                .When(x => x.VacancySource == VacancySource.Raa);
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidApprenticeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months)
-                .When(x => x.VacancyType != VacancyType.Traineeship);
+                .When(x => x.VacancyType != VacancyType.Traineeship)
+                .When(x => x.VacancySource == VacancySource.Raa);
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidTraineeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationMustBeBetweenSixWeeksAndSixMonths)
-                .When(x => x.VacancyType == VacancyType.Traineeship);
+                .When(x => x.VacancyType == VacancyType.Traineeship)
+                .When(x => x.VacancySource == VacancySource.Raa);
             
             validator.RuleFor(x => x.VacancyDatesViewModel).SetValidator(new VacancyDatesViewModelServerCommonValidator());
 
