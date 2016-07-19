@@ -74,7 +74,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void PersonalQualitiesInvalidCharacters(string personalQualities, bool expectValid)

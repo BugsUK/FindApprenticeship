@@ -48,7 +48,8 @@
                 .Matches(VacancyViewModelMessages.PersonalQualities.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.PersonalQualities));
 
             validator.RuleFor(x => x.ThingsToConsider)
                 .Matches(VacancyViewModelMessages.ThingsToConsider.WhiteListHtmlRegularExpression)
@@ -78,6 +79,7 @@
 
             validator.RuleFor(x => x.PersonalQualities)
                 .NotEmpty()
+                .When(x => x.VacancySource == VacancySource.Raa)
                 .WithMessage(VacancyViewModelMessages.PersonalQualities.RequiredErrorText);
 
             validator.RuleFor(x => x.DesiredQualifications)

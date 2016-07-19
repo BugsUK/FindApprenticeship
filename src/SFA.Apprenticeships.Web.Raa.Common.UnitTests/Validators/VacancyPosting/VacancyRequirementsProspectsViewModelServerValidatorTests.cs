@@ -111,7 +111,8 @@
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                PersonalQualities = personalQualities
+                PersonalQualities = personalQualities,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
