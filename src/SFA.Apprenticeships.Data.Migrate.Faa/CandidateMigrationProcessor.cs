@@ -27,12 +27,14 @@
         private readonly VacancyRepository _vacancyRepository;
         private readonly LocalAuthorityRepository _localAuthorityRepository;
         private readonly CandidateRepository _candidateRepository;
+        private readonly CandidateHistoryRepository _candidateHistoryRepository;
         private readonly CandidateUserRepository _candidateUserRepository;
         private readonly UserRepository _userRepository;
         private readonly SyncRepository _syncRepository;
 
         private readonly ITableSpec _candidateTable = new CandidateTable();
         private readonly ITableSpec _personTable = new PersonTable();
+        private readonly ITableSpec _candidateHistoryTable = new CandidateHistoryTable();
 
         private readonly bool _anonymiseData;
 
@@ -47,6 +49,7 @@
             _vacancyRepository = new VacancyRepository(targetDatabase);
             _localAuthorityRepository = new LocalAuthorityRepository(targetDatabase);
             _candidateRepository = new CandidateRepository(targetDatabase);
+            _candidateHistoryRepository = new CandidateHistoryRepository(targetDatabase);
             _candidateUserRepository = new CandidateUserRepository(configurationService, _logService);
             _userRepository = new UserRepository(configurationService, logService);
 
@@ -125,11 +128,12 @@
                 var maxDateUpdated = candidateUsers.Max(c => c.Candidate.DateUpdated) ?? DateTime.MinValue;
 
                 var candidateSummaries = _candidateRepository.GetCandidateSummariesByGuid(candidateUsers.Select(c => c.Candidate.Id));
-                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidatePerson(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, _anonymiseData)).Where(c => c != null).ToList();
+                var candidateHistoryIds = _candidateHistoryRepository.GetCandidateHistoryIdsByCandidateIds(candidateSummaries.Values.Select(cs => cs.CandidateId).Distinct());
+                var candidatesWithHistory = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidateWithHistory(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, candidateHistoryIds, _anonymiseData)).Where(c => c != null).ToList();
                 
-                count += candidatePersons.Count;
-                _logService.Info($"Processing {candidatePersons.Count} active candidates");
-                BulkUpsert(candidatePersons, candidateSummaries);
+                count += candidatesWithHistory.Count;
+                _logService.Info($"Processing {candidatesWithHistory.Count} active candidates");
+                BulkUpsert(candidatesWithHistory, candidateSummaries);
 
                 var syncParams = _syncRepository.GetSyncParams();
                 syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
@@ -137,34 +141,47 @@
                 _syncRepository.SetCandidateSyncParams(syncParams);
 
                 var percentage = ((double)count / expectedCount) * 100;
-                _logService.Info($"Processed batch of {candidatePersons.Count} candidates and {count} candidates out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
+                _logService.Info($"Processed batch of {candidatesWithHistory.Count} candidates and {count} candidates out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
             }
         }
 
-        private void BulkUpsert(IList<CandidatePerson> candidatePersons, IDictionary<Guid, CandidateSummary> candidateSummaries)
+        private void BulkUpsert(IList<CandidateWithHistory> candidatesWithHistory, IDictionary<Guid, CandidateSummary> candidateSummaries)
         {
             //Have to do these one at a time as need to get the id for the inserted person records
-            foreach (var candidatePerson in candidatePersons.Where(c => c.Person.PersonId == 0))
+            foreach (var candidateWithHistory in candidatesWithHistory.Where(c => c.CandidatePerson.Person.PersonId == 0))
             {
                 //Insert any new person records to match with candidate records
-                var personId = _targetDatabase.Insert(candidatePerson.Person);
-                candidatePerson.Candidate.PersonId = (int)personId;
+                var personId = _targetDatabase.Insert(candidateWithHistory.CandidatePerson.Person);
+                candidateWithHistory.CandidatePerson.Candidate.PersonId = (int)personId;
             }
 
             //Update any existing person records
-            _genericSyncRespository.BulkUpdate(_personTable, candidatePersons.Where(c => c.Person.PersonId != 0).Select(c => _candidateMappers.MapPersonDictionary(c.Person)));
+            _genericSyncRespository.BulkUpdate(_personTable, candidatesWithHistory.Where(c => c.CandidatePerson.Person.PersonId != 0).Select(c => _candidateMappers.MapPersonDictionary(c.CandidatePerson.Person)));
 
             //Bulk insert any candidates with valid ids that are not already in the database
-            _genericSyncRespository.BulkInsert(_candidateTable, candidatePersons.Where(c => c.Candidate.CandidateId != 0 && !candidateSummaries.ContainsKey(c.Candidate.CandidateGuid)).Select(c => _candidateMappers.MapCandidateDictionary(c.Candidate)));
+            _genericSyncRespository.BulkInsert(_candidateTable, candidatesWithHistory.Where(c => c.CandidatePerson.Candidate.CandidateId != 0 && !candidateSummaries.ContainsKey(c.CandidatePerson.Candidate.CandidateGuid)).Select(c => _candidateMappers.MapCandidateDictionary(c.CandidatePerson.Candidate)));
 
             //Now insert any remaining candidates one at a time
-            foreach (var candidate in candidatePersons.Where(c => c.Candidate.CandidateId == 0).Select(c => c.Candidate))
+            foreach (var candidateWithHistory in candidatesWithHistory.Where(c => c.CandidatePerson.Candidate.CandidateId == 0))
             {
-                _targetDatabase.Insert(candidate);
+                //Ensure candidate histories have the correct candidate id
+                var candidateId = _targetDatabase.Insert(candidateWithHistory.CandidatePerson.Candidate);
+                foreach (var candidateHistory in candidateWithHistory.CandidateHistory)
+                {
+                    candidateHistory.CandidateId = (int)candidateId;
+                }
             }
 
             //Finally, update existing candidates
-            _genericSyncRespository.BulkUpdate(_candidateTable, candidatePersons.Where(c => c.Candidate.CandidateId != 0 && candidateSummaries.ContainsKey(c.Candidate.CandidateGuid)).Select(c => _candidateMappers.MapCandidateDictionary(c.Candidate)));
+            _genericSyncRespository.BulkUpdate(_candidateTable, candidatesWithHistory.Where(c => c.CandidatePerson.Candidate.CandidateId != 0 && candidateSummaries.ContainsKey(c.CandidatePerson.Candidate.CandidateGuid)).Select(c => _candidateMappers.MapCandidateDictionary(c.CandidatePerson.Candidate)));
+
+            //Insert new candidate history records
+            var newCandidateHistories = candidatesWithHistory.SelectMany(a => a.CandidateHistory).Where(a => a.CandidateHistoryId == 0);
+            _genericSyncRespository.BulkInsert(_candidateHistoryTable, newCandidateHistories.Select(ah => ah.MapCandidateHistoryDictionary()));
+
+            //Update existing candidate history records
+            var existingCandidateHistories = candidatesWithHistory.SelectMany(a => a.CandidateHistory).Where(a => a.CandidateHistoryId != 0);
+            _genericSyncRespository.BulkUpdate(_candidateHistoryTable, existingCandidateHistories.Select(ah => ah.MapCandidateHistoryDictionary()));
         }
     }
 }
