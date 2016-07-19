@@ -254,6 +254,7 @@
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />
