@@ -34,7 +34,8 @@
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                DesiredSkills = desiredSkills
+                DesiredSkills = desiredSkills,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

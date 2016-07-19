@@ -28,7 +28,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void DesiredSkillsInvalidCharacters(string desiredSkills, bool expectValid)

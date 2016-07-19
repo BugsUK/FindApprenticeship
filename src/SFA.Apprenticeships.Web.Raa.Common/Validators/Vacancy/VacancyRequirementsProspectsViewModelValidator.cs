@@ -34,7 +34,8 @@
                 .Matches(VacancyViewModelMessages.DesiredSkills.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListInvalidTagErrorText)
+                .When( x => Common.IsNotEmpty(x.DesiredSkills));
 
             validator.RuleFor(x => x.FutureProspects)
                 .Matches(VacancyViewModelMessages.FutureProspects.WhiteListHtmlRegularExpression)
@@ -67,6 +68,7 @@
         {
             validator.RuleFor(x => x.DesiredSkills)
                 .NotEmpty()
+                .When(x => x.VacancySource == VacancySource.Raa)
                 .WithMessage(VacancyViewModelMessages.DesiredSkills.RequiredErrorText);
 
             validator.RuleFor(x => x.FutureProspects)
@@ -79,8 +81,8 @@
 
             validator.RuleFor(x => x.DesiredQualifications)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.DesiredQualifications.RequiredErrorText)
-                .When(x => x.VacancyType != VacancyType.Traineeship);
+                .When(x => x.VacancyType != VacancyType.Traineeship)
+                .WithMessage(VacancyViewModelMessages.DesiredQualifications.RequiredErrorText);
         }
     }
 }
