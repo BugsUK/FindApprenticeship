@@ -30,6 +30,16 @@
             return MapEmployer(employer);
         }
 
+        //TODO: temporary method. Remove after moving status checks to a higher tier
+        public DomainEmployer GetByIdWithoutStatusCheck(int employerId)
+        {
+            var employer =
+                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId",
+                    new { EmployerId = employerId }).SingleOrDefault();
+
+            return MapEmployer(employer);
+        }
+
         public DomainEmployer GetByEdsUrn(string edsUrn)
         {
             var employer =
@@ -113,20 +123,23 @@ WHERE  FullName = @CountyFullName",
                     new
                     {
                         CountyFullName = entity.Address.County
-                    }).Single();
+                    }).SingleOrDefault();
             }
         }
 
         private DomainEmployer MapCountyId(Employer dbEmployer, DomainEmployer result)
         {
-            result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+            if (dbEmployer.CountyId > 0)
+            {
+                result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT FullName
 FROM   dbo.County
 WHERE  CountyId = @CountyId",
-                new
-                {
-                    CountyId = dbEmployer.CountyId
-                }).Single();
+                    new
+                    {
+                        CountyId = dbEmployer.CountyId
+                    }).Single();
+            }
 
             return result;
         }

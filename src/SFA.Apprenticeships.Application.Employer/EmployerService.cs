@@ -10,18 +10,22 @@
     public class EmployerService : IEmployerService
     {
         private readonly IGetByIdStrategy _getByIdStrategy;
+        //TODO: temporary method. Remove after moving status checks to a higher tier
+        private readonly IGetByIdWithoutStatusCheckStrategy _getByIdWithoutStatusCheckStrategy;
         private readonly IGetByIdsStrategy _getByIdsStrategy;
         private readonly IGetByEdsUrnStrategy _getByEdsUrnStrategy;
         private readonly IGetPagedEmployerSearchResultsStrategy _getPagedEmployerSearchResultsStrategy;
         private readonly ISaveEmployerStrategy _saveEmployerStrategy;
 
-        public EmployerService(IGetByIdStrategy getByIdStrategy, IGetByIdsStrategy getByIdsStrategy, IGetByEdsUrnStrategy getByEdsUrnStrategy, IGetPagedEmployerSearchResultsStrategy getPagedEmployerSearchResultsStrategy, ISaveEmployerStrategy saveEmployerStrategy)
+        public EmployerService(IGetByIdStrategy getByIdStrategy, IGetByIdsStrategy getByIdsStrategy, IGetByEdsUrnStrategy getByEdsUrnStrategy, IGetPagedEmployerSearchResultsStrategy getPagedEmployerSearchResultsStrategy, ISaveEmployerStrategy saveEmployerStrategy, IGetByIdWithoutStatusCheckStrategy getByIdWithoutStatusCheckStrategy)
         {
             _getByIdStrategy = getByIdStrategy;
             _getByIdsStrategy = getByIdsStrategy;
             _getByEdsUrnStrategy = getByEdsUrnStrategy;
             _getPagedEmployerSearchResultsStrategy = getPagedEmployerSearchResultsStrategy;
             _saveEmployerStrategy = saveEmployerStrategy;
+            //TODO: temporary method. Remove after moving status checks to a higher tier
+            _getByIdWithoutStatusCheckStrategy = getByIdWithoutStatusCheckStrategy;
         }
 
         public Employer GetEmployer(int employerId)
@@ -29,6 +33,14 @@
             Condition.Requires(employerId);
 
             return _getByIdStrategy.Get(employerId);
+        }
+
+        //TODO: temporary method. Remove after moving status checks to a higher tier
+        public Employer GetEmployerWithoutStatusCheck(int employerId)
+        {
+            Condition.Requires(employerId);
+
+            return _getByIdWithoutStatusCheckStrategy.Get(employerId);
         }
 
         public Employer GetEmployer(string edsUrn)
