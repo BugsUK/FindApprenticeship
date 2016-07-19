@@ -32,6 +32,7 @@
         public DateTime? DateQAApproved { get; set; }
         public int SubmissionCount { get; set; }
         public int? VacancyManagerId { get; set; }
+        public int? DeliveryOrganisationId { get; set; }
         public int? ParentVacancyId { get; set; }
         public TrainingType TrainingType { get; set; }
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
