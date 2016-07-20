@@ -323,7 +323,8 @@ DECLARE @VacancyTypeId int
 						SmallEmployerWageIncentive,
 						VacancyManagerAnonymous,
 						LocalAuthorityId,
-						VacancyGuid
+						VacancyGuid,
+						VacancySourceId
 					   )        
 					  VALUES     
 					   (      
@@ -372,7 +373,8 @@ DECLARE @VacancyTypeId int
 						@IsSmallEmployerWageIncentive, 
 						case WHEN @VacancyManagerId = @TrainingProviderId THEN 0 ELSE @IsVacancyManagerAnonymous END, --Its VM=VO then always display
 						@localAuthorityId,
-						NEWID()
+						NEWID(),
+						1
 					   )    
 				 
 					  --Inserting Image Parameters in Relationship Table
