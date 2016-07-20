@@ -74,7 +74,8 @@
             {
                 HoursPerWeek = hoursPerWeek,
                 Duration = expectedDuration,
-                DurationType = durationType
+                DurationType = durationType,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -222,7 +223,8 @@
             {
                 HoursPerWeek = hoursPerWeek,
                 Duration = expectedDuration,
-                DurationType = durationType
+                DurationType = durationType,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -272,7 +274,8 @@
             {
                 Duration = expectedDuration,
                 DurationType = durationType,
-                VacancyType = VacancyType.Traineeship
+                VacancyType = VacancyType.Traineeship,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
