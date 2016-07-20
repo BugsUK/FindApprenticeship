@@ -305,7 +305,7 @@
 
         [TestCase(null, false)]
         [TestCase(30.0, true)]
-        public void ShouldNotHaveHoursPerWeekWhenApprenticeshipButNoHoursPerWeekSet(double? hoursPerWeek, bool expectValid)
+        public void ShouldNotShowHoursPerWeekWhenApprenticeshipHasNoHoursPerWeekSet(double? hoursPerWeek, bool expectValid)
         {
             //Arrange
             var viewModel = new VacancyViewModel()

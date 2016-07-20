@@ -2,10 +2,11 @@
 {
     using FluentValidation;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Common;
+    using VacancyType = Domain.Entities.Vacancies.VacancyType;
 
     public class NewVacancyViewModelClientValidator : AbstractValidator<NewVacancyViewModel>
     {
@@ -58,7 +59,8 @@
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Length(0, 0)
                 .When(viewModel => !viewModel.OfflineVacancy.HasValue || viewModel.OfflineVacancy.Value == false)
-                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ShouldBeEmpty);
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ShouldBeEmpty)
+                .When(viewModel => viewModel.VacancySource == VacancySource.Raa);
             
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
