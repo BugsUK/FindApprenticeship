@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Web.Common.Constants
-@using SFA.Apprenticeships.Web.Common.Framework
+﻿@using SFA.Apprenticeships.Web.Common.Framework
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 <!DOCTYPE html>
@@ -24,8 +23,14 @@
     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="@Url.CdnImage("apple-touch-icon-120x120.png")">
     <link rel="apple-touch-icon-precomposed" sizes="76x76" href="@Url.CdnImage("apple-touch-icon-76x76.png")">
     <link rel="apple-touch-icon-precomposed" href="@Url.CdnImage("apple-touch-icon-60x60.png")">
+    
     @Scripts.Render("~/bundles/webtrends")
     @Styles.Render("~/bundles/font-awesome")
+    @Scripts.Render("~/bundles/ckeditor")
+    @Scripts.Render("~/bundles/nanospell")
+
+   @*<textarea id='editor1' class="ckeditor">...</textarea>*@   
+
     @Html.Partial("_Scripts")
 </head>
 <body>
@@ -168,6 +173,20 @@
     @Scripts.Render("~/bundles/underscore")
     @Scripts.Render("~/bundles/joyride")
     @Scripts.Render("~/bundles/nas")
-    @RenderSection("scripts", required: false)
+<script>CKEDITOR.replace('editor1');</script>
+<script>CKEDITOR.replace('ds_editor');</script>
+<script>CKEDITOR.replace('pq_editor');</script>
+<script>CKEDITOR.replace('dq_editor');</script>
+
+    @Scripts.Render("~/bundles/nanospell")
+    <script>
+        nanospell.ckeditor('all',
+        {
+            dictionary: "en", // 24 free international dictionaries
+            server: "asp.net" // can be php, asp, asp.net or java
+        });
+    </script> 
+@RenderSection("scripts", required: false)
+     
 </body>
 </html>

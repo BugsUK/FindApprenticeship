@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -131,7 +132,7 @@ WriteLiteral("        ");
 
             
             #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "ckeditor", type = "text", id = "ds_editor" }));
 
             
             #line default
@@ -164,7 +165,7 @@ WriteLiteral("        ");
 
             
             #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "ckeditor", type = "text", id = "pq_editor" }));
 
             
             #line default
@@ -240,14 +241,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-       Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
+       Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "ckeditor", type = "text" , id = "dq_editor" }));
 
             
             #line default
             #line hidden
             
             #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-                                                                                                                                                          
+                                                                                                                                                    
             
             
             #line default

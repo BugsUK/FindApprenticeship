@@ -774,12 +774,12 @@ WriteLiteral("        ");
 
             
             #line 122 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-   Write(Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex }));
+   Write(Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { id="editor1", @class = "ckeditor", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex}));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("        \r\n");
 
 WriteLiteral("        ");
 

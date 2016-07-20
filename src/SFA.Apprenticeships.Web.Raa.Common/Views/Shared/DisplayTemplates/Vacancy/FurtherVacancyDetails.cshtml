@@ -119,7 +119,7 @@
             var longDescriptionDataValLength = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipTooLongErrorText : VacancyViewModelMessages.LongDescription.TooLongErrorText;
             var longDescriptionDataValRegex = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipWhiteListInvalidCharacterErrorText : VacancyViewModelMessages.LongDescription.WhiteListInvalidCharacterErrorText;
         }
-        @Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex })
+        @Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { id="editor1", @class = "ckeditor", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex})        
         @Html.EditorFor(m => m.LongDescriptionComment, "Comment", Html.GetLabelFor(m => m.LongDescriptionComment, Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescriptionComment.TraineeshipLabelText : null))
     </div>
 </section>
