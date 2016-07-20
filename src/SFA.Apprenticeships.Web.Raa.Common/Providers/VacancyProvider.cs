@@ -241,8 +241,7 @@
         public void CreateVacancy(VacancyMinimumData vacancyMinimumData)
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-            var vacancyParty =
-                _providerService.GetVacancyParty(vacancyMinimumData.VacancyPartyId, true);
+            var vacancyParty = _providerService.GetVacancyParty(vacancyMinimumData.VacancyPartyId, true);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var provider = _providerService.GetProvider(vacancyMinimumData.Ukprn);
 

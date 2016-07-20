@@ -441,11 +441,6 @@ select top 10 * from VacancyReferralComments
             newRecord.BeingSupportedBy      = null;
             newRecord.LockedForSupportUntil = null;
 
-            // We can't populate these for new vacancies and none of our systems used it (including FAA)
-            // Therefore it is better to set it to null (etc) to out problems early
-            // TODO: Check that new vacancies are really setting to null and not the vacancy owner site id (etc)
-            newRecord.VacancyManagerID        = null;
-            newRecord.DeliveryOrganisationID  = null;
             // Required by unsuccessful candidates report and now correctly set in RAA so keeping
             //newRecord.ContractOwnerID         = null;
             //newRecord.OriginalContractOwnerId = null;
