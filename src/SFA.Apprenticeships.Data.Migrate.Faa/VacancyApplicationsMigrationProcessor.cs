@@ -120,6 +120,7 @@
             //Now insert any remaining applications one at a time
             foreach (var applicationWithHistory in applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.Application.ApplicationId == 0))
             {
+                //Ensure application histories have the correct application id
                 var applicationId = _targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.Application);
                 foreach (var applicationHistory in applicationWithHistory.ApplicationHistory)
                 {

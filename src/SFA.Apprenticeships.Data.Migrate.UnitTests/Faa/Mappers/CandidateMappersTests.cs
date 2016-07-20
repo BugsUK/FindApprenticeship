@@ -419,5 +419,40 @@
             person.Email.Should().Be(candidateUser.Candidate.Id + "@anon.com");
             person.PersonTypeId.Should().Be(1);
         }
+
+        [Test]
+        public void ActivatedCandidateWithHistoryTest()
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(20).Build();
+
+            //Act
+            var candidateWithHistory = _candidateMappers.MapCandidateWithHistory(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, Dictionary<int, int>>(), false);
+
+            //Assert
+            var candidatePerson = candidateWithHistory.CandidatePerson;
+            candidatePerson.Candidate.CandidateStatusTypeId.Should().Be(2);
+            var candidateHistory = candidateWithHistory.CandidateHistory;
+            candidateHistory.Should().NotBeNullOrEmpty();
+            candidateHistory.Count.Should().Be(3);
+            var createdHistory = candidateHistory[0];
+            createdHistory.CandidateHistoryEventTypeId.Should().Be(1);
+            createdHistory.CandidateHistorySubEventTypeId.Should().Be(1);
+            var activatedHistory = candidateHistory[1];
+            activatedHistory.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
+            activatedHistory.CandidateHistoryEventTypeId.Should().Be(1);
+            activatedHistory.CandidateHistorySubEventTypeId.Should().Be(2);
+            // ReSharper disable once PossibleInvalidOperationException
+            activatedHistory.EventDate.Should().Be(candidateUser.User.ActivationDate.Value);
+            activatedHistory.Comment.Should().BeNull();
+            activatedHistory.UserName.Should().Be("NAS Gateway");
+            var noteHistory = candidateHistory[2];
+            noteHistory.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
+            noteHistory.CandidateHistoryEventTypeId.Should().Be(3);
+            noteHistory.CandidateHistorySubEventTypeId.Should().Be(0);
+            noteHistory.EventDate.Should().Be(candidateUser.User.ActivationDate.Value);
+            noteHistory.Comment.Should().Be("NAS Exemplar registered Candidate.");
+            noteHistory.UserName.Should().Be("NAS Gateway");
+        }
     }
 }

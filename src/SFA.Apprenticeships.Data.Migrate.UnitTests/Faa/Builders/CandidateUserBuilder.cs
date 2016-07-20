@@ -55,7 +55,10 @@
             var user = new User
             {
                 Id = _candidateId,
+                DateCreated = DateTime.Now.AddDays(-7),
+                DateUpdated = DateTime.Now,
                 Status = _status,
+                ActivationDate = DateTime.Now.AddDays(-6),
                 LastLogin = DateTime.Now.AddHours(-12)
             };
 
