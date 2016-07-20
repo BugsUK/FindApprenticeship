@@ -252,5 +252,55 @@
 
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }
+
+        [TestCase(null, DurationType.Weeks, "12 weeks", "12 weeks")]
+        [TestCase(12.0, DurationType.Weeks, null, "12 weeks")]
+        [TestCase(12.0, DurationType.Months, null, "12 months")]
+        [TestCase(12.0, DurationType.Years, null, "12 years")]
+        [TestCase(null, DurationType.Weeks, null, "Not specified")]
+        public void ShouldShowExpectedDurationIfPresentAndNoDurationSet(double? duration, DurationType durationType, string expectedDuration, string expectedDisplayText)
+        {
+            var details = new VacancyDetails();
+
+            var viewModel = new VacancyViewModel()
+            {
+                ProviderSite = new ProviderSiteViewModel()
+                {
+                    Address = new AddressViewModel()
+                },
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
+                {
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
+                    Duration = (decimal?)duration,
+                    DurationType = durationType,
+                    ExpectedDuration = expectedDuration
+                },
+                NewVacancyViewModel = new NewVacancyViewModel
+                {
+                    OwnerParty = new VacancyPartyViewModel()
+                    {
+                        Employer = new EmployerViewModel()
+                        {
+                            Address = new AddressViewModel()
+                        }
+                    },
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
+                    OfflineVacancy = false
+                },
+                TrainingDetailsViewModel = new TrainingDetailsViewModel(),
+                VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = VacancyStatus.ReservedForQA,
+                VacancyType = VacancyType.Apprenticeship
+            };
+
+            var view = details.RenderAsHtml(_context, viewModel);
+
+            view.GetElementbyId("vacancy-expected-duration").InnerHtml.Should().Be(expectedDisplayText);
+        }
     }
 }
