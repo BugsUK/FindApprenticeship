@@ -4,13 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Application.Interfaces.Reporting;
     using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;
     using Constants.Messages;
     using CsvClassMaps;
     using CsvHelper.Configuration;
+    using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
     using Infrastructure.Presentation;
     using SFA.Infrastructure.Interfaces;
@@ -19,13 +19,13 @@
 
     public class ReportingMediator : MediatorBase, IReportingMediator
     {
-        private readonly IReportingService _reportingService;
+        private readonly IReportingRepository _reportingRepo;
         private readonly ReportParametersDateRangeValidator _reportDateRangeValidator;
         private readonly ILogService _logService;
 
-        public ReportingMediator(IReportingService reportingService, ILogService logService)
+        public ReportingMediator(IReportingRepository reportingRepo, ILogService logService)
         {
-            _reportingService = reportingService;
+            _reportingRepo = reportingRepo;
             _reportDateRangeValidator = new ReportParametersDateRangeValidator();
             _logService = logService;
         }
@@ -34,7 +34,7 @@
         {
             try
             {
-                var reportResult = _reportingService.ReportVacanciesList(parameters.FromDate.Date,
+                var reportResult = _reportingRepo.ReportVacanciesList(parameters.FromDate.Date,
                     parameters.ToDate.Date);
                 var bytes = GetCsvBytes<ReportVacanciesResultItem, ReportVacanciesResultItemClassMap>(reportResult, "");
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
@@ -62,7 +62,7 @@
         {
             try
             {
-                var reportResult = _reportingService.ReportSuccessfulCandidates(parameters.Type,
+                var reportResult = _reportingRepo.ReportSuccessfulCandidates(parameters.Type,
                     parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange, parameters.ManagedBy, parameters.Region);
 
                 var headerBuilder = new StringBuilder();
@@ -85,7 +85,7 @@
         {
             try
             {
-                var reportResult = _reportingService.ReportUnsuccessfulCandidates(parameters.Type,
+                var reportResult = _reportingRepo.ReportUnsuccessfulCandidates(parameters.Type,
                     parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange, parameters.ManagedBy, parameters.Region);
 
                 var headerBuilder = new StringBuilder();
@@ -115,10 +115,10 @@
 
             try
             {
-                var localAuthorities = _reportingService.LocalAuthorityManagerGroups();
-                result.ManagedByList = localAuthorities.ToListOfListItem();
-                var regions = _reportingService.RegionsIncludingAll();
-                result.RegionList = regions.ToListOfListItem();
+                var localAuthorities = _reportingRepo.LocalAuthorityManagerGroups();
+                result.ManagedByList = localAuthorities.ToListItemList();
+                var regions = _reportingRepo.GeoRegionsIncludingAll();
+                result.RegionList = regions.ToListItemList();
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, result);
             }
             catch (Exception ex)
@@ -134,10 +134,10 @@
 
             try
             {
-                var localAuthorities = _reportingService.LocalAuthorityManagerGroups();
-                result.ManagedByList = localAuthorities.ToListOfListItem();
-                var regions = _reportingService.RegionsIncludingAll();
-                result.RegionList = regions.ToListOfListItem();
+                var localAuthorities = _reportingRepo.LocalAuthorityManagerGroups();
+                result.ManagedByList = localAuthorities.ToListItemList();
+                var regions = _reportingRepo.GeoRegionsIncludingAll();
+                result.RegionList = regions.ToListItemList();
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, result);
             }
             catch (Exception ex)
@@ -158,7 +158,7 @@
                     vacancyStatus = int.Parse(parameters.Status);
                 }
 
-                var reportResult = _reportingService.ReportVacancyExtensions(parameters.FromDate.Date, parameters.ToDate.Date,
+                var reportResult = _reportingRepo.ReportVacancyExtensions(parameters.FromDate.Date, parameters.ToDate.Date,
                     parameters.UKPRN, vacancyStatus);
 
                 var bytes = GetCsvBytes<ReportVacancyExtensionsResultItem, ReportVacancyExtensionsResultItemClassMap>(reportResult, "");

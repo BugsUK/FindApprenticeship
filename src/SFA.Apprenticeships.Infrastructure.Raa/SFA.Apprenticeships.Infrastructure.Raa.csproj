@@ -100,7 +100,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApprenticeshipVacancyDataProvider.cs" />
     <Compile Include="ReferenceDataProvider.cs" />
-    <Compile Include="ReportingProvider.cs" />
     <Compile Include="TraineeshipVacancyDataProvider.cs" />
     <Compile Include="VacancyIndexDataProvider.cs" />
   </ItemGroup>
@@ -124,10 +123,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Reporting\SFA.Apprenticeships.Application.Reporting.csproj">
-      <Project>{f7b7b49b-0b08-4edc-afe2-7e88a6a5a3f6}</Project>
-      <Name>SFA.Apprenticeships.Application.Reporting</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>

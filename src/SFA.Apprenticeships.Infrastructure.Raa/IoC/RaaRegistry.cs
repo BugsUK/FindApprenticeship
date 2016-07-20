@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.IoC
 {
     using Application.ReferenceData;
-    using Application.Reporting;
-
     using Application.Candidate.Configuration;
 
     using StructureMap.Configuration.DSL;
@@ -15,9 +13,6 @@
             {
                 For<IReferenceDataProvider>()
                     .Use<ReferenceDataProvider>();
-
-                For<IReportingProvider>()
-                    .Use<ReportingProvider>();
             }
         }
     }
