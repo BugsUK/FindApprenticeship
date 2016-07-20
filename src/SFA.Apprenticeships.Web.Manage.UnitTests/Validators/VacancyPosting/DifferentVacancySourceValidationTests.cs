@@ -381,6 +381,49 @@
             }
         }
 
+        [TestCase(VacancySource.Raa, true, "some instructions", true)]
+        [TestCase(VacancySource.Raa, true, "", true)]
+        [TestCase(VacancySource.Raa, false, "some instructions", false)]
+        [TestCase(VacancySource.Raa, false, "", true)]
+        [TestCase(VacancySource.Av, true, "some instructions", true)]
+        [TestCase(VacancySource.Av, true, "", true)]
+        [TestCase(VacancySource.Av, false, "some instructions", true)]
+        [TestCase(VacancySource.Av, false, "", true)]
+        [TestCase(VacancySource.Api, true, "some instructions", true)]
+        [TestCase(VacancySource.Api, true, "", true)]
+        [TestCase(VacancySource.Api, false, "some instructions", true)]
+        [TestCase(VacancySource.Api, false, "", true)]
+        public void OfflineApplicationInstructionsRequired(VacancySource vacancySource, bool offlineVacancy, string instructions, bool expectValid)
+        {
+            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            vacancyViewModel.NewVacancyViewModel = new NewVacancyViewModel
+            {
+                OfflineVacancy = offlineVacancy,
+                OfflineApplicationInstructions = instructions,
+                VacancySource = vacancySource
+            };
+
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
         private VacancyViewModel BuildValidVacancy(VacancySource vacancySource)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();

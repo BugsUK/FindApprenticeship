@@ -74,12 +74,14 @@
             validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
                 .Length(0, 0)
                 .When(viewModel => !viewModel.OfflineVacancy.HasValue || viewModel.OfflineVacancy.Value == false)
-                .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.ShouldBeEmptyText);
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.ShouldBeEmptyText)
+                .When(viewModel => viewModel.VacancySource == VacancySource.Raa);
 
             validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
                 .Matches(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListErrorText)
-                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value)
+                .When(viewModel => Common.IsNotEmpty(viewModel.OfflineApplicationInstructions));
 
             validator.RuleFor(m => m.OfflineApplicationInstructionsComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
