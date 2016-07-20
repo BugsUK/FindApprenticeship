@@ -51,7 +51,8 @@
                 .Matches(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.TrainingProvided));
 
             validator.RuleFor(m => m.TrainingProvidedComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
@@ -116,7 +117,8 @@
 
             validator.RuleFor(x => x.TrainingProvided)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.RequiredErrorText)
+                .When(v => v.VacancySource == VacancySource.Raa);
         }
     }
 }

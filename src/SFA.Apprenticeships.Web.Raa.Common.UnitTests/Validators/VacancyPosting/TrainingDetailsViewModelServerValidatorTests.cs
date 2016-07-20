@@ -358,7 +358,8 @@
         {
             var viewModel = new TrainingDetailsViewModel
             {
-                TrainingProvided = trainingProvided
+                TrainingProvided = trainingProvided,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

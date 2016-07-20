@@ -296,6 +296,48 @@
             }
         }
 
+        [TestCase(VacancySource.Raa, null, false)]
+        [TestCase(VacancySource.Raa, "", false)]
+        [TestCase(VacancySource.Raa, " ", false)]
+        [TestCase(VacancySource.Raa, Samples.ValidFreeHtmlText, true)]
+        [TestCase(VacancySource.Av, null, true)]
+        [TestCase(VacancySource.Av, "", true)]
+        [TestCase(VacancySource.Av, " ", true)]
+        [TestCase(VacancySource.Av, Samples.ValidFreeHtmlText, true)]
+        [TestCase(VacancySource.Api, null, true)]
+        [TestCase(VacancySource.Api, "", true)]
+        [TestCase(VacancySource.Api, " ", true)]
+        [TestCase(VacancySource.Api, Samples.ValidFreeHtmlText, true)]
+        public void TrainingProvidedRequired(VacancySource vacancySource, string trainingProvided, bool expectValid)
+        {
+            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            vacancyViewModel.TrainingDetailsViewModel = new TrainingDetailsViewModel
+            {
+                TrainingProvided = trainingProvided,
+                VacancySource = vacancySource
+            };
+
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
         private VacancyViewModel BuildValidVacancy(VacancySource vacancySource)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();
