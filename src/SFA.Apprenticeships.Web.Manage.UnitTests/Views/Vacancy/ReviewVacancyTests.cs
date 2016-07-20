@@ -302,5 +302,63 @@
 
             view.GetElementbyId("vacancy-expected-duration").InnerHtml.Should().Be(expectedDisplayText);
         }
+
+        [TestCase(null, false)]
+        [TestCase(30.0, true)]
+        public void ShouldNotHaveHoursPerWeekWhenApprenticeshipButNoHoursPerWeekSet(double? hoursPerWeek, bool expectValid)
+        {
+            //Arrange
+            var viewModel = new VacancyViewModel()
+            {
+                ProviderSite = new ProviderSiteViewModel()
+                {
+                    Address = new AddressViewModel()
+                },
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
+                {
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
+                    VacancyType = VacancyType.Apprenticeship,
+                    HoursPerWeek = (decimal?)hoursPerWeek
+                },
+                NewVacancyViewModel = new NewVacancyViewModel
+                {
+                    OwnerParty = new VacancyPartyViewModel()
+                    {
+                        Employer = new EmployerViewModel()
+                        {
+                            Address = new AddressViewModel()
+                        }
+                    },
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
+                    OfflineVacancy = false
+                },
+                TrainingDetailsViewModel = new TrainingDetailsViewModel(),
+                VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = VacancyStatus.ReservedForQA,
+                VacancyType = VacancyType.Apprenticeship
+            };
+
+            var details = new WorkingWeekAndWage();
+
+            //Act
+            var view = details.RenderAsHtml(viewModel);
+
+            //Assert
+            var totalHoursPerWeek = view.GetElementbyId("total-hours-per-week");
+
+            if (expectValid)
+            {
+                totalHoursPerWeek.Should().NotBeNull();
+            }
+            else
+            {
+                totalHoursPerWeek.Should().BeNull();
+            }
+        }
     }
 }

@@ -119,7 +119,7 @@
             hoursPerWeek.Should().NotBeNull();
             hoursPerWeek.Attributes["type"].Value.Should().Be("hidden");
         }
-
+        
         [Test]
         public void ShouldHaveWageWhenApprenticeship()
         {
