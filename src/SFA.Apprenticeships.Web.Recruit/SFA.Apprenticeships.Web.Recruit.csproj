@@ -453,13 +453,14 @@
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
-    <Content Include="Content\_assets\js\vendor\ckeditor.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\adapters\jquery.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\build-config.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\CHANGES.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\ckeditor.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\config.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\contents.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\lang\en.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\LICENSE.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\CHANGES.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.json" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.tests.json" />
@@ -517,6 +518,7 @@
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\balloonpanel\skins\moono\images\hidpi\close.png" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\icons.png" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\README.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog_ie.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog_ie7.css" />
@@ -557,30 +559,6 @@
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\css\bootstrapck-sample.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\js\jquery-1.11.0.min.js" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\gecko\editor_gecko.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\ie7\dialog_ie7.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\ie7\editor_ie7.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\ie8\dialog_ie8.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\ie8\editor_ie8.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\iequirks\dialog_iequirks.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\iequirks\editor_iequirks.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\ie\dialog_ie.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\ie\editor_ie.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\browser-specific\opera\dialog_opera.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\editor.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_colorpanel.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_elementspath.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_mainui.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_menu.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_panel.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_presets.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_reset.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_richcombo.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\components\_toolbar.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\config\_colors.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Content\_assets\js\vendor\ckeditor\styles.js" />
     <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.js" />
     <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.min.js" />
@@ -597,9 +575,8 @@
     <Content Include="Content\_assets\js\vendor\nanospell\nanospell.ckeditor\plugin.js" />
     <Content Include="Content\_assets\js\vendor\nanospell\nanospell.ckeditor\theme\nanospell.css" />
     <Content Include="Content\_assets\js\vendor\nanospell\nanospell.ckeditor\theme\wiggle.png" />
-    <Content Include="Content\_assets\js\vendor\nanospell\sample-ckeditor.html" />
-    <Content Include="Content\_assets\js\vendor\nanospell\sample-multiple.html" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp.net\tinyspell.aspx" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp.net\Web.config" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\json1.asp" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\json2.js" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\tinyspell.asp" />
@@ -607,6 +584,7 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\php\spellcheck.php" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\php\tinyspell.php" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\custom.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en.dic" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\banned-words.txt" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\common-mistakes.txt" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\enforced-corrections.txt" />
@@ -617,7 +595,10 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\installer\php.php" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\installer\test-cke.js" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\installer\theme.css" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\.htaccess" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\license\EULA.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\key.lic" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\web.config" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\robots.txt" />
     <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
     <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
@@ -767,14 +748,6 @@
       <LastGenOutput>Cookies.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\ProviderUser\OnBoardingComplete.cshtml" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\CHANGES.md" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\LICENSE.md" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\README.md" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp.net\Web.config" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en.dic" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\license\.htaccess" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\license\key.lic" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\license\web.config" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

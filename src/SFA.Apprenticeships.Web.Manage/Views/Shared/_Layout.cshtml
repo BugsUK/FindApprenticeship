@@ -25,6 +25,8 @@
     <link rel="apple-touch-icon-precomposed" href="@Url.CdnImage("apple-touch-icon-60x60.png")">
     @Scripts.Render("~/bundles/webtrends")
     @Styles.Render("~/bundles/font-awesome")
+    @Scripts.Render("~/bundles/ckeditor")
+    @Scripts.Render("~/bundles/nanospell")
     @Html.Partial("_Scripts")
 </head>
 <body>
@@ -167,6 +169,19 @@
     @Scripts.Render("~/bundles/underscore")
     @Scripts.Render("~/bundles/joyride")
     @Scripts.Render("~/bundles/nas")
+    <script>CKEDITOR.replace('editor1');</script>
+    <script>CKEDITOR.replace('ds_editor');</script>
+    <script>CKEDITOR.replace('pq_editor');</script>
+    <script>CKEDITOR.replace('dq_editor');</script>
+
+    @Scripts.Render("~/bundles/nanospell")
+    <script>
+        nanospell.ckeditor('all',
+        {
+            dictionary: "en", // 24 free international dictionaries
+            server: "asp.net" // can be php, asp, asp.net or java
+        });
+    </script> 
     @RenderSection("scripts", required: false)
 </body>
 </html>
