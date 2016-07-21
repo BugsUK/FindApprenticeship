@@ -5,6 +5,7 @@
     using System.Linq;
     using Builders;
     using FluentAssertions;
+    using Migrate.Faa.Entities.Mongo;
     using Migrate.Faa.Entities.Sql;
     using Migrate.Faa.Mappers;
     using Moq;
@@ -24,7 +25,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            Action mapApplicationAction = () => _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>());
+            Action mapApplicationAction = () => _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
 
             //Assert
             mapApplicationAction.ShouldThrow<ArgumentException>();
@@ -38,7 +39,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -66,7 +67,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -94,7 +95,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -122,7 +123,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -162,7 +163,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -210,7 +211,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -238,7 +239,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -266,7 +267,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>(), new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
+            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>(), new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
 
             //Assert
             applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -297,7 +298,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(0);
@@ -317,7 +318,7 @@
             };
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds, new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds, new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(applicationId);
@@ -332,7 +333,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
             var applicationDictionary = _applicationMappers.MapApplicationDictionary(application);
 
             //Assert
@@ -361,7 +362,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, SubVacancy>(), new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
+            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>(), new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
             var applicationDictionary = _applicationMappers.MapApplicationDictionary(applicationWithHistory.ApplicationWithSubVacancy.Application);
             var applicationHistoryDictionary = applicationWithHistory.ApplicationHistory.MapApplicationHistoryDictionary();
 
@@ -404,7 +405,7 @@
             };
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds, sourceApplicationSummaries, new Dictionary<int, SubVacancy>()).Application;
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds, sourceApplicationSummaries, new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
             application.ApplicationId.Should().Be(applicationId);
@@ -430,7 +431,7 @@
             };
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, legacyApplicationId, applicationIds, new Dictionary<int, ApplicationSummary>(), sourceSubVacancies);
+            var application = _applicationMappers.MapApplication(vacancyApplication, legacyApplicationId, applicationIds, new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), sourceSubVacancies);
 
             //Assert
             application.Application.ApplicationId.Should().Be(applicationId);
@@ -456,7 +457,7 @@
             };
 
             //Act
-            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(vacancyApplication, legacyApplicationId, applicationIds, new Dictionary<int, ApplicationSummary>(), sourceSubVacancies, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
+            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(vacancyApplication, legacyApplicationId, applicationIds, new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), sourceSubVacancies, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
             var subVacancyDictionary = _applicationMappers.MapSubVacancyDictionary(applicationWithHistory.ApplicationWithSubVacancy.SubVacancy);
 
             //Assert
@@ -465,6 +466,109 @@
             subVacancyDictionary["AllocatedApplicationId"].Should().Be(subVacancy.AllocatedApplicationId);
             subVacancyDictionary["StartDate"].Should().Be(subVacancy.StartDate);
             subVacancyDictionary["ILRNumber"].Should().Be(subVacancy.ILRNumber);
+        }
+
+        [Test]
+        public void SchoolAttendedTest()
+        {
+            //Arrange
+            var applicationTemplate = new ApplicationTemplate
+            {
+                EducationHistory = new Education
+                {
+                    Institution = "John Port School",
+                    FromYear = 1990,
+                    ToYear = 1997
+                }
+            };
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithApplicationTemplate(applicationTemplate).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+
+            //Act
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
+
+            //Assert
+            applicationWithSubVacancy.SchoolAttended.Should().NotBeNull();
+            applicationWithSubVacancy.SchoolAttended.SchoolAttendedId.Should().Be(0);
+            applicationWithSubVacancy.SchoolAttended.CandidateId.Should().Be(candidate.LegacyCandidateId);
+            applicationWithSubVacancy.SchoolAttended.SchoolId.Should().Be(null);
+            applicationWithSubVacancy.SchoolAttended.OtherSchoolName.Should().Be(applicationTemplate.EducationHistory.Institution);
+            applicationWithSubVacancy.SchoolAttended.OtherSchoolTown.Should().BeNull();
+            applicationWithSubVacancy.SchoolAttended.StartDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.FromYear, 1, 1));
+            applicationWithSubVacancy.SchoolAttended.EndDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.ToYear, 1, 1));
+            applicationWithSubVacancy.SchoolAttended.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
+        }
+
+        [Test]
+        public void SchoolAttendedDictionaryTest()
+        {
+            //Arrange
+            var applicationTemplate = new ApplicationTemplate
+            {
+                EducationHistory = new Education
+                {
+                    Institution = "John Port School",
+                    FromYear = 1990,
+                    ToYear = 1997
+                }
+            };
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithApplicationTemplate(applicationTemplate).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+
+            //Act
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
+            var schoolAttendedDictionary = _applicationMappers.MapSchoolAttendedDictionary(applicationWithSubVacancy.SchoolAttended);
+
+            //Assert
+            schoolAttendedDictionary["SchoolAttendedId"].Should().Be(0);
+            schoolAttendedDictionary["CandidateId"].Should().Be(candidate.LegacyCandidateId);
+            schoolAttendedDictionary["SchoolId"].Should().Be(null);
+            schoolAttendedDictionary["OtherSchoolName"].Should().Be(applicationTemplate.EducationHistory.Institution);
+            schoolAttendedDictionary["OtherSchoolTown"].Should().BeNull();
+            schoolAttendedDictionary["StartDate"].Should().Be(new DateTime(applicationTemplate.EducationHistory.FromYear, 1, 1));
+            schoolAttendedDictionary["EndDate"].Should().Be(new DateTime(applicationTemplate.EducationHistory.ToYear, 1, 1));
+            schoolAttendedDictionary["ApplicationId"].Should().Be(vacancyApplication.LegacyApplicationId);
+        }
+
+        [Test]
+        public void SourceSchoolAttendedTest()
+        {
+            //Arrange
+            const int legacyApplicationId = 42;
+            var applicationTemplate = new ApplicationTemplate
+            {
+                EducationHistory = new Education
+                {
+                    Institution = "John Port School",
+                    FromYear = 1990,
+                    ToYear = 1997
+                }
+            };
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithLegacyApplicationId(legacyApplicationId).WithApplicationTemplate(applicationTemplate).Build();
+            const int applicationId = -42;
+            var applicationIds = new Dictionary<Guid, int>
+            {
+                {vacancyApplication.Id, applicationId}
+            };
+            const int schoolAttendedId = 44;
+            var schoolAttendedIds = new Dictionary<int, int>
+            {
+                {applicationId, schoolAttendedId}
+            };
+
+            //Act
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, legacyApplicationId, applicationIds, new Dictionary<int, ApplicationSummary>(), schoolAttendedIds, new Dictionary<int, SubVacancy>());
+
+            //Assert
+            applicationWithSubVacancy.SchoolAttended.Should().NotBeNull();
+            applicationWithSubVacancy.SchoolAttended.SchoolAttendedId.Should().Be(schoolAttendedId);
+            applicationWithSubVacancy.SchoolAttended.CandidateId.Should().Be(legacyApplicationId);
+            applicationWithSubVacancy.SchoolAttended.SchoolId.Should().Be(null);
+            applicationWithSubVacancy.SchoolAttended.OtherSchoolName.Should().Be(applicationTemplate.EducationHistory.Institution);
+            applicationWithSubVacancy.SchoolAttended.OtherSchoolTown.Should().BeNull();
+            applicationWithSubVacancy.SchoolAttended.StartDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.FromYear, 1, 1));
+            applicationWithSubVacancy.SchoolAttended.EndDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.ToYear, 1, 1));
+            applicationWithSubVacancy.SchoolAttended.ApplicationId.Should().Be(applicationId);
         }
     }
 }

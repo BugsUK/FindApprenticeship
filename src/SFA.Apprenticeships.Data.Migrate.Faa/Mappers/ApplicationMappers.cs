@@ -5,6 +5,7 @@
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
+    using Repository.Sql;
     using SFA.Infrastructure.Interfaces;
 
     public class ApplicationMappers : IApplicationMappers
@@ -104,7 +105,7 @@
             return applicationIds;
         }
 
-        public ApplicationWithSubVacancy MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, SubVacancy> subVacancies)
+        public ApplicationWithSubVacancy MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, int> schoolAttendedIds, IDictionary<int, SubVacancy> subVacancies)
         {
             var applicationId = GetApplicationId(apprenticeshipApplication, applicationIds);
             var sourceApplicationId = GetSourceApplicationId(applicationId, apprenticeshipApplication.LegacyApplicationId);
@@ -130,13 +131,14 @@
                     WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
                     ApplicationGuid = apprenticeshipApplication.Id,
                 },
+                SchoolAttended = MapSchoolAttended(apprenticeshipApplication, schoolAttendedIds, applicationId, candidateId),
                 SubVacancy = GetSubVacancy(subVacancies, applicationId, sourceApplicationId)
             };
         }
 
-        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, SubVacancy> subVacancies, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
+        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, int> schoolAttendedIds, IDictionary<int, SubVacancy> subVacancies, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
         {
-            var applicationWithSubVacancy = MapApplication(apprenticeshipApplication, candidateId, applicationIds, sourceApplicationSummaries, subVacancies);
+            var applicationWithSubVacancy = MapApplication(apprenticeshipApplication, candidateId, applicationIds, sourceApplicationSummaries, schoolAttendedIds, subVacancies);
             var applicationHistory = apprenticeshipApplication.MapApplicationHistory(applicationWithSubVacancy.Application.ApplicationId, applicationHistoryIds, sourceApplicationHistorySummaries);
             return new ApplicationWithHistory {ApplicationWithSubVacancy = applicationWithSubVacancy, ApplicationHistory = applicationHistory};
         }
@@ -160,6 +162,21 @@
                 {"LockedForSupportUntil", application.LockedForSupportUntil},
                 {"WithdrawalAcknowledged", application.WithdrawalAcknowledged},
                 {"ApplicationGuid", application.ApplicationGuid}
+            };
+        }
+
+        public IDictionary<string, object> MapSchoolAttendedDictionary(SchoolAttended schoolAttended)
+        {
+            return new Dictionary<string, object>
+            {
+                {"SchoolAttendedId", schoolAttended.SchoolAttendedId},
+                {"CandidateId", schoolAttended.CandidateId},
+                {"SchoolId", schoolAttended.SchoolId},
+                {"OtherSchoolName", schoolAttended.OtherSchoolName},
+                {"OtherSchoolTown", schoolAttended.OtherSchoolTown},
+                {"StartDate", schoolAttended.StartDate},
+                {"EndDate", schoolAttended.EndDate},
+                {"ApplicationId", schoolAttended.ApplicationId}
             };
         }
 
@@ -265,6 +282,29 @@
         private static bool? GetWithdrawalAcknowledged(int unsuccessfulReasonId)
         {
             return unsuccessfulReasonId != 10 && unsuccessfulReasonId != 11 && unsuccessfulReasonId != 13;
+        }
+
+        private static SchoolAttended MapSchoolAttended(VacancyApplication apprenticeshipApplication, IDictionary<int, int> schoolAttendedIds, int applicationId, int candidateId)
+        {
+            if (apprenticeshipApplication.CandidateInformation?.EducationHistory == null)
+                return null;
+
+            var educationHistory = apprenticeshipApplication.CandidateInformation.EducationHistory;
+
+            int schoolAttendedId;
+            schoolAttendedIds.TryGetValue(applicationId, out schoolAttendedId);
+
+            return new SchoolAttended
+            {
+                SchoolAttendedId = schoolAttendedId,
+                CandidateId = candidateId,
+                SchoolId = null,
+                OtherSchoolName = educationHistory.Institution,
+                OtherSchoolTown = null,
+                StartDate = new DateTime(educationHistory.FromYear, 1, 1),
+                EndDate = new DateTime(educationHistory.ToYear, 1, 1),
+                ApplicationId = applicationId
+            };
         }
 
         private static SubVacancy GetSubVacancy(IDictionary<int, SubVacancy> subVacancies, int applicationId, int sourceApplicationId)

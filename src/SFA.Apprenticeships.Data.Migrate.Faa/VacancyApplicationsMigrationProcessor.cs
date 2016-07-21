@@ -28,11 +28,13 @@
         private readonly SubVacancyRepository _sourceSubVacancyRepository;
         private readonly ApplicationRepository _destinationApplicationRepository;
         private readonly ApplicationHistoryRepository _destinationApplicationHistoryRepository;
+        private readonly SchoolAttendedRepository _schoolAttendedRepository;
         private readonly SubVacancyRepository _destinationSubVacancyRepository;
         private readonly VacancyApplicationsRepository _vacancyApplicationsRepository;
 
         private readonly ITableSpec _applicationTable = new ApplicationTable();
         private readonly ITableSpec _applicationHistoryTable = new ApplicationHistoryTable();
+        private readonly ITableSpec _schoolsAttendedTable = new SchoolAttendedTable();
         private readonly ITableSpec _subVacanciesTable = new SubVacancyTable();
 
         public VacancyApplicationsMigrationProcessor(IVacancyApplicationsUpdater vacancyApplicationsUpdater, IApplicationMappers applicationMappers, IGenericSyncRespository genericSyncRespository, IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
@@ -50,6 +52,7 @@
             _sourceSubVacancyRepository = new SubVacancyRepository(sourceDatabase);
             _destinationApplicationRepository = new ApplicationRepository(targetDatabase);
             _destinationApplicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase);
+            _schoolAttendedRepository = new SchoolAttendedRepository(targetDatabase);
             _destinationSubVacancyRepository = new SubVacancyRepository(targetDatabase);
             _vacancyApplicationsRepository = new VacancyApplicationsRepository(_vacancyApplicationsUpdater.CollectionName, configurationService, logService);
         }
@@ -120,11 +123,12 @@
             //Now insert any remaining applications one at a time
             foreach (var applicationWithHistory in applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.Application.ApplicationId == 0))
             {
-                //Ensure application histories have the correct application id
-                var applicationId = _targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.Application);
+                //Ensure schools attended and application histories have the correct application id
+                var applicationId = (int)_targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.Application);
+                applicationWithHistory.ApplicationWithSubVacancy.SchoolAttended.ApplicationId = applicationId;
                 foreach (var applicationHistory in applicationWithHistory.ApplicationHistory)
                 {
-                    applicationHistory.ApplicationId = (int)applicationId;
+                    applicationHistory.ApplicationId = applicationId;
                 }
             }
 
@@ -138,6 +142,14 @@
             //Update existing application history records
             var existingApplicationHistories = applicationsWithHistory.SelectMany(a => a.ApplicationHistory).Where(a => a.ApplicationHistoryId != 0);
             _genericSyncRespository.BulkUpdate(_applicationHistoryTable, existingApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
+
+            //Insert new schools attended
+            var newSchoolsAttended = applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.SchoolAttended != null && a.ApplicationWithSubVacancy.SchoolAttended.SchoolAttendedId == 0).Select(a => a.ApplicationWithSubVacancy.SchoolAttended);
+            _genericSyncRespository.BulkInsert(_schoolsAttendedTable, newSchoolsAttended.Select(sa => _applicationMappers.MapSchoolAttendedDictionary(sa)));
+
+            //Update existing schools attended
+            var existingSchoolsAttended = applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.SchoolAttended != null && a.ApplicationWithSubVacancy.SchoolAttended.SchoolAttendedId != 0).Select(a => a.ApplicationWithSubVacancy.SchoolAttended);
+            _genericSyncRespository.BulkUpdate(_schoolsAttendedTable, existingSchoolsAttended.Select(sa => _applicationMappers.MapSchoolAttendedDictionary(sa)));
 
             var subVacancies = applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.SubVacancy != null).Select(a => a.ApplicationWithSubVacancy.SubVacancy).ToList();
             var existingSubVacancies = _destinationSubVacancyRepository.GetApplicationSummariesByIds(subVacancies.Select(sv => sv.AllocatedApplicationId));
@@ -173,8 +185,9 @@
                 var sourceApplicationSummaries = _sourceApplicationRepository.GetApplicationSummariesByIds(legacyApplicationIds);
                 var applicationHistoryIds = _destinationApplicationHistoryRepository.GetApplicationHistoryIdsByApplicationIds(applicationIds.Values);
                 var sourceApplicationHistorySummaries = _sourceApplicationHistoryRepository.GetApplicationHistorySummariesByApplicationIds(legacyApplicationIds);
+                var schoolAttendedIds = _schoolAttendedRepository.GetSchoolAttendedIdsByApplicationIds(legacyApplicationIds);
                 var subVacancies = _sourceSubVacancyRepository.GetApplicationSummariesByIds(legacyApplicationIds);
-                var applicationsWithHistory = batch.Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, sourceApplicationSummaries, subVacancies, applicationHistoryIds, sourceApplicationHistorySummaries)).ToList();
+                var applicationsWithHistory = batch.Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, sourceApplicationSummaries, schoolAttendedIds, subVacancies, applicationHistoryIds, sourceApplicationHistorySummaries)).ToList();
 
                 count += applicationsWithHistory.Count;
                 _logService.Info($"Processing {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName}");
