@@ -774,7 +774,7 @@ WriteLiteral("        ");
 
             
             #line 122 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-   Write(Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { id="editor1", @class = "ckeditor", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex}));
+   Write(Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { id= "LongDescription", @class = "ckeditor", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex}));
 
             
             #line default
@@ -790,7 +790,21 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</section>\r\n");
+WriteLiteral(@"
+    </div>
+</section>
+<script>CKEDITOR.replace('LongDescription');</script>
+<script>CKEDITOR.replace('DesiredSkills');</script>
+<script>CKEDITOR.replace('DesiredQualifications');</script>
+<script>CKEDITOR.replace('PersonalQualities');</script>
+
+<script>
+        nanospell.ckeditor('all',
+        {
+            dictionary: ""en_uk"", // 24 free international dictionaries
+            server: ""asp.net"" // can be php, asp, asp.net or java
+        });
+</script>");
 
         }
     }

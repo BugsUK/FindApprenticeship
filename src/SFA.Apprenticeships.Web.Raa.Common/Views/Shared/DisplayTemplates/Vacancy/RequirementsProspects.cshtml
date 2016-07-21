@@ -20,10 +20,10 @@
 
 <section>
     <div class="form-group">
-        @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "ckeditor", type = "text", id = "ds_editor" })
+        @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "DesiredSkills"})
         @Html.EditorFor(m => m.DesiredSkillsComment, "Comment", Html.GetLabelFor(m => m.DesiredSkillsComment))
         @Html.ValidationMessageFor(m => m.DesiredSkillsComment)
-        @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "ckeditor", type = "text", id = "pq_editor" })
+        @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "PersonalQualities"})
         @Html.EditorFor(m => m.PersonalQualitiesComment, "Comment", Html.GetLabelFor(m => m.PersonalQualitiesComment))
         @Html.ValidationMessageFor(m => m.PersonalQualitiesComment)
         @if (Model.VacancyType == VacancyType.Traineeship)
@@ -33,15 +33,28 @@
         }
         else
         {
-            @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "ckeditor", type = "text" , id = "dq_editor" })
+            @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "DesiredQualifications"})
             @Html.EditorFor(m => m.DesiredQualificationsComment, "Comment", Html.GetLabelFor(m => m.DesiredQualificationsComment))
             @Html.ValidationMessageFor(m => m.DesiredQualificationsComment)
         }
-        @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"})
         @Html.EditorFor(m => m.FutureProspectsComment, "Comment", Html.GetLabelFor(m => m.FutureProspectsComment))
         @Html.ValidationMessageFor(m => m.FutureProspectsComment)
-        @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"})
         @Html.EditorFor(m => m.ThingsToConsiderComment, "Comment", Html.GetLabelFor(m => m.ThingsToConsiderComment))
         @Html.ValidationMessageFor(m => m.ThingsToConsiderComment)
     </div>
 </section>
+
+<script>CKEDITOR.replace('LongDescription');</script>
+<script>CKEDITOR.replace('DesiredSkills');</script>
+<script>CKEDITOR.replace('DesiredQualifications');</script>
+<script>CKEDITOR.replace('PersonalQualities');</script>
+
+<script>
+        nanospell.ckeditor('all',
+        {
+            dictionary: "en_uk", // 24 free international dictionaries
+            server: "asp.net" // can be php, asp, asp.net or java
+        });
+</script>

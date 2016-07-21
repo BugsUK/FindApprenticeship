@@ -748,6 +748,7 @@
       <LastGenOutput>Cookies.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\ProviderUser\OnBoardingComplete.cshtml" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
