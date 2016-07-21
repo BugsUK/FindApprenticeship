@@ -7,10 +7,10 @@ body
 {
 	/* Font */
 	font-family: sans-serif, Arial, Verdana, "Trebuchet MS";
-	font-size: 24px;
+	font-size: 12px;
 
 	/* Text color */
-	color: #355;
+	color: #333;
 
 	/* Remove the background color to make it transparent */
 	background-color: #fff;
@@ -20,8 +20,9 @@ body
 
 .cke_editable
 {
-	font-size: 13px;
-	line-height: 1.6;
+	font-size: 19px;
+    font-family: nta,Arial,sans-serif;
+    /*margin-bottom: 5px;*/
 
 	/* Fix for missing scrollbars with RTL texts. (#10488) */
 	word-wrap: break-word;
@@ -62,6 +63,10 @@ ol,ul,dl
 	*margin-right: 0px;
 	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
 	padding: 0 40px;
+}
+
+li > p {
+    margin: 0;
 }
 
 h1,h2,h3,h4,h5,h6

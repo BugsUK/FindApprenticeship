@@ -21,7 +21,6 @@ CKEDITOR.editorConfig = function( config ) {
 	config.format_tags = 'p;h3';
 
 	// Simplify the dialog windows.
-	config.removeDialogTabs = 'image:advanced;link:advanced';
-
+	config.removeDialogTabs = 'image:advanced;link:advanced';	
 	//config.disableNativeSpellChecker = false;
 };
