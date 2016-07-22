@@ -68,8 +68,20 @@
 
                     @Html.Partial("_wage", Model)
 
+                    @{
+                        var className = Model.HoursPerWeek.HasValue ? "small-btm-margin" : "";
+                    }
+
                     <h3 class="bold-small">Working week</h3>
-                    <p id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</p>
+                    <p id="vacancy-working-week" itemprop="workHours" class="@className">@Model.WorkingWeek</p>
+                    @if (Model.HoursPerWeek.HasValue)
+                    {
+                        <p id="total-hours-per-week">Total hours per week: @Model.HoursPerWeek</p>
+                        if (Model.HoursPerWeek > 40)
+                        {
+                            <p>(the hours are based on the candidate being over 18)</p>
+                        }
+                    }
 
                     <h3 class="bold-small">Apprenticeship duration</h3>
                     <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
