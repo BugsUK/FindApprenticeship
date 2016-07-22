@@ -5,7 +5,7 @@
     using System.Security.Cryptography;
     using Configuration;
     using SFA.Infrastructure.Interfaces;
-    
+
     public class AES256Provider : IEncryptionProvider
     {
         private readonly CryptographyConfiguration _configuration;
@@ -26,22 +26,38 @@
 
         public string Encrypt(string input)
         {
-            // Check arguments.
-            if (input == null || input.Length <= 0)
-                throw new ArgumentNullException(nameof(input));
+            try
+            {
+                // Check arguments.
+                if (input == null || input.Length <= 0)
+                    throw new ArgumentNullException(nameof(input));
 
-            return Convert.ToBase64String(EncryptStringToBytes(input, _keyBytes, _ivBytes));
+                return Convert.ToBase64String(EncryptStringToBytes(input, _keyBytes, _ivBytes));
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Error encrypting data {input}", ex);
+                return null;
+            }
         }
 
         public string Decrypt(string cipherText)
         {
-            // Check arguments.
-            if (cipherText == null || cipherText.Length <= 0)
-                throw new ArgumentNullException(nameof(cipherText));
+            try
+            {
+                // Check arguments.
+                if (cipherText == null || cipherText.Length <= 0)
+                    throw new ArgumentNullException(nameof(cipherText));
 
-            var cipherTextBytes = Convert.FromBase64String(cipherText);
+                var cipherTextBytes = Convert.FromBase64String(cipherText);
 
-            return DecryptStringFromBytes(cipherTextBytes, _keyBytes, _ivBytes);
+                return DecryptStringFromBytes(cipherTextBytes, _keyBytes, _ivBytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error(cipherText, ex);
+                return null;
+            }
         }
 
         /// <summary>
@@ -57,7 +73,6 @@
         //    var stringIV = Convert.ToBase64String(myRijndael.IV);
         //    var stringKey = Convert.ToBase64String(myRijndael.Key);
         //}
-
 
         private byte[] EncryptStringToBytes(string plainText, byte[] Key, byte[] IV)
         {
@@ -90,11 +105,10 @@
                         encrypted = msEncrypt.ToArray();
                     }
                 }
+
+                // Return the encrypted bytes from the memory stream.
+                return encrypted;
             }
-
-
-            // Return the encrypted bytes from the memory stream.
-            return encrypted;
         }
 
         private string DecryptStringFromBytes(byte[] cipherText, byte[] Key, byte[] IV)
