@@ -7,6 +7,12 @@
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.Review.Ok";
         }
 
+        public class View
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.View.Ok";
+            public const string LinkExpired = "ApprenticeshipApplicationMediatorCodes.View.LinkExpired";
+        }
+
         public class ReviewAppointCandidate
         {
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.ReviewAppointCandidate.Ok";

@@ -331,6 +331,7 @@
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\EmployerApplicationController.cs" />
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -370,6 +371,7 @@
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
+    <Compile Include="ViewModels\AnomisedApplicationLink.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -604,6 +606,7 @@
       <LastGenOutput>Cookies.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\ProviderUser\OnBoardingComplete.cshtml" />
+    <Content Include="Views\EmployerApplication\View.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
