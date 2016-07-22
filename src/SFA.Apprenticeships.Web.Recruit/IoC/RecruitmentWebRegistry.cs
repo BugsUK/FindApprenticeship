@@ -26,6 +26,7 @@
     using Mediators.Application;
     using Mediators.Provider;
     using Mediators.ProviderUser;
+    using Mediators.Report;
     using Mediators.VacancyPosting;
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
@@ -116,6 +117,7 @@
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
             For<IHomeMediator>().Use<HomeMediator>();            
+            For<IReportMediator>().Use<ReportMediator>();            
         }
     }
 }
