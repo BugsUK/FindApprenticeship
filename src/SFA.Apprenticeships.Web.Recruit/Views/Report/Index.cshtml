@@ -4,15 +4,11 @@
     ViewBag.Title = "Reports";
 }
 
-<div class="grid-wrapper">
-    <h2>Provider Reports</h2>
+<h1 id="heading" class="heading-xlarge">Provider Reports</h1>
 
-    <p>
-        <ul>
-            @foreach (var report in Model.ReportList)
-            {
-                <li><a href="@Url.HttpRouteUrl(report.Value, null)">@report.Key</a></li>
-            }
-        </ul>
-    </p>
-</div>
+<ul>
+@foreach (var report in Model.ReportList)
+{
+    <li><a href="@Url.RouteUrl(report.Value)">@report.Key</a></li>
+}
+</ul>

@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Validators
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Report
 {
-    using Common.Validators;
-    using Constants.ViewModels;
     using FluentValidation;
-    using ViewModels;
+    using Constants.ViewModels;
+    using ViewModels.Report;
+    using Web.Common.Validators;
 
     public class ReportParametersDateRangeValidator : AbstractValidator<ReportParameterBase>
     {
@@ -18,13 +18,13 @@
     {
         internal static void AddCommonRules(this AbstractValidator<ReportParameterBase> validator)
         {
-            validator.RuleFor(x => x.ToDate)
-                .Must(x => x.HasValue)
-                .WithMessage(ReportViewModelMessages.ToDateRequired);
-
             validator.RuleFor(x => x.FromDate)
                 .Must(x => x.HasValue)
-                .WithMessage(ReportViewModelMessages.FromDateRequired);
+                .WithMessage(ReportParametersMessages.FromDateMessages.RequiredErrorText);
+
+            validator.RuleFor(x => x.ToDate)
+                .Must(x => x.HasValue)
+                .WithMessage(ReportParametersMessages.ToDateMessages.RequiredErrorText);
         }
     }
 }

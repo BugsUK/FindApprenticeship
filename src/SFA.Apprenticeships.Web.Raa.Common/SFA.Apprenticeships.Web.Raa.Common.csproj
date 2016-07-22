@@ -173,6 +173,7 @@
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\LocationSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyPartyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
+    <Compile Include="Validators\Report\ReportParametersDateRangeValidator.cs" />
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelServerValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
@@ -254,6 +256,7 @@
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />

@@ -369,14 +369,14 @@
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ReportApplicationsReceived,
-               url: "reports/candidateswithapplications",
-               defaults: new { controller = "Report", action = "ReportApplicationsReceived" }
+               url: "reports/applicationsreceived",
+               defaults: new { controller = "Report", action = "ApplicationsReceived" }
                );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ReportCandidatesWithApplications,
                url: "reports/candidateswithapplications",
-               defaults: new { controller = "Report", action = "ReportCandidatesWithApplications" }
+               defaults: new { controller = "Report", action = "CandidatesWithApplications" }
                );
 
             routes.LowercaseUrls = true;

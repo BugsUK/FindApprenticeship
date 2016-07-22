@@ -382,6 +382,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
+    <Compile Include="ViewModels\Report\ApplicationsReceivedParameters.cs" />
+    <Compile Include="ViewModels\Report\CandidatesWithApplicationsParameters.cs" />
     <Compile Include="ViewModels\Report\ReportMenu.cs" />
     <Compile Include="Views\Home\Cookies.generated.cs">
       <DependentUpon>Cookies.cshtml</DependentUpon>
@@ -830,6 +832,8 @@
     <Content Include="Views\ProviderUser\OnBoardingComplete.cshtml" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\ApplicationsReceived.cshtml" />
+    <Content Include="Views\Report\CandidatesWithApplications.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
