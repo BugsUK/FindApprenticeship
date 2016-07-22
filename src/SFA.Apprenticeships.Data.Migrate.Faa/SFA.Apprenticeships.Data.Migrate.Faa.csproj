@@ -144,6 +144,7 @@
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mappers\IApplicationMappers.cs" />
     <Compile Include="Mappers\ICandidateMappers.cs" />
+    <Compile Include="Mappers\SchoolAttendedMappers.cs" />
     <Compile Include="Repository\Sql\CandidateHistoryRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationHistoryRepository.cs" />

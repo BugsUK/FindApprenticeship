@@ -165,21 +165,6 @@
             };
         }
 
-        public IDictionary<string, object> MapSchoolAttendedDictionary(SchoolAttended schoolAttended)
-        {
-            return new Dictionary<string, object>
-            {
-                {"SchoolAttendedId", schoolAttended.SchoolAttendedId},
-                {"CandidateId", schoolAttended.CandidateId},
-                {"SchoolId", schoolAttended.SchoolId},
-                {"OtherSchoolName", schoolAttended.OtherSchoolName},
-                {"OtherSchoolTown", schoolAttended.OtherSchoolTown},
-                {"StartDate", schoolAttended.StartDate},
-                {"EndDate", schoolAttended.EndDate},
-                {"ApplicationId", schoolAttended.ApplicationId}
-            };
-        }
-
         public IDictionary<string, object> MapSubVacancyDictionary(SubVacancy subVacancy)
         {
             return new Dictionary<string, object>
@@ -290,6 +275,9 @@
                 return null;
 
             var educationHistory = apprenticeshipApplication.CandidateInformation.EducationHistory;
+
+            if (string.IsNullOrEmpty(educationHistory.Institution) || educationHistory.FromYear == 0 || educationHistory.ToYear == 0)
+                return null;
 
             int schoolAttendedId;
             schoolAttendedIds.TryGetValue(applicationId, out schoolAttendedId);

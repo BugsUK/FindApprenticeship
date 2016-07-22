@@ -125,7 +125,10 @@
             {
                 //Ensure schools attended and application histories have the correct application id
                 var applicationId = (int)_targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.Application);
-                applicationWithHistory.ApplicationWithSubVacancy.SchoolAttended.ApplicationId = applicationId;
+                if (applicationWithHistory.ApplicationWithSubVacancy.SchoolAttended != null)
+                {
+                    applicationWithHistory.ApplicationWithSubVacancy.SchoolAttended.ApplicationId = applicationId;
+                }
                 foreach (var applicationHistory in applicationWithHistory.ApplicationHistory)
                 {
                     applicationHistory.ApplicationId = applicationId;
@@ -145,11 +148,11 @@
 
             //Insert new schools attended
             var newSchoolsAttended = applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.SchoolAttended != null && a.ApplicationWithSubVacancy.SchoolAttended.SchoolAttendedId == 0).Select(a => a.ApplicationWithSubVacancy.SchoolAttended);
-            _genericSyncRespository.BulkInsert(_schoolsAttendedTable, newSchoolsAttended.Select(sa => _applicationMappers.MapSchoolAttendedDictionary(sa)));
+            _genericSyncRespository.BulkInsert(_schoolsAttendedTable, newSchoolsAttended.Select(sa => sa.MapSchoolAttendedDictionary()));
 
             //Update existing schools attended
             var existingSchoolsAttended = applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.SchoolAttended != null && a.ApplicationWithSubVacancy.SchoolAttended.SchoolAttendedId != 0).Select(a => a.ApplicationWithSubVacancy.SchoolAttended);
-            _genericSyncRespository.BulkUpdate(_schoolsAttendedTable, existingSchoolsAttended.Select(sa => _applicationMappers.MapSchoolAttendedDictionary(sa)));
+            _genericSyncRespository.BulkUpdate(_schoolsAttendedTable, existingSchoolsAttended.Select(sa => sa.MapSchoolAttendedDictionary()));
 
             var subVacancies = applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.SubVacancy != null).Select(a => a.ApplicationWithSubVacancy.SubVacancy).ToList();
             var existingSubVacancies = _destinationSubVacancyRepository.GetApplicationSummariesByIds(subVacancies.Select(sv => sv.AllocatedApplicationId));

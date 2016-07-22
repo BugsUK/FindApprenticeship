@@ -5,7 +5,6 @@
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
-    using Repository.Sql;
 
     public interface IApplicationMappers
     {
@@ -13,7 +12,6 @@
         ApplicationWithSubVacancy MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, int> schoolAttendedIds, IDictionary<int, SubVacancy> subVacancies);
         ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, int> schoolAttendedIds, IDictionary<int, SubVacancy> subVacancies, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries);
         IDictionary<string, object> MapApplicationDictionary(Application application);
-        IDictionary<string, object> MapSchoolAttendedDictionary(SchoolAttended schoolAttended);
         IDictionary<string, object> MapSubVacancyDictionary(SubVacancy subVacancy);
     }
 }

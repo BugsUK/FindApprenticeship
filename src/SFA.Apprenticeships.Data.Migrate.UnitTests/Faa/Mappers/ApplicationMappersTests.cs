@@ -517,7 +517,7 @@
 
             //Act
             var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
-            var schoolAttendedDictionary = _applicationMappers.MapSchoolAttendedDictionary(applicationWithSubVacancy.SchoolAttended);
+            var schoolAttendedDictionary = applicationWithSubVacancy.SchoolAttended.MapSchoolAttendedDictionary();
 
             //Assert
             schoolAttendedDictionary["SchoolAttendedId"].Should().Be(0);
@@ -535,6 +535,7 @@
         {
             //Arrange
             const int legacyApplicationId = 42;
+            const int legacyCandidateId = 43;
             var applicationTemplate = new ApplicationTemplate
             {
                 EducationHistory = new Education
@@ -557,18 +558,36 @@
             };
 
             //Act
-            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, legacyApplicationId, applicationIds, new Dictionary<int, ApplicationSummary>(), schoolAttendedIds, new Dictionary<int, SubVacancy>());
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, legacyCandidateId, applicationIds, new Dictionary<int, ApplicationSummary>(), schoolAttendedIds, new Dictionary<int, SubVacancy>());
 
             //Assert
             applicationWithSubVacancy.SchoolAttended.Should().NotBeNull();
             applicationWithSubVacancy.SchoolAttended.SchoolAttendedId.Should().Be(schoolAttendedId);
-            applicationWithSubVacancy.SchoolAttended.CandidateId.Should().Be(legacyApplicationId);
+            applicationWithSubVacancy.SchoolAttended.CandidateId.Should().Be(legacyCandidateId);
             applicationWithSubVacancy.SchoolAttended.SchoolId.Should().Be(null);
             applicationWithSubVacancy.SchoolAttended.OtherSchoolName.Should().Be(applicationTemplate.EducationHistory.Institution);
             applicationWithSubVacancy.SchoolAttended.OtherSchoolTown.Should().BeNull();
             applicationWithSubVacancy.SchoolAttended.StartDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.FromYear, 1, 1));
             applicationWithSubVacancy.SchoolAttended.EndDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.ToYear, 1, 1));
             applicationWithSubVacancy.SchoolAttended.ApplicationId.Should().Be(applicationId);
+        }
+
+        [Test]
+        public void EmptySchoolAttendedTest()
+        {
+            //Arrange
+            var applicationTemplate = new ApplicationTemplate
+            {
+                EducationHistory = new Education()
+            };
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithApplicationTemplate(applicationTemplate).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+
+            //Act
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
+
+            //Assert
+            applicationWithSubVacancy.SchoolAttended.Should().BeNull();
         }
     }
 }
