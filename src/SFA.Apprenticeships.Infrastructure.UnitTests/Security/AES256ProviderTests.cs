@@ -51,17 +51,15 @@
         [Test]
         public void RoundTrip()
         {
+            //Arrange
             string original = "Here is some data to encrypt!";
 
-            // Encrypt the string to an array of bytes.
+            //Act
             var encrypted = providerUnderTest.Encrypt(original);
-
-            // Decrypt the bytes to a string.
             string roundtrip = providerUnderTest.Decrypt(encrypted);
 
-            //Display the original data and the decrypted data.
-            Console.WriteLine("Original:   {0}", original);
-            Console.WriteLine("Round Trip: {0}", roundtrip);
+            //Assert
+            roundtrip.ShouldBeEquivalentTo(original);
 
         }
 

@@ -3,11 +3,10 @@
     using System;
     using System.IO;
     using System.Security.Cryptography;
-    using System.Text;
     using Configuration;
     using SFA.Infrastructure.Interfaces;
     
-    public class AES256Provider
+    public class AES256Provider : IEncryptionProvider
     {
         private readonly CryptographyConfiguration _configuration;
         private readonly ILogService _logService;
@@ -29,7 +28,7 @@
         {
             // Check arguments.
             if (input == null || input.Length <= 0)
-                throw new ArgumentNullException("input");
+                throw new ArgumentNullException(nameof(input));
 
             return Convert.ToBase64String(EncryptStringToBytes(input, _keyBytes, _ivBytes));
         }
@@ -38,7 +37,7 @@
         {
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)
-                throw new ArgumentNullException("cipherText");
+                throw new ArgumentNullException(nameof(cipherText));
 
             var cipherTextBytes = Convert.FromBase64String(cipherText);
 
@@ -63,9 +62,9 @@
         private byte[] EncryptStringToBytes(string plainText, byte[] Key, byte[] IV)
         {
             if (Key == null || Key.Length <= 0)
-                throw new ArgumentNullException("Key");
+                throw new ArgumentNullException(nameof(Key));
             if (IV == null || IV.Length <= 0)
-                throw new ArgumentNullException("IV");
+                throw new ArgumentNullException(nameof(IV));
             byte[] encrypted;
             // Create an RijndaelManaged object
             // with the specified key and IV.
@@ -96,15 +95,14 @@
 
             // Return the encrypted bytes from the memory stream.
             return encrypted;
-
         }
 
         private string DecryptStringFromBytes(byte[] cipherText, byte[] Key, byte[] IV)
         {
             if (Key == null || Key.Length <= 0)
-                throw new ArgumentNullException("Key");
+                throw new ArgumentNullException(nameof(Key));
             if (IV == null || IV.Length <= 0)
-                throw new ArgumentNullException("IV");
+                throw new ArgumentNullException(nameof(IV));
 
             // Declare the string used to hold
             // the decrypted text.
@@ -138,7 +136,6 @@
             }
 
             return plaintext;
-
         }
     }
 }
