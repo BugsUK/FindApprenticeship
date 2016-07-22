@@ -217,6 +217,7 @@
     <Compile Include="ScheduledJobs\Vacancy\ApprenticeshipSummaryUpdateProcessorTests.cs" />
     <Compile Include="ScheduledJobs\Vacancy\VacancyStatusControlQueueConsumerTests..cs" />
     <Compile Include="ScheduledJobs\Vacancy\VacancySchedulerConsumerTests.cs" />
+    <Compile Include="Security\AES256ProviderTests.cs" />
     <Compile Include="Security\CryptographyServiceTests.cs" />
     <Compile Include="SiteMap\CreateVacancySiteMapRequestSubscriberTests.cs" />
     <Compile Include="UserDirectory\PasswordHashTests.cs" />

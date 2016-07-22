@@ -31,7 +31,7 @@
             var result = cryptoService.Encrypt(objectToEncrypt);
 
             //Assert
-            result.Should().Be("");
+            result.Should().NotBeNullOrWhiteSpace();
         }
 
         [Test]
@@ -45,7 +45,7 @@
             var result = cryptoService.Encrypt(objectToEncrypt);
 
             //Assert
-            result.Should().Be("");
+            result.Should().NotBeNullOrWhiteSpace();
         }
     }
 
