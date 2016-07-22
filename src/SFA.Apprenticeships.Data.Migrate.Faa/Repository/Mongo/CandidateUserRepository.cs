@@ -151,6 +151,9 @@
                 .Include(c => c.RegistrationDetails.Address.GeoPoint.Latitude)
                 .Include(c => c.RegistrationDetails.EmailAddress)
                 .Include(c => c.RegistrationDetails.PhoneNumber)
+                .Include(a => a.ApplicationTemplate.EducationHistory.Institution)
+                .Include(a => a.ApplicationTemplate.EducationHistory.FromYear)
+                .Include(a => a.ApplicationTemplate.EducationHistory.ToYear)
                 .Include(c => c.MonitoringInformation.Gender)
                 .Include(c => c.MonitoringInformation.DisabilityStatus)
                 .Include(c => c.MonitoringInformation.Ethnicity);

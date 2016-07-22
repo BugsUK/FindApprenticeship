@@ -12,6 +12,8 @@
 
         public RegistrationDetails RegistrationDetails { get; set; }
 
+        public ApplicationTemplate ApplicationTemplate { get; set; }
+
         public MonitoringInformation MonitoringInformation { get; set; }
     }
 }

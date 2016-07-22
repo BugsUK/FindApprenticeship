@@ -21,6 +21,8 @@
 
         public int LegacyApplicationId { get; set; }
 
+        public ApplicationTemplate CandidateInformation { get; set; }
+
         public DateTime? SuccessfulDateTime { get; set; }
 
         public DateTime? UnsuccessfulDateTime { get; set; }
