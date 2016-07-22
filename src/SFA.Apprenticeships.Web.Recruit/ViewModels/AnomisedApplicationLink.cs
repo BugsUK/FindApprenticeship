@@ -5,6 +5,7 @@
     public class AnomisedApplicationLink
     {
         public Guid ApplicationId { get; set; }
+
         public DateTime ExpirationDateTime { get; set; } 
     }
 }

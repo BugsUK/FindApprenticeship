@@ -36,14 +36,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> View(string application)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> View(string applicationCipherText)
         {
-            var anomymisedApplicationLink = _decryptionService.Decrypt(application);
-
-            if (_dateTimeService.UtcNow > anomymisedApplicationLink.ExpirationDateTime)
-            {
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.LinkExpired, new ApprenticeshipApplicationViewModel(), "", UserMessageLevel.Info);
-            }
+            var anomymisedApplicationLink = _decryptionService.Decrypt(applicationCipherText);
 
             var applicationSelectionViewModel = new ApplicationSelectionViewModel
             {
@@ -51,6 +46,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             };
 
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
+
+            if (_dateTimeService.UtcNow > anomymisedApplicationLink.ExpirationDateTime)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.LinkExpired, viewModel);
+            }
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, viewModel);
         }

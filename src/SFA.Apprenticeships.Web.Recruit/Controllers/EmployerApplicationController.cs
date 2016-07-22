@@ -16,7 +16,7 @@
             _apprenticeshipApplicationMediator = apprenticeshipApplicationMediator;
         }
 
-        public ActionResult Review(string application)
+        public ActionResult ViewAnonymised(string application)
         {
             var response = _apprenticeshipApplicationMediator.View(application);
 
@@ -26,7 +26,6 @@
                     return View(response.ViewModel);
                 case ApprenticeshipApplicationMediatorCodes.View.LinkExpired:
                     return View("LinkExpired");
-
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
