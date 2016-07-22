@@ -25,6 +25,7 @@
                 DurationType = vacancy.DurationType,
                 DurationTypes = GetDurationTypes(vacancy.VacancyType),
                 Duration = vacancy.Duration,
+                ExpectedDuration = vacancy.ExpectedDuration,
                 Status = vacancy.Status,
                 VacancyDatesViewModel = new VacancyDatesViewModel { 
                     ClosingDate = new DateViewModel(vacancy.ClosingDate),

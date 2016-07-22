@@ -112,6 +112,11 @@
                 "The minimum expected duration is 12 months based on the hours per week selected";
         }
 
+        public static class LegacyExpectedDuration
+        {
+            public const string LabelText = "Expected duration";
+        }
+
         public static class DurationComment
         {
             public const string LabelText = "Expected duration comment";

@@ -50,6 +50,7 @@
         [Display(Name = VacancyViewModelMessages.DurationComment.LabelText)]
         public string DurationComment { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.LegacyExpectedDuration.LabelText)]
         public string ExpectedDuration { get; set; }
 
         [AllowHtml]

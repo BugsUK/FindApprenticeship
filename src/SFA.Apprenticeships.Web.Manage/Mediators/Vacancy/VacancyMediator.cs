@@ -171,7 +171,10 @@
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(viewModel.VacancyType);
 
-                viewModel.AcceptWarnings = true;
+                if (validationResult.Errors.All(e => (ValidationType?) e.CustomState == ValidationType.Warning))
+                {
+                    viewModel.AcceptWarnings = true;
+                }
 
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }

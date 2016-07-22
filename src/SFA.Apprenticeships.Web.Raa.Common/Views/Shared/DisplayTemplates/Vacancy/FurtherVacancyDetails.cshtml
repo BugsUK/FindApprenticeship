@@ -94,6 +94,11 @@
                 @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
                 @Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration))
             </div>
+
+            @if (Model.VacancySource != VacancySource.Raa )
+            {
+                @Html.FormTextFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" })
+            }
         </fieldset>
         <fieldset class="form-group">
             @Html.EditorFor(m => m.DurationComment, "Comment", Html.GetLabelFor(m => m.DurationComment))

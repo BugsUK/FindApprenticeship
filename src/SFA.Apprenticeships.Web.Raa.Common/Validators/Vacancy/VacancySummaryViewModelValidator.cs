@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
@@ -101,7 +102,7 @@
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship)
-                .When(x => x.VacancySource == VacancySource.Raa);
+                .When(x => x.VacancySource == VacancySource.Raa || x.Duration.HasValue);
 
             validator.RuleFor(x => x.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)
@@ -135,7 +136,7 @@
                 .Must(HaveAValidApprenticeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months)
                 .When(x => x.VacancyType != VacancyType.Traineeship)
-                .When(x => x.VacancySource == VacancySource.Raa);
+                .When(x => x.VacancySource == VacancySource.Raa || x.HoursPerWeek.HasValue);
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidTraineeshipDuration)

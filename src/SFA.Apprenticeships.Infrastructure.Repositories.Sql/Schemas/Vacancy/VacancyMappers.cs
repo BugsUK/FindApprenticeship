@@ -51,6 +51,13 @@
 
     public class VacancyMappers : MapperEngine
     {
+        private string MapExpectedDuration(DomainVacancy vacancy)
+        {
+            return !vacancy.Duration.HasValue
+                ? vacancy.ExpectedDuration
+                : new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText();
+        }
+
         public override void Initialise()
         {
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
@@ -94,7 +101,7 @@
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
-                .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
+                .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => MapExpectedDuration(av)))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
                 .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
                 .MapMemberFrom(v => v.EmployerAnonymousName, av => av.EmployerAnonymousName)

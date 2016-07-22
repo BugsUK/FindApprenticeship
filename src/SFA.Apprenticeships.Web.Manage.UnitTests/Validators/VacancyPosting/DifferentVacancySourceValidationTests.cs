@@ -223,7 +223,8 @@
             vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
             {
                 Duration = duration,
-                VacancySource = vacancySource
+                VacancySource = vacancySource,
+                HoursPerWeek = 40
             };
 
             _aggregateValidator.Validate(vacancyViewModel);
@@ -421,6 +422,112 @@
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.Errors);
                 _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.Warnings);
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationInstructions, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
+        [TestCase(VacancySource.Raa, "40", 120.0, true, true)]
+        [TestCase(VacancySource.Raa, "40", null, true, false)]
+        [TestCase(VacancySource.Raa, null, null, false, false)]
+        [TestCase(VacancySource.Raa, null, 120.0, false, true)]
+        [TestCase(VacancySource.Av, "40", 120.0, true, true)]
+        [TestCase(VacancySource.Av, "40", null, true, true)]
+        [TestCase(VacancySource.Av, null, null, true, true)]
+        [TestCase(VacancySource.Av, null, 120.0, false, true)]
+        [TestCase(VacancySource.Api, "40", 120.0, true, true)]
+        [TestCase(VacancySource.Api, "40", null, true, true)]
+        [TestCase(VacancySource.Api, null, null, true, true)]
+        [TestCase(VacancySource.Api, null, 120.0, false, true)]
+        public void DurationAndHoursPerWeekValidation(VacancySource vacancySource, string hoursPerWeekString, double? duration, bool expectHoursPerWeekValid, bool expectDurationValid)
+        {
+            decimal? hoursPerWeek = null;
+            decimal parsedHoursPerWeek;
+            if (decimal.TryParse(hoursPerWeekString, out parsedHoursPerWeek))
+            {
+                hoursPerWeek = parsedHoursPerWeek;
+            }
+
+            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
+            {
+                HoursPerWeek = hoursPerWeek,
+                VacancySource = vacancySource,
+                Duration = (decimal?) duration
+            };
+
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectHoursPerWeekValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+
+            if (expectDurationValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
+        [TestCase(VacancySource.Raa, "40", 12.0, true, false)]
+        [TestCase(VacancySource.Av, "40", 12.0, true, false)]
+        [TestCase(VacancySource.Api, "40", 12.0, true, false)]
+        public void DurationWarningsValidation(VacancySource vacancySource, string hoursPerWeekString, double? duration, bool expectHoursPerWeekValid, bool expectDurationValid)
+        {
+            decimal? hoursPerWeek = null;
+            decimal parsedHoursPerWeek;
+            if (decimal.TryParse(hoursPerWeekString, out parsedHoursPerWeek))
+            {
+                hoursPerWeek = parsedHoursPerWeek;
+            }
+
+            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
+            {
+                HoursPerWeek = hoursPerWeek,
+                VacancySource = vacancySource,
+                Duration = (decimal?)duration
+            };
+
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectHoursPerWeekValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+
+            if (expectDurationValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
 

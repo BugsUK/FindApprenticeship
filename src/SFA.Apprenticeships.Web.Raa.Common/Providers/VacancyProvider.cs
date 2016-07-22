@@ -1313,6 +1313,7 @@
             vacancy.LongDescriptionComment = viewModel.LongDescriptionComment;
             vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
+            vacancy.ExpectedDuration = viewModel.ExpectedDuration;
 
             AddQAInformation(vacancy);
 
