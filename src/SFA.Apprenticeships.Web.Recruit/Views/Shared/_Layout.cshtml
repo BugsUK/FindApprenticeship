@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Web.Common.Constants
-@using SFA.Apprenticeships.Web.Common.Framework
+﻿@using SFA.Apprenticeships.Web.Common.Framework
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 <!DOCTYPE html>
@@ -24,8 +23,11 @@
     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="@Url.CdnImage("apple-touch-icon-120x120.png")">
     <link rel="apple-touch-icon-precomposed" sizes="76x76" href="@Url.CdnImage("apple-touch-icon-76x76.png")">
     <link rel="apple-touch-icon-precomposed" href="@Url.CdnImage("apple-touch-icon-60x60.png")">
+    
     @Scripts.Render("~/bundles/webtrends")
     @Styles.Render("~/bundles/font-awesome")
+    @Scripts.Render("~/bundles/ckeditor")
+    @Scripts.Render("~/bundles/nanospell")   
     @Html.Partial("_Scripts")
 </head>
 <body>
@@ -169,5 +171,6 @@
     @Scripts.Render("~/bundles/joyride")
     @Scripts.Render("~/bundles/nas")
     @RenderSection("scripts", required: false)
+     
 </body>
 </html>
