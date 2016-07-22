@@ -110,12 +110,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-      <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>  
+    </Compile>
     <Compile Include="Faa\Builders\CandidateSummaryBuilder.cs" />
     <Compile Include="Faa\Builders\CandidateUserBuilder.cs" />
     <Compile Include="Faa\Builders\VacancyApplicationBuilder.cs" />
+    <Compile Include="Faa\Mappers\CandidateHistoryMappersTests.cs" />
     <Compile Include="Faa\Mappers\ApplicationHistoryMappersTests.cs" />
     <Compile Include="Faa\Mappers\ApplicationMappersTests.cs" />
     <Compile Include="Faa\Mappers\CandidateMappersTests.cs" />

@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using Builders;
     using FluentAssertions;
+    using Migrate.Faa.Entities.Mongo;
     using Migrate.Faa.Entities.Sql;
     using Migrate.Faa.Mappers;
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
+    using CandidateSummary = Migrate.Faa.Entities.Sql.CandidateSummary;
 
     [TestFixture]
     public class CandidateMappersTests
@@ -22,7 +24,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -102,7 +104,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(status).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -120,7 +122,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithGender(gender).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -163,7 +165,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithEthnicity(ethnicity).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -181,7 +183,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithDisabilityStatus(disabilityStatus).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -196,7 +198,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
             var candidateDictionary = _candidateMappers.MapCandidateDictionary(candidate);
@@ -272,7 +274,7 @@
             var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -292,7 +294,7 @@
             };
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateSummaries, new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateSummaries, new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -309,7 +311,7 @@
             var candidateUser = new CandidateUserBuilder().WithEmailAddress("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@testtesttesttesttesttesttest.com").Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -339,7 +341,7 @@
             var localAuthorityCountyIds = new Dictionary<int, int> {{ localAuthorityId, countyId } };
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), vacancyLocalAuthorities, localAuthorityCountyIds, false);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), vacancyLocalAuthorities, localAuthorityCountyIds, new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -354,7 +356,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(20).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), true);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), true);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -418,6 +420,157 @@
             person.MobileNumber.Should().Be("");
             person.Email.Should().Be(candidateUser.Candidate.Id + "@anon.com");
             person.PersonTypeId.Should().Be(1);
+        }
+
+        [Test]
+        public void ActivatedCandidateWithHistoryTest()
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(20).Build();
+
+            //Act
+            var candidateWithHistory = _candidateMappers.MapCandidateWithHistory(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), new Dictionary<int, Dictionary<int, int>>(), false);
+
+            //Assert
+            var candidatePerson = candidateWithHistory.CandidatePerson;
+            candidatePerson.Candidate.CandidateStatusTypeId.Should().Be(2);
+            var candidateHistory = candidateWithHistory.CandidateHistory;
+            candidateHistory.Should().NotBeNullOrEmpty();
+            candidateHistory.Count.Should().Be(3);
+            var createdHistory = candidateHistory[0];
+            createdHistory.CandidateHistoryEventTypeId.Should().Be(1);
+            createdHistory.CandidateHistorySubEventTypeId.Should().Be(1);
+            var activatedHistory = candidateHistory[1];
+            activatedHistory.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
+            activatedHistory.CandidateHistoryEventTypeId.Should().Be(1);
+            activatedHistory.CandidateHistorySubEventTypeId.Should().Be(2);
+            // ReSharper disable once PossibleInvalidOperationException
+            activatedHistory.EventDate.Should().Be(candidateUser.User.ActivationDate.Value);
+            activatedHistory.Comment.Should().BeNull();
+            activatedHistory.UserName.Should().Be("NAS Gateway");
+            var noteHistory = candidateHistory[2];
+            noteHistory.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
+            noteHistory.CandidateHistoryEventTypeId.Should().Be(3);
+            noteHistory.CandidateHistorySubEventTypeId.Should().Be(0);
+            noteHistory.EventDate.Should().Be(candidateUser.User.ActivationDate.Value);
+            noteHistory.Comment.Should().Be("NAS Exemplar registered Candidate.");
+            noteHistory.UserName.Should().Be("NAS Gateway");
+        }
+
+        [Test]
+        public void SchoolAttendedTest()
+        {
+            //Arrange
+            const int legacyCandidateId = 42;
+            var applicationTemplate = new ApplicationTemplate
+            {
+                EducationHistory = new Education
+                {
+                    Institution = "John Port School",
+                    FromYear = 1990,
+                    ToYear = 1997
+                }
+            };
+            var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(legacyCandidateId).WithStatus(20).WithApplicationTemplate(applicationTemplate).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
+
+            //Assert
+            candidatePerson.SchoolAttended.Should().NotBeNull();
+            candidatePerson.SchoolAttended.SchoolAttendedId.Should().Be(0);
+            candidatePerson.SchoolAttended.CandidateId.Should().Be(legacyCandidateId);
+            candidatePerson.SchoolAttended.SchoolId.Should().Be(null);
+            candidatePerson.SchoolAttended.OtherSchoolName.Should().Be(applicationTemplate.EducationHistory.Institution);
+            candidatePerson.SchoolAttended.OtherSchoolTown.Should().BeNull();
+            candidatePerson.SchoolAttended.StartDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.FromYear, 1, 1));
+            candidatePerson.SchoolAttended.EndDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.ToYear, 1, 1));
+            candidatePerson.SchoolAttended.ApplicationId.Should().Be(null);
+        }
+
+        [Test]
+        public void SchoolAttendedDictionaryTest()
+        {
+            //Arrange
+            const int legacyCandidateId = 42;
+            var applicationTemplate = new ApplicationTemplate
+            {
+                EducationHistory = new Education
+                {
+                    Institution = "John Port School",
+                    FromYear = 1990,
+                    ToYear = 1997
+                }
+            };
+            var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(legacyCandidateId).WithStatus(20).WithApplicationTemplate(applicationTemplate).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
+            var schoolAttendedDictionary = candidatePerson.SchoolAttended.MapSchoolAttendedDictionary();
+
+            //Assert
+            schoolAttendedDictionary["SchoolAttendedId"].Should().Be(0);
+            schoolAttendedDictionary["CandidateId"].Should().Be(legacyCandidateId);
+            schoolAttendedDictionary["SchoolId"].Should().Be(null);
+            schoolAttendedDictionary["OtherSchoolName"].Should().Be(applicationTemplate.EducationHistory.Institution);
+            schoolAttendedDictionary["OtherSchoolTown"].Should().BeNull();
+            schoolAttendedDictionary["StartDate"].Should().Be(new DateTime(applicationTemplate.EducationHistory.FromYear, 1, 1));
+            schoolAttendedDictionary["EndDate"].Should().Be(new DateTime(applicationTemplate.EducationHistory.ToYear, 1, 1));
+            schoolAttendedDictionary["ApplicationId"].Should().Be(null);
+        }
+
+        [Test]
+        public void SourceSchoolAttendedTest()
+        {
+            //Arrange
+            const int legacyCandidateId = 42;
+            var applicationTemplate = new ApplicationTemplate
+            {
+                EducationHistory = new Education
+                {
+                    Institution = "John Port School",
+                    FromYear = 1990,
+                    ToYear = 1997
+                }
+            };
+            var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(legacyCandidateId).WithStatus(20).WithApplicationTemplate(applicationTemplate).Build();
+            const int schoolAttendedId = 44;
+            var schoolAttendedIds = new Dictionary<int, int>
+            {
+                {legacyCandidateId, schoolAttendedId}
+            };
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), schoolAttendedIds, false);
+
+            //Assert
+            candidatePerson.SchoolAttended.Should().NotBeNull();
+            candidatePerson.SchoolAttended.SchoolAttendedId.Should().Be(schoolAttendedId);
+            candidatePerson.SchoolAttended.CandidateId.Should().Be(legacyCandidateId);
+            candidatePerson.SchoolAttended.SchoolId.Should().Be(null);
+            candidatePerson.SchoolAttended.OtherSchoolName.Should().Be(applicationTemplate.EducationHistory.Institution);
+            candidatePerson.SchoolAttended.OtherSchoolTown.Should().BeNull();
+            candidatePerson.SchoolAttended.StartDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.FromYear, 1, 1));
+            candidatePerson.SchoolAttended.EndDate.Should().Be(new DateTime(applicationTemplate.EducationHistory.ToYear, 1, 1));
+            candidatePerson.SchoolAttended.ApplicationId.Should().Be(null);
+        }
+
+        [Test]
+        public void EmptySchoolAttendedTest()
+        {
+            //Arrange
+            const int legacyCandidateId = 42;
+            var applicationTemplate = new ApplicationTemplate
+            {
+                EducationHistory = new Education()
+            };
+            var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(legacyCandidateId).WithStatus(20).WithApplicationTemplate(applicationTemplate).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
+
+            //Assert
+            candidatePerson.SchoolAttended.Should().BeNull();
         }
     }
 }

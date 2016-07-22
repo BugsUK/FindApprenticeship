@@ -34,7 +34,6 @@
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
         private readonly ILogService _logService;
-
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
         private readonly IProviderService _providerService;
@@ -145,58 +144,6 @@
             return viewModel;
         }
 
-        public LocationSearchViewModel CreateVacancy(LocationSearchViewModel locationSearchViewModel, string ukprn)
-        {
-            var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-            var vacancyParty =
-                _providerService.GetVacancyParty(locationSearchViewModel.ProviderSiteId, locationSearchViewModel.EmployerEdsUrn);
-            var provider = _providerService.GetProvider(ukprn);
-
-            locationSearchViewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
-
-            var vacancy = new Vacancy
-            {
-                VacancyGuid = locationSearchViewModel.VacancyGuid,
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                OwnerPartyId = vacancyParty.VacancyPartyId,
-                Status = VacancyStatus.Draft,
-                AdditionalLocationInformation = locationSearchViewModel.AdditionalLocationInformation,
-                IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                ProviderId = provider.ProviderId
-            };
-
-            GeoCodeVacancyLocations(locationSearchViewModel);
-
-            if (locationSearchViewModel.Addresses.Count == 1)
-            {
-                var addressViewModel = locationSearchViewModel.Addresses.Single();
-                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(addressViewModel.Address);
-                vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
-                vacancy.NumberOfPositions = addressViewModel.NumberOfPositions;
-                _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
-            }
-            else
-            {
-                vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
-                var vacancyLocations =
-                    _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        locationSearchViewModel.Addresses);
-                foreach (var vacancyLocation in vacancyLocations)
-                {
-                    vacancyLocation.VacancyId = vacancy.VacancyId;
-
-                    vacancyLocation.LocalAuthorityCode =
-                        _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
-                }
-                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
-            }
-
-            locationSearchViewModel.AutoSaveTimeoutInSeconds =
-                _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
-
-            return locationSearchViewModel;
-        }
-
         private void GeoCodeVacancyLocations(LocationSearchViewModel viewModel)
         {
             foreach (var vacancyLocationAddressViewModel in viewModel.Addresses)
@@ -281,32 +228,9 @@
         /// <param name="newVacancyViewModel"></param>
         /// <param name="ukprn"></param>
         /// <returns></returns>
-        public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
+        public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
-            NewVacancyViewModel resultViewModel;
-
-            if (VacancyExists(newVacancyViewModel))
-            {
-                resultViewModel = UpdateExistingVacancy(newVacancyViewModel);
-            }
-            else
-            {
-                _logService.Debug("Creating vacancy reference number");
-
-                try
-                {
-                    var vacancy = CreateNewVacancy(newVacancyViewModel, ukprn);
-
-                    _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);
-
-                    resultViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
-                }
-                catch (Exception e)
-                {
-                    _logService.Error("Failed to create vacancy", e);
-                    throw;
-                }
-            }
+            var resultViewModel = UpdateExistingVacancy(newVacancyViewModel);
 
             resultViewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
@@ -314,42 +238,34 @@
             return resultViewModel;
         }
 
-        private Vacancy CreateNewVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
+        public void CreateVacancy(VacancyMinimumData vacancyMinimumData)
         {
-            var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-            var vacancyParty =
-                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId, true);
+            var vacancyParty = _providerService.GetVacancyParty(vacancyMinimumData.VacancyPartyId, true);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-            var provider = _providerService.GetProvider(ukprn);
+            var provider = _providerService.GetProvider(vacancyMinimumData.Ukprn);
 
             if (!employer.Address.GeoPoint.IsValid())
             {
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
 
-            var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
+            _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
             {
-                VacancyGuid = newVacancyViewModel.VacancyGuid,
+                VacancyGuid = vacancyMinimumData.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Title = newVacancyViewModel.Title,
-                ShortDescription = newVacancyViewModel.ShortDescription,
                 OwnerPartyId = vacancyParty.VacancyPartyId,
                 Status = VacancyStatus.Draft,
-                OfflineVacancy = newVacancyViewModel.OfflineVacancy,
-                OfflineApplicationUrl = offlineApplicationUrl,
-                OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions,
-                IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
-                VacancyType = newVacancyViewModel.VacancyType,
-                Address = employer.Address,
+                IsEmployerLocationMainApprenticeshipLocation = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation,
+                NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
+                Address = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation ? employer.Address : null,
                 ProviderId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
-                LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode)
+                LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
+                EmployerDescription = vacancyMinimumData.EmployerDescription,
+                EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
             });
-
-            return vacancy;
         }
-
+        
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
             return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : CategoryPrefixes.GetOriginalFrameworkCode(trainingDetailsViewModel.FrameworkCodeName);
@@ -391,7 +307,7 @@
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
 
-            if (employer.Address.GeoPoint == null)
+            if (!employer.Address.GeoPoint.IsValid())
             {
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
@@ -404,7 +320,7 @@
             vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
-
+            vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
             vacancy.Address = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue
                               && newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false
                               && newVacancyViewModel.LocationAddresses != null
@@ -418,18 +334,7 @@
 
             return newVacancyViewModel;
         }
-
-        private bool VacancyExists(NewVacancyViewModel newVacancyViewModel)
-        {
-            var hasReferenceNumber = newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
-
-            if (hasReferenceNumber) return true;
-
-            var vacancy = _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
-
-            return vacancy != null;
-        }
-
+        
         public TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -614,6 +519,8 @@
 
             _vacancyPostingService.UpdateVacancy(vacancy);
         }
+
+        
 
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
