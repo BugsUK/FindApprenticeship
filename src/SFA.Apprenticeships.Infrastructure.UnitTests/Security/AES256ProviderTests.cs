@@ -2,8 +2,8 @@
 {
     using System;
     using FluentAssertions;
-    using SFA.Apprenticeships.Infrastructure.Security;
-    using SFA.Apprenticeships.Infrastructure.Security.Configuration;
+    using Infrastructure.Security;
+    using Infrastructure.Security.Configuration;
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
@@ -12,20 +12,22 @@
     public class AES256ProviderTests
     {
         private Mock<IConfigurationService> mockConfig = new Mock<IConfigurationService>();
+        private Mock<ILogService> mockLog = new Mock<ILogService>();
         private AES256Provider providerUnderTest;
-        private readonly string AesPassword = "test";
+        private readonly string AesKey = "WCWB0DBPmlGvr/G9ZVPXMP3mBqpiHswC6gV/2+zeACA=";
+        private readonly string AesIV = "At1KzcFvd1Fx1mKvzFegew==";
 
         [SetUp]
         public void Setup()
         {
             mockConfig.Setup(m => m.Get<CryptographyConfiguration>())
-                .Returns(new CryptographyConfiguration() { Password = AesPassword });
+                .Returns(new CryptographyConfiguration() { Key = AesKey, IV = AesIV });
 
-            providerUnderTest = new AES256Provider(mockConfig.Object);
+            providerUnderTest = new AES256Provider(mockConfig.Object, mockLog.Object);
         }
 
         [Test]
-        public void RequiresInput()
+        public void EncryptRequiresInput()
         {
             //Arrange
             string input = null;
@@ -35,9 +37,37 @@
             Assert.Throws<ArgumentNullException>(() => providerUnderTest.Encrypt(input));
         }
 
-        [TestCase("test", @"U2FsdGVkX1+/GYd73GeWULMITutNz+CaWZs3Q+2Kd+I=")]
-        [TestCase("{id:1,name:'name value'}", @"U2FsdGVkX18V/cOOrVz06jyXCtSYsSOQ5H4pLbooj8HI5SHRczxUIV37drBe90AU")]
-        [TestCase("here's a string", @"U2FsdGVkX1+BcbPXAlzh2fw1BBNE8zfkctLdLh14Roo=")]
+        [Test]
+        public void DeryptRequiresCipherText()
+        {
+            //Arrange
+            string cipherText = null;
+
+            //Act
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => providerUnderTest.Decrypt(cipherText));
+        }
+
+        [Test]
+        public void RoundTrip()
+        {
+            string original = "Here is some data to encrypt!";
+
+            // Encrypt the string to an array of bytes.
+            var encrypted = providerUnderTest.Encrypt(original);
+
+            // Decrypt the bytes to a string.
+            string roundtrip = providerUnderTest.Decrypt(encrypted);
+
+            //Display the original data and the decrypted data.
+            Console.WriteLine("Original:   {0}", original);
+            Console.WriteLine("Round Trip: {0}", roundtrip);
+
+        }
+
+        [TestCase("test", "lVs/VZWa8fpC0+J884LnGw==")]
+        [TestCase("{id:1,name:'name value'}", "1DPOw7tEL+HCJ6jxO3Pz0iwTKspIDMnB9+auMdFffHI=")]
+        [TestCase("here's a string", "3MBKuyWFcvN1RK+jXIJ3bg==")]
         public void EncryptString(string input, string expectedOutput)
         {
             //Arrange
@@ -48,9 +78,9 @@
             result.Should().Be(expectedOutput);
         }
 
-        [TestCase("test", @"U2FsdGVkX1+/GYd73GeWULMITutNz+CaWZs3Q+2Kd+I=")]
-        [TestCase("{id:1,name:'name value'}", @"U2FsdGVkX18V/cOOrVz06jyXCtSYsSOQ5H4pLbooj8HI5SHRczxUIV37drBe90AU")]
-        [TestCase("here's a string", @"U2FsdGVkX1+BcbPXAlzh2fw1BBNE8zfkctLdLh14Roo=")]
+        [TestCase("test", "lVs/VZWa8fpC0+J884LnGw==")]
+        [TestCase("{id:1,name:'name value'}", "1DPOw7tEL+HCJ6jxO3Pz0iwTKspIDMnB9+auMdFffHI=")]
+        [TestCase("here's a string", "3MBKuyWFcvN1RK+jXIJ3bg==")]
         public void DecryptString(string expectedOutput, string input)
         {
             //Arrange
