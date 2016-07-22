@@ -22,5 +22,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';	
-	//config.disableNativeSpellChecker = false;
+    //config.disableNativeSpellChecker = false;
+	config.pasteFromWordRemoveFontStyles = false;
+	config.extraPlugins = 'pastefromword';
 };
