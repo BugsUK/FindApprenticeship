@@ -531,6 +531,47 @@
             }
         }
 
+        [TestCase(VacancySource.Raa, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.Raa, Samples.ValidFreeHtmlText, false)]
+        [TestCase(VacancySource.Raa, Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(VacancySource.Raa, Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(VacancySource.Raa, Samples.InvalidHtmlTextWithScript, false)]
+        [TestCase(VacancySource.Av, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.Av, Samples.ValidFreeHtmlText, false)]
+        [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithScript, false)]
+        [TestCase(VacancySource.Api, Samples.ValidFreeText, true)]
+        [TestCase(VacancySource.Api, Samples.ValidFreeHtmlText, false)]
+        [TestCase(VacancySource.Api, Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(VacancySource.Api, Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(VacancySource.Api, Samples.InvalidHtmlTextWithScript, false)]
+        public void ExpectedDurationValidation(VacancySource vacancySource, string expectedDuration, bool expectValid)
+        {
+            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            vacancyViewModel.FurtherVacancyDetailsViewModel.ExpectedDuration = expectedDuration;
+
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.ExpectedDuration, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.ExpectedDuration, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.ExpectedDuration, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.ExpectedDuration, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.ExpectedDuration, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.ExpectedDuration, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.ExpectedDuration, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.ExpectedDuration, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
         private VacancyViewModel BuildValidVacancy(VacancySource vacancySource)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();

@@ -84,6 +84,12 @@
 
             validator.RuleFor(viewModel => viewModel.VacancyDatesViewModel)
                 .SetValidator(new VacancyDatesViewModelCommonValidator());
+
+            validator.RuleFor(x => x.ExpectedDuration)
+                .Matches(VacancyViewModelMessages.ExpectedDuration.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.ExpectedDuration.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyViewModelMessages.ExpectedDuration.WhiteListInvalidTagErrorText);
         }
 
         internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)

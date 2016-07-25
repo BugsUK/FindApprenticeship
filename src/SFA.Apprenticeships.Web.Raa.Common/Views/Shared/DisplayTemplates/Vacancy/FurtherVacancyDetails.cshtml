@@ -97,7 +97,7 @@
 
             @if (Model.VacancySource != VacancySource.Raa )
             {
-                @Html.FormTextFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" })
+                @Html.FormTextAreaFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" })
             }
         </fieldset>
         <fieldset class="form-group">
