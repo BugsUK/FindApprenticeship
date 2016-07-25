@@ -29,14 +29,22 @@
         </fieldset>
 
         <div class="grid grid-1-2">
-            <button id="ValidateApplicationsReceived" type="submit" class="button" name="ApplicationsReceived" value="ValidateApplicationsReceived">Export CSV</button>
+            <button id="ValidateReportParameters" type="submit" class="button" name="ApplicationsReceived" value="ValidateApplicationsReceived">Export CSV</button>
             @if (Model.IsValid)
             {
-                <button id="DownloadApplicationsReceived" type="submit" class="button-link" name="ApplicationsReceived" value="DownloadApplicationsReceived">Download CSV</button>
+                <button id="DownloadReport" type="submit" class="button-link hidden" name="ApplicationsReceived" value="DownloadApplicationsReceived">Download CSV</button>
+                <noscript>
+                    <button id="DownloadReportNoJs" type="submit" class="button-link" name="ApplicationsReceived" value="DownloadApplicationsReceived">Download CSV</button>
+                </noscript>
             }
             <p class="med-btm-margin">
                 @Html.RouteLink("Back to List", RecruitmentRouteNames.ReportList)
             </p>
         </div>
     </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/reports")
 }
