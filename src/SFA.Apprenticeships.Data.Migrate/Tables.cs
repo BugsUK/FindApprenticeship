@@ -454,6 +454,9 @@ select top 10 * from VacancyReferralComments
             // newRecord.EmployerAnonymousName = null;
             // newRecord.VacancyManagerAnonymous = false;
 
+            // Vacancy source
+            newRecord.VacancySourceId = 1;
+
             AnonymiseVacancy(tableSpec, oldRecord, newRecord);
         }
 

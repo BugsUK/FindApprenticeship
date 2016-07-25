@@ -374,7 +374,7 @@ DECLARE @VacancyTypeId int
 						case WHEN @VacancyManagerId = @TrainingProviderId THEN 0 ELSE @IsVacancyManagerAnonymous END, --Its VM=VO then always display
 						@localAuthorityId,
 						NEWID(),
-						1
+						2
 					   )    
 				 
 					  --Inserting Image Parameters in Relationship Table
