@@ -239,6 +239,7 @@
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Application\AnonymisedApplicantDetailsViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
@@ -303,6 +304,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AboutYou.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.generated.cs">
+      <DependentUpon>AnonymisedApplicantDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\ApplicantDetails.generated.cs">
       <AutoGen>True</AutoGen>
@@ -509,6 +515,10 @@
     <Content Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MonitoringInformation.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AnonymisedApplicantDetails.generated.cs</LastGenOutput>
     </Content>
     <None Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml">
       <Generator>RazorGenerator</Generator>

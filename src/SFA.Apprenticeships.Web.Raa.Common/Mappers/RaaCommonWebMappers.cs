@@ -124,10 +124,14 @@
                 .ForMember(v => v.SecondQuestionAnswer, opt => opt.MapFrom(src => src.AdditionalQuestion2Answer))
                 .ForMember(v => v.AnythingWeCanDoToSupportYourInterviewAnswer, opt => opt.MapFrom(src => src.CandidateInformation.AboutYou.Support));
 
+            Mapper.CreateMap<ApprenticeshipApplicationDetail, AnonymisedApplicantDetailsViewModel>()
+                .ForMember(v => v.ApplicantId, opt => opt.MapFrom(src => src.CandidateId.ToString().Replace("-","").Substring(0,6)));
+
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>()
                 .ForMember(v => v.ApplicationSelection, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>(src)))
                 .ForMember(v => v.Vacancy, opt => opt.Ignore())
                 .ForMember(v => v.ApplicantDetails, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, ApplicantDetailsViewModel>(src)))
+                .ForMember(v => v.AnonymousApplicantDetails, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, AnonymisedApplicantDetailsViewModel>(src)))
                 .ForMember(v => v.AboutYou, opt => opt.MapFrom(src => Map<AboutYou, AboutYouViewModel>(src.CandidateInformation.AboutYou)))
                 .ForMember(v => v.Education, opt => opt.MapFrom(src => Map<Education, EducationViewModel>(src.CandidateInformation.EducationHistory)))
                 .ForMember(v => v.Qualifications, opt => opt.MapFrom(src => Map<IList<Qualification>, IList<QualificationViewModel>>(src.CandidateInformation.Qualifications)))
