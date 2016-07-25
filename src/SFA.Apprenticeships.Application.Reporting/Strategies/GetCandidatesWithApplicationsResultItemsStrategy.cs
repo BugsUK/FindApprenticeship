@@ -14,9 +14,9 @@
             _reportingRepository = reportingRepository;
         }
 
-        public IEnumerable<CandidatesWithApplicationsResultItem> Get(DateTime dateFrom, DateTime dateTo)
+        public IList<CandidatesWithApplicationsResultItem> Get(DateTime dateFrom, DateTime dateTo, int providerSiteId)
         {
-            return _reportingRepository.GetCandidatesWithApplicationsResultItems(dateFrom, dateTo);
+            return _reportingRepository.GetCandidatesWithApplicationsResultItems(dateFrom, dateTo, providerSiteId);
         }
     }
 }

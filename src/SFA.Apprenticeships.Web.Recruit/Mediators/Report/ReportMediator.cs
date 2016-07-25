@@ -38,16 +38,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Report
             return GetMediatorResponse(ReportMediatorCodes.ValidateApplicationsReceivedParameters.Ok, parameters, validationResult);
         }
 
-        public MediatorResponse<byte[]> GetApplicationsReceived(ApplicationsReceivedParameters parameters)
+        public MediatorResponse<byte[]> GetApplicationsReceived(ApplicationsReceivedParameters parameters, string username)
         {
             try
             {
-                var reportResult = _reportingProvider.GetApplicationsReceivedResultItems(parameters.FromDate.Date, parameters.ToDate.Date);
+                var reportResult = _reportingProvider.GetApplicationsReceivedResultItems(parameters.FromDate.Date, parameters.ToDate.Date, username);
 
                 var headerBuilder = new StringBuilder();
-                headerBuilder.AppendLine("PROTECT,,,,,,,,,,,");
-                headerBuilder.AppendLine(",,,,,,,,,,,");
-                headerBuilder.AppendLine(",,,,,,,,,,,");
+                headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,");
+                headerBuilder.AppendLine("Date,Total_Number_Of_Applications,,,,,,,,,,,,,,,,,,,,,,");
+                headerBuilder.Append(DateTime.Now.ToString("dd/MM/yyy HH:mm")).Append(",");
+                headerBuilder.Append(reportResult.Count);
+                headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,");
 
                 var bytes = GetCsvBytes<ApplicationsReceivedResultItem, ApplicationsReceivedResultItemClassMap>(reportResult, headerBuilder.ToString());
                 return GetMediatorResponse(ReportMediatorCodes.GetApplicationsReceived.Ok, bytes);
@@ -71,16 +76,16 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Report
             return GetMediatorResponse(ReportMediatorCodes.ValidateCandidatesWithApplicationsParameters.Ok, parameters, validationResult);
         }
 
-        public MediatorResponse<byte[]> GetCandidatesWithApplications(CandidatesWithApplicationsParameters parameters)
+        public MediatorResponse<byte[]> GetCandidatesWithApplications(CandidatesWithApplicationsParameters parameters, string username)
         {
             try
             {
-                var reportResult = _reportingProvider.GetCandidatesWithApplicationsResultItem(parameters.FromDate.Date, parameters.ToDate.Date);
+                var reportResult = _reportingProvider.GetCandidatesWithApplicationsResultItem(parameters.FromDate.Date, parameters.ToDate.Date, username);
 
                 var headerBuilder = new StringBuilder();
-                headerBuilder.AppendLine("PROTECT,,,,,,,,,,,");
-                headerBuilder.AppendLine(",,,,,,,,,,,");
-                headerBuilder.AppendLine(",,,,,,,,,,,");
+                headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
 
                 var bytes = GetCsvBytes<CandidatesWithApplicationsResultItem, CandidatesWithApplicationsResultItemClassMap>(reportResult, headerBuilder.ToString());
                 return GetMediatorResponse(ReportMediatorCodes.GetCandidatesWithApplications.Ok, bytes);

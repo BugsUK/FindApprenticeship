@@ -17,14 +17,14 @@
             _getCandidatesWithApplicationsResultItemsStrategy = getCandidatesWithApplicationsResultItemsStrategy;
         }
 
-        public IEnumerable<ApplicationsReceivedResultItem> GetApplicationsReceivedResultItems(DateTime dateFrom, DateTime dateTo)
+        public IList<ApplicationsReceivedResultItem> GetApplicationsReceivedResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId)
         {
-            return _getApplicationsReceivedResultItemsStrategy.Get(dateFrom, dateTo);
+            return _getApplicationsReceivedResultItemsStrategy.Get(dateFrom, dateTo, providerSiteId);
         }
 
-        public IEnumerable<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo)
+        public IList<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId)
         {
-            return _getCandidatesWithApplicationsResultItemsStrategy.Get(dateFrom, dateTo);
+            return _getCandidatesWithApplicationsResultItemsStrategy.Get(dateFrom, dateTo, providerSiteId);
         }
     }
 }

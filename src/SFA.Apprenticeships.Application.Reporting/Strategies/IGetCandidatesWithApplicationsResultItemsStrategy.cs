@@ -6,6 +6,6 @@
 
     public interface IGetCandidatesWithApplicationsResultItemsStrategy
     {
-        IEnumerable<CandidatesWithApplicationsResultItem> Get(DateTime dateFrom, DateTime dateTo);
+        IList<CandidatesWithApplicationsResultItem> Get(DateTime dateFrom, DateTime dateTo, int providerSiteId);
     }
 }

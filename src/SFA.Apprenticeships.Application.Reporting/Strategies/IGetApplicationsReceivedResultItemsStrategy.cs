@@ -6,6 +6,6 @@
 
     public interface IGetApplicationsReceivedResultItemsStrategy
     {
-        IEnumerable<ApplicationsReceivedResultItem> Get(DateTime dateFrom, DateTime dateTo);
+        IList<ApplicationsReceivedResultItem> Get(DateTime dateFrom, DateTime dateTo, int providerSiteId);
     }
 }

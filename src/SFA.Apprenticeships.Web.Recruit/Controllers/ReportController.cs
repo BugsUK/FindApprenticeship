@@ -56,7 +56,7 @@
         [HttpPost]
         public ActionResult DownloadApplicationsReceived(ApplicationsReceivedParameters parameters)
         {
-            var response = _reportMediator.GetApplicationsReceived(parameters);
+            var response = _reportMediator.GetApplicationsReceived(parameters, User.Identity.Name);
             return File(response.ViewModel, "text/csv", "ApplicationsReceived.csv");
         }
 
@@ -89,7 +89,7 @@
         [HttpPost]
         public ActionResult DownloadCandidatesWithApplications(CandidatesWithApplicationsParameters parameters)
         {
-            var response = _reportMediator.GetCandidatesWithApplications(parameters);
+            var response = _reportMediator.GetCandidatesWithApplications(parameters, User.Identity.Name);
             return File(response.ViewModel, "text/csv", "CandidatesWithApplications.csv");
         }
     }

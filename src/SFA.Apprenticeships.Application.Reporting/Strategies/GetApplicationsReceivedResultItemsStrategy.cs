@@ -14,9 +14,9 @@ namespace SFA.Apprenticeships.Application.Reporting.Strategies
             _reportingRepository = reportingRepository;
         }
 
-        public IEnumerable<ApplicationsReceivedResultItem> Get(DateTime dateFrom, DateTime dateTo)
+        public IList<ApplicationsReceivedResultItem> Get(DateTime dateFrom, DateTime dateTo, int providerSiteId)
         {
-            return _reportingRepository.GetApplicationsReceivedResultItems(dateFrom, dateTo);
+            return _reportingRepository.GetApplicationsReceivedResultItems(dateFrom, dateTo, providerSiteId);
         }
     }
 }

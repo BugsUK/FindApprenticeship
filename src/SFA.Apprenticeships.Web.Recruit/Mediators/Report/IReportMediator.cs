@@ -6,8 +6,8 @@
     public interface IReportMediator
     {
         MediatorResponse<ApplicationsReceivedParameters> ValidateApplicationsReceivedParameters(ApplicationsReceivedParameters parameters);
-        MediatorResponse<byte[]> GetApplicationsReceived(ApplicationsReceivedParameters parameters);
+        MediatorResponse<byte[]> GetApplicationsReceived(ApplicationsReceivedParameters parameters, string username);
         MediatorResponse<CandidatesWithApplicationsParameters> ValidateCandidatesWithApplicationsParameters(CandidatesWithApplicationsParameters parameters);
-        MediatorResponse<byte[]> GetCandidatesWithApplications(CandidatesWithApplicationsParameters parameters);
+        MediatorResponse<byte[]> GetCandidatesWithApplications(CandidatesWithApplicationsParameters parameters, string username);
     }
 }
