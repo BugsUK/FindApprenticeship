@@ -346,14 +346,34 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral(@"
-    </div>
-</section>
+WriteLiteral("\r\n    </div>\r\n</section>\r\n<script");
 
-<script>CKEDITOR.replace('LongDescription');</script>
-<script>CKEDITOR.replace('DesiredSkills');</script>
-<script>CKEDITOR.replace('DesiredQualifications');</script>
-<script>CKEDITOR.replace('PersonalQualities');</script>
+WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js\"");
+
+WriteLiteral("></script>\r\n<script>\r\n    if (typeof CKEDITOR == \'undefined\') {\r\n        document" +
+".write(unescape(\"%3Cscript src=\'/Content/_assets/js/vendor/ckeditor/ckeditor.js\'" +
+" type=\'text/javascript\'%3E%3C/script%3E\"));\r\n    }\r\n</script>\r\n\r\n    <script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 2923), Tuple.Create("\"", 2978)
+, Tuple.Create(Tuple.Create("", 2929), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 2929), false)
+);
+
+WriteLiteral(@"></script>
+<script>    
+    CKEDITOR.replace('DesiredSkills',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+    CKEDITOR.replace('DesiredQualifications',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+    CKEDITOR.replace('PersonalQualities',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+</script>
 
 <script>
     nanospell.ckeditor('all',

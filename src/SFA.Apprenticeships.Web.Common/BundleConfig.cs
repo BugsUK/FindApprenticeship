@@ -23,15 +23,7 @@
 
             bundles.Add(new ScriptBundle("~/bundles/cookie",
                 "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(
-                    "~/Content/_assets/js/vendor/jquery.cookie.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/ckeditor",
-              "//cdn.ckeditor.com/4.5.10/standard/ckeditor.js")
-              .Include("~/Content/_assets/js/vendor/ckeditor/ckeditor.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/nanospell",
-                "//ckeditor-spellcheck.nanospell.com/autoload.js")              
-              .Include("~/Content/_assets/js/vendor/nanospell/autoload.js"));
+                    "~/Content/_assets/js/vendor/jquery.cookie.js"));            
 
             // TODO: split in different bundles?
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(

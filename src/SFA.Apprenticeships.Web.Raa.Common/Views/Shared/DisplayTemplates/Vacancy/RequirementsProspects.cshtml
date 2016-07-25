@@ -45,11 +45,28 @@
         @Html.ValidationMessageFor(m => m.ThingsToConsiderComment)
     </div>
 </section>
+<script src="https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
+<script>
+    if (typeof CKEDITOR == 'undefined') {
+        document.write(unescape("%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+</script>
 
-<script>CKEDITOR.replace('LongDescription');</script>
-<script>CKEDITOR.replace('DesiredSkills');</script>
-<script>CKEDITOR.replace('DesiredQualifications');</script>
-<script>CKEDITOR.replace('PersonalQualities');</script>
+    <script src="~/Content/_assets/js/vendor/nanospell/autoload.js"></script>
+<script>    
+    CKEDITOR.replace('DesiredSkills',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+    CKEDITOR.replace('DesiredQualifications',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+    CKEDITOR.replace('PersonalQualities',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+</script>
 
 <script>
     nanospell.ckeditor('all',
