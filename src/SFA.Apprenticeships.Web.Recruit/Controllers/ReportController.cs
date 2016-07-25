@@ -52,6 +52,14 @@
             }
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationsReceived")]
+        [HttpPost]
+        public ActionResult DownloadApplicationsReceived(ApplicationsReceivedParameters parameters)
+        {
+            var response = _reportMediator.GetApplicationsReceived(parameters);
+            return File(response.ViewModel, "text/csv", "ApplicationsReceived.csv");
+        }
+
         [HttpGet]
         public ActionResult CandidatesWithApplications()
         {
@@ -75,6 +83,14 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "CandidatesWithApplications")]
+        [HttpPost]
+        public ActionResult DownloadCandidatesWithApplications(CandidatesWithApplicationsParameters parameters)
+        {
+            var response = _reportMediator.GetCandidatesWithApplications(parameters);
+            return File(response.ViewModel, "text/csv", "CandidatesWithApplications.csv");
         }
     }
 }

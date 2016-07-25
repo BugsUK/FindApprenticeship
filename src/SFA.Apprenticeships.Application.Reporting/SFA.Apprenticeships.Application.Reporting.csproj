@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E3F2F285-16EB-49C5-9668-8D8E1DB6C610}</ProjectGuid>
+    <ProjectGuid>{8AC673DF-E924-4C09-8A07-46614D29AAC1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Domain.Entities.Raa</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Domain.Entities.Raa</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Application.Reporting</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Application.Reporting</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -74,62 +74,38 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="ICreatableEntity.cs" />
-    <Compile Include="IUpdatableEntity.cs" />
-    <Compile Include="Locations\GeoPoint.cs" />
-    <Compile Include="Locations\GeoPointExtensionMethods.cs" />
-    <Compile Include="Locations\PostalAddress.cs" />
-    <Compile Include="Locations\VacancyLocation.cs" />
-    <Compile Include="Parties\Employer.cs" />
-    <Compile Include="Parties\Provider.cs" />
-    <Compile Include="Parties\ProviderSite.cs" />
-    <Compile Include="Parties\VacancyParty.cs" />
-    <Compile Include="Parties\EmployerEqualityComparer.cs" />
-    <Compile Include="Parties\VacancyPartyEqualityComparer.cs" />
-    <Compile Include="Parties\VerifiedOrganisationSummary.cs" />
+    <Compile Include="IoC\ReportingServicesRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reference\County.cs" />
-    <Compile Include="Reference\Framework.cs" />
-    <Compile Include="Reference\LocalAuthority.cs" />
-    <Compile Include="Reference\Occupation.cs" />
-    <Compile Include="Reference\Region.cs" />
-    <Compile Include="Reference\RegionalTeam.cs" />
-    <Compile Include="Reference\RegionalTeamMapper.cs" />
-    <Compile Include="Reporting\ApplicationsReceivedResultItem.cs" />
-    <Compile Include="Reporting\CandidatesWithApplicationsResultItem.cs" />
-    <Compile Include="Roles.cs" />
-    <Compile Include="Users\AgencyUser.cs" />
-    <Compile Include="Users\ProviderUser.cs" />
-    <Compile Include="Users\ProviderUserStatus.cs" />
-    <Compile Include="Users\Role.cs" />
-    <Compile Include="Vacancies\IVacancyIdStatusAndClosingDate.cs" />
-    <Compile Include="Vacancies\ApprenticeshipLevel.cs" />
-    <Compile Include="Vacancies\Duration.cs" />
-    <Compile Include="Vacancies\DurationType.cs" />
-    <Compile Include="Vacancies\VacancyLocationType.cs" />
-    <Compile Include="Vacancies\VacancyStatus.cs" />
-    <Compile Include="Vacancies\Sector.cs" />
-    <Compile Include="Vacancies\Standard.cs" />
-    <Compile Include="Vacancies\TrainingType.cs" />
-    <Compile Include="Vacancies\Vacancy.cs" />
-    <Compile Include="Vacancies\VacancySummary.cs" />
-    <Compile Include="Vacancies\VacancyType.cs" />
-    <Compile Include="Vacancies\Wage.cs" />
-    <Compile Include="Vacancies\WageType.cs" />
-    <Compile Include="Vacancies\WageUnit.cs" />
+    <Compile Include="ReportingService.cs" />
+    <Compile Include="Strategies\GetApplicationsReceivedResultItemsStrategy.cs" />
+    <Compile Include="Strategies\GetCandidatesWithApplicationsResultItemsStrategy.cs" />
+    <Compile Include="Strategies\IGetApplicationsReceivedResultItemsStrategy.cs" />
+    <Compile Include="Strategies\IGetCandidatesWithApplicationsResultItemsStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
-      <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
-      <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
+      <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
