@@ -6,6 +6,7 @@
     using System.Data.SqlClient;
     using System.Linq;
     using Common;
+    using Domain.Entities.Raa.Reporting;
     using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
     using SFA.Infrastructure.Interfaces;
@@ -278,6 +279,16 @@
             _logger.Debug($"Done executing vacancy extensions report with toDate {toDate} and fromdate {fromDate} for provider with ukprn {ukprn} and for vacancies with status {status}.");
 
             return response;
+        }
+
+        public IList<ApplicationsReceivedResultItem> GetApplicationsReceivedResultItems(DateTime dateFrom, DateTime dateTo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo)
+        {
+            throw new NotImplementedException();
         }
     }
 }
