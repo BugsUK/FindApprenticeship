@@ -108,7 +108,7 @@ WHERE  LocalAuthorityId = @LocalAuthorityId",
 
         private void PopulateCountyId(VacancyLocation entity, Entities.VacancyLocation dbVacancyLocation)
         {
-            if (entity.Address?.County != null)
+            if (!string.IsNullOrWhiteSpace(entity.Address?.County))
             {
                 dbVacancyLocation.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT CountyId
@@ -123,14 +123,19 @@ WHERE  FullName = @CountyFullName",
 
         private void MapCountyId(Entities.VacancyLocation dbVacancyLocation, VacancyLocation result)
         {
-            result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+            // Not all the vacancies have CountyId (before being accepted by QA).
+            // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
+            if (dbVacancyLocation.CountyId > 0)
+            {
+                result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT FullName
 FROM   dbo.County
 WHERE  CountyId = @CountyId",
-                new
-                {
-                    CountyId = dbVacancyLocation.CountyId
-                }).Single();
+                    new
+                    {
+                        CountyId = dbVacancyLocation.CountyId
+                    }).SingleOrDefault();
+            }
         }
     }
 }

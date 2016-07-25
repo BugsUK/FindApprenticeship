@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
+    using Attributes;
     using Common.Attributes;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
+    using Domain.Entities.Raa;
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
@@ -12,6 +14,8 @@
     using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
+    [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+    [AuthorizeUser(Roles = Roles.Faa)]
     public class ApprenticeshipApplicationController : RecruitmentControllerBase
     {
         private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;

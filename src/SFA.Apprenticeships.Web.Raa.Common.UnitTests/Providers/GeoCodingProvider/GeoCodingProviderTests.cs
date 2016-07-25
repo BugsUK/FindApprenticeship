@@ -93,6 +93,25 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvid
             result.Should().Be(GeoCodeAddressResult.InvalidAddress);
         }
 
+        [Test]
+        public void GivenAInvalidCountyShouldReturnInvalidAddress()
+        {
+            const int employerId = 2;
+            var employerService = new Mock<IEmployerService>();
+            var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
+            var postalAddress = new PostalAddress { County = "" };
+
+            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer { Address = postalAddress });
+            geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(new Fixture().Create<GeoPoint>());
+
+            var geoCodingProvider =
+                new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
+
+            var result = geoCodingProvider.EmployerHasAValidAddress(employerId);
+
+            result.Should().Be(GeoCodeAddressResult.Ok);
+        }
+
     }
 
     public class GeoCodingProviderBuilder

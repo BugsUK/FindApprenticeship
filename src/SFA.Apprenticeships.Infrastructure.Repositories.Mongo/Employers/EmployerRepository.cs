@@ -37,6 +37,16 @@
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
+        //TODO: temporary method. Remove after moving status checks to a higher tier
+        public Employer GetByIdWithoutStatusCheck(int employerId)
+        {
+            _logger.Debug("Called Mongodb to get employer with Id={0}", employerId);
+
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EmployerId == employerId);
+
+            return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
+        }
+
         public Employer GetByEdsUrn(string edsUrn)
         {
             _logger.Debug("Called Mongodb to get employer with edsUrn={0}", edsUrn);

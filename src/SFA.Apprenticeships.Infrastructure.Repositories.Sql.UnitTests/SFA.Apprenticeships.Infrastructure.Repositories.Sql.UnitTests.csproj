@@ -101,10 +101,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-      <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>   
+    </Compile>
     <Compile Include="Employer\EmployerMappersTests.cs" />
+    <Compile Include="Helpers\DbHelpersTests.cs" />
     <Compile Include="Provider\ProviderMappersTests.cs" />
     <Compile Include="Provider\ProviderSiteMappersTests.cs" />
     <Compile Include="Provider\ProviderUserMappersTests.cs" />

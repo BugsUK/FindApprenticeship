@@ -53,7 +53,7 @@
                                     <td>
                                         @if (vacancy.CanBeReservedForQaByCurrentUser)
                                         {
-                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReserveForQA, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Review vacancy</a>
+                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReserveForQA, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Review @vacancy.Title">Review vacancy</a>
                                         }
                                     </td>
                                 </tr>

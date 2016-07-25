@@ -56,10 +56,10 @@
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
             Mapper.CreateMap<DomainVacancy, DbVacancy>()
                 .IgnoreMember(v => v.CountyId) // -> DB Lookup
-                .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
+                .MapMemberFrom(v => v.DeliveryOrganisationID, av => av.DeliveryOrganisationId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.OwnerPartyId)
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.VacancyGuid)
@@ -152,6 +152,7 @@
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .MapMemberFrom(av => av.EmployerWebsiteUrl, v => v.EmployersWebsite)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
+                .MapMemberFrom(av => av.DeliveryOrganisationId, v => v.DeliveryOrganisationID)
                 .IgnoreMember(av => av.TrainingType)
                 .IgnoreMember(av => av.ApprenticeshipLevel)
                 .IgnoreMember(av => av.ApprenticeshipLevelComment)
@@ -285,6 +286,7 @@
                 .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
                 .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
+                .MapMemberFrom(av => av.DeliveryOrganisationId, v => v.DeliveryOrganisationID)
                 .IgnoreMember(av => av.TrainingType)
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => v.ApprenticeshipType ?? 0)
                 .MapMemberFrom(av => av.FrameworkCodeName, v => v.ApprenticeshipFrameworkId.HasValue ? v.ApprenticeshipFrameworkId.ToString() : null)

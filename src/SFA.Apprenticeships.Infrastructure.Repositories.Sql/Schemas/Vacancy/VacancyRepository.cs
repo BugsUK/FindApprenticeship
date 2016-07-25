@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common;
+    using dbo;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
@@ -17,7 +18,6 @@
     using VacancyLocation = Entities.VacancyLocation;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
-    using Domain.Entities.Raa.Locations;
 
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
@@ -41,6 +41,8 @@
             "VacancyGuid", "SubmissionCount", "StartedToQADateTime", "StandardId", "HoursPerWeek", "WageUnitId", "DurationTypeId", "DurationValue", "QAUserName",
             "TrainingTypeId", "VacancyTypeId", "SectorId", "UpdatedDateTime"
         };
+
+        private const int StandardsApprenticeshipOccupationId = 100;
 
         private const string StatusChangeText = "Status Change";
 
@@ -301,6 +303,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapCountyId(dbVacancy, result);
 
             PatchTrainingType(result);
+            PatchStandards(dbVacancy, result);
 
             return result;
         }
@@ -323,6 +326,7 @@ FETCH NEXT @PageSize ROWS ONLY
                 MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
                 MapDuration(dbVacancy, vacancySummary);
+                PatchStandards(dbVacancy, vacancySummary);
             }
 
             return results;
@@ -366,7 +370,7 @@ WHERE  ApprenticeshipFrameworkId IN @Ids",
         private void MapApprenticeshipType(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipType.HasValue)
-            {
+            {   
                 var educationLevelCodeName =
                     _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT el.CodeName
@@ -428,6 +432,7 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
         {
             // Not all the vacancies have CountyId (before being accepted by QA).
             // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
+            
             if (dbVacancy.CountyId > 0)
             {
                 result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
@@ -530,6 +535,78 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             {
                 result.TrainingType = TrainingType.Frameworks;
             }
+        }
+
+        private void PatchStandards(Vacancy dbVacancy, VacancySummary result)
+        {
+            if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
+            {
+                var apprenticeshipOccupationId =
+                    GetApprenticeshipOccupationIdFor(dbVacancy.ApprenticeshipFrameworkId.Value);
+
+                if (apprenticeshipOccupationId == StandardsApprenticeshipOccupationId)
+                {
+                    // This is a vacancy created in AVMS with an standard codified as framework
+                    result.TrainingType = TrainingType.Standards;
+                    result.FrameworkCodeName = null;
+
+                    // Try to get the standard id
+                    var frameworkFullName = GetFrameworkFullNameFor(dbVacancy.ApprenticeshipFrameworkId.Value);
+                    var sanitizedFrameworkFullName = SanitizeFrameworkFullName(frameworkFullName);
+
+                    result.StandardId = GetStandardIdWithFullName(sanitizedFrameworkFullName);
+
+                    _logger.Info(
+                        result.StandardId.HasValue
+                            ? $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({frameworkFullName}) and the new StandardId is {result.StandardId.Value}"
+                            : $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({frameworkFullName}) but we haven't found any matching standard.");
+                }
+            }
+        }
+
+        private static string SanitizeFrameworkFullName(string frameworkFullName)
+        {
+            var sanitizedFrameworkFullName = frameworkFullName.IndexOf("(") == -1
+                ? frameworkFullName
+                : frameworkFullName.Substring(0, frameworkFullName.IndexOf("(")).Trim().ToLowerInvariant();
+
+            return sanitizedFrameworkFullName;
+        }
+
+        private int GetApprenticeshipOccupationIdFor(int frameworkId)
+        {
+            return _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT ApprenticeshipOccupationId
+FROM   dbo.ApprenticeshipFramework
+WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
+                new
+                {
+                    ApprenticeshipFrameworkId = frameworkId
+                }).Single();
+        }
+
+        private string GetFrameworkFullNameFor(int frameworkId)
+        {
+            return _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT FullName
+FROM   dbo.ApprenticeshipFramework
+WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
+                new
+                {
+                    ApprenticeshipFrameworkId = frameworkId
+                }).Single();
+        }
+
+        private int? GetStandardIdWithFullName(string fullName)
+        {
+            return _getOpenConnection.QueryCached<int?>(_cacheDuration, @"
+SELECT StandardId
+FROM   Reference.Standard
+WHERE  FullName = @FrameworkFullName",
+                new
+                {
+                    FrameworkFullName = fullName
+                }).SingleOrDefault();
         }
 
         private string GetTextField(IReadOnlyDictionary<string, string> textFields, string codeName)
@@ -721,23 +798,26 @@ order by HistoryDate desc
 
         private void MapRegionalTeam(VacancySummary vacancySummary)
         {
-            vacancySummary.RegionalTeam = vacancySummary.Address != null
-                                              ? RegionalTeamMapper.GetRegionalTeam(vacancySummary.Address.Postcode)
-                                              : RegionalTeam.Other;
+            const string sql = @"
+                SELECT ps.PostCode
+                FROM dbo.Vacancy v
+                INNER JOIN dbo.VacancyOwnerRelationship vor
+                ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                INNER JOIN dbo.ProviderSite ps
+                ON ps.ProviderSiteId = vor.ProviderSiteId
+                WHERE v.VacancyId = @vacancyId
+                ";
 
-            if (vacancySummary.RegionalTeam == RegionalTeam.Other)
+            var sqlParams = new
             {
-                //Try and get region from vacancy locations
-                var vacancyLocation =
-                    _getOpenConnection.Query<VacancyLocation>(
-                        "SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC", new {vacancySummary.VacancyId})
-                        .FirstOrDefault();
-                if (vacancyLocation != null)
-                {
-                    vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancyLocation.PostCode);
-                }
-            }
-        }        
+                vacancySummary.VacancyId,
+                vacancySummary.OwnerPartyId
+            };
+
+            var postcode = _getOpenConnection.Query<string>(sql, sqlParams).FirstOrDefault();
+
+            vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(postcode);
+        }
 
         private static void MapDuration(Vacancy dbVacancy, VacancySummary result)
         {
@@ -934,7 +1014,7 @@ WHERE  CodeName = @FrameworkCodeName",
 
         private void PopulateCountyId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            if (entity.Address?.County != null)
+            if (!string.IsNullOrWhiteSpace(entity.Address?.County))
             {
                 dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT CountyId
@@ -943,7 +1023,7 @@ WHERE  FullName = @CountyFullName",
                     new
                     {
                         CountyFullName = entity.Address.County
-                    }).Single(); 
+                    }).SingleOrDefault(); 
             }
         }
 
@@ -1251,6 +1331,36 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             return MapVacancy(dbVacancy);
         }
 
+        public void UnReserveVacancyForQa(int vacancyReferenceNumber)
+        {
+            _logger.Debug(
+                $"Calling database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA");
+
+            var dbVacancy = _getOpenConnection.MutatingQuery<Vacancy>(@"
+UPDATE dbo.Vacancy
+SET    QAUserName             = null,
+       VacancyStatusId        = @VacancyStatusId
+WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
+
+SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
+",
+                new
+                {
+                    VacancyStatusId = VacancyStatus.Submitted,
+                    VacancyReferenceNumber = vacancyReferenceNumber
+                })
+                .SingleOrDefault();
+            if (dbVacancy == null)
+            {
+                _logger.Warn(
+                    $"Call to database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA failed");
+                return;
+            }
+
+            _logger.Info(
+                $"Called database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
+        }
+
         private void UpdateEntityTimestamps(DomainVacancy entity)
         {
             // determine whether this is a "new" entity being saved for the first time
@@ -1266,26 +1376,33 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
         }
 
         public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
-        {
-            // TODO: Handle >2000 records - Shoma
-            return _getOpenConnection.Query<dynamic>(@"
-SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId
-FROM   dbo.Vacancy
-WHERE  VacancyOwnerRelationshipId IN @Ids",
-new { Ids = vacancyPartyIds })
-            .GroupBy(x => (int)x.VacancyOwnerRelationshipId)
-            .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));
+        {            
+            var vacancyCollections = new List<dynamic>();                               
+            var partyIds = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
+            var splitVacancyPartyIds = DbHelpers.SplitIds(partyIds);            
+            foreach (var splitVacancyPartyId in splitVacancyPartyIds)
+            {
+                IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(@"
+                                SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId
+                                FROM   dbo.Vacancy
+                                WHERE  VacancyOwnerRelationshipId IN @Ids",
+                    new {Ids = splitVacancyPartyId});                                                                                                      
+                vacancyCollections.AddRange(singleCollection);                
+            }
+            return vacancyCollections
+                .GroupBy(x => (int) x.VacancyOwnerRelationshipId)
+                .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));               
         }
 
         public IReadOnlyDictionary<int, IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
         {
             // TODO: Handle >2000 records - Shoma
             return _getOpenConnection.Query<Domain.Entities.Raa.Locations.VacancyLocation> (@"
-SELECT *
-FROM   dbo.VacancyLocation
-WHERE  VacancyId IN @Ids",
-new { Ids = vacancyIds })
-            .GroupBy(x => x.VacancyId)
+                        SELECT *
+                        FROM   dbo.VacancyLocation
+                        WHERE  VacancyId IN @Ids",
+                        new { Ids = vacancyIds })
+                                    .GroupBy(x => x.VacancyId)
             .ToDictionary(x => x.Key, x => (IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>)x);
         }
 

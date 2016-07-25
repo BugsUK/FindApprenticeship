@@ -66,10 +66,6 @@
         };
 
         self.addLocationAddressByField = function (addressLine1, addressLine2, addressLine3, addressLine4, town, postcode, numberOfPositions, uprn, provinceName) {
-            if (!provinceName) {
-                provinceName = town;
-            }
-
             var locationAddressItem = new locationAddressItemModel(addressLine1, addressLine2, addressLine3, addressLine4, town, postcode, numberOfPositions, uprn, provinceName);
 
             var found = self.locationAddresses().some(function (el) {

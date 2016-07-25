@@ -105,7 +105,7 @@
                 // Seems to be related to applications rather than vacancies
                 // var SubVacancy                     = _tables.AddNew("SubVacancy",                                                                  OwnedByAv, Vacancy);
 
-                var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, Unchanged, OwnedByAVUnlessNegativeNoDeletes, ProviderSiteRelationship);
+                var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, Unchanged, OwnedByAVUnlessNegative, ProviderSiteRelationship);
                 var ProviderSiteFramework             = _tables.AddNew("ProviderSiteFramework",      new string[] { "ProviderSiteFrameworkID" },      Unchanged, OwnedByAVUnlessNegativeAllowDeletes, ProviderSiteRelationship, ApprenticeshipFramework);
 
                 // This isn't really needed, plus records can be deleted (outside of archiving activity) which we don't support yet (also, records get deleted and re-added by the AVMS GUI when editing)
@@ -443,11 +443,6 @@ select top 10 * from VacancyReferralComments
             newRecord.BeingSupportedBy      = null;
             newRecord.LockedForSupportUntil = null;
 
-            // We can't populate these for new vacancies and none of our systems used it (including FAA)
-            // Therefore it is better to set it to null (etc) to out problems early
-            // TODO: Check that new vacancies are really setting to null and not the vacancy owner site id (etc)
-            newRecord.VacancyManagerID        = null;
-            newRecord.DeliveryOrganisationID  = null;
             // Required by unsuccessful candidates report and now correctly set in RAA so keeping
             //newRecord.ContractOwnerID         = null;
             //newRecord.OriginalContractOwnerId = null;

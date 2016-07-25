@@ -58,7 +58,7 @@
 
                 if (vacancyManager?.PreferredProviderSiteId != null)
                 {
-                    vacancy.VacancyManagerId = vacancyManager.PreferredProviderSiteId.Value;
+                    vacancy.VacancyManagerId = vacancy.DeliveryOrganisationId = vacancyManager.PreferredProviderSiteId.Value;
                 }
             }
 
@@ -113,6 +113,11 @@
         public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             return _vacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+        }
+
+        public void UnReserveVacancyForQa(int vacancyReferenceNumber)
+        {
+            _vacancyWriteRepository.UnReserveVacancyForQa(vacancyReferenceNumber);
         }
 
         public List<VacancyLocation> GetVacancyLocations(int vacancyId)

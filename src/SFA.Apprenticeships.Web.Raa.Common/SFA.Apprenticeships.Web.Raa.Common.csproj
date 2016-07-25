@@ -163,8 +163,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="Attributes\CookiesEnabledAttribute.cs" />
     <Compile Include="Configuration\ManageWebConfiguration.cs" />
     <Compile Include="Configuration\RecruitWebConfiguration.cs" />
+    <Compile Include="Constants\Pages\PrivacyPageMessages.cs" />
     <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
@@ -212,6 +214,8 @@
     <Compile Include="Providers\ProviderProvider.cs" />
     <Compile Include="Providers\ProviderUserProvider.cs" />
     <Compile Include="Factories\SelectListItemsFactory.cs" />
+    <Compile Include="Providers\CookieDetectionProvider.cs" />
+    <Compile Include="Providers\EuCookieDirectiveProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
@@ -250,6 +254,7 @@
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />

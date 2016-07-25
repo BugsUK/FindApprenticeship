@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces;
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Repository.Sql;
     using SFA.Infrastructure.Interfaces;
     using CandidateSummary = Entities.Sql.CandidateSummary;
     using Candidate = Entities.Sql.Candidate;
@@ -64,12 +64,13 @@
             _logService = logService;
         }
 
-        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, bool anonymise)
+        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, IDictionary<int, int> schoolAttendedIds, bool anonymise)
         {
             try
             {
                 var candidateGuid = candidateUser.Candidate.Id;
                 var candidateSummary = candidateSummaries.ContainsKey(candidateGuid) ? candidateSummaries[candidateGuid] : new CandidateSummary();
+                var candidateId = GetCandidateId(candidateUser, candidateSummary);
                 var address = candidateUser.Candidate.RegistrationDetails.Address;
                 var email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower();
                 var monitoringInformation = candidateUser.Candidate.MonitoringInformation ?? new MonitoringInformation();
@@ -80,7 +81,7 @@
 
                 var candidate = new Candidate
                 {
-                    CandidateId = GetCandidateId(candidateUser, candidateSummary),
+                    CandidateId = candidateId,
                     PersonId = candidateSummary.PersonId,
                     CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser.User.Status),
                     DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
@@ -148,6 +149,7 @@
                 return new CandidatePerson
                 {
                     Candidate = candidate,
+                    SchoolAttended = MapSchoolAttended(candidateUser, schoolAttendedIds, candidateId),
                     Person = person
                 };
             }
@@ -157,6 +159,13 @@
                 _logService.Error($"Failed to map Candidate with Id {candidateUser.Candidate.Id}", ex);
                 return null;
             }
+        }
+
+        public CandidateWithHistory MapCandidateWithHistory(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, IDictionary<int, int> schoolAttendedIds, IDictionary<int, Dictionary<int, int>> candidateHistoryIds, bool anonymise)
+        {
+            var candidatePerson = MapCandidatePerson(candidateUser, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, schoolAttendedIds, anonymise);
+            var candidateHistory = candidateUser.MapCandidateHistory(candidatePerson.Candidate.CandidateId, candidateHistoryIds);
+            return new CandidateWithHistory { CandidatePerson = candidatePerson, CandidateHistory = candidateHistory };
         }
 
         public Dictionary<string, object> MapCandidateDictionary(Candidate candidate)
@@ -355,6 +364,32 @@
                 return "Other";
             }
             return "";
+        }
+
+        private static SchoolAttended MapSchoolAttended(CandidateUser candidateUser, IDictionary<int, int> schoolAttendedIds, int candidateId)
+        {
+            if (candidateUser.Candidate.ApplicationTemplate?.EducationHistory == null)
+                return null;
+
+            var educationHistory = candidateUser.Candidate.ApplicationTemplate.EducationHistory;
+
+            if (string.IsNullOrEmpty(educationHistory.Institution) || educationHistory.FromYear == 0 || educationHistory.ToYear == 0)
+                return null;
+
+            int schoolAttendedId;
+            schoolAttendedIds.TryGetValue(candidateId, out schoolAttendedId);
+
+            return new SchoolAttended
+            {
+                SchoolAttendedId = schoolAttendedId,
+                CandidateId = candidateId,
+                SchoolId = null,
+                OtherSchoolName = educationHistory.Institution,
+                OtherSchoolTown = null,
+                StartDate = new DateTime(educationHistory.FromYear, 1, 1),
+                EndDate = new DateTime(educationHistory.ToYear, 1, 1),
+                ApplicationId = null
+            };
         }
     }
 }

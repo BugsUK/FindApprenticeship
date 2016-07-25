@@ -235,6 +235,18 @@
                defaults: new { controller = "Report", action = "VacancyExtensionsCsv" }
                );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.WebTrendsOptOut,
+                url: "webtrendsoptout",
+                defaults: new { controller = "Home", action = "WebTrendsOptOut" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.Cookies,
+                url: "cookies",
+                defaults: new { controller = "Home", action = "Cookies" }
+                );
+
             routes.LowercaseUrls = true;
         }
     }

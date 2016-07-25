@@ -20,11 +20,6 @@
         {
             var employer = _employerService.GetEmployer(employerId);
 
-            if (InvalidCounty(employer.Address))
-            {
-                return GeoCodeAddressResult.InvalidAddress;
-            }
-
             if (NoGeoPoint(employer.Address) || InvalidGeopoint(employer.Address))
             {
                 var geoPoint = _geoCodeLookupService.GetGeoPointFor(employer.Address);
@@ -45,11 +40,6 @@
             const double tolerance = 0.001;
 
             return Math.Abs(address.GeoPoint.Latitude) < 0.0001 && Math.Abs(address.GeoPoint.Longitude) < tolerance;
-        }
-
-        private bool InvalidCounty(PostalAddress address)
-        {
-            return string.IsNullOrWhiteSpace(address.County);
         }
     }
 }

@@ -93,6 +93,7 @@
         private void RegisterStrategies()
         {
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");

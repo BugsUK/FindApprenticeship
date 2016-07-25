@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -131,7 +132,7 @@ WriteLiteral("        ");
 
             
             #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "DesiredSkills"}));
 
             
             #line default
@@ -164,7 +165,7 @@ WriteLiteral("        ");
 
             
             #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "PersonalQualities"}));
 
             
             #line default
@@ -240,14 +241,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-       Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
+       Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "DesiredQualifications"}));
 
             
             #line default
             #line hidden
             
             #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-                                                                                                                                                          
+                                                                                                                                                              
             
             
             #line default
@@ -285,7 +286,7 @@ WriteLiteral("        ");
 
             
             #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
 
             
             #line default
@@ -318,7 +319,7 @@ WriteLiteral("        ");
 
             
             #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
 
             
             #line default
@@ -345,7 +346,22 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</section>");
+WriteLiteral(@"
+    </div>
+</section>
+
+<script>CKEDITOR.replace('LongDescription');</script>
+<script>CKEDITOR.replace('DesiredSkills');</script>
+<script>CKEDITOR.replace('DesiredQualifications');</script>
+<script>CKEDITOR.replace('PersonalQualities');</script>
+
+<script>
+    nanospell.ckeditor('all',
+    {
+        dictionary: ""en_uk"", // 24 free international dictionaries
+        server: ""asp.net"" // can be php, asp, asp.net or java
+    });
+</script>");
 
         }
     }

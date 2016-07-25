@@ -10,7 +10,9 @@
 
     using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
+
     [AuthorizeUser(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.VerifiedEmail)]
     public class ApplicationController : RecruitmentControllerBase
     {
         private readonly IApplicationMediator _applicationMediator;

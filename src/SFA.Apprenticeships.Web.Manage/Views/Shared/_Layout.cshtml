@@ -25,6 +25,8 @@
     <link rel="apple-touch-icon-precomposed" href="@Url.CdnImage("apple-touch-icon-60x60.png")">
     @Scripts.Render("~/bundles/webtrends")
     @Styles.Render("~/bundles/font-awesome")
+    @Scripts.Render("~/bundles/ckeditor")
+    @Scripts.Render("~/bundles/nanospell")
     @Html.Partial("_Scripts")
 </head>
 <body>
@@ -65,7 +67,7 @@
             </div>
             <div class="global-header__nav">
                 <div class="global-header__title beta" id="headerLinkFAA">
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard)">Agency home</a>
+                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard)" title="Home">Agency home</a>
                 </div>
             </div>
         </div>

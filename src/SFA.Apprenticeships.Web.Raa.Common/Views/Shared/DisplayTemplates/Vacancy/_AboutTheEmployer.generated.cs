@@ -229,6 +229,7 @@ WriteLiteral(">\r\n");
             #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                  if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl))
                 {
+                    var employerWebsiteUri = new UriBuilder(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl).Uri;
 
             
             #line default
@@ -246,7 +247,7 @@ WriteLiteral(">\r\n                            Website\r\n");
 WriteLiteral("                            ");
 
             
-            #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                        Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink)));
 
             
@@ -256,29 +257,29 @@ WriteLiteral("\r\n                        </h3>\r\n                        <a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2610), Tuple.Create("\"", 2673)
+WriteAttribute("href", Tuple.Create(" href=\"", 2733), Tuple.Create("\"", 2759)
             
-            #line 47 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 2617), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl
+            #line 48 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+, Tuple.Create(Tuple.Create("", 2740), Tuple.Create<System.Object, System.Int32>(employerWebsiteUri
             
             #line default
             #line hidden
-, 2617), false)
+, 2740), false)
 );
 
 WriteLiteral("\r\n                           id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                           target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 2776), Tuple.Create("\"", 2871)
+WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 2862), Tuple.Create("\"", 2957)
             
-            #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 2812), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.Employer.Name
+            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+, Tuple.Create(Tuple.Create("", 2898), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.Employer.Name
             
             #line default
             #line hidden
-, 2812), false)
-, Tuple.Create(Tuple.Create(" ", 2863), Tuple.Create("Website", 2864), true)
+, 2898), false)
+, Tuple.Create(Tuple.Create(" ", 2949), Tuple.Create("Website", 2950), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -286,7 +287,7 @@ WriteLiteral(" rel=\"external\"");
 WriteLiteral(">");
 
             
-            #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                                          Write(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl);
 
             
@@ -297,7 +298,7 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 52 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
@@ -306,7 +307,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n");
 
             
-            #line 53 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 54 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                 }
 
             
@@ -319,13 +320,13 @@ WriteLiteral(" class=\"inner-block-padr\"");
 WriteLiteral(">\r\n");
 
             
-            #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                          if (Model.IsSingleLocation)
                         {
 
@@ -357,7 +358,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 62 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 63 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                     Write(Model.Address.AddressLine1);
 
             
@@ -372,7 +373,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 63 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                     Write(Model.Address.AddressLine2);
 
             
@@ -387,7 +388,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                     Write(Model.Address.AddressLine3);
 
             
@@ -402,7 +403,7 @@ WriteLiteral(" itemprop=\"addressLocality\"");
 WriteLiteral(">");
 
             
-            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 66 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                       Write(Model.Address.Town);
 
             
@@ -417,7 +418,7 @@ WriteLiteral(" itemprop=\"addressRegion\"");
 WriteLiteral(">");
 
             
-            #line 66 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 67 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                     Write(Model.Address.County);
 
             
@@ -432,7 +433,7 @@ WriteLiteral(" itemprop=\"postalCode\"");
 WriteLiteral(">");
 
             
-            #line 67 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                  Write(Model.Address.Postcode);
 
             
@@ -442,7 +443,7 @@ WriteLiteral("</p>\r\n                                </div>\r\n                
 "\n");
 
             
-            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 71 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                         }
                         else
                         {
@@ -471,7 +472,7 @@ WriteLiteral(">\r\n                                        Address\r\n");
 WriteLiteral("                                        ");
 
             
-            #line 78 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                    Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink)));
 
             
@@ -491,7 +492,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 82 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                         Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1);
 
             
@@ -506,7 +507,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 82 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                         Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2);
 
             
@@ -521,7 +522,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                         Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3);
 
             
@@ -536,7 +537,7 @@ WriteLiteral(" itemprop=\"addressLocality\"");
 WriteLiteral(">");
 
             
-            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                           Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.Town);
 
             
@@ -551,7 +552,7 @@ WriteLiteral(" itemprop=\"addressRegion\"");
 WriteLiteral(">");
 
             
-            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                         Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.County);
 
             
@@ -566,7 +567,7 @@ WriteLiteral(" itemprop=\"postalCode\"");
 WriteLiteral(">");
 
             
-            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                      Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode);
 
             
@@ -577,7 +578,7 @@ WriteLiteral("</p>\r\n                                    </div>\r\n\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 89 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 90 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
@@ -586,7 +587,7 @@ WriteLiteral("                                    ");
 WriteLiteral("\r\n                                </div>\r\n");
 
             
-            #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 92 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                             }
                             else
                             {
@@ -616,7 +617,7 @@ WriteLiteral(">\r\n                                        Addresses\r\n");
 WriteLiteral("                                        ");
 
             
-            #line 99 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 100 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                    Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink)));
 
             
@@ -675,13 +676,13 @@ WriteLiteral(" data-bind=\"foreach: locationAddresses\"");
 WriteLiteral(">\r\n");
 
             
-            #line 120 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 121 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                     
             
             #line default
             #line hidden
             
-            #line 120 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 121 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                      for (var i = 0; i < midIndex; i++)
                                                     {
                                                         var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
@@ -690,14 +691,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 123 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                    Write(Html.DisplayFor(m => locationAddress));
 
             
             #line default
             #line hidden
             
-            #line 123 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                               
                                                     }
 
@@ -754,13 +755,13 @@ WriteLiteral(" data-bind=\"foreach: locationAddresses\"");
 WriteLiteral(">\r\n");
 
             
-            #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 150 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                 
             
             #line default
             #line hidden
             
-            #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 150 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                  for (var i = midIndex; i < Model.NewVacancyViewModel.LocationAddresses.Count; i++)
                                                 {
                                                     var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
@@ -769,14 +770,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 152 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 153 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                Write(Html.DisplayFor(m => locationAddress));
 
             
             #line default
             #line hidden
             
-            #line 152 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 153 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                           
                                                 }
 
@@ -789,7 +790,7 @@ WriteLiteral("\r\n                                            </tbody>\r\n      
 WriteLiteral("                                    ");
 
             
-            #line 159 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 160 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
@@ -798,7 +799,7 @@ WriteLiteral("                                    ");
 WriteLiteral("\r\n                                </div>\r\n");
 
             
-            #line 161 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 162 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                             }
                             if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
                             {
@@ -819,7 +820,7 @@ WriteLiteral(">\r\n                                        Additional location i
 WriteLiteral("                                        ");
 
             
-            #line 167 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 168 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                    Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.NewVacancyViewModel.AdditionalLocationInformationComment, Model.LocationsLink)));
 
             
@@ -828,20 +829,20 @@ WriteLiteral("                                        ");
 WriteLiteral("\r\n                                    </h3>\r\n                                    " +
 "<p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 12150), Tuple.Create("\"", 12246)
+WriteAttribute("class", Tuple.Create(" class=\"", 12236), Tuple.Create("\"", 12332)
             
-            #line 169 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 12158), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()
+            #line 170 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+, Tuple.Create(Tuple.Create("", 12244), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 12158), false)
+, 12244), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 169 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 170 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                                                                                                                    Write(Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation));
 
             
@@ -852,7 +853,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 170 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 171 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                                Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
@@ -861,7 +862,7 @@ WriteLiteral("                                    ");
 WriteLiteral("\r\n                                </div>\r\n");
 
             
-            #line 172 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 173 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                             }
                         }
 
@@ -876,13 +877,13 @@ WriteLiteral(" class=\"grid grid-1-2 hide-print\"");
 WriteLiteral(">\r\n");
 
             
-            #line 179 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 180 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 179 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 180 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
              if (Model.IsSingleLocation)
             {
 
@@ -911,16 +912,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 13109), Tuple.Create("\"", 13257)
-, Tuple.Create(Tuple.Create("", 13115), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13115), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 13195), Tuple.Create("\"", 13343)
+, Tuple.Create(Tuple.Create("", 13201), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13201), true)
             
-            #line 183 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 13160), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
+            #line 184 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+                                                                , Tuple.Create(Tuple.Create("", 13246), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
             
             #line default
             #line hidden
-, 13160), false)
-, Tuple.Create(Tuple.Create("", 13193), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 13193), true)
+, 13246), false)
+, Tuple.Create(Tuple.Create("", 13279), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 13279), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -931,7 +932,7 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "    </div>\r\n");
 
             
-            #line 186 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 187 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
             }
             else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
             {
@@ -961,16 +962,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 13820), Tuple.Create("\"", 13994)
-, Tuple.Create(Tuple.Create("", 13826), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13826), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 13906), Tuple.Create("\"", 14080)
+, Tuple.Create(Tuple.Create("", 13912), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13912), true)
             
-            #line 191 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 13871), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
+            #line 192 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+                                                                , Tuple.Create(Tuple.Create("", 13957), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
             
             #line default
             #line hidden
-, 13871), false)
-, Tuple.Create(Tuple.Create("", 13930), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 13930), true)
+, 13957), false)
+, Tuple.Create(Tuple.Create("", 14016), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 14016), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -981,7 +982,7 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "    </div>\r\n");
 
             
-            #line 194 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 195 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
             }
 
             

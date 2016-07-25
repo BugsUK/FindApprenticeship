@@ -39,12 +39,13 @@
             <div class="inner-block-padr">
                 @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl))
                 {
+                    var employerWebsiteUri = new UriBuilder(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl).Uri;
                     <div class="editable-item">
                         <h3 class="bold-small">
                             Website
                             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
                         </h3>
-                        <a itemprop="url" href="@Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl"
+                        <a itemprop="url" href="@employerWebsiteUri"
                            id="vacancy-employer-website"
                            target="_blank"
                            title="@Model.NewVacancyViewModel.OwnerParty.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl</a>

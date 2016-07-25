@@ -34,6 +34,8 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
 
     using StructureMap;
     using StructureMap.Web;
+    using EuCookieDirectiveProvider = Raa.Common.Providers.EuCookieDirectiveProvider;
+    using CookieDetectionProvider = Raa.Common.Providers.CookieDetectionProvider;
 
     public static class IoC
     {

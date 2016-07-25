@@ -8,6 +8,7 @@
         public const string ManageProviderSites = "ManageProviderSites";
         public const string AddProviderSite = "AddProviderSite";
         public const string EditProviderSite = "EditProviderSite";
+        public const string OnBoardingComplete = "OnBoardingComplete";
 
         // Account set up
         public const string Settings = "Settings";
@@ -27,6 +28,8 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
+        public const string WebTrendsOptOut = "WebTrendsOptOut";
+        public const string Cookies = "Cookies";
 
         // Vacancy posting
         public const string CreateVacancy = "CreateVacancy";

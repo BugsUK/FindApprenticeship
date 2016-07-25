@@ -32,6 +32,12 @@
                 );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.OnBoardingComplete,
+                url: "onboardingcomplete",
+                defaults: new { controller = "ProviderUser", action = "OnBoardingComplete" }
+                );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.Privacy,
                 url: "privacy",
                 defaults: new { controller = "Home", action = "Privacy" }
@@ -342,6 +348,18 @@
                url: "traineeshipapplication/review",
                defaults: new { controller = "TraineeshipApplication", action = "Review" }
                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.WebTrendsOptOut,
+                url: "webtrendsoptout",
+                defaults: new { controller = "Home", action = "WebTrendsOptOut" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.Cookies,
+                url: "cookies",
+                defaults: new { controller = "Home", action = "Cookies" }
+                );
 
             routes.LowercaseUrls = true;
         }

@@ -44,8 +44,8 @@
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
         private Mock<ICurrentUserService> _mockCurrentUserService;
         private Mock<IUserProfileService> _mockUserProfileService;
-        private Mock<IGeoCodeLookupService> _mockGeoCodingService;
-        private Mock<ILocalAuthorityLookupService> _mockLocalAuthorityService;
+        protected Mock<IGeoCodeLookupService> MockGeoCodingService;
+        protected Mock<ILocalAuthorityLookupService> MockLocalAuthorityService;
 
         [SetUp]
         public void SetUp()
@@ -78,8 +78,8 @@
             _mockVacancyLockingService = new Mock<IVacancyLockingService>();
             _mockCurrentUserService = new Mock<ICurrentUserService>();
             _mockUserProfileService = new Mock<IUserProfileService>();
-            _mockGeoCodingService = new Mock<IGeoCodeLookupService>();
-            _mockLocalAuthorityService = new Mock<ILocalAuthorityLookupService>();
+            MockGeoCodingService = new Mock<IGeoCodeLookupService>();
+            MockLocalAuthorityService = new Mock<ILocalAuthorityLookupService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -97,8 +97,8 @@
                 _mockVacancyLockingService.Object,
                 _mockCurrentUserService.Object,
                 _mockUserProfileService.Object,
-                _mockGeoCodingService.Object,
-                _mockLocalAuthorityService.Object);
+                MockGeoCodingService.Object,
+                MockLocalAuthorityService.Object);
         }
 
         protected IVacancyPostingMediator GetMediator()

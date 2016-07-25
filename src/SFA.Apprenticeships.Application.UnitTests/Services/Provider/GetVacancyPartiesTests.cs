@@ -153,20 +153,50 @@
             linksPage.TotalNumberOfPages.Should().Be(1);
         }
 
-        [Test]
-        public void NameAndLocationRepositorySearch()
+        [TestCase("AddressLine4Kidderminster", null)]
+        [TestCase(null, "TownKidderminster")]
+        public void NameAndLocationRepositorySearch(string addressLine4, string town)
         {
-            var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
-            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
-            var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyPartyReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer1.Name.Substring(0, 10), _employer1.Address.AddressLine4.Substring(0, 15));
+            // Arrange.
+            var fromRepository = new List<VacancyParty>
+            {
+                _providerSiteEmployerLink1,
+                _providerSiteEmployerLink2,
+                _providerSiteEmployerLink3
+            };
 
+            _vacancyPartyReadRepository.Setup(r => r.
+                GetByProviderSiteId(ProviderSiteId))
+                .Returns(fromRepository);
+
+            var service = new ProviderServiceBuilder()
+                .With(_employerService.Object)
+                .With(_vacancyPartyReadRepository.Object)
+                .Build();
+
+            _employer1.Address.AddressLine4 = addressLine4;
+            _employer1.Address.Town = town;
+
+            var employerName = _employer1.Name.Substring(0, 10);
+            var location = (addressLine4 ?? town).Substring(0, 15);
+
+            var employerSearchRequest = new EmployerSearchRequest(
+                ProviderSiteId, employerName, location);
+
+            var expectedResults = new List<VacancyParty>
+            {
+                _providerSiteEmployerLink1
+            };
+
+            // Act.
             var linksPage = service.GetVacancyParties(employerSearchRequest, CurrentPage, PageSize);
 
-            var expectedResults = new List<VacancyParty> { _providerSiteEmployerLink1 };
+            // Assert.
             linksPage.Should().NotBeNull();
+
             linksPage.Page.Count().Should().Be(expectedResults.Count);
             linksPage.Page.ShouldBeEquivalentTo(expectedResults);
+
             linksPage.ResultsCount.Should().Be(expectedResults.Count);
             linksPage.TotalNumberOfPages.Should().Be(1);
         }
@@ -189,20 +219,47 @@
             linksPage.TotalNumberOfPages.Should().Be(1);
         }
 
-        [Test]
-        public void LocationRepositorySearch()
+        [TestCase("AddressLine4Kidderminster", null)]
+        [TestCase(null, "TownKidderminster")]
+        public void LocationRepositorySearch(string addressLine4, string town)
         {
-            var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
-            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
-            var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyPartyReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, null, _employer3.Address.AddressLine4.Substring(0, 15));
+            // Arrange.
+            var fromRepository = new List<VacancyParty>
+            {
+                _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3
+            };
 
+            _vacancyPartyReadRepository.Setup(r => r
+                .GetByProviderSiteId(ProviderSiteId))
+                .Returns(fromRepository);
+
+            var service = new ProviderServiceBuilder()
+                .With(_employerService.Object)
+                .With(_vacancyPartyReadRepository.Object)
+                .Build();
+
+            _employer3.Address.AddressLine4 = addressLine4;
+            _employer3.Address.Town = town;
+
+            var location = (addressLine4 ?? town).Substring(0, 15);
+
+            var employerSearchRequest = new EmployerSearchRequest(
+                ProviderSiteId, null, location);
+
+            var expectedResults = new List<VacancyParty>
+            {
+                _providerSiteEmployerLink3
+            };
+
+            // Act.
             var linksPage = service.GetVacancyParties(employerSearchRequest, CurrentPage, PageSize);
 
-            var expectedResults = new List<VacancyParty> { _providerSiteEmployerLink3 };
+            // Assert.
             linksPage.Should().NotBeNull();
+
             linksPage.Page.Count().Should().Be(expectedResults.Count);
             linksPage.Page.ShouldBeEquivalentTo(expectedResults);
+
             linksPage.ResultsCount.Should().Be(expectedResults.Count);
             linksPage.TotalNumberOfPages.Should().Be(1);
         }

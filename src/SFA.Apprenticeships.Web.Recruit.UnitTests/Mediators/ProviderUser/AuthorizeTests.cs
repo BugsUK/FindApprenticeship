@@ -187,6 +187,30 @@
             response.AssertCode(ProviderUserMediatorCodes.Authorize.Ok);
         }
 
+        [Test(Description = "User has all claims, a complete provider profile and has verified their email address")]
+        public void Authorize_Ok_NonMigrated()
+        {
+            // Arrange.
+            var providerViewModel = new ProviderViewModelBuilder().With(new List<ProviderSiteViewModel>
+            {
+                new ProviderSiteViewModel()
+            }).Build();
+
+            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
+            MockProviderUserProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>()))
+                .Returns(new ProviderUserViewModel { EmailAddressVerified = true });
+
+            var mediator = GetMediator();
+            var principal =
+                new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Roles.Faa).Build();
+
+            // Act.
+            var response = mediator.Authorize(principal);
+
+            // Assert.
+            response.AssertCode(ProviderUserMediatorCodes.Authorize.Ok);
+        }
+
         [Test(
             Description =
                 "User has all claims, a complete provider profile and has verified their email address, should set ProviderId"
@@ -226,33 +250,6 @@
             // Assert.
             response.AssertCode(ProviderUserMediatorCodes.Authorize.Ok);
             response.ViewModel.ProviderId.Should().Be(providerViewModel.ProviderId);
-        }
-
-        [Test(Description = "User has not been migrated")]
-        public void Authorize_ProviderNotMigrated()
-        {
-            // Arrange.
-            var providerViewModel = new ProviderViewModelBuilder()
-                .With(false)
-                .With(new List<ProviderSiteViewModel>
-                {
-                    new ProviderSiteViewModel()
-                }).Build();
-
-            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
-            MockProviderUserProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>()))
-                .Returns(new ProviderUserViewModel {EmailAddressVerified = true});
-
-            var mediator = GetMediator();
-            var principal =
-                new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Roles.Faa).Build();
-
-            // Act.
-            var response = mediator.Authorize(principal);
-
-            // Assert.
-            response.AssertMessage(ProviderUserMediatorCodes.Authorize.ProviderNotMigrated,
-                AuthorizeMessages.ProviderNotMigrated, UserMessageLevel.Warning);
         }
     }
 }

@@ -41,7 +41,10 @@
         {
             return Builders<User>.Projection
                    .Include(u => u.Id)
+                   .Include(u => u.DateCreated)
+                   .Include(u => u.DateUpdated)
                    .Include(u => u.Status)
+                   .Include(u => u.ActivationDate)
                    .Include(u => u.LastLogin);
         }
     }
