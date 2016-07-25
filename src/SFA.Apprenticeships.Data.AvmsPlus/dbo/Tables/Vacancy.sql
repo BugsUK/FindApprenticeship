@@ -69,7 +69,7 @@
 	[SectorId]						   INT				NULL,
 	[UpdatedDateTime]				   DATETIME			NULL,
 	[EditedInRaa]					   BIT				NOT NULL DEFAULT 0,
-	[VacancySourceId]			       INT				NULL
+	[VacancySourceId]			       INT				NOT NULL DEFAULT 1
 	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),

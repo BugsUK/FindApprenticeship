@@ -2,8 +2,9 @@
 {
     public enum VacancySource
     {
-        Av = 0,
-        Api = 1,
-        Raa = 2
+        Unknown = 0,
+        Av = 1,
+        Api = 2,
+        Raa = 3
     }
 }

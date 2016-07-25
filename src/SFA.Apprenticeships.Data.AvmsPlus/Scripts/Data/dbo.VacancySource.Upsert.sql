@@ -3,9 +3,10 @@ GO
 
 MERGE INTO [dbo].[VacancySource] AS Target 
 USING (VALUES 
-  (0, 'AV', 'AV', 'AVMS'),
-  (1, 'API', 'API', 'API'),
-  (2, 'RAA', 'RAA', 'RAA')
+  (0, 'UNK', 'UNK', 'Unknown'),
+  (1, 'AV', 'AV', 'AVMS'),
+  (2, 'API', 'API', 'API'),
+  (3, 'RAA', 'RAA', 'RAA')
 ) 
 AS Source (VacancySourceId, CodeName, ShortName, FullName) 
 ON Target.VacancySourceId = Source.VacancySourceId 
