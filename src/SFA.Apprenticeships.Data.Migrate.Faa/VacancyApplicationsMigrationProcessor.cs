@@ -188,7 +188,7 @@
                 var sourceApplicationSummaries = _sourceApplicationRepository.GetApplicationSummariesByIds(legacyApplicationIds);
                 var applicationHistoryIds = _destinationApplicationHistoryRepository.GetApplicationHistoryIdsByApplicationIds(applicationIds.Values);
                 var sourceApplicationHistorySummaries = _sourceApplicationHistoryRepository.GetApplicationHistorySummariesByApplicationIds(legacyApplicationIds);
-                var schoolAttendedIds = _schoolAttendedRepository.GetSchoolAttendedIdsByApplicationIds(legacyApplicationIds);
+                var schoolAttendedIds = _schoolAttendedRepository.GetSchoolAttendedIdsByApplicationIds(applicationIds.Values);
                 var subVacancies = _sourceSubVacancyRepository.GetApplicationSummariesByIds(legacyApplicationIds);
                 var applicationsWithHistory = batch.Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, sourceApplicationSummaries, schoolAttendedIds, subVacancies, applicationHistoryIds, sourceApplicationHistorySummaries)).ToList();
 
