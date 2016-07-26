@@ -12,7 +12,6 @@
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
-    using Web.Common.ViewModels.Locations;
 
     [TestFixture]
     public class CreateVacancyTests : TestBase
@@ -24,7 +23,6 @@
         private const int VacancyPartyId = 4;
 
         private NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber;
-        private NewVacancyViewModel _validNewVacancyViewModelSansReferenceNumber;
 
         private readonly Vacancy _existingVacancy = new Vacancy()
         {
@@ -47,22 +45,6 @@
                 VacancyReferenceNumber = 1,
                 OfflineVacancy = false,
                 OwnerParty = new VacancyPartyViewModel()
-            };
-
-            _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
-            {
-                OwnerParty = new VacancyPartyViewModel()
-                {
-                    VacancyPartyId = VacancyPartyId,
-                    ProviderSiteId = ProviderSiteId,
-                    Employer = new EmployerViewModel
-                    {
-                        EmployerId = EmployerId,
-                        EdsUrn = EdsUrn,
-                        Address = new AddressViewModel()
-                    }
-                },
-                OfflineVacancy = false,
             };
 
             MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
@@ -111,7 +93,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
+            var viewModel = provider.UpdateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
@@ -136,136 +118,13 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
+            provider.UpdateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
                 mock.UpdateVacancy(It.Is<Vacancy>(v => v.Address == employerPostalAddress)));
         }
-
-        [Test]
-        public void ShouldCreateNewIfVacancyReferenceIsNotPresent()
-        {
-            // Arrange.
-            var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
-            MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            var provider = GetVacancyPostingProvider();
-
-            // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
-
-            // Assert.
-            MockVacancyPostingService.Verify(mock =>
-                mock.GetVacancyByReferenceNumber(It.IsAny<int>()), Times.Never);
-            MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Once);
-            MockVacancyPostingService.Verify(mock =>
-                mock.CreateVacancy(It.IsAny<Vacancy>()), Times.Once);
-
-            viewModel.VacancyReferenceNumber.Should().HaveValue();
-        }
-
-        [Test]
-        public void ShouldStoreOfflineApplicationFields()
-        {
-            var provider = GetVacancyPostingProvider();
-
-            const bool offlineVacancy = true;
-            const string offlineApplicationUrl = "a_url.com";
-            const string offlineApplicationInstructions = "Some instructions";
-
-            provider.CreateVacancy(new NewVacancyViewModel
-            {
-                OwnerParty = new VacancyPartyViewModel
-                {
-                    VacancyPartyId = VacancyPartyId,
-                    ProviderSiteId = ProviderSiteId,
-                    Employer  = new EmployerViewModel
-                    {
-                        EmployerId = EmployerId
-                    }
-                },
-                OfflineVacancy = offlineVacancy,
-                OfflineApplicationUrl = offlineApplicationUrl,
-                OfflineApplicationInstructions = offlineApplicationInstructions,
-            }, Ukprn);
-
-            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => v.OfflineVacancy == offlineVacancy 
-            && v.OfflineApplicationUrl.StartsWith("http://") && v.OfflineApplicationInstructions == offlineApplicationInstructions)));
-        }
-
-        [Test]
-        public void ShouldUseVacancyGuidExistingInTheViewModel()
-        {
-            var vacancyGuid = Guid.NewGuid();
-            MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(1);
-
-            var provider = GetVacancyPostingProvider();
-
-            provider.CreateVacancy(new NewVacancyViewModel
-            {
-                VacancyGuid = vacancyGuid,
-                OfflineVacancy = false,
-                OwnerParty = new VacancyPartyViewModel
-                {
-                    VacancyPartyId = VacancyPartyId,
-                    ProviderSiteId = ProviderSiteId,
-                    Employer = new EmployerViewModel
-                    {
-                        EmployerId = EmployerId
-                    }
-                }
-            }, Ukprn);
-
-            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => v.VacancyGuid == vacancyGuid)));
-        }
-
-        [Test]
-        public void ShouldReturnAnExistingVacancyIfVacancyGuidExists()
-        {
-            // Arrange
-            var vacancyGuid = Guid.NewGuid();
-            var av = new Vacancy
-            {
-                Title = "Title",
-                ShortDescription = "shorts",
-                FrameworkCodeName = "fwcn",
-                StandardId = 1234,
-                OfflineVacancy = true,
-                OfflineApplicationUrl = "http://www.google.com",
-                OfflineApplicationInstructions = "optional",
-                ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
-                OwnerPartyId = 3
-            };
-
-            var vvm = new NewVacancyViewModel()
-            {
-                Title = av.Title,
-                ShortDescription = av.ShortDescription,
-                OfflineVacancy = av.OfflineVacancy,
-                OfflineApplicationInstructions = av.OfflineApplicationInstructions,
-                OfflineApplicationUrl = av.OfflineApplicationUrl
-            };
-
-            MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            MockVacancyPostingService.Setup(m => m.GetVacancyLocations(It.IsAny<int>()))
-                .Returns(new List<VacancyLocation>());
-
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(av);
-            var provider = GetVacancyPostingProvider();
-
-            // Act
-            var result = provider.GetNewVacancyViewModel(VacancyPartyId, vacancyGuid, null);
-
-            // Assert
-            MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.GetVacancyParty(ProviderSiteId, EdsUrn), Times.Never);
-            result.Should()
-                .Match<NewVacancyViewModel>(
-                    r =>
-                        r.Title == av.Title && r.ShortDescription == av.ShortDescription &&
-                        r.OfflineApplicationInstructions == av.OfflineApplicationInstructions);
-        }
-
+        
         [Test]
         public void ShouldReturnANewVacancyIfVacancyGuidDoesNotExists()
         {
@@ -288,54 +147,6 @@
                     r =>
                         r.OwnerParty.EmployerDescription == _vacancyParty.EmployerDescription &&
                         r.OwnerParty.ProviderSiteId == ProviderSiteId);
-        }
-
-        [Test]
-        public void CreateVacancy_LocationSearchViewModel_StatusIsDraft()
-        {
-            //Arrange
-            var locationSearchViewModel = new LocationSearchViewModel
-            {
-                ProviderSiteId = ProviderSiteId,
-                EmployerId = EmployerId,
-                EmployerEdsUrn = EdsUrn
-            };
-            var provider = GetVacancyPostingProvider();
-
-            MockMapper.Setup(
-                m =>
-                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
-
-            //Act
-            provider.CreateVacancy(locationSearchViewModel, Ukprn);
-
-            //Assert
-            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(av => av.Status == VacancyStatus.Draft)));
-        }
-
-        [Test]
-        public void CreateVacancy_LocationSearchViewModel_SavesOnce()
-        {
-            //Arrange
-            var locationSearchViewModel = new LocationSearchViewModel
-            {
-                ProviderSiteId = ProviderSiteId,
-                EmployerId = EmployerId,
-                EmployerEdsUrn = EdsUrn
-            };
-            var provider = GetVacancyPostingProvider();
-
-            MockMapper.Setup(
-                m =>
-                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
-
-            //Act
-            provider.CreateVacancy(locationSearchViewModel, Ukprn);
-
-            //Assert
-            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.IsAny<Vacancy>()), Times.Once);
         }
     }
 }

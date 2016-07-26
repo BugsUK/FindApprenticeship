@@ -4,7 +4,6 @@
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Candidate.Strategies.Traineeships;
     using Application.ReferenceData;
-    using Application.Reporting;
     using Application.Vacancies;
     using Application.Vacancy;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -36,9 +35,6 @@
 
             For<IReferenceDataProvider>()
                 .Use<ReferenceDataProvider>();
-
-            For<IReportingProvider>()
-                .Use<ReportingProvider>();
         }
     }
 }

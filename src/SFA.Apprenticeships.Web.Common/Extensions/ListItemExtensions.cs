@@ -6,7 +6,7 @@
 
     public static class ListItemExtensions
     {
-        public static List<ListItem> ToListOfListItem(this Dictionary<string, string> source)
+        public static List<ListItem> ToListItemList(this Dictionary<string, string> source)
         {
             return source.Select(x => new ListItem(x.Key, x.Value)).ToList();
         }

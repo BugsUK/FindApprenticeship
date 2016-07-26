@@ -199,17 +199,17 @@
         [TestCase(VacancySource.Raa, "", false)]
         [TestCase(VacancySource.Raa, " ", false)]
         [TestCase(VacancySource.Raa, "12 - 14 Months", false)]
-        [TestCase(VacancySource.Raa, "11", true)]
+        [TestCase(VacancySource.Raa, "110", true)]
         [TestCase(VacancySource.Av, null, true)]
         [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Av, " ", true)]
         [TestCase(VacancySource.Av, "12 - 14 Months", true)]
-        [TestCase(VacancySource.Av, "11", true)]
+        [TestCase(VacancySource.Av, "110", true)]
         [TestCase(VacancySource.Api, null, true)]
         [TestCase(VacancySource.Api, "", true)]
         [TestCase(VacancySource.Api, " ", true)]
         [TestCase(VacancySource.Api, "12 - 14 Months", true)]
-        [TestCase(VacancySource.Api, "11", true)]
+        [TestCase(VacancySource.Api, "110", true)]
         public void DurationValidation(VacancySource vacancySource, string durationString, bool expectValid)
         {
             int? duration = null;

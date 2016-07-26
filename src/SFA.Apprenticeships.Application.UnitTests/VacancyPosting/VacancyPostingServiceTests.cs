@@ -63,7 +63,7 @@
         }
 
         [Test]
-        public void CreateVacancyShouldUpdateVacancyManagerUsername()
+        public void CreateVacancyShouldUpdateVacancyManagerAndDeliveryOrganisation()
         {
             // Arrange.
             MockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
@@ -77,11 +77,16 @@
 
             MockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
+            // ReSharper disable once PossibleInvalidOperationException
+            var preferredProviderSiteId = _vacancyManager.PreferredProviderSiteId.Value;
+
             // Act.
             VacancyPostingService.CreateVacancy(vacancy);
 
             // Assert.
-            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.PreferredProviderSiteId.Value)));
+            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v =>
+                v.VacancyManagerId == preferredProviderSiteId &&
+                v.DeliveryOrganisationId == preferredProviderSiteId)));
         }
 
         [Test]

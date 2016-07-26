@@ -2,47 +2,29 @@
 {
     using System;
     using System.Collections.Generic;
-    using Domain.Raa.Interfaces.Reporting.Models;
+    using Domain.Entities.Raa.Reporting;
     using Interfaces.Reporting;
+    using Strategies;
 
     public class ReportingService : IReportingService
     {
-        private readonly IReportingProvider _reportingProvider;
+        private readonly IGetApplicationsReceivedResultItemsStrategy _getApplicationsReceivedResultItemsStrategy;
+        private readonly IGetCandidatesWithApplicationsResultItemsStrategy _getCandidatesWithApplicationsResultItemsStrategy;
 
-        public ReportingService(IReportingProvider reportingProvider)
+        public ReportingService(IGetApplicationsReceivedResultItemsStrategy getApplicationsReceivedResultItemsStrategy, IGetCandidatesWithApplicationsResultItemsStrategy getCandidatesWithApplicationsResultItemsStrategy)
         {
-            _reportingProvider = reportingProvider;
+            _getApplicationsReceivedResultItemsStrategy = getApplicationsReceivedResultItemsStrategy;
+            _getCandidatesWithApplicationsResultItemsStrategy = getCandidatesWithApplicationsResultItemsStrategy;
         }
 
-        public IList<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate)
+        public IList<ApplicationsReceivedResultItem> GetApplicationsReceivedResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId)
         {
-            return _reportingProvider.ReportVacanciesList(fromDate, toDate);
+            return _getApplicationsReceivedResultItemsStrategy.Get(dateFrom, dateTo, providerSiteId);
         }
 
-        public IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string reportType, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region)
+        public IList<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId)
         {
-            return _reportingProvider.ReportUnsuccessfulCandidates(reportType, fromDate, toDate, ageRange, managedBy, region);
-        }
-
-        public IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate, int? providerUkprn, int? vacancyStatus)
-        {
-            return _reportingProvider.ReportVacancyExtensions(fromDate, toDate, providerUkprn, vacancyStatus);
-        }
-
-        public IList<ReportSuccessfulCandidatesResultItem> ReportSuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string managedBy,
-            string region)
-        {
-            return _reportingProvider.ReportSuccessfulCandidates(type, fromDate, toDate, ageRange, managedBy, region);
-        }
-
-        public Dictionary<string, string> LocalAuthorityManagerGroups()
-        {
-            return _reportingProvider.LocalAuthorityManagerGroups();
-        }
-
-        public Dictionary<string, string> RegionsIncludingAll()
-        {
-            return _reportingProvider.RegionsIncludingAll();
+            return _getCandidatesWithApplicationsResultItemsStrategy.Get(dateFrom, dateTo, providerSiteId);
         }
     }
 }

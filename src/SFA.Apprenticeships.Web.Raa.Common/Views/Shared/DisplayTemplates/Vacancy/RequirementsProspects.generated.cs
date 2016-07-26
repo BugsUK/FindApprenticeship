@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -131,7 +132,7 @@ WriteLiteral("        ");
 
             
             #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "DesiredSkills"}));
 
             
             #line default
@@ -164,7 +165,7 @@ WriteLiteral("        ");
 
             
             #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "PersonalQualities"}));
 
             
             #line default
@@ -240,14 +241,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-       Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
+       Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "DesiredQualifications"}));
 
             
             #line default
             #line hidden
             
             #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-                                                                                                                                                          
+                                                                                                                                                              
             
             
             #line default
@@ -285,7 +286,7 @@ WriteLiteral("        ");
 
             
             #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
 
             
             #line default
@@ -318,7 +319,7 @@ WriteLiteral("        ");
 
             
             #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
 
             
             #line default
@@ -345,7 +346,42 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</section>");
+WriteLiteral("\r\n    </div>\r\n</section>\r\n<script");
+
+WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js\"");
+
+WriteLiteral("></script>\r\n<script>\r\n    if (typeof CKEDITOR == \'undefined\') {\r\n        document" +
+".write(unescape(\"%3Cscript src=\'/Content/_assets/js/vendor/ckeditor/ckeditor.js\'" +
+" type=\'text/javascript\'%3E%3C/script%3E\"));\r\n    }\r\n</script>\r\n\r\n    <script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 2923), Tuple.Create("\"", 2978)
+, Tuple.Create(Tuple.Create("", 2929), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 2929), false)
+);
+
+WriteLiteral(@"></script>
+<script>    
+    CKEDITOR.replace('DesiredSkills',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+    CKEDITOR.replace('DesiredQualifications',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+    CKEDITOR.replace('PersonalQualities',
+    {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });
+</script>
+
+<script>
+    nanospell.ckeditor('all',
+    {
+        dictionary: ""en_uk"", // 24 free international dictionaries
+        server: ""asp.net"" // can be php, asp, asp.net or java
+    });
+</script>");
 
         }
     }

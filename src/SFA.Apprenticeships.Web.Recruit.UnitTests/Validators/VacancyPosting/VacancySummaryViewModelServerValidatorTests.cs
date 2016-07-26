@@ -31,7 +31,8 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                VacancyDatesViewModel = new VacancyDatesViewModel()
+                VacancyDatesViewModel = new VacancyDatesViewModel(),
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -39,9 +40,9 @@
             var aggregateResults = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Count.Should().BeGreaterThan(5);
+            result.Errors.Count.Should().BeGreaterThan(4);
             aggregateResults.IsValid.Should().BeFalse();
-            aggregateResults.Errors.Count.Should().BeGreaterThan(5);
+            aggregateResults.Errors.Count.Should().BeGreaterThan(4);
         }
 
         [TestCase(null, false)]

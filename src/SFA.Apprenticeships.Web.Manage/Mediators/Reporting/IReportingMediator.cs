@@ -2,6 +2,7 @@
 {
     using System;
     using Common.Mediators;
+    using Raa.Common.ViewModels.Report;
     using ViewModels;
 
     public interface IReportingMediator

@@ -182,6 +182,9 @@
 
                 .ForMember(dest => dest.EditedInRaa, 
                     opt => opt.UseValue(false))
+
+                .ForMember(dest => dest.HoursPerWeek,
+                    opt => opt.Ignore())
             ;
         }
     }

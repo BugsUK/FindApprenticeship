@@ -82,5 +82,10 @@
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
         // Traineeships
         public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
+
+        //Reports
+        public const string ReportList = "ReportList";
+        public const string ReportApplicationsReceived = "ReportApplicationsReceived";
+        public const string ReportCandidatesWithApplications = "ReportCandidatesWithApplications";
     }
 }

@@ -11,11 +11,13 @@
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Reporting;
     using Application.Interfaces.Users;
     using Application.Location;
     using Application.Organisation;
     using Application.Provider;
     using Application.ReferenceData;
+    using Application.Reporting;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Common.Configuration;
@@ -26,6 +28,7 @@
     using Mediators.Application;
     using Mediators.Provider;
     using Mediators.ProviderUser;
+    using Mediators.Report;
     using Mediators.VacancyPosting;
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
@@ -66,6 +69,7 @@
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<IGeoCodingProvider>().Use<GeoCodingProvider>();
+            For<IReportingProvider>().Use<ReportingProvider>();
         }
 
         private void RegisterServices()
@@ -80,6 +84,7 @@
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
             For<ICommunicationService>().Use<CommunicationService>();
+            For<IReportingService>().Use<ReportingService>();
         }
 
         private void RegisterStrategies()
@@ -99,6 +104,7 @@
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
 
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
@@ -115,6 +121,7 @@
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
             For<IHomeMediator>().Use<HomeMediator>();            
+            For<IReportMediator>().Use<ReportMediator>();            
         }
     }
 }

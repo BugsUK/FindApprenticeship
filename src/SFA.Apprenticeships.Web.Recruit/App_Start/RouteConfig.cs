@@ -361,6 +361,24 @@
                 defaults: new { controller = "Home", action = "Cookies" }
                 );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReportList,
+               url: "reports",
+               defaults: new { controller = "Report", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReportApplicationsReceived,
+               url: "reports/applicationsreceived",
+               defaults: new { controller = "Report", action = "ApplicationsReceived" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReportCandidatesWithApplications,
+               url: "reports/candidateswithapplications",
+               defaults: new { controller = "Report", action = "CandidatesWithApplications" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

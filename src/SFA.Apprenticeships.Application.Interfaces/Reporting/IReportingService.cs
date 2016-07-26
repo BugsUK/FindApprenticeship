@@ -2,18 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using Domain.Raa.Interfaces.Reporting.Models;
+    using Domain.Entities.Raa.Reporting;
 
     public interface IReportingService
     {
-        IList<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate);
-        IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region);
-        IList<ReportSuccessfulCandidatesResultItem> ReportSuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region);
-        IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate,
-            int? providerUkprn, int? vacancyStatus);
-
-        Dictionary<string, string> LocalAuthorityManagerGroups();
-
-        Dictionary<string, string> RegionsIncludingAll();
+        IList<ApplicationsReceivedResultItem> GetApplicationsReceivedResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId);
+        IList<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId);
     }
 }
+ 

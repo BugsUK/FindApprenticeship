@@ -57,7 +57,7 @@
 
                 if (vacancyManager?.PreferredProviderSiteId != null)
                 {
-                    vacancy.VacancyManagerId = vacancyManager.PreferredProviderSiteId.Value;
+                    vacancy.VacancyManagerId = vacancy.DeliveryOrganisationId = vacancyManager.PreferredProviderSiteId.Value;
                 }
             }
 
