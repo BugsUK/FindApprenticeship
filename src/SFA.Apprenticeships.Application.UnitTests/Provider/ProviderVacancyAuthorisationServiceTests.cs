@@ -6,6 +6,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Interfaces.Providers;
     using Moq;
@@ -25,6 +26,12 @@
 
             var provider = new Fixture().Create<Provider>();
 
+            var vacancy = new Vacancy
+            {
+                ProviderId = provider.ProviderId,
+                VacancyManagerId = providerSiteId
+            };
+
             var mockCurrentUserService = new Mock<ICurrentUserService>();
             var mockProviderService = new Mock<IProviderService>();
 
@@ -43,7 +50,7 @@
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
 
             // Act.
-            Action action = () => service.Authorise(provider.ProviderId, providerSiteId);
+            Action action = () => service.Authorise(vacancy);
 
             // Assert.
             action.ShouldNotThrow();
@@ -59,6 +66,12 @@
 
             var provider = new Fixture().Create<Provider>();
             var otherProviderId = provider.ProviderId + 1;
+
+            var vacancy = new Vacancy
+            {
+                ProviderId = otherProviderId,
+                VacancyManagerId = providerSiteId
+            };
 
             var mockCurrentUserService = new Mock<ICurrentUserService>();
             var mockProviderService = new Mock<IProviderService>();
@@ -82,7 +95,7 @@
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
 
             // Act.
-            Action action = () => service.Authorise(otherProviderId, providerSiteId);
+            Action action = () => service.Authorise(vacancy);
 
             // Assert.
             action
@@ -98,8 +111,13 @@
             var subContractorProviderId = new Random().Next(51, 100);
 
             var providerSiteId = new Random().Next(101, 200);
-
             var provider = new Fixture().Create<Provider>();
+
+            var vacancy = new Vacancy
+            {
+                ProviderId = subContractorProviderId,
+                VacancyManagerId = providerSiteId
+            };
 
             var mockCurrentUserService = new Mock<ICurrentUserService>();
             var mockProviderService = new Mock<IProviderService>();
@@ -129,7 +147,7 @@
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
 
             // Act.
-            Action action = () => service.Authorise(subContractorProviderId, providerSiteId);
+            Action action = () => service.Authorise(vacancy);
 
             // Assert.
             action.ShouldNotThrow();
@@ -146,6 +164,12 @@
 
             var provider = new Fixture().Create<Provider>();
             var otherProviderId = provider.ProviderId + 1;
+
+            var vacancy = new Vacancy
+            {
+                ProviderId = otherProviderId,
+                VacancyManagerId = providerSiteId
+            };
 
             var mockCurrentUserService = new Mock<ICurrentUserService>();
             var mockProviderService = new Mock<IProviderService>();
@@ -175,7 +199,7 @@
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
 
             // Act.
-            Action action = () => service.Authorise(otherProviderId, providerSiteId);
+            Action action = () => service.Authorise(vacancy);
 
             // Assert.
             action
@@ -188,6 +212,12 @@
         {
             // Arrange.
             var ukprn = Convert.ToString(new Random().Next(1, 50));
+
+            var vacancy = new Vacancy
+            {
+                ProviderId = 1,
+                VacancyManagerId = 2
+            };
 
             var mockCurrentUserService = new Mock<ICurrentUserService>();
             var mockProviderService = new Mock<IProviderService>();
@@ -207,7 +237,7 @@
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
 
             // Act.
-            Action action = () => service.Authorise(1, 2);
+            Action action = () => service.Authorise(vacancy);
 
             // Assert.
             action
@@ -222,6 +252,12 @@
             var providerId = new Random().Next(1, 100);
             var providerSiteId = new Random().Next(101, 200);
 
+            var vacancy = new Vacancy
+            {
+                ProviderId = providerId,
+                VacancyManagerId = providerSiteId
+            };
+
             var mockCurrentUserService = new Mock<ICurrentUserService>();
             var mockProviderService = new Mock<IProviderService>();
 
@@ -232,7 +268,7 @@
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
 
             // Act.
-            Action action = () => service.Authorise(providerId, providerSiteId);
+            Action action = () => service.Authorise(vacancy);
 
             // Assert.
             action.ShouldNotThrow();
