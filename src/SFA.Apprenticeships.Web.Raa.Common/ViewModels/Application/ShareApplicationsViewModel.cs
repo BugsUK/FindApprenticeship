@@ -8,6 +8,12 @@
 
     public class ShareApplicationsViewModel
     {
+        public ShareApplicationsViewModel()
+        {
+            ApplicationSummaries = new List<ApplicationSummaryViewModel>();
+            SelectedApplicationIds = new List<Guid>();
+        }
+
         public int VacancyReferenceNumber { get; set; }
 
         public string EmployerName { get; set; }

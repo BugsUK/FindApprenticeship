@@ -29,7 +29,6 @@
         public MediatorResponse<ShareApplicationsViewModel> ShareApplications(int vacancyReferenceNumber)
         {
             var viewModel = _applicationProvider.GetShareApplicationsViewModel(vacancyReferenceNumber);
-            viewModel.SelectedApplicationIds = new List<Guid>();
 
             return GetMediatorResponse(ApplicationMediatorCodes.GetShareApplicationsViewModel.Ok, viewModel);
         }
