@@ -5,7 +5,7 @@
     using Mediators.Application;
     using SFA.Infrastructure.Interfaces;
 
-    public class EmployerApplicationController : RecruitmentControllerBase
+    public class EmployerApplicationController : Common.Controllers.ControllerBase
     {
         private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;
 

@@ -11,7 +11,7 @@
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyApplications, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ShareApplications, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -34,13 +34,15 @@
                     <li>
                         <figure class="data">
                             <p class="count">@Model.NewApplicationsCount</p>
-                            <figcaption><h2>New</h2></figcaption>
+                            <figcaption>
+                                <h2>New</h2></figcaption>
                         </figure>
                     </li>
                     <li>
                         <figure class="data">
                             <p class="count">@Model.ViewedApplicationsCount</p>
-                            <figcaption><h2>Viewed</h2></figcaption>
+                            <figcaption>
+                                <h2>Viewed</h2></figcaption>
                         </figure>
                     </li>
 
@@ -49,13 +51,15 @@
                         <li>
                             <figure class="data">
                                 <p class="count">@Model.SuccessfulApplicationsCount</p>
-                                <figcaption><h2>Successful</h2></figcaption>
+                                <figcaption>
+                                    <h2>Successful</h2></figcaption>
                             </figure>
                         </li>
                         <li>
                             <figure class="data">
                                 <p class="count">@Model.UnsuccessfulApplicationsCount</p>
-                                <figcaption><h2>Unsuccessful</h2></figcaption>
+                                <figcaption>
+                                    <h2>Unsuccessful</h2></figcaption>
                             </figure>
                         </li>
                     }
@@ -117,12 +121,29 @@
                             @Html.Partial("_applicationStatus", applicationSummary.Status)
                         </td>
                         <td>
-                            <input type="checkbox"/>
+                            @{
+                                var selected = Model.SelectedApplicationIds.Contains(applicationSummary.ApplicationId) ? "checked" : string.Empty;
+                            }
+                            <input type="checkbox" name="@Html.NameFor(m => m.SelectedApplicationIds)" value="@applicationSummary.ApplicationId" @selected/>
                         </td>
                     </tr>
                 }
                 </tbody>
             </table>
         </section>
+
+        <section>
+            <p>Enter an email address for the person/organisation you would like to share this vacancy's application/s with.</p>
+            @Html.FormTextFor(m => m.RecipientEmailAddress, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-small"})
+            <p>They'll receive an email containing a link to the application/s. The link will expire in 2 weeks (@DateTime.UtcNow.AddDays(14).ToString("d MMMM yyyy")).</p>
+        </section>
+
+        <section>
+            <div class="form-group">
+                <button type="submit" class="button">Submit</button>
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.VacancyReferenceNumber })
+            </div>
+        </section>
+
     </div>
 }

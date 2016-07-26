@@ -119,7 +119,7 @@
             viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;
             viewModel.ApplicationSummaries = new PageableViewModel<ApplicationSummaryViewModel>
             {
-                Page = applications.Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(a => _mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>(a)).ToList(),
+                Page = applications.Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
                 ResultsCount = applications.Count,
                 CurrentPage = vacancyApplicationsSearch.CurrentPage,
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
@@ -193,6 +193,11 @@
         public void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes)
         {
             _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
+        }
+
+        public ShareApplicationsViewModel ShareApplications(ShareApplicationsViewModel vacancyReferenceNumber)
+        {
+            throw new NotImplementedException();
         }
 
         #region Helpers

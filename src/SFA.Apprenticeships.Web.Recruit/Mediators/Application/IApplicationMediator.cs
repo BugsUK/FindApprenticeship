@@ -7,5 +7,6 @@
     {
         MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch);
         MediatorResponse<ShareApplicationsViewModel> ShareApplications(int vacancyReferenceNumber);
+        MediatorResponse<ShareApplicationsViewModel> ShareApplications(ShareApplicationsViewModel vacancyReferenceNumber);
     }
 }

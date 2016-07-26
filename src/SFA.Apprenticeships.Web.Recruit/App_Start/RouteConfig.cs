@@ -328,7 +328,7 @@
             routes.MapRoute(
                name: RecruitmentRouteNames.ShareApplications,
                url: "vacancy/shareapplications",
-               defaults: new { controller = "Application", action = "ShareVacancyApplications" }
+               defaults: new { controller = "Application", action = "ShareApplications" }
                );
 
             routes.MapRoute(

@@ -26,5 +26,7 @@
         TraineeshipApplicationViewModel GetTraineeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes);
+
+        ShareApplicationsViewModel ShareApplications(ShareApplicationsViewModel vacancyReferenceNumber);
     }
 }

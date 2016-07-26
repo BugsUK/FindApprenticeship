@@ -10,7 +10,12 @@
         public class GetShareApplicationsViewModel
         {
             public const string Ok = "ApplicationMediatorCodes.GetShareApplicationsViewModel.Ok";
-            public const string NoApplications = "ApplicationMediatorCodes.GetShareApplicationsViewModel.NoApplications";
+        }
+
+        public class ShareApplications
+        {
+            public const string Ok = "ApplicationMediatorCodes.ShareApplications.Ok";
+            public const string FailedValidation = "ApplicationMediatorCodes.ShareApplications.FailedValidation";
         }
     }
 }
