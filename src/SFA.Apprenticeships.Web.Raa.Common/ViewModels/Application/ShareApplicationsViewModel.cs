@@ -12,6 +12,8 @@
 
         public string EmployerName { get; set; }
 
+        public VacancyType VacancyType { get; set; }
+
         public List<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
 
         public int NewApplicationsCount { get; set; }

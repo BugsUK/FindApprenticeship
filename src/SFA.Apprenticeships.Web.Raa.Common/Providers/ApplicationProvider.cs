@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.UI;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
@@ -48,6 +49,7 @@
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = new ShareApplicationsViewModel();
             viewModel.EmployerName = employer.Name;
+            viewModel.VacancyType = vacancy.VacancyType;
 
             var applications = vacancy.VacancyType == VacancyType.Traineeship
                 ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()

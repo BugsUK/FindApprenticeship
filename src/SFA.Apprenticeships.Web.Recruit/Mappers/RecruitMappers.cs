@@ -26,8 +26,6 @@
                 .ForMember(v => v.UnsuccessfulApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.ApplicationSummaries, opt => opt.Ignore());
 
-            Mapper.CreateMap<VacancyApplicationsViewModel, ShareApplicationsViewModel>();
-
             Mapper.CreateMap<ApplicationSummary, ApplicationSummaryViewModel>()
                 .ForMember(v => v.ApplicantName, opt => opt.MapFrom(src => new Name(src.CandidateDetails.FirstName, src.CandidateDetails.MiddleNames, src.CandidateDetails.LastName).GetDisplayText()))
                 .ForMember(v => v.ApplicantID, opt => opt.MapFrom(src => src.CandidateId.ToString().Replace("-", "").Substring(0,6)));

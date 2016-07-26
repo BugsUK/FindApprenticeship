@@ -125,47 +125,4 @@
             </table>
         </section>
     </div>
-
-    <div class="page-navigation">
-
-        @{
-            var currentPage = Model.ApplicationSummaries.CurrentPage;
-            var totalNumberOfPages = Model.ApplicationSummaries.TotalNumberOfPages;
-            var prevLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage - 1));
-            var nextLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage + 1));
-        }
-
-        <a href="@prevLink"
-           style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
-           class="page-navigation__btn previous grid grid-1-3">
-            <i class="arrow-button fa fa-angle-left"></i>
-            <span class="description">Previous <span class="hide-mob">page</span></span>
-            <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
-        </a>
-
-        <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
-            <label for="page-size" class="heading-small inline">Display results</label>
-            @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new {id = "page-size"})
-            <noscript>
-                <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
-            </noscript>
-        </div>
-
-        <a href="@nextLink"
-           style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
-           class="page-navigation__btn next grid grid-1-3">
-            <i class="arrow-button fa fa-angle-right"></i>
-            <span class="description">Next <span class="hide-mob">page</span></span>
-            <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
-        </a>
-
-    </div>
-}
-
-@section scripts
-{
-    @Scripts.Render("~/bundles/vacancyApplications")
-    <script>
-        var searchUrl = '@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications)';
-    </script>
 }
