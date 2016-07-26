@@ -181,11 +181,65 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
         {
             _logger.Debug("Called database to get page {1} of apprenticeship vacancies in status {0}. Page size {2}", string.Join(",", desiredStatuses), page, pageSize);
 
-
-            var sql = $@"
-            SELECT {string.Join(", ", VacancySummaryColumns)}
-            FROM dbo.Vacancy";
-
+            var sql = $@"SELECT
+  VacancyId,
+  VacancyOwnerRelationshipId,
+  VacancyReferenceNumber,
+  VacancyStatusId,
+  AddressLine1,
+  AddressLine2,
+  AddressLine3,
+  AddressLine4,
+  AddressLine5,
+  Town,
+  CountyId,
+  PostCode,
+  LocalAuthorityId,
+  Longitude,
+  Latitude,
+  af.CodeName as ApprenticeshipFrameworkId,
+  Title,
+  el.CodeName as ApprenticeshipType,
+  ShortDescription,
+  WeeklyWage,
+  WageType,
+  WageText,
+  NumberofPositions,
+  ApplicationClosingDate,
+  InterviewsFromDate,
+  ExpectedStartDate,
+  ExpectedDuration,
+  WorkingWeek,
+  EmployerAnonymousName,
+  ApplyOutsideNAVMS,
+  LockedForSupportUntil,
+  NoOfOfflineApplicants,
+  MasterVacancyId,
+  VacancyLocationTypeId,
+  VacancyManagerID,
+  VacancyGuid,
+  SubmissionCount,
+  StartedToQADateTime,
+  StandardId,
+  HoursPerWeek,
+  WageUnitId,
+  DurationTypeId,
+  DurationValue,
+  QAUserName,
+  TrainingTypeId,
+  VacancyTypeId,
+  ao.CodeName as SectorId,
+  UpdatedDateTime
+FROM dbo.Vacancy AS v
+LEFT JOIN dbo.ApprenticeshipType AS at
+  ON at.ApprenticeshipTypeId = v.ApprenticeShipType
+LEFT JOIN Reference.EducationLevel AS el
+  ON el.EducationLevelId = at.EducationLevelId
+LEFT JOIN ApprenticeshipFramework AS af
+  ON af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
+LEFT JOIN ApprenticeshipOccupation as ao
+  ON ao.ApprenticeshipOccupationId = v.SectorId
+";
             if (filterByProviderBeenMigrated)
             {
                 sql += " inner join Provider on ContractOwnerId = ProviderId";
@@ -197,6 +251,7 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             {
                 sql += " AND ProviderToUseFAA = 1";
             }
+
 
             if (pageSize > 0)
             {
@@ -217,7 +272,7 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             _logger.Debug(
                 $"Found {dbVacancies.Count} apprenticeship vacancies in page {page} with statuses in {string.Join(",", desiredStatuses)}. Page size {pageSize}");
 
-            return MapVacancySummaries(dbVacancies.ToList());
+            return OnlyMapVacancySummaries(dbVacancies.ToList());
         }
 
         public List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
@@ -304,6 +359,30 @@ FETCH NEXT @PageSize ROWS ONLY
             PatchStandards(dbVacancy, result);
 
             return result;
+        }
+
+        private List<VacancySummary> OnlyMapVacancySummaries(IReadOnlyList<Vacancy> dbVacancies)
+        {
+            var results = _mapper.Map<IReadOnlyList<Vacancy>, List<VacancySummary>>(dbVacancies);
+
+            //MapApprenticeshipTypes(dbVacancies, results);
+            //MapFrameworkIds(dbVacancies, results);
+            //MapSectorIds(dbVacancies, results);
+
+            for (var i = 0; i < dbVacancies.Count; i++)
+            {
+                var dbVacancy = dbVacancies[i];
+                var vacancySummary = results[i];
+
+                MapDateFirstSubmitted(dbVacancy, vacancySummary);
+                MapDateSubmitted(dbVacancy, vacancySummary);
+                MapDateQAApproved(dbVacancy, vacancySummary);
+                MapRegionalTeam(vacancySummary);
+                MapDuration(dbVacancy, vacancySummary);
+                PatchStandards(dbVacancy, vacancySummary);
+            }
+
+            return results;
         }
 
         private List<VacancySummary> MapVacancySummaries(IReadOnlyList<Vacancy> dbVacancies)
