@@ -117,45 +117,52 @@
             </div>
 
         </section>
-        <section class="section-border grid-wrapper" id="course-info">
-            <h2 class="heading-large">Requirements and prospects</h2>
-            <div class="grid grid-1-2">
-                <div class="inner-block-padr">
-                    <div class="text">
-                        @if (!string.IsNullOrWhiteSpace(Model.SkillsRequired))
-                        {
-                            <h3 class="heading-small">Desired skills</h3>
-                            <p id="vacancy-skills-required" class="@Model.SkillsRequired.GetPreserveFormattingCssClass()" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Model.PersonalQualities))
-                        {
-                            <h3 class="heading-small">Personal qualities</h3>
-                            <p id="vacancy-qualities-required" class="@Model.PersonalQualities.GetPreserveFormattingCssClass()" itemprop="qualities">@Html.Raw(Model.PersonalQualities)</p>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Model.QualificationRequired))
-                        {
-                            <h3 class="heading-small">Qualifications required</h3>
-                            <p id="vacancy-qualifications-required" class="@Model.QualificationRequired.GetPreserveFormattingCssClass()" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
-                        }
+        if (!string.IsNullOrWhiteSpace(Model.SkillsRequired)
+            || !string.IsNullOrWhiteSpace(Model.PersonalQualities)
+            || !string.IsNullOrWhiteSpace(Model.QualificationRequired)
+            || !string.IsNullOrWhiteSpace(Model.FutureProspects)
+            || !string.IsNullOrWhiteSpace(Model.RealityCheck))
+         {
+             <section class="section-border grid-wrapper" id="course-info">
+                 <h2 class="heading-large">Requirements and prospects</h2>
+                 <div class="grid grid-1-2">
+                     <div class="inner-block-padr">
+                         <div class="text">
+                             @if (!string.IsNullOrWhiteSpace(Model.SkillsRequired))
+                             {
+                                 <h3 class="heading-small">Desired skills</h3>
+                                 <p id="vacancy-skills-required" class="@Model.SkillsRequired.GetPreserveFormattingCssClass()" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
+                             }
+                             @if (!string.IsNullOrWhiteSpace(Model.PersonalQualities))
+                             {
+                                 <h3 class="heading-small">Personal qualities</h3>
+                                 <p id="vacancy-qualities-required" class="@Model.PersonalQualities.GetPreserveFormattingCssClass()" itemprop="qualities">@Html.Raw(Model.PersonalQualities)</p>
+                             }
+                             @if (!string.IsNullOrWhiteSpace(Model.QualificationRequired))
+                             {
+                                 <h3 class="heading-small">Qualifications required</h3>
+                                 <p id="vacancy-qualifications-required" class="@Model.QualificationRequired.GetPreserveFormattingCssClass()" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
+                             }
 
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-1-2">
-                <div class="text">
-                    @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
-                    {
-                        <h3 class="heading-small">Future prospects</h3>
-                        <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
-                    {
-                        <h3 class="heading-small">Things to consider</h3>
-                        <p id="vacancy-reality-check" class="@Model.RealityCheck.GetPreserveFormattingCssClass()" itemprop="incentives">@Html.Raw(Model.RealityCheck)</p>
-                    }
-                </div>
-            </div>
-        </section>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="grid grid-1-2">
+                     <div class="text">
+                         @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
+                         {
+                             <h3 class="heading-small">Future prospects</h3>
+                             <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
+                         }
+                         @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
+                         {
+                             <h3 class="heading-small">Things to consider</h3>
+                             <p id="vacancy-reality-check" class="@Model.RealityCheck.GetPreserveFormattingCssClass()" itemprop="incentives">@Html.Raw(Model.RealityCheck)</p>
+                         }
+                     </div>
+                 </div>
+             </section>
+         }
         <section class="section-border" id="employer-info">
             <h2 class="heading-large">About the employer</h2>
             <div class="grid-wrapper">
