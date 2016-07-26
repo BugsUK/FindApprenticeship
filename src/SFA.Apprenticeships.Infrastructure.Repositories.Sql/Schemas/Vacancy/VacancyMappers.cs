@@ -51,6 +51,13 @@
 
     public class VacancyMappers : MapperEngine
     {
+        private string MapExpectedDuration(DomainVacancy vacancy)
+        {
+            return !vacancy.Duration.HasValue
+                ? vacancy.ExpectedDuration
+                : new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText();
+        }
+
         public override void Initialise()
         {
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
@@ -75,8 +82,8 @@
                 .MapMemberFrom(v => v.Town, av => av.Address.Town)
                 .MapMemberFrom(v => v.Latitude, av => (decimal)av.Address.GeoPoint.Latitude) 
                 .MapMemberFrom(v => v.Longitude, av => (decimal)av.Address.GeoPoint.Longitude)
-                .MapMemberFrom(v => v.GeocodeEasting, av => (int)av.Address.GeoPoint.Easting) 
-                .MapMemberFrom(v => v.GeocodeNorthing, av => (int)av.Address.GeoPoint.Northing) 
+                .MapMemberFrom(v => v.GeocodeEasting, av => av.Address.GeoPoint.Easting) 
+                .MapMemberFrom(v => v.GeocodeNorthing, av => av.Address.GeoPoint.Northing) 
 
                 .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)
                 .MapMemberFrom(v => v.ContactName, av => av.ContactName)
@@ -94,7 +101,7 @@
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
-                .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
+                .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => MapExpectedDuration(av)))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
                 .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
                 .MapMemberFrom(v => v.EmployerAnonymousName, av => av.EmployerAnonymousName)
@@ -129,6 +136,7 @@
                 .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
                 .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.ProviderId)
                 .IgnoreMember(v => v.LocalAuthorityId)
+                .MapMemberFrom(v => v.VacancySourceId, av => av.VacancySource)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -228,6 +236,7 @@
                 .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .IgnoreMember(av => av.LocalAuthorityCode)
                 .MapMemberFrom(av => av.EditedInRaa, v => v.EditedInRaa)
+                .MapMemberFrom(av => av.VacancySource, v => v.VacancySourceId)
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
