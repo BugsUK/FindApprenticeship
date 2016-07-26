@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
+    using System;
+    using System.Collections.Generic;
     using Common.Mediators;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
@@ -27,6 +29,7 @@
         public MediatorResponse<ShareApplicationsViewModel> ShareApplications(int vacancyReferenceNumber)
         {
             var viewModel = _applicationProvider.GetShareApplicationsViewModel(vacancyReferenceNumber);
+            viewModel.SelectedApplicationIds = new List<Guid>();
 
             return GetMediatorResponse(ApplicationMediatorCodes.GetShareApplicationsViewModel.Ok, viewModel);
         }
