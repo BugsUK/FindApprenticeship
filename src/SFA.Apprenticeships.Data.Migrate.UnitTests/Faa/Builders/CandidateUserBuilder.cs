@@ -13,6 +13,7 @@
         private int _ethnicity;
         private string _emailAddress = "Test@TEST.CoM";
         private string _postCode = "B26 2LW";
+        private ApplicationTemplate _applicationTemplate;
 
         public CandidateUser Build()
         {
@@ -44,6 +45,7 @@
                     EmailAddress = _emailAddress,
                     PhoneNumber = "07895123456"
                 },
+                ApplicationTemplate = _applicationTemplate,
                 MonitoringInformation = new MonitoringInformation
                 {
                     Gender = _gender,
@@ -114,6 +116,12 @@
         public CandidateUserBuilder WithPostCode(string postCode)
         {
             _postCode = postCode;
+            return this;
+        }
+
+        public CandidateUserBuilder WithApplicationTemplate(ApplicationTemplate applicationTemplate)
+        {
+            _applicationTemplate = applicationTemplate;
             return this;
         }
     }

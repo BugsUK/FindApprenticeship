@@ -122,8 +122,10 @@
     <Compile Include="Entities\CandidatePerson.cs" />
     <Compile Include="Entities\CandidateWithHistory.cs" />
     <Compile Include="Entities\Mongo\Address.cs" />
+    <Compile Include="Entities\Mongo\ApplicationTemplate.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />
     <Compile Include="Entities\Mongo\CandidateUser.cs" />
+    <Compile Include="Entities\Mongo\Education.cs" />
     <Compile Include="Entities\Mongo\GeoPoint.cs" />
     <Compile Include="Entities\Mongo\MonitoringInformation.cs" />
     <Compile Include="Entities\Mongo\RegistrationDetails.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mappers\IApplicationMappers.cs" />
     <Compile Include="Mappers\ICandidateMappers.cs" />
+    <Compile Include="Mappers\SchoolAttendedMappers.cs" />
     <Compile Include="Repository\Sql\CandidateHistoryRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationHistoryRepository.cs" />
@@ -153,7 +156,10 @@
     <Compile Include="Repository\Sql\ApplicationHistoryTable.cs" />
     <Compile Include="Repository\Sql\CandidateTable.cs" />
     <Compile Include="Entities\Sql\Person.cs" />
+    <Compile Include="Repository\Sql\SchoolAttended.cs" />
+    <Compile Include="Repository\Sql\SchoolAttendedRepository.cs" />
     <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
+    <Compile Include="Repository\Sql\SchoolAttendedTable.cs" />
     <Compile Include="Repository\Sql\SubVacancyTable.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MigrateFromFaaToAvmsPlusConfiguration.cs" />

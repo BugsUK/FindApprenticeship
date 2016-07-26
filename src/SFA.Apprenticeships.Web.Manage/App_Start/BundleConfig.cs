@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Manage
                 "~/Content/_assets/js/vendor/knockout.validation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/webtrends").Include(
-                "~/Content/_assets/js/webtrends/webtrends.load.js"));
+                "~/Content/_assets/js/webtrends/webtrends.load.js"));           
         }
     }
 }

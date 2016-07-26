@@ -75,5 +75,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public VacancyType VacancyType { get; set; }
 
         public int AutoSaveTimeoutInSeconds { get; set; }
+
+        public VacancySource VacancySource { get; set; }
     }
 }

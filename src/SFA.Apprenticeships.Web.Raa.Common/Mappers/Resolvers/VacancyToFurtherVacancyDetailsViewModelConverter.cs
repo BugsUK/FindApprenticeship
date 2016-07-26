@@ -15,6 +15,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 Duration = source.Duration.HasValue ? (decimal?) source.Duration.Value : null,
                 DurationComment = source.DurationComment,
                 DurationType = source.DurationType,
+                ExpectedDuration = source.ExpectedDuration,
                 HoursPerWeek = source.HoursPerWeek,
                 LongDescription = source.LongDescription,
                 LongDescriptionComment = source.LongDescriptionComment,

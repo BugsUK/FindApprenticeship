@@ -51,7 +51,7 @@
                 },
                 OfflineVacancy = false,
             };
-            MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
             MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
                 .Returns(_vacancyParty);
@@ -108,7 +108,7 @@
             // Assert.
             MockGeocodeService.Verify(m => m.GetGeoPointFor(postalAddress), Times.Once);
         }
-        
+
         [Test]
         public void ShouldUpdateVacancyWithGeocodeIfEmployerDoesNotHaveGeocode()
         {
@@ -290,7 +290,7 @@
                 m =>
                     m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(vacancyLocations);
-            MockVacancyPostingService.Setup(v => v.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(v => v.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
             var vacancy = new Fixture().Create<Vacancy>();
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))

@@ -69,5 +69,7 @@
         public string ContactDetailsComment { get; set; }
 
         public int AutoSaveTimeoutInSeconds { get; set; }
+
+        public VacancySource VacancySource { get; set; }
     }
 }

@@ -10,8 +10,8 @@
 
     public interface ICandidateMappers
     {
-        CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, bool anonymise);
-        CandidateWithHistory MapCandidateWithHistory(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, IDictionary<int, Dictionary<int, int>> candidateHistoryIds, bool anonymise);
+        CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, IDictionary<int, int> schoolAttendedIds, bool anonymise);
+        CandidateWithHistory MapCandidateWithHistory(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, IDictionary<int, int> schoolAttendedIds, IDictionary<int, Dictionary<int, int>> candidateHistoryIds, bool anonymise);
         Dictionary<string, object> MapCandidateDictionary(Candidate candidate);
         Dictionary<string, object> MapPersonDictionary(Person person);
     }

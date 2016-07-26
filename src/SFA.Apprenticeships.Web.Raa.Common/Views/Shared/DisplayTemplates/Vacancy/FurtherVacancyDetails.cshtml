@@ -29,7 +29,7 @@
                 var workingWeekDataValLength = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipTooLongErrorText : VacancyViewModelMessages.WorkingWeek.TooLongErrorText;
                 var workingWeekDataValRegex = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipWhiteListErrorText : VacancyViewModelMessages.WorkingWeek.WhiteListErrorText;
             }
-            @Html.FormTextAreaFor(m => m.WorkingWeek, workingWeeklabelText, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, data_val_length = workingWeekDataValLength, data_val_regex = workingWeekDataValRegex })
+            @Html.FormTextAreaFor(m => m.WorkingWeek, workingWeeklabelText, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, data_val_length = workingWeekDataValLength, data_val_regex = workingWeekDataValRegex})
         </fieldset>
         @if (Model.VacancyType == VacancyType.Traineeship)
         {
@@ -94,6 +94,11 @@
                 @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
                 @Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration))
             </div>
+
+            @if (Model.VacancySource != VacancySource.Raa )
+            {
+                @Html.FormTextAreaFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" })
+            }
         </fieldset>
         <fieldset class="form-group">
             @Html.EditorFor(m => m.DurationComment, "Comment", Html.GetLabelFor(m => m.DurationComment))
@@ -119,7 +124,30 @@
             var longDescriptionDataValLength = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipTooLongErrorText : VacancyViewModelMessages.LongDescription.TooLongErrorText;
             var longDescriptionDataValRegex = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipWhiteListInvalidCharacterErrorText : VacancyViewModelMessages.LongDescription.WhiteListInvalidCharacterErrorText;
         }
-        @Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex })
+        @Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new {id = "LongDescription", @class = "ckeditor", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex})
         @Html.EditorFor(m => m.LongDescriptionComment, "Comment", Html.GetLabelFor(m => m.LongDescriptionComment, Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescriptionComment.TraineeshipLabelText : null))
     </div>
 </section>
+
+<!---->
+<script src="https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
+<script>
+    if (typeof CKEDITOR == 'undefined') {
+        document.write(unescape("%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+</script>
+ 
+<script src="~/Content/_assets/js/vendor/nanospell/autoload.js"></script>
+<script>  
+    CKEDITOR.replace('LongDescription', {
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+    });    
+</script>
+
+    @*<script>
+        nanospell.ckeditor('all',
+        {
+            dictionary: "en_uk", // 24 free international dictionaries
+            server: "asp.net" // can be php, asp, asp.net or java
+        });
+    </script>*@

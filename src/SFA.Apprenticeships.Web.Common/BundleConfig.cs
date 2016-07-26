@@ -23,7 +23,7 @@
 
             bundles.Add(new ScriptBundle("~/bundles/cookie",
                 "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(
-                    "~/Content/_assets/js/vendor/jquery.cookie.js"));
+                    "~/Content/_assets/js/vendor/jquery.cookie.js"));            
 
             // TODO: split in different bundles?
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(

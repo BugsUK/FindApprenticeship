@@ -57,6 +57,11 @@
                 case VacancyMediatorCodes.ReviewVacancy.Ok:
                     return View(vacancyViewModel);
 
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms:
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi:
+                    SetUserMessage(response.Message);
+                    return View(vacancyViewModel);
+
                 case VacancyMediatorCodes.ReviewVacancy.InvalidVacancy:
                     SetUserMessage(response.Message);
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
