@@ -35,6 +35,22 @@
             }
         }
 
+        [HttpGet]
+        public ActionResult ShareApplications(int vacancyReferenceNumber)
+        {
+            var response = _applicationMediator.ShareApplications(vacancyReferenceNumber);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.View.Ok:
+                    return View(response.ViewModel);
+                case ApprenticeshipApplicationMediatorCodes.View.LinkExpired:
+                    return View("LinkExpired");
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         [HttpPost]
         public ActionResult VacancyApplications(VacancyApplicationsViewModel vacancyApplications)
         {

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
@@ -38,6 +39,32 @@
             _employerService = employerService;
             _mapper = mapper;
             _logService = logService;
+        }
+
+        public ShareApplicationsViewModel GetShareApplicationsViewModel(int vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var viewModel = new ShareApplicationsViewModel();
+            viewModel.EmployerName = employer.Name;
+
+            var applications = vacancy.VacancyType == VacancyType.Traineeship
+                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
+                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList();
+
+            var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
+            var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
+            var successful = applications.Where(v => v.Status == ApplicationStatuses.Successful).ToList();
+            var unsuccessful = applications.Where(v => v.Status == ApplicationStatuses.Unsuccessful).ToList();
+
+            viewModel.NewApplicationsCount = @new.Count;
+            viewModel.ViewedApplicationsCount = viewed.Count;
+            viewModel.SuccessfulApplicationsCount = successful.Count;
+            viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
+            viewModel.ApplicationSummaries = _mapper.Map<List<ApplicationSummary>, List<ApplicationSummaryViewModel>>(applications);
+
+            return viewModel;
         }
 
         public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)

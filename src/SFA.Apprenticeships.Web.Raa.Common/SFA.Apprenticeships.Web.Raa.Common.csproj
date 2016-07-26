@@ -252,6 +252,7 @@
     <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
+    <Compile Include="ViewModels\Application\ShareApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />

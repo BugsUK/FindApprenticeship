@@ -608,6 +608,7 @@
     <Content Include="Views\ProviderUser\OnBoardingComplete.cshtml" />
     <Content Include="Views\EmployerApplication\ViewAnonymised.cshtml" />
     <Content Include="Views\EmployerApplication\LinkExpired.cshtml" />
+    <Content Include="Views\Application\ShareApplications.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

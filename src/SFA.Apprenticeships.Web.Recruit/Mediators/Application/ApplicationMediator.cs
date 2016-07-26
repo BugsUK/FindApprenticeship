@@ -19,5 +19,17 @@
 
             return GetMediatorResponse(ApplicationMediatorCodes.GetVacancyApplicationsViewModel.Ok, viewModel);
         }
+
+        public MediatorResponse<ShareApplicationsViewModel> ShareApplications(int vacancyReferenceNumber)
+        {
+            var viewModel = _applicationProvider.GetShareApplicationsViewModel(vacancyReferenceNumber);
+
+            if (viewModel.ApplicationSummaries.Count == 0)
+            {
+                return GetMediatorResponse(ApplicationMediatorCodes.GetShareApplicationsViewModel.NoApplications, viewModel);
+            }
+
+            return GetMediatorResponse(ApplicationMediatorCodes.GetShareApplicationsViewModel.Ok, viewModel);
+        }
     }
 }

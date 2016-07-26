@@ -326,6 +326,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.ShareApplications,
+               url: "vacancy/shareapplications",
+               defaults: new { controller = "Application", action = "ShareVacancyApplications" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewApprenticeshipApplication,
                url: "apprenticeshipapplication/review",
                defaults: new { controller = "ApprenticeshipApplication", action = "Review" }
