@@ -170,5 +170,22 @@
             wageUnit.Should().NotBeNull();
             wageUnit.Attributes["type"].Value.Should().Be("hidden");
         }
+
+        [Test]
+        public void ShouldNoDisplayLegacyExpectedDurationWhenVacancySourceIsRaa()
+        {
+            //Arrange
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.VacancySource, VacancySource.Raa)
+                .Create();
+            var details = new FurtherVacancyDetails();
+
+            //Act
+            var view = details.RenderAsHtml(viewModel);
+
+            //Assert
+            var expectedDuration = view.GetElementbyId("ExpectedDuration");
+            expectedDuration.Should().BeNull();
+        }
     }
 }

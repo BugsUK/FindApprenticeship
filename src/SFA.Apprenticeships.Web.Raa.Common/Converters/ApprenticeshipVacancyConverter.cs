@@ -38,7 +38,8 @@
                 DurationComment = vacancy.DurationComment,
                 LongDescriptionComment = vacancy.LongDescriptionComment,
                 WorkingWeekComment = vacancy.WorkingWeekComment,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                VacancySource = vacancy.VacancySource
             };
 
             return vacancyViewModel;
@@ -84,7 +85,8 @@
                 DesiredQualifications = vacancy.DesiredQualifications,
                 DesiredQualificationsComment = vacancy.DesiredQualificationsComment,
                 Status = vacancy.Status,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                VacancySource = vacancy.VacancySource
             };
 
             return vacancyViewModel;
