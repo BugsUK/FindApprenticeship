@@ -11,5 +11,6 @@
         public string Notes { get; set; }
         public DateTime DateApplied { get; set; }
         public ApplicationStatuses Status { get; set; }
+        public string AnonymousLinkData { get; set; }
     }
 }

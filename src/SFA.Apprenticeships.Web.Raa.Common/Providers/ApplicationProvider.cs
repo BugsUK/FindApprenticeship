@@ -8,6 +8,7 @@
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
+    using Application.Interfaces.Security;
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Locations;
@@ -29,8 +30,10 @@
         private readonly IEmployerService _employerService;
         private readonly IMapper _mapper;
         private readonly ILogService _logService;
+        private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
+        private readonly IDateTimeService _dateTimeService;
 
-        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IProviderService providerService, IEmployerService employerService, IMapper mapper, ILogService logService)
+        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IProviderService providerService, IEmployerService employerService, IMapper mapper, ILogService logService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
         {
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
@@ -40,6 +43,8 @@
             _employerService = employerService;
             _mapper = mapper;
             _logService = logService;
+            _encryptionService = encryptionService;
+            _dateTimeService = dateTimeService;
         }
 
         public ShareApplicationsViewModel GetShareApplicationsViewModel(int vacancyReferenceNumber)
@@ -119,6 +124,13 @@
                 CurrentPage = vacancyApplicationsSearch.CurrentPage,
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
             };
+
+            foreach (var application in viewModel.ApplicationSummaries.Page)
+            {
+                application.AnonymousLinkData =
+                    _encryptionService.Encrypt(new AnonymisedApplicationLink(application.ApplicationId,
+                        _dateTimeService.TwoWeeksFromUtcNow));
+            }
 
             return viewModel;
         }

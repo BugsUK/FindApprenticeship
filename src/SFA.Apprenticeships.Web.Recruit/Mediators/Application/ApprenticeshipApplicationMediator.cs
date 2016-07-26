@@ -10,18 +10,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using SFA.Infrastructure.Interfaces;
-    using ViewModels;
 
     public class ApprenticeshipApplicationMediator : MediatorBase, IApprenticeshipApplicationMediator
     {
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelServerValidator;
-        private readonly IDecryptionService<AnomisedApplicationLink> _decryptionService;
+        private readonly IDecryptionService<AnonymisedApplicationLink> _decryptionService;
         private readonly IDateTimeService _dateTimeService;
 
         public ApprenticeshipApplicationMediator(IApplicationProvider applicationProvider, 
             ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelServerValidator,
-            IDecryptionService<AnomisedApplicationLink> decryptionService, IDateTimeService dateTimeService )
+            IDecryptionService<AnonymisedApplicationLink> decryptionService, IDateTimeService dateTimeService )
         {
             _applicationProvider = applicationProvider;
             _apprenticeshipApplicationViewModelServerValidator = apprenticeshipApplicationViewModelServerValidator;

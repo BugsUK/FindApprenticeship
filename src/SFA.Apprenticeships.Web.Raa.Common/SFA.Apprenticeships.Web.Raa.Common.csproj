@@ -240,6 +240,7 @@
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
     <Compile Include="ViewModels\Application\AnonymisedApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\AnonymisedApplicationLink.cs" />
     <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />

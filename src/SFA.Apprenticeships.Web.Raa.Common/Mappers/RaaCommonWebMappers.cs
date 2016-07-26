@@ -125,7 +125,7 @@
                 .ForMember(v => v.AnythingWeCanDoToSupportYourInterviewAnswer, opt => opt.MapFrom(src => src.CandidateInformation.AboutYou.Support));
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, AnonymisedApplicantDetailsViewModel>()
-                .ForMember(v => v.ApplicantId, opt => opt.MapFrom(src => src.CandidateId.ToString().Replace("-","").Substring(0,6)));
+                .ForMember(v => v.ApplicantId, opt => opt.MapFrom(src => src.CandidateId.ToString().Replace("-","").Substring(0,7).ToUpperInvariant()));
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>()
                 .ForMember(v => v.ApplicationSelection, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>(src)))

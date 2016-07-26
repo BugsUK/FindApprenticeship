@@ -11,6 +11,7 @@
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Security;
     using Application.Interfaces.Users;
     using Application.Location;
     using Application.Organisation;
@@ -22,6 +23,7 @@
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
+    using Infrastructure.Security;
     using Mappers;
     using Mediators.Application;
     using Mediators.Provider;
@@ -29,7 +31,8 @@
     using Mediators.VacancyPosting;
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
-
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.Views.Shared.DisplayTemplates.Application;
     using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
 
     using StructureMap;
@@ -66,6 +69,7 @@
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<IGeoCodingProvider>().Use<GeoCodingProvider>();
+            For<IEncryptionProvider>().Use<AES256Provider>();
         }
 
         private void RegisterServices()
@@ -80,6 +84,8 @@
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
             For<ICommunicationService>().Use<CommunicationService>();
+            For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
+            For<IDecryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
         }
 
         private void RegisterStrategies()

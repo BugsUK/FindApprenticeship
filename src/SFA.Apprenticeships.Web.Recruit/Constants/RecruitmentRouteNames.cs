@@ -77,6 +77,7 @@
         // Applications
         public const string VacancyApplications = "VacancyApplications";
         public const string ShareApplications = "ShareApplications";
+        public const string ViewAnonymousApplication = "ViewAnonymousApplication";
 
         // Apprenticeships
         public const string ReviewApprenticeshipApplication = "ReviewApprenticeshipApplication";

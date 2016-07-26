@@ -8,6 +8,6 @@
     {
         public const string PartialView = "Application/AnonymisedApplicantDetails";
 
-        public Guid ApplicantId { get; set; }
+        public string ApplicantId { get; set; }
     }
 }

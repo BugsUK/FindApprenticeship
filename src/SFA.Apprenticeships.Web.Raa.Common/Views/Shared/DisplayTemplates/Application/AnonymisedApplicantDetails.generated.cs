@@ -56,10 +56,14 @@ WriteLiteral(">\r\n        <ul");
 
 WriteLiteral(" class=\"list-text\"");
 
-WriteLiteral(">\r\n            <li>");
+WriteLiteral(">\r\n            <li><span");
+
+WriteLiteral(" class=\"\"");
+
+WriteLiteral(">Applicant ID:</span></li>\r\n            <li>");
 
             
-            #line 7 "..\..\Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml"
+            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml"
            Write(Model.ApplicantId);
 
             
