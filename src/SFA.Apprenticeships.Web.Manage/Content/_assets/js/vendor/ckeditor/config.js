@@ -20,7 +20,8 @@ CKEDITOR.editorConfig = function( config ) {
 	// Set the most common block elements.
 	config.format_tags = 'p;h3';
 
-	// Simplify the dialog windows.
+    // Simplify the dialog windows.
+	config.language = 'en-gb';
 	config.removeDialogTabs = 'image:advanced;link:advanced';	
     config.disableNativeSpellChecker = false;
 	config.pasteFromWordRemoveFontStyles = false;
