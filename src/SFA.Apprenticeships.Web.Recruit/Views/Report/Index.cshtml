@@ -1,0 +1,14 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Report.ReportMenu
+
+@{
+    ViewBag.Title = "Reports";
+}
+
+<h1 id="heading" class="heading-xlarge">Provider Reports</h1>
+
+<ul>
+@foreach (var report in Model.ReportList)
+{
+    <li><a href="@Url.RouteUrl(report.Value)">@report.Key</a></li>
+}
+</ul>

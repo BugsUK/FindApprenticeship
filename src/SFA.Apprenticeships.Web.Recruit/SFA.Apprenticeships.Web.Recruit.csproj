@@ -94,6 +94,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NanoSpell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Content\_assets\js\vendor\nanospell\bin\NanoSpell.dll</HintPath>
@@ -335,6 +339,7 @@
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -369,6 +374,9 @@
     <Compile Include="IoC\RecruitmentWebRegistry.cs" />
     <Compile Include="IoC\StructureMapScopeModule.cs" />
     <Compile Include="Mediators\Provider\ProviderMediator.cs" />
+    <Compile Include="Mediators\Report\ReportMediatorCodes.cs" />
+    <Compile Include="Mediators\Report\IReportMediator.cs" />
+    <Compile Include="Mediators\Report\ReportMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\IVacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
@@ -378,6 +386,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
+    <Compile Include="ViewModels\Report\ApplicationsReceivedParameters.cs" />
+    <Compile Include="ViewModels\Report\CandidatesWithApplicationsParameters.cs" />
+    <Compile Include="ViewModels\Report\ReportMenu.cs" />
     <Compile Include="Views\Home\Cookies.generated.cs">
       <DependentUpon>Cookies.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -448,6 +459,7 @@
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
     <Content Include="Content\_assets\js\nas\autosave.js" />
+    <Content Include="Content\_assets\js\nas\reports.js" />
     <Content Include="Content\_assets\js\nas\vacancyApplications.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
@@ -824,6 +836,9 @@
     </Content>
     <Content Include="Views\ProviderUser\OnBoardingComplete.cshtml" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\ApplicationsReceived.cshtml" />
+    <Content Include="Views\Report\CandidatesWithApplications.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -934,6 +949,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Reporting\SFA.Apprenticeships.Application.Reporting.csproj">
+      <Project>{8ac673df-e924-4c09-8a07-46614d29aac1}</Project>
+      <Name>SFA.Apprenticeships.Application.Reporting</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>

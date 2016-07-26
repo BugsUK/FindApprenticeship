@@ -89,6 +89,10 @@
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CuttingEdge.Conditions, Version=1.2.0.11174, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
@@ -173,6 +177,7 @@
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\LocationSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyPartyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
@@ -187,6 +192,8 @@
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
+    <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToVacancyDatesViewModelConverter.cs" />
@@ -200,6 +207,7 @@
     <Compile Include="Providers\GeoCodeAddressResult.cs" />
     <Compile Include="Providers\GeoCodingProvider.cs" />
     <Compile Include="Providers\IGeoCodingProvider.cs" />
+    <Compile Include="Providers\IReportingProvider.cs" />
     <Compile Include="Providers\QAActionResultCode.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
@@ -216,6 +224,7 @@
     <Compile Include="Factories\SelectListItemsFactory.cs" />
     <Compile Include="Providers\CookieDetectionProvider.cs" />
     <Compile Include="Providers\EuCookieDirectiveProvider.cs" />
+    <Compile Include="Providers\ReportingProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
@@ -226,6 +235,7 @@
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
+    <Compile Include="Validators\Report\ReportParametersDateRangeValidator.cs" />
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelServerValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
@@ -254,6 +264,7 @@
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
