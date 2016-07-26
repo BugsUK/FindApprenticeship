@@ -108,7 +108,10 @@
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship)
-                .When(x => x.VacancySource == VacancySource.Raa || x.Duration.HasValue);
+                .When(
+                    x =>
+                        x.VacancySource == VacancySource.Raa || x.Duration.HasValue ||
+                        x.WageType == WageType.ApprenticeshipMinimum || x.WageType == WageType.NationalMinimum);
 
             validator.RuleFor(x => x.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)

@@ -572,6 +572,51 @@
             }
         }
 
+        [TestCase(VacancySource.Av, "40", WageType.LegacyWeekly, true)]
+        [TestCase(VacancySource.Av, "40", WageType.LegacyText, true)]
+        [TestCase(VacancySource.Av, "40", WageType.Custom, true)]
+        [TestCase(VacancySource.Av, "40", WageType.NationalMinimum, true)]
+        [TestCase(VacancySource.Av, "40", WageType.ApprenticeshipMinimum, true)]
+        [TestCase(VacancySource.Av, null, WageType.LegacyWeekly, true)]
+        [TestCase(VacancySource.Av, null, WageType.LegacyText, true)]
+        [TestCase(VacancySource.Av, null, WageType.Custom, true)]
+        [TestCase(VacancySource.Av, null, WageType.NationalMinimum, false)]
+        [TestCase(VacancySource.Av, null, WageType.ApprenticeshipMinimum, false)]
+        public void WageTypeAndHoursPerWeekValidation(VacancySource vacancySource, string hoursPerWeekString, WageType wageType, bool expectHoursPerWeekValid)
+        {
+            decimal? hoursPerWeek = null;
+            decimal parsedHoursPerWeek;
+            if (decimal.TryParse(hoursPerWeekString, out parsedHoursPerWeek))
+            {
+                hoursPerWeek = parsedHoursPerWeek;
+            }
+
+            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
+            {
+                HoursPerWeek = hoursPerWeek,
+                VacancySource = vacancySource,
+                WageType = wageType
+            };
+
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectHoursPerWeekValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
         private VacancyViewModel BuildValidVacancy(VacancySource vacancySource)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();
