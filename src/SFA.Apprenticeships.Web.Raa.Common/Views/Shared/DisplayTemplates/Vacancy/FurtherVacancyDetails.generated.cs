@@ -834,21 +834,11 @@ WriteAttribute("src", Tuple.Create(" src=\"", 9802), Tuple.Create("\"", 9857)
 , 9808), false)
 );
 
-WriteLiteral(@"></script>
-<script>  
-    CKEDITOR.replace('LongDescription', {
-        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
-    });    
-</script>
+WriteLiteral("></script>\r\n<script>  \r\n    CKEDITOR.replace(\'LongDescription\', {\r\n        custom" +
+"Config: \'/Content/_assets/js/vendor/ckeditor/config.js\'\r\n    });    \r\n</script>\r" +
+"\n\r\n    ");
 
-    <script>
-        nanospell.ckeditor('all',
-        {
-            dictionary: ""en_uk"", // 24 free international dictionaries
-            server: ""asp.net"" // can be php, asp, asp.net or java
-        });
-    </script>
-");
+WriteLiteral("\r\n");
 
         }
     }
