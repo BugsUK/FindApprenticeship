@@ -839,10 +839,11 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Report\ApplicationsReceived.cshtml" />
-    <Content Include="Views\EmployerApplication\ViewAnonymised.cshtml" />
+    <Content Include="Views\EmployerApplication\ViewAnonymisedApprenticeship.cshtml" />
     <Content Include="Views\EmployerApplication\LinkExpired.cshtml" />
     <Content Include="Views\Application\ShareApplications.cshtml" />
     <Content Include="Views\Report\CandidatesWithApplications.cshtml" />
+    <Content Include="Views\EmployerApplication\ViewAnonymisedTraineeship.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

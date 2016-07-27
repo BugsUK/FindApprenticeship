@@ -338,9 +338,15 @@
                );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.ViewAnonymousApplication,
-               url: "application/viewanonymous",
-               defaults: new { controller = "EmployerApplication", action = "ViewAnonymised" }
+               name: RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication,
+               url: "apprenticeshipapplication/anonymous",
+               defaults: new { controller = "EmployerApplication", action = "ViewAnonymisedApprenticeship" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ViewAnonymousTraineeshipApplication,
+               url: "traineeshipapplication/anonymous",
+               defaults: new { controller = "EmployerApplication", action = "ViewAnonymisedTraineeship" }
                );
 
             routes.MapRoute(

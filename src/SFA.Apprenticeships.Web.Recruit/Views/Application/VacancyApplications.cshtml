@@ -244,7 +244,7 @@
                         </td>
                         <td>
                             <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId))" title="View @applicationSummary.ApplicantName application">View application</a>
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.ViewAnonymousApplication, new { application = applicationSummary.AnonymousLinkData })" title="View anonymous application">View anonymous</a>
+                            <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new { application = applicationSummary.AnonymousLinkData })" title="View anonymous application">View anonymous</a>
                         </td>
                     </tr>
                 }
