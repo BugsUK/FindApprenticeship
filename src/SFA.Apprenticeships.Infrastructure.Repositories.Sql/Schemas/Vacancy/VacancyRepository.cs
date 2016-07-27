@@ -198,9 +198,10 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
   Longitude,
   Latitude,
   v.ApprenticeshipFrameworkId,
-  af.CodeName as FrameworkCodeName,
+  --af.CodeName as FrameworkCodeName,
   Title,
-  el.CodeName as ApprenticeshipType,
+  v.ApprenticeshipType
+  --el.CodeName as ApprenticeshipType,
   ShortDescription,
   WeeklyWage,
   WageType,
@@ -229,18 +230,18 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
   QAUserName,
   TrainingTypeId,
   VacancyTypeId,
-  ao.CodeName as SectorCodeName,
+  --ao.CodeName as SectorCodeName,
   v.SectorId,
   UpdatedDateTime
 FROM dbo.Vacancy AS v
-LEFT JOIN dbo.ApprenticeshipType AS at
-  ON at.ApprenticeshipTypeId = v.ApprenticeShipType
-LEFT JOIN Reference.EducationLevel AS el
-  ON el.EducationLevelId = at.EducationLevelId
-LEFT JOIN ApprenticeshipFramework AS af
-  ON af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
-LEFT JOIN ApprenticeshipOccupation as ao
-  ON ao.ApprenticeshipOccupationId = v.SectorId
+--LEFT JOIN dbo.ApprenticeshipType AS at
+--  ON at.ApprenticeshipTypeId = v.ApprenticeShipType
+--LEFT JOIN Reference.EducationLevel AS el
+--  ON el.EducationLevelId = at.EducationLevelId
+--LEFT JOIN ApprenticeshipFramework AS af
+--  ON af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
+--LEFT JOIN ApprenticeshipOccupation as ao
+--  ON ao.ApprenticeshipOccupationId = v.SectorId
 ";
             if (filterByProviderBeenMigrated)
             {
@@ -366,9 +367,9 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             var results = _mapper.Map<IReadOnlyList<Vacancy>, List<VacancySummary>>(dbVacancies);
 
-            //MapApprenticeshipTypes(dbVacancies, results);
-            //MapFrameworkIds(dbVacancies, results);
-            //MapSectorIds(dbVacancies, results);
+            MapApprenticeshipTypes(dbVacancies, results);
+            MapFrameworkIds(dbVacancies, results);
+            MapSectorIds(dbVacancies, results);
 
             for (var i = 0; i < dbVacancies.Count; i++)
             {
