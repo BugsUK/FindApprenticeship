@@ -13,13 +13,11 @@
         }
     }
 
-    public class NullableIntToBool : ValueResolver<int?, bool>
+    public class ProviderToUseFaaToBool : ValueResolver<int?, bool>
     {
         protected override bool ResolveCore(int? source)
         {
-            if (!source.HasValue) return false;
-
-            return source != 0;
+            return source == 2;
         }
     }
 
@@ -29,7 +27,7 @@
         {
             Mapper.CreateMap<DatabaseProvider, DomainProvider>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.FullName))
-                .ForMember(dest => dest.IsMigrated, opt => opt.ResolveUsing<NullableIntToBool>().FromMember(source => source.ProviderToUseFAA) );
+                .ForMember(dest => dest.IsMigrated, opt => opt.ResolveUsing<ProviderToUseFaaToBool>().FromMember(source => source.ProviderToUseFAA) );
 
             Mapper.CreateMap<DomainProvider, DatabaseProvider>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(source => source.Name))
