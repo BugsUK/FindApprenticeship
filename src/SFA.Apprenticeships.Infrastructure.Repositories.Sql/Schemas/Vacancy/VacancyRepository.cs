@@ -794,7 +794,7 @@ GROUP BY VacancyId",
             }
         }
 
-        private void MapDateSubmittedAndDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
+        private void MapDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
         {
             var vacancyPlus = dbVacancy as VacancyPlus;
             if (vacancyPlus != null)
