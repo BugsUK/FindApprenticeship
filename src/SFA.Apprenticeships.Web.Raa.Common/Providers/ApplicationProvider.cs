@@ -195,9 +195,11 @@
             _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
         }
 
-        public void ShareApplications(IDictionary<string, string> applicationLinks, string recipientEmailAddress)
+        public void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress)
         {
-            _employerService.SendApplicationLinks(applicationLinks, recipientEmailAddress);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            _employerService.SendApplicationLinks(vacancy.Title, providerName, applicationLinks, linkExpiryDateTime, recipientEmailAddress);
         }
 
         #region Helpers

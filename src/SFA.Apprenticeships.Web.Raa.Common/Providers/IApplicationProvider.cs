@@ -28,6 +28,6 @@
 
         void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes);
 
-        void ShareApplications(IDictionary<string, string> applicationLinks, string recipientEmailAddress);
+        void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
     }
 }

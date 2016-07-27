@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Employer
 {
+    using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
@@ -67,12 +68,14 @@
             return _saveEmployerStrategy.Save(employer);
         }
 
-        public void SendApplicationLinks(IDictionary<string, string> applicationLinks, string recipientEmailAddress)
+        public void SendApplicationLinks(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress)
         {
+            Condition.Requires(vacancyTitle).IsNotNullOrEmpty();
+            Condition.Requires(providerName).IsNotNullOrEmpty();
             Condition.Requires(applicationLinks.Count).IsGreaterThan(0);
             Condition.Requires(recipientEmailAddress).IsNotNullOrEmpty();
 
-            _sendEmployerLinksStrategy.Send(applicationLinks, recipientEmailAddress);
+            _sendEmployerLinksStrategy.Send(vacancyTitle, providerName, applicationLinks, linkExpiryDateTime, recipientEmailAddress);
         }
     }
 }

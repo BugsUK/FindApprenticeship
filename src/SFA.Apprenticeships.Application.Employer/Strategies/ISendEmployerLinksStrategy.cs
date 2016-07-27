@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Employer.Strategies
 {
+    using System;
     using System.Collections.Generic;
 
     public interface ISendEmployerLinksStrategy
     {
-        void Send(IDictionary<string, string> applicationLinks, string recipientEmailAddress);
+        void Send(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
     }
 }

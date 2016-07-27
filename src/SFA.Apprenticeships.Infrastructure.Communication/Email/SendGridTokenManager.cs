@@ -105,6 +105,15 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.ProviderUserUsername:
                     emailTemplateToken = "ProviderUser.Username";
                     break;
+                case CommunicationTokens.EmployerApplicationLinks:
+                    emailTemplateToken = "Employer.ApplicationLinks";
+                    break;
+                case CommunicationTokens.ProviderName:
+                    emailTemplateToken = "Provider.Name";
+                    break;
+                case CommunicationTokens.EmployerApplicationLinksExpiry:
+                    emailTemplateToken = "Employer.ApplicationLinksExpiry";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(key), key, string.Format("Unknown communication token '{0}'.", key));
             }

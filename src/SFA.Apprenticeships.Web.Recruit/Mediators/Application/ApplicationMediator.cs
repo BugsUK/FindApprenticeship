@@ -64,7 +64,7 @@
                 applicationLinks[application.ApplicantID] = link;
             }
 
-            _applicationProvider.ShareApplications(applicationLinks, viewModel.RecipientEmailAddress);
+            _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.EmployerName, applicationLinks, _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress);
 
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
         }

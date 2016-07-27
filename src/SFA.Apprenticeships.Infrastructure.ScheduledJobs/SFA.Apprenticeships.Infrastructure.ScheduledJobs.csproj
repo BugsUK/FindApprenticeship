@@ -255,6 +255,10 @@
       <Project>{D91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
       <Name>SFA.Apprenticeships.Application.Communications</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">
+      <Project>{c91e4093-3348-43ed-b386-cf70000ffcb3}</Project>
+      <Name>SFA.Apprenticeships.Application.Communication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj">
       <Project>{dd096f97-415d-4676-9f90-7aee60213f49}</Project>
       <Name>SFA.Apprenticeships.Application.Employer</Name>
