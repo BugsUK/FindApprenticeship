@@ -344,10 +344,9 @@ FETCH NEXT @PageSize ROWS ONLY
             MapApprenticeshipType(dbVacancy, result);
             MapFrameworkId(dbVacancy, result);
             MapSectorId(dbVacancy, result);
-            MapDateFirstSubmitted(dbVacancy, result);
+            MapDateSubmittedAndDateFirstSubmitted(dbVacancy, result);
             MapCreatedDateTime(dbVacancy, result);
             MapCreatedByProviderUsername(dbVacancy, result);
-            MapDateSubmitted(dbVacancy, result);
 
             MapDateQAApproved(dbVacancy, result);
 
@@ -376,8 +375,7 @@ FETCH NEXT @PageSize ROWS ONLY
                 var dbVacancy = dbVacancies[i];
                 var vacancySummary = results[i];
 
-                MapDateFirstSubmitted(dbVacancy, vacancySummary);
-                MapDateSubmitted(dbVacancy, vacancySummary);
+                MapDateSubmittedAndDateFirstSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
                 MapDuration(dbVacancy, vacancySummary);
@@ -400,8 +398,7 @@ FETCH NEXT @PageSize ROWS ONLY
                 var dbVacancy = dbVacancies[i];
                 var vacancySummary = results[i];
 
-                MapDateFirstSubmitted(dbVacancy, vacancySummary);
-                MapDateSubmitted(dbVacancy, vacancySummary);
+                MapDateSubmittedAndDateFirstSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
                 MapDuration(dbVacancy, vacancySummary);
@@ -769,17 +766,18 @@ WHERE VacancyId = @VacancyId
                 ? results[vacancyReferralCommentTypeCodeName].Comments
                 : null;
         }
-        
-        private void MapDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
+
+        private void MapDateSubmittedAndDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
         {
             var vacancyPlus = dbVacancy as VacancyPlus;
             if (vacancyPlus != null)
             {
                 result.DateFirstSubmitted = vacancyPlus.DateFirstSubmitted;
+                result.DateSubmitted = vacancyPlus.DateSubmitted;
             }
             else
             {
-                result.DateFirstSubmitted = _getOpenConnection.Query<DateTime>(@"
+                var lastDate = _getOpenConnection.Query<DateTime>(@"
 select top 1 HistoryDate
 from dbo.VacancyHistory
 where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
@@ -791,30 +789,9 @@ order by HistoryDate
                     VacancyStatus = VacancyStatus.Submitted
                 }
                 ).SingleOrDefault();
-            }
-        }
 
-        private void MapDateSubmitted(Vacancy dbVacancy, VacancySummary result)
-        {
-            var vacancyPlus = dbVacancy as VacancyPlus;
-            if (vacancyPlus != null)
-            {
-                result.DateSubmitted = vacancyPlus.DateSubmitted;
-            }
-            else
-            {
-                result.DateSubmitted = _getOpenConnection.Query<DateTime?>(@"
-select top 1 HistoryDate
-from dbo.VacancyHistory
-where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
-order by HistoryDate desc
-",
-                new
-                {
-                    VacancyId = dbVacancy.VacancyId,
-                    VacancyStatus = VacancyStatus.Submitted
-                }
-                ).SingleOrDefault();
+                result.DateFirstSubmitted = lastDate;
+                result.DateSubmitted = lastDate;
             }
         }
 
