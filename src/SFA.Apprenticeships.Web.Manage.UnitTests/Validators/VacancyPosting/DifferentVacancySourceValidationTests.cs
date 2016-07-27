@@ -617,6 +617,39 @@
             }
         }
 
+        [TestCase(VacancySource.Raa, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", false)]
+        [TestCase(VacancySource.Raa, "asdf@asdf.com", false)]
+        [TestCase(VacancySource.Av, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
+        [TestCase(VacancySource.Av, "asdf@asdf.com", true)]
+        [TestCase(VacancySource.Api, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
+        [TestCase(VacancySource.Api, "asdf@asdf.com", true)]
+        public void ContactDetailsValidation(VacancySource vacancySource, string fullName, bool expectValid)
+        {
+            // Arrange.
+            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            vacancyViewModel.TrainingDetailsViewModel = new TrainingDetailsViewModel
+            {
+                ContactName = fullName,
+                VacancySource = vacancySource
+            };
+
+            // Act.
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            // Assert.
+            if (expectValid)
+            {
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactName, vacancyViewModel);
+            }
+            else
+            {
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactName, vacancyViewModel);
+            }
+        }
+
         private VacancyViewModel BuildValidVacancy(VacancySource vacancySource)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();

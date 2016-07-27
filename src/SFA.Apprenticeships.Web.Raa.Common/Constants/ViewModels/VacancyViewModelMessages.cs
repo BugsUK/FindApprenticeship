@@ -376,6 +376,7 @@
             public const string LabelText = "Contact name (optional)";
             public const string TooLongErrorText = "Contact name must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string FreeTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Contact name " + Whitelists.FreetextWhitelist.ErrorText;
         }
 

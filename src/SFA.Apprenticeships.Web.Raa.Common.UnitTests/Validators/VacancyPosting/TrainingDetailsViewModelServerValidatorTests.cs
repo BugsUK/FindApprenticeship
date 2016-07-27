@@ -296,7 +296,8 @@
             {
                 ContactName = fullName,
                 ContactEmail = email,
-                ContactNumber = phoneNumber
+                ContactNumber = phoneNumber,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -325,7 +326,8 @@
             {
                 ContactName = fullName,
                 ContactEmail = email,
-                ContactNumber = phoneNumber
+                ContactNumber = phoneNumber,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
