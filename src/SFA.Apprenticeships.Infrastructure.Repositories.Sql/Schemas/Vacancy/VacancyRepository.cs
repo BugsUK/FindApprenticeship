@@ -11,7 +11,6 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-    using Newtonsoft.Json;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
     using VacancyLocation = Entities.VacancyLocation;
@@ -346,9 +345,10 @@ FETCH NEXT @PageSize ROWS ONLY
             MapApprenticeshipType(dbVacancy, result);
             MapFrameworkId(dbVacancy, result);
             MapSectorId(dbVacancy, result);
-            MapDateSubmittedAndDateFirstSubmitted(dbVacancy, result);
+            MapDateFirstSubmitted(dbVacancy, result);
             MapCreatedDateTime(dbVacancy, result);
             MapCreatedByProviderUsername(dbVacancy, result);
+            MapDateSubmitted(dbVacancy, result);
 
             MapDateQAApproved(dbVacancy, result);
 
@@ -378,7 +378,8 @@ FETCH NEXT @PageSize ROWS ONLY
                 var dbVacancy = dbVacancies[i];
                 var vacancySummary = results[i];
 
-                //MapDateSubmittedAndDateFirstSubmitted(dbVacancy, vacancySummary);
+                //MapDateFirstSubmitted(dbVacancy, vacancySummary);
+                //MapDateSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
                 MapDuration(dbVacancy, vacancySummary);
@@ -401,7 +402,8 @@ FETCH NEXT @PageSize ROWS ONLY
                 var dbVacancy = dbVacancies[i];
                 var vacancySummary = results[i];
 
-                MapDateSubmittedAndDateFirstSubmitted(dbVacancy, vacancySummary);
+                MapDateFirstSubmitted(dbVacancy, vacancySummary);
+                MapDateSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
                 MapDuration(dbVacancy, vacancySummary);
@@ -798,11 +800,10 @@ GROUP BY VacancyId",
             if (vacancyPlus != null)
             {
                 result.DateFirstSubmitted = vacancyPlus.DateFirstSubmitted;
-                result.DateSubmitted = vacancyPlus.DateSubmitted;
             }
             else
             {
-                var lastDate = _getOpenConnection.Query<DateTime>(@"
+                result.DateFirstSubmitted = _getOpenConnection.Query<DateTime>(@"
 select top 1 HistoryDate
 from dbo.VacancyHistory
 where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
@@ -814,9 +815,30 @@ order by HistoryDate
                     VacancyStatus = VacancyStatus.Submitted
                 }
                 ).SingleOrDefault();
+            }
+        }
 
-                result.DateFirstSubmitted = lastDate;
-                result.DateSubmitted = lastDate;
+        private void MapDateSubmitted(Vacancy dbVacancy, VacancySummary result)
+        {
+            var vacancyPlus = dbVacancy as VacancyPlus;
+            if (vacancyPlus != null)
+            {
+                result.DateSubmitted = vacancyPlus.DateSubmitted;
+            }
+            else
+            {
+                result.DateSubmitted = _getOpenConnection.Query<DateTime?>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate desc
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Submitted
+                }
+                ).SingleOrDefault();
             }
         }
 
