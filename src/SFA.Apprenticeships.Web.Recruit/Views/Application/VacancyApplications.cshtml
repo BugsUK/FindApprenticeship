@@ -197,8 +197,9 @@
 
             <table class="vert-top" id="applicationTable">
                 <colgroup>
-                    <col class="t30">
                     <col class="t25">
+                    <col class="t15">
+                    <col class="t15">
                     <col class="t15">
                     <col class="t15">
                     <col class="t15">
@@ -207,6 +208,9 @@
                 <tr>
                     <th>
                         <span class="font-black">Applicant name</span>
+                    </th>
+                    <th>
+                        <span class="font-black">Applicant ID</span>
                     </th>
                     <th>
                         <span class="font-black">Vacancy manager notes</span>
@@ -227,6 +231,9 @@
                     <tr class="applicant">
                         <td>
                             <h4 class="applicant-name">@applicationSummary.ApplicantName</h4>
+                        </td>
+                        <td>
+                            @applicationSummary.ApplicantID
                         </td>
                         <td>
                             @{
