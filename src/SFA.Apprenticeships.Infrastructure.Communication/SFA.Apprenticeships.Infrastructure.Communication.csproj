@@ -124,6 +124,7 @@
     <Compile Include="Email\EmailMessageFormatters\EmailSimpleMessageFormatter.cs" />
     <Compile Include="Email\EmailFromResolvers\HelpDeskMessageEmailFromResolver.cs" />
     <Compile Include="Email\EmailFromResolvers\IEmailFromResolver.cs" />
+    <Compile Include="Email\EmailMessageFormatters\EmployerApplicationLinksMessageFormatter.cs" />
     <Compile Include="Sms\ISmsNumberFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationExpiringDraftMessageFormatter.cs" />

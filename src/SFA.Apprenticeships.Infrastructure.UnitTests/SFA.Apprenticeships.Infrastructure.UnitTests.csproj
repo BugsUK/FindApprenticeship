@@ -217,6 +217,8 @@
     <Compile Include="ScheduledJobs\Vacancy\ApprenticeshipSummaryUpdateProcessorTests.cs" />
     <Compile Include="ScheduledJobs\Vacancy\VacancyStatusControlQueueConsumerTests..cs" />
     <Compile Include="ScheduledJobs\Vacancy\VacancySchedulerConsumerTests.cs" />
+    <Compile Include="Security\AES256ProviderTests.cs" />
+    <Compile Include="Security\CryptographyServiceTests.cs" />
     <Compile Include="SiteMap\CreateVacancySiteMapRequestSubscriberTests.cs" />
     <Compile Include="UserDirectory\PasswordHashTests.cs" />
   </ItemGroup>
@@ -324,6 +326,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.ScheduledJobs\SFA.Apprenticeships.Infrastructure.ScheduledJobs.csproj">
       <Project>{0491054E-CAF4-4321-BE1D-3E44E739421C}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.ScheduledJobs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Security\SFA.Apprenticeships.Infrastructure.Security.csproj">
+      <Project>{e8841e6e-382a-476b-9af0-acdbd4870659}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
       <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>

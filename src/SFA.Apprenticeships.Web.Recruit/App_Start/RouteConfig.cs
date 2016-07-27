@@ -326,9 +326,27 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.ShareApplications,
+               url: "vacancy/shareapplications",
+               defaults: new { controller = "Application", action = "ShareApplications" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewApprenticeshipApplication,
                url: "apprenticeshipapplication/review",
                defaults: new { controller = "ApprenticeshipApplication", action = "Review" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication,
+               url: "apprenticeshipapplication/anonymous",
+               defaults: new { controller = "EmployerApplication", action = "ViewAnonymisedApprenticeship" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ViewAnonymousTraineeshipApplication,
+               url: "traineeshipapplication/anonymous",
+               defaults: new { controller = "EmployerApplication", action = "ViewAnonymisedTraineeship" }
                );
 
             routes.MapRoute(

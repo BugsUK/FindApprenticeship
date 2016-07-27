@@ -340,6 +340,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\EmployerApplicationController.cs" />
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -838,7 +839,11 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Report\ApplicationsReceived.cshtml" />
+    <Content Include="Views\EmployerApplication\ViewAnonymisedApprenticeship.cshtml" />
+    <Content Include="Views\EmployerApplication\LinkExpired.cshtml" />
+    <Content Include="Views\Application\ShareApplications.cshtml" />
     <Content Include="Views\Report\CandidatesWithApplications.cshtml" />
+    <Content Include="Views\EmployerApplication\ViewAnonymisedTraineeship.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1029,6 +1034,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Security\SFA.Apprenticeships.Infrastructure.Security.csproj">
+      <Project>{E8841E6E-382A-476B-9AF0-ACDBD4870659}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

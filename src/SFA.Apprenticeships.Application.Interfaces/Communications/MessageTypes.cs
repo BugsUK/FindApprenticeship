@@ -24,6 +24,7 @@
         SendDormantAccountReminder = 19,
         CandidateFeedbackMessage = 20,
         SendProviderUserEmailVerificationCode = 21,
-        ProviderContactUsMessage = 22
+        ProviderContactUsMessage = 22,
+        SendEmployerApplicationLinks = 23
     }
 }
