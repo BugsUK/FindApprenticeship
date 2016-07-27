@@ -28,7 +28,8 @@
 
             Mapper.CreateMap<ApplicationSummary, ApplicationSummaryViewModel>()
                 .ForMember(v => v.ApplicantName, opt => opt.MapFrom(src => new Name(src.CandidateDetails.FirstName, src.CandidateDetails.MiddleNames, src.CandidateDetails.LastName).GetDisplayText()))
-                .ForMember(v => v.ApplicantID, opt => opt.MapFrom(src => src.CandidateId.GetApplicantId()));
+                .ForMember(v => v.ApplicantID, opt => opt.MapFrom(src => src.CandidateId.GetApplicantId()))
+                .ForMember(v => v.AnonymousLinkData, opt => opt.Ignore());
 
             Mapper.CreateMap<ContactMessageViewModel, ProviderContactMessage>()
                 .ForMember(c => c.Type, opt => opt.UseValue(ContactMessageTypes.ContactUs))

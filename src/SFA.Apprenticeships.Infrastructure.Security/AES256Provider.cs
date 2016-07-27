@@ -29,10 +29,14 @@
             try
             {
                 // Check arguments.
-                if (input == null || input.Length <= 0)
+                if (string.IsNullOrWhiteSpace(input))
                     throw new ArgumentNullException(nameof(input));
 
                 return Convert.ToBase64String(EncryptStringToBytes(input, _keyBytes, _ivBytes));
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -46,12 +50,16 @@
             try
             {
                 // Check arguments.
-                if (cipherText == null || cipherText.Length <= 0)
+                if (string.IsNullOrWhiteSpace(cipherText))
                     throw new ArgumentNullException(nameof(cipherText));
 
                 var cipherTextBytes = Convert.FromBase64String(cipherText);
 
                 return DecryptStringFromBytes(cipherTextBytes, _keyBytes, _ivBytes);
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
             }
             catch (Exception ex)
             {

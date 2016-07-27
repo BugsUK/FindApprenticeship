@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
-  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Migrate" vmsize="Small">
+  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Migrate" vmsize="ExtraSmall">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
-  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Migrate.Faa" vmsize="Small">
+  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Migrate.Faa" vmsize="ExtraSmall">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
