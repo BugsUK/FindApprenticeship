@@ -23,7 +23,7 @@ CKEDITOR.editorConfig = function( config ) {
     // Simplify the dialog windows.
 	config.language = 'en-gb';
 	config.removeDialogTabs = 'image:advanced;link:advanced';	
-    config.disableNativeSpellChecker = false;
+    //config.disableNativeSpellChecker = false;
 	config.pasteFromWordRemoveFontStyles = false;
 	config.extraPlugins = 'pastefromword';
 };
