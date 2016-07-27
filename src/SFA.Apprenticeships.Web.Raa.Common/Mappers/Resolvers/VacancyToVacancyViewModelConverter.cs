@@ -29,7 +29,8 @@
                 VacancyQuestionsViewModel = context.Engine.Map<Vacancy, VacancyQuestionsViewModel>(source),
                 OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
                 VacancyType = source.VacancyType,
-                Address = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address)
+                Address = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address),
+                VacancySource = source.VacancySource
             };
 
             if (source.Status.IsStateInQa())

@@ -34,7 +34,8 @@
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                DesiredSkills = desiredSkills
+                DesiredSkills = desiredSkills,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -72,7 +73,8 @@
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                FutureProspects = futureProspects
+                FutureProspects = futureProspects,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -110,7 +112,8 @@
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                PersonalQualities = personalQualities
+                PersonalQualities = personalQualities,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -190,7 +193,8 @@
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
                 DesiredQualifications = desiredQualifications,
-                VacancyType = VacancyType.Apprenticeship
+                VacancyType = VacancyType.Apprenticeship,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -219,9 +223,8 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
-        
         [TestCase(Samples.ValidFreeHtmlText, true)]
         [TestCase(Samples.InvalidHtmlTextWithInput, false)]
         [TestCase(Samples.InvalidHtmlTextWithObject, false)]
@@ -231,7 +234,8 @@
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
                 DesiredQualifications = desiredQualifications,
-                VacancyType = VacancyType.Traineeship
+                VacancyType = VacancyType.Traineeship,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

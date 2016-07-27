@@ -26,7 +26,7 @@
 
             var subcategory = vacancy.GetSubCategory(categories);
             LogSubCategory(vacancy, logService, subcategory);
-
+            
             var detail = new ApprenticeshipVacancyDetail
             {
                 Id = vacancy.VacancyId,
@@ -45,6 +45,7 @@
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
                 WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
+                HoursPerWeek = vacancy.HoursPerWeek,
                 OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?

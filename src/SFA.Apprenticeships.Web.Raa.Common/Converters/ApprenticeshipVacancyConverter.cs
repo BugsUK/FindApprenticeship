@@ -25,6 +25,7 @@
                 DurationType = vacancy.DurationType,
                 DurationTypes = GetDurationTypes(vacancy.VacancyType),
                 Duration = vacancy.Duration,
+                ExpectedDuration = vacancy.ExpectedDuration,
                 Status = vacancy.Status,
                 VacancyDatesViewModel = new VacancyDatesViewModel { 
                     ClosingDate = new DateViewModel(vacancy.ClosingDate),
@@ -37,7 +38,8 @@
                 DurationComment = vacancy.DurationComment,
                 LongDescriptionComment = vacancy.LongDescriptionComment,
                 WorkingWeekComment = vacancy.WorkingWeekComment,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                VacancySource = vacancy.VacancySource
             };
 
             return vacancyViewModel;
@@ -83,7 +85,8 @@
                 DesiredQualifications = vacancy.DesiredQualifications,
                 DesiredQualificationsComment = vacancy.DesiredQualificationsComment,
                 Status = vacancy.Status,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                VacancySource = vacancy.VacancySource
             };
 
             return vacancyViewModel;

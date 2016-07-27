@@ -20,12 +20,21 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
             });
         }
 
+        public static VacancyViewModel GetValidVacancyViewModel(int vacancyReferenceNumber, VacancySource vacancySource)
+        {
+            var viewModel = GetValidVacancyViewModel(vacancyReferenceNumber);
+            viewModel.VacancySource = vacancySource;
+
+            return viewModel;
+        }
+
         public static VacancyViewModel GetValidVacancyViewModel(int vacancyReferenceNumber)
         {
             return new VacancyViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Status = VacancyStatus.Submitted,
+                VacancySource = VacancySource.Raa,
                 Address = new AddressViewModel
                 {
                     Town = "London",

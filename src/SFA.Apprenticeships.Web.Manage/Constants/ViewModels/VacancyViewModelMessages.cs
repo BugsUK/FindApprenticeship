@@ -2,6 +2,8 @@
 {
     public class VacancyViewModelMessages
     {
+        public const string VacancyAuthoredInApi = "This vacancy needs to have all fields validated because it has been uploaded from an approved third party rather than posted through Recruit an apprentice.";
+        public const string VacancyAuthoredInAvms = "This vacancy needs to have all fields validated because it has been imported from Apprenticeship vacancies rather than posted through Recruit an apprentice.";
         public const string NoVacanciesAvailble = "All vacancies have been reviewed.";
 
         public const string NextAvailableVacancy =

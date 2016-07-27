@@ -56,7 +56,7 @@
             MockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             // Act.
-            VacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+            VacancyPostingService.CreateVacancy(vacancy);
 
             // Assert.
             MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
@@ -81,7 +81,7 @@
             var preferredProviderSiteId = _vacancyManager.PreferredProviderSiteId.Value;
 
             // Act.
-            VacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+            VacancyPostingService.CreateVacancy(vacancy);
 
             // Assert.
             MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v =>
@@ -90,12 +90,9 @@
         }
 
         [Test]
-        public void SaveVacancyShouldCallRepository()
+        public void CreateVacancyShouldSetVacancySourceAsRaa()
         {
             // Arrange.
-            MockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
-            MockCurrentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
-
             var vacancy = new Vacancy
             {
                 VacancyReferenceNumber = 1,
@@ -105,31 +102,10 @@
             MockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             // Act.
-            VacancyPostingService.SaveVacancy(vacancy);
+            VacancyPostingService.CreateVacancy(vacancy);
 
             // Assert.
-            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
-        }
-
-        [Test]
-        public void SaveVacancyShouldUpdateLastEditedByUsername()
-        {
-            // Arrange.
-            MockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
-            MockCurrentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
-
-            var vacancy = new Vacancy
-            {
-                VacancyReferenceNumber = 1,
-                VacancyId = 1
-            };
-            MockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
-
-            // Act.
-            VacancyPostingService.SaveVacancy(vacancy);
-
-            // Assert.
-            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
+            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancySource == VacancySource.Raa)));
         }
 
         [Test]

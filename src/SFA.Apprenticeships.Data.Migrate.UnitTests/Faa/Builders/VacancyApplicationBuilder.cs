@@ -9,6 +9,7 @@
         private int _legacyApplicationId = 123456;
         private string _unsuccessfulReason;
         private string _withdrawnOrDeclinedReason;
+        private ApplicationTemplate _applicationTemplate;
 
         public VacancyApplication Build()
         {
@@ -21,6 +22,7 @@
                 DateApplied = DateTime.Now.AddDays(-6),
                 CandidateId = Guid.NewGuid(),
                 LegacyApplicationId = _legacyApplicationId,
+                CandidateInformation = _applicationTemplate,
                 SuccessfulDateTime = DateTime.Now.AddDays(-1),
                 UnsuccessfulDateTime = DateTime.Now.AddDays(-2),
                 WithdrawnOrDeclinedReason = _withdrawnOrDeclinedReason,
@@ -55,6 +57,12 @@
         public VacancyApplicationBuilder WithWithdrawnOrDeclinedReason(string withdrawnOrDeclinedReason)
         {
             _withdrawnOrDeclinedReason = withdrawnOrDeclinedReason;
+            return this;
+        }
+
+        public VacancyApplicationBuilder WithApplicationTemplate(ApplicationTemplate applicationTemplate)
+        {
+            _applicationTemplate = applicationTemplate;
             return this;
         }
     }

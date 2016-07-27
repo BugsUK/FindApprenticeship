@@ -313,7 +313,7 @@
             MockEmployerService.Verify(s => s.GetEmployer(employerId));
             MockProviderService.Verify(s => s.GetProvider(ukprn));
             MockLocalAuthorityService.Verify(s => s.GetLocalAuthorityCode(employersPostcode));
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => 
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => 
                 v.VacancyGuid == vacancyGuid 
                 && v.VacancyReferenceNumber == vacancyReferenceNumber 
                 && v.Title == null 
@@ -380,7 +380,7 @@
             });
 
             // Assert.
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v =>
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v =>
                 v.Address == null
             )));
         }

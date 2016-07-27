@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
-  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Processes" vmsize="Small">
+  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Processes" vmsize="Medium">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
@@ -8,7 +8,7 @@
       <Certificate name="NasClientCertificate" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WorkerRole>
-  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Monitor" vmsize="ExtraSmall">
+  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Monitor" vmsize="Small">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
@@ -16,7 +16,7 @@
       <Certificate name="NasClientCertificate" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WorkerRole>
-  <WorkerRole name="SFA.Apprenticeships.Infrastructure.ScheduledJobs" vmsize="ExtraSmall">
+  <WorkerRole name="SFA.Apprenticeships.Infrastructure.ScheduledJobs" vmsize="Small">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>

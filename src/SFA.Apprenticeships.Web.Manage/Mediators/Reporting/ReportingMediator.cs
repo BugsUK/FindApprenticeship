@@ -13,6 +13,8 @@
     using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
     using Infrastructure.Presentation;
+    using Raa.Common.Validators.Report;
+    using Raa.Common.ViewModels.Report;
     using SFA.Infrastructure.Interfaces;
     using Validators;
     using ViewModels;

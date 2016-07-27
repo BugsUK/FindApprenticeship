@@ -19,7 +19,7 @@
         {
             if (!source.HasValue) return false;
 
-            return source == 1;
+            return source != 0;
         }
     }
 

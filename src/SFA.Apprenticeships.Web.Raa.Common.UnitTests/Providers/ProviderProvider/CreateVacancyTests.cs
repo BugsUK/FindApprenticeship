@@ -115,7 +115,7 @@
             MockProviderService.Verify(s => s.SaveVacancyParty(providerSiteEmployerLink), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
-                    s.SaveVacancy(
+                    s.CreateVacancy(
                         It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Never);
         }
     }

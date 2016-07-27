@@ -58,6 +58,8 @@
             viewModel.Status = status;
             viewModel.VacancyType = vacancyType;
             viewModel.IsCandidateView = false;
+            viewModel.VacancySource = VacancySource.Raa;
+
             return viewModel;
         }
 
