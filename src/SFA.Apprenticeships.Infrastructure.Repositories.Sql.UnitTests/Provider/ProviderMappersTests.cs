@@ -60,7 +60,8 @@
 
         [TestCase(null, false)]
         [TestCase(0, false)]
-        [TestCase(1, true)]
+        [TestCase(1, false)]
+        [TestCase(2, true)]
         public void ShouldMapProviderToUseFaaToIsMigrated(int? providerToUseFaa, bool isMigrated)
         {
             var dbProvider = new Fixture()
