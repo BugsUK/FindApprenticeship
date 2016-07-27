@@ -24,6 +24,8 @@
 
         public ApplicantDetailsViewModel ApplicantDetails { get; set; }
 
+        public AnonymisedApplicantDetailsViewModel AnonymousApplicantDetails { get; set; }
+
         public AboutYouViewModel AboutYou { get; set; }
 
         public EducationViewModel Education { get; set; }

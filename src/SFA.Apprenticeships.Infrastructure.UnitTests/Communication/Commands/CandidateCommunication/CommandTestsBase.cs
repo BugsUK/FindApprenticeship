@@ -45,7 +45,7 @@
                 mock.Get<CommunicationConfiguration>())
                 .Returns(new CommunicationConfiguration
                 {
-                    SiteDomainName = "www.example.com"
+                    CandidateSiteDomainName = "www.example.com"
                 });
         }
 
