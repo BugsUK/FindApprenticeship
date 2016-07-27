@@ -952,6 +952,8 @@
     <Build Include="dbo\Functions\fnDisplayDisability.function.sql" />
     <Build Include="dbo\Stored Procedures\ReportCandidatesWithApplicationsList.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportGetAllEmployers.proc.sql" />
+    <Build Include="Schemas\WebProxy.sql" />
+    <Build Include="dbo\Tables\WebProxy.WebProxyConsumer.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
