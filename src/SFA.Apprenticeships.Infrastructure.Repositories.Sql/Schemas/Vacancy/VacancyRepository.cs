@@ -11,6 +11,7 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using Newtonsoft.Json;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
     using VacancyLocation = Entities.VacancyLocation;
@@ -370,13 +371,14 @@ FETCH NEXT @PageSize ROWS ONLY
             MapApprenticeshipTypes(dbVacancies, results);
             MapFrameworkIds(dbVacancies, results);
             MapSectorIds(dbVacancies, results);
+            MapAllDateSubmittedAndDateFirstSubmitted(dbVacancies, results);
 
             for (var i = 0; i < dbVacancies.Count; i++)
             {
                 var dbVacancy = dbVacancies[i];
                 var vacancySummary = results[i];
 
-                MapDateSubmittedAndDateFirstSubmitted(dbVacancy, vacancySummary);
+                //MapDateSubmittedAndDateFirstSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
                 MapDuration(dbVacancy, vacancySummary);
@@ -766,6 +768,28 @@ WHERE VacancyId = @VacancyId
             return results.ContainsKey(vacancyReferralCommentTypeCodeName)
                 ? results[vacancyReferralCommentTypeCodeName].Comments
                 : null;
+        }
+
+        private void MapAllDateSubmittedAndDateFirstSubmitted(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        {
+            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
+            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+SELECT VacancyId, MIN(HistoryDate) as DateFirstSubmitted, MAX(HistoryDate) as DateSubmitted
+FROM dbo.VacancyHistory
+WHERE VacancyId IN @Ids and VacancyHistoryEventSubTypeId = @VacancyStatus
+GROUP BY VacancyId",
+                new
+                {
+                    Ids = ids,
+                    VacancyStatus = VacancyStatus.Submitted
+                }).ToDictionary(t => t.VacancyId.ToString(), t => t);
+
+            foreach (var vacancySummary in results)
+            {
+                var value = map[vacancySummary.VacancyId.ToString()];
+                vacancySummary.DateSubmitted = value.DateSubmitted;
+                vacancySummary.DateFirstSubmitted = value.DateFirstSubmitted;
+            }
         }
 
         private void MapDateSubmittedAndDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
