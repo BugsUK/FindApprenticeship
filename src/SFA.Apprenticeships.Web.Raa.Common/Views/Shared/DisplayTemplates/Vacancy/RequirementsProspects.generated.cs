@@ -384,7 +384,13 @@ WriteLiteral(@"></script>
     });
 </script>
 
-");
+<script>
+    nanospell.ckeditor('all',
+    {
+        dictionary: ""en_uk"", // 24 free international dictionaries
+        server: ""asp.net"" // can be php, asp, asp.net or java
+    });
+</script>");
 
         }
     }
