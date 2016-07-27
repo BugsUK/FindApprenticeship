@@ -12,5 +12,10 @@
             public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Email address " + Whitelists.EmailAddressWhitelist.ErrorText;
         }
+
+        public static class SelectedApplicationsMessages
+        {
+            public const string RequiredErrorText = "You must select an application";
+        }
     }
 }

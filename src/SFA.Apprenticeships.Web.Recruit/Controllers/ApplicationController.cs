@@ -60,7 +60,7 @@
             switch (response.Code)
             {
                 case ApplicationMediatorCodes.ShareApplications.Ok:
-                    SetUserMessage($"You have sent {response.ViewModel.SelectedApplicationIds.Count()} to {response.ViewModel.RecipientEmailAddress}");
+                    SetUserMessage($"You have sent {response.ViewModel.SelectedApplicationIds.Count()} applications with {viewModel.RecipientEmailAddress}");
                     return View(response.ViewModel);
                 case ApplicationMediatorCodes.ShareApplications.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
