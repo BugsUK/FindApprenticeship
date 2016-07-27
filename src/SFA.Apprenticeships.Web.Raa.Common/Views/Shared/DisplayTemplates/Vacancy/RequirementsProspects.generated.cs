@@ -122,6 +122,15 @@ Write(Html.HiddenFor(m => m.ComeFromPreview));
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+Write(Html.HiddenFor(m => m.VacancySource));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n\r\n<section>\r\n    <div");
 
 WriteLiteral(" class=\"form-group\"");
@@ -131,7 +140,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "DesiredSkills"}));
 
             
@@ -142,7 +151,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.EditorFor(m => m.DesiredSkillsComment, "Comment", Html.GetLabelFor(m => m.DesiredSkillsComment)));
 
             
@@ -153,7 +162,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.ValidationMessageFor(m => m.DesiredSkillsComment));
 
             
@@ -164,7 +173,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "PersonalQualities"}));
 
             
@@ -175,7 +184,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.EditorFor(m => m.PersonalQualitiesComment, "Comment", Html.GetLabelFor(m => m.PersonalQualitiesComment)));
 
             
@@ -186,7 +195,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.ValidationMessageFor(m => m.PersonalQualitiesComment));
 
             
@@ -195,13 +204,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n");
 
             
-            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
          if (Model.VacancyType == VacancyType.Traineeship)
         {
             
@@ -209,28 +218,28 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
        Write(Html.HiddenFor(m => m.DesiredQualifications));
 
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
                                                          
             
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
        Write(Html.HiddenFor(m => m.DesiredQualificationsComment));
 
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
                                                                 
         }
         else
@@ -240,42 +249,42 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
        Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new {@class = "ckeditor", type = "text", id = "DesiredQualifications"}));
 
             
             #line default
             #line hidden
             
-            #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
                                                                                                                                                               
             
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
        Write(Html.EditorFor(m => m.DesiredQualificationsComment, "Comment", Html.GetLabelFor(m => m.DesiredQualificationsComment)));
 
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
                                                                                                                                   
             
             
             #line default
             #line hidden
             
-            #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 39 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
        Write(Html.ValidationMessageFor(m => m.DesiredQualificationsComment));
 
             
             #line default
             #line hidden
             
-            #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 39 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
                                                                            
         }
 
@@ -285,7 +294,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
 
             
@@ -296,7 +305,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.EditorFor(m => m.FutureProspectsComment, "Comment", Html.GetLabelFor(m => m.FutureProspectsComment)));
 
             
@@ -307,7 +316,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.ValidationMessageFor(m => m.FutureProspectsComment));
 
             
@@ -318,7 +327,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
 
             
@@ -329,7 +338,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.EditorFor(m => m.ThingsToConsiderComment, "Comment", Html.GetLabelFor(m => m.ThingsToConsiderComment)));
 
             
@@ -340,7 +349,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
    Write(Html.ValidationMessageFor(m => m.ThingsToConsiderComment));
 
             
@@ -354,9 +363,9 @@ WriteLiteral("></script>\r\n<script>\r\n    if (typeof CKEDITOR == \'undefined\'
 ".write(unescape(\"%3Cscript src=\'/Content/_assets/js/vendor/ckeditor/ckeditor.js\'" +
 " type=\'text/javascript\'%3E%3C/script%3E\"));\r\n    }\r\n</script>\r\n\r\n    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2923), Tuple.Create("\"", 2978)
-, Tuple.Create(Tuple.Create("", 2929), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
-, 2929), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 2962), Tuple.Create("\"", 3017)
+, Tuple.Create(Tuple.Create("", 2968), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 2968), false)
 );
 
 WriteLiteral(@"></script>

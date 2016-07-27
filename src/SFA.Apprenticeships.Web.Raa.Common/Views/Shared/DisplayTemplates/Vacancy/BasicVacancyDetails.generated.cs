@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -146,13 +147,27 @@ Write(Html.HiddenFor(m => m.ComeFromPreview));
             #line hidden
             
             #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-Write(Html.Partial("ValidationSummary", ViewData.ModelState));
+Write(Html.HiddenFor(m => m.VacancySource));
 
             
             #line default
             #line hidden
             
             #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+                                         
+    
+            
+            #line default
+            #line hidden
+            
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+Write(Html.Partial("ValidationSummary", ViewData.ModelState));
+
+            
+            #line default
+            #line hidden
+            
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                            
 
     
@@ -160,42 +175,42 @@ Write(Html.Partial("ValidationSummary", ViewData.ModelState));
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-small"}));
 
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                                                                                                             
     
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.EditorFor(m => m.TitleComment, "Comment", Html.GetLabelFor(m => m.TitleComment)));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                                                           
     
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.ValidationMessageFor(m => m.TitleComment));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                    
 
     
@@ -203,42 +218,42 @@ Write(Html.ValidationMessageFor(m => m.TitleComment));
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium"}));
 
             
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                                                                                                                         
     
             
             #line default
             #line hidden
             
-            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.EditorFor(m => m.ShortDescriptionComment, "Comment", Html.GetLabelFor(m => m.ShortDescriptionComment)));
 
             
             #line default
             #line hidden
             
-            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                                                                                 
     
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.ValidationMessageFor(m => m.ShortDescriptionComment));
 
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                               
 
 
@@ -247,27 +262,27 @@ Write(Html.ValidationMessageFor(m => m.ShortDescriptionComment));
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1541), Tuple.Create("\"", 1684)
-, Tuple.Create(Tuple.Create("", 1549), Tuple.Create("form-group", 1549), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1584), Tuple.Create("\"", 1727)
+, Tuple.Create(Tuple.Create("", 1592), Tuple.Create("form-group", 1592), true)
             
-            #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1559), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyType))
+            #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 1602), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyType))
             
             #line default
             #line hidden
-, 1560), false)
+, 1603), false)
 );
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 1698), Tuple.Create("\"", 1759)
+WriteAttribute("name", Tuple.Create(" name=\"", 1741), Tuple.Create("\"", 1802)
             
-            #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 1705), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyType).ToString().ToLower()
+            #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 1748), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyType).ToString().ToLower()
             
             #line default
             #line hidden
-, 1705), false)
+, 1748), false)
 );
 
 WriteLiteral("></a>\r\n        <label");
@@ -287,7 +302,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
        Write(Html.RadioButtonFor(model => model.VacancyType, VacancyType.Apprenticeship, new { id = "vacancy-type-apprenticeship", aria_labelledby = "vacancy-type-label" }));
 
             
@@ -306,7 +321,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
        Write(Html.RadioButtonFor(model => model.VacancyType, VacancyType.Traineeship, new { id = "vacancy-type-traineeship", aria_labelledby = "vacancy-type-label" }));
 
             
@@ -317,7 +332,7 @@ WriteLiteral(" Traineeship\r\n        </label>\r\n");
 WriteLiteral("        ");
 
             
-            #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
    Write(Html.ValidationMessageFor(m => m.VacancyType));
 
             
@@ -326,7 +341,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 
 
             
@@ -362,7 +377,7 @@ WriteLiteral(" data-target=\"online-panel\"");
 WriteLiteral(" ");
 
             
-            #line 54 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 55 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                                                                      Write(isApplicationThroughRAAYes);
 
             
@@ -373,7 +388,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 55 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 56 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.RadioButtonFor(model => model.OfflineVacancy, false, new {id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label"}));
 
             
@@ -393,7 +408,7 @@ WriteLiteral(" data-target=\"offline-panel\"");
 WriteLiteral(" ");
 
             
-            #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 60 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                                                                        Write(isApplicationThroughRAANo);
 
             
@@ -404,7 +419,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 60 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel"}));
 
             
@@ -415,7 +430,7 @@ WriteLiteral(" Candidates will apply through an external website\r\n            
 WriteLiteral("                ");
 
             
-            #line 62 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 63 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
            Write(Html.ValidationMessageFor(m => m.OfflineVacancy));
 
             
@@ -443,7 +458,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, id = "apprenticeship-offline-application-url"}));
 
             
@@ -454,7 +469,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationUrlComment)));
 
             
@@ -465,7 +480,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 71 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.ValidationMessageFor(m => m.OfflineApplicationUrlComment));
 
             
@@ -482,7 +497,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 74 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium", id = "apprenticheship-offline-application-instructions"}));
 
             
@@ -493,7 +508,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.EditorFor(m => m.OfflineApplicationInstructionsComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationInstructionsComment)));
 
             
@@ -504,7 +519,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.ValidationMessageFor(m => m.OfflineApplicationInstructionsComment));
 
             
@@ -514,77 +529,77 @@ WriteLiteral("\r\n                    <br/>\r\n                </div>\r\n       
 "</div>\r\n    </div>\r\n");
 
             
-            #line 82 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                           
     
             
             #line default
             #line hidden
             
-            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.Ukprn));
 
             
             #line default
             #line hidden
             
-            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                          
     
             
             #line default
             #line hidden
             
-            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.OwnerParty.VacancyPartyId));
 
             
             #line default
             #line hidden
             
-            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                              
     
             
             #line default
             #line hidden
             
-            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.VacancyGuid));
 
             
             #line default
             #line hidden
             
-            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                
     
             
             #line default
             #line hidden
             
-            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.Status));
 
             
             #line default
             #line hidden
             
-            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                           
 
             
