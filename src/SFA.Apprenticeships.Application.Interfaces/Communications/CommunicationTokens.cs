@@ -37,6 +37,7 @@
         AccountExpiryDate = 32,
         ProviderUserEmailVerificationCode = 33,
         ProviderUserFullName = 34,
-        ProviderUserUsername = 35
+        ProviderUserUsername = 35,
+        EmployerApplicationLinks = 36
     }
 }

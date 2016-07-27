@@ -16,6 +16,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
         IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds);
         Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
         Employer SaveEmployer(Employer employer);
+        void SendApplicationLinks(IDictionary<string, string> applicationLinks, string recipientEmailAddress);
     }
     
     public class EmployerSearchRequest

@@ -195,9 +195,9 @@
             _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
         }
 
-        public ShareApplicationsViewModel ShareApplications(ShareApplicationsViewModel vacancyReferenceNumber)
+        public void ShareApplications(IDictionary<string, string> applicationLinks, string recipientEmailAddress)
         {
-            throw new NotImplementedException();
+            _employerService.SendApplicationLinks(applicationLinks, recipientEmailAddress);
         }
 
         #region Helpers

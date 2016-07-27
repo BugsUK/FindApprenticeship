@@ -55,7 +55,7 @@
         public ActionResult ShareApplications(ShareApplicationsViewModel viewModel)
         {
 
-            var response = _applicationMediator.ShareApplications(viewModel);
+            var response = _applicationMediator.ShareApplications(viewModel, Url);
 
             switch (response.Code)
             {

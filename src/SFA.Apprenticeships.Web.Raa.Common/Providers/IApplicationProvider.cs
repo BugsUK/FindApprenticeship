@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
+    using System.Collections.Generic;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -27,6 +28,6 @@
 
         void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes);
 
-        ShareApplicationsViewModel ShareApplications(ShareApplicationsViewModel vacancyReferenceNumber);
+        void ShareApplications(IDictionary<string, string> applicationLinks, string recipientEmailAddress);
     }
 }

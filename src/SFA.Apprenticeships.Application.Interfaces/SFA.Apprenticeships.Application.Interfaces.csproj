@@ -91,6 +91,7 @@
     <Compile Include="Communications\CommunicationChannels.cs" />
     <Compile Include="Communications\CommunicationRequestHelpers.cs" />
     <Compile Include="Communications\ErrorCodes.cs" />
+    <Compile Include="Communications\IEmployerCommunicationService.cs" />
     <Compile Include="Communications\IProviderCommunicationService.cs" />
     <Compile Include="Communications\SubscriptionTypes.cs" />
     <Compile Include="Employers\IEmployerService.cs" />

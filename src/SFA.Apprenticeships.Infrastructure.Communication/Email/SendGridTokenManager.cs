@@ -82,7 +82,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                     emailTemplateToken = "User.PendingUsernameCode";
                     break;
                 case CommunicationTokens.CandidateSiteDomainName:
-                    emailTemplateToken = "Candidate.SiteDomainName";
+                    emailTemplateToken = "Candidate.CandidateSiteDomainName";
                     break;
                 case CommunicationTokens.CandidateSubscriberId:
                     emailTemplateToken = "Candidate.SubscriberId";
