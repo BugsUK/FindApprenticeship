@@ -372,6 +372,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapFrameworkIds(dbVacancies, results);
             MapSectorIds(dbVacancies, results);
             MapAllDateSubmittedAndDateFirstSubmitted(dbVacancies, results);
+            MapAllDateQAApproved(dbVacancies, results);
 
             for (var i = 0; i < dbVacancies.Count; i++)
             {
@@ -380,7 +381,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
                 //MapDateFirstSubmitted(dbVacancy, vacancySummary);
                 //MapDateSubmitted(dbVacancy, vacancySummary);
-                MapDateQAApproved(dbVacancy, vacancySummary);
+                //MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
                 MapDuration(dbVacancy, vacancySummary);
                 PatchStandards(dbVacancy, vacancySummary);
@@ -872,6 +873,30 @@ order by HistoryDate
                     VacancyStatus = VacancyStatus.Draft
                 }
                 ).SingleOrDefault();
+        }
+
+        private void MapAllDateQAApproved(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        {
+            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
+            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+SELECT VacancyId, MAX(HistoryDate) as DateQAApproved
+FROM dbo.VacancyHistory
+WHERE VacancyId IN @Ids and VacancyHistoryEventSubTypeId = @VacancyStatus
+GROUP BY VacancyId",
+                new
+                {
+                    Ids = ids,
+                    VacancyStatus = VacancyStatus.Live
+                }).ToDictionary(t => t.VacancyId.ToString(), t => t);
+
+            foreach (var vacancySummary in results)
+            {
+                if (map.ContainsKey(vacancySummary.VacancyId.ToString()))
+                {
+                    var value = map[vacancySummary.VacancyId.ToString()];
+                    vacancySummary.DateQAApproved = value.DateQAApproved;
+                }
+            }
         }
 
         private void MapDateQAApproved(Vacancy dbVacancy, VacancySummary result)
