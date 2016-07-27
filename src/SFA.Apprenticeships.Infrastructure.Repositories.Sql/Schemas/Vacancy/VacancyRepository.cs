@@ -194,7 +194,7 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
 
             if (filterByProviderBeenMigrated)
             {
-                sql += " AND ProviderToUseFAA = 1";
+                sql += " AND ProviderToUseFAA = 2";
             }
 
             if (pageSize > 0)
