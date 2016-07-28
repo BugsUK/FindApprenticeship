@@ -1,0 +1,67 @@
+﻿@model SFA.Apprenticeships.Web.Manage.ViewModels.InformationRadiatorViewModel
+@{
+    ViewBag.Title = "Information radiator";
+}
+
+<section>
+    <h1 class="heading-xlarge">Information radiator</h1>
+    <div class="grid-wrapper" style="Margin-Bottom: 20px">
+        <h2 class="heading-medium">Vacancies</h2>
+        <ul class="vacancies-summary">
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesSubmittedViaRaa</p>
+                    <figcaption>
+                        <h2>Total submitted via recruit</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesApprovedViaRaa</p>
+                    <figcaption>
+                        <h2>Total made live via manage</h2>
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+    </div>
+    <div class="grid-wrapper" style="Margin-Bottom: 20px">
+        <h2 class="heading-medium">Applications</h2>
+        <ul class="vacancies-summary">
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalApplicationsSubmittedForRaaVacancies</p>
+                    <figcaption>
+                        <h2>Total submitted for recruit vacancies</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalUnsuccessfulApplicationsViaRaa</p>
+                    <figcaption>
+                        <h2>Total made unsuccessful via recruit</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalSuccessfulApplicationsViaRaa</p>
+                    <figcaption>
+                        <h2>Total made successful via recruit</h2>
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+    </div>
+</section>
+
+@section scripts
+{
+    <script>
+        setTimeout(function () {
+            location.reload();
+        }, 10000);
+    </script>
+}
