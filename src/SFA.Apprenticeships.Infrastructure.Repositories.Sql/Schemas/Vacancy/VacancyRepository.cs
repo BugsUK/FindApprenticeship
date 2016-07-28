@@ -181,68 +181,11 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
         {
             _logger.Debug("Called database to get page {1} of apprenticeship vacancies in status {0}. Page size {2}", string.Join(",", desiredStatuses), page, pageSize);
 
-            var sql = $@"SELECT
-  VacancyId,
-  VacancyOwnerRelationshipId,
-  VacancyReferenceNumber,
-  VacancyStatusId,
-  AddressLine1,
-  AddressLine2,
-  AddressLine3,
-  AddressLine4,
-  AddressLine5,
-  Town,
-  CountyId,
-  PostCode,
-  LocalAuthorityId,
-  Longitude,
-  Latitude,
-  v.ApprenticeshipFrameworkId,
-  --af.CodeName as FrameworkCodeName,
-  Title,
-  v.ApprenticeshipType
-  --el.CodeName as ApprenticeshipType,
-  ShortDescription,
-  WeeklyWage,
-  WageType,
-  WageText,
-  NumberofPositions,
-  ApplicationClosingDate,
-  InterviewsFromDate,
-  ExpectedStartDate,
-  ExpectedDuration,
-  WorkingWeek,
-  EmployerAnonymousName,
-  ApplyOutsideNAVMS,
-  LockedForSupportUntil,
-  NoOfOfflineApplicants,
-  MasterVacancyId,
-  VacancyLocationTypeId,
-  VacancyManagerID,
-  VacancyGuid,
-  SubmissionCount,
-  StartedToQADateTime,
-  StandardId,
-  HoursPerWeek,
-  WageUnitId,
-  DurationTypeId,
-  DurationValue,
-  QAUserName,
-  TrainingTypeId,
-  VacancyTypeId,
-  --ao.CodeName as SectorCodeName,
-  v.SectorId,
-  UpdatedDateTime
-FROM dbo.Vacancy AS v
---LEFT JOIN dbo.ApprenticeshipType AS at
---  ON at.ApprenticeshipTypeId = v.ApprenticeShipType
---LEFT JOIN Reference.EducationLevel AS el
---  ON el.EducationLevelId = at.EducationLevelId
---LEFT JOIN ApprenticeshipFramework AS af
---  ON af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
---LEFT JOIN ApprenticeshipOccupation as ao
---  ON ao.ApprenticeshipOccupationId = v.SectorId
-";
+
+            var sql = $@"
+            SELECT {string.Join(", ", VacancySummaryColumns)}
+            FROM dbo.Vacancy";
+
             if (filterByProviderBeenMigrated)
             {
                 sql += " inner join Provider on ContractOwnerId = ProviderId";
@@ -252,9 +195,8 @@ FROM dbo.Vacancy AS v
 
             if (filterByProviderBeenMigrated)
             {
-                sql += " AND ProviderToUseFAA = 1";
+                sql += " AND ProviderToUseFAA = 2";
             }
-
 
             if (pageSize > 0)
             {
@@ -269,13 +211,13 @@ FROM dbo.Vacancy AS v
             sql, new
             {
                 VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s)
-            },600);
+            }, 600);
 
 
             _logger.Debug(
                 $"Found {dbVacancies.Count} apprenticeship vacancies in page {page} with statuses in {string.Join(",", desiredStatuses)}. Page size {pageSize}");
 
-            return OnlyMapVacancySummaries(dbVacancies.ToList());
+            return MapVacancySummaries(dbVacancies.ToList());
         }
 
         public List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
@@ -364,7 +306,7 @@ FETCH NEXT @PageSize ROWS ONLY
             return result;
         }
 
-        private List<VacancySummary> OnlyMapVacancySummaries(IReadOnlyList<Vacancy> dbVacancies)
+        private List<VacancySummary> MapVacancySummaries(IReadOnlyList<Vacancy> dbVacancies)
         {
             var results = _mapper.Map<IReadOnlyList<Vacancy>, List<VacancySummary>>(dbVacancies);
 
@@ -373,40 +315,13 @@ FETCH NEXT @PageSize ROWS ONLY
             MapSectorIds(dbVacancies, results);
             MapAllDateSubmittedAndDateFirstSubmitted(dbVacancies, results);
             MapAllDateQAApproved(dbVacancies, results);
+            MapAllRegionalTeams(dbVacancies, results);
 
             for (var i = 0; i < dbVacancies.Count; i++)
             {
                 var dbVacancy = dbVacancies[i];
                 var vacancySummary = results[i];
 
-                //MapDateFirstSubmitted(dbVacancy, vacancySummary);
-                //MapDateSubmitted(dbVacancy, vacancySummary);
-                //MapDateQAApproved(dbVacancy, vacancySummary);
-                MapRegionalTeam(vacancySummary);
-                MapDuration(dbVacancy, vacancySummary);
-                PatchStandards(dbVacancy, vacancySummary);
-            }
-
-            return results;
-        }
-
-        private List<VacancySummary> MapVacancySummaries(IReadOnlyList<Vacancy> dbVacancies)
-        {
-            var results = _mapper.Map<IReadOnlyList<Vacancy>, List<VacancySummary>>(dbVacancies);
-
-            MapApprenticeshipTypes(dbVacancies, results);
-            MapFrameworkIds(dbVacancies, results);
-            MapSectorIds(dbVacancies, results);
-
-            for (var i = 0; i < dbVacancies.Count; i++)
-            {
-                var dbVacancy = dbVacancies[i];
-                var vacancySummary = results[i];
-
-                MapDateFirstSubmitted(dbVacancy, vacancySummary);
-                MapDateSubmitted(dbVacancy, vacancySummary);
-                MapDateQAApproved(dbVacancy, vacancySummary);
-                MapRegionalTeam(vacancySummary);
                 MapDuration(dbVacancy, vacancySummary);
                 PatchStandards(dbVacancy, vacancySummary);
             }
@@ -921,6 +836,29 @@ order by HistoryDate desc
                     VacancyStatus = VacancyStatus.Live
                 }
                 ).SingleOrDefault();
+            }
+        }
+
+        private void MapAllRegionalTeams(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        {
+            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
+            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+                SELECT v.VacancyId, ps.PostCode
+                FROM dbo.Vacancy v
+                INNER JOIN dbo.VacancyOwnerRelationship vor
+                ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                INNER JOIN dbo.ProviderSite ps
+                ON ps.ProviderSiteId = vor.ProviderSiteId
+                WHERE VacancyId IN @Ids",
+                new
+                {
+                    Ids = ids
+                }).ToDictionary(t => t.VacancyId.ToString(), t => t.PostCode);
+
+            foreach (var vacancySummary in results)
+            {
+                var value = map[vacancySummary.VacancyId.ToString()];
+                vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(value);
             }
         }
 

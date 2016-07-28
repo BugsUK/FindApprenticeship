@@ -47,8 +47,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public decimal? Latitude { get; set; }
 
-        public string ApprenticeshipFrameworkCodeName { get; set; }
-
         public int? ApprenticeshipFrameworkId { get; set; }
 
         public int? StandardId { get; set; }
@@ -150,8 +148,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public bool EditedInRaa { get; set; }
 
         public int? SectorId { get; set; }
-
-        public string SectorCodeName { get; set; }
 
         public DateTime? UpdatedDateTime { get; set; }
     }
