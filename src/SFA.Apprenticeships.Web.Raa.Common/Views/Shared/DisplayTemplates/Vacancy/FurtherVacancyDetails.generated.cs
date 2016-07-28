@@ -844,8 +844,9 @@ WriteAttribute("src", Tuple.Create(" src=\"", 10081), Tuple.Create("\"", 10136)
 );
 
 WriteLiteral("></script>\r\n<script>  \r\n    CKEDITOR.replace(\'LongDescription\', {\r\n        custom" +
-"Config: \'/Content/_assets/js/vendor/ckeditor/config.js\'\r\n    });    \r\n</script>\r" +
-"\n\r\n    ");
+"Config: \'/Content/_assets/js/vendor/ckeditor/config.js\',\r\n        contentsCss: \'" +
+"/Content/_assets/js/vendor/ckeditor/contents.css\'\r\n    });    \r\n</script>\r\n\r\n   " +
+" ");
 
 WriteLiteral("\r\n");
 
