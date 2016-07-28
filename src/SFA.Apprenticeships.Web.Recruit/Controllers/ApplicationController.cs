@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Common.Mediators;
+    using Common.Validators.Extensions;
     using Constants;
     using Domain.Entities.Raa;
     using Mediators.Application;
@@ -30,6 +32,39 @@
                 case ApplicationMediatorCodes.GetVacancyApplicationsViewModel.Ok:
                     return View(response.ViewModel);
 
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ShareApplications(int vacancyReferenceNumber)
+        {
+            var response = _applicationMediator.ShareApplications(vacancyReferenceNumber);
+
+            switch (response.Code)
+            {
+                case ApplicationMediatorCodes.GetShareApplicationsViewModel.Ok:
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ShareApplications(ShareApplicationsViewModel viewModel)
+        {
+
+            var response = _applicationMediator.ShareApplications(viewModel, Url);
+
+            switch (response.Code)
+            {
+                case ApplicationMediatorCodes.ShareApplications.Ok:
+                    SetUserMessage($"You have shared {response.ViewModel.SelectedApplicationIds.Count()} applications with {viewModel.RecipientEmailAddress}");
+                    return View(response.ViewModel);
+                case ApplicationMediatorCodes.ShareApplications.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

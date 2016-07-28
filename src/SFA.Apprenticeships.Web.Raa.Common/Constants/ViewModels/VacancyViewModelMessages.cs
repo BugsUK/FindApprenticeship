@@ -112,6 +112,11 @@
                 "The minimum expected duration is 12 months based on the hours per week selected";
         }
 
+        public static class LegacyExpectedDuration
+        {
+            public const string LabelText = "Expected duration (from Apprenticeship vacancies or uploaded via the API)";
+        }
+
         public static class DurationComment
         {
             public const string LabelText = "Expected duration comment";
@@ -371,6 +376,7 @@
             public const string LabelText = "Contact name (optional)";
             public const string TooLongErrorText = "Contact name must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string FreeTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Contact name " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
@@ -421,6 +427,13 @@
         public class OfflineVacancy
         {
             public const string RequiredErrorText = "Select whether the vacancy will be managed through the find an apprentice site or not";
+        }
+
+        public static class ExpectedDuration
+        {
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The expected duration " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The expected duration " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
     }
 }

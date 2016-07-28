@@ -88,6 +88,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AddressPresenter.cs" />
+    <Compile Include="ApplicantIdPresenter.cs" />
     <Compile Include="Constants\Wages.cs" />
     <Compile Include="CsvPresenter.cs" />
     <Compile Include="DatePresenter.cs" />

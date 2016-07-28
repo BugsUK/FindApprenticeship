@@ -124,6 +124,8 @@
 
         public class ReviewVacancy
         {
+            public const string VacancyAuthoredInApi = "VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi";
+            public const string VacancyAuthoredInAvms = "VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms";
             public const string InvalidVacancy = "VacancyMediatorCodes.ReviewVacancy.ReviewVacancy";
             public const string Ok = "VacancyMediatorCodes.ReviewVacancy.Ok";
             public const string FailedValidation = "VacancyMediatorCodes.ReviewVacancy.FailedValidation";

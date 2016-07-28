@@ -7,9 +7,7 @@
 
     public interface IVacancyPostingService
     {
-        Vacancy CreateApprenticeshipVacancy(Vacancy vacancy);
-
-        Vacancy SaveVacancy(Vacancy vacancy);
+        Vacancy CreateVacancy(Vacancy vacancy);
 
         int GetNextVacancyReferenceNumber();
 

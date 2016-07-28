@@ -130,7 +130,19 @@
                     vacancyViewModel, validationResult);
             }
 
-            return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.Ok, vacancyViewModel);
+            switch (vacancyViewModel.VacancySource)
+            {
+                case VacancySource.Av:
+                    return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms, vacancyViewModel,
+                        VacancyViewModelMessages.VacancyAuthoredInAvms, UserMessageLevel.Info);
+                case VacancySource.Api:
+                    return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi, vacancyViewModel,
+                        VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
+                case VacancySource.Raa:
+                    return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.Ok, vacancyViewModel);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber)
@@ -159,7 +171,10 @@
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(viewModel.VacancyType);
 
-                viewModel.AcceptWarnings = true;
+                if (validationResult.Errors.All(e => (ValidationType?) e.CustomState == ValidationType.Warning))
+                {
+                    viewModel.AcceptWarnings = true;
+                }
 
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }

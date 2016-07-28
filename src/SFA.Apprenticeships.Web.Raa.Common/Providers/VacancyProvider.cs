@@ -250,7 +250,7 @@
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
 
-            _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
+            _vacancyPostingService.CreateVacancy(new Vacancy
             {
                 VacancyGuid = vacancyMinimumData.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
@@ -897,7 +897,7 @@
             vacancy.VacancyId = 0;
             vacancy.VacancyGuid = Guid.NewGuid();
 
-            _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.CreateVacancy(vacancy);
 
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, true);
             if (vacancyParty == null)
@@ -1096,7 +1096,7 @@
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
-            _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
+            _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
         public QAActionResultCode ApproveVacancy(int vacancyReferenceNumber)
@@ -1220,6 +1220,7 @@
             vacancy.LongDescriptionComment = viewModel.LongDescriptionComment;
             vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
+            vacancy.ExpectedDuration = viewModel.ExpectedDuration;
 
             AddQAInformation(vacancy);
 

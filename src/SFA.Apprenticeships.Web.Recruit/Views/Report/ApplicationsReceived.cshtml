@@ -1,0 +1,50 @@
+﻿@using SFA.Apprenticeships.Web.Common.Extensions
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Recruit.ViewModels.Report.ApplicationsReceivedParameters
+
+@{
+    ViewBag.Title = "Applications received report";
+}
+
+<h1 id="heading" class="heading-xlarge">Applications received</h1>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div>
+        <fieldset class="form-group inline-fixed date-input">
+            <a name="@Html.NameFor(m => m.FromDate).ToString().Replace(".", "_").ToLower()"></a>
+            <legend class="form-label">@Model.GetMetadata(m => m.FromDate).DisplayName</legend>
+            @Html.EditorFor(m => m.FromDate)
+            @Html.ValidationMessageFor(m => m.FromDate)
+        </fieldset>
+
+        <fieldset class="form-group inline-fixed date-input">
+            <a name="@Html.NameFor(m => m.ToDate).ToString().Replace(".", "_").ToLower()"></a>
+            <legend class="form-label">@Model.GetMetadata(m => m.ToDate).DisplayName</legend>
+            @Html.EditorFor(m => m.ToDate)
+            @Html.ValidationMessageFor(m => m.ToDate)
+        </fieldset>
+
+        <div class="grid grid-1-2">
+            <button id="ValidateReportParameters" type="submit" class="button" name="ApplicationsReceived" value="ValidateApplicationsReceived">Export CSV</button>
+            @if (Model.IsValid)
+            {
+                <button id="DownloadReport" type="submit" class="button-link hidden" name="ApplicationsReceived" value="DownloadApplicationsReceived">Download CSV</button>
+                <noscript>
+                    <button id="DownloadReportNoJs" type="submit" class="button-link" name="ApplicationsReceived" value="DownloadApplicationsReceived">Download CSV</button>
+                </noscript>
+            }
+            <p class="med-btm-margin">
+                @Html.RouteLink("Back to List", RecruitmentRouteNames.ReportList)
+            </p>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/reports")
+}

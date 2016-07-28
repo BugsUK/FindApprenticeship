@@ -13,7 +13,6 @@
     using Entities;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
-    using VacancyLocation = Entities.VacancyLocation;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 

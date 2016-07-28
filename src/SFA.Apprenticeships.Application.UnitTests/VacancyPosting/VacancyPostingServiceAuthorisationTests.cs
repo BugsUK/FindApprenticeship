@@ -31,15 +31,15 @@
                 .Returns(true);
 
             MockProviderVacancyAuthorisationService.Setup(mock => mock
-                .Authorise(_testVacancy.ProviderId, _testVacancy.VacancyManagerId))
+                .Authorise(_testVacancy))
                 .Throws<UnauthorizedAccessException>();
         }
 
         [Test]
-        public void ShouldAuthoriseProviderUserOnSaveVacancy()
+        public void ShouldAuthoriseProviderUserOnCreateVacancy()
         {
             // Act.
-            Action action = () => VacancyPostingService.SaveVacancy(_testVacancy);
+            Action action = () => VacancyPostingService.CreateVacancy(_testVacancy);
 
             // Assert.
             action.ShouldThrow<UnauthorizedAccessException>();

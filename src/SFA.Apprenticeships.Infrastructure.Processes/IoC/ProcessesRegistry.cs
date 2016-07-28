@@ -57,14 +57,17 @@
             For<CommunicationCommand>().Use<CandidateDailyDigestCommunicationCommand>();
             For<CommunicationCommand>().Use<HelpDeskCommunicationCommand>();
             For<CommunicationCommand>().Use<ProviderCommunicationCommand>();
+            For<CommunicationCommand>().Use<EmailCommunicationCommand>();
 
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
             For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
             For<ISendCandidateCommunicationStrategy>().Use<QueueCandidateCommunicationStrategy>();
             For<ISendContactMessageStrategy>().Use<QueueContactMessageStrategy>();
             For<ISendUsernameUpdateCommunicationStrategy>().Use<QueueUsernameUpdateCommunicationStrategy>();
+            For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
 
             For<ICommunicationService>().Use<CommunicationService>();
+            For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
 
             // applications
             For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
@@ -188,6 +191,7 @@
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
+            For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
         }
 
         #endregion

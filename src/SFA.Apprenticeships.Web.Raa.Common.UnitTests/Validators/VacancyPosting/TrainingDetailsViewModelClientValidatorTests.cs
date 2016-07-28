@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Validators.VacancyPosting
 {
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Raa.Common.Validators.Vacancy;
-    using Raa.Common.ViewModels.Vacancy;
+    using Common.Validators.Vacancy;
+    using ViewModels.Vacancy;
 
     [TestFixture]
     public class TrainingDetailsViewModelClientValidatorTests
@@ -28,7 +29,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase(Samples.ValidFreeText, true)]
         [TestCase(Samples.InvalidFreeTextWithInput, false)]
@@ -38,7 +39,8 @@
         {
             var viewModel = new TrainingDetailsViewModel
             {
-                TrainingProvided = trainingProvided
+                TrainingProvided = trainingProvided,
+                VacancySource = VacancySource.Raa
             };
 
             _validator.Validate(viewModel);
@@ -61,7 +63,8 @@
         {
             var viewModel = new TrainingDetailsViewModel
             {
-                ContactName = contactName
+                ContactName = contactName,
+                VacancySource = VacancySource.Raa
             };
 
             _validator.Validate(viewModel);
@@ -84,7 +87,8 @@
         {
             var viewModel = new TrainingDetailsViewModel
             {
-                ContactNumber = contactNumber
+                ContactNumber = contactNumber,
+                VacancySource = VacancySource.Raa
             };
 
             _validator.Validate(viewModel);
@@ -107,7 +111,8 @@
         {
             var viewModel = new TrainingDetailsViewModel
             {
-                ContactEmail = contactEmail
+                ContactEmail = contactEmail,
+                VacancySource = VacancySource.Raa
             };
 
             _validator.Validate(viewModel);

@@ -34,20 +34,22 @@
                 .Matches(VacancyViewModelMessages.DesiredSkills.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListInvalidTagErrorText)
+                .When( x => Common.IsNotEmpty(x.DesiredSkills));
 
             validator.RuleFor(x => x.FutureProspects)
                 .Matches(VacancyViewModelMessages.FutureProspects.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidCharacterErrorText)
-                .When(x => !string.IsNullOrEmpty(x.FutureProspects)) //Migrated vacancies can contain just the empty string
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.FutureProspects));
 
             validator.RuleFor(x => x.PersonalQualities)
                 .Matches(VacancyViewModelMessages.PersonalQualities.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.PersonalQualities));
 
             validator.RuleFor(x => x.ThingsToConsider)
                 .Matches(VacancyViewModelMessages.ThingsToConsider.WhiteListHtmlRegularExpression)
@@ -60,27 +62,32 @@
                 .Matches(VacancyViewModelMessages.DesiredQualifications.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.DesiredQualifications));
         }
 
         internal static void AddServerRules(this AbstractValidator<VacancyRequirementsProspectsViewModel> validator)
         {
             validator.RuleFor(x => x.DesiredSkills)
                 .NotEmpty()
+                .When(x => x.VacancySource == VacancySource.Raa)
                 .WithMessage(VacancyViewModelMessages.DesiredSkills.RequiredErrorText);
 
             validator.RuleFor(x => x.FutureProspects)
                 .NotEmpty()
+                .When(x => x.VacancySource == VacancySource.Raa)
                 .WithMessage(VacancyViewModelMessages.FutureProspects.RequiredErrorText);
 
             validator.RuleFor(x => x.PersonalQualities)
                 .NotEmpty()
+                .When(x => x.VacancySource == VacancySource.Raa)
                 .WithMessage(VacancyViewModelMessages.PersonalQualities.RequiredErrorText);
 
             validator.RuleFor(x => x.DesiredQualifications)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.DesiredQualifications.RequiredErrorText)
-                .When(x => x.VacancyType != VacancyType.Traineeship);
+                .When(x => x.VacancyType != VacancyType.Traineeship)
+                .When(x => x.VacancySource == VacancySource.Raa)
+                .WithMessage(VacancyViewModelMessages.DesiredQualifications.RequiredErrorText);
         }
     }
 }

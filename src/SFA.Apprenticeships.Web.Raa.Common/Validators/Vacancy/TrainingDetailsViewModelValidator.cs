@@ -51,7 +51,8 @@
                 .Matches(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.TrainingProvided));
 
             validator.RuleFor(m => m.TrainingProvidedComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
@@ -61,7 +62,13 @@
                 .Length(0, 100)
                 .WithMessage(VacancyViewModelMessages.ContactNameMessages.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.ContactNameMessages.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.ContactNameMessages.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.ContactNameMessages.WhiteListErrorText)
+                .When(x => x.VacancySource == VacancySource.Raa);
+
+            validator.RuleFor(m => m.ContactName)
+                .Matches(VacancyViewModelMessages.ContactNameMessages.FreeTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.ContactNameMessages.WhiteListErrorText)
+                .When(x => x.VacancySource != VacancySource.Raa);
 
             validator.RuleFor(x => x.ContactNumber)
                 .Length(8, 16)
@@ -116,7 +123,8 @@
 
             validator.RuleFor(x => x.TrainingProvided)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.RequiredErrorText)
+                .When(v => v.VacancySource == VacancySource.Raa);
         }
     }
 }

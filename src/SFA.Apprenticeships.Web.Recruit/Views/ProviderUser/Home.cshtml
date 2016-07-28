@@ -304,11 +304,14 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-1">
                 <section>
+                    <p>
+                         <a href="@Url.RouteUrl(RecruitmentRouteNames.ReportList)">Your reports</a>
+                    </p>
                     @{ var open = string.IsNullOrEmpty(Model.VacanciesSummary.VacanciesSummarySearch.SearchString) ? "" : "open"; }
                     <details class="@open" @open>
                         <summary>Search your @vacanciesLabel</summary>
                         <div class="detail-content">
-                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {aria_label = "Search your " + vacanciesLabel })
+                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {aria_label = "Search your " + vacanciesLabel})
                             <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>
                         </div>
                     </details>
@@ -317,8 +320,8 @@
                             var apprenticeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ? " active" : "";
                             var traineeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? " active" : "";
                         }
-                        @Html.RouteLink("Apprenticeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Apprenticeship), new { @class = "tabbed-tab no-js" + apprenticeshipsTabControlClass })
-                        @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship), new { @class = "tabbed-tab no-js" + traineeshipsTabControlClass })
+                        @Html.RouteLink("Apprenticeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Apprenticeship), new {@class = "tabbed-tab no-js" + apprenticeshipsTabControlClass})
+                        @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship), new {@class = "tabbed-tab no-js" + traineeshipsTabControlClass})
                     </nav>
                     <div class="tabbed-content active width-all-1-1">
                         <table id="vacancies-table">
@@ -331,124 +334,124 @@
                                 <col class="t15">
                             </colgroup>
                             <thead>
-                                <tr>
-                                    <th>@vacanciesTitle title</th>
-                                    <th>Employer</th>
-                                    <th>Location</th>
-                                    @if (filterType == VacanciesSummaryFilterTypes.NewApplications)
-                                    {
-                                        <th>New applications</th>
-                                    }
-                                    else
-                                    {
-                                        <th>Applications / click-throughs</th>
-                                    }
-                                    <th>@vacanciesTitle status</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th>@vacanciesTitle title</th>
+                                <th>Employer</th>
+                                <th>Location</th>
+                                @if (filterType == VacanciesSummaryFilterTypes.NewApplications)
+                                {
+                                    <th>New applications</th>
+                                }
+                                else
+                                {
+                                    <th>Applications / click-throughs</th>
+                                }
+                                <th>@vacanciesTitle status</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach (var vacancy in Model.VacanciesSummary.Vacancies.Page)
-                                {
-                                    var title = string.IsNullOrEmpty(vacancy.Title) ? "(No Title)" : vacancy.Title;
-                                    var isOfflineVacancy = vacancy.OfflineVacancy == true;
-                                    <tr>
-                                        <td data-label="Vacancy title">
-                                            <div class="vac-title">
-                                                @{
-                                                    var routeName = RecruitmentRouteNames.PreviewVacancy;
-                                                    if (vacancy.Status == VacancyStatus.Unknown || vacancy.Status == VacancyStatus.Draft)
-                                                    {
-                                                        routeName = RecruitmentRouteNames.ReviewCreateVacancy;
-                                                    }
-                                                    if (vacancy.Status.CanHaveApplicationsOrClickThroughs() && vacancy.ApplicationCount > 0)
-                                                    {
-                                                        routeName = RecruitmentRouteNames.VacancyApplications;
-                                                    }
-                                                }
-                                                <a href="@Url.RouteUrl(routeName, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">
-                                                    @title
-                                                    @if (isOfflineVacancy)
-                                                    {
-                                                        <span class="subtitle"><br />(Applications managed externally)</span>
-                                                    }
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td class="vac-employer" data-label="Employer">
-                                            @vacancy.EmployerName
-                                        </td>
-                                        <td class="vac-ref-number" data-label="Location">
-                                            @if (vacancy.ParentVacancyId != null &&
-                    vacancy.Status == VacancyStatus.Live)
-                                            {
-
-                                                @vacancy.Location.Town<br />
-                                                @vacancy.Location.AddressLineEllipsis
-                                            }
-                                            else
-                                            {
-                                                @vacancy.Location.Town
-                                            }
-                                        </td>
-                                        <td class="vac-no-of-applications" data-label="Number of applications">
-                                            @if (vacancy.Status.CanHaveApplicationsOrClickThroughs())
-                                            {
-                                                var unit = isOfflineVacancy ? "click-through" : "application";
-                                                var units = unit + "s";
-                                                var applicationCount = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
-                                                var newApplicationCount = vacancy.NewApplicationCount;
-                                                if (filterType == VacanciesSummaryFilterTypes.NewApplications)
+                            @foreach (var vacancy in Model.VacanciesSummary.Vacancies.Page)
+                            {
+                                var title = string.IsNullOrEmpty(vacancy.Title) ? "(No Title)" : vacancy.Title;
+                                var isOfflineVacancy = vacancy.OfflineVacancy == true;
+                                <tr>
+                                    <td data-label="Vacancy title">
+                                        <div class="vac-title">
+                                            @{
+                                                var routeName = RecruitmentRouteNames.PreviewVacancy;
+                                                if (vacancy.Status == VacancyStatus.Unknown || vacancy.Status == VacancyStatus.Draft)
                                                 {
-                                                    if (newApplicationCount == 1)
-                                                    {
-                                                        <span>1<br /> application</span>
-                                                    }                                                    
-                                                    else
-                                                    {
-                                                        <span>@newApplicationCount<br /> applications</span>
-                                                    }
+                                                    routeName = RecruitmentRouteNames.ReviewCreateVacancy;
+                                                }
+                                                if (vacancy.Status.CanHaveApplicationsOrClickThroughs() && vacancy.ApplicationCount > 0)
+                                                {
+                                                    routeName = RecruitmentRouteNames.VacancyApplications;
+                                                }
+                                            }
+                                            <a href="@Url.RouteUrl(routeName, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">
+                                                @title
+                                                @if (isOfflineVacancy)
+                                                {
+                                                    <span class="subtitle"><br />(Applications managed externally)</span>
+                                                }
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="vac-employer" data-label="Employer">
+                                        @vacancy.EmployerName
+                                    </td>
+                                    <td class="vac-ref-number" data-label="Location">
+                                        @if (vacancy.ParentVacancyId != null &&
+                                             vacancy.Status == VacancyStatus.Live)
+                                        {
+
+                                            @vacancy.Location.Town<br/>
+                                            @vacancy.Location.AddressLineEllipsis
+                                        }
+                                        else
+                                        {
+                                            @vacancy.Location.Town
+                                        }
+                                    </td>
+                                    <td class="vac-no-of-applications" data-label="Number of applications">
+                                        @if (vacancy.Status.CanHaveApplicationsOrClickThroughs())
+                                        {
+                                            var unit = isOfflineVacancy ? "click-through" : "application";
+                                            var units = unit + "s";
+                                            var applicationCount = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
+                                            var newApplicationCount = vacancy.NewApplicationCount;
+                                            if (filterType == VacanciesSummaryFilterTypes.NewApplications)
+                                            {
+                                                if (newApplicationCount == 1)
+                                                {
+                                                    <span>1<br /> application</span>
                                                 }
                                                 else
-                                                {                                                                                                      
-                                                    if (applicationCount == 1)
-                                                    {
-                                                        <span>1<br /> @unit</span>
-                                                    }
-                                                    else if (vacancy.Status == VacancyStatus.Live && applicationCount == 0 && vacancy.ClosingDate.Date.CloseToClosingDate())
-                                                    {
-                                                        <span style="color: red; font-weight: bold">0<br /> @units</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>@applicationCount<br /> @units</span>
-                                                    }
-                                                }                                                                               
+                                                {
+                                                    <span>@newApplicationCount<br /> applications</span>
+                                                }
                                             }
                                             else
                                             {
-                                                <span>-</span>
+                                                if (applicationCount == 1)
+                                                {
+                                                    <span>1<br /> @unit</span>
+                                                }
+                                                else if (vacancy.Status == VacancyStatus.Live && applicationCount == 0 && vacancy.ClosingDate.Date.CloseToClosingDate())
+                                                {
+                                                    <span style="color: red; font-weight: bold">0<br /> @units</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>@applicationCount<br /> @units</span>
+                                                }
                                             }
-                                            </td>
-                                            <td class="vac-status">
-                                                @{ Html.RenderPartial("_vacancyStatus", vacancy.Status); }
-                                                @if (vacancy.Status == VacancyStatus.Live)
-                                                {
-                                                    Html.RenderPartial("_closingDate", vacancy.ClosingDate);
-                                                }
-                                            </td>
-                                            <td class="vac-toolbox">
-                                                @if (VacancyIsClonable(vacancy))
-                                                {
-                                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Clone @title for @vacancy.EmployerName">Clone</a>
-                                                }
-                                                @if (vacancy.Status == VacancyStatus.Referred)
-                                                {
-                                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Edit and resubmit @title for @vacancy.EmployerName">Edit and resubmit</a>
-                                                }
-                                            </td>
-                                        </tr>
-                                                    }
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+                                    <td class="vac-status">
+                                        @{ Html.RenderPartial("_vacancyStatus", vacancy.Status); }
+                                        @if (vacancy.Status == VacancyStatus.Live)
+                                        {
+                                            Html.RenderPartial("_closingDate", vacancy.ClosingDate);
+                                        }
+                                    </td>
+                                    <td class="vac-toolbox">
+                                        @if (VacancyIsClonable(vacancy))
+                                        {
+                                            <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Clone @title for @vacancy.EmployerName">Clone</a>
+                                        }
+                                        @if (vacancy.Status == VacancyStatus.Referred)
+                                        {
+                                            <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Edit and resubmit @title for @vacancy.EmployerName">Edit and resubmit</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                             </tbody>
                         </table>
                     </div>

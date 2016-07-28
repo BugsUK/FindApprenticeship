@@ -4,6 +4,7 @@
     using FluentValidation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
+    using Common = Validators.Common;
 
     public class VacancyQuestionsViewModelClientValidator : AbstractValidator<VacancyQuestionsViewModel>
     {
@@ -32,7 +33,8 @@
                 .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListTextRegularExpression)
                 .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidCharacterErrorText)
                 .Must(Validators.Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.FirstQuestion));
 
             validator.RuleFor(x => x.SecondQuestion)
                 .Length(0, 4000)
@@ -40,7 +42,8 @@
                 .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListTextRegularExpression)
                 .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidCharacterErrorText)
                 .Must(Validators.Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.SecondQuestion));
 
             validator.RuleFor(x => x.FirstQuestionComment)
                 .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListTextRegularExpression)

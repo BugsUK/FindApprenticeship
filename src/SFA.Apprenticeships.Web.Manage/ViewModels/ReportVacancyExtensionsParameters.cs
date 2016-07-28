@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Manage.ViewModels
     using System.Web.UI.WebControls;
     using System.Collections.Generic;
     using Domain.Entities.Raa.Vacancies;
+    using Raa.Common.ViewModels.Report;
 
     public class ReportVacancyExtensionsParameters : ReportParameterBase
     {

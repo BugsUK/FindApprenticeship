@@ -23,7 +23,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase(Samples.ValidFreeText, true)]
         [TestCase(Samples.ValidFreeHtmlText, false)]
@@ -62,6 +62,9 @@
             }
         }
 
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase(" ", true)]
         [TestCase(Samples.ValidFreeText, true)]
         [TestCase(Samples.ValidFreeHtmlText, false)]
         [TestCase(Samples.InvalidHtmlTextWithInput, false)]

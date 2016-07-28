@@ -102,6 +102,8 @@
     <Compile Include="Reference\Region.cs" />
     <Compile Include="Reference\RegionalTeam.cs" />
     <Compile Include="Reference\RegionalTeamMapper.cs" />
+    <Compile Include="Reporting\ApplicationsReceivedResultItem.cs" />
+    <Compile Include="Reporting\CandidatesWithApplicationsResultItem.cs" />
     <Compile Include="Roles.cs" />
     <Compile Include="Users\AgencyUser.cs" />
     <Compile Include="Users\ProviderUser.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Vacancies\Duration.cs" />
     <Compile Include="Vacancies\DurationType.cs" />
     <Compile Include="Vacancies\VacancyLocationType.cs" />
+    <Compile Include="Vacancies\VacancySource.cs" />
     <Compile Include="Vacancies\VacancyStatus.cs" />
     <Compile Include="Vacancies\Sector.cs" />
     <Compile Include="Vacancies\Standard.cs" />

@@ -31,6 +31,9 @@
 
         public int UnsuccessfulApplicationsCount { get; set; }
 
+        public int TotalNumberOfApplications => NewApplicationsCount + ViewedApplicationsCount + SuccessfulApplicationsCount +
+                                                UnsuccessfulApplicationsCount;
+
         public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
     }
 }

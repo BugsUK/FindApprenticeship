@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.UI.WebControls;
+    using Raa.Common.ViewModels.Report;
 
     public class ReportUnsuccessfulCandidatesParameters : ReportParameterBase
     {
