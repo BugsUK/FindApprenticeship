@@ -372,15 +372,18 @@ WriteLiteral(@"></script>
 <script>    
     CKEDITOR.replace('DesiredSkills',
     {
-        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+        contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
     });
     CKEDITOR.replace('DesiredQualifications',
     {
-        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+        contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
     });
     CKEDITOR.replace('PersonalQualities',
     {
-        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+        contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
     });
 </script>
 
