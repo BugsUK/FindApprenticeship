@@ -368,18 +368,31 @@ WriteAttribute("src", Tuple.Create(" src=\"", 2962), Tuple.Create("\"", 3017)
 , 2968), false)
 );
 
-WriteLiteral(@"></script>
-<script>    
+WriteLiteral("></script>\r\n<script>\r\n    var isApprenticeship;\r\n    isApprenticeship = \"");
+
+            
+            #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+                    Write(Model.VacancyType == VacancyType.Apprenticeship);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@""";
+
     CKEDITOR.replace('DesiredSkills',
     {
         customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
         contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
     });
+
+    if (isApprenticeship === ""True""){
     CKEDITOR.replace('DesiredQualifications',
     {
         customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
         contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
     });
+    }
+
     CKEDITOR.replace('PersonalQualities',
     {
         customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
