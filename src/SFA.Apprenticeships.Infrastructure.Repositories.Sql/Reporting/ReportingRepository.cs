@@ -447,5 +447,42 @@
 
             return response;
         }
+
+        public InformationRadiatorData GetInformationRadiatorData()
+        {
+            var data = new InformationRadiatorData();
+
+            var command = new SqlCommand(
+                @"SELECT 
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesSubmittedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 2) as TotalVacanciesApprovedViaRaa,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+WHERE a.VacancyId < -1) as TotalApplicationsSubmittedForRaaVacancies,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
+WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 5 and ah.ApplicationHistoryEventSubTypeId = 5) as TotalUnsuccessfulApplicationsViaRaa,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
+WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHistoryEventSubTypeId = 6) as TotalSuccessfulApplicationsViaRaa"
+                , (SqlConnection) _getOpenConnection.GetOpenConnection());
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                data = new InformationRadiatorData
+                {
+                    TotalVacanciesSubmittedViaRaa = Convert.ToInt32(reader["TotalVacanciesSubmittedViaRaa"]),
+                    TotalVacanciesApprovedViaRaa = Convert.ToInt32(reader["TotalVacanciesApprovedViaRaa"]),
+                    TotalApplicationsSubmittedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsSubmittedForRaaVacancies"]),
+                    TotalUnsuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsViaRaa"]),
+                    TotalSuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalSuccessfulApplicationsViaRaa"]),
+                };
+            }
+
+            return data;
+        }
     }
 }
