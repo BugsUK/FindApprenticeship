@@ -619,10 +619,12 @@
 
         [TestCase(VacancySource.Raa, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", false)]
         [TestCase(VacancySource.Raa, "asdf@asdf.com", false)]
+        [TestCase(VacancySource.Raa, "", false)]
         [TestCase(VacancySource.Av, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
         [TestCase(VacancySource.Av, "asdf@asdf.com", true)]
+        [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Api, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
-        [TestCase(VacancySource.Api, "asdf@asdf.com", true)]
+        [TestCase(VacancySource.Api, "", true)]
         public void ContactDetailsValidation(VacancySource vacancySource, string fullName, bool expectValid)
         {
             // Arrange.
