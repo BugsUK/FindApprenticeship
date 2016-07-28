@@ -16,6 +16,7 @@
         public const string ContactUs = "ContactUs";
         public const string WebTrendsOptOut = "WebTrendsOptOut";
         public const string Cookies = "Cookies";
+        public const string InformationRadiator = "InformationRadiator";
 
         //QA
         public const string ReviewVacancy = "ReviewVacancy";

@@ -104,6 +104,7 @@
     <Compile Include="Reference\RegionalTeamMapper.cs" />
     <Compile Include="Reporting\ApplicationsReceivedResultItem.cs" />
     <Compile Include="Reporting\CandidatesWithApplicationsResultItem.cs" />
+    <Compile Include="Reporting\InformationRadiatorData.cs" />
     <Compile Include="Roles.cs" />
     <Compile Include="Users\AgencyUser.cs" />
     <Compile Include="Users\ProviderUser.cs" />

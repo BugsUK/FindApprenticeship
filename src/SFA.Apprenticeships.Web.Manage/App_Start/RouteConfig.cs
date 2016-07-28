@@ -247,6 +247,12 @@
                 defaults: new { controller = "Home", action = "Cookies" }
                 );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.InformationRadiator,
+                url: "informationradiator",
+                defaults: new { controller = "InformationRadiator", action = "Index" }
+                );
+
             routes.LowercaseUrls = true;
         }
     }

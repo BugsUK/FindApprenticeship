@@ -34,6 +34,7 @@
     using Application.ReferenceData;
     using Mappers;
     using Mediators.Candidate;
+    using Mediators.InformationRadiator;
     using Mediators.Reporting;
     using Raa.Common.Providers;
 
@@ -117,6 +118,7 @@
             For<ICandidateMediator>().Use<CandidateMediator>();
             For<IVacancyMediator>().Use<VacancyMediator>();
             For<IReportingMediator>().Use<ReportingMediator>();
+            For<IInformationRadiatorMediator>().Use<InformationRadiatorMediator>();
         }
     }
 }
