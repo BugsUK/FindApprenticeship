@@ -54,15 +54,22 @@
 </script>
 
     <script src="~/Content/_assets/js/vendor/nanospell/autoload.js"></script>
-<script>    
+<script>
+    var isApprenticeship;
+    isApprenticeship = "@(Model.VacancyType == VacancyType.Apprenticeship)";
+
     CKEDITOR.replace('DesiredSkills',
     {
         customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
     });
-    CKEDITOR.replace('DesiredQualifications',
-    {
-        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
-    });
+
+    if (isApprenticeship === "True"){
+        CKEDITOR.replace('DesiredQualifications',
+        {
+            customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
+        });
+    }
+
     CKEDITOR.replace('PersonalQualities',
     {
         customConfig: '/Content/_assets/js/vendor/ckeditor/config.js'
