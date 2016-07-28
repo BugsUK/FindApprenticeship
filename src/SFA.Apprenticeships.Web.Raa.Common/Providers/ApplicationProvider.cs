@@ -55,6 +55,7 @@
             var viewModel = new ShareApplicationsViewModel();
             viewModel.EmployerName = employer.Name;
             viewModel.VacancyType = vacancy.VacancyType;
+            viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
 
             var applications = vacancy.VacancyType == VacancyType.Traineeship
                 ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()

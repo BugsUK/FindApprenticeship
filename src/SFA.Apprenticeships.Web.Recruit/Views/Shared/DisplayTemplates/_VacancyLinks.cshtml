@@ -17,7 +17,7 @@
         <a href="">Withdraw this @vacancyTypeText</a>
     </p>-->
 }
-@if (Model.Status.CanShareApplications())
+@if (Model.Status.CanShareApplications(Model.TotalNumberOfApplications))
 {
     <p class="small-btm-margin">
         @Html.RouteLink("Share applications", RecruitmentRouteNames.ShareApplications, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
