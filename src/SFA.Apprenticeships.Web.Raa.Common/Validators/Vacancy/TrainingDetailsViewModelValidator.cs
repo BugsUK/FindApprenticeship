@@ -68,7 +68,7 @@
             validator.RuleFor(m => m.ContactName)
                 .Matches(VacancyViewModelMessages.ContactNameMessages.FreeTextRegularExpression)
                 .WithMessage(VacancyViewModelMessages.ContactNameMessages.WhiteListErrorText)
-                .When(x => x.VacancySource != VacancySource.Raa);
+                .When(x => x.VacancySource != VacancySource.Raa && Common.IsNotEmpty(x.ContactName));
 
             validator.RuleFor(x => x.ContactNumber)
                 .Length(8, 16)
