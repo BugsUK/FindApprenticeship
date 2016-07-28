@@ -126,8 +126,21 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.FailedValidation,
-                    vacancyViewModel, validationResult);
+                switch (vacancyViewModel.VacancySource)
+                {
+                    case VacancySource.Av:
+                        return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors, 
+                            vacancyViewModel, validationResult, VacancyViewModelMessages.VacancyAuthoredInAvms, UserMessageLevel.Info);
+                    case VacancySource.Api:
+                        return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors, 
+                            vacancyViewModel, validationResult, VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
+                    case VacancySource.Raa:
+                        return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.FailedValidation,
+                            vacancyViewModel, validationResult);
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                
             }
 
             switch (vacancyViewModel.VacancySource)
