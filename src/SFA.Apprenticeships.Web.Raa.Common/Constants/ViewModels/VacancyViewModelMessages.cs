@@ -114,7 +114,7 @@
 
         public static class LegacyExpectedDuration
         {
-            public const string LabelText = "Expected duration";
+            public const string LabelText = "Expected duration (from Apprenticeship vacancies or uploaded via the API)";
         }
 
         public static class DurationComment
