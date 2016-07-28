@@ -89,7 +89,8 @@
                 .Matches(VacancyViewModelMessages.ExpectedDuration.WhiteListTextRegularExpression)
                 .WithMessage(VacancyViewModelMessages.ExpectedDuration.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.ExpectedDuration.WhiteListInvalidTagErrorText);
+                .WithMessage(VacancyViewModelMessages.ExpectedDuration.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.ExpectedDuration));
         }
 
         internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)
