@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Location
 {
-    using System.Collections.Generic;
     using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;

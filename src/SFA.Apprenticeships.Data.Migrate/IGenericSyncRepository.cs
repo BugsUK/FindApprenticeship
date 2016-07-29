@@ -47,9 +47,13 @@
         string Name { get; }
 
         IEnumerable<string> PrimaryKeys { get; }
+
+        IEnumerable<string> ErrorKeys { get; }
+
+        bool IdentityInsert { get; }
     }
 
-    public class FullScanRequiredException : Exception
+    public class FullScanRequiredException : FatalException
     {
         public FullScanRequiredException() : base("Full scan required (change tracking does not go back far enough)")
         { }

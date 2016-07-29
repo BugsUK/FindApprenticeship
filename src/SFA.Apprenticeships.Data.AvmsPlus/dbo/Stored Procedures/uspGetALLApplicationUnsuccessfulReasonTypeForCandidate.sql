@@ -14,7 +14,7 @@ BEGIN
 		CandidateFullName,
 		ReferralPoints,
 		CandidateDisplayText
-	FROM Applicationunsuccessfulreasontype		
+	FROM ApplicationUnsuccessfulReasonType		
 	WHERE CandidateFullName IS NOT NULL
 
 END

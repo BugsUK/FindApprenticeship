@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
@@ -13,9 +14,11 @@
 
         public int VacancyReferenceNumber { get; set; }
 
+        [AllowHtml]
         [Display(Name = VacancyViewModelMessages.FirstQuestion.LabelText)]
         public string FirstQuestion { get; set; }
 
+        [AllowHtml]
         [Display(Name = VacancyViewModelMessages.SecondQuestion.LabelText)]
         public string SecondQuestion { get; set; }
 
@@ -30,5 +33,7 @@
         public VacancyStatus Status { get; set; }
 
         public VacancyType VacancyType { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
     }
 }

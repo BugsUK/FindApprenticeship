@@ -14,18 +14,17 @@
     using Extensions;
     using Presentation;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
-    using WageUnit = Domain.Entities.Vacancies.WageUnit;
 
     public class TraineeshipVacancyDetailMapper
     {
-        public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
+        public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, Employer employer, Provider provider, ProviderSite providerSite, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
             var detail = new TraineeshipVacancyDetail
             {
-                Id = vacancy.VacancyReferenceNumber,
+                Id = vacancy.VacancyId,
                 VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,
@@ -41,7 +40,7 @@
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
                 WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
-                OtherInformation = vacancy.ThingsToConsider,
+                OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?
                 //VacancyOwner = vacancy.,
@@ -54,13 +53,13 @@
                 EmployerName = employer.Name,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
-                EmployerDescription = vacancyParty.EmployerDescription,
-                EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
+                EmployerDescription = vacancy.EmployerDescription,
+                EmployerWebsite = vacancy.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
                 IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
-                ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
+                ExpectedDuration = vacancy.ExpectedDuration,
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
@@ -69,12 +68,11 @@
                 SupplementaryQuestion1 = vacancy.FirstQuestion,
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
-                //RecruitmentAgency = vacancy.,
+                RecruitmentAgency = providerSite.TradingName,
                 ProviderName = provider.Name,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
-                Contact = GetContactInformation(vacancy),
-                //ProviderSectorPassRate = vacancy.,
+                Contact = vacancy.GetContactInformation(providerSite),
                 TrainingToBeProvided = vacancy.TrainingProvided,
                 //TODO: How is this captured in RAA?
                 //ContractOwner = vacancy.,
@@ -97,6 +95,8 @@
                 AddressLine2 = address.AddressLine2,
                 AddressLine3 = address.AddressLine3,
                 AddressLine4 = address.AddressLine4,
+                Town = address.Town,
+                County = address.County,
                 Postcode = address.Postcode,
                 GeoPoint = GetGeoPoint(address.GeoPoint)
             };
@@ -104,45 +104,11 @@
 
         private static GeoPoint GetGeoPoint(Domain.Entities.Raa.Locations.GeoPoint geoPoint)
         {
-            var vacancyGeoPoint = new GeoPoint();
-            if (geoPoint == null || geoPoint.Latitude == 0 || geoPoint.Longitude == 0)
+            return new GeoPoint
             {
-                vacancyGeoPoint.Latitude = 52.4009991288043;
-                vacancyGeoPoint.Longitude = -1.50812239495425;
-            }
-            else
-            {
-                vacancyGeoPoint.Longitude = geoPoint.Longitude;
-                vacancyGeoPoint.Latitude = geoPoint.Latitude;
-            }
-            return vacancyGeoPoint;
-        }
-
-        private static string GetContactInformation(Vacancy vacancy)
-        {
-            var sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(vacancy.ContactName))
-            {
-                sb.Append(vacancy.ContactName);
-            }
-            if (!string.IsNullOrEmpty(vacancy.ContactNumber))
-            {
-                if (sb.Length > 0)
-                {
-                    sb.Append(" ");
-                }
-                sb.Append(vacancy.ContactNumber);
-            }
-            if (!string.IsNullOrEmpty(vacancy.ContactEmail))
-            {
-                if (sb.Length > 0)
-                {
-                    sb.Append(" ");
-                }
-                sb.Append(vacancy.ContactEmail);
-            }
-
-            return sb.ToString();
+                Longitude = geoPoint.Longitude,
+                Latitude = geoPoint.Latitude
+            };
         }
     }
 }

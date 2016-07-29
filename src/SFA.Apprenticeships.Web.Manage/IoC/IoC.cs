@@ -15,23 +15,24 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Common.Services;
     using Infrastructure.Azure.ServiceBus.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
+    using Infrastructure.Caching.Memory.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
-    using Infrastructure.Raa.IoC;
     using Infrastructure.Repositories.Mongo.Applications.IoC;
     using Infrastructure.Repositories.Mongo.Candidates.IoC;
     using Infrastructure.Repositories.Mongo.Employers.IoC;
     using Infrastructure.Repositories.Mongo.Providers.IoC;
     using Infrastructure.Repositories.Mongo.UserProfiles.IoC;
-    using Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.Repositories.Sql.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
     using StructureMap;
     using StructureMap.Web;
+    using EuCookieDirectiveProvider = Raa.Common.Providers.EuCookieDirectiveProvider;
+    using CookieDetectionProvider = Raa.Common.Providers.CookieDetectionProvider;
 
     public static class IoC
     {
@@ -46,7 +47,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
             var sqlConfiguration = configurationService.Get<SqlConfiguration>();
-            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
 
             return new Container(x =>
             {
@@ -63,18 +63,19 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
-                x.AddRegistry<VacancyReferenceNumberRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<ApplicationServicesRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
-                x.AddRegistry(new RaaRegistry(servicesConfiguration));
-
+                x.AddRegistry<MemoryCacheRegistry>();
+                x.AddRegistry<VacancySourceRegistry>();
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
+                x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
+                x.For<IProviderVacancyAuthorisationService>().Use<ProviderVacancyAuthorisationService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

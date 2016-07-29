@@ -9,7 +9,7 @@ BEGIN
     SELECT       
     T.ID as "ThirdPartyId"
 	,T.ThirdPartyName       
-    ,T.EdsUrn       
+    ,T.EDSURN       
     ,T.AddressLine1      
     ,T.AddressLine2      
     ,T.AddressLine3      

@@ -26,13 +26,16 @@
         [TestCase(null, false)]
         [TestCase("", false)]
         [TestCase(" ", false)]
-        [TestCase("<script>", false)]
-        [TestCase("Desired Skill", true)]
-        public void DesiredSkillsRequired(string desiredSkills, bool expectValid)
+        [TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
+        public void DesiredSkillsValidation(string desiredSkills, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                DesiredSkills = desiredSkills
+                DesiredSkills = desiredSkills,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -63,13 +66,15 @@
         [TestCase(null, false)]
         [TestCase("", false)]
         [TestCase(" ", false)]
-        [TestCase("<script>", false)]
-        [TestCase("Future Prospects", true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void FutureProspectsRequired(string futureProspects, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                FutureProspects = futureProspects
+                FutureProspects = futureProspects,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -100,13 +105,15 @@
         [TestCase(null, false)]
         [TestCase("", false)]
         [TestCase(" ", false)]
-        [TestCase("<script>", false)]
-        [TestCase("Personal Qualities", true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void PersonalQualitiesRequired(string personalQualities, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                PersonalQualities = personalQualities
+                PersonalQualities = personalQualities,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -135,10 +142,12 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
-        [TestCase("<script>", false)]
-        [TestCase("Things To Consider", true)]
+		[TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void ThingsToConsiderNotRequired(string thingsToConsider, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
@@ -174,14 +183,18 @@
         [TestCase(null, false)]
         [TestCase("", false)]
         [TestCase(" ", false)]
-        [TestCase("<script>", false)]
-        [TestCase("Desired Qualifications", true)]
+        
+        [TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void ApprenticeshipDesiredQualificationsRequired(string desiredQualifications, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
                 DesiredQualifications = desiredQualifications,
-                VacancyType = VacancyType.Apprenticeship
+                VacancyType = VacancyType.Apprenticeship,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -210,16 +223,19 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
-        [TestCase("<script>", false)]
-        [TestCase("Desired Qualifications", true)]
+        [TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void TraineeshipDesiredQualificationsRequired(string desiredQualifications, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
                 DesiredQualifications = desiredQualifications,
-                VacancyType = VacancyType.Traineeship
+                VacancyType = VacancyType.Traineeship,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

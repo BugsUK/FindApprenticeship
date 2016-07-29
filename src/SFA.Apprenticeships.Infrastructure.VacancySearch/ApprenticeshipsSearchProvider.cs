@@ -8,6 +8,7 @@
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Elastic.Common.Configuration;
     using Nest;
@@ -44,7 +45,7 @@
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancies(ApprenticeshipSearchParameters parameters, string indexName)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary));
 
             _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);
@@ -74,6 +75,7 @@
                         //if anyone can find a better way to get this value out, feel free!
                         var array = hitMd.Fields.FieldValues<JArray>("distance");
                         var value = array[0];
+
                         r.Distance = double.Parse(value.ToString());
                     }
                 }
@@ -105,8 +107,8 @@
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancy(string vacancyReference)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary));
 
             _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);
@@ -119,7 +121,7 @@
                         q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, vacancyReference)))));
 
             var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSearchResponse>>(searchResults.Documents).ToList();
-            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(searchResults.Total, responses, null, new ApprenticeshipSearchParameters {PageNumber = 1});
+            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(searchResults.Total, responses, null, new ApprenticeshipSearchParameters { PageNumber = 1 });
             return results;
         }
 
@@ -149,7 +151,7 @@
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
-                s.Skip((parameters.PageNumber - 1)*parameters.PageSize);
+                s.Skip((parameters.PageNumber - 1) * parameters.PageSize);
                 s.Take(parameters.PageSize);
 
                 s.TrackScores();
@@ -171,7 +173,7 @@
                         query = BuildContainer(null, queryClause);
                     }
 
-                    if (_searchFactorConfiguration.DescriptionFactors.Enabled 
+                    if (_searchFactorConfiguration.DescriptionFactors.Enabled
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Description))
                     {
@@ -183,7 +185,7 @@
                         query = BuildContainer(query, queryClause);
                     }
 
-                    if (_searchFactorConfiguration.EmployerFactors.Enabled 
+                    if (_searchFactorConfiguration.EmployerFactors.Enabled
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Employer))
                     {
@@ -209,8 +211,14 @@
 
                     if (!string.IsNullOrWhiteSpace(parameters.CategoryCode))
                     {
-                        var querySector = q.Match(m => m.OnField(f => f.CategoryCode).Query(parameters.CategoryCode));
-                        query = query && querySector;
+                        var categoryCodes = new List<string>
+                        {
+                            parameters.CategoryCode
+                        };
+
+                        var queryCategory = q.Terms(f => f.CategoryCode, categoryCodes.Distinct());
+
+                        query = query && queryCategory;
                     }
 
                     if (parameters.ExcludeVacancyIds != null)
@@ -302,7 +310,6 @@
                                     return fp;
                                 })
                                 .Script("doc['location'].arcDistanceInMiles(lat, lon)")));
-                        //.Script("doc[\u0027location\u0027].distanceInMiles(lat,lon)")));
                         break;
                 }
 
@@ -310,12 +317,16 @@
 
                 if (parameters.SubCategoryCodes != null)
                 {
-                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, parameters.SubCategoryCodes));
+                    var subCategoryCodes = new List<string>();
+
+                    subCategoryCodes.AddRange(parameters.SubCategoryCodes);
+
+                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, subCategoryCodes.Distinct()));
                 }
 
                 return s;
             });
-            
+
             return search;
         }
 

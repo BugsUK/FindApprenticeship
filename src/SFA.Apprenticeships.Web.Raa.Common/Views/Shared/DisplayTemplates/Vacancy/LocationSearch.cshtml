@@ -134,6 +134,7 @@
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new {@id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2"})
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine3, new {@id = "addresses_" + i + "address__AddressLine3", Name = "Addresses[" + i + "].Address.AddressLine3"})
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine4, new {@id = "addresses_" + i + "address__AddressLine4", Name = "Addresses[" + i + "].Address.AddressLine4"})
+                                    @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Town, new {@id = "addresses_" + i + "address__Town", Name = "Addresses[" + i + "].Address.Town"})
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Uprn, new {@id = "addresses_" + i + "address__Uprn", Name = "Addresses[" + i + "].Address.Uprn"})
                                 </td>
                                 <td>
@@ -214,8 +215,10 @@
                         <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
                         <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
                         <input type="hidden" data-bind="value: itemAddressLine4, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine4', 'id':'addresses_'+ $index() + 'address__AddressLine4' }">
+                        <input type="hidden" data-bind="value: itemTown, attr:{'name':'Addresses[' + $index() +'].Address.Town', 'id':'addresses_'+ $index() + 'address__Town' }">
                         <input type="hidden" data-bind="value: itemPostcode, attr:{'name':'Addresses[' + $index() +'].Address.Postcode', 'id':'addresses_'+ $index() + 'address__Postcode' }">
                         <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
+                        <input type="hidden" data-bind="value: itemProvinceName, attr:{'name':'Addresses[' + $index() +'].Address.County', 'id':'addresses_'+ $index() + 'address__County' }">
                     </td>
                     <td class="ta-center">
                         <a href="#" data-bind="click: $root.removeLocationAddress">remove location</a>

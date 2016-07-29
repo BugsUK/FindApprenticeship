@@ -1,19 +1,28 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
+    using Attributes;
     using Common.Attributes;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
+    using Domain.Entities.Raa;
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
+    using SFA.Infrastructure.Interfaces;
 
+    [AuthorizeUser(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.VerifiedEmail)]
     public class TraineeshipApplicationController : RecruitmentControllerBase
     {
         private readonly ITraineeshipApplicationMediator _traineeshipApplicationMediator;
 
-        public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator)
+        public TraineeshipApplicationController(
+            ITraineeshipApplicationMediator traineeshipApplicationMediator,
+            IConfigurationService configurationService,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }

@@ -82,6 +82,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Applications\ErrorCodes.cs" />
+    <Compile Include="Applications\ICommonApplicationService.cs" />
     <Compile Include="Applications\ITraineeshipApplicationService.cs" />
     <Compile Include="Applications\IApprenticeshipApplicationService.cs" />
     <Compile Include="Candidates\ErrorCodes.cs" />
@@ -90,12 +91,16 @@
     <Compile Include="Communications\CommunicationChannels.cs" />
     <Compile Include="Communications\CommunicationRequestHelpers.cs" />
     <Compile Include="Communications\ErrorCodes.cs" />
+    <Compile Include="Communications\IEmployerCommunicationService.cs" />
     <Compile Include="Communications\IProviderCommunicationService.cs" />
     <Compile Include="Communications\SubscriptionTypes.cs" />
     <Compile Include="Employers\IEmployerService.cs" />
+    <Compile Include="ErrorCodes.cs" />
     <Compile Include="Generic\Pageable.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchService.cs" />
+    <Compile Include="Locations\IGeoCodeLookupService.cs" />
+    <Compile Include="Locations\ILocalAuthorityLookupService.cs" />
     <Compile Include="Locations\IPostalAddressSearchService.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Communications\CommunicationToken.cs" />
@@ -110,8 +115,12 @@
     <Compile Include="Communications\SmsRequest.cs" />
     <Compile Include="Organisations\IOrganisationService.cs" />
     <Compile Include="Providers\IProviderService.cs" />
+    <Compile Include="Providers\IProviderVacancyAuthorisationService.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
+    <Compile Include="Reporting\IReportingService.cs" />
     <Compile Include="Search\AggregationResult.cs" />
+    <Compile Include="Security\IDecryptionService.cs" />
+    <Compile Include="Security\IEncryptionService.cs" />
     <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />

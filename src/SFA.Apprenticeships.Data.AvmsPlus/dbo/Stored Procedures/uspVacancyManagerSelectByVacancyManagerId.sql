@@ -25,7 +25,7 @@ BEGIN
 			 ) as IsRelationshipDeletable	     
 		FROM [dbo].[VacancyOwnerRelationship]  
 		INNER JOIN dbo.ProviderSiteRelationship ON VacancyOwnerRelationship.[ProviderSiteID]
-		= ProviderSIteRelationship.ProviderSiteID  
+		= ProviderSiteRelationship.ProviderSiteID  
 			Left Outer Join VacancyProvisionRelationshipStatusType on [VacancyOwnerRelationship].StatusTypeId = VacancyProvisionRelationshipStatusType.VacancyProvisionRelationshipStatusTypeId
 		WHERE [VacancyOwnerRelationshipId] = @VacancyManagerId And 
 			VacancyProvisionRelationshipStatusType.FullName != 'Deleted'

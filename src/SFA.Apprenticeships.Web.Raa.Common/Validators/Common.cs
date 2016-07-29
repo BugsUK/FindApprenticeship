@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text.RegularExpressions;
+    using Web.Common.Constants;
 
     public static class Common
     {
@@ -32,6 +33,27 @@
             {
                 return false;
             }
+        }
+
+        public static bool BeAValidFreeText(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                //Will be picked up by required validator
+                return true;
+            }
+            if (Regex.IsMatch(input, Whitelists.FreeHtmlTextWhiteList.RegularExpressionScripts) ||
+                Regex.IsMatch(input, Whitelists.FreeHtmlTextWhiteList.RegularExpressionInputs) ||
+                Regex.IsMatch(input, Whitelists.FreeHtmlTextWhiteList.RegularExpressionObjects))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool IsNotEmpty(string input)
+        {
+            return !string.IsNullOrWhiteSpace(input);
         }
     }
 }

@@ -59,6 +59,16 @@ namespace SFA.Apprenticeships.Web.Common.UnitTests.Mediators
             response.ValidationResult.Should().NotBeNull();
         }
 
+        public static void AssertValidationResultWithMessage<T>(this MediatorResponse<T> response, string code, string message, UserMessageLevel messageLevel, bool viewModelShouldNotBeNull, bool parametersShouldNotBeNull = false)
+        {
+            response.Code.Should().Be(code);
+            response.AssertViewModel(viewModelShouldNotBeNull);
+            response.Message.Text.Should().Be(message);
+            response.Message.Level.Should().Be(messageLevel);
+            response.AssertParameters(parametersShouldNotBeNull);
+            response.ValidationResult.Should().NotBeNull();
+        }
+
         private static void AssertViewModel<T>(this MediatorResponse<T> response, bool viewModelShouldNotBeNull)
         {
             if (viewModelShouldNotBeNull)

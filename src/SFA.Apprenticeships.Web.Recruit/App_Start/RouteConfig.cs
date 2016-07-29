@@ -32,6 +32,12 @@
                 );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.OnBoardingComplete,
+                url: "onboardingcomplete",
+                defaults: new { controller = "ProviderUser", action = "OnBoardingComplete" }
+                );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.Privacy,
                 url: "privacy",
                 defaults: new { controller = "Home", action = "Privacy" }
@@ -122,6 +128,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveCreateVacancy,
+               url: "vacancy/autosavecreate",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveCreateVacancy" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewCreateVacancy,
                url: "vacancy/create/review",
                defaults: new { controller = "VacancyPosting", action = "ReviewCreateVacancy" }
@@ -131,6 +143,12 @@
                name: RecruitmentRouteNames.TrainingDetails,
                url: "vacancy/training",
                defaults: new { controller = "VacancyPosting", action = "TrainingDetails" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveTrainingDetails,
+               url: "vacancy/autosavetrainingdetails",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveTrainingDetails" }
                );
 
             routes.MapRoute(
@@ -146,6 +164,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveVacancySummary,
+               url: "vacancy/autosaveVacancySummary",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveVacancySummary" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewVacancySummary,
                url: "vacancy/summary/review",
                defaults: new { controller = "VacancyPosting", action = "ReviewVacancySummary" }
@@ -158,6 +182,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveRequirementsProspects,
+               url: "vacancy/autosaveRequirementsProspects",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveRequirementsProspects" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewVacancyRequirementsProspects,
                url: "vacancy/requirementsprospects/review",
                defaults: new { controller = "VacancyPosting", action = "ReviewVacancyRequirementsProspects" }
@@ -167,6 +197,12 @@
                name: RecruitmentRouteNames.VacancyQuestions,
                url: "vacancy/questions",
                defaults: new { controller = "VacancyPosting", action = "VacancyQuestions" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveVacancyQuestions,
+               url: "vacancy/autosaveVacancyQuestions",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveVacancyQuestions" }
                );
 
             routes.MapRoute(
@@ -254,6 +290,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveLocations,
+               url: "vacancy/autosavelocations",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveLocations" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.SearchAddresses,
                url: "vacancy/searchAddresses",
                defaults: new { controller = "VacancyPosting", action = "SearchAddresses" }
@@ -272,15 +314,39 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveManageDates,
+               url: "vacancy/autosaveManageDates",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveManageDates" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.VacancyApplications,
                url: "vacancy/applications",
                defaults: new { controller = "Application", action = "VacancyApplications" }
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.ShareApplications,
+               url: "vacancy/shareapplications",
+               defaults: new { controller = "Application", action = "ShareApplications" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewApprenticeshipApplication,
                url: "apprenticeshipapplication/review",
                defaults: new { controller = "ApprenticeshipApplication", action = "Review" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication,
+               url: "apprenticeshipapplication/anonymous",
+               defaults: new { controller = "EmployerApplication", action = "ViewAnonymisedApprenticeship" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ViewAnonymousTraineeshipApplication,
+               url: "traineeshipapplication/anonymous",
+               defaults: new { controller = "EmployerApplication", action = "ViewAnonymisedTraineeship" }
                );
 
             routes.MapRoute(
@@ -299,6 +365,36 @@
                name: RecruitmentRouteNames.ReviewTraineeshipApplication,
                url: "traineeshipapplication/review",
                defaults: new { controller = "TraineeshipApplication", action = "Review" }
+               );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.WebTrendsOptOut,
+                url: "webtrendsoptout",
+                defaults: new { controller = "Home", action = "WebTrendsOptOut" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.Cookies,
+                url: "cookies",
+                defaults: new { controller = "Home", action = "Cookies" }
+                );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReportList,
+               url: "reports",
+               defaults: new { controller = "Report", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReportApplicationsReceived,
+               url: "reports/applicationsreceived",
+               defaults: new { controller = "Report", action = "ApplicationsReceived" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReportCandidatesWithApplications,
+               url: "reports/candidateswithapplications",
+               defaults: new { controller = "Report", action = "CandidatesWithApplications" }
                );
 
             routes.LowercaseUrls = true;

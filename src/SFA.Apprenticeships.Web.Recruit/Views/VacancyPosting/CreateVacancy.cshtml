@@ -6,6 +6,7 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
 {
+    @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
     @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView)
 
     var saveButtonText = "Save and continue";
@@ -29,13 +30,25 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/autosave")
+
     <script>
-        $("input[name='OfflineVacancy']").change(function () {
+        $("input[name='OfflineVacancy']").change(function() {
             var selectedValue = $("input[name='OfflineVacancy']:checked").val();
             if (selectedValue === "False") {
                 $("#apprenticeship-offline-application-url").val("");
                 $("#apprenticheship-offline-application-instructions").val("");
             }
+        });
+
+        var autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)) * 1000;
+
+        $(window).on('load', function() {
+            autoSave.initialise({
+                formSelector: "form",
+                timeout: autoSaveTimeout,
+                postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy)'
+            });
         });
     </script>
 }

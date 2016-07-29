@@ -150,5 +150,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public int? SectorId { get; set; }
 
         public DateTime? UpdatedDateTime { get; set; }
+
+        public int VacancySourceId { get; set; }
     }
 }

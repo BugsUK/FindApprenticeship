@@ -7,6 +7,8 @@
     {
         Employer GetById(int employerId);
 
+        Employer GetByIdWithoutStatusCheck(int employerId);
+
         Employer GetByEdsUrn(string edsUrn);
 
         List<Employer> GetByIds(IEnumerable<int> employerIds);

@@ -103,6 +103,17 @@
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
                 </div>
             }
+            else
+            {
+                if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+                {
+                    <div class="@editableItemClass">
+                        <h3 class="bold-small">Positions</h3>
+                        <p id="vacancy-reference-id">@Model.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions available</p>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+                    </div>
+                }
+            }
 
             @if (Model.VacancyType == VacancyType.Traineeship)
             {
@@ -142,7 +153,7 @@
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment, Model.SummaryLink))
                 </h3>
             }
-            <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.FurtherVacancyDetailsViewModel.LongDescription)</p>
+            <p id="vacancy-full-descrpition" class="@Model.FurtherVacancyDetailsViewModel.LongDescription.GetPreserveFormattingCssClass()">@Html.Raw(Model.FurtherVacancyDetailsViewModel.LongDescription)</p>
             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment))
         </div>
         @if (Model.VacancyType == VacancyType.Traineeship)
@@ -152,7 +163,7 @@
                     Training to be provided
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
                 </h3>
-                <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Model.TrainingDetailsViewModel.TrainingProvided</p>
+                <p id="vacancy-training-to-be-provided" class="@Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()">@Model.TrainingDetailsViewModel.TrainingProvided</p>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
             </div>
             <div class="@editableItemClass">
@@ -161,7 +172,7 @@
                         Future prospects
                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))
                     </h3>
-                    <p id="vacancy-future-prospects" itemprop="incentives" class="preserve-formatting">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
+                    <p id="vacancy-future-prospects" itemprop="incentives" class="@Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
                 </div>
             </div>

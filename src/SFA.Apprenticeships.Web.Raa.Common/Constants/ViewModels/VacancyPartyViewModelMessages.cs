@@ -8,8 +8,10 @@
         {
             public const string LabelText = "About the employer";
             public const string RequiredErrorText = "Enter text about the employer";
-            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "About the employer " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "About the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "About the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
         public static class EmployerWebsiteUrl
         {
@@ -42,6 +44,11 @@
         public class NumberOfPositionsComment
         {
             public const string LabelText = "Number of positions for this vacancy comment";
+        }
+
+        public class InvalidEmployerAddress
+        {
+            public const string ErrorText = "We could not map the address. You will need to complete the full address to continue.";
         }
     }
 }

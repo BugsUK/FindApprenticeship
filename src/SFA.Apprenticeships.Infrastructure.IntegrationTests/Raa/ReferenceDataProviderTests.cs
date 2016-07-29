@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Raa
 {
     using Application.ReferenceData;
-    using Common.Configuration;
+
     using Common.IoC;
     using Domain.Entities.ReferenceData;
     using FluentAssertions;
-    using Infrastructure.Caching.Memory.IoC;
-    using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Raa.IoC;
     using Logging.IoC;
     using NUnit.Framework;
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
+
+    using Application.Candidate.Configuration;
     using SFA.Infrastructure.Interfaces;
     using StructureMap;
 

@@ -10,7 +10,7 @@ BEGIN
 		UPDATE StakeHolder 
 		SET StakeHolderStatusId = (Select StakeHolderStatusId from StakeHolderStatus
 									Where CodeName = 'AVT')
-		Where StakeHolderId = @StakeHolderId
+		Where StakeHolderID = @StakeHolderId
 
 		IF @@ROWCOUNT = 0      
 			BEGIN      

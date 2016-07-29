@@ -25,7 +25,9 @@
         public DateTime? DateSubmitted { get; set; }
         public int SubmissionCount { get; set; }
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
-        public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
+        public IList<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
         public int? ParentVacancyId { get; set; }
+
+        public int NewApplicationCount { get; set; }
     }
 }

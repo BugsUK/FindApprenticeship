@@ -1,79 +1,189 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System;
-    using System.Net;
-    using System.Security.Principal;
     using System.Web.Mvc;
-    using System.Web.UI.WebControls;
     using Attributes;
-    using Common.Configuration;
+    using Common.Attributes;
+    using Common.Mediators;
+    using Common.Validators.Extensions;
     using Domain.Entities.Raa;
-    using Microsoft.Reporting.WebForms;
+    using Mediators.Reporting;
+    using ViewModels;
     using SFA.Infrastructure.Interfaces;
-
     [AuthorizeUser(Roles = Roles.Raa)]
     public class ReportController : ManagementControllerBase
     {
-        private readonly ReportServerConfiguration _reportServerConfiguration;
+        private readonly IReportingMediator _reportingMediator;
 
-        public ReportController(IConfigurationService configurationService)
+        public ReportController(IReportingMediator reportingMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
-            _reportServerConfiguration = configurationService.Get<ReportServerConfiguration>();
+            _reportingMediator = reportingMediator;
         }
 
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult VacanciesListCsv()
+        {
+            return View(new ReportVacanciesParameters());
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacanciesListCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ValidateVacanciesListCsv(ReportVacanciesParameters parameters)
+        {
+            var validationResponse = _reportingMediator.Validate(parameters);
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return View("VacanciesListCsv", validationResponse.ViewModel);
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacanciesListCsv", validationResponse.ViewModel);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacanciesListCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadVacanciesListCsv(ReportVacanciesParameters parameters)
+        {
+            var response = _reportingMediator.GetVacanciesListReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "VacanciesList.csv");
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult SuccessfulCandidatesCsv()
+        {
+            var response = _reportingMediator.GetSuccessfulCandidatesReportParams();
+            if (response.Code != ReportingMediatorCodes.ReportCodes.Ok)
+                RedirectToAction("Index");
+
+            return View(response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "SuccessfulCandidatesCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ValidateSuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
+        {
+            var validationResponse = _reportingMediator.Validate(parameters);
+            var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
+            validationResponse.ViewModel.ManagedByList = newParameterSet.ViewModel.ManagedByList;
+            validationResponse.ViewModel.RegionList = newParameterSet.ViewModel.RegionList;
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return View("SuccessfulCandidatesCsv", validationResponse.ViewModel);
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("SuccessfulCandidatesCsv", validationResponse.ViewModel);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "SuccessfulCandidatesCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadSuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
+        {
+            var response = _reportingMediator.GetSuccessfulCandidatesReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "SuccessfulCandidatesCsv.csv");
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult UnsuccessfulCandidatesCsv()
+        {
+            var response = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
+            if (response.Code != ReportingMediatorCodes.ReportCodes.Ok)
+                RedirectToAction("Index");
+
+            return View(response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "UnsuccessfulCandidatesCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ValidateUnsuccessfulCandidatesCsv(ReportUnsuccessfulCandidatesParameters parameters)
+        {
+            var validationResponse = _reportingMediator.Validate(parameters);
+            var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
+            validationResponse.ViewModel.ManagedByList = newParameterSet.ViewModel.ManagedByList;
+            validationResponse.ViewModel.RegionList = newParameterSet.ViewModel.RegionList;
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return View("UnsuccessfulCandidatesCsv", validationResponse.ViewModel);
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("UnsuccessfulCandidatesCsv", validationResponse.ViewModel);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "UnsuccessfulCandidatesCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadUnsuccessfulCandidatesCsv(ReportUnsuccessfulCandidatesParameters parameters)
+        {
+            var response = _reportingMediator.GetUnsuccessfulCandidatesReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "UnsuccessfulCandidatesCsv.csv");
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult Index()
         {
-            var reportViewer = new ReportViewer();
-            reportViewer.ProcessingMode = ProcessingMode.Remote;
-
-            reportViewer.ServerReport.ReportPath = "/NAVMS/VacanciesCSV";
-            reportViewer.ServerReport.ReportServerUrl = new Uri(_reportServerConfiguration.ReportServerUrl);
-            reportViewer.ServerReport.ReportServerCredentials = new ReportServerCredentials(_reportServerConfiguration);
-
-            reportViewer.Width = Unit.Pixel(900);
-            reportViewer.Height = Unit.Pixel(1200);
-
-            ViewBag.ReportViewer = reportViewer;
-
-            return View();
+            return View(new ReportMenu());
         }
 
-        public class ReportServerCredentials : IReportServerCredentials
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult VacancyExtensionsCsv()
         {
-            private readonly ReportServerConfiguration _reportServerConfiguration;
+            return View(new ReportVacancyExtensionsParameters());
+        }
 
-            public ReportServerCredentials(ReportServerConfiguration reportServerConfiguration)
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyExtensionsCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ValidateVacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
+        {
+            var validationResponse = _reportingMediator.Validate(parameters);
+            
+            switch (validationResponse.Code)
             {
-                _reportServerConfiguration = reportServerConfiguration;
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return View("VacancyExtensionsCsv", validationResponse.ViewModel);
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacancyExtensionsCsv", validationResponse.ViewModel);
             }
+        }
 
-            public bool GetFormsCredentials(out Cookie authCookie, out string userName, out string password, out string authority)
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyExtensionsCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadVacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
+        {
+            var response = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
+
+            switch (response.Code)
             {
-                authCookie = null;
-                userName = null;
-                password = null;
-                authority = null;
-
-                // Not using form credentials
-                return false;
-            }
-
-            public WindowsIdentity ImpersonationUser
-            {
-                get
-                {
-                    // Use the default Windows user.  Credentials will be
-                    // provided by the NetworkCredentials property.
-                    return null;
-                }
-            }
-
-            public ICredentials NetworkCredentials
-            {
-                get
-                {
-                    return new NetworkCredential(_reportServerConfiguration.NetworkUsername, _reportServerConfiguration.NetworkPassword, _reportServerConfiguration.NetworkDomain);
-                }
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return File(response.ViewModel, "text/csv", "VacancyExtensionsCsv.csv");
+                case ReportingMediatorCodes.ReportCodes.Error:
+                    SetUserMessage(response.Message);
+                    return View("VacancyExtensionsCsv", parameters);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
             }
         }
     }

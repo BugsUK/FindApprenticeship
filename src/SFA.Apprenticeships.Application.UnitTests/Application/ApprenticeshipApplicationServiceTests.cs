@@ -12,7 +12,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-
+    using System.Collections.Generic;
     [TestFixture]
     public class ApprenticeshipApplicationServiceTests
     {
@@ -41,6 +41,72 @@
                 _mockApplicationStatusUpdateStrategy.Object);
         }
 
+        [Test]
+        public void GetCountsForVacancyIds()
+        {
+            // TODO: This test doesn't really have any value, but it has been kept working anyway
+
+            //Arrange
+
+            var vacancy = new ApprenticeshipSummary
+            {
+                ClosingDate = DateTime.Today.AddDays(90),
+                Id = 1
+            };
+
+            var expectedCounts = new Mock<IApplicationCounts>();
+            expectedCounts.Setup(mock => mock.AllApplications).Returns(2);
+            expectedCounts.Setup(mock => mock.NewApplications).Returns(1);
+
+            var expected = new Dictionary<int, IApplicationCounts> {
+                { vacancy.Id, expectedCounts.Object }
+            };
+
+            var vacancies = new int[] { vacancy.Id };
+
+            _mockApprenticeshipApplicationReadRepository.Setup(mock =>
+                mock.GetCountsForVacancyIds(vacancies)).Returns(expected);
+
+            //Act            
+            var response = _apprenticeshipApplicationService.GetCountsForVacancyIds(vacancies);            
+
+            //Assert            
+            Assert.AreEqual(response, expected);
+        }
+
+        [Test]
+        public void GetCountsForVacancyIds_GetApplicationCount()
+        {
+            // TODO: This test doesn't really have any value, but it has been kept working anyway
+
+            //Arrange
+
+            var vacancy = new ApprenticeshipSummary
+            {
+                ClosingDate = DateTime.Today.AddDays(90),
+                Id = 1
+            };
+
+            var expectedCounts = new Mock<IApplicationCounts>();
+            expectedCounts.Setup(mock => mock.AllApplications).Returns(2);
+            expectedCounts.Setup(mock => mock.NewApplications).Returns(1);
+
+            var expected = new Dictionary<int, IApplicationCounts> {
+                { vacancy.Id, expectedCounts.Object }
+            };
+
+            var vacancies = new int[] { vacancy.Id };
+
+            _mockApprenticeshipApplicationReadRepository.Setup(mock =>
+                mock.GetCountsForVacancyIds(vacancies)).Returns(expected);
+
+            //Act            
+            var response = _apprenticeshipApplicationService.GetApplicationCount(vacancy.Id);
+
+            //Assert            
+            Assert.AreEqual(response, expected[vacancy.Id].AllApplications);
+        }
+
         [TestCase(ApplicationStatuses.Successful)]
         [TestCase(ApplicationStatuses.Unsuccessful)]
         public void ShouldSetSuccessfulOutcome(ApplicationStatuses applicationStatus)
@@ -54,7 +120,7 @@
                 VacancyStatus = VacancyStatuses.Live,
                 Vacancy = new ApprenticeshipSummary
                 {
-                    ClosingDate = DateTime.Today.AddDays(90)
+                    ClosingDate = DateTime.Today.AddDays(90)                                   
                 }
             };
 
@@ -100,7 +166,8 @@
                 LegacyCandidateId = 0,
                 LegacyVacancyId = 0,
                 VacancyStatus = apprenticeshipApplicationDetail.VacancyStatus,
-                ClosingDate = apprenticeshipApplicationDetail.Vacancy.ClosingDate
+                ClosingDate = apprenticeshipApplicationDetail.Vacancy.ClosingDate,
+                UpdateSource = ApplicationStatusSummary.Source.Raa
             });
         }
     }

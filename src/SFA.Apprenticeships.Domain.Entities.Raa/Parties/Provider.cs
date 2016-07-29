@@ -5,5 +5,6 @@
         public int ProviderId { get; set; }
         public string Ukprn { get; set; }
         public string Name { get; set; }
+        public bool IsMigrated { get; set; }
     }
 }

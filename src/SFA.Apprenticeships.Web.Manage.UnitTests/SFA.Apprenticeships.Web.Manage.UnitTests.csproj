@@ -153,6 +153,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Builders\AgencyUserBuilder.cs" />
     <Compile Include="Factory\RoleListFactory.cs" />
     <Compile Include="Mappers\CandidateMappersTests.cs" />
@@ -181,6 +184,7 @@
     <Compile Include="Validators\CandidateSearchViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\CandidateSearchResultsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\CandidateSearchViewModelServerValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\DifferentVacancySourceValidationTests.cs" />
     <Compile Include="Views\Vacancy\ReviewVacancyTests.cs" />
     <Compile Include="Views\ViewUnitTest.cs" />
   </ItemGroup>

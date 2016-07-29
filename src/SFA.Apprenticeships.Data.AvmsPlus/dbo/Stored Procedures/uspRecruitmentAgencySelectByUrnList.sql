@@ -9,7 +9,7 @@ BEGIN
 if @urnList is null or @urnList = ''    
 set @urnList = 'NULL'              
           
- SELECT [ProviderSite].[EdsUrn]  AS 'EdsUrn',   
+ SELECT [ProviderSite].[EDSURN]  AS 'EdsUrn',   
  [ProviderSite].[ProviderSiteID] AS 'TrainingProviderId',  
  isnull([ProviderSite].[FullName],'') AS 'FullName',  
  isnull([ProviderSite].[TradingName],'') AS 'TradingName',  

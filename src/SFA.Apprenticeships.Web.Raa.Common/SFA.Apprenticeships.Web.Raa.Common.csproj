@@ -88,6 +88,10 @@
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CuttingEdge.Conditions, Version=1.2.0.11174, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
@@ -162,14 +166,18 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="Attributes\CookiesEnabledAttribute.cs" />
     <Compile Include="Configuration\ManageWebConfiguration.cs" />
     <Compile Include="Configuration\RecruitWebConfiguration.cs" />
+    <Compile Include="Constants\Pages\PrivacyPageMessages.cs" />
     <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\LocationSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
+    <Compile Include="Constants\ViewModels\ShareApplicationsViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyPartyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
@@ -184,6 +192,8 @@
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
+    <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToVacancyDatesViewModelConverter.cs" />
@@ -194,6 +204,10 @@
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
+    <Compile Include="Providers\GeoCodeAddressResult.cs" />
+    <Compile Include="Providers\GeoCodingProvider.cs" />
+    <Compile Include="Providers\IGeoCodingProvider.cs" />
+    <Compile Include="Providers\IReportingProvider.cs" />
     <Compile Include="Providers\QAActionResultCode.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
@@ -208,16 +222,21 @@
     <Compile Include="Providers\ProviderProvider.cs" />
     <Compile Include="Providers\ProviderUserProvider.cs" />
     <Compile Include="Factories\SelectListItemsFactory.cs" />
+    <Compile Include="Providers\CookieDetectionProvider.cs" />
+    <Compile Include="Providers\EuCookieDirectiveProvider.cs" />
+    <Compile Include="Providers\ReportingProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
+    <Compile Include="Validators\ProviderUser\ShareApplicationsViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\VerifyEmailViewModelValidator.cs" />
     <Compile Include="Validators\Provider\VacancyPartyViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
+    <Compile Include="Validators\Report\ReportParametersDateRangeValidator.cs" />
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelServerValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
@@ -231,6 +250,8 @@
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Application\AnonymisedApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\AnonymisedApplicationLink.cs" />
     <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
@@ -243,9 +264,12 @@
     <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
+    <Compile Include="ViewModels\Application\ShareApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
+    <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />
@@ -294,6 +318,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AboutYou.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.generated.cs">
+      <DependentUpon>AnonymisedApplicantDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\ApplicantDetails.generated.cs">
       <AutoGen>True</AutoGen>
@@ -503,6 +532,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MonitoringInformation.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AnonymisedApplicantDetails.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EmployerQuestionAnswers.generated.cs</LastGenOutput>
@@ -548,6 +581,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>

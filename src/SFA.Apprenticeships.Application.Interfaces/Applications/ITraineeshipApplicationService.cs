@@ -4,18 +4,12 @@
     using System.Collections.Generic;
     using Domain.Entities.Applications;
 
-    public interface ITraineeshipApplicationService
+    public interface ITraineeshipApplicationService : ICommonApplicationService
     {
         IEnumerable<TraineeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
-
-        int GetApplicationCount(int vacancyId);
-
-        int GetNewApplicationCount(int vacancyId);
 
         TraineeshipApplicationDetail GetApplication(Guid applicationId);
 
         TraineeshipApplicationDetail GetApplicationForReview(Guid applicationId);
-
-        void UpdateApplicationNotes(Guid applicationId, string notes);
     }
 }

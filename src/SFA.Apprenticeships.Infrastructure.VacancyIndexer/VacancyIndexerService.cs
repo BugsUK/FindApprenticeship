@@ -5,10 +5,11 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Vacancies.Entities;
-    using Common.Configuration;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
+
+    using Application.Candidate.Configuration;
 
     public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
         where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
@@ -164,8 +165,8 @@
         {
             _logger.Debug("Checking if the index is correctly created.");
 
-            var serviceImplementation = _configurationService.Get<ServicesConfiguration>().ServiceImplementation;
-            if (serviceImplementation == ServicesConfiguration.Legacy)
+            var vacanciesSource = _configurationService.Get<ServicesConfiguration>().VacanciesSource;
+            if (vacanciesSource == ServicesConfiguration.Legacy)
             {
                 var indexAlias = GetIndexAlias();
                 var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
@@ -186,13 +187,13 @@
                 return result;
             }
 
-            if (serviceImplementation == ServicesConfiguration.Raa)
+            if (vacanciesSource == ServicesConfiguration.Raa)
             {
                 //RAA index creation talks directly to the repositories rather than a service boundary
                 return true;
             }
 
-            throw new Exception("Service implementation " + serviceImplementation + " was not recognised. Please check ServicesConfiguration section");
+            throw new Exception("Service implementation " + vacanciesSource + " was not recognised. Please check ServicesConfiguration section");
         }
 
         private void LogResult(bool result, string newIndexName)

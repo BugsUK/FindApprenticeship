@@ -23,7 +23,7 @@
 
             bundles.Add(new ScriptBundle("~/bundles/cookie",
                 "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(
-                    "~/Content/_assets/js/vendor/jquery.cookie.js"));
+                    "~/Content/_assets/js/vendor/jquery.cookie.js"));            
 
             // TODO: split in different bundles?
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(
@@ -40,11 +40,11 @@
                 "~/Content/_assets/js/nas/locationAutocomplete.js",
                 "~/Content/_assets/js/nas/refineSearch.js"));
             
-            bundles.Add(new StyleBundle("~/bundles/not-ie8")
+            bundles.Add(new StyleBundle("~/Content/_assets/styles/not-ie8")
                 .Include("~/Content/_assets/css/main.css")
                 .Include("~/Content/_assets/css/fonts.css"));
 
-            bundles.Add(new StyleBundle("~/bundles/ie8")
+            bundles.Add(new StyleBundle("~/Content/_assets/styles/ie8")
                 .Include("~/Content/_assets/css/main-ie8.css")
                 .Include("~/Content/_assets/css/fonts-ie8.css"));
 

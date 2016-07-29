@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 Wage = Wage,
                 WageText = WageText,
                 WageUnit = WageUnit,
+                ExpectedDuration = ExpectedDuration,
                 DurationType = DurationType,
                 Duration = Duration,
                 ClosingDate = ClosingDate,
@@ -77,7 +78,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 AdditionalLocationInformation = AdditionalLocationInformation,
                 IsEmployerLocationMainApprenticeshipLocation = IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = NumberOfPositions,
-                EmployerAnonymousName = null,
                 EmployerDescriptionComment = EmployerDescriptionComment,
                 EmployerWebsiteUrlComment = EmployerWebsiteUrlComment,
                 LocationAddressesComment = LocationAddressesComment,
@@ -90,7 +90,9 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 ContactEmail = ContactEmail,
                 ContactDetailsComment = ContactDetailsComment,
                 VacancyType = VacancyType,
-                Address = Address
+                Address = Address,
+                ProviderId = ProviderId,
+                EditedInRaa = EditedInRaa
             };
         }
 
@@ -105,6 +107,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string PersonalQualitiesComment { get; set; }
         public string ThingsToConsider { get; set; }
         public string ThingsToConsiderComment { get; set; }
+        public string OtherInformation { get; set; }
         public string DesiredQualifications { get; set; }
         public string DesiredQualificationsComment { get; set; }
         public string FirstQuestion { get; set; }
@@ -142,5 +145,9 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string ContactDetailsComment { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public string CreatedByProviderUsername { get; set; }
+        public string LocalAuthorityCode { get; set; }
+        public int ProviderId { get; set; }
+        public bool EditedInRaa { get; set; }
+        public VacancySource VacancySource { get; set; }
     }
 }

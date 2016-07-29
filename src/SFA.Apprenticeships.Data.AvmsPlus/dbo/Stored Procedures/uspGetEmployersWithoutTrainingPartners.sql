@@ -42,7 +42,7 @@ BEGIN
  declare @employertemp table(EmployerID int, LSCRegion int);    
    
    	WITH EmployersAndManagingAreas AS 
-	(SELECT EmployerID, ISNULL(ManagingAreaID, (SELECT ManagingAreaID FROM dbo.vwManagingAreas 
+	(SELECT EmployerId, ISNULL(ManagingAreaID, (SELECT ManagingAreaID FROM dbo.vwManagingAreas 
 	WHERE ManagingAreaCodeName = 'NAC')) AS ManagingArea
 	FROM employer LEFT JOIN vwManagingAreaAndLocalAuthority MALA
 	ON dbo.Employer.LocalAuthorityId = MALA.LocalAuthorityID)

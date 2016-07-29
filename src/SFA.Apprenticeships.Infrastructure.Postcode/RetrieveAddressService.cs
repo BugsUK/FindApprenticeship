@@ -15,6 +15,12 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
         private readonly ILogService _logger;
         private AddressConfiguration Config { get; }
 
+        private Dictionary<string, string> _specialCities = new Dictionary<string, string>
+        {
+            { "London", "London"},
+            { "York", "North Yorkshire"}
+        };
+
         public RetrieveAddressService(IConfigurationService configurationService, ILogService logger)
         {
             _logger = logger;
@@ -47,12 +53,26 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
                 AddressLine1 = address.Line1,
                 AddressLine2 = address.Line2,
                 AddressLine3 = address.Line3,
-                AddressLine4 = address.City,
+                AddressLine4 = address.Line4,
+                Town = address.City,
+                County = GetCounty(address),
                 Postcode = address.PostalCode,
                 Uprn = address.DomesticId
             };
         }
 
+        private string GetCounty(AddressInfo address)
+        {
+            if (!string.IsNullOrWhiteSpace(address.ProvinceName)) return address.ProvinceName;
+
+            if (_specialCities.ContainsKey(address.City))
+            {
+                return _specialCities[address.City];
+            }
+
+            return address.AdminAreaName;
+        }
+        
         private static string GetRetrieveServiceUrl()
         {
             return "&key={key}&id={id}";

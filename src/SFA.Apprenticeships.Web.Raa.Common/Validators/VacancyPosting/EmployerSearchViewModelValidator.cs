@@ -29,7 +29,7 @@
                 .WithMessage(EmployerSearchViewModelMessages.Location.WhiteListErrorText);
 
             RuleFor(x => x)
-                .Must(x => !string.IsNullOrWhiteSpace(x.Name) || !string.IsNullOrWhiteSpace(x.Location))
+                .Must(x => !string.IsNullOrWhiteSpace(x.Name) && !string.IsNullOrWhiteSpace(x.Location))
                 .When(x => x.FilterType == EmployerFilterType.NameAndLocation)
                 .WithMessage(EmployerSearchViewModelMessages.NameAndLocationSearchRequiredErrorText);
         }

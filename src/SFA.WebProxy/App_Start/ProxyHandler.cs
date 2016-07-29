@@ -12,7 +12,7 @@
     using Logging;
     using Models;
     using Routing;
-
+    using System.IO;
     public class ProxyHandler : DelegatingHandler
     {
         private readonly IProxyRouting _proxyRouting;
@@ -46,11 +46,11 @@
                 {
                     if (route.IsPrimary)
                     {
-                        responses.Insert(0, GetAsyncRequest(request, route));
+                        responses.Insert(0, GetAsyncRequest(request, route, routing));
                     }
                     else if (_configuration.AreNonPrimaryRequestsEnabled)
                     {
-                        responses.Add(GetAsyncRequest(request, route));
+                        responses.Add(GetAsyncRequest(request, route, routing));
                     }
                 }
             }
@@ -61,12 +61,12 @@
                     if (route.IsPrimary)
                     {
                         var requestHttpContent = GetRequestHttpContent(request, requestContent);
-                        responses.Insert(0, PostAsyncRequest(request, requestHttpContent, route));
+                        responses.Insert(0, PostAsyncRequest(request, requestHttpContent, route, routing));
                     }
                     else if (_configuration.AreNonPrimaryRequestsEnabled)
                     {
                         var requestHttpContent = GetRequestHttpContent(request, requestContent);
-                        responses.Add(PostAsyncRequest(request, requestHttpContent, route));
+                        responses.Add(PostAsyncRequest(request, requestHttpContent, route, routing));
                     }
                 }
             }
@@ -91,20 +91,20 @@
             return requestHttpContent;
         }
 
-        private Task<HttpResponseMessage> GetAsyncRequest(HttpRequestMessage request, Route route)
+        private Task<HttpResponseMessage> GetAsyncRequest(HttpRequestMessage request, Route route, Models.Routing routing)
         {
             var client = RoutingHttpClientFactory.Create(request, route.Uri);
-            return client.GetAsync(route.Uri).ContinueWith(ContinuationFunction(client, null, route));
+            return client.GetAsync(route.Uri).ContinueWith(ContinuationFunction(client, null, route, routing));
         }
 
-        private Task<HttpResponseMessage> PostAsyncRequest(HttpRequestMessage request, HttpContent requestHttpContent, Route route)
+        private Task<HttpResponseMessage> PostAsyncRequest(HttpRequestMessage request, HttpContent requestHttpContent, Route route, Models.Routing routing)
         {
             var client = RoutingHttpClientFactory.Create(request, route.Uri);
             var contentHeaders = request.Content?.Headers;
-            return client.PostAsync(route.Uri, requestHttpContent).ContinueWith(ContinuationFunction(client, contentHeaders, route));
+            return client.PostAsync(route.Uri, requestHttpContent).ContinueWith(ContinuationFunction(client, contentHeaders, route, routing));
         }
 
-        private Func<Task<HttpResponseMessage>, HttpResponseMessage> ContinuationFunction(HttpClient client, HttpContentHeaders contentHeaders, Route route)
+        private Func<Task<HttpResponseMessage>, HttpResponseMessage> ContinuationFunction(HttpClient client, HttpContentHeaders contentHeaders, Route route, Models.Routing routing)
         {
             return task =>
             {
@@ -134,12 +134,89 @@
 
                 if (task.IsCompleted)
                 {
-                    task.Result.Headers.Add("X-Response-From", route.Uri.ToString());
-                    _proxyLogging.LogResponseContent(task.Result, route.Identifier);
+                    var memoryStream = new MemoryStream();
+                    var encoding = System.Text.Encoding.UTF8;
+
+                    int replacements = SearchReplace(task.Result.Content.ReadAsStreamAsync().Result, memoryStream,
+                        encoding.GetBytes(routing.RewriteFrom.ToLower()), encoding.GetBytes(routing.RewriteTo));
+
+                    _proxyLogging.LogResponseContent(new MemoryStream(memoryStream.GetBuffer()), route.Identifier);
+
+                    if (route.IsPrimary)
+                    {
+                        var result = new HttpResponseMessage(task.Result.StatusCode);
+                        result.Headers.Clear();
+
+                        result.Headers.Add("X-Response-From", route.Uri.ToString());
+
+                        // May be useful for debugging
+                        //result.Headers.Add("X-MemoryStream-Length", $"{memoryStream.Length}");
+                        result.Headers.Add("X-Replacement", $"{routing.RewriteFrom} to {routing.RewriteTo}: {replacements}");
+
+                        result.Content = new ByteArrayContent(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
+                        result.Content.Headers.Add("Content-Length", $"{memoryStream.Length}");
+                        foreach (var header in task.Result.Content.Headers)
+                        {
+                            if (!result.Content.Headers.Contains(header.Key))
+                                result.Content.Headers.Add(header.Key, header.Value);
+                        }
+
+                        return result;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
 
-                return task.Result;
+                throw new Exception("Unhandled");
             };
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="input">Assumed to be UTF-8</param>
+        /// <param name="output"></param>
+        /// <param name="search">Case insensitive within ASCII range provided the search term is in lower case.</param>
+        /// <param name="replace"></param>
+        private int SearchReplace(Stream input, Stream output, byte[] search, byte[] replace)
+        {
+            var matchBuffer = new byte[search.Length];
+
+            int replacements = 0;
+
+            int searchPos = 0;
+            while (true)
+            {
+                int thisByte = input.ReadByte();
+
+                if (thisByte == search[searchPos] || (thisByte >= 'A' && thisByte <= 'Z' && (thisByte - 'A' + 'a') == search[searchPos]))
+                {
+                    matchBuffer[searchPos++] = (byte)thisByte;
+
+                    if (searchPos == search.Length)
+                    {
+                        replacements++;
+                        output.Write(replace, 0, replace.Length);
+                        searchPos = 0;
+                    }
+                }
+                else
+                {
+                    if (searchPos > 0)
+                    {
+                        output.Write(matchBuffer, 0, searchPos);
+                        searchPos = 0;
+                    }
+
+                    if (thisByte == -1)
+                        break;
+
+                    output.WriteByte((byte)thisByte);
+                }
+            }
+
+            return replacements;
         }
 
         // Credit: http://stackoverflow.com/questions/9565889/get-the-ip-address-of-the-remote-host

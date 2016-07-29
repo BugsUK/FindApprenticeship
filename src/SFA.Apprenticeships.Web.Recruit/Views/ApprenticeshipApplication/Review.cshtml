@@ -67,7 +67,20 @@
             @Html.DisplayFor(m => m, "Application/MonitoringInformation")
         </section>
 
-        @if (!(Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful))
+        @if (Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful)
+        {
+            var notes = string.IsNullOrWhiteSpace(Model.Notes) ?
+                "There are no notes for this candidate's application" :
+                Model.Notes;
+
+            <section class="section-border">
+                <h2 class="heading-large">
+                    Vacancy manager notes
+                </h2>
+                <p>@notes</p>
+            </section>
+        }
+        else
         {
             <section>
                 <div class="form-group">

@@ -15,10 +15,14 @@
     using FluentAssertions;
     using Helpers;
     using Infrastructure.LegacyWebServices.IoC;
-    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Monitor.IoC;
+    using Repositories.Mongo.Applications.IoC;
     using Logging.IoC;
     using Moq;
     using NUnit.Framework;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
 
     [TestFixture]
@@ -39,7 +43,8 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy, VacanciesSource = ServicesConfiguration.Legacy }, new CacheConfiguration()));
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(), new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy, VacanciesSource = ServicesConfiguration.Legacy }));
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.For<ICandidateReadRepository>().Use(_candidateReadRepositoryMock.Object);
             });

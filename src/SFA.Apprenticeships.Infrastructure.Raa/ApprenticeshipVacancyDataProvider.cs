@@ -31,7 +31,7 @@
 
         public ApprenticeshipVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound = false)
         {
-            var vacancy = _vacancyReadRepository.GetByReferenceNumber(vacancyId);
+            var vacancy = _vacancyReadRepository.Get(vacancyId);
 
             if (vacancy == null)
             {
@@ -46,13 +46,18 @@
                 return null;
             }
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false); // Some current vacancies have non-current vacancy parties
+            //TODO: temporary method. Remove after moving status checks to a higher tier and go back to GetEmployer
+            var employer = _employerService.GetEmployerWithoutStatusCheck(vacancyParty.EmployerId);
+
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
+            if (providerSite == null)
+                throw new System.Exception($"Could not find VacancyParty for ProviderSiteId={vacancyParty.ProviderSiteId}");
+
             var provider = _providerService.GetProvider(providerSite.ProviderId);
             var categories = _referenceDataProvider.GetCategories().ToList();
 
-            return ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(vacancy, vacancyParty, employer, provider, categories, _logService);
+            return ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(vacancy, employer, provider, providerSite, categories, _logService);
         }
     }
 }

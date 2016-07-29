@@ -20,10 +20,11 @@
             @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WorkingWeekComment))
         }
     </h3>
-    <p id="vacancy-working-week" itemprop="workHours" class="preserve-formatting">@Model.FurtherVacancyDetailsViewModel.WorkingWeek</p>
-    @if (Model.VacancyType == VacancyType.Apprenticeship)
+    <p id="vacancy-working-week" itemprop="workHours" class="@Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">@Model.FurtherVacancyDetailsViewModel.WorkingWeek</p>
+    @if (Model.VacancyType == VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.HoursPerWeek.HasValue)
     {
-        <p>Total hours per week: @Model.FurtherVacancyDetailsViewModel.HoursPerWeek</p>
+        <a name="furthervacancydetailsviewmodel_hoursperweek"></a>
+        <p id="total-hours-per-week">Total hours per week: @Model.FurtherVacancyDetailsViewModel.HoursPerWeek</p>
         if (Model.FurtherVacancyDetailsViewModel.HoursPerWeek > 40)
         {
             <p>(the hours are based on the candidate being over 18)</p>

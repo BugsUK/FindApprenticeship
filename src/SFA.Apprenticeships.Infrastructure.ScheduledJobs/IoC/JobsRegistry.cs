@@ -5,11 +5,14 @@
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
     using Application.Candidates;
+    using Application.Communication;
+    using Application.Communication.Strategies;
     using Application.Communications;
     using Application.Communications.Housekeeping;
     using Application.Communications.Strategies;
     using Application.Employer;
     using Application.Employer.Strategies;
+    using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
@@ -63,6 +66,8 @@
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
 
+            For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
+
             //Candidate Housekeeping
             For<ICandidateProcessor>().Use<CandidateProcessor>();
             
@@ -90,10 +95,13 @@
         private void RegisterStrategies()
         {
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
+            For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
+            For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
         }
     }
 }

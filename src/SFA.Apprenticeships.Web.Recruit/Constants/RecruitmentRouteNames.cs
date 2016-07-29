@@ -8,6 +8,7 @@
         public const string ManageProviderSites = "ManageProviderSites";
         public const string AddProviderSite = "AddProviderSite";
         public const string EditProviderSite = "EditProviderSite";
+        public const string OnBoardingComplete = "OnBoardingComplete";
 
         // Account set up
         public const string Settings = "Settings";
@@ -27,17 +28,24 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
+        public const string WebTrendsOptOut = "WebTrendsOptOut";
+        public const string Cookies = "Cookies";
 
         // Vacancy posting
         public const string CreateVacancy = "CreateVacancy";
+        public const string AutoSaveCreateVacancy = "AutoSaveCreateVacancy";
         public const string ReviewCreateVacancy = "ReviewCreateVacancy";
         public const string TrainingDetails = "TrainingDetails";
+        public const string AutoSaveTrainingDetails = "AutoSaveTrainingDetails";
         public const string ReviewTrainingDetails = "ReviewTrainingDetails";
         public const string VacancySummary = "VacancySummary";
+        public const string AutoSaveVacancySummary = "AutoSaveVacancySummary";
         public const string ReviewVacancySummary = "ReviewVacancySummary";
         public const string VacancyRequirementsProspects = "VacancyRequirementsProspects";
+        public const string AutoSaveRequirementsProspects = "AutoSaveRequirementsProspects";
         public const string ReviewVacancyRequirementsProspects = "ReviewVacancyRequirementsProspects";
         public const string VacancyQuestions = "VacancyQuestions";
+        public const string AutoSaveVacancyQuestions = "AutoSaveVacancyQuestions";
         public const string ReviewVacancyQuestions = "ReviewVacancyQuestions";
         public const string PreviewVacancy = "PreviewVacancy";
         public const string SubmitVacancy = "SubmitVacancy";
@@ -47,7 +55,10 @@
         public const string ConfirmNewEmployerSelection = "ConfirmNewEmployerSelection";
         public const string SearchAddresses = "SearchAddresses";
         public const string AddLocations = "AddLocations";
+        public const string AutoSaveLocations = "AutoSaveLocations";
         public const string ShowLocations = "ShowLocations";
+        public const string ManageDates = "ManageDates";
+        public const string AutoSaveManageDates = "AutoSaveManageDates";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
@@ -65,13 +76,21 @@
 
         // Applications
         public const string VacancyApplications = "VacancyApplications";
+        public const string ShareApplications = "ShareApplications";
+
         // Apprenticeships
         public const string ReviewApprenticeshipApplication = "ReviewApprenticeshipApplication";
         public const string ConfirmSuccessfulApprenticeshipApplication = "ConfirmSuccessfulApprenticeshipApplication";
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
+        public const string ViewAnonymousApprenticeshipApplication = "ViewAnonymousApprenticeshipApplication";
+
         // Traineeships
         public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
+        public const string ViewAnonymousTraineeshipApplication = "ViewAnonymousTraineeshipApplication";
 
-        public const string ManageDates = "ManageDates";
+        //Reports
+        public const string ReportList = "ReportList";
+        public const string ReportApplicationsReceived = "ReportApplicationsReceived";
+        public const string ReportCandidatesWithApplications = "ReportCandidatesWithApplications";
     }
 }

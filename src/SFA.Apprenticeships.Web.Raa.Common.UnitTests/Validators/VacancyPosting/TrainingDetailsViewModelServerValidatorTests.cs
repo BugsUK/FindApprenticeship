@@ -296,7 +296,8 @@
             {
                 ContactName = fullName,
                 ContactEmail = email,
-                ContactNumber = phoneNumber
+                ContactNumber = phoneNumber,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -325,7 +326,8 @@
             {
                 ContactName = fullName,
                 ContactEmail = email,
-                ContactNumber = phoneNumber
+                ContactNumber = phoneNumber,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -350,11 +352,16 @@
         [TestCase(" ", false)]
         [TestCase("<script>", false)]
         [TestCase("Desired Skill", true)]
+        [TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void TrainingProvidedRequired(string trainingProvided, bool expectValid)
         {
             var viewModel = new TrainingDetailsViewModel
             {
-                TrainingProvided = trainingProvided
+                TrainingProvided = trainingProvided,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

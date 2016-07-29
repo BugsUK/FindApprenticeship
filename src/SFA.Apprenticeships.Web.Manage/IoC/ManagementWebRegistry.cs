@@ -34,6 +34,8 @@
     using Application.ReferenceData;
     using Mappers;
     using Mediators.Candidate;
+    using Mediators.InformationRadiator;
+    using Mediators.Reporting;
     using Raa.Common.Providers;
 
     public class ManagementWebRegistry : Registry
@@ -64,18 +66,23 @@
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
+            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
         }
 
         private void RegisterServices()
         {
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
+            For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
             For<IVacancyLockingService>().Use<VacancyLockingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
+            For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
         }
 
         private void RegisterStrategies()
@@ -90,18 +97,19 @@
             var codeGenerator = configurationService.Get<CommonWebConfiguration>().CodeGenerator;
 
             For<ISendProviderUserCommunicationStrategy>().Use<QueueProviderUserCommunicationStrategy>();
+            For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
             For<ISendEmailVerificationCodeStrategy>().Use<SendEmailVerificationCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
             For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
-            For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
-            For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
-
+            
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
+            For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
         }
 
         private void RegisterMediators()
@@ -109,6 +117,8 @@
             For<IAgencyUserMediator>().Use<AgencyUserMediator>();
             For<ICandidateMediator>().Use<CandidateMediator>();
             For<IVacancyMediator>().Use<VacancyMediator>();
+            For<IReportingMediator>().Use<ReportingMediator>();
+            For<IInformationRadiatorMediator>().Use<InformationRadiatorMediator>();
         }
     }
 }

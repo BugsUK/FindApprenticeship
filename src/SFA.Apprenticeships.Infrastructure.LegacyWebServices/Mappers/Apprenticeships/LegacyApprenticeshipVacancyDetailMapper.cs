@@ -163,7 +163,7 @@
                     opt => opt.MapFrom(src => src.WeeklyWage))
 
                 .ForMember(dest => dest.WageUnit,
-                    opt => opt.Ignore())
+                    opt => opt.ResolveUsing<LegacyVacancySummaryWageUnitResolver>().FromMember(src => src.WageType))
 
                 .ForMember(dest => dest.WageDescription,
                     opt => opt.MapFrom(src => src.WageText))
@@ -178,6 +178,12 @@
                     opt => opt.Ignore())
 
                 .ForMember(dest => dest.TrainingType,
+                    opt => opt.Ignore())
+
+                .ForMember(dest => dest.EditedInRaa, 
+                    opt => opt.UseValue(false))
+
+                .ForMember(dest => dest.HoursPerWeek,
                     opt => opt.Ignore())
             ;
         }

@@ -8,7 +8,7 @@ BEGIN
 	
 	BEGIN TRY
 		UPDATE [dbo].[ApprenticeshipOccupation] 
-		SET ApprenticeshipOccupationStatusTypeID = @newApprOccpStatusType, 
+		SET ApprenticeshipOccupationStatusTypeId = @newApprOccpStatusType, 
 			ClosedDate = @closedDate
 		WHERE   [ApprenticeshipOccupationId] = @apprenticeshipOccupationId 
 	END TRY

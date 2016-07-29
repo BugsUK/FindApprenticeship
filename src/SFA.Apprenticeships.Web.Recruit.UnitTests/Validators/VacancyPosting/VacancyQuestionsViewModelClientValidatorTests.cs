@@ -28,7 +28,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void FirstQuestionInvalidCharacters(string firstQuestion, bool expectValid)
@@ -51,7 +51,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void SecondQuestionInvalidCharacters(string secondQuestion, bool expectValid)

@@ -3,7 +3,6 @@
     //TODO: rename project to SFA.Management.Application.VacancyPosting?
     using System;
     using System.Collections.Generic;
-    using System.Threading;
     using CuttingEdge.Conditions;
     using Domain.Entities;
     using Domain.Entities.Exceptions;
@@ -13,6 +12,7 @@
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Interfaces;
+    using Interfaces.Providers;
     using Interfaces.VacancyPosting;
 
     public class VacancyPostingService : IVacancyPostingService
@@ -24,15 +24,17 @@
         private readonly IVacancyLocationReadRepository _vacancyLocationReadRepository;
         private readonly IVacancyLocationWriteRepository _vacancyLocationWriteRepository;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IProviderVacancyAuthorisationService _providerVacancyAuthorisationService;
 
         public VacancyPostingService(
             IVacancyReadRepository vacancyReadRepository,
             IVacancyWriteRepository vacancyWriteRepository,
             IReferenceNumberRepository referenceNumberRepository,
-            IProviderUserReadRepository providerUserReadRepository, 
-            IVacancyLocationReadRepository vacancyLocationReadRepository, 
+            IProviderUserReadRepository providerUserReadRepository,
+            IVacancyLocationReadRepository vacancyLocationReadRepository,
             IVacancyLocationWriteRepository vacancyLocationWriteRepository,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService,
+            IProviderVacancyAuthorisationService providerVacancyAuthorisationService)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
@@ -41,27 +43,27 @@
             _vacancyLocationReadRepository = vacancyLocationReadRepository;
             _vacancyLocationWriteRepository = vacancyLocationWriteRepository;
             _currentUserService = currentUserService;
+            _providerVacancyAuthorisationService = providerVacancyAuthorisationService;
         }
 
-        public Vacancy CreateApprenticeshipVacancy(Vacancy vacancy)
+        public Vacancy CreateVacancy(Vacancy vacancy)
         {
             Condition.Requires(vacancy);
 
-            if(_currentUserService.IsInRole(Roles.Faa))
+            if (_currentUserService.IsInRole(Roles.Faa))
             {
                 var username = _currentUserService.CurrentUserName;
                 var vacancyManager = _providerUserReadRepository.GetByUsername(username);
+
                 if (vacancyManager?.PreferredProviderSiteId != null)
                 {
-                    vacancy.VacancyManagerId = vacancyManager.PreferredProviderSiteId.Value;
+                    vacancy.VacancyManagerId = vacancy.DeliveryOrganisationId = vacancyManager.PreferredProviderSiteId.Value;
                 }
             }
 
-            return SaveVacancy(vacancy);
-        }
+            // Always set VacancySource as Raa when creating a vacancy from Raa
+            vacancy.VacancySource = VacancySource.Raa;
 
-        public Vacancy SaveVacancy(Vacancy vacancy)
-        {
             return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Create(v));
         }
 
@@ -70,11 +72,82 @@
             return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
         }
 
-        private Vacancy UpsertVacancy(Vacancy vacancy, Func<Vacancy, Vacancy> operation )
+        public int GetNextVacancyReferenceNumber()
+        {
+            return _referenceNumberRepository.GetNextVacancyReferenceNumber();
+        }
+
+        public Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber)
+        {
+            return AuthoriseCurrentUser(_vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber));
+        }
+
+        public Vacancy GetVacancy(Guid vacancyGuid)
+        {
+            return AuthoriseCurrentUser(_vacancyReadRepository.GetByVacancyGuid(vacancyGuid));
+        }
+
+        public Vacancy GetVacancy(int vacancyId)
+        {
+            return AuthoriseCurrentUser(_vacancyReadRepository.Get(vacancyId));
+        }
+
+        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
+        {
+            return _vacancyReadRepository.GetWithStatus(0, 0, true, desiredStatuses);
+        }
+
+        public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)
+        {
+            return _vacancyReadRepository.GetByIds(vacancyIds);
+        }
+
+        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
+        {
+            return _vacancyReadRepository.GetByOwnerPartyIds(ownerPartyIds);
+        }
+
+        public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
+        {
+            return _vacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+        }
+
+        public void UnReserveVacancyForQa(int vacancyReferenceNumber)
+        {
+            _vacancyWriteRepository.UnReserveVacancyForQa(vacancyReferenceNumber);
+        }
+
+        public List<VacancyLocation> GetVacancyLocations(int vacancyId)
+        {
+            return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);
+        }
+
+        public List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations)
+        {
+            return _vacancyLocationWriteRepository.Save(vacancyLocations);
+        }
+
+        public void DeleteVacancyLocationsFor(int vacancyId)
+        {
+            _vacancyLocationWriteRepository.DeleteFor(vacancyId);
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
+        {
+            return _vacancyReadRepository.GetMinimalVacancyDetails(vacancyPartyIds);
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
+        {
+            return _vacancyReadRepository.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+        }
+
+        private Vacancy UpsertVacancy(Vacancy vacancy, Func<Vacancy, Vacancy> operation)
         {
             Condition.Requires(vacancy);
 
-            // currentApplication.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
+            AuthoriseCurrentUser(vacancy);
+
             if (vacancy.Status == VacancyStatus.Completed)
             {
                 var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
@@ -96,59 +169,14 @@
             return _vacancyReadRepository.Get(vacancy.VacancyId);
         }
 
-        public int GetNextVacancyReferenceNumber()
+        private Vacancy AuthoriseCurrentUser(Vacancy vacancy)
         {
-            return _referenceNumberRepository.GetNextVacancyReferenceNumber();
-        }
+            if (vacancy != null)
+            {
+                _providerVacancyAuthorisationService.Authorise(vacancy);
+            }
 
-        public Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber)
-        {
-            return _vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber);
-        }
-
-        public Vacancy GetVacancy(Guid vacancyGuid)
-        {
-            return _vacancyReadRepository.GetByVacancyGuid(vacancyGuid);
-        }
-
-        public Vacancy GetVacancy(int vacancyId)
-        {
-            return _vacancyReadRepository.Get(vacancyId);
-        }
-
-        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
-        {
-            return _vacancyReadRepository.GetWithStatus(0, 0, desiredStatuses);
-        }
-
-        public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
-        {
-            return _vacancyReadRepository.GetByIds(vacancyIds);
-        }
-
-        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
-        {
-            return _vacancyReadRepository.GetByOwnerPartyIds(ownerPartyIds);
-        }
-
-        public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
-        {
-            return _vacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
-        }
-
-        public List<VacancyLocation> GetVacancyLocations(int vacancyId)
-        {
-            return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);
-        }
-
-        public List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations)
-        {
-            return _vacancyLocationWriteRepository.Save(vacancyLocations);
-        }
-
-        public void DeleteVacancyLocationsFor(int vacancyId)
-        {
-            _vacancyLocationWriteRepository.DeleteFor(vacancyId);
+            return vacancy;
         }
     }
 }

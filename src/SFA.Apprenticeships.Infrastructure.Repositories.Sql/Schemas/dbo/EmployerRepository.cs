@@ -13,6 +13,7 @@
     {
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
+        private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
         public EmployerRepository(IGetOpenConnection getOpenConnection, IMapper mapper)
         {
@@ -26,7 +27,17 @@
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId AND EmployerStatusTypeId != 2",
                     new { EmployerId = employerId }).SingleOrDefault();
 
-            return _mapper.Map<Employer, DomainEmployer>(employer);
+            return MapEmployer(employer);
+        }
+
+        //TODO: temporary method. Remove after moving status checks to a higher tier
+        public DomainEmployer GetByIdWithoutStatusCheck(int employerId)
+        {
+            var employer =
+                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId",
+                    new { EmployerId = employerId }).SingleOrDefault();
+
+            return MapEmployer(employer);
         }
 
         public DomainEmployer GetByEdsUrn(string edsUrn)
@@ -35,21 +46,26 @@
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EdsUrn = @EdsUrn AND EmployerStatusTypeId != 2",
                     new { EdsUrn = Convert.ToInt32(edsUrn) }).SingleOrDefault();
 
-            return _mapper.Map<Employer, DomainEmployer>(employer);
+            return employer == null ? null : MapEmployer(employer);
         }
 
         public List<DomainEmployer> GetByIds(IEnumerable<int> employerIds)
         {
-            var employers =
-                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",
-                    new { EmployerIds = employerIds }).ToList();
-
-            return _mapper.Map<List<Employer>, List<DomainEmployer>>(employers);
+            List<Employer> employers = new List<Employer>();
+            var splitEmployerIds = DbHelpers.SplitIds(employerIds);           
+            foreach (int[] employersIds in splitEmployerIds)
+            {
+                var splitEmployer= _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",
+                    new { EmployerIds = employersIds }).ToList();
+                employers.AddRange(splitEmployer);
+            }                                 
+            return employers.Select(MapEmployer).ToList();
         }
 
         public DomainEmployer Save(DomainEmployer employer)
         {
             var dbEmployer = _mapper.Map<DomainEmployer, Employer>(employer);
+            PopulateCountyId(employer, dbEmployer);
 
             if (dbEmployer.EmployerId == 0)
             {
@@ -88,6 +104,44 @@
             }
 
             return GetById(dbEmployer.EmployerId);
+        }
+
+        private DomainEmployer MapEmployer(Employer employer)
+        {
+            var result = _mapper.Map<Employer, DomainEmployer>(employer);
+            return MapCountyId(employer, result);
+        }
+
+        private void PopulateCountyId(DomainEmployer entity, Employer dbVacancyLocation)
+        {
+            if (!string.IsNullOrWhiteSpace(entity.Address?.County))
+            {
+                dbVacancyLocation.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT CountyId
+FROM   dbo.County
+WHERE  FullName = @CountyFullName",
+                    new
+                    {
+                        CountyFullName = entity.Address.County
+                    }).SingleOrDefault();
+            }
+        }
+
+        private DomainEmployer MapCountyId(Employer dbEmployer, DomainEmployer result)
+        {
+            if (dbEmployer.CountyId > 0)
+            {
+                result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT FullName
+FROM   dbo.County
+WHERE  CountyId = @CountyId",
+                    new
+                    {
+                        CountyId = dbEmployer.CountyId
+                    }).Single();
+            }
+
+            return result;
         }
     }
 }

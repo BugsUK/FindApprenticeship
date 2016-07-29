@@ -24,8 +24,8 @@
 
             vacancyProviderBuilder.VacancyPostingService.Verify(
                 ps =>
-                    ps.UpdateVacancy(
-                        It.Is<Vacancy>(v => v.VacancyReferenceNumber == vacancyReferenceNumber && v.QAUserName == null)),
+                    ps.UnReserveVacancyForQa(
+                        It.Is<int>(v => v == vacancyReferenceNumber)),
                 Times.Once);
         }
 

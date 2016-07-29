@@ -53,7 +53,7 @@
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
                     <div class="text" itemprop="description">
-                        <p id="vacancy-description">@Model.Description</p>
+                        <p id="vacancy-description" class="@Model.Description.GetPreserveFormattingCssClass()">@Model.Description</p>
                     </div>
                 </div>
             </div>
@@ -68,8 +68,20 @@
 
                     @Html.Partial("_wage", Model)
 
+                    @{
+                        var className = Model.HoursPerWeek.HasValue ? "small-btm-margin" : "";
+                    }
+
                     <h3 class="bold-small">Working week</h3>
-                    <p id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</p>
+                    <p id="vacancy-working-week" itemprop="workHours" class="@className">@Model.WorkingWeek</p>
+                    @if (Model.HoursPerWeek.HasValue)
+                    {
+                        <p id="total-hours-per-week">Total hours per week: @Model.HoursPerWeek</p>
+                        if (Model.HoursPerWeek > 40)
+                        {
+                            <p>(the hours are based on the candidate being over 18)</p>
+                        }
+                    }
 
                     <h3 class="bold-small">Apprenticeship duration</h3>
                     <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
@@ -100,50 +112,57 @@
             </div>
             <div class="grid grid-2-3">
                 <div class="text" itemprop="responsibilities">
-                    <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
+                    <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@Html.Raw(Model.FullDescription)</p>
                 </div>
             </div>
 
         </section>
-        <section class="section-border grid-wrapper" id="course-info">
-            <h2 class="heading-large">Requirements and prospects</h2>
-            <div class="grid grid-1-2">
-                <div class="inner-block-padr">
-                    <div class="text">
-                        @if (!string.IsNullOrWhiteSpace(Model.SkillsRequired))
-                        {
-                            <h3 class="heading-small">Desired skills</h3>
-                            <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Model.PersonalQualities))
-                        {
-                            <h3 class="heading-small">Personal qualities</h3>
-                            <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.PersonalQualities)</p>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Model.QualificationRequired))
-                        {
-                            <h3 class="heading-small">Qualifications required</h3>
-                            <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
-                        }
+        if (!string.IsNullOrWhiteSpace(Model.SkillsRequired)
+            || !string.IsNullOrWhiteSpace(Model.PersonalQualities)
+            || !string.IsNullOrWhiteSpace(Model.QualificationRequired)
+            || !string.IsNullOrWhiteSpace(Model.FutureProspects)
+            || !string.IsNullOrWhiteSpace(Model.RealityCheck))
+         {
+             <section class="section-border grid-wrapper" id="course-info">
+                 <h2 class="heading-large">Requirements and prospects</h2>
+                 <div class="grid grid-1-2">
+                     <div class="inner-block-padr">
+                         <div class="text">
+                             @if (!string.IsNullOrWhiteSpace(Model.SkillsRequired))
+                             {
+                                 <h3 class="heading-small">Desired skills</h3>
+                                 <p id="vacancy-skills-required" class="@Model.SkillsRequired.GetPreserveFormattingCssClass()" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
+                             }
+                             @if (!string.IsNullOrWhiteSpace(Model.PersonalQualities))
+                             {
+                                 <h3 class="heading-small">Personal qualities</h3>
+                                 <p id="vacancy-qualities-required" class="@Model.PersonalQualities.GetPreserveFormattingCssClass()" itemprop="qualities">@Html.Raw(Model.PersonalQualities)</p>
+                             }
+                             @if (!string.IsNullOrWhiteSpace(Model.QualificationRequired))
+                             {
+                                 <h3 class="heading-small">Qualifications required</h3>
+                                 <p id="vacancy-qualifications-required" class="@Model.QualificationRequired.GetPreserveFormattingCssClass()" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
+                             }
 
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-1-2">
-                <div class="text">
-                    @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
-                    {
-                        <h3 class="heading-small">Future prospects</h3>
-                        <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
-                    {
-                        <h3 class="heading-small">Things to consider</h3>
-                        <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.RealityCheck)</p>
-                    }
-                </div>
-            </div>
-        </section>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="grid grid-1-2">
+                     <div class="text">
+                         @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
+                         {
+                             <h3 class="heading-small">Future prospects</h3>
+                             <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
+                         }
+                         @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
+                         {
+                             <h3 class="heading-small">Things to consider</h3>
+                             <p id="vacancy-reality-check" class="@Model.RealityCheck.GetPreserveFormattingCssClass()" itemprop="incentives">@Html.Raw(Model.RealityCheck)</p>
+                         }
+                     </div>
+                 </div>
+             </section>
+         }
         <section class="section-border" id="employer-info">
             <h2 class="heading-large">About the employer</h2>
             <div class="grid-wrapper">
@@ -152,7 +171,7 @@
                         @if (!Model.IsEmployerAnonymous)
                         {
                             <div class="text">
-                                <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
+                                <p id="vacancy-employer-description" class="@Model.EmployerDescription.GetPreserveFormattingCssClass()">@Html.Raw(Model.EmployerDescription)</p>
                             </div>
                         }
                     </div>
@@ -194,8 +213,9 @@
                                     <div itemprop="address">
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
-                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</p>
-                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
                                         <p class="small-btm-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
                                     </div>
                                 </div>
@@ -228,7 +248,7 @@
                     <div class="text">
                         @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
                         {
-                            <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
+                            <p id="vacancy-training-to-be-provided" class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@Html.Raw(Model.TrainingToBeProvided)</p>
                         }
                         @if (Model.TrainingType == TrainingType.Standards)
                         {
@@ -239,14 +259,6 @@
                             <h3 class="heading-small">Apprenticeship framework</h3>
                         }
                         <p id="vacancy-framework">@Html.Raw(Model.SubCategory)</p>
-                        @if (Model.ProviderSectorPassRate > 0)
-                        {
-                            <p id="vacancy-provider-sector-pass-rate">The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprenticeship training.</p>
-                        }
-                        else
-                        {
-                            <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
-                        }
                     </div>
                 </div>
             </div>
@@ -265,7 +277,7 @@
                 {
                     <div class="text">
                         <h3 class="bold-small">Contact</h3>
-                        <p id="vacancy-provider-contact">@Model.Contact</p>
+                        <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
                     </div>
                 }
             </div>
@@ -278,7 +290,7 @@
                 <div class="text">
                     <h2 class="heading-large collpanel-trigger">Other information</h2>
                     <div class="collpanel toggle-content">
-                        <p>@Html.Raw(Model.OtherInformation)</p>
+                        <p class="@Model.OtherInformation.GetPreserveFormattingCssClass()">@Html.Raw(Model.OtherInformation)</p>
                     </div>
                 </div>
             </section>
@@ -289,7 +301,7 @@
             <section id="application-instructions-container" class="section-border">
                 <h2 class="heading-large">Employer's Application Instructions</h2>
                 <div class="text">
-                    <p id="application-instructions">@Model.ApplicationInstructions</p>
+                    <p id="application-instructions" class="@Model.ApplicationInstructions.GetPreserveFormattingCssClass()">@Model.ApplicationInstructions</p>
                 </div>
             </section>
         }

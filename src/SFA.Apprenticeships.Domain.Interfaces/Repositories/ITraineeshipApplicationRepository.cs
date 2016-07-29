@@ -18,9 +18,7 @@
 
         IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
 
-        int GetApplicationCount(int vacancyId);
-
-        int GetNewApplicationCount(int vacancyId);
+        IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds);
     }
 
     public interface ITraineeshipApplicationWriteRepository : IWriteRepository<TraineeshipApplicationDetail>

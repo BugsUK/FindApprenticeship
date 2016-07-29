@@ -30,12 +30,12 @@
 
         public int GetApplicationCount(int vacancyId)
         {
-            return _traineeshipApplicationReadRepository.GetApplicationCount(vacancyId);
+            return _traineeshipApplicationReadRepository.GetCountsForVacancyIds(new int[] { vacancyId })[vacancyId].AllApplications;
         }
 
-        public int GetNewApplicationCount(int vacancyId)
+        public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
-            return _traineeshipApplicationReadRepository.GetNewApplicationCount(vacancyId);
+            return _traineeshipApplicationReadRepository.GetCountsForVacancyIds(vacancyIds);
         }
 
         public TraineeshipApplicationDetail GetApplication(Guid applicationId)
@@ -51,6 +51,6 @@
         public void UpdateApplicationNotes(Guid applicationId, string notes)
         {
             _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
-        }
+        }        
     }
 }

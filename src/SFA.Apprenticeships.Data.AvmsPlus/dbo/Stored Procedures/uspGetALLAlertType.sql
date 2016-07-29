@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT * from Alerttype
+	SELECT * from AlertType
 END

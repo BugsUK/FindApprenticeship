@@ -10,6 +10,8 @@
 
     public class VacancyApplicationsRepository
     {
+        private const int Status = 30;
+
         private readonly string _collectionName;
         private readonly ILogService _logService;
         private readonly IMongoDatabase _database;
@@ -18,27 +20,27 @@
         {
             _collectionName = collectionName;
             _logService = logService;
-            var connectionString = configurationService.Get<MongoConfiguration>().MetricsApplicationsDb;
+            var connectionString = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>().SourceApplicationsDb;
             var databaseName = MongoUrl.Create(connectionString).DatabaseName;
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
         }
 
         public async Task<long> GetVacancyApplicationsCount(CancellationToken cancellationToken)
         {
-            var cursor = _database.GetCollection<VacancyApplication>(_collectionName).CountAsync(Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10), cancellationToken: cancellationToken);
+            var cursor = _database.GetCollection<VacancyApplication>(_collectionName).CountAsync(Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status), cancellationToken: cancellationToken);
             return await cursor;
         }
 
         public async Task<long> GetVacancyApplicationsCreatedSinceCount(DateTime lastCreatedDate, CancellationToken cancellationToken)
         {
-            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10) & Builders<VacancyApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
+            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status) & Builders<VacancyApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).CountAsync(filter, cancellationToken: cancellationToken);
             return await cursor;
         }
 
         public async Task<long> GetVacancyApplicationsUpdatedSinceCount(DateTime lastUpdatedDate, CancellationToken cancellationToken)
         {
-            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10) & Builders<VacancyApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
+            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status) & Builders<VacancyApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).CountAsync(filter, cancellationToken: cancellationToken);
             return await cursor;
         }
@@ -65,7 +67,7 @@
                 BatchSize = 1000,
                 Projection = GetVacancyApplicationProjection()
             };
-            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10) & Builders<VacancyApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
+            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status) & Builders<VacancyApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).FindAsync(filter, options, cancellationToken);
             return await cursor;
         }
@@ -79,7 +81,7 @@
                 BatchSize = 1000,
                 Projection = GetVacancyApplicationProjection()
             };
-            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10) & Builders<VacancyApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
+            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status) & Builders<VacancyApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).FindAsync(filter, options, cancellationToken);
             return await cursor;
         }
@@ -91,8 +93,14 @@
                 .Include(a => a.DateCreated)
                 .Include(a => a.DateUpdated)
                 .Include(a => a.Status)
+                .Include(a => a.DateApplied)
                 .Include(a => a.CandidateId)
                 .Include(a => a.LegacyApplicationId)
+                .Include(a => a.CandidateInformation.EducationHistory.Institution)
+                .Include(a => a.CandidateInformation.EducationHistory.FromYear)
+                .Include(a => a.CandidateInformation.EducationHistory.ToYear)
+                .Include(a => a.SuccessfulDateTime)
+                .Include(a => a.UnsuccessfulDateTime)
                 .Include(a => a.WithdrawnOrDeclinedReason)
                 .Include(a => a.UnsuccessfulReason)
                 .Include(a => a.Vacancy.Id)

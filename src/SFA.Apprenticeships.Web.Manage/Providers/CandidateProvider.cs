@@ -19,8 +19,7 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.Application.Traineeship;
-
-    using SFA.Apprenticeships.Web.Common.Configuration;
+    using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
@@ -63,10 +62,21 @@
                 SearchViewModel = searchViewModel,
                 Candidates = new PageableViewModel<CandidateSummaryViewModel>
                 {
-                    Page = candidates.OrderBy(c => c.LastName).ThenBy(c => c.FirstName).ThenBy(c => c.Address.Postcode).ThenBy(c => c.Address.AddressLine1).Skip((searchViewModel.CurrentPage - 1) * searchViewModel.PageSize).Take(searchViewModel.PageSize).Select(c => _mapper.Map<CandidateSummary, CandidateSummaryViewModel>(c)).ToList(),
+                    Page =
+                        candidates.OrderBy(c => c.LastName)
+                            .ThenBy(c => c.FirstName)
+                            .ThenBy(c => c.Address.Postcode)
+                            .ThenBy(c => c.Address.AddressLine1)
+                            .Skip((searchViewModel.CurrentPage - 1)*searchViewModel.PageSize)
+                            .Take(searchViewModel.PageSize)
+                            .Select(c => _mapper.Map<CandidateSummary, CandidateSummaryViewModel>(c))
+                            .ToList(),
                     ResultsCount = candidates.Count,
                     CurrentPage = searchViewModel.CurrentPage,
-                    TotalNumberOfPages = candidates.Count == 0 ? 1 : (int)Math.Ceiling((double)candidates.Count / searchViewModel.PageSize)
+                    TotalNumberOfPages =
+                        candidates.Count == 0
+                            ? 1
+                            : (int) Math.Ceiling((double) candidates.Count/searchViewModel.PageSize)
                 }
             };
 
@@ -145,8 +155,8 @@
 
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(application.Vacancy.Id);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
@@ -157,8 +167,8 @@
 
         private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(application.Vacancy.Id);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);

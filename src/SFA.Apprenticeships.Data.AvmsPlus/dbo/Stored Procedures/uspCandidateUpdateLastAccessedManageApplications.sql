@@ -5,7 +5,7 @@ AS
 BEGIN      
  SET NOCOUNT ON      
        
-    UPDATE CANDIDATE 
+    UPDATE Candidate 
         SET LastAccessedManageApplications = getdate()
     WHERE
         CANDIDATEID = @CandidateId

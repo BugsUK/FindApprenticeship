@@ -17,14 +17,14 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
-
+    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
     public class VacancyController : ManagementControllerBase
     {
         private readonly IVacancyMediator _vacancyMediator;
 
-        public VacancyController(IVacancyMediator vacancyMediator)
+        public VacancyController(IVacancyMediator vacancyMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _vacancyMediator = vacancyMediator;
         }
@@ -51,10 +51,20 @@
             {
                 case VacancyMediatorCodes.ReviewVacancy.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    var view = View(vacancyViewModel);
-                    return view;
+                    return View(vacancyViewModel);
+
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors:
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors:
+                    SetUserMessage(response.Message);
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(vacancyViewModel);
 
                 case VacancyMediatorCodes.ReviewVacancy.Ok:
+                    return View(vacancyViewModel);
+
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms:
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi:
+                    SetUserMessage(response.Message);
                     return View(vacancyViewModel);
 
                 case VacancyMediatorCodes.ReviewVacancy.InvalidVacancy:
@@ -466,7 +476,8 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyMediatorCodes.UpdateEmployerInformation.Ok:
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });

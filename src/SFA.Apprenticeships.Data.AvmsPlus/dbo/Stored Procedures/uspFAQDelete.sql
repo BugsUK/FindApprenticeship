@@ -9,7 +9,7 @@ BEGIN
 		
 		DELETE FROM [dbo].[FAQ] 
 		WHERE 
-		 [FaqId] = @faqId
+		 [FAQId] = @faqId
 
 	END TRY
 

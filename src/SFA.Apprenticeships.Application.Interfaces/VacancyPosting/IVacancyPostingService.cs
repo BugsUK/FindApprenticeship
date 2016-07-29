@@ -7,9 +7,7 @@
 
     public interface IVacancyPostingService
     {
-        Vacancy CreateApprenticeshipVacancy(Vacancy vacancy);
-
-        Vacancy SaveVacancy(Vacancy vacancy);
+        Vacancy CreateVacancy(Vacancy vacancy);
 
         int GetNextVacancyReferenceNumber();
 
@@ -21,11 +19,13 @@
         
         List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses);
 
-        List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
+        IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds);
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
         Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
+
+        void UnReserveVacancyForQa(int vacancyReferenceNumber);
 
         List<VacancyLocation> GetVacancyLocations(int vacancyId);
 
@@ -34,5 +34,19 @@
         void DeleteVacancyLocationsFor(int vacancyId);
 
         Vacancy UpdateVacancy(Vacancy vacancy);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vacancyPartyIds"></param>
+        /// <returns>VacancyPartyId => IVacancyIdStatusAndClosingDate</returns>
+        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vacancyPartyIds"></param>
+        /// <returns>VacancyPartId => VacancyLocation</returns>
+        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
     }
 }

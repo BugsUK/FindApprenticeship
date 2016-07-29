@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
     using System;
+    using Apprenticeships.Application.Interfaces.Security;
     using Common.Constants;
     using Common.Mediators;
     using Raa.Common.Constants.ViewModels;
@@ -8,16 +9,23 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Raa.Common.Validators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
+    using SFA.Infrastructure.Interfaces;
 
     public class ApprenticeshipApplicationMediator : MediatorBase, IApprenticeshipApplicationMediator
     {
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelServerValidator;
+        private readonly IDecryptionService<AnonymisedApplicationLink> _decryptionService;
+        private readonly IDateTimeService _dateTimeService;
 
-        public ApprenticeshipApplicationMediator(IApplicationProvider applicationProvider, ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelServerValidator)
+        public ApprenticeshipApplicationMediator(IApplicationProvider applicationProvider, 
+            ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelServerValidator,
+            IDecryptionService<AnonymisedApplicationLink> decryptionService, IDateTimeService dateTimeService )
         {
             _applicationProvider = applicationProvider;
             _apprenticeshipApplicationViewModelServerValidator = apprenticeshipApplicationViewModelServerValidator;
+            _decryptionService = decryptionService;
+            _dateTimeService = dateTimeService;
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
@@ -25,6 +33,25 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApprenticeshipApplicationViewModel> View(string applicationCipherText)
+        {
+            var anomymisedApplicationLink = _decryptionService.Decrypt(applicationCipherText);
+
+            var applicationSelectionViewModel = new ApplicationSelectionViewModel
+            {
+                ApplicationId = anomymisedApplicationLink.ApplicationId
+            };
+
+            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
+
+            if (_dateTimeService.UtcNow > anomymisedApplicationLink.ExpirationDateTime)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.LinkExpired, viewModel);
+            }
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, viewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)

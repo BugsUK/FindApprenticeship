@@ -70,14 +70,22 @@
                 // Changed from PendingQA to Draft because PendingQA is not still in the db
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
-            vacancy.Address.County = "CAM";
+            vacancy.Address.County = "West Midlands";
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.Duration = 2;
+            vacancy.DurationType = DurationType.Years;
+            vacancy.ExpectedDuration = "2 years";
 
             writeRepository.Create(vacancy);
 
             var entity = readRepository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
+
+            entity.AdditionalLocationInformationComment = "AdditionalLocationInformationComment";
+            writeRepository.Update(entity);
+            entity = readRepository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
 
             entity.ShouldBeEquivalentTo(vacancy, options =>
                 ForShallowSave(options)
@@ -97,7 +105,10 @@
                     .Excluding(x => x.CreatedDateTime)
                     .Excluding(x => x.CreatedByProviderUsername)
                     .Excluding(x => x.VacancyLocationType)
-                    .Excluding(x => x.WageUnit)); //remove this after changes in DB
+                    .Excluding(x => x.OtherInformation)
+                    .Excluding(x => x.WageUnit)); // TODO: remove this after changes in DB
+
+            entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");
         }
 
         [Test, Category("Integration")]
@@ -126,10 +137,11 @@
             // Changed from PendingQA to Draft because PendingQA is not still in the db
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
-            vacancy.Address.County = "CAM";
+            vacancy.Address.County = "West Midlands";
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
             vacancy.Status = VacancyStatus.Submitted;
@@ -168,10 +180,11 @@
             // Changed from PendingQA to Draft because PendingQA is not still in the db
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
-            vacancy.Address.County = "CAM";
+            vacancy.Address.County = "West Midlands";
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var entity = writeRepository.Create(vacancy);
             vacancy.VacancyId = entity.VacancyId;
@@ -204,6 +217,7 @@
             vacancy.UpdatedDateTime = null;
             vacancy.CreatedDateTime = DateTime.MinValue;
             vacancy.ClosingDate = DateTime.UtcNow.AddDays(2);
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             writeRepository.Create(vacancy);
 
@@ -281,16 +295,19 @@
             vacancy1.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy1.Address.Postcode = "B26 2LW";
             vacancy1.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy1.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var vacancy2 = CreateValidDomainVacancy();
             vacancy2.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy2.Address.Postcode = "SW2 4NT";
             vacancy2.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy2.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var vacancy3 = CreateValidDomainVacancy();
             vacancy3.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy3.Address.Postcode = "DE6 5JA";
             vacancy3.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy3.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy1 = writeRepository.Create(vacancy1);
             vacancy2 = writeRepository.Create(vacancy2);
@@ -317,13 +334,15 @@
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             IVacancyLocationWriteRepository locationWriteRepository = new VacancyLocationRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _logger.Object);
 
             var vacancy = CreateValidDomainVacancy();
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = null;
+            vacancy.Address.County = null;
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
             
@@ -334,7 +353,8 @@
                     VacancyId = vacancy.VacancyId,
                     Address = new PostalAddress
                     {
-                        Postcode = "SW2 4NT"
+                        Postcode = "SW2 4NT",
+                        County = "West Midlands"
                     }
                 },
                 new VacancyLocation
@@ -342,7 +362,8 @@
                     VacancyId = vacancy.VacancyId,
                     Address = new PostalAddress
                     {
-                        Postcode = "B26 2LW"
+                        Postcode = "B26 2LW",
+                        County = "West Midlands"
                     }
                 }
             };
@@ -352,6 +373,36 @@
             var entity = readRepository.Get(vacancy.VacancyId);
 
             entity.RegionalTeam.Should().Be(RegionalTeam.SouthEast);
+        }
+
+        [Test, Category("Integration")]
+        public void IncrementNumberOfClickThroughs()
+        {
+            IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            vacancy.Address.Postcode = null;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.OfflineApplicationClickThroughCount = 0;
+            
+            vacancy = writeRepository.Create(vacancy);
+            
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+
+            var entity = readRepository.Get(vacancy.VacancyId);
+
+            entity.OfflineApplicationClickThroughCount.Should().Be(5);
         }
     }
 }

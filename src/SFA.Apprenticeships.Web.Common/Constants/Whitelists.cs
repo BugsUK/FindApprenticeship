@@ -18,7 +18,7 @@
             // name section https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository
             //public const string RegularExpression = @"^[a-zA-Z0-9+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@((?!\-).)(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$";
             //public const string RegularExpression = @"^([a-zA-Z0-9+&*-]+)+(?:(\.|_)[a-zA-Z0-9_+&*-]+)*@((?!\-).)(?:[a-zA-Z0-9-]+\.)+([a-zA-Z]{2,7})$";
-            public const string RegularExpression = @"^[a-zA-Z0-9\u0080-\uFFA7?$#()""'!,+\-=_:;.&€£*%\s\/]+@[a-zA-Z0-9\u0080-\uFFA7?$#()""'!,+\-=_:;.&€£*%\s\/]+\.([a-zA-Z0-9\u0080-\uFFA7]{2,7})$";
+            public const string RegularExpression = @"^[a-zA-Z0-9\u0080-\uFFA7?$#()""'!,+\-=_:;.&€£*%\s\/]+@[a-zA-Z0-9\u0080-\uFFA7?$#()""'!,+\-=_:;.&€£*%\s\/]+\.([a-zA-Z0-9\u0080-\uFFA7]{2,10})$";
 
             // This Regex is stronger, but doesn't works well in javascript.
             // http://haacked.com/archive/2007/08/21/i-knew-how-to-validate-an-email-address-until-i.aspx/
@@ -30,9 +30,19 @@
         }
 
         public static class FreetextWhitelist
-        {
+        {           
             public const string RegularExpression = @"^[a-zA-Z0-9\u0080-\uFFA7?$@#()""'!,+\-=_:;.&€£*%\s\/]+$";
             public const string ErrorText = @"contains some invalid characters";
+        }
+
+        public static class FreeHtmlTextWhiteList
+        {
+            public const string RegularExpression = @"^[a-zA-Z0-9\u0080-\uFFA7?$@#()""'!,+\-=_:;.&€£*%\s\/<>]+$";
+            public const string RegularExpressionScripts = @"<script[^>]*\s*[^>]*\s*[^>]*>";
+            public const string RegularExpressionInputs = @"<input[^>]*\s*[^>]*\s*[^>]*>";
+            public const string RegularExpressionObjects = @"<object[^>]*\s*[^>]*\s*[^>]*>";
+            public const string InvalidCharacterErrorText = @"contains some invalid characters";
+            public const string InvalidTagErrorText = @"contains some invalid tags";
         }
 
         public static class IntegerWhitelist

@@ -89,7 +89,7 @@ BEGIN
 				la.CodeName as 'LocalAuthority',
 				vac.DeliveryOrganisationId as 'DeliveryOrganisationId',
 				tp.ProviderSiteId as 'TrainingProviderId',
-				DOP.IsNasProvider as 'IsNasProvider',
+				DOP.IsNASProvider as 'IsNasProvider',
 				DO.TrainingProviderStatusTypeId as 'DeliveryOrganisationStatusId',
 				vac.VacancyManagerId as 'VacancyManagerId',
 				vac.VacancyManagerAnonymous as 'VacancyManagerAnonymous', 

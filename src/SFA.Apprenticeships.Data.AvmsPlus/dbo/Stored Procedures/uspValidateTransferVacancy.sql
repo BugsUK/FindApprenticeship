@@ -138,7 +138,7 @@ BEGIN
 	(
 		SELECT  1
 		FROM	ProviderSite ps
-				INNER JOIN ProviderSiteRelationship psr ON ps.ProviderSiteId = psr.ProviderSiteId
+				INNER JOIN ProviderSiteRelationship psr ON ps.ProviderSiteId = psr.ProviderSiteID
 				INNER JOIN ProviderSiteRelationShipType psrt ON psrt.ProviderSiteRelationShipTypeID = psr.ProviderSiteRelationShipTypeID
 				INNER JOIN Provider p ON p.ProviderId = psr.ProviderId
 		WHERE	ps.ProviderSiteID = @vacancyOwnerId
@@ -149,7 +149,7 @@ BEGIN
 		INSERT INTO @Error
 		SELECT 3, 'VacancyOwner'+ ',' + ISNULL(ps.TradingName,'Blank')  + ',' + CONVERT(varchar(50),ps.EDSURN) + ',' + ISNULL(p.TradingName,'Blank') + ',' + CONVERT(varchar(50), UKPRN)
 		FROM	ProviderSite ps
-				INNER JOIN ProviderSiteRelationship psr ON ps.ProviderSiteId = psr.ProviderSiteId				
+				INNER JOIN ProviderSiteRelationship psr ON ps.ProviderSiteId = psr.ProviderSiteID				
 				INNER JOIN ProviderSiteRelationShipType psrt ON psrt.ProviderSiteRelationShipTypeID = psr.ProviderSiteRelationShipTypeID
 				INNER JOIN Provider p ON p.ProviderId = psr.ProviderId
 		WHERE	ps.ProviderSiteID IN (@vacancyOwnerId)

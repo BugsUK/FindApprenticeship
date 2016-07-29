@@ -31,7 +31,8 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                VacancyDatesViewModel = new VacancyDatesViewModel()
+                VacancyDatesViewModel = new VacancyDatesViewModel(),
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -39,9 +40,9 @@
             var aggregateResults = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Count.Should().BeGreaterThan(5);
+            result.Errors.Count.Should().BeGreaterThan(4);
             aggregateResults.IsValid.Should().BeFalse();
-            aggregateResults.Errors.Count.Should().BeGreaterThan(5);
+            aggregateResults.Errors.Count.Should().BeGreaterThan(4);
         }
 
         [TestCase(null, false)]
@@ -104,7 +105,8 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                HoursPerWeek = hoursPerWeek
+                HoursPerWeek = hoursPerWeek,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -388,7 +390,8 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Duration = duration
+                Duration = duration,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -423,6 +426,10 @@
         [TestCase(" ", false)]
         [TestCase("<script>", false)]
         [TestCase("Description", true)]
+        [TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void LongDescriptionRequired(string longDescription, bool expectValid)
         {
             var viewModel = new FurtherVacancyDetailsViewModel

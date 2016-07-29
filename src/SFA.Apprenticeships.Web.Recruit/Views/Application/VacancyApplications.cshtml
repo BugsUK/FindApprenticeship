@@ -32,7 +32,7 @@
                     <div class="inner-block-padr">
                         <div>
                             <div class="text" itemprop="description">
-                                <p id="vacancy-description" class="preserve-formatting">@Model.ShortDescription</p>
+                                <p id="vacancy-description" class="@Model.ShortDescription.GetPreserveFormattingCssClass()">@Model.ShortDescription</p>
                                 <p>
                                     <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber})" class="disp-block">View @(Model.VacancyType == VacancyType.Traineeship ? "traineeship" : "apprenticeship")</a>
                                 </p>
@@ -44,7 +44,7 @@
                     <p class="small-btm-margin">
                         Closing date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
                     </p>
-                    @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
+                    @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status, Model.TotalNumberOfApplications), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
                 </div>
             </div>
         </section>
@@ -117,71 +117,79 @@
             <section class="grid-wrapper">
                 <ul class="applications-summary">
                     <li>
-                        <figure class="data">
-                            @if (filterType == VacancyApplicationsFilterTypes.New)
-                            {
+                        @if (filterType == VacancyApplicationsFilterTypes.New)
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.NewApplicationsCount</p>
                                 <figcaption><h2>New</h2></figcaption>
-                            }
-                            else
-                            {
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New))" class="vacancy-filter">
+                            </figure>
+                        }
+                        else
+                        {
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.NewApplicationsCount</p>
                                     <figcaption><h2>New</h2></figcaption>
-                                </a>
-                            }
-                        </figure>
+                                </figure>
+                            </a>
+                        }
                     </li>
                     <li>
-                        <figure class="data">
-                            @if (filterType == VacancyApplicationsFilterTypes.Viewed)
-                            {
+                        @if (filterType == VacancyApplicationsFilterTypes.Viewed)
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.ViewedApplicationsCount</p>
                                 <figcaption><h2>Viewed</h2></figcaption>
-                            }
-                            else
-                            {
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Viewed))" class="vacancy-filter">
+                            </figure>
+                        }
+                        else
+                        {
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Viewed))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.ViewedApplicationsCount</p>
                                     <figcaption><h2>Viewed</h2></figcaption>
-                                </a>
-                            }
-                        </figure>
+                                </figure>
+                            </a>
+                        }
                     </li>
 
                     @if (Model.VacancyType != VacancyType.Traineeship)
                     {
                         <li>
-                            <figure class="data">
-                                @if (filterType == VacancyApplicationsFilterTypes.Successful)
-                                {
+                            @if (filterType == VacancyApplicationsFilterTypes.Successful)
+                            {
+                                <figure class="data">
                                     <p class="count">@Model.SuccessfulApplicationsCount</p>
                                     <figcaption><h2>Successful</h2></figcaption>
-                                }
-                                else
-                                {
-                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Successful))" class="vacancy-filter">
+                                </figure>
+                            }
+                            else
+                            {
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Successful))" class="vacancy-filter">
+                                    <figure class="data">
                                         <p class="count">@Model.SuccessfulApplicationsCount</p>
                                         <figcaption><h2>Successful</h2></figcaption>
-                                    </a>
-                                }
-                            </figure>
+                                    </figure>
+                                </a>
+                            }
                         </li>
                         <li>
-                            <figure class="data">
-                                @if (filterType == VacancyApplicationsFilterTypes.Unsuccessful)
-                                {
+                            @if (filterType == VacancyApplicationsFilterTypes.Unsuccessful)
+                            {
+                                <figure class="data">
                                     <p class="count">@Model.UnsuccessfulApplicationsCount</p>
                                     <figcaption><h2>Unsuccessful</h2></figcaption>
-                                }
-                                else
-                                {
-                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Unsuccessful))" class="vacancy-filter">
+                                </figure>
+                            }
+                            else
+                            {
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Unsuccessful))" class="vacancy-filter">
+                                    <figure class="data">
                                         <p class="count">@Model.UnsuccessfulApplicationsCount</p>
                                         <figcaption><h2>Unsuccessful</h2></figcaption>
-                                    </a>
-                                }
-                            </figure>
+                                    </figure>
+                                </a>
+                            }
                         </li>
                     }
                 </ul>
@@ -189,8 +197,9 @@
 
             <table class="vert-top" id="applicationTable">
                 <colgroup>
-                    <col class="t30">
                     <col class="t25">
+                    <col class="t15">
+                    <col class="t15">
                     <col class="t15">
                     <col class="t15">
                     <col class="t15">
@@ -199,6 +208,9 @@
                 <tr>
                     <th>
                         <span class="font-black">Applicant name</span>
+                    </th>
+                    <th>
+                        <span class="font-black">Applicant ID</span>
                     </th>
                     <th>
                         <span class="font-black">Vacancy manager notes</span>
@@ -221,6 +233,9 @@
                             <h4 class="applicant-name">@applicationSummary.ApplicantName</h4>
                         </td>
                         <td>
+                            @applicationSummary.ApplicantID
+                        </td>
+                        <td>
                             @{
                                 var notes = applicationSummary.Notes;
                                 if (notes != null && notes.Length > 20)
@@ -236,6 +251,7 @@
                         </td>
                         <td>
                             <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId))" title="View @applicationSummary.ApplicantName application">View application</a>
+                            <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new { application = applicationSummary.AnonymousLinkData })" title="View anonymous application">Anonymous view</a>
                         </td>
                     </tr>
                 }

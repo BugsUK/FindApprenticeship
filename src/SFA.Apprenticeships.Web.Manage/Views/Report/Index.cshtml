@@ -1,15 +1,15 @@
-﻿@using ReportViewerForMvc;
+﻿@model SFA.Apprenticeships.Web.Manage.ViewModels.ReportMenu
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Reports";
 }
 
-<div>
-    <h1 class="heading-xlarge">
-        Reports
-    </h1>
-    <div>
-        @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer)
-    </div>
-</div>
+<h2>Reports</h2>
+
+
+<ul>
+    @foreach (var report in Model.ReportList)
+    {
+        <li><a href="@Url.HttpRouteUrl(report.Value, null)">@report.Key</a></li>
+    }
+</ul>

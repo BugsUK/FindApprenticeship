@@ -5969,6 +5969,14 @@ footer {
     .footer__copyright {
       display: none !important; } }
 
+.footer__hidden-version {
+  color: #dee0e2;
+  position: absolute; }
+
+@media print {
+  .footer__hidden-version {
+    display: none; } }
+
 #main {
   background: #fff;
   display: block;
@@ -6170,9 +6178,13 @@ html:not(.touch) .editable-item {
 .fa-check {
   color: #28a197; }
 
-.raa-icon-comment {
-  font-size: 19px !important;
-  color: #28a197; }
+.raa-icon-comment-img {
+  height: 1em !important;
+  padding: 1px 0 0 0; }
+
+.raa-icon-checkmark-img {
+  height: 1em !important;
+  margin-right: .3em; }
 
 h2 a i.raa-icon-comment {
   vertical-align: middle; }
@@ -6210,7 +6222,8 @@ h2 a i.raa-icon-comment {
     display: block;
     float: left; }
     .vacancies-summary li a {
-      text-decoration: none; }
+      text-decoration: none;
+      display: block; }
     .vacancies-summary li figure.data .count {
       font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
       font-size: 48px;

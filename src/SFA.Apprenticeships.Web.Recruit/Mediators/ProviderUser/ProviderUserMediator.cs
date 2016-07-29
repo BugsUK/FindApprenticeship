@@ -1,8 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
-using SFA.Apprenticeships.Web.Raa.Common.Providers;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
-
-namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
+﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 {
     using System;
     using System.Collections.Generic;
@@ -16,9 +12,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Constants.Messages;
     using Domain.Entities.Raa;
     using Raa.Common.Validators.ProviderUser;
-    using SFA.Apprenticeships.Application.Interfaces.Users;
-    using SFA.Apprenticeships.Domain.Entities.Communication;
-    using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
+    using Apprenticeships.Application.Interfaces.Users;
+    using Domain.Entities.Communication;
+    using Raa.Common.Constants.ViewModels;
+    using Raa.Common.Providers;
+    using Raa.Common.ViewModels.ProviderUser;
+    using ViewModels.Home;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
     using ClaimTypes = Common.Constants.ClaimTypes;
@@ -66,15 +65,20 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             }
 
             var username = principal.Identity.Name;
+
             viewModel.Username = username;
+
             var userProfile = _providerUserProvider.GetUserProfileViewModel(username);
+
             if (userProfile != null)
             {
                 viewModel.EmailAddress = userProfile.EmailAddress;
                 viewModel.EmailAddressVerified = userProfile.EmailAddressVerified;
             }
 
-            if (!principal.HasClaim(c => c.Type == ClaimTypes.Ukprn))
+            var ukprn = principal.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Ukprn)?.Value;
+
+            if (string.IsNullOrWhiteSpace(ukprn))
             {
                 return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier, viewModel, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
             }
@@ -84,18 +88,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
                 return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.MissingServicePermission, viewModel, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
             }
 
-            var ukprn = principal.Claims.Single(c => c.Type == ClaimTypes.Ukprn).Value;
-            if (string.IsNullOrEmpty(ukprn))
-            {
-                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier, viewModel, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
-            }
-
             var provider = _providerProvider.GetProviderViewModel(ukprn);
 
             if (provider == null)
             {
                 return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.NoProviderProfile, viewModel, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Info);
             }
+
+            viewModel.ProviderId = provider.ProviderId;
 
             if (provider.ProviderSiteViewModels.Count() < MinProviderSites)
             {
@@ -105,6 +105,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             if (userProfile == null)
             {
                 var isFirstUser = !_providerUserProvider.GetUserProfileViewModels(ukprn).Any();
+
                 if (isFirstUser)
                 {
                     return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.FirstUser, viewModel, AuthorizeMessages.FirstUser, UserMessageLevel.Info);
@@ -115,7 +116,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 
             if (!userProfile.EmailAddressVerified)
             {
-                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.EmailAddressNotVerified, viewModel, AuthorizeMessages.EmailAddressNotVerified, UserMessageLevel.Info);
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.EmailAddressNotVerified, viewModel,
+                    AuthorizeMessages.EmailAddressNotVerified, UserMessageLevel.Info);
+            }
+
+            if (!provider.IsMigrated)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.ProviderNotMigrated, viewModel);
             }
 
             return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.Ok, viewModel);
@@ -199,6 +206,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             if (!_providerUserProvider.ValidateEmailVerificationCode(username, verifyEmailViewModel.VerificationCode))
             {
                 return GetMediatorResponse(ProviderUserMediatorCodes.VerifyEmailAddress.InvalidCode, VerifyEmailViewModelMessages.VerificationCodeEmailIncorrectMessage, UserMessageLevel.Error);
+            }
+
+            var user = _providerUserProvider.GetProviderUser(username);
+            var provider = _providerProvider.GetProviderViewModel(user.ProviderId);
+            if (!provider.IsMigrated)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.VerifyEmailAddress.OkNotYetMigrated);
             }
 
             return GetMediatorResponse(ProviderUserMediatorCodes.VerifyEmailAddress.Ok);

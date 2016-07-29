@@ -44,6 +44,14 @@
             var tempTable = "_InsertTemp_" + table.Name;
             var columnTypes = GetColumnTypes(records);
 
+            if (!table.IdentityInsert)
+            {
+                foreach (var primaryKey in table.PrimaryKeys)
+                {
+                    columnTypes.Remove(primaryKey);
+                }
+            }
+
             using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
             {
                 if (tempTable == null)
@@ -107,7 +115,7 @@
                     _log.Warn($"Error updating record. Therefore updating what can be before continuing. Error was {ex.Message}");
                     var errors = UpdateFromTempOneAtATime(table, columnTypes, tempTable, connection);
                     if (errors.Any())
-                        throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                        throw new Exception($"Errors updating {table.Name}:\n{GetErrorText(errors)}");
                 }
             }
 
@@ -117,22 +125,33 @@
         {
             var tempTable = "_DeleteTemp_" + table.Name;
             var primaryKeysWithTypes = table.PrimaryKeys.ToDictionary(k => k, k => typeof(long));
-            var records = keys.Select(k => k.ToDictionary(r => table.PrimaryKeys.First(), r => (object)r)); // TODO: Only works if one primary key
-
+            var allRecords = keys.Select(k => k.ToDictionary(r => table.PrimaryKeys.First(), r => (object)r)).ToList(); // TODO: Only works if one primary key
+            
             using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
             {
-                CreateAndInsertIntoTemp(table, primaryKeysWithTypes, tempTable, connection, records);
+                const int batchSize = 1000;
+                int thisBatchSize = batchSize;
 
-                try
+                for (int firstRecord = 0; allRecords.Count != 0 && thisBatchSize == batchSize; firstRecord += batchSize)
                 {
-                    DeleteFromTempInOneGo(table, primaryKeysWithTypes, tempTable, connection);
-                }
-                catch (Exception ex)
-                {
-                    _log.Warn($"Error deleting record. Therefore updating what can be before continuing. Error was {ex.Message}");
-                    var errors = DeleteFromTempOneAtATime(table, primaryKeysWithTypes, tempTable, connection);
-                    if (errors.Any())
-                        throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                    var records = allRecords.Skip(firstRecord).Take(batchSize).ToList();
+                    thisBatchSize = records.Count();
+
+                    _log.Info($"Deleting {thisBatchSize} records {firstRecord * 100L / allRecords.Count}% done");
+
+                    CreateAndInsertIntoTemp(table, primaryKeysWithTypes, tempTable, connection, records);
+
+                    try
+                    {
+                        DeleteFromTempInOneGo(table, primaryKeysWithTypes, tempTable, connection);
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Warn($"Error deleting record. Therefore deleting what can be before continuing. Error was {ex.Message}");
+                        var errors = DeleteFromTempOneAtATime(table, primaryKeysWithTypes, tempTable, connection);
+                        if (errors.Any())
+                            throw new Exception($"Errors deleting from {table.Name}:\n{GetErrorText(errors)}");
+                    }
                 }
             }
         }
@@ -171,24 +190,36 @@ END CATCH
 
         private void InsertFromTemp(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, IDbConnection connection)
         {
-            connection.Execute($@"
-{GetSetIdentityInsertSql(table)};
-{GetInsertSql(table, columnTypes, tempTable)};
-");
+            if (table.IdentityInsert)
+            {
+                connection.Execute($@"{GetSetIdentityInsertSql(table)};{GetInsertSql(table, columnTypes, tempTable)};");
+            }
+            else
+            {
+                connection.Execute($@"{GetInsertSql(table, columnTypes, tempTable)};");
+            }
         }
 
 
         private IEnumerable<dynamic> InsertFromTempOneAtATime(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, IDbConnection connection)
         {
             string primaryKeyList = $"{string.Join(", ", table.PrimaryKeys)}";
+            string errorKeyList = $"{string.Join(", ", table.ErrorKeys)}";
+
+            var identityInsert = GetSetIdentityInsertSql(table) + ";";
+            if (!table.IdentityInsert)
+            {
+                primaryKeyList = errorKeyList;
+                identityInsert = "";
+            }
 
             var sql = $@"
 DECLARE @totalRecords INT = (SELECT COUNT(*) FROM {tempTable});
 DECLARE @thisRecord   INT = 0;
 
-CREATE TABLE #Errors ({string.Join(", ", table.PrimaryKeys.Select(k => new KeyValuePair<string, Type>(k, columnTypes[k])).Select(col => $"{col.Key} {SqlTypeFor(col.Value)}"))}, Error NVARCHAR(MAX))
+CREATE TABLE #Errors ({string.Join(", ", table.ErrorKeys.Select(k => new KeyValuePair<string, Type>(k, columnTypes[k])).Select(col => $"{col.Key} {SqlTypeFor(col.Value)}"))}, Error NVARCHAR(MAX))
 
-{GetSetIdentityInsertSql(table)};
+{identityInsert}
 
 WHILE @thisRecord < @totalRecords
 BEGIN
@@ -199,9 +230,9 @@ BEGIN
     END TRY
     BEGIN CATCH
         INSERT INTO #Errors
-        SELECT {primaryKeyList}, ERROR_MESSAGE()
+        SELECT {errorKeyList}, ERROR_MESSAGE()
         FROM   {tempTable}
-        ORDER BY {primaryKeyList}
+        ORDER BY {errorKeyList}
         OFFSET (@thisRecord) ROWS FETCH NEXT (1) ROWS ONLY;
     END CATCH
     SET @thisRecord = @thisRecord + 1;

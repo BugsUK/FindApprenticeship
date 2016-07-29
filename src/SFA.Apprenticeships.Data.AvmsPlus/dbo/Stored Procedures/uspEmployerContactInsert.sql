@@ -26,7 +26,7 @@ BEGIN
 				[AddressLine4],
 				[Town],
 				[CountyId],
-				[Postcode],
+				[PostCode],
 				[LocalAuthorityId],
 				[ContactPreferenceTypeId],
 				[JobTitle],

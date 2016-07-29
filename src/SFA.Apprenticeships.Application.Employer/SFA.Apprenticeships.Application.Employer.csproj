@@ -86,6 +86,10 @@
       <HintPath>..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -95,25 +99,37 @@
     </Compile>
     <Compile Include="EmployerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\GetByIdWithoutStatusCheckStrategy.cs" />
     <Compile Include="Strategies\GetByEdsUrnStrategy.cs" />
     <Compile Include="Strategies\GetByIdsStrategy.cs" />
     <Compile Include="Strategies\GetByIdStrategy.cs" />
     <Compile Include="Strategies\GetPagedEmployerSearchResultsStrategy.cs" />
+    <Compile Include="Strategies\IGetByIdWithoutStatusCheckStrategy.cs" />
     <Compile Include="Strategies\IGetByEdsUrnStrategy.cs" />
     <Compile Include="Strategies\IGetByIdsStrategy.cs" />
     <Compile Include="Strategies\IGetByIdStrategy.cs" />
     <Compile Include="Strategies\IGetPagedEmployerSearchResultsStrategy.cs" />
     <Compile Include="Strategies\ISaveEmployerStrategy.cs" />
+    <Compile Include="Strategies\ISendEmployerLinksStrategy.cs" />
     <Compile Include="Strategies\SaveEmployerStrategy.cs" />
+    <Compile Include="Strategies\SendEmployerLinksStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>

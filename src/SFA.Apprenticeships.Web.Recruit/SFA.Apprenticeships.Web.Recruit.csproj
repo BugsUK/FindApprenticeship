@@ -94,6 +94,14 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NanoSpell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Content\_assets\js\vendor\nanospell\bin\NanoSpell.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
       <Private>True</Private>
@@ -108,6 +116,14 @@
     </Reference>
     <Reference Include="FluentValidation.Mvc, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Glimpse.AspNet, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.1.8.2\lib\net45\Glimpse.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
@@ -193,6 +209,10 @@
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.0\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
@@ -205,6 +225,14 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -303,6 +331,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="App_Start\AuthenticationConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
@@ -317,9 +348,13 @@
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\EmployerApplicationController.cs" />
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mediators\Application\ITraineeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Application\TraineeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Application\ApprenticeshipApplicationMediator.cs" />
@@ -349,6 +384,9 @@
     <Compile Include="IoC\RecruitmentWebRegistry.cs" />
     <Compile Include="IoC\StructureMapScopeModule.cs" />
     <Compile Include="Mediators\Provider\ProviderMediator.cs" />
+    <Compile Include="Mediators\Report\ReportMediatorCodes.cs" />
+    <Compile Include="Mediators\Report\IReportMediator.cs" />
+    <Compile Include="Mediators\Report\ReportMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\IVacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
@@ -358,6 +396,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
+    <Compile Include="ViewModels\Report\ApplicationsReceivedParameters.cs" />
+    <Compile Include="ViewModels\Report\CandidatesWithApplicationsParameters.cs" />
+    <Compile Include="ViewModels\Report\ReportMenu.cs" />
+    <Compile Include="Views\Home\Cookies.generated.cs">
+      <DependentUpon>Cookies.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -415,21 +461,248 @@
     <Content Include="500.html" />
     <Content Include="Content\_assets\css\main-ie8.css" />
     <Content Include="Content\_assets\css\main.css" />
+    <Content Include="Content\_assets\img\bubble.svg" />
     <Content Include="Content\_assets\js\inplaceediting.js" />
     <Content Include="Content\_assets\js\interactions.js" />
     <Content Include="Content\_assets\js\jquery.pwstrength.js" />
     <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\autosave.js" />
+    <Content Include="Content\_assets\js\nas\reports.js" />
     <Content Include="Content\_assets\js\nas\vacancyApplications.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\adapters\jquery.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\build-config.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\CHANGES.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\ckeditor.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\config.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\contents.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\lang\en.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\LICENSE.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\CHANGES.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.tests.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.tests.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\preconditions.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\quail.jquery.min.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\tests.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\tests.min.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\wcag2.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\LICENSE.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\AddTableCaption.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\AnchorsMerge.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\AttributeRename.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\DateUnfold.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\ElementRemove.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\ElementReplace.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\ImgAlt.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\ImgAltNonEmpty.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\LocalizedRepository.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\ParagraphToHeader.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\QuickFix.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\TableHeaders.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\AddTableCaption.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\AnchorsMerge.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\AttributeRename.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\DateUnfold.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\ElementRemove.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\ElementReplace.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\ImgAlt.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\ImgAltNonEmpty.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\LocalizedRepository.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\ParagraphToHeader.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\QuickFix.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\en\TableHeaders.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\AddTableCaption.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\AnchorsMerge.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\AttributeRename.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\DateUnfold.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\ElementRemove.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\ElementReplace.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\ImgAlt.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\ImgAltNonEmpty.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\LocalizedRepository.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\ParagraphToHeader.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\QuickFix.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\TableHeaders.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\README.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\skins\moono\a11ychecker.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\skins\moono\images\reload.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\styles\contents.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\balloonpanel\skins\kama\balloonpanel.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\balloonpanel\skins\moono\balloonpanel.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\balloonpanel\skins\moono\images\close.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\balloonpanel\skins\moono\images\hidpi\close.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\icons.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\icons\hidpi\pastefromword-rtl.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\icons\hidpi\pastefromword.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\icons\pastefromword-rtl.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\icons\pastefromword.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\af.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ar.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\bg.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\bn.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\bs.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ca.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\cs.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\cy.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\da.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\de-ch.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\de.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\el.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\en-au.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\en-ca.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\en-gb.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\en.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\eo.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\es.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\et.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\eu.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\fa.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\fi.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\fo.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\fr-ca.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\fr.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\gl.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\gu.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\he.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\hi.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\hr.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\hu.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\id.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\is.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\it.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ja.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ka.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\km.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ko.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ku.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\lt.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\lv.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\mk.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\mn.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ms.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\nb.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\nl.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\no.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\pl.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\pt-br.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\pt.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ro.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ru.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\si.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\sk.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\sl.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\sq.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\sr-latn.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\sr.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\sv.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\th.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\tr.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\tt.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\ug.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\uk.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\vi.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\zh-cn.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\zh.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\plugin.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\README.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog_ie.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog_ie7.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog_ie8.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog_iequirks.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\dialog_opera.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\editor.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\editor_gecko.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\editor_ie.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\editor_ie7.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\editor_ie8.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\.temp\css\editor_iequirks.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog_ie.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog_ie7.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog_ie8.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog_iequirks.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog_opera.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\editor.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\editor_gecko.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\editor_ie.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\editor_ie7.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\editor_ie8.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\editor_iequirks.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\icons.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\icons_hidpi.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\arrow.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\close.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\hidpi\close.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\hidpi\lock-open.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\hidpi\lock.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\hidpi\refresh.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\lock-open.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\lock.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\refresh.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\readme.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\bootstrapck-sample.html" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\css\bootstrapck-sample.css" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\js\jquery-1.11.0.min.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\styles.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
+    <Content Include="Content\_assets\js\vendor\nanospell\autoload.js" />
+    <Content Include="Content\_assets\js\vendor\nanospell\bin\NanoSpell.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\_assets\js\vendor\nanospell\getstarted.html" />
+    <Content Include="Content\_assets\js\vendor\nanospell\nanospell.ckeditor\icons\nanospell.png" />
+    <Content Include="Content\_assets\js\vendor\nanospell\nanospell.ckeditor\license.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\nanospell.ckeditor\plugin.js" />
+    <Content Include="Content\_assets\js\vendor\nanospell\nanospell.ckeditor\theme\nanospell.css" />
+    <Content Include="Content\_assets\js\vendor\nanospell\nanospell.ckeditor\theme\wiggle.png" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp.net\tinyspell.aspx" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp.net\Web.config" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\json1.asp" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\json2.js" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\tinyspell.asp" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\php\lib.php" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\php\spellcheck.php" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\php\tinyspell.php" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\custom.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en.dic" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\banned-words.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\common-mistakes.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\enforced-corrections.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\README.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\installer\asp.asp" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\installer\asp.net.aspx" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\installer\json.js" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\installer\php.php" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\installer\test-cke.js" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\installer\theme.css" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\.htaccess" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\EULA.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\key.lic" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\web.config" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\robots.txt" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.min.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -567,6 +840,19 @@
     <Content Include="Views\ApprenticeshipApplication\ConfirmSuccessfulDecision.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\ConfirmUnsuccessfulDecision.cshtml" />
     <Content Include="Views\TraineeshipApplication\Review.cshtml" />
+    <Content Include="Views\Home\Cookies.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Cookies.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ProviderUser\OnBoardingComplete.cshtml" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\ApplicationsReceived.cshtml" />
+    <Content Include="Views\EmployerApplication\ViewAnonymisedApprenticeship.cshtml" />
+    <Content Include="Views\EmployerApplication\LinkExpired.cshtml" />
+    <Content Include="Views\Application\ShareApplications.cshtml" />
+    <Content Include="Views\Report\CandidatesWithApplications.cshtml" />
+    <Content Include="Views\EmployerApplication\ViewAnonymisedTraineeship.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -644,6 +930,10 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
       <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
       <Name>SFA.Apprenticeships.Application.Application</Name>
@@ -676,6 +966,10 @@
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Reporting\SFA.Apprenticeships.Application.Reporting.csproj">
+      <Project>{8ac673df-e924-4c09-8a07-46614d29aac1}</Project>
+      <Name>SFA.Apprenticeships.Application.Reporting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
@@ -684,9 +978,17 @@
       <Project>{5853DBD3-4999-4710-8CAA-7BC0603C5827}</Project>
       <Name>SFA.Apprenticeships.Application.UserProfile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
       <Project>{ce04b708-ff21-41d4-b796-a36edce2960d}</Project>
       <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{E3F2F285-16EB-49C5-9668-8D8E1DB6C610}</Project>
@@ -703,6 +1005,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
+      <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
@@ -739,6 +1045,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Security\SFA.Apprenticeships.Infrastructure.Security.csproj">
+      <Project>{E8841E6E-382A-476B-9AF0-ACDBD4870659}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

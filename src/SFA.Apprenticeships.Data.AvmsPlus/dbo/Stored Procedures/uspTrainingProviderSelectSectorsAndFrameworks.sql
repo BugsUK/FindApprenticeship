@@ -15,7 +15,7 @@ Begin
 			JOIN SectorSuccessRates s 	ON	s.sectorid = af.ApprenticeshipOccupationId
 			JOIN ProvidersiteRelationship PSR on PSF.ProviderSiteRelationShipID = PSR.ProviderSiteRelationShipID
 	
-	And		psR.ProviderSIteId	= @trainingProviderId
+	And		psR.ProviderSiteID	= @trainingProviderId
 	
 	SET NOCOUNT OFF;
 End

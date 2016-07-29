@@ -11,9 +11,13 @@
     using FluentAssertions;
     using Helpers;
     using Infrastructure.LegacyWebServices.IoC;
+    using Infrastructure.Monitor.IoC;
     using Logging.IoC;
     using Moq;
     using NUnit.Framework;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
 
     public class LegacyApplicationProviderIntegrationTests
@@ -32,7 +36,8 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy, VacanciesSource = ServicesConfiguration.Legacy }, new CacheConfiguration()));
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(), new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
                 x.For<ICandidateReadRepository>().Use(_candidateRepositoryMock.Object);
             });
 

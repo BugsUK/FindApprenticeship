@@ -20,7 +20,7 @@
                         Description
                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
                     </h3>
-                    <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.OwnerParty.EmployerDescription)</p>
+                    <p id="vacancy-employer-description" class="@Model.NewVacancyViewModel.OwnerParty.EmployerDescription.GetPreserveFormattingCssClass()">@Html.Raw(Model.NewVacancyViewModel.OwnerParty.EmployerDescription)</p>
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                 </div>
             </div>
@@ -30,7 +30,7 @@
     <div class="grid-wrapper">
         @{
             var gridClass = "grid";
-            if (Model.IsSingleLocation)
+            if (Model.IsSingleLocation || ( Model.LocationAddresses != null && Model.LocationAddresses.Count == 1))
             {
                 gridClass += " grid-1-2";
             }
@@ -39,12 +39,13 @@
             <div class="inner-block-padr">
                 @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl))
                 {
+                    var employerWebsiteUri = new UriBuilder(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl).Uri;
                     <div class="editable-item">
                         <h3 class="bold-small">
                             Website
                             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
                         </h3>
-                        <a itemprop="url" href="@Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl"
+                        <a itemprop="url" href="@employerWebsiteUri"
                            id="vacancy-employer-website"
                            target="_blank"
                            title="@Model.NewVacancyViewModel.OwnerParty.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl</a>
@@ -61,8 +62,9 @@
                                 <div itemprop="address">
                                     <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine1</p>
                                     <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.Address.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.Town</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.Address.County</p>
                                     <p class="small-btm-margin" itemprop="postalCode">@Model.Address.Postcode</p>
                                 </div>
                             </div>
@@ -79,8 +81,9 @@
                                     <div itemprop="address">
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
-                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
-                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.County</p>
                                         <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
                                     </div>
 
@@ -164,7 +167,7 @@
                                         Additional location information
                                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.NewVacancyViewModel.AdditionalLocationInformationComment, Model.LocationsLink))
                                     </h3>
-                                    <p class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)</p>
+                                    <p class="@Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()">@Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)</p>
                                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                                 </div>
                             }
@@ -179,6 +182,14 @@
                 <div id="vacancy-map" class="ad-details__map">
                     <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
                     <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                    <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                </div>
+            }
+            else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+            {
+                <div id="vacancy-map" class="ad-details__map">
+                    <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
+                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.LocationAddresses.First().Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                     <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>
             }

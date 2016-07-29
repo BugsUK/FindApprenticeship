@@ -129,8 +129,10 @@ ApplicationInsights.config
 # Windows Store app package directory
 AppPackages/
 
+# vi / vim
+*.swp
+
 # Others
-sql/
 *.Cache
 ClientBin/
 [Ss]tyle[Cc]op.*

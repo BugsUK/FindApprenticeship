@@ -6,7 +6,7 @@ BEGIN
   
 	BEGIN TRY    
 	Select EmailAddress From NASSupportContact
-		Where ManagingAreaId = @ManagingAreaId
+		Where ManagingAreaID = @ManagingAreaId
 	END TRY
     
     BEGIN CATCH    

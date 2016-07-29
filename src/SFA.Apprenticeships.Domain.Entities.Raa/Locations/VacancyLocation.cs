@@ -6,5 +6,6 @@
         public int VacancyId { get; set; }
         public PostalAddress Address { get; set; }
         public int NumberOfPositions { get; set; }
+        public string LocalAuthorityCode { get; set; }
     }
 }

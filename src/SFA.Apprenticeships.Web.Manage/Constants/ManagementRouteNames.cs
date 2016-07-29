@@ -14,6 +14,9 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
+        public const string WebTrendsOptOut = "WebTrendsOptOut";
+        public const string Cookies = "Cookies";
+        public const string InformationRadiator = "InformationRadiator";
 
         //QA
         public const string ReviewVacancy = "ReviewVacancy";
@@ -38,5 +41,13 @@
         public const string ViewCandidateTraineeshipApplication = "ViewCandidateTraineeshipApplication";
         public const string ViewCandidateApprenticeshipVacancy = "ViewCandidateApprenticeshipVacancy";
         public const string ViewCandidateTraineeshipVacancy = "ViewCandidateTraineeshipVacancy";
+
+        //Reports
+        public const string ReportList = "ReportList";
+        public const string ReportVacanciesList = "ReportVacanciesList";
+        public const string ReportSuccessfulCandidates = "ReportSuccessfulCandidates";
+        public const string ReportUnsuccessfulCandidates = "ReportUnsuccessfulCandidates";
+        public const string ReportVacancyExtensions = "ReportVacancyExtensions";
+
     }
 }

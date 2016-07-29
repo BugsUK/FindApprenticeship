@@ -206,10 +206,52 @@
                );
 
             routes.MapRoute(
-               name: "reports",
+               name: ManagementRouteNames.ReportList,
                url: "reports",
                defaults: new { controller = "Report", action = "Index" }
                );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ReportVacanciesList,
+               url: "reports/vacancies",
+               defaults: new { controller = "Report", action = "VacanciesListCsv" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ReportSuccessfulCandidates,
+               url: "reports/successfulcandidates",
+               defaults: new { controller = "Report", action = "SuccessfulCandidatesCsv" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ReportUnsuccessfulCandidates,
+               url: "reports/unsuccessfulcandidates",
+               defaults: new { controller = "Report", action = "UnsuccessfulCandidatesCsv" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ReportVacancyExtensions,
+               url: "reports/vacancyextensions",
+               defaults: new { controller = "Report", action = "VacancyExtensionsCsv" }
+               );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.WebTrendsOptOut,
+                url: "webtrendsoptout",
+                defaults: new { controller = "Home", action = "WebTrendsOptOut" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.Cookies,
+                url: "cookies",
+                defaults: new { controller = "Home", action = "Cookies" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.InformationRadiator,
+                url: "informationradiator",
+                defaults: new { controller = "InformationRadiator", action = "Index" }
+                );
 
             routes.LowercaseUrls = true;
         }

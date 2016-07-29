@@ -60,5 +60,7 @@
         public string AdditionalLocationInformationComment { get; set; }
 
         public int VacancyPartyId { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
     }
 }

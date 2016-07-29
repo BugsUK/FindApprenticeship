@@ -148,7 +148,7 @@ WriteLiteral("            ");
 
             
             #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-       Write(Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status)));
+       Write(Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status, Model.ApplicationCount)));
 
             
             #line default
@@ -161,16 +161,16 @@ WriteLiteral(" style=\"clear: left\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1258), Tuple.Create("\"", 1296)
-, Tuple.Create(Tuple.Create("", 1266), Tuple.Create("hgroup", 1266), true)
-, Tuple.Create(Tuple.Create(" ", 1272), Tuple.Create("text", 1273), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1282), Tuple.Create("\"", 1320)
+, Tuple.Create(Tuple.Create("", 1290), Tuple.Create("hgroup", 1290), true)
+, Tuple.Create(Tuple.Create(" ", 1296), Tuple.Create("text", 1297), true)
             
             #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1277), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create(" ", 1301), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1278), false)
+, 1302), false)
 );
 
 WriteLiteral(">\r\n                <h1");
@@ -246,14 +246,14 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2245), Tuple.Create("\"", 2271)
+WriteAttribute("class", Tuple.Create(" class=\"", 2269), Tuple.Create("\"", 2295)
             
             #line 47 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 2253), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 2277), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 2253), false)
+, 2277), false)
 );
 
 WriteLiteral(">\r\n                    <h3");
@@ -315,13 +315,21 @@ WriteLiteral(">\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-description\"");
 
-WriteLiteral(" class=\"preserve-formatting\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 3044), Tuple.Create("\"", 3127)
+            
+            #line 60 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
+, Tuple.Create(Tuple.Create("", 3052), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ShortDescription.GetPreserveFormattingCssClass()
+            
+            #line default
+            #line hidden
+, 3052), false)
+);
 
 WriteLiteral(">");
 
             
             #line 60 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-                                                                           Write(Model.NewVacancyViewModel.ShortDescription);
+                                                                                                                                   Write(Model.NewVacancyViewModel.ShortDescription);
 
             
             #line default
@@ -354,14 +362,14 @@ WriteLiteral(" class=\"grid grid-1-3\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3641), Tuple.Create("\"", 3667)
+WriteAttribute("class", Tuple.Create(" class=\"", 3721), Tuple.Create("\"", 3747)
             
             #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 3649), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 3729), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 3649), false)
+, 3729), false)
 );
 
 WriteLiteral(">\r\n                <h3");

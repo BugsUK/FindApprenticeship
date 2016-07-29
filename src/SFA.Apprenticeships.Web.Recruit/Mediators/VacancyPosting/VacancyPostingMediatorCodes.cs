@@ -22,6 +22,7 @@
         public static class GetEmployer
         {
             public const string Ok = "VacancyPosting.GetEmployer.Ok";
+            public const string InvalidEmployerAddress = "VacancyPosting.GetEmployer.InvalidEmployerAddress";
         }
 
         public static class ConfirmEmployer
@@ -34,6 +35,7 @@
         {
             public const string Ok = "VacancyPosting.GetNewVacancyViewModel.Ok";
             public const string FailedValidation = "VacancyPosting.GetNewVacancyViewModel.FailedValidation";
+            public const string LocationNotSet = "VacancyPosting.GetNewVacancyViewModel.LocationNotSet";
         }
 
         public static class GetVacancyViewModel

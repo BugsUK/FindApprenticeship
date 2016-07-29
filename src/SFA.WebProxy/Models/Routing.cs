@@ -5,5 +5,8 @@
     public class Routing
     {
         public IList<Route> Routes;
+
+        public string RewriteFrom;
+        public string RewriteTo;
     }
 }

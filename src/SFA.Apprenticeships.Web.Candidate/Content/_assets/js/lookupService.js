@@ -160,7 +160,23 @@ $(document).ready(function () {
     }
 
     function populateAddress(address) {
-        window.locationAddressesViewModel.addLocationAddressByField(address.Line1, address.Line2, address.Line3, address.City, address.PostalCode, null, address.DomesticId);
+        var specialCities = [];
+        specialCities["London"] = "London";
+        specialCities["York"] = "North Yorkshire";
+
+        var provinceName = address.ProvinceName;
+
+        if (!provinceName) {
+            if (specialCities[address.City]) {
+                provinceName = specialCities[address.City];
+            } else {
+                provinceName = "";
+            }
+        }
+
+        var county = provinceName || address.AdminAreaName;
+
+        window.locationAddressesViewModel.addLocationAddressByField(address.Line1, address.Line2, address.Line3, address.Line4, address.City, address.PostalCode, null, address.DomesticId, county);
     }
 
     function populateLatLng(address) {

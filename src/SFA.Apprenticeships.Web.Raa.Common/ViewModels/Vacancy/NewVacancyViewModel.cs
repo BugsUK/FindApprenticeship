@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public int? VacancyReferenceNumber { get; set; }
 
-        //TODO: probably remove
+        //TODO: probably removegit 
         public string Ukprn { get; set; }
 
         [Display(Name = VacancyViewModelMessages.Title.LabelText)]
@@ -73,5 +73,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string AdditionalLocationInformationComment { get; set; }
 
         public VacancyType VacancyType { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
+
+        public VacancySource VacancySource { get; set; }
     }
 }

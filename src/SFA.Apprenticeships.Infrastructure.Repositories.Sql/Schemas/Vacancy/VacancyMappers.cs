@@ -51,17 +51,22 @@
 
     public class VacancyMappers : MapperEngine
     {
+        private string MapExpectedDuration(DomainVacancy vacancy)
+        {
+            return !vacancy.Duration.HasValue
+                ? vacancy.ExpectedDuration
+                : new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText();
+        }
+
         public override void Initialise()
         {
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
             Mapper.CreateMap<DomainVacancy, DbVacancy>()
-                .IgnoreMember(v => v.ContractOwnerID) // -> null for new entries
                 .IgnoreMember(v => v.CountyId) // -> DB Lookup
-                .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
-                .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
+                .MapMemberFrom(v => v.DeliveryOrganisationID, av => av.DeliveryOrganisationId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.OwnerPartyId)
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.VacancyGuid)
@@ -75,16 +80,16 @@
                 .MapMemberFrom(v => v.AddressLine5, av => av.Address.AddressLine5)
                 .MapMemberFrom(v => v.PostCode, av => av.Address.Postcode)
                 .MapMemberFrom(v => v.Town, av => av.Address.Town)
-                .MapMemberFrom(v => v.Latitude, av => (decimal)av.Address.GeoPoint.Latitude)  // use a converter?
-                .MapMemberFrom(v => v.Longitude, av => (decimal)av.Address.GeoPoint.Longitude) // use a converter?
+                .MapMemberFrom(v => v.Latitude, av => (decimal)av.Address.GeoPoint.Latitude) 
+                .MapMemberFrom(v => v.Longitude, av => (decimal)av.Address.GeoPoint.Longitude)
+                .MapMemberFrom(v => v.GeocodeEasting, av => av.Address.GeoPoint.Easting) 
+                .MapMemberFrom(v => v.GeocodeNorthing, av => av.Address.GeoPoint.Northing) 
 
                 .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)
                 .MapMemberFrom(v => v.ContactName, av => av.ContactName)
                 .MapMemberFrom(v => v.ContactEmail, av => av.ContactEmail)
                 .MapMemberFrom(v => v.ContactNumber, av => av.ContactNumber)
 
-                .IgnoreMember(v => v.GeocodeEasting) // Encoding user story
-                .IgnoreMember(v => v.GeocodeNorthing) // Encoding user story
                 .MapMemberFrom(v => v.Title, av => av.Title)
                 .IgnoreMember(v => v.ApprenticeshipType) 
                 .MapMemberFrom(v => v.ShortDescription, av => av.ShortDescription)
@@ -96,7 +101,7 @@
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
-                .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
+                .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => MapExpectedDuration(av)))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
                 .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
                 .MapMemberFrom(v => v.EmployerAnonymousName, av => av.EmployerAnonymousName)
@@ -128,6 +133,10 @@
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.UpdatedDateTime)
                 .IgnoreMember(v => v.SectorId)
                 .IgnoreMember(v => v.InterviewsFromDate)
+                .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
+                .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.ProviderId)
+                .IgnoreMember(v => v.LocalAuthorityId)
+                .MapMemberFrom(v => v.VacancySourceId, av => av.VacancySource)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -140,7 +149,6 @@
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(av => av.LongDescription, v => v.Description)
                 .MapMemberFrom(av => av.Wage, v => RoundMoney(v.WeeklyWage))
-                .MapMemberFrom(av => av.WageType, v => v.WageType)  //db lookup
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
@@ -152,6 +160,7 @@
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .MapMemberFrom(av => av.EmployerWebsiteUrl, v => v.EmployersWebsite)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
+                .MapMemberFrom(av => av.DeliveryOrganisationId, v => v.DeliveryOrganisationID)
                 .IgnoreMember(av => av.TrainingType)
                 .IgnoreMember(av => av.ApprenticeshipLevel)
                 .IgnoreMember(av => av.ApprenticeshipLevelComment)
@@ -186,6 +195,10 @@
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
+                // .MapMemberFrom(av => av.WageType, v => v.WageType)
+                .ForMember(av => av.WageType, opt => opt.MapFrom(v =>
+                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : v.WageType
+                ))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .IgnoreMember(av => av.DesiredSkills)
@@ -196,6 +209,7 @@
                 .IgnoreMember(av => av.PersonalQualitiesComment)
                 .IgnoreMember(av => av.ThingsToConsider)
                 .IgnoreMember(av => av.ThingsToConsiderComment)
+                .IgnoreMember(av => av.OtherInformation)
                 .IgnoreMember(av => av.DesiredQualifications)
                 .IgnoreMember(av => av.DesiredQualificationsComment)
                 .IgnoreMember(av => av.FirstQuestion)
@@ -219,26 +233,45 @@
                 .IgnoreMember(av => av.RegionalTeam)
                 .IgnoreMember(av => av.CreatedByProviderUsername)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
+                .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
+                .IgnoreMember(av => av.LocalAuthorityCode)
+                .MapMemberFrom(av => av.EditedInRaa, v => v.EditedInRaa)
+                .MapMemberFrom(av => av.VacancySource, v => v.VacancySourceId)
                 .AfterMap((v, av) =>
                 {
-                    av.Address = new DomainPostalAddress
+                    if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
+                        || !string.IsNullOrWhiteSpace(v.AddressLine3) || !string.IsNullOrWhiteSpace(v.AddressLine4)
+                        || !string.IsNullOrWhiteSpace(v.AddressLine5) || !string.IsNullOrWhiteSpace(v.PostCode)
+                        || !string.IsNullOrWhiteSpace(v.Town))
                     {
-                        AddressLine1 = v.AddressLine1,
-                        AddressLine2 = v.AddressLine2,
-                        AddressLine3 = v.AddressLine3,
-                        AddressLine4 = v.AddressLine4,
-                        AddressLine5 = v.AddressLine5,
-                        Postcode = v.PostCode,
-                        Town = v.Town
-                    };
+                        av.Address = new DomainPostalAddress
+                        {
+                            AddressLine1 = v.AddressLine1,
+                            AddressLine2 = v.AddressLine2,
+                            AddressLine3 = v.AddressLine3,
+                            AddressLine4 = v.AddressLine4,
+                            AddressLine5 = v.AddressLine5,
+                            Postcode = v.PostCode,
+                            Town = v.Town
+                        };
+                    }
+
+                    if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
+                        (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue))
+                    {
+                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
 
                     if (v.Latitude.HasValue && v.Longitude.HasValue)
                     {
-                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
-                        {
-                            Latitude = (double) v.Latitude.Value,
-                            Longitude = (double) v.Longitude.Value
-                        };
+                        av.Address.GeoPoint.Latitude = (double)v.Latitude.Value;
+                        av.Address.GeoPoint.Longitude = (double)v.Longitude.Value;
+                    }
+
+                    if (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue)
+                    {
+                        av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
+                        av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
                     }
                 })
 
@@ -255,7 +288,6 @@
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(av => av.Wage, v => v.WeeklyWage)
-                .MapMemberFrom(av => av.WageType, v => v.WageType)  //db lookup
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
@@ -263,6 +295,7 @@
                 .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
                 .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
+                .MapMemberFrom(av => av.DeliveryOrganisationId, v => v.DeliveryOrganisationID)
                 .IgnoreMember(av => av.TrainingType)
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => v.ApprenticeshipType ?? 0)
                 .MapMemberFrom(av => av.FrameworkCodeName, v => v.ApprenticeshipFrameworkId.HasValue ? v.ApprenticeshipFrameworkId.ToString() : null)
@@ -273,6 +306,10 @@
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
+                // .MapMemberFrom(av => av.WageType, v => v.WageType)
+                .ForMember(av => av.WageType, opt => opt.MapFrom(v =>
+                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : v.WageType
+                ))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .IgnoreMember(av => av.QAUserName)
@@ -302,13 +339,22 @@
                         Town = v.Town
                     };
 
+                    if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
+                        (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue))
+                    {
+                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
+
                     if (v.Latitude.HasValue && v.Longitude.HasValue)
                     {
-                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
-                        {
-                            Latitude = (double)v.Latitude.Value,
-                            Longitude = (double)v.Longitude.Value
-                        };
+                        av.Address.GeoPoint.Latitude = (double)v.Latitude.Value;
+                        av.Address.GeoPoint.Longitude = (double)v.Longitude.Value;
+                    }
+
+                    if (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue)
+                    {
+                        av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
+                        av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
                     }
                 })
                 .End();
@@ -316,12 +362,10 @@
             Mapper.CreateMap<DomainPostalAddress, DbPostalAddress>()
                 .MapMemberFrom(a => a.Latitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Latitude)
                 .MapMemberFrom(a => a.Longitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Longitude)
+                .MapMemberFrom(a => a.Easting, a => a.GeoPoint == null ? null : (int?)a.GeoPoint.Easting)
+                .MapMemberFrom(a => a.Northing, a => a.GeoPoint == null ? null : (int?)a.GeoPoint.Northing)
 
                 .MapMemberFrom(a => a.PostTown, a => a.Town)
-
-                // TODO: Remove from Vacancy.Vacancy?
-                .IgnoreMember(a => a.Easting)
-                .IgnoreMember(a => a.Northing)
 
                 // TODO: Not in model and may not need to be
                 .IgnoreMember(a => a.PostalAddressId) // TODO: Need to add to round-trip...?
@@ -342,13 +386,21 @@
                 .IgnoreMember(dpa => dpa.GeoPoint)
                 .AfterMap((dbpa, dpa) =>
                 {
+                    if ((dbpa.Latitude.HasValue && dbpa.Longitude.HasValue) || (dbpa.Easting.HasValue && dbpa.Northing.HasValue))
+                    {
+                        dpa.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
+
                     if (dbpa.Latitude.HasValue && dbpa.Longitude.HasValue)
                     {
-                        dpa.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
-                        {
-                            Latitude = (double)dbpa.Latitude.Value,
-                            Longitude = (double)dbpa.Longitude.Value
-                        };
+                        dpa.GeoPoint.Latitude = (double) dbpa.Latitude.Value;
+                        dpa.GeoPoint.Longitude = (double) dbpa.Longitude.Value;
+                    }
+
+                    if (dbpa.Easting.HasValue && dbpa.Northing.HasValue)
+                    {
+                        dpa.GeoPoint.Easting = dbpa.Easting.Value;
+                        dpa.GeoPoint.Northing = dbpa.Northing.Value;
                     }
                 })
                 ;
@@ -365,14 +417,15 @@
                 .MapMemberFrom(dbvl => dbvl.Latitude, dvl => (decimal) dvl.Address.GeoPoint.Latitude)
                 // use a converter?
                 .MapMemberFrom(dbvl => dbvl.Longitude, dvl => (decimal) dvl.Address.GeoPoint.Longitude)
+                .MapMemberFrom(dbvl => dbvl.GeocodeEasting, dvl => dvl.Address.GeoPoint.Easting)
+                .MapMemberFrom(dbvl => dbvl.GeocodeNorthing, dvl => dvl.Address.GeoPoint.Northing)
                 // use a converter?
                 .IgnoreMember(dbvl => dbvl.CountyId)
-                .IgnoreMember(dbvl => dbvl.LocalAuthorityId)
-                .IgnoreMember(dbvl => dbvl.GeocodeNorthing)
-                .IgnoreMember(dbvl => dbvl.GeocodeEasting);
+                .IgnoreMember(dbvl => dbvl.LocalAuthorityId);
 
             Mapper.CreateMap<DbVacancyLocation, DomainVacancyLocation>()
                 .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(dvl => dvl.LocalAuthorityCode)
                 .AfterMap((dbvl, dvl) =>
                 {
                     dvl.Address = new DomainPostalAddress
@@ -386,13 +439,22 @@
                         Town = dbvl.Town
                     };
 
+                    if ((dbvl.Latitude.HasValue && dbvl.Longitude.HasValue) || 
+                        (dbvl.GeocodeEasting.HasValue && dbvl.GeocodeNorthing.HasValue))
+                    {
+                        dvl.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
+
                     if (dbvl.Latitude.HasValue && dbvl.Longitude.HasValue)
                     {
-                        dvl.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
-                        {
-                            Latitude = (double)dbvl.Latitude.Value,
-                            Longitude = (double)dbvl.Longitude.Value
-                        };
+                        dvl.Address.GeoPoint.Latitude = (double)dbvl.Latitude.Value;
+                        dvl.Address.GeoPoint.Longitude = (double)dbvl.Longitude.Value;
+                    }
+
+                    if (dbvl.GeocodeEasting.HasValue && dbvl.GeocodeNorthing.HasValue)
+                    {
+                        dvl.Address.GeoPoint.Easting = dbvl.GeocodeEasting.Value;
+                        dvl.Address.GeoPoint.Northing = dbvl.GeocodeNorthing.Value;
                     }
                 });
         }

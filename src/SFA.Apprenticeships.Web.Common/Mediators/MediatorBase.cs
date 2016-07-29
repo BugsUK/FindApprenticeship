@@ -46,6 +46,24 @@ namespace SFA.Apprenticeships.Web.Common.Mediators
             return response;
         }
 
+        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel, ValidationResult validationResult, string message, UserMessageLevel level, object parameters = null)
+        {
+            var response = new MediatorResponse<T>
+            {
+                Code = code,
+                ViewModel = viewModel,
+                Message = new MediatorResponseMessage
+                {
+                    Text = message,
+                    Level = level
+                },
+                ValidationResult = validationResult,
+                Parameters = parameters
+            };
+
+            return response;
+        }
+
         protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel, string message, UserMessageLevel level, object parameters = null)
         {
             var response = new MediatorResponse<T>

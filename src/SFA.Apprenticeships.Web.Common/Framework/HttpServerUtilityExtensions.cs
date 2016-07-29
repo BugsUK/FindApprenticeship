@@ -30,6 +30,9 @@
 
             if (httpException == null)
             {
+                // TODO: Somehow get an instance of the ILogService and use that here.
+                // Using NLog directly doesn't work when logging to a file.
+
                 var verb = httpContext.Request.HttpMethod;
                 
                 var exceptionMessage = string.Format("Error while executing action {0}/{1} of controller {2} ({3}): {4}",

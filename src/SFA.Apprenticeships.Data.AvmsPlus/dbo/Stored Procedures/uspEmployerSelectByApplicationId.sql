@@ -19,7 +19,7 @@ AS
 				VPR.EMPLOYERID = EMP.EMPLOYERID		
 			INNER JOIN 	VACANCY VC ON
 				VC.[VacancyOwnerRelationshipId] = VPR.[VacancyOwnerRelationshipId]
-			 INNER JOIN APPLICATION APP ON
+			 INNER JOIN Application APP ON
 				APP.VACANCYID = VC.VACANCYID AND APP.APPLICATIONID =  @applicationId
 
 

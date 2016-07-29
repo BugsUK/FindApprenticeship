@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ServiceConfiguration serviceName="SFA.Apprenticeships.Web.Manage.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
   <Role name="SFA.Apprenticeships.Web.Manage">
-    <Instances count="1" />
+    <Instances count="2" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
     <Certificates>
-      <Certificate name="SSLWebManage" thumbprint="86B23A467637C7365590E719E70FEA46781A82D1" thumbprintAlgorithm="sha1" />
+      <Certificate name="SSLWebManage" thumbprint="1010E2B681569B8A3E3490C063D1CDEE716B4389" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
   <NetworkConfiguration>
@@ -17,6 +17,9 @@
           <Subnet name="ProviderWeb" />
         </Subnets>
       </InstanceAddress>
+      <ReservedIPs>
+        <ReservedIP name="sfa-manage-prod-staging" />
+      </ReservedIPs>
     </AddressAssignments>
   </NetworkConfiguration>
 </ServiceConfiguration>

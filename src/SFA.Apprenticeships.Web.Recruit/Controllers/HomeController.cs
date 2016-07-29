@@ -1,18 +1,22 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System;
+    using System.Web;
     using System.Web.Mvc;
-
+    using Common.Constants;
+    using Common.Framework;
     using FluentValidation.Mvc;
-
-    using SFA.Apprenticeships.Web.Common.Mediators;
-    using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
-    using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
+    using Common.Mediators;
+    using Mediators.Home;
+    using Raa.Common.Constants.Pages;
+    using ViewModels.Home;
+    using SFA.Infrastructure.Interfaces;
 
     public class HomeController : RecruitmentControllerBase
     {
         private readonly IHomeMediator _homeMediator;
 
-        public HomeController(IHomeMediator homeMediator)            
+        public HomeController(IHomeMediator homeMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _homeMediator = homeMediator;
         }
@@ -61,6 +65,25 @@
             }
 
             throw new InvalidMediatorCodeException(response.Code);
+        }
+
+        [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
+        public ActionResult Cookies(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl.IsValidReturnUrl() ? returnUrl : "/";
+            return View();
+        }
+
+        [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        public ActionResult WebTrendsOptOut()
+        {
+
+            var webTrendsOptOutCookie = new HttpCookie("WTLOPTOUT", "yes") { Expires = DateTime.UtcNow.AddYears(5) };
+            HttpContext.Response.Cookies.Add(webTrendsOptOutCookie);
+            SetUserMessage(PrivacyPageMessages.WebTrendsOptOutSuccessful);
+            return View("Privacy");
         }
     }
 }

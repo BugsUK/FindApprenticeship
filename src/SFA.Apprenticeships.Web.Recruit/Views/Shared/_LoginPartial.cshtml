@@ -1,5 +1,4 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Recruit.Controllers
 @using Roles = SFA.Apprenticeships.Domain.Entities.Raa.Roles
 
 @if (Request.IsAuthenticated)
@@ -12,8 +11,6 @@
         {
             <div>
                 <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Home</a>
-                <!--<a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.ManageProviderSites)">Provider details</a>-->
-                <!--<a class="" id="applicationsLink" href="user-info.html">Contact details</a>-->
             </div>
         }
     </div>
@@ -21,13 +18,6 @@
 else
 {
     <div class="account-info" id="bannerSignedOut">
-        @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
-        {
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
-        }
-        else
-        {
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
-        }
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
     </div>
 }

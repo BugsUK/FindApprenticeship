@@ -65,7 +65,7 @@
             return MapProviderSite(dbProviderSite);
         }
         
-        public IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, ProviderSite> GetByIds(IEnumerable<int> providerSiteIds)
         {
             var providerSiteIdsArray = providerSiteIds as int[] ?? providerSiteIds.ToArray();
 
@@ -80,7 +80,7 @@
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
 
-            return providerSites.Select(MapProviderSite);
+            return providerSites.Select(MapProviderSite).ToDictionary(ps => ps.ProviderSiteId);
         }
 
         public IEnumerable<ProviderSite> GetByProviderId(int providerId)
@@ -137,13 +137,17 @@
             return providerSite;
         }
 
+        // Contracted
         private int GetProviderIdByProviderSiteId(int providerSiteId)
         {
+            //TODO: Deal with Subcontractors and recruitment consultants. Should be done with ContractOwnerId rather than like this
+
             const string sql = @"
                 SELECT psr.ProviderID
                 FROM dbo.ProviderSiteRelationship AS psr 
                 JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
-                WHERE ps.ProviderSiteId = @providerSiteId AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+                WHERE ps.ProviderSiteId = @providerSiteId
+                ORDER BY psr.ProviderSiteRelationshipTypeID"; //Forces non Subcontractors and Recruitment Consultants to the end of the list to prioritize owners
 
             var sqlParams = new
             {
@@ -151,6 +155,7 @@
                 ActivatedEmployerTrainingProviderStatusId
             };
 
+            //TODO: workaround to be able to create the index. Should be done properly.
             return _getOpenConnection.Query<int>(sql, sqlParams).First();
         }
     }

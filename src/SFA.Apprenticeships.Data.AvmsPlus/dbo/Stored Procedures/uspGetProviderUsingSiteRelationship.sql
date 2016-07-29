@@ -20,7 +20,7 @@ BEGIN
 	declare @TotalRows int     
 	SELECT @TotalRows= count(1)  FROM Provider P
 	JOIN ProviderSiteRelationship PSR ON PSR.ProviderId = P.ProviderID
-	WHERE PSR.ProviderSiteId = @id AND PSR.ProviderSiteRelationShipTypeID = @relationshipTypeId
+	WHERE PSR.ProviderSiteID = @id AND PSR.ProviderSiteRelationShipTypeID = @relationshipTypeId
 
 	/* SORTING */
 	if @IsSortAsc = 1 BEGIN set  @SortByField = @SortByField + ' Asc' END            

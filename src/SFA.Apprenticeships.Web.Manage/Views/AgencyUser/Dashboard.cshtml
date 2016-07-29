@@ -6,8 +6,11 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
+@section metatags
+{
+    <meta name="DCS.dcsaut" content="@User.Identity.Name" />   
+    <meta name="WT.sp" content="Manage Apprenticeships" />
+}
 @using (Html.BeginForm(null, "AgencyUser", FormMethod.Post))
 {
     <div class="grid-wrapper">
@@ -19,7 +22,7 @@
             </div>
         </div>
         <div class="grid grid-1-2">
-            <p class="form-label">Change role</p>
+            <label class="form-label">Change role</label>
             @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new {id = "role", @class = "chosen-select grid grid-1-1"})
             @if (Model.AgencyUser.RoleId != "QA_advisor")
             {
@@ -40,7 +43,7 @@
                 </h2>
             </div>
             <div class="grid grid-1-2">
-                <p class="form-label">Change team</p>
+                <label class="form-label">Change team</label>
                 @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams, new { id = "regional-team", @class = "chosen-select grid grid-1-1" })
                 <noscript>
                     <button class="button" name="DashboardAction" value="ChangeTeam">Change team</button>

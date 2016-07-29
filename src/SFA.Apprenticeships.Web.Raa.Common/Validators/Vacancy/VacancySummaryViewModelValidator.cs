@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
     using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
+    using Common = Validators.Common;
 
     public class VacancySummaryViewModelClientValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
     {
@@ -46,8 +48,8 @@
         {
             RuleSet(RuleSets.Warnings, () => this.AddVacancySummaryViewModelServerWarningRules(parentPropertyName));
         }
-    }
-
+    }    
+    
     internal static class VacancySummaryViewModelValidatorRules
     {
         internal static void AddVacancySummaryViewModelCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)
@@ -56,13 +58,13 @@
                 .Length(0, 250)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);                
 
             validator.RuleFor(viewModel => viewModel.LongDescription)
-                .Length(0, 4000)
-                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
-                .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
+                .Matches(VacancyViewModelMessages.LongDescription.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(viewModel => viewModel.DurationComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
@@ -76,12 +78,19 @@
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            validator.RuleFor(viewModel => viewModel.WorkingWeekComment)
+            validator.RuleFor(viewModel => viewModel.WorkingWeekComment)                
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
             validator.RuleFor(viewModel => viewModel.VacancyDatesViewModel)
                 .SetValidator(new VacancyDatesViewModelCommonValidator());
+
+            validator.RuleFor(x => x.ExpectedDuration)
+                .Matches(VacancyViewModelMessages.ExpectedDuration.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.ExpectedDuration.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyViewModelMessages.ExpectedDuration.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.ExpectedDuration));
         }
 
         internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)
@@ -99,7 +108,11 @@
             validator.RuleFor(x => x.HoursPerWeek)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText)
-                .When(x => x.VacancyType != VacancyType.Traineeship);
+                .When(x => x.VacancyType != VacancyType.Traineeship)
+                .When(
+                    x =>
+                        x.VacancySource == VacancySource.Raa || x.Duration.HasValue ||
+                        x.WageType == WageType.ApprenticeshipMinimum || x.WageType == WageType.NationalMinimum);
 
             validator.RuleFor(x => x.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)
@@ -126,17 +139,20 @@
 
             validator.RuleFor(x => x.Duration)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
+                .When(x => x.VacancySource == VacancySource.Raa);
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidApprenticeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months)
-                .When(x => x.VacancyType != VacancyType.Traineeship);
+                .When(x => x.VacancyType != VacancyType.Traineeship)
+                .When(x => x.VacancySource == VacancySource.Raa || x.HoursPerWeek.HasValue);
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidTraineeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationMustBeBetweenSixWeeksAndSixMonths)
-                .When(x => x.VacancyType == VacancyType.Traineeship);
+                .When(x => x.VacancyType == VacancyType.Traineeship)
+                .When(x => x.VacancySource == VacancySource.Raa);
             
             validator.RuleFor(x => x.VacancyDatesViewModel).SetValidator(new VacancyDatesViewModelServerCommonValidator());
 

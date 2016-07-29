@@ -49,6 +49,7 @@
 
         public List<SelectListItem> Sectors { get; set; }
 
+        [AllowHtml]
         [Display(Name = VacancyViewModelMessages.TrainingProvidedMessages.LabelText)]
         public string TrainingProvided { get; set; }
 
@@ -66,5 +67,9 @@
 
         [Display(Name = VacancyViewModelMessages.ContactDetailsComment.LabelText)]
         public string ContactDetailsComment { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
+
+        public VacancySource VacancySource { get; set; }
     }
 }

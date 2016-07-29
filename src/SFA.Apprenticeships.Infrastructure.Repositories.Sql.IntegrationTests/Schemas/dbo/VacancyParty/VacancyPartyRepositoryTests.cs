@@ -44,7 +44,7 @@
             vacancyPartyByProviderSiteAndEmployerId.Should().NotBeNull();
 
             // Act.
-            var vacancyPartyById = _vacancyPartyReadRepository.GetById(vacancyPartyByProviderSiteAndEmployerId.VacancyPartyId);
+            var vacancyPartyById = _vacancyPartyReadRepository.GetByIds(new[] { vacancyPartyByProviderSiteAndEmployerId.VacancyPartyId }).FirstOrDefault();
 
             // Assert.
             vacancyPartyById.Should().NotBeNull();

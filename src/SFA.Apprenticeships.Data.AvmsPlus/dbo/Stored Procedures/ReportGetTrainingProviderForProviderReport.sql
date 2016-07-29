@@ -52,7 +52,7 @@ BEGIN
 					tp.ProviderSiteID,
 					tp.TradingName + ' ('+ tp.Town + ', ' + tp.Postcode + ')' TradingName
 					--,FullName
-			FROM	dbo.ProviderSIte tp
+			FROM	dbo.ProviderSite tp
 			JOIN dbo.VacancyOwnerRelationship vpr 
 					ON vpr.ProviderSiteID = tp.ProviderSiteID
 			WHERE

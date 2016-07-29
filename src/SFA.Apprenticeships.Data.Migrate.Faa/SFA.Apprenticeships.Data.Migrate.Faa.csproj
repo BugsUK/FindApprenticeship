@@ -113,10 +113,56 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="CandidateMigrationProcessor.cs" />
+    <Compile Include="Entities\ApplicationWithHistory.cs" />
+    <Compile Include="Entities\ApplicationWithSubVacancy.cs" />
+    <Compile Include="Entities\CandidatePerson.cs" />
+    <Compile Include="Entities\CandidateWithHistory.cs" />
+    <Compile Include="Entities\Mongo\Address.cs" />
+    <Compile Include="Entities\Mongo\ApplicationTemplate.cs" />
+    <Compile Include="Entities\Mongo\CandidateSummary.cs" />
+    <Compile Include="Entities\Mongo\CandidateUser.cs" />
+    <Compile Include="Entities\Mongo\Education.cs" />
+    <Compile Include="Entities\Mongo\GeoPoint.cs" />
+    <Compile Include="Entities\Mongo\MonitoringInformation.cs" />
+    <Compile Include="Entities\Mongo\RegistrationDetails.cs" />
+    <Compile Include="Entities\Sql\ApplicationHistory.cs" />
+    <Compile Include="Entities\Sql\ApplicationHistorySummary.cs" />
+    <Compile Include="Entities\Sql\ApplicationIds.cs" />
+    <Compile Include="Entities\Sql\ApplicationSummary.cs" />
+    <Compile Include="Entities\Sql\Candidate.cs" />
+    <Compile Include="Entities\Sql\CandidateHistory.cs" />
+    <Compile Include="Entities\Sql\CandidateSummary.cs" />
+    <Compile Include="Entities\Sql\SubVacancy.cs" />
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IVacancyApplicationsUpdater.cs" />
+    <Compile Include="Mappers\CandidateHistoryMappers.cs" />
+    <Compile Include="Mappers\ApplicationHistoryMappers.cs" />
+    <Compile Include="Mappers\CandidateMappers.cs" />
+    <Compile Include="Mappers\IApplicationMappers.cs" />
+    <Compile Include="Mappers\ICandidateMappers.cs" />
+    <Compile Include="Mappers\SchoolAttendedMappers.cs" />
+    <Compile Include="Repository\Sql\CandidateHistoryRepository.cs" />
+    <Compile Include="Repository\Sql\ApplicationRepository.cs" />
+    <Compile Include="Repository\Sql\ApplicationHistoryRepository.cs" />
+    <Compile Include="Repository\Sql\CandidateHistoryTable.cs" />
+    <Compile Include="Repository\Sql\CandidateRepository.cs" />
+    <Compile Include="Repository\Sql\LocalAuthorityRepository.cs" />
+    <Compile Include="Repository\Sql\PersonRepository.cs" />
+    <Compile Include="Repository\Sql\PersonTable.cs" />
+    <Compile Include="Repository\Sql\ApplicationHistoryTable.cs" />
+    <Compile Include="Repository\Sql\CandidateTable.cs" />
+    <Compile Include="Entities\Sql\Person.cs" />
+    <Compile Include="Repository\Sql\SchoolAttended.cs" />
+    <Compile Include="Repository\Sql\SchoolAttendedRepository.cs" />
+    <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
+    <Compile Include="Repository\Sql\SchoolAttendedTable.cs" />
+    <Compile Include="Repository\Sql\SubVacancyTable.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
-    <Compile Include="Configuration\MongoConfiguration.cs" />
+    <Compile Include="Configuration\MigrateFromFaaToAvmsPlusConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />
     <Compile Include="Entities\Mongo\Candidate.cs" />
     <Compile Include="Entities\Mongo\User.cs" />
@@ -127,7 +173,7 @@
     <Compile Include="MigrationProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Mongo\VacancyApplicationsRepository.cs" />
-    <Compile Include="Repository\Mongo\CandidateRepository.cs" />
+    <Compile Include="Repository\Mongo\CandidateUserRepository.cs" />
     <Compile Include="Repository\Mongo\UserRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationTable.cs" />
     <Compile Include="Repository\Sql\SyncRepository.cs" />

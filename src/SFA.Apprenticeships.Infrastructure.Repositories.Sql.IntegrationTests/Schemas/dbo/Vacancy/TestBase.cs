@@ -40,9 +40,10 @@
             result.Address = new PostalAddress
             {
                 Postcode = "CV1 2WT",
-                County = "CAM"
+                County = "West Midlands"
             };
 
+            result.LocalAuthorityCode= "00CC";
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
             {
                 result.TrainingType = TrainingType.Frameworks;

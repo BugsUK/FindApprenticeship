@@ -35,9 +35,9 @@
                     .With(each => each.WageType, Domain.Entities.Raa.Vacancies.WageType.NationalMinimum)
                     .Create();
 
-                var vacancyParty = fixture.Create<Domain.Entities.Raa.Parties.VacancyParty>();
                 var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
                 var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
+                var providerSite = fixture.Create<Domain.Entities.Raa.Parties.ProviderSite>();
 
                 var categories = fixture
                     .Build<Domain.Entities.ReferenceData.Category>()
@@ -46,12 +46,12 @@
 
                 // Act.
                 var detail = TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(
-                    vacancy, vacancyParty, employer, provider, categories, _mockLogService.Object);
+                    vacancy, employer, provider, providerSite, categories, _mockLogService.Object);
 
                 // Assert.
                 detail.Should().NotBeNull();
 
-                detail.Id.Should().Be(vacancy.VacancyReferenceNumber);
+                detail.Id.Should().Be(vacancy.VacancyId);
                 detail.VacancyReference.Should().Be(vacancy.VacancyReferenceNumber.GetVacancyReference());
                 detail.Title.Should().Be(vacancy.Title);
                 detail.Description.Should().Be(vacancy.ShortDescription);
@@ -68,11 +68,11 @@
                 detail.Wage.Should().Be(vacancy.Wage ?? 0m);
                 detail.WageUnit.Should().Be(Domain.Entities.Vacancies.WageUnit.Weekly);
                 detail.WageDescription.Should().NotBeNull();
-                detail.WageType.Should().Be((Domain.Entities.Vacancies.LegacyWageType)vacancy.WageType);
+                detail.WageType.Should().Be((Domain.Entities.Vacancies.LegacyWageType) vacancy.WageType);
 
                 detail.WorkingWeek.Should().Be(vacancy.WorkingWeek);
 
-                detail.OtherInformation.Should().Be(vacancy.ThingsToConsider);
+                detail.OtherInformation.Should().Be(vacancy.OtherInformation);
                 detail.FutureProspects.Should().Be(vacancy.FutureProspects);
                 detail.VacancyOwner.Should().BeNull();
                 detail.VacancyManager.Should().BeNull();
@@ -85,15 +85,15 @@
                 detail.TrainingType.Should().Be(vacancy.TrainingType.GetTrainingType());
                 detail.EmployerName.Should().Be(employer.Name);
                 detail.AnonymousEmployerName.Should().Be(vacancy.EmployerAnonymousName);
-                detail.EmployerDescription.Should().Be(vacancyParty.EmployerDescription);
-                detail.EmployerWebsite.Should().Be(vacancyParty.EmployerWebsiteUrl);
+                detail.EmployerDescription.Should().Be(vacancy.EmployerDescription);
+                detail.EmployerWebsite.Should().Be(vacancy.EmployerWebsiteUrl);
                 detail.ApplyViaEmployerWebsite.Should().Be(vacancy.OfflineVacancy ?? false);
                 detail.VacancyUrl.Should().Be(vacancy.OfflineApplicationUrl);
                 detail.ApplicationInstructions.Should().Be(vacancy.OfflineApplicationInstructions);
                 detail.IsEmployerAnonymous.Should().Be(!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName));
                 detail.IsPositiveAboutDisability.Should().Be(employer.IsPositiveAboutDisability);
 
-                detail.ExpectedDuration.Should().EndWith($"{vacancy.Duration ?? 0} weeks");
+                detail.ExpectedDuration.Should().Be(vacancy.ExpectedDuration);
 
                 detail.VacancyAddress.Should().NotBeNull();
 
@@ -114,7 +114,7 @@
                 detail.SupplementaryQuestion1.Should().Be(vacancy.FirstQuestion);
                 detail.SupplementaryQuestion2.Should().Be(vacancy.SecondQuestion);
 
-                detail.RecruitmentAgency.Should().BeNull();
+                detail.RecruitmentAgency.Should().Be(providerSite.TradingName);
                 detail.ProviderName.Should().Be(provider.Name);
                 detail.TradingName.Should().Be(employer.TradingName);
                 detail.ProviderDescription.Should().BeNull();
@@ -148,8 +148,8 @@
                 .Create();
 
             var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
-            var vacancyParty = fixture.Create<Domain.Entities.Raa.Parties.VacancyParty>();
             var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
+            var providerSite = fixture.Create<Domain.Entities.Raa.Parties.ProviderSite>();
 
             var categories = fixture
                 .Build<Domain.Entities.ReferenceData.Category>()
@@ -158,12 +158,71 @@
 
             // Act.
             var detail = TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(
-                vacancy, vacancyParty, employer, provider, categories, _mockLogService.Object);
+                vacancy, employer, provider, providerSite, categories, _mockLogService.Object);
 
             // Assert.
             detail.Should().NotBeNull();
             detail.AnonymousEmployerName.Should().Be(anonymousEmployerName);
             detail.IsEmployerAnonymous.Should().Be(anonymised);
+        }
+
+        [TestCase]
+        public void ShouldMapContactDetailsFromProviderSiteContactForCandidatesForVacanciesNotEditedInRaa()
+        {
+            // Arrange.
+            var fixture = new Fixture();
+
+            var vacancy = fixture
+                .Build<Domain.Entities.Raa.Vacancies.Vacancy>()
+                .With(each => each.EditedInRaa, false)
+                .Create();
+
+            var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
+            var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
+            var providerSite = fixture.Create<Domain.Entities.Raa.Parties.ProviderSite>();
+
+            var categories = fixture
+                .Build<Domain.Entities.ReferenceData.Category>()
+                .CreateMany(1)
+                .ToList();
+
+            // Act.
+            var detail = TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(
+                vacancy, employer, provider, providerSite, categories, _mockLogService.Object);
+
+            // Assert.
+            detail.Contact.Should().Be(providerSite.ContactDetailsForCandidate);
+        }
+
+        [TestCase]
+        public void ShouldMapContactDetailsFromVacancyForVacanciesEditedInRaa()
+        {
+            // Arrange.
+            var fixture = new Fixture();
+
+            var vacancy = fixture
+                .Build<Domain.Entities.Raa.Vacancies.Vacancy>()
+                .With(each => each.EditedInRaa, true)
+                .Create();
+
+            var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
+            var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
+            var providerSite = fixture.Create<Domain.Entities.Raa.Parties.ProviderSite>();
+
+            var categories = fixture
+                .Build<Domain.Entities.ReferenceData.Category>()
+                .CreateMany(1)
+                .ToList();
+
+            var expectedContact = vacancy.ContactName + " " + vacancy.ContactNumber + " " + vacancy.ContactEmail;
+
+            // Act.
+            var detail = TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(
+                vacancy, employer, provider, providerSite, categories, _mockLogService.Object);
+
+            // Assert.
+            detail.Contact.Should().NotBe(providerSite.ContactDetailsForCandidate);
+            detail.Contact.Should().Be(expectedContact);
         }
     }
 }

@@ -12,8 +12,7 @@
         public int ClosingSoonCount { get; set; }
         public int ClosedCount { get; set; }
         public int DraftCount { get; set; }
-        public int NewApplicationsCount { get; set; }
-        public int WithdrawnCount { get; set; }
+        public int NewApplicationsAcrossAllVacanciesCount { get; set; }
         public int CompletedCount { get; set; }
         public bool HasVacancies { get; set; }
         public PageableViewModel<VacancySummaryViewModel> Vacancies { get; set; }

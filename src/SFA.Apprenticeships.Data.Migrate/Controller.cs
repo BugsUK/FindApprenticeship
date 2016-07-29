@@ -40,13 +40,9 @@
                 {
                     DoUpdatesForAll();
                 }
-                catch (FatalException)
+                catch (FullScanRequiredException ex)
                 {
-                    throw;
-                }
-                catch (FullScanRequiredException)
-                {
-                    _log.Warn("Change tracking unavailable. Doing full scan");
+                    _log.Warn($"Change tracking unavailable ({ex.Message}). Doing full scan");
 
                     try
                     {
@@ -56,10 +52,14 @@
                     {
                         throw;
                     }
-                    catch (Exception ex)
+                    catch (Exception ex2)
                     {
-                        _log.Error("Error occurred. Sleeping before trying again", ex);
+                        _log.Error("Error occurred. Sleeping before trying again", ex2);
                     }
+                }
+                catch (FatalException)
+                {
+                    throw;
                 }
                 catch (Exception ex)
                 {
@@ -74,7 +74,11 @@
 
         public void Reset(bool threaded = false)
         {
-            ApplyToTablesReverseDependency(table => _syncRepository.DeleteAll(table), threaded);
+            var exceptions = ApplyToTablesReverseDependency(table => _syncRepository.DeleteAll(table), threaded);
+
+            if (exceptions.Any())
+                throw exceptions.First();
+
             _syncRepository.Reset();
         }
 
@@ -87,10 +91,10 @@
             {
                 if (context.AreAnyChanges())
                 {
-                    _log.Info("====== Adds / Updates, collect deletes");
+                    _log.Info("====== Adds / Updates, first go at Deletes");
                     var exceptions = ApplyToTables(table => DoChangesForTable(table, context, mutators[table]), false);
-                    _log.Info("====== Apply Deletes");
-                    ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), false);
+                    _log.Info("====== Second go at Deletes");
+                    exceptions = exceptions.Concat(ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), false));
 
                     if (exceptions.Any())
                         throw exceptions.First();
@@ -107,8 +111,14 @@
             var mutators = _tables.ToDictionary(t => t, t => _createMutateTarget(t));
             var context = _syncRepository.StartFullTransactionlessSync();
 
-            var exceptions = ApplyToTables(table => DoInitial(table, context, mutators[table]), threaded);
-            ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), threaded);
+            // Getting this up from pretty much eliminates problems with new parent+child records being added after the parent has been processed,
+            // but not the case where parents are updated to point to a new child.
+            _log.Info("====== Getting maximum ids");
+            var maxFirstId = new Dictionary<ITableSpec, long>();
+            ApplyToTablesUnthreaded(table => maxFirstId[table] = context.GetMaxFirstId(table));
+
+            var exceptions = ApplyToTables(table => DoInitial(table, context, mutators[table], maxFirstId[table]), threaded);
+            exceptions = exceptions.Concat(ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), threaded));
 
             if (exceptions.Any())
                 throw exceptions.First();
@@ -126,14 +136,6 @@
 
         public IEnumerable<Exception> ApplyToTablesThreaded(Action<ITableSpec> action)
         {
-            if (_tables.Count() == 1)
-            {
-                // Special case for testing - ignore dependencies
-                action(_tables.Single());
-                return Enumerable.Empty<Exception>();
-            }
-
-
             var tables = _tables.Select(tableSpec =>
                 new KeyValuePair<ITableSpec, Task>(tableSpec, new Task(() => { try { action(tableSpec); } catch (Exception ex) { if (!(ex is FatalException)) _log.Error(ex); throw; } }))
                 ).ToDictionary(i => i.Key, i => i.Value);
@@ -152,7 +154,7 @@
                     {
                         //_log.Debug($"Already started {table.Key.Name} - status is {table.Value.Status}");
                     }
-                    else if (table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Any())
+                    else if (_tables.Count() != 1 && table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Any()) // Special case for --SingleTable option - ignore dependencies
                     {
                         //_log.Debug($"Deferring {table.Key.Name} as dependent on " + string.Join(", ", table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Select(t => t.Name)));
                     }
@@ -203,10 +205,12 @@
             return exceptions;
         }
 
-        public void ApplyToTablesReverseDependency(Action<ITableSpec> action, bool threaded)
+        public IEnumerable<Exception> ApplyToTablesReverseDependency(Action<ITableSpec> action, bool threaded)
         {
             if (threaded)
                 _log.Info("Threaded reverse dependency not supported");
+
+            var exceptions = new List<Exception>();
 
             var tables = _tables.Select(tableSpec =>
                 new KeyValuePair<ITableSpec, bool>(tableSpec, false) // Table -> completed
@@ -226,14 +230,31 @@
                     {
                         var outstandingDependencies = tables.Where(t => t.Key.DependsOn.Any(t2 => t2 == table.Key) && !t.Value).Select(t => t.Key.Name);
 
-                        if (outstandingDependencies.Any())
+                        if (outstandingDependencies.Any() && _tables.Count() != 1) // Special case for --SingleTable option - ignore dependencies
                         {
                             //_log.Debug($"Deferring {table.Key.Name} as dependent on {string.Join(", ", outstandingDependencies)}");
                         }
                         else
                         {
                             _log.Info($"Processing {table.Key.Name}");
-                            action(table.Key);
+
+                            try
+                            {
+                                action(table.Key);
+                            }
+                            catch (FatalException)
+                            {
+                                // No point in carrying on for one of these
+                                throw;
+                            }
+                            catch (Exception ex)
+                            {
+                                // Report, but try to progress with the next table
+                                // Re-throw the exception later
+                                _log.Error(ex);
+                                exceptions.Add(ex);
+                            }
+
                             tables[table.Key] = true;
                             break;
                         }
@@ -243,6 +264,8 @@
                 if (!tables.Any(table => !table.Value))
                     break;
             }
+
+            return exceptions;
         }
 
 
@@ -291,13 +314,11 @@
         }
 
 
-        public void DoInitial(ITableSpec table, ITransactionlessSyncContext syncContext, IMutateTarget mutateTarget)
+        public void DoInitial(ITableSpec table, ITransactionlessSyncContext syncContext, IMutateTarget mutateTarget, long maxFirstId)
         {
             int batchSize = (int)(_migrateConfig.RecordBatchSize * table.BatchSizeMultiplier);
             try
             {
-                long maxFirstId = (table.Name == "Vacancyxxx") ? 700000 : syncContext.GetMaxFirstId(table);
-
                 long startFirstId = (table.Name == "Personxxxx") ? 4290000 : 0;
 
                 while (startFirstId < maxFirstId)
@@ -315,6 +336,17 @@
             }
             finally
             {
+                try
+                {
+                    // Where records are deleted and then reinserted in is important that they are deleted before attempting inserts...
+                    mutateTarget.FlushDeletes(); // TODO: Ideally pass parameter through to prevent WARNings and ERRORs.
+                }
+                catch (Exception)
+                {
+                    // ...but when they are on a child table then the parent will need to be deleted first.
+                    _log.Info("Some deletes failed. These will be retried once the parent tables have been processed.");
+                }
+
                 mutateTarget.FlushInsertsAndUpdates();
             }
         }

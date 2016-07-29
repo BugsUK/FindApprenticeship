@@ -50,6 +50,10 @@
         [Display(Name = VacancyViewModelMessages.DurationComment.LabelText)]
         public string DurationComment { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.LegacyExpectedDuration.LabelText)]
+        public string ExpectedDuration { get; set; }
+
+        [AllowHtml]
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string LongDescription { get; set; }
 
@@ -64,7 +68,18 @@
 
         public string WageUnitDisplayText => new Wage(WageType, Wage, WageText, WageUnit).GetHeaderDisplayText();
 
-        public string DurationTypeDisplayText => new Duration(DurationType, (int?)Duration).GetDisplayText();
+        public string DurationTypeDisplayText 
+        {
+            get
+            {
+                if (!Duration.HasValue)
+                {
+                    return string.IsNullOrWhiteSpace(ExpectedDuration) ? "Not specified" : ExpectedDuration;
+                }
+
+                return new Duration(DurationType, (int?) Duration).GetDisplayText();
+            }
+        }
 
         public string WageDisplayText => new Wage(WageType, Wage, WageText, WageUnit).GetDisplayText(HoursPerWeek);
 
@@ -73,5 +88,9 @@
         public VacancyDatesViewModel VacancyDatesViewModel { get; set; }
 
         public VacancyType VacancyType { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
+
+        public VacancySource VacancySource { get; set; }
     }
 }

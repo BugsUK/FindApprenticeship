@@ -14,68 +14,76 @@
     </p>
     <ul class="vacancies-summary">
         <li>
-            <figure class="data">
-                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedToday)
-                {
+            @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedToday)
+            {
+                <figure class="data">
                     <p class="count">@Model.SubmittedTodayCount</p>
                     <figcaption><h2>Submitted today</h2></figcaption>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedToday))" class="vacancy-filter">
+                </figure>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedToday))" class="vacancy-filter">
+                    <figure class="data">
                         <p class="count">@Model.SubmittedTodayCount</p>
                         <figcaption><h2>Submitted today</h2></figcaption>
-                    </a>
-                }
-            </figure>
+                    </figure>
+                </a>
+            }
         </li>
         <li>
-            <figure class="data">
-                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedYesterday)
-                {
+            @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedYesterday)
+            {
+                <figure class="data">
                     <p class="count">@Model.SubmittedYesterdayCount</p>
                     <figcaption><h2>Submitted yesterday</h2></figcaption>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedYesterday))" class="vacancy-filter">
+                </figure>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedYesterday))" class="vacancy-filter">
+                    <figure class="data">
                         <p class="count">@Model.SubmittedYesterdayCount</p>
                         <figcaption><h2>Submitted yesterday</h2></figcaption>
-                    </a>
-                }
-            </figure>
+                    </figure>
+                </a>
+            }
         </li>
         <li>
-            <figure class="data">
-                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours)
-                {
+            @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours)
+            {
+                <figure class="data">
                     <p class="count">@Model.SubmittedMoreThan48HoursCount</p>
                     <figcaption><h2>Submitted +48 hours</h2></figcaption>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours))" class="vacancy-filter">
+                </figure>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours))" class="vacancy-filter">
+                    <figure class="data">
                         <p class="count">@Model.SubmittedMoreThan48HoursCount</p>
                         <figcaption><h2>Submitted +48 hours</h2></figcaption>
-                    </a>
-                }
-            </figure>
+                    </figure>
+                </a>
+            }
         </li>
         <li>
-            <figure class="data">
-                @if (filterType == DashboardVacancySummaryFilterTypes.Resubmitted)
-                {
+            @if (filterType == DashboardVacancySummaryFilterTypes.Resubmitted)
+            {
+                <figure class="data">
                     <p class="count">@Model.ResubmittedCount</p>
                     <figcaption><h2>Resubmitted vacancies</h2></figcaption>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.Resubmitted))" class="vacancy-filter">
+                </figure>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.Resubmitted))" class="vacancy-filter">
+                    <figure class="data">
                         <p class="count">@Model.ResubmittedCount</p>
                         <figcaption><h2>Resubmitted vacancies</h2></figcaption>
-                    </a>
-                }
-            </figure>
+                    </figure>
+                </a>
+            }
         </li>
     </ul>
 </section>

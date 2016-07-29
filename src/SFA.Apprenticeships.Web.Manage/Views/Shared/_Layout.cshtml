@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Web.Common.Constants
-@using SFA.Apprenticeships.Web.Common.Framework
+﻿@using SFA.Apprenticeships.Web.Common.Framework
 @using SFA.Apprenticeships.Web.Manage.Constants
 
 <!DOCTYPE html>
@@ -16,13 +15,15 @@
     <meta name="description" content="We’ve introduced a new way to Manage an apprenticeship in England.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
-    <!--[if gt IE 8]><!-->@Styles.Render("~/bundles/not-ie8")<!--<![endif]-->
-    <!--[if lte IE 8]>@Styles.Render("~/bundles/ie8")<![endif]-->
+    <!--[if gt IE 8]><!-->@Styles.Render("~/Content/_assets/styles/not-ie8")<!--<![endif]-->
+    <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/styles/ie8")<![endif]-->
+    @RenderSection("metatags", false)
     <link rel="shortcut icon" href="@Url.CdnImage("favicon.ico")" type="image/x-icon">
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="@Url.CdnImage("apple-touch-icon-152x152.png")">
     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="@Url.CdnImage("apple-touch-icon-120x120.png")">
     <link rel="apple-touch-icon-precomposed" sizes="76x76" href="@Url.CdnImage("apple-touch-icon-76x76.png")">
     <link rel="apple-touch-icon-precomposed" href="@Url.CdnImage("apple-touch-icon-60x60.png")">
+    @Scripts.Render("~/bundles/webtrends")
     @Styles.Render("~/bundles/font-awesome")
     @Html.Partial("_Scripts")
 </head>
@@ -64,7 +65,7 @@
             </div>
             <div class="global-header__nav">
                 <div class="global-header__title beta" id="headerLinkFAA">
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard)">Agency home</a>
+                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard)" title="Home">Agency home</a>
                 </div>
             </div>
         </div>
@@ -74,7 +75,11 @@
             <div class="banner-container">
                 <div class="phase-notice gov-border grid-wrapper">
                     <div class="grid grid-1-2">
-                        <strong class="beta__label">Beta</strong><!--  <span>This is a prototype – your <a href="https://www.surveymonkey.com/s/MFNR7NZ" target="_blank" rel="external">feedback</a> will help improve it.</span>-->
+                        <strong class="beta__label">Beta</strong>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <span>This is a new service – your <a rel="external" href="https://www.surveymonkey.co.uk/r/QLQTJQC" target="_blank">feedback</a> helps improve it.</span>
+                        }
                     </div>
                     <div class="grid grid-1-2">
                         @Html.Partial("_LoginPartial")
@@ -146,6 +151,7 @@
                     <img src="@Url.CdnImage("govuk-crest-2x.png")" width="125" height="102" alt="Crown copyright logo">
                     <p>&copy; Crown copyright</p>
                 </a>
+                @Html.Partial("_AboutDisguised")
             </div>
         </div>
         <div class="toggle-content show-print">

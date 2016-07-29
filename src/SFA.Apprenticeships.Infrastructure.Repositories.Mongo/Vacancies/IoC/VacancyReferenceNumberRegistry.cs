@@ -3,7 +3,6 @@
     using Domain.Interfaces.Repositories;
     using StructureMap.Configuration.DSL;
 
-    // TODO: move to VacancyRepositoryRegistry
     public class VacancyReferenceNumberRegistry : Registry
     {
         public VacancyReferenceNumberRegistry()
