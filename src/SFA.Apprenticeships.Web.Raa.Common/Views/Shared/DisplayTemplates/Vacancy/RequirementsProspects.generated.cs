@@ -368,7 +368,7 @@ WriteAttribute("src", Tuple.Create(" src=\"", 2962), Tuple.Create("\"", 3017)
 , 2968), false)
 );
 
-WriteLiteral("></script>\r\n<script>\r\n    var isApprenticeship;\r\n    isApprenticeship = \"");
+WriteLiteral("></script>\r\n<script>    \r\n    var isApprenticeship;\r\n    isApprenticeship = \"");
 
             
             #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
@@ -386,11 +386,11 @@ WriteLiteral(@""";
     });
 
     if (isApprenticeship === ""True""){
-    CKEDITOR.replace('DesiredQualifications',
-    {
-        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
-        contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
-    });
+	    CKEDITOR.replace('DesiredQualifications',
+	    {
+	        customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+	        contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
+	    });
     }
 
     CKEDITOR.replace('PersonalQualities',
@@ -400,7 +400,13 @@ WriteLiteral(@""";
     });
 </script>
 
-");
+<script>
+    nanospell.ckeditor('all',
+    {
+        dictionary: ""en_uk"", // 24 free international dictionaries
+        server: ""asp.net"" // can be php, asp, asp.net or java
+    });
+</script>");
 
         }
     }
