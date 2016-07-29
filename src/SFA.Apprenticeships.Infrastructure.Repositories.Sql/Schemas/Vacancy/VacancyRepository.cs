@@ -43,6 +43,14 @@
 
         private const string StatusChangeText = "Status Change";
 
+        private readonly Dictionary<string, string> _standardsMap = new Dictionary<string, string>
+        {
+            { "Motor Vehicle Service and Maintenance Technician (light vehicle) (L3)", "Motor Vehicle Service and Maintenance Technician [light vehicle] (L3)" },
+            { "Public Service - Operational delivery officer (Level 3)", "Public Service Operational Delivery Officer"},
+            { "Cyber Security", "Cyber security technologist" },
+            { "Workplace Pensions (Administrator or Consultant)", "Workplace Pensions (Administrator or Consultant)()"}
+        };
+
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
             ILogService logger, ICurrentUserService currentUserService)
         {
@@ -563,9 +571,9 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
 
         private static string SanitizeFrameworkFullName(string frameworkFullName)
         {
-            var sanitizedFrameworkFullName = frameworkFullName.IndexOf("(") == -1
+            var sanitizedFrameworkFullName = frameworkFullName.LastIndexOf("(") == -1
                 ? frameworkFullName
-                : frameworkFullName.Substring(0, frameworkFullName.IndexOf("(")).Trim().ToLowerInvariant();
+                : frameworkFullName.Substring(0, frameworkFullName.LastIndexOf("(")).Trim().ToLowerInvariant();
 
             return sanitizedFrameworkFullName;
         }
@@ -584,7 +592,7 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
 
         private string GetFrameworkFullNameFor(int frameworkId)
         {
-            return _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+            var dbFrameworkFullName = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT FullName
 FROM   dbo.ApprenticeshipFramework
 WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
@@ -592,6 +600,11 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
                 {
                     ApprenticeshipFrameworkId = frameworkId
                 }).Single();
+
+            // Consider edge cases
+            return _standardsMap.ContainsKey(dbFrameworkFullName)
+                ? _standardsMap[dbFrameworkFullName]
+                : dbFrameworkFullName;
         }
 
         private int? GetStandardIdWithFullName(string fullName)
