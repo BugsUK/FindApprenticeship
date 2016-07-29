@@ -96,8 +96,8 @@
                     ProviderSite, Employer, AttachedDocument, VacancyProvisionRelationshipStatusType);
                 var VacancyOwnerRelationshipHistory   = _tables.AddNew("VacancyOwnerRelationshipHistory", Unchanged, CanMutateVacancyOwnerRelationshipHistory, VacancyOwnerRelationship, VacancyProvisionRelationshipHistoryEventType);
 
-                var ProviderSiteRelationship          = _tables.AddNew("ProviderSiteRelationship",   new string[] { "ProviderSiteRelationshipID" },   Unchanged, OwnedByAVUnlessNegative, Provider, ProviderSite, ProviderSiteRelationshipType);
-                var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", new string[] { "VacancyOwnerRelationshipID", "ProviderSiteRelationshipID" }, Unchanged, OwnedByAVUnlessNegative, VacancyOwnerRelationship, ProviderSiteRelationship);
+                var ProviderSiteRelationship          = _tables.AddNew("ProviderSiteRelationship",   new string[] { "ProviderSiteRelationshipID" },   Unchanged, OwnedByAVUnlessNegativeNoDeletes, Provider, ProviderSite, ProviderSiteRelationshipType);
+                var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", new string[] { "VacancyOwnerRelationshipID", "ProviderSiteRelationshipID" }, Unchanged, OwnedByAVUnlessNegativeNoDeletes, VacancyOwnerRelationship, ProviderSiteRelationship);
                 var SectorSuccessRates                = _tables.AddNew("SectorSuccessRates",         new string[] { "ProviderID", "SectorID" },       Unchanged, OwnedByAVUnlessNegativeNoDeletes, Provider, ApprenticeshipOccupation);
 
                 // Seems to be related to applications rather than vacancies
