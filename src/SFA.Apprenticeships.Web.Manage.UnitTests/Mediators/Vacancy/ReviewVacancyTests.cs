@@ -123,5 +123,29 @@
                 message,
                 UserMessageLevel.Info);
         }
+
+        [TestCase(VacancySource.Av, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors, VacancyViewModelMessages.VacancyAuthoredInAvms)]
+        [TestCase(VacancySource.Api, VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors, VacancyViewModelMessages.VacancyAuthoredInApi)]
+        public void ShouldReturnTheViewModelAndAMessageIfTheVacancySourceIsNotRaaAndHasValidationErrors(VacancySource vacancySource, string code, string message)
+        {
+            const int vacancyReferenceNumber = 1;
+            var viewModel = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber, vacancySource);
+
+            var provider = new Mock<IVacancyQAProvider>();
+
+            provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
+
+            var validator = new Mock<VacancyViewModelValidator>();
+            var validationFailure = new ValidationFailure("NewVacancyViewModel.Title", "someError");
+            validator.Setup(v => v.Validate(It.IsAny<VacancyViewModel>()))
+                .Returns(new ValidationResult(new[] { validationFailure }));
+
+            var mediator = new VacancyMediatorBuilder().With(validator).With(provider).Build();
+
+            var result = mediator.ReviewVacancy(vacancyReferenceNumber);
+
+            result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
+            result.AssertValidationResultWithMessage(code, message, UserMessageLevel.Info, true);
+        }
     }
 }

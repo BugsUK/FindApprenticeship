@@ -34,6 +34,7 @@
     using Application.ReferenceData;
     using Mappers;
     using Mediators.Candidate;
+    using Mediators.InformationRadiator;
     using Mediators.Reporting;
     using Raa.Common.Providers;
 
@@ -74,6 +75,7 @@
             For<IOrganisationService>().Use<OrganisationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
+            For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
             For<IVacancyLockingService>().Use<VacancyLockingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
@@ -95,6 +97,7 @@
             var codeGenerator = configurationService.Get<CommonWebConfiguration>().CodeGenerator;
 
             For<ISendProviderUserCommunicationStrategy>().Use<QueueProviderUserCommunicationStrategy>();
+            For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
             For<ISendEmailVerificationCodeStrategy>().Use<SendEmailVerificationCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
@@ -106,6 +109,7 @@
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
+            For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
         }
 
         private void RegisterMediators()
@@ -114,6 +118,7 @@
             For<ICandidateMediator>().Use<CandidateMediator>();
             For<IVacancyMediator>().Use<VacancyMediator>();
             For<IReportingMediator>().Use<ReportingMediator>();
+            For<IInformationRadiatorMediator>().Use<InformationRadiatorMediator>();
         }
     }
 }

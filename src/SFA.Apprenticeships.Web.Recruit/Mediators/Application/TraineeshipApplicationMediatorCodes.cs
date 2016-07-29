@@ -13,5 +13,11 @@
             public const string FailedValidation = "TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation";
             public const string Error = "TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Error";
         }
+
+        public class View
+        {
+            public const string Ok = "TraineeshipApplicationMediatorCodes.View.Ok";
+            public const string LinkExpired = "TraineeshipApplicationMediatorCodes.View.LinkExpired";
+        }
     }
 }

@@ -147,7 +147,7 @@
 
             tokens.Add(new CommunicationToken(
                 CommunicationTokens.CandidateSiteDomainName,
-                _configurationService.Get<CommunicationConfiguration>().SiteDomainName));
+                _configurationService.Get<CommunicationConfiguration>().CandidateSiteDomainName));
         }
 
         #endregion

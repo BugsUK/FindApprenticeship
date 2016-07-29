@@ -178,6 +178,7 @@
     <Compile Include="Constants\ViewModels\LocationSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
+    <Compile Include="Constants\ViewModels\ShareApplicationsViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyPartyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
+    <Compile Include="Validators\ProviderUser\ShareApplicationsViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\VerifyEmailViewModelValidator.cs" />
     <Compile Include="Validators\Provider\VacancyPartyViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
@@ -249,6 +251,8 @@
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Application\AnonymisedApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\AnonymisedApplicationLink.cs" />
     <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
@@ -261,6 +265,7 @@
     <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
+    <Compile Include="ViewModels\Application\ShareApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
@@ -314,6 +319,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AboutYou.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.generated.cs">
+      <DependentUpon>AnonymisedApplicantDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\ApplicantDetails.generated.cs">
       <AutoGen>True</AutoGen>
@@ -520,6 +530,10 @@
     <Content Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MonitoringInformation.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AnonymisedApplicantDetails.generated.cs</LastGenOutput>
     </Content>
     <None Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml">
       <Generator>RazorGenerator</Generator>

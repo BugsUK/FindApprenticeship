@@ -50,5 +50,10 @@
         {
             return status == VacancyStatus.Live;
         }
+
+        public static bool CanShareApplications(this VacancyStatus status, int totalNumberOfApplications)
+        {
+            return totalNumberOfApplications > 0 && (status == VacancyStatus.Live || status == VacancyStatus.Closed || status == VacancyStatus.Completed);
+        }
     }
 }

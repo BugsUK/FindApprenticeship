@@ -450,7 +450,7 @@ select top 10 * from VacancyReferralComments
             // newRecord.VacancyManagerAnonymous = false;
 
             // Vacancy source
-            newRecord.VacancySourceId = 1;
+            newRecord.VacancySourceId = (object) 1;
 
             AnonymiseVacancy(tableSpec, oldRecord, newRecord);
         }

@@ -531,16 +531,25 @@
             }
         }
 
+        [TestCase(VacancySource.Raa, null, true)]
+        [TestCase(VacancySource.Raa, "", true)]
+        [TestCase(VacancySource.Raa, " ", true)]
         [TestCase(VacancySource.Raa, Samples.ValidFreeText, true)]
         [TestCase(VacancySource.Raa, Samples.ValidFreeHtmlText, false)]
         [TestCase(VacancySource.Raa, Samples.InvalidHtmlTextWithInput, false)]
         [TestCase(VacancySource.Raa, Samples.InvalidHtmlTextWithObject, false)]
         [TestCase(VacancySource.Raa, Samples.InvalidHtmlTextWithScript, false)]
+        [TestCase(VacancySource.Av, null, true)]
+        [TestCase(VacancySource.Av, "", true)]
+        [TestCase(VacancySource.Av, " ", true)]
         [TestCase(VacancySource.Av, Samples.ValidFreeText, true)]
         [TestCase(VacancySource.Av, Samples.ValidFreeHtmlText, false)]
         [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithInput, false)]
         [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithObject, false)]
         [TestCase(VacancySource.Av, Samples.InvalidHtmlTextWithScript, false)]
+        [TestCase(VacancySource.Api, null, true)]
+        [TestCase(VacancySource.Api, "", true)]
+        [TestCase(VacancySource.Api, " ", true)]
         [TestCase(VacancySource.Api, Samples.ValidFreeText, true)]
         [TestCase(VacancySource.Api, Samples.ValidFreeHtmlText, false)]
         [TestCase(VacancySource.Api, Samples.InvalidHtmlTextWithInput, false)]
@@ -619,10 +628,12 @@
 
         [TestCase(VacancySource.Raa, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", false)]
         [TestCase(VacancySource.Raa, "asdf@asdf.com", false)]
+        [TestCase(VacancySource.Raa, "", false)]
         [TestCase(VacancySource.Av, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
         [TestCase(VacancySource.Av, "asdf@asdf.com", true)]
+        [TestCase(VacancySource.Av, "", true)]
         [TestCase(VacancySource.Api, "asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", true)]
-        [TestCase(VacancySource.Api, "asdf@asdf.com", true)]
+        [TestCase(VacancySource.Api, "", true)]
         public void ContactDetailsValidation(VacancySource vacancySource, string fullName, bool expectValid)
         {
             // Arrange.
