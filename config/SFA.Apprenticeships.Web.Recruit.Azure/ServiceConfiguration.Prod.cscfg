@@ -17,6 +17,9 @@
           <Subnet name="ProviderWeb" />
         </Subnets>
       </InstanceAddress>
+      <ReservedIPs>
+        <ReservedIP name="sfa-recruit-prod-staging" />
+      </ReservedIPs>
     </AddressAssignments>
   </NetworkConfiguration>
 </ServiceConfiguration>
