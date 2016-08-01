@@ -834,13 +834,23 @@ WriteLiteral("\r\n    </div>\r\n</section>\r\n\r\n<!---->\r\n<script");
 
 WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js\"");
 
-WriteLiteral("></script>\r\n<script>\r\n    if (typeof CKEDITOR == \'undefined\') {\r\n        document" +
-".write(unescape(\"%3Cscript src=\'/Content/_assets/js/vendor/ckeditor/ckeditor.js\'" +
-" type=\'text/javascript\'%3E%3C/script%3E\"));\r\n    }\r\n</script>\r\n \r\n<script");
+WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 10081), Tuple.Create("\"", 10136)
-, Tuple.Create(Tuple.Create("", 10087), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
-, 10087), false)
+WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/adapters/jquery.js\"");
+
+WriteLiteral(@"></script>
+<script>
+    if (typeof CKEDITOR == 'undefined') {
+        document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E""));
+        document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/adapters/jquery.js' type='text/javascript'%3E%3C/script%3E""));
+    }
+</script>
+ 
+<script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 10314), Tuple.Create("\"", 10369)
+, Tuple.Create(Tuple.Create("", 10320), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 10320), false)
 );
 
 WriteLiteral(@"></script>

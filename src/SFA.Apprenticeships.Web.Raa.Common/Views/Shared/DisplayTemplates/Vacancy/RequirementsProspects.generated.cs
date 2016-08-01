@@ -359,19 +359,29 @@ WriteLiteral("\r\n    </div>\r\n</section>\r\n<script");
 
 WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js\"");
 
-WriteLiteral("></script>\r\n<script>\r\n    if (typeof CKEDITOR == \'undefined\') {\r\n        document" +
-".write(unescape(\"%3Cscript src=\'/Content/_assets/js/vendor/ckeditor/ckeditor.js\'" +
-" type=\'text/javascript\'%3E%3C/script%3E\"));\r\n    }\r\n</script>\r\n\r\n    <script");
+WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2962), Tuple.Create("\"", 3017)
-, Tuple.Create(Tuple.Create("", 2968), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
-, 2968), false)
+WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/adapters/jquery.js\"");
+
+WriteLiteral(@"></script>
+<script>
+    if (typeof CKEDITOR == 'undefined') {
+        document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E""));
+        document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/adapters/jquery.js' type='text/javascript'%3E%3C/script%3E""));
+    }
+</script>
+
+    <script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 3195), Tuple.Create("\"", 3250)
+, Tuple.Create(Tuple.Create("", 3201), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 3201), false)
 );
 
 WriteLiteral("></script>\r\n<script>    \r\n    var isApprenticeship;\r\n    isApprenticeship = \"");
 
             
-            #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+            #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
                     Write(Model.VacancyType == VacancyType.Apprenticeship);
 
             
