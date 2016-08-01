@@ -14,7 +14,6 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -119,7 +118,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorGenerator.Mvc.2.3.12\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <HintPath>..\packages\RazorGenerator.Mvc.2.4.2\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -154,11 +153,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -178,6 +177,7 @@
     <Compile Include="Constants\ViewModels\LocationSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
+    <Compile Include="Constants\ViewModels\ShareApplicationsViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyPartyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
@@ -230,6 +230,7 @@
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
+    <Compile Include="Validators\ProviderUser\ShareApplicationsViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\VerifyEmailViewModelValidator.cs" />
     <Compile Include="Validators\Provider\VacancyPartyViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
@@ -249,6 +250,8 @@
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Application\AnonymisedApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\AnonymisedApplicationLink.cs" />
     <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
@@ -261,6 +264,7 @@
     <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
+    <Compile Include="ViewModels\Application\ShareApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
@@ -314,6 +318,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AboutYou.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.generated.cs">
+      <DependentUpon>AnonymisedApplicantDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\ApplicantDetails.generated.cs">
       <AutoGen>True</AutoGen>
@@ -450,7 +459,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Views\razorgenerator.directives" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml">
@@ -520,6 +531,10 @@
     <Content Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MonitoringInformation.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AnonymisedApplicantDetails.generated.cs</LastGenOutput>
     </Content>
     <None Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml">
       <Generator>RazorGenerator</Generator>

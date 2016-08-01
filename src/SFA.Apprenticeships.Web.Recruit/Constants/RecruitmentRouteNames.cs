@@ -76,12 +76,17 @@
 
         // Applications
         public const string VacancyApplications = "VacancyApplications";
+        public const string ShareApplications = "ShareApplications";
+
         // Apprenticeships
         public const string ReviewApprenticeshipApplication = "ReviewApprenticeshipApplication";
         public const string ConfirmSuccessfulApprenticeshipApplication = "ConfirmSuccessfulApprenticeshipApplication";
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
+        public const string ViewAnonymousApprenticeshipApplication = "ViewAnonymousApprenticeshipApplication";
+
         // Traineeships
         public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
+        public const string ViewAnonymousTraineeshipApplication = "ViewAnonymousTraineeshipApplication";
 
         //Reports
         public const string ReportList = "ReportList";

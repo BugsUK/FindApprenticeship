@@ -126,6 +126,8 @@
         {
             public const string VacancyAuthoredInApi = "VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi";
             public const string VacancyAuthoredInAvms = "VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms";
+            public const string VacancyAuthoredInApiWithValidationErrors = "VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors";
+            public const string VacancyAuthoredInAvmsWithValidationErrors = "VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors";
             public const string InvalidVacancy = "VacancyMediatorCodes.ReviewVacancy.ReviewVacancy";
             public const string Ok = "VacancyMediatorCodes.ReviewVacancy.Ok";
             public const string FailedValidation = "VacancyMediatorCodes.ReviewVacancy.FailedValidation";

@@ -43,6 +43,14 @@
 
         private const string StatusChangeText = "Status Change";
 
+        private readonly Dictionary<string, string> _standardsMap = new Dictionary<string, string>
+        {
+            { "Motor Vehicle Service and Maintenance Technician (light vehicle) (L3)", "Motor Vehicle Service and Maintenance Technician [light vehicle] (L3)" },
+            { "Public Service - Operational delivery officer (Level 3)", "Public Service Operational Delivery Officer"},
+            { "Cyber Security", "Cyber security technologist" },
+            { "Workplace Pensions (Administrator or Consultant)", "Workplace Pensions (Administrator or Consultant)()"}
+        };
+
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
             ILogService logger, ICurrentUserService currentUserService)
         {
@@ -563,9 +571,12 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
 
         private static string SanitizeFrameworkFullName(string frameworkFullName)
         {
-            var sanitizedFrameworkFullName = frameworkFullName.IndexOf("(") == -1
+            var sanitizedFrameworkFullName = frameworkFullName.LastIndexOf("(") == -1
                 ? frameworkFullName
-                : frameworkFullName.Substring(0, frameworkFullName.IndexOf("(")).Trim().ToLowerInvariant();
+                : frameworkFullName.Substring(0, frameworkFullName.LastIndexOf("(")).Trim().ToLowerInvariant();
+
+            //sanitizedFrameworkFullName = Regex.Replace(sanitizedFrameworkFullName, "\u00a0", " ");
+            sanitizedFrameworkFullName = sanitizedFrameworkFullName.Replace("\u00a0", " ");
 
             return sanitizedFrameworkFullName;
         }
@@ -584,7 +595,7 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
 
         private string GetFrameworkFullNameFor(int frameworkId)
         {
-            return _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+            var dbFrameworkFullName = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT FullName
 FROM   dbo.ApprenticeshipFramework
 WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
@@ -592,6 +603,11 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
                 {
                     ApprenticeshipFrameworkId = frameworkId
                 }).Single();
+
+            // Consider edge cases
+            return _standardsMap.ContainsKey(dbFrameworkFullName)
+                ? _standardsMap[dbFrameworkFullName]
+                : dbFrameworkFullName;
         }
 
         private int? GetStandardIdWithFullName(string fullName)
@@ -1074,35 +1090,13 @@ WHERE  el.CodeName = @EducationLevel",
 
         private void SaveTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
         {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                InsertTextField(vacancyId, vacancyTextFieldCodeName, value);
-            }
-            else
-            {
-                DeleteTextField(vacancyId, vacancyTextFieldCodeName);
-            }
+            UpsertTextField(vacancyId, vacancyTextFieldCodeName, value);
         }
 
         private void SaveAdditionalQuestionsFor(int vacancyId, DomainVacancy entity)
         {
-            if (!string.IsNullOrWhiteSpace(entity.FirstQuestion))
-            {
-                UpsertAdditionalQuestion(vacancyId, 1, entity.FirstQuestion);
-            }
-            else
-            {
-                DeleteAdditionalQuestion(vacancyId, 1);
-            }
-
-            if (!string.IsNullOrWhiteSpace(entity.SecondQuestion))
-            {
-                UpsertAdditionalQuestion(vacancyId, 2, entity.SecondQuestion);
-            }
-            else
-            {
-                DeleteAdditionalQuestion(vacancyId, 2);
-            }
+            UpsertAdditionalQuestion(vacancyId, 1, entity.FirstQuestion);
+            UpsertAdditionalQuestion(vacancyId, 2, entity.SecondQuestion);
         }
 
         private void UpsertAdditionalQuestion(int vacancyId, short questionId, string question)
@@ -1124,7 +1118,7 @@ when not matched then
             {
                 VacancyId = vacancyId,
                 QuestionId = questionId,
-                Question = question
+                Question = question ?? string.Empty
             });
         }
 
@@ -1162,7 +1156,7 @@ when not matched then
             });
         }
 
-        private void InsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
+        private void UpsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
         {
             var vacancyTextFieldValueId =
                 _getOpenConnection.Query<int>(

@@ -190,6 +190,7 @@
     <Compile Include="Communications\Commands\CandidateCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CommunicationCommand.cs" />
     <Compile Include="Communications\Commands\HelpDeskCommunicationCommand.cs" />
+    <Compile Include="Communications\Commands\EmployerCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\ProviderCommunicationCommand.cs" />
     <Compile Include="Communications\CommunicationRequestSubscriber.cs" />
     <Compile Include="Communications\EmailRequestSubscriber.cs" />

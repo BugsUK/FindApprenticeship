@@ -492,6 +492,11 @@
 
             var suggestedVacancies = _candidateService.GetSuggestedApprenticeshipVacancies(searchParameters, candidateId, vacancyId);
 
+            if (suggestedVacancies == null)
+            {
+                return whatHappensNextViewModel;
+            }
+
             var searchedCategory = (suggestedVacancies.SearchParameters.SubCategoryCodes != null && suggestedVacancies.SearchParameters.SubCategoryCodes.Length == 1
                 ? _referenceDataService.GetSubCategoryByCode(suggestedVacancies.SearchParameters.SubCategoryCodes[0])
                 : _referenceDataService.GetCategoryByCode(suggestedVacancies.SearchParameters.CategoryCode)) ?? Category.InvalidSectorSubjectAreaTier1;

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Employer
 {
+    using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
@@ -16,8 +17,9 @@
         private readonly IGetByEdsUrnStrategy _getByEdsUrnStrategy;
         private readonly IGetPagedEmployerSearchResultsStrategy _getPagedEmployerSearchResultsStrategy;
         private readonly ISaveEmployerStrategy _saveEmployerStrategy;
+        private readonly ISendEmployerLinksStrategy _sendEmployerLinksStrategy;
 
-        public EmployerService(IGetByIdStrategy getByIdStrategy, IGetByIdsStrategy getByIdsStrategy, IGetByEdsUrnStrategy getByEdsUrnStrategy, IGetPagedEmployerSearchResultsStrategy getPagedEmployerSearchResultsStrategy, ISaveEmployerStrategy saveEmployerStrategy, IGetByIdWithoutStatusCheckStrategy getByIdWithoutStatusCheckStrategy)
+        public EmployerService(IGetByIdStrategy getByIdStrategy, IGetByIdsStrategy getByIdsStrategy, IGetByEdsUrnStrategy getByEdsUrnStrategy, IGetPagedEmployerSearchResultsStrategy getPagedEmployerSearchResultsStrategy, ISaveEmployerStrategy saveEmployerStrategy, IGetByIdWithoutStatusCheckStrategy getByIdWithoutStatusCheckStrategy, ISendEmployerLinksStrategy sendEmployerLinksStrategy)
         {
             _getByIdStrategy = getByIdStrategy;
             _getByIdsStrategy = getByIdsStrategy;
@@ -26,6 +28,7 @@
             _saveEmployerStrategy = saveEmployerStrategy;
             //TODO: temporary method. Remove after moving status checks to a higher tier
             _getByIdWithoutStatusCheckStrategy = getByIdWithoutStatusCheckStrategy;
+            _sendEmployerLinksStrategy = sendEmployerLinksStrategy;
         }
 
         public Employer GetEmployer(int employerId)
@@ -63,6 +66,16 @@
         public Employer SaveEmployer(Employer employer)
         {
             return _saveEmployerStrategy.Save(employer);
+        }
+
+        public void SendApplicationLinks(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress)
+        {
+            Condition.Requires(vacancyTitle).IsNotNullOrEmpty();
+            Condition.Requires(providerName).IsNotNullOrEmpty();
+            Condition.Requires(applicationLinks.Count).IsGreaterThan(0);
+            Condition.Requires(recipientEmailAddress).IsNotNullOrEmpty();
+
+            _sendEmployerLinksStrategy.Send(vacancyTitle, providerName, applicationLinks, linkExpiryDateTime, recipientEmailAddress);
         }
     }
 }

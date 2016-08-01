@@ -119,6 +119,7 @@
             For<IProviderService>().Use<ProviderService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
+            For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
         }
 
         private void RegisterStrategies()
@@ -204,6 +205,8 @@
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
+            For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
+            For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
         }
 
         private void RegisterMediators()
