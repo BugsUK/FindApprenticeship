@@ -138,6 +138,11 @@
                     SetStateExpiredOrWithdrawn(apprenticeshipApplication);
                     break;
 
+                case Application.Interfaces.Vacancies.ErrorCodes.VacancyNotFoundError:
+                    _logger.Info("Legacy vacancy was not found. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
+                    SetStateExpiredOrWithdrawn(apprenticeshipApplication);
+                    break;
+
                 case Domain.Entities.ErrorCodes.EntityStateError:
                     _logger.Error(string.Format("Apprenticeship application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), e);
                     break;
