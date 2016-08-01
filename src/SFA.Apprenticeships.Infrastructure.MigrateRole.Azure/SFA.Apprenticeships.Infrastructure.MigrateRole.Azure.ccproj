@@ -92,8 +92,8 @@
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
-    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\2.7\</CloudExtensionsDir>
-    <ProductVersion>2.7</ProductVersion>
+    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\2.9\</CloudExtensionsDir>
+    <ProductVersion>2.9</ProductVersion>
     <ProjectGuid>{90752230-6869-4de6-8264-cdecfa8a5ac0}</ProjectGuid>
     <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
     <UseWebProjectPorts>False</UseWebProjectPorts>
