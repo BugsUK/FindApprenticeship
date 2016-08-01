@@ -11,6 +11,7 @@
     /// tests to overload the LabelFor method
     /// </summary>
     [TestFixture]
+    [Parallelizable]
     public class FormTextForTests : BaseExtensionTests
     {
         /// <summary>

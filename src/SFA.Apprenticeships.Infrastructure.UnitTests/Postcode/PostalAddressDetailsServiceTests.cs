@@ -13,6 +13,7 @@
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class PostalAddressDetailsServiceTests
     {
         private PostalAddressDetailsService _serviceUnderTest;

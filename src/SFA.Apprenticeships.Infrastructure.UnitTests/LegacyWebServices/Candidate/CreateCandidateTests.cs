@@ -11,6 +11,7 @@
     using Candidate = Domain.Entities.Candidates.Candidate;
 
     [TestFixture]
+    [Parallelizable]
     public class CreateCandidateTests
     {
         [Test]

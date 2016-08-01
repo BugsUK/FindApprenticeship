@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class SettingsTests
     {
         [Test]

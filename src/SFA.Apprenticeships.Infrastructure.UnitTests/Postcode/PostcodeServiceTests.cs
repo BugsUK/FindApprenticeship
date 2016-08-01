@@ -9,6 +9,7 @@
     using RestSharp;
 
     [TestFixture]
+    [Parallelizable]
     public class PostcodeServiceTests
     {
         private Mock<PostcodeLookupProvider> _postcodeService;

@@ -9,6 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class UnarchiveApplicationTests
     {
         const int ValidVacancyId = 1;

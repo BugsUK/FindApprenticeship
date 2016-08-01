@@ -14,6 +14,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class SavedSearchesTabTests
     {
         [TestCase(1)]

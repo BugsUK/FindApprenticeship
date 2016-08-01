@@ -4,6 +4,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyHelperTests
     {
         [TestCase("VAC000123456", true)]

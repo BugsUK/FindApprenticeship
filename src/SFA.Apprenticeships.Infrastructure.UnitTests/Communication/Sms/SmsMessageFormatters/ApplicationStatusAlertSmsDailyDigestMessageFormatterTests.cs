@@ -12,6 +12,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ApplicationStatusAlertSmsDailyDigestMessageFormatterTests : SmsDailyDigestMessageFormatterTestsBase
     {
         [TestCase(ApplicationStatuses.Unsuccessful)]

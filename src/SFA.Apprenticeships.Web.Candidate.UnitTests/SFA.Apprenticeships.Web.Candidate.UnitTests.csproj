@@ -122,9 +122,9 @@
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Ploeh.AutoFixture, Version=3.49.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoFixture.3.49.0\lib\net40\Ploeh.AutoFixture.dll</HintPath>
@@ -259,8 +259,6 @@
     <Compile Include="Mediators\Login\IndexTests.cs" />
     <Compile Include="Mediators\Login\LoginMediatorBuilder.cs" />
     <Compile Include="Mediators\Login\ResendTests.cs" />
-    <Compile Include="Mediators\Login\SessionTimeoutTests.cs" />
-    <Compile Include="Mediators\Login\SignOutTests.cs" />
     <Compile Include="Mediators\Login\UnlockTests.cs" />
     <Compile Include="Mediators\Register\ActivateTests.cs" />
     <Compile Include="Mediators\Login\ForgottenPasswordTests.cs" />
@@ -321,7 +319,6 @@
     <Compile Include="Providers\Traineeships\PatchApplicationViewModelTests.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderBuilder.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />
-    <Compile Include="Providers\TraineeshipVacancyProvider\FindVacanciesTests.cs" />
     <Compile Include="Validators\FeedbackViewModelValidatorTests.cs" />
     <Compile Include="Validators\MonitoringInformationViewModelValidatorTests.cs" />
     <Compile Include="Validators\ActivationViewModelValidatorTests.cs" />
@@ -441,9 +438,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Providers\ApprenticeshipVacancyDetailProvider\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

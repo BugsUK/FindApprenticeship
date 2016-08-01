@@ -12,6 +12,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class SearchProviderTests
     {
         private Mock<ILogService> _logService;

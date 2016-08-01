@@ -6,6 +6,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ReachSmsNumberFormatterTests
     {
         private const string ExpectedSmsNumber = "447999999999";

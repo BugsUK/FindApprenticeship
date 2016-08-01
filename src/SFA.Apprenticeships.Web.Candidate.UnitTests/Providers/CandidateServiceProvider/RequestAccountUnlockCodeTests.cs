@@ -11,6 +11,7 @@
     using ErrorCodes = Domain.Entities.ErrorCodes;
 
     [TestFixture]
+    [Parallelizable]
     public class RequestAccountUnlockCodeTests
     {
         private const string EmailAddress = "test@test.com";

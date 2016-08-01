@@ -16,6 +16,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class SubmitApprenticeshipApplicationRequestSubscriberTests
     {
         private Mock<ILogService> _mockLogger;

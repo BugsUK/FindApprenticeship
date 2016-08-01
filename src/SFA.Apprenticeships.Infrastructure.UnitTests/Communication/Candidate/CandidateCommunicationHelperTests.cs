@@ -8,6 +8,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class CandidateCommunicationHelperTests
     {
         [TestCase(CommunicationChannels.Email, MessageTypes.SendActivationCode, true)]

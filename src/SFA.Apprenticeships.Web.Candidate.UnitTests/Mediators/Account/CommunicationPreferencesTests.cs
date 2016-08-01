@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
     using Providers.AccountProvider;
 
     [TestFixture]
+    [Parallelizable]
     public class CommunicationPreferencesTests
     {
         [TestCase("0123456789", false, false, AccountMediatorCodes.Settings.Success)]

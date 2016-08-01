@@ -9,6 +9,7 @@
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class AES256ProviderTests
     {
         private Mock<IConfigurationService> mockConfig = new Mock<IConfigurationService>();
