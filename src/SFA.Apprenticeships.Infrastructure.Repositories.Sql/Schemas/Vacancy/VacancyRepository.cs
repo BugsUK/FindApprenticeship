@@ -575,6 +575,9 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
                 ? frameworkFullName
                 : frameworkFullName.Substring(0, frameworkFullName.LastIndexOf("(")).Trim().ToLowerInvariant();
 
+            //sanitizedFrameworkFullName = Regex.Replace(sanitizedFrameworkFullName, "\u00a0", " ");
+            sanitizedFrameworkFullName = sanitizedFrameworkFullName.Replace("\u00a0", " ");
+
             return sanitizedFrameworkFullName;
         }
 
