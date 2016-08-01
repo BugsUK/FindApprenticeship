@@ -3,9 +3,9 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using RazorGenerator.Mvc;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(SFA.Apprenticeships.Web.Candidate.App_Start.RazorGeneratorMvcStart), "Start")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(SFA.Apprenticeships.Web.Candidate.RazorGeneratorMvcStart), "Start")]
 
-namespace SFA.Apprenticeships.Web.Candidate.App_Start {
+namespace SFA.Apprenticeships.Web.Candidate {
     public static class RazorGeneratorMvcStart {
         public static void Start() {
             var engine = new PrecompiledMvcEngine(typeof(RazorGeneratorMvcStart).Assembly) {

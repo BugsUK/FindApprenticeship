@@ -575,6 +575,9 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
                 ? frameworkFullName
                 : frameworkFullName.Substring(0, frameworkFullName.LastIndexOf("(")).Trim().ToLowerInvariant();
 
+            //sanitizedFrameworkFullName = Regex.Replace(sanitizedFrameworkFullName, "\u00a0", " ");
+            sanitizedFrameworkFullName = sanitizedFrameworkFullName.Replace("\u00a0", " ");
+
             return sanitizedFrameworkFullName;
         }
 
@@ -1087,35 +1090,13 @@ WHERE  el.CodeName = @EducationLevel",
 
         private void SaveTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
         {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                InsertTextField(vacancyId, vacancyTextFieldCodeName, value);
-            }
-            else
-            {
-                DeleteTextField(vacancyId, vacancyTextFieldCodeName);
-            }
+            UpsertTextField(vacancyId, vacancyTextFieldCodeName, value);
         }
 
         private void SaveAdditionalQuestionsFor(int vacancyId, DomainVacancy entity)
         {
-            if (!string.IsNullOrWhiteSpace(entity.FirstQuestion))
-            {
-                UpsertAdditionalQuestion(vacancyId, 1, entity.FirstQuestion);
-            }
-            else
-            {
-                DeleteAdditionalQuestion(vacancyId, 1);
-            }
-
-            if (!string.IsNullOrWhiteSpace(entity.SecondQuestion))
-            {
-                UpsertAdditionalQuestion(vacancyId, 2, entity.SecondQuestion);
-            }
-            else
-            {
-                DeleteAdditionalQuestion(vacancyId, 2);
-            }
+            UpsertAdditionalQuestion(vacancyId, 1, entity.FirstQuestion);
+            UpsertAdditionalQuestion(vacancyId, 2, entity.SecondQuestion);
         }
 
         private void UpsertAdditionalQuestion(int vacancyId, short questionId, string question)
@@ -1137,7 +1118,7 @@ when not matched then
             {
                 VacancyId = vacancyId,
                 QuestionId = questionId,
-                Question = question
+                Question = question ?? string.Empty
             });
         }
 
@@ -1175,7 +1156,7 @@ when not matched then
             });
         }
 
-        private void InsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
+        private void UpsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
         {
             var vacancyTextFieldValueId =
                 _getOpenConnection.Query<int>(

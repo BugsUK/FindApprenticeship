@@ -14,13 +14,14 @@
             }
 
             function saveForm() {
-                //$.ajax({
-                //    type: "POST",
-                //    url: settings.postUrl,
-                //    cache: false,
-                //    timeout: 30000,
-                //    data: $(settings.formSelector).serialize()
-                //});
+                $.ajax({
+                    type: "POST",
+                    url: settings.postUrl,
+                    cache: false,
+                    async: false,
+                    timeout: 30000,
+                    data: $(settings.formSelector).serialize()
+                });
             }
 
             function timeoutTrigger() {
