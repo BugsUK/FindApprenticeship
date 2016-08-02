@@ -194,6 +194,7 @@
     <Compile Include="VacancySearch\TraineeshipVacancySearchTests.cs" />
     <Compile Include="VacancySearch\SearchConfigurationShould.cs" />
     <Compile Include="VacancySearch\ApprenticeshipVacancySearchTests.cs" />
+    <Compile Include="SourceRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
