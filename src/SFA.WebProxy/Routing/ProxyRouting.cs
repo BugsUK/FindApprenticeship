@@ -1,12 +1,12 @@
 ﻿namespace SFA.WebProxy.Routing
 {
+    using Configuration;
+    using Models;
+    using Repositories;
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Text.RegularExpressions;
-    using Configuration;
-    using Models;
-    using Repositories;
 
     public class BbcRouting : IProxyRouting
     {
@@ -14,7 +14,7 @@
         {
             return new Routing
             {
-                Routes = new List<Route> {new Route("http://news.bbc.co.uk", new RouteIdentifier("bbcnews"), true)}
+                Routes = new List<Route> { new Route("http://news.bbc.co.uk", new RouteIdentifier("bbcnews"), true) }
             };
         }
     }
@@ -34,7 +34,7 @@
             {
                 routing.Routes.Add(new Route("https://webapp.services.coventry.ac.uk/" + requestUri.PathAndQuery.Substring(1), new RouteIdentifier("coventryuniversitywebappservices"), true));
                 routing.RewriteFrom = "https://webapp.services.coventry.ac.uk/";
-                routing.RewriteTo   = "://" + requestUri.Host;
+                routing.RewriteTo = "://" + requestUri.Host;
             }
 
             return routing;
@@ -67,7 +67,7 @@
                 },
                 // The service is https-only and our configuration set accordingly, but the service thinks it is running under http, thus rewriting WSDL needs to be from http
                 RewriteFrom = Regex.Replace(_configuration.NasAvWebServiceRootUri.OriginalString, "^https:", "http:"),
-                RewriteTo   = requestUri.Scheme + Uri.SchemeDelimiter + requestUri.Authority
+                RewriteTo = requestUri.Scheme + Uri.SchemeDelimiter + requestUri.Authority
             };
         }
 
@@ -108,10 +108,6 @@
         public Uri GetCompatabilityWebServiceUrl(Uri requestUri)
         {
             var pathAndQuery = requestUri.PathAndQuery;
-            if (pathAndQuery.EndsWith(".svc"))
-            {
-                pathAndQuery = pathAndQuery.Substring(pathAndQuery.LastIndexOf("/", StringComparison.Ordinal));
-            }
             return new Uri(_configuration.CompatabilityWebServiceRootUri, pathAndQuery);
         }
     }
