@@ -282,26 +282,26 @@ FETCH NEXT @PageSize ROWS ONLY
             
             var result = _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
 
-            MapAdditionalQuestions(dbVacancy, result);
-            MapTextFields(dbVacancy, result);
-            MapApprenticeshipType(dbVacancy, result);
-            MapFrameworkId(dbVacancy, result);
-            MapSectorId(dbVacancy, result);
-            MapDateFirstSubmitted(dbVacancy, result);
-            MapCreatedDateTime(dbVacancy, result);
-            MapCreatedByProviderUsername(dbVacancy, result);
-            MapDateSubmitted(dbVacancy, result);
+            GetAdditionalQuestions(dbVacancy, result);
+            GetAndMapTextFields(dbVacancy, result);
+            GetApprenticeshipType(dbVacancy, result);
+            GetFrameworkId(dbVacancy, result);
+            GetSectorId(dbVacancy, result);
+            GetDateFirstSubmitted(dbVacancy, result);
+            GetCreatedDateTime(dbVacancy, result);
+            GetCreatedByProviderUsername(dbVacancy, result);
+            GetDateSubmitted(dbVacancy, result);
 
-            MapDateQAApproved(dbVacancy, result);
+            GetDateQAApproved(dbVacancy, result);
 
-            MapComments(dbVacancy, result);
-            MapRegionalTeam(result);
-            MapLocalAuthorityCode(dbVacancy, result);
+            GetAndMapComments(dbVacancy, result);
+            GetRegionalTeam(result);
+            GetLocalAuthorityCode(dbVacancy, result);
             MapDuration(dbVacancy, result);
-            MapCountyId(dbVacancy, result);
+            GetCountyId(dbVacancy, result);
 
             PatchTrainingType(result);
-            PatchStandards(dbVacancy, result);
+            GetAndTryToMapStandards(dbVacancy, result);
 
             return result;
         }
@@ -310,12 +310,12 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             var results = _mapper.Map<IReadOnlyList<Vacancy>, List<VacancySummary>>(dbVacancies);
 
-            MapApprenticeshipTypes(dbVacancies, results);
-            MapFrameworkIds(dbVacancies, results);
-            MapSectorIds(dbVacancies, results);
-            MapAllDateSubmittedAndDateFirstSubmitted(dbVacancies, results);
-            MapAllDateQAApproved(dbVacancies, results);
-            MapAllRegionalTeams(dbVacancies, results);
+            GetApprenticeshipTypes(dbVacancies, results);
+            GetFrameworkIds(dbVacancies, results);
+            GetSectorIds(dbVacancies, results);
+            GetAllDateSubmittedAndDateFirstSubmitted(dbVacancies, results);
+            GetAllDateQAApproved(dbVacancies, results);
+            GetAllRegionalTeams(dbVacancies, results);
 
             for (var i = 0; i < dbVacancies.Count; i++)
             {
@@ -323,13 +323,13 @@ FETCH NEXT @PageSize ROWS ONLY
                 var vacancySummary = results[i];
 
                 MapDuration(dbVacancy, vacancySummary);
-                PatchStandards(dbVacancy, vacancySummary);
+                GetAndTryToMapStandards(dbVacancy, vacancySummary);
             }
 
             return results;
         }
 
-        private void MapFrameworkId(Vacancy dbVacancy, VacancySummary result)
+        private void GetFrameworkId(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
             {
@@ -345,7 +345,7 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
             }
         }
 
-        private void MapFrameworkIds(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        private void GetFrameworkIds(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
             var ids = dbVacancies.Select(v => v.ApprenticeshipFrameworkId).Distinct().Where(id => id.HasValue);
             var map = _getOpenConnection.QueryCached<PropertyMapItem>(_cacheDuration, @"
@@ -364,7 +364,7 @@ WHERE  ApprenticeshipFrameworkId IN @Ids",
             }
         }
 
-        private void MapApprenticeshipType(Vacancy dbVacancy, VacancySummary result)
+        private void GetApprenticeshipType(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipType.HasValue)
             {   
@@ -387,7 +387,7 @@ WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
             }
         }
 
-        private void MapApprenticeshipTypes(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        private void GetApprenticeshipTypes(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
             var ids = dbVacancies.Select(v => v.ApprenticeshipType).Distinct().Where(id => id.HasValue);
             var map = _getOpenConnection.QueryCached<PropertyMapItem>(_cacheDuration, @"
@@ -406,7 +406,7 @@ WHERE  at.ApprenticeshipTypeId IN @Ids",
             }
         }
 
-        private void MapSectorId(Vacancy dbVacancy, VacancySummary result)
+        private void GetSectorId(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.SectorId.HasValue)
             {
@@ -425,7 +425,7 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
             }
         }
 
-        private void MapCountyId(Vacancy dbVacancy, VacancySummary result)
+        private void GetCountyId(Vacancy dbVacancy, VacancySummary result)
         {
             // Not all the vacancies have CountyId (before being accepted by QA).
             // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
@@ -443,7 +443,7 @@ WHERE  CountyId = @CountyId",
             }
         }
 
-        private void MapLocalAuthorityCode(Vacancy dbVacancy, DomainVacancy result)
+        private void GetLocalAuthorityCode(Vacancy dbVacancy, DomainVacancy result)
         {
             if (dbVacancy.LocalAuthorityId.HasValue)
             {
@@ -462,7 +462,7 @@ WHERE  LocalAuthorityId = @LocalAuthorityId",
             }
         }
 
-        private void MapSectorIds(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        private void GetSectorIds(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
             var ids = dbVacancies.Select(v => v.SectorId).Distinct().Where(id => id.HasValue);
             var map = _getOpenConnection.QueryCached<PropertyMapItem>(_cacheDuration, @"
@@ -481,7 +481,7 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             }
         }
 
-        private void MapAdditionalQuestions(Vacancy dbVacancy, DomainVacancy result)
+        private void GetAdditionalQuestions(Vacancy dbVacancy, DomainVacancy result)
         {
             var additionalQuestions = GetAdditionalQuestions(dbVacancy);
             result.FirstQuestion = GetAdditionalQuestion(additionalQuestions, FirstQuestionId);
@@ -504,7 +504,7 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             return results;         
         }             
 
-        private void MapTextFields(Vacancy dbVacancy, DomainVacancy result)
+        private void GetAndMapTextFields(Vacancy dbVacancy, DomainVacancy result)
         {
             var textFields = GetTextFields(dbVacancy.VacancyId);
             result.TrainingProvided = GetTextField(textFields, TextFieldCodeName.TrainingProvided);
@@ -534,7 +534,7 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             }
         }
 
-        private void PatchStandards(Vacancy dbVacancy, VacancySummary result)
+        private void GetAndTryToMapStandards(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
             {
@@ -631,7 +631,7 @@ WHERE  FullName = @FrameworkFullName",
             public string Comments { get; set; }
         }
 
-        private void MapComments(Vacancy dbVacancy, DomainVacancy result)
+        private void GetAndMapComments(Vacancy dbVacancy, DomainVacancy result)
         {
             var comments = GetComments(dbVacancy.VacancyId);
 
@@ -688,7 +688,7 @@ WHERE VacancyId = @VacancyId
                 : null;
         }
 
-        private void MapAllDateSubmittedAndDateFirstSubmitted(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        private void GetAllDateSubmittedAndDateFirstSubmitted(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
             var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
             var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
@@ -710,7 +710,7 @@ GROUP BY VacancyId",
             }
         }
 
-        private void MapDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
+        private void GetDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
         {
             var vacancyPlus = dbVacancy as VacancyPlus;
             if (vacancyPlus != null)
@@ -734,7 +734,7 @@ order by HistoryDate
             }
         }
 
-        private void MapDateSubmitted(Vacancy dbVacancy, VacancySummary result)
+        private void GetDateSubmitted(Vacancy dbVacancy, VacancySummary result)
         {
             var vacancyPlus = dbVacancy as VacancyPlus;
             if (vacancyPlus != null)
@@ -758,7 +758,7 @@ order by HistoryDate desc
             }
         }
 
-        private void MapCreatedDateTime(Vacancy dbVacancy, DomainVacancy result)
+        private void GetCreatedDateTime(Vacancy dbVacancy, DomainVacancy result)
         {
             result.CreatedDateTime = _getOpenConnection.Query<DateTime>(@"
 select top 1 HistoryDate
@@ -774,7 +774,7 @@ order by HistoryDate
                 ).SingleOrDefault();
         }
 
-        private void MapCreatedByProviderUsername(Vacancy dbVacancy, DomainVacancy result)
+        private void GetCreatedByProviderUsername(Vacancy dbVacancy, DomainVacancy result)
         {
             result.CreatedByProviderUsername = _getOpenConnection.Query<string>(@"
 select top 1 UserName
@@ -790,7 +790,7 @@ order by HistoryDate
                 ).SingleOrDefault();
         }
 
-        private void MapAllDateQAApproved(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        private void GetAllDateQAApproved(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
             var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
             var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
@@ -814,7 +814,7 @@ GROUP BY VacancyId",
             }
         }
 
-        private void MapDateQAApproved(Vacancy dbVacancy, VacancySummary result)
+        private void GetDateQAApproved(Vacancy dbVacancy, VacancySummary result)
         {
             var vacancyPlus = dbVacancy as VacancyPlus;
 
@@ -839,7 +839,7 @@ order by HistoryDate desc
             }
         }
 
-        private void MapAllRegionalTeams(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        private void GetAllRegionalTeams(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
             var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
             var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
@@ -862,7 +862,7 @@ order by HistoryDate desc
             }
         }
 
-        private void MapRegionalTeam(VacancySummary vacancySummary)
+        private void GetRegionalTeam(VacancySummary vacancySummary)
         {
             const string sql = @"
                 SELECT ps.PostCode
