@@ -9,6 +9,7 @@
     using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class ManageDatesTests : TestsBase
     {
         [Test]

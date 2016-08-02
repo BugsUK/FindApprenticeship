@@ -6,6 +6,8 @@
     using NUnit.Framework;
     using ViewModels;
 
+    [TestFixture]
+    [Parallelizable]
     public class CandidateSearchViewModelServerValidatorTests
     {
         private CandidateSearchViewModelServerValidator _validator;

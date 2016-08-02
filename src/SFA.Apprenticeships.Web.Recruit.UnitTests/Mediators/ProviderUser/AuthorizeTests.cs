@@ -14,6 +14,7 @@
     using Recruit.Mediators.ProviderUser;
 
     [TestFixture]
+    [Parallelizable]
     public class AuthorizeTests : TestBase
     {
         [TestCase(null)]

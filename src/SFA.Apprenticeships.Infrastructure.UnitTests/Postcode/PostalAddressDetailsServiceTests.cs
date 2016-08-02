@@ -36,14 +36,13 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ShouldExpectAddressId()
         {
             //Arrange
             string nullArgument = null;
-            //Act
-            _serviceUnderTest.RetrieveValidatedAddress(nullArgument);
+            
             //Assert
+            Assert.Throws(typeof (ArgumentNullException), () => _serviceUnderTest.RetrieveValidatedAddress(nullArgument));
         }
 
         [Test]

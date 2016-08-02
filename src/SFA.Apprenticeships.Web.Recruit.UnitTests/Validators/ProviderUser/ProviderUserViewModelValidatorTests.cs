@@ -6,6 +6,7 @@
     using Raa.Common.ViewModels.ProviderUser;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderUserViewModelValidatorTests
     {
         [TestCase("", "", "")]

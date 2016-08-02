@@ -15,6 +15,7 @@
     using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class PreviewVacancyTests : TestsBase
     {
         //IVacancyPostingMediator.GetPreviewVacancyViewModel 

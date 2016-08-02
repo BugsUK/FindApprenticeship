@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class MandatoryDateChecks
     {
         private const string RuleSet = RuleSets.Errors;

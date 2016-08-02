@@ -8,6 +8,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class GetNewVacancyTests : TestBase
     {
         private const int ProviderSiteId = 1;

@@ -10,6 +10,7 @@
     using ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class CandidateMediatorTests
     {
         private Mock<ICandidateProvider> _candidateProvider;

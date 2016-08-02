@@ -11,6 +11,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateVacancyQuestionsViewModelTests
     {
         [Test]

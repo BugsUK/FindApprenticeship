@@ -18,6 +18,7 @@
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class GetPendingQAVacanciesOverviewTests
     {
         private const int ExpectedSubmittedTodayCount = 5;
