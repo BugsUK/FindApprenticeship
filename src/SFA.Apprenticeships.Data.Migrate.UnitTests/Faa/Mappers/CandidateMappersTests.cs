@@ -572,5 +572,33 @@
             //Assert
             candidatePerson.SchoolAttended.Should().BeNull();
         }
+
+        [TestCase(false, false, false, false)]
+        [TestCase(true, false, false, true)]
+        [TestCase(false, true, false, false)]
+        [TestCase(false, false, true, false)]
+        [TestCase(false, true, true, true)]
+        [TestCase(true, true, true, true)]
+        public void AllowMarketingMessagesCandidateUserTest(bool allowEmail, bool allowText, bool verifiedMobile, bool expected)
+        {
+            //Arrange
+            var communicationPreferences = new CommunicationPreferences
+            {
+                VerifiedMobile = verifiedMobile,
+                MarketingPreferences = new CommunicationPreference
+                {
+                    EnableEmail = allowEmail,
+                    EnableText = allowText
+                }
+            };
+            var candidateUser = new CandidateUserBuilder().WithStatus(20).WithCommunicationPreferences(communicationPreferences).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.AllowMarketingMessages.Should().Be(expected);
+        }
     }
 }

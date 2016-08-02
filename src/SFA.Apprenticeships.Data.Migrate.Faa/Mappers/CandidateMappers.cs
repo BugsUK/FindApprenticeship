@@ -126,7 +126,7 @@
                     LockedForSupportUntil = null,
                     NewVacancyAlertEmail = null,
                     NewVacancyAlertSMS = null,
-                    AllowMarketingMessages = false,
+                    AllowMarketingMessages = GetAllowMarketingMessages(candidateUser.Candidate.CommunicationPreferences),
                     ReminderMessageSent = true,
                     CandidateGuid = candidateGuid
                 };
@@ -158,6 +158,17 @@
                 _logService.Error($"Failed to map Candidate with Id {candidateUser.Candidate.Id}", ex);
                 return null;
             }
+        }
+
+        private bool? GetAllowMarketingMessages(CommunicationPreferences communicationPreferences)
+        {
+            if (communicationPreferences == null || communicationPreferences.MarketingPreferences == null)
+                return false;
+
+            var allowMarketingTexts = communicationPreferences.MarketingPreferences.EnableText && communicationPreferences.VerifiedMobile;
+            var allowMarketingEmails = communicationPreferences.MarketingPreferences.EnableEmail;
+
+            return allowMarketingTexts || allowMarketingEmails;
         }
 
         public CandidateWithHistory MapCandidateWithHistory(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, IDictionary<int, int> schoolAttendedIds, IDictionary<int, Dictionary<int, int>> candidateHistoryIds, bool anonymise)
