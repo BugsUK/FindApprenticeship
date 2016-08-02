@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ServiceConfiguration serviceName="SFA.Apprenticeships.Web.Recruit.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
   <Role name="SFA.Apprenticeships.Web.Recruit">
-    <Instances count="2" />
+    <Instances count="3" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
     <Certificates>
-      <Certificate name="SSLWebRecruit" thumbprint="B8A7107EAECE42B270088BD5050C5290C9408E90" thumbprintAlgorithm="sha1" />
+      <Certificate name="SSLWebRecruit" thumbprint="AE0730A50D36F5615038ED41C1D78CDB137AEF19" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
   <NetworkConfiguration>

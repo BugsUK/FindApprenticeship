@@ -125,6 +125,8 @@
     <Compile Include="Entities\Mongo\ApplicationTemplate.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />
     <Compile Include="Entities\Mongo\CandidateUser.cs" />
+    <Compile Include="Entities\Mongo\CommunicationPreference.cs" />
+    <Compile Include="Entities\Mongo\CommunicationPreferences.cs" />
     <Compile Include="Entities\Mongo\Education.cs" />
     <Compile Include="Entities\Mongo\GeoPoint.cs" />
     <Compile Include="Entities\Mongo\MonitoringInformation.cs" />

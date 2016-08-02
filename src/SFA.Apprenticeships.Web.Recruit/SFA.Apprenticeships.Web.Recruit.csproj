@@ -853,6 +853,7 @@
     <Content Include="Views\Application\ShareApplications.cshtml" />
     <Content Include="Views\Report\CandidatesWithApplications.cshtml" />
     <Content Include="Views\EmployerApplication\ViewAnonymisedTraineeship.cshtml" />
+    <Content Include="Views\Shared\_AnonymousLayout.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
