@@ -14,6 +14,13 @@
             }
 
             function saveForm() {
+
+                if (typeof CKEDITOR != 'undefined') {
+                    for (instance in CKEDITOR.instances) {
+                        CKEDITOR.instances[instance].updateElement();
+                    }
+                }
+
                 $.ajax({
                     type: "POST",
                     url: settings.postUrl,
