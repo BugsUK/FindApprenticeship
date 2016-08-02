@@ -173,6 +173,27 @@
             }
         }
 
+        public MediatorResponse<byte[]> GetRegisteredCandidatesReportBytes(ReportRegisteredCandidatesParameters parameters)
+        {
+            try
+            {
+                var reportResult = _reportingRepo.ReportRegisteredCandidates(parameters.FromDate.Date, parameters.ToDate.Date);
+
+                var headerBuilder = new StringBuilder();
+                headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,");
+
+                var bytes = GetCsvBytes<ReportRegisteredCandidatesResultItem, ReportRegisteredCandidatesResultItemClassMap>(reportResult, headerBuilder.ToString());
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+            }
+        }
+
         private static byte[] GetCsvBytes<T, TClassMap>(IEnumerable<T> items, string header) where T : class where TClassMap : CsvClassMap<T>
         {
             var csvString = header + CsvPresenter.ToCsv<T, TClassMap>(items);

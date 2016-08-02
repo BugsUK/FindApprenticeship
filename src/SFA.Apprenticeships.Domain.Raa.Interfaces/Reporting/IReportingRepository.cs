@@ -16,5 +16,6 @@
         IList<ApplicationsReceivedResultItem> GetApplicationsReceivedResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId);
         IList<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId);
         InformationRadiatorData GetInformationRadiatorData();
+        IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(DateTime fromDate, DateTime toDate);
     }
 }

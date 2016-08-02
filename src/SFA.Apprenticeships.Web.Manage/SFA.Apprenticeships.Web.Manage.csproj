@@ -362,6 +362,7 @@
     <Compile Include="Controllers\ManagementControllerBase.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
+    <Compile Include="CsvClassMaps\ReportRegisteredCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportSuccessfulCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportUnsuccessfulCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
@@ -412,6 +413,7 @@
     <Compile Include="ViewModels\ReportUnsuccessfulCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportSuccessfulCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportVacanciesParameters.cs" />
+    <Compile Include="ViewModels\ReportRegisteredCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportVacancyExtensionsParameters.cs" />
     <Compile Include="Views\Home\Cookies.generated.cs">
       <DependentUpon>Cookies.cshtml</DependentUpon>
@@ -854,6 +856,7 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\license\web.config" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
     <Content Include="Views\InformationRadiator\Index.cshtml" />
+    <Content Include="Views\Report\RegisteredCandidatesCsv.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
