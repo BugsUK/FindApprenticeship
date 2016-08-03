@@ -14,7 +14,7 @@
         [Test]
         public void ShouldReturnAWarningHashIfTheModelHasOnlyWarnings()
         {
-            int vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
 
             var viewModel = new VacancyDatesViewModel
             {
@@ -35,7 +35,7 @@
         [Test]
         public void ShouldReturnOkIfThereIsntAnyValidationError()
         {
-            int vacancyReferenceNumber = 1;
+            var vacancyReferenceNumber = 1;
 
             var viewModel = new VacancyDatesViewModel
             {
@@ -55,7 +55,7 @@
         [Test]
         public void ShouldNotUpdateTheVacancyIfThereAreWarningsAndWeDontAcceptThem()
         {
-            int vacancyReferenceNumber = 1;
+            var vacancyReferenceNumber = 1;
 
             var viewModel = new VacancyDatesViewModel
             {
@@ -74,7 +74,7 @@
         [Test]
         public void ShouldNotUpdateTheVacancyIfWeAcceptTheWarningsButTheyAreDifferentFromThePreviousOnes()
         {
-            int vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             const int oldWarningHash = -1011218820;
 
             var viewModel = new VacancyDatesViewModel
@@ -96,7 +96,7 @@
         [TestCase(UpdateVacancyDatesState.UpdatedNoApplications, VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications)]
         public void ShouldUpdateTheVacancyIfWeAcceptTheWarningsAndTheyAreEqualFromThePreviousOnes(UpdateVacancyDatesState state, string expectedCode)
         {
-            int vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             const int oldWarningHash = 128335101;
 
             var closingDate = new DateViewModel(DateTime.Now.AddDays(20));
