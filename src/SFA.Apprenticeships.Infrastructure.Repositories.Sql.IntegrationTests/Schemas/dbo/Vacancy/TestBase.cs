@@ -35,7 +35,7 @@
                 .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
                 .With(av => av.ParentVacancyId, null)
                 .With(av => av.UpdatedDateTime, null)
-                .With(av => av.RegionalTeam, RegionalTeam.WestMidlands)
+                .With(av => av.RegionalTeam, RegionalTeam.NorthWest)
                 .Create();
 
             result.Address = new PostalAddress
