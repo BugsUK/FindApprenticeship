@@ -46,10 +46,10 @@
 
     <div class="blocklabel-single-container">
         <p>Search for an employer</p>
-        @if (!searchPerformed)
+        @if (!(searchPerformed && noResults))
         {
             <div class="panel-indent grid grid-2-3">
-                If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN.
+                If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN
             </div>
         }
 
