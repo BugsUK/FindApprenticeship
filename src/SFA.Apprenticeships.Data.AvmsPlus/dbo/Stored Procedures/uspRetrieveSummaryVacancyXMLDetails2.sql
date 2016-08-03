@@ -43,7 +43,7 @@ BEGIN
         vac.Town                        AS 'Town',
         Cty.FullName                    AS 'County',
         vac.PostCode                    AS 'Postcode',
-        fwk.FullName                    AS 'ApprenticeshipFramework',
+        COALESCE(fwk.FullName, std.FullName) as 'ApprenticeshipFramework',
         vac.ApplicationClosingDate      AS 'ClosingDateForApplicationsDate', 
         convert(VARCHAR, vac.ApplicationClosingDate, 111) AS 'ClosingDateForApplications', 
         vac.GeocodeEasting              AS 'GeocodeEasting',
@@ -72,8 +72,9 @@ BEGIN
         INNER JOIN [VacancyOwnerRelationship] vpr ON  vac.[VacancyOwnerRelationshipId] = vpr.[VacancyOwnerRelationshipId]
         INNER JOIN [ProviderSite]             tp  ON  vpr.[ProviderSiteID]             = tp.ProviderSiteID
         INNER JOIN Employer                   emp ON  vpr.EmployerId                   = emp.EmployerId
-        INNER JOIN ApprenticeshipFramework    fwk ON  vac.ApprenticeshipFrameworkId    = fwk.ApprenticeshipFrameworkId
-        INNER JOIN ApprenticeshipOccupation   occ ON  fwk.ApprenticeshipOccupationId   = occ.ApprenticeshipOccupationId
+        left outer join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
+        left outer join [Reference].[Standard] std on vac.StandardId = std.StandardId
+        left outer join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
         INNER JOIN ApprenticeshipType         apt ON  vac.ApprenticeshipType           = apt.ApprenticeshipTypeId 
         INNER JOIN VacancyHistory             vh  ON  vh.VacancyId                     = vac.VacancyId 
 		                                          AND vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
