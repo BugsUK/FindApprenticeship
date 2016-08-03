@@ -57,8 +57,8 @@ BEGIN
         vac.VacancyId, VacancyReferenceNumber
     FROM 
         Vacancy vac
-        JOIN    ApprenticeshipFramework  fwk ON  vac.ApprenticeshipFrameworkId  = fwk.ApprenticeshipFrameworkId
-        JOIN    ApprenticeshipOccupation occ ON  fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
+        LEFT OUTER JOIN    ApprenticeshipFramework  fwk ON  vac.ApprenticeshipFrameworkId  = fwk.ApprenticeshipFrameworkId
+        LEFT OUTER JOIN    ApprenticeshipOccupation occ ON  fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
         JOIN    VacancyHistory vh            ON  vh.VacancyId = vac.VacancyId 
                                              AND vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
                                              AND vh.VacancyHistoryId = (
