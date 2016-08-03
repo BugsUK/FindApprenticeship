@@ -63,14 +63,14 @@
                 .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
                 .Must(Common.BeOneDayInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.AfterTodayErrorText)
-                .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
+                .SetValidator(new DateViewModelClientValidator());
 
             validator.RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeValidDate)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.RequiredErrorText)
                 .Must(Common.BeOneDayInTheFuture)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.AfterTodayErrorText)
-                .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
+                .SetValidator(new DateViewModelClientValidator());
         }
 
         internal static void AddServerWarningRules(this AbstractValidator<VacancyDatesViewModel> validator,

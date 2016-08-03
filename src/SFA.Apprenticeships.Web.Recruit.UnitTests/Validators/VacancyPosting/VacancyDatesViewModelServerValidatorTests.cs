@@ -31,7 +31,7 @@
         }
 
         [Test]
-        public void VacancyViewModelValidatorDefaultShouldHaveValidationErrors()
+        public void VacancyViewModelValidatorDefaultShouldHaveMultipleValidationErrors()
         {
             var viewModel = new VacancyDatesViewModel();
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
@@ -39,21 +39,22 @@
             var aggregateResults = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             aggregateResults.IsValid.Should().BeFalse();
-            aggregateResults.Errors.Count.Should().BeGreaterThan(2);
+            aggregateResults.Errors.Count.Should().BeGreaterThan(1);
         }
 
         [Test]
-        public void CommonValidatorDefaultShouldHaveValidationErrors()
+        public void CommonValidatorDefaultShouldNotHaveValidationErrors()
         {
             var viewModel = new VacancyDatesViewModel();
 
             var commonResult = _commonValidator.Validate(viewModel, ruleSet: RuleSet);
 
             commonResult.IsValid.Should().BeTrue();
+            commonResult.Errors.Count.Should().Be(0);
         }
 
         [Test]
-        public void ServerCommonValidatorDefaultShouldHaveValidationErrors()
+        public void ServerCommonValidatorDefaultShouldHaveTwoValidationErrors()
         {
             var viewModel = new VacancyDatesViewModel();
 
