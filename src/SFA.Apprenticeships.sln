@@ -223,8 +223,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acceptance", "Acceptance", "{4F6A1B64-A291-4CF4-A22C-17C8B412E207}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{27FAEE86-BE68-4162-933B-8B4533D61403}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2178AB6A-A503-4F98-8C14-7BF4CDE1EED3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RAA", "RAA", "{6A45D40D-5A49-4E50-8574-4706291CA578}"
@@ -1377,7 +1375,6 @@ Global
 		{386A0F54-B4E6-4A2F-9A79-6E565A54F904} = {E4F43B40-7F9C-4355-BAA9-0EF1B56FB9E4}
 		{B72A90ED-6BD6-4AED-8863-36F2F3793ECC} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
 		{4F6A1B64-A291-4CF4-A22C-17C8B412E207} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
-		{27FAEE86-BE68-4162-933B-8B4533D61403} = {B72A90ED-6BD6-4AED-8863-36F2F3793ECC}
 		{2178AB6A-A503-4F98-8C14-7BF4CDE1EED3} = {E4F43B40-7F9C-4355-BAA9-0EF1B56FB9E4}
 		{6A45D40D-5A49-4E50-8574-4706291CA578} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}
 		{C7144529-8462-4D82-9AD9-D2C8E01D2A57} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}
@@ -1387,7 +1384,7 @@ Global
 		{E8841E6E-382A-476B-9AF0-ACDBD4870659} = {CCED2B84-BCDF-4E9B-AE7C-0597B7E7CCB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal
