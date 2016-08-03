@@ -234,7 +234,46 @@ WriteLiteral(" * 1000;\r\n\r\n        $(window).on(\'load\', function() {\r\n   
             
             #line default
             #line hidden
-WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n");
+WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n\r\n    <!---->\r\n    <script");
+
+WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js\"");
+
+WriteLiteral("></script>\r\n    <script");
+
+WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/adapters/jquery.js\"");
+
+WriteLiteral(@"></script>
+    <script>
+            if (typeof CKEDITOR == 'undefined') {
+                document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E""));
+                document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/adapters/jquery.js' type='text/javascript'%3E%3C/script%3E""));
+            }
+    </script>
+
+    <script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 2366), Tuple.Create("\"", 2421)
+, Tuple.Create(Tuple.Create("", 2372), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 2372), false)
+);
+
+WriteLiteral(@"></script>
+    <script>
+            CKEDITOR.replace('LongDescription', {
+                customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+                contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
+            });
+    </script>
+
+    <script>
+            nanospell.ckeditor('all',
+            {
+                dictionary: ""en_uk"", // 24 free international dictionaries
+                server: ""asp.net"" // can be php, asp, asp.net or java
+            });
+    </script>
+
+");
 
 });
 

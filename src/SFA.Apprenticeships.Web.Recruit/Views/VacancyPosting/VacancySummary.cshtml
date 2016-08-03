@@ -43,4 +43,31 @@
             });
         });
     </script>
+
+    <!---->
+    <script src="https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.5.10/standard/adapters/jquery.js"></script>
+    <script>
+            if (typeof CKEDITOR == 'undefined') {
+                document.write(unescape("%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E"));
+                document.write(unescape("%3Cscript src='/Content/_assets/js/vendor/ckeditor/adapters/jquery.js' type='text/javascript'%3E%3C/script%3E"));
+            }
+    </script>
+
+    <script src="~/Content/_assets/js/vendor/nanospell/autoload.js"></script>
+    <script>
+            CKEDITOR.replace('LongDescription', {
+                customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+                contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
+            });
+    </script>
+
+    <script>
+            nanospell.ckeditor('all',
+            {
+                dictionary: "en_uk", // 24 free international dictionaries
+                server: "asp.net" // can be php, asp, asp.net or java
+            });
+    </script>
+
 }
