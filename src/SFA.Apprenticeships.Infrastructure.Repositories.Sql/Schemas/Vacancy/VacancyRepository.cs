@@ -717,7 +717,7 @@ GROUP BY VacancyId",
                     VacancyStatus = VacancyStatus.Submitted
                 }).ToDictionary(t => t.VacancyId.ToString(), t => t);
 
-            foreach (var vacancySummary in results)
+            foreach (var vacancySummary in results.Where(x => map.ContainsKey(x.VacancyId.ToString())))
             {
                 var value = map[vacancySummary.VacancyId.ToString()];
                 vacancySummary.DateSubmitted = value.DateSubmitted;
@@ -872,8 +872,11 @@ order by HistoryDate desc
 
             foreach (var vacancySummary in results)
             {
-                var value = map[vacancySummary.VacancyId.ToString()];
-                vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(value);
+                if (map.ContainsKey(vacancySummary.VacancyId.ToString()))
+                {
+                    var value = map[vacancySummary.VacancyId.ToString()];
+                    vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(value);
+                }
             }
         }
 
