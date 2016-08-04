@@ -140,11 +140,17 @@
                 BulkUpsert(candidatesWithHistory, candidateSummaries);
 
                 var syncParams = _syncRepository.GetSyncParams();
-                if (syncType == SyncType.Full || syncType == SyncType.PartialByDateCreated)
+                if (syncType == SyncType.Full)
+                {
+                    syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
+                    //Deliberate as date updated could skip some updates post full sync
+                    syncParams.CandidateLastUpdatedDate = syncParams.CandidateLastCreatedDate;
+                }
+                if (syncType == SyncType.PartialByDateCreated)
                 {
                     syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
                 }
-                if (syncType == SyncType.Full || syncType == SyncType.PartialByDateUpdated)
+                if (syncType == SyncType.PartialByDateUpdated)
                 {
                     syncParams.CandidateLastUpdatedDate = maxDateUpdated > syncParams.CandidateLastUpdatedDate ? maxDateUpdated : syncParams.CandidateLastUpdatedDate;
                 }
