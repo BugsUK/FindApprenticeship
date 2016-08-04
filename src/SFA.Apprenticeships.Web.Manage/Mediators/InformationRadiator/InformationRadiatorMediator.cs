@@ -19,6 +19,7 @@
 
             var viewModel = new InformationRadiatorViewModel
             {
+                TotalProviders = data.TotalProviders,
                 TotalProviderUserAccounts = data.TotalProviderUserAccounts,
                 TotalVacanciesApprovedViaRaa = data.TotalVacanciesApprovedViaRaa,
                 TotalVacanciesSubmittedViaRaa = data.TotalVacanciesSubmittedViaRaa,
