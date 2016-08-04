@@ -817,7 +817,7 @@
             stopWatch.Stop();
             var milis = stopWatch.ElapsedMilliseconds;
 
-            //File.AppendAllLines("C:\\Temp\\DashboardTimes.txt", new []{$"{milis} Milliseconds" });
+            _logService.Info($"[DASHBOARD] (FilterType: {vacanciesSummarySearch.FilterType}) => Time: {milis} milliseconds.");
 
             return vacanciesSummary;
         }
@@ -854,7 +854,7 @@
                 case VacanciesSummaryFilterTypes.Closed:
                 case VacanciesSummaryFilterTypes.Live:
                 case VacanciesSummaryFilterTypes.Completed:
-                    return data.OrderBy(v => v.EmployerName);
+                    return data.OrderBy(v => v.EmployerName).ThenBy(v => v.Title);
                 case VacanciesSummaryFilterTypes.All:
                 case VacanciesSummaryFilterTypes.Submitted:
                 case VacanciesSummaryFilterTypes.Rejected:

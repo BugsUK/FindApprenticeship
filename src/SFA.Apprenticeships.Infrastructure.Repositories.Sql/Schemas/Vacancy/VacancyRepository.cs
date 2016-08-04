@@ -1445,7 +1445,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             foreach (var splitVacancyPartyId in splitVacancyPartyIds)
             {
                 IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(@"
-                                SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId
+                                SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title
                                 FROM   dbo.Vacancy
                                 WHERE  VacancyOwnerRelationshipId IN @Ids",
                     new {Ids = splitVacancyPartyId});                                                                                                      
@@ -1483,6 +1483,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 // TODO: Won't be set for uploaded vacancies, but this is an issue throughout
                 VacancyType = (VacancyType)record.VacancyTypeId;
                 EmployerName = record.EmployerName;
+                Title = record.Title;
             }
 
             public int VacancyId { get; private set; }
@@ -1509,6 +1510,8 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             public VacancyType VacancyType { get; private set; }
 
             public string EmployerName { get; set; }
+
+            public string Title { get; set; }
         }
 
         private class VacancyPlus : Vacancy
