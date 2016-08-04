@@ -454,6 +454,7 @@
 
             var command = new SqlCommand(
                 @"SELECT 
+(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser]) as TotalProviders,
 (SELECT COUNT(*) FROM [Provider].[ProviderUser]) as TotalProviderUserAccounts,
 (SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesSubmittedViaRaa,
 (SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 2) as TotalVacanciesApprovedViaRaa,
@@ -475,6 +476,7 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
             {
                 data = new InformationRadiatorData
                 {
+                    TotalProviders = Convert.ToInt32(reader["TotalProviders"]),
                     TotalProviderUserAccounts = Convert.ToInt32(reader["TotalProviderUserAccounts"]),
                     TotalVacanciesSubmittedViaRaa = Convert.ToInt32(reader["TotalVacanciesSubmittedViaRaa"]),
                     TotalVacanciesApprovedViaRaa = Convert.ToInt32(reader["TotalVacanciesApprovedViaRaa"]),
