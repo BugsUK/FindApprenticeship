@@ -122,7 +122,7 @@ BEGIN
     WHERE	vac.Vacancyid IN (
 				SELECT VacancyId
 				FROM   #AllRecords
-				ORDER BY VacancyReferenceNumber
+				ORDER BY Sort_Id
 				OFFSET   (@pageIndex-1) * @pageSize ROWS FETCH NEXT @pageSize ROWS ONLY
 			)
 	AND     lagt.LocalAuthorityGroupTypeName      = 'Region'

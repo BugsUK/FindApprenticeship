@@ -12,6 +12,7 @@ CREATE FUNCTION [dbo].[fnGetIdsForApi]
 )
 RETURNS @Result TABLE
 (
+	Sort_Id				   INT IDENTITY PRIMARY KEY,
 	VacancyId              INT,
 	VacancyReferenceNumber VARCHAR(100)
 )
@@ -91,7 +92,9 @@ BEGIN
 				  AND (vac.Town     = @town       OR @town       IS NULL OR @town = '')
 				  AND (LAG.CodeName = @regionCode OR @regionCode IS NULL OR @regionCode = '')
 				)
-			);
+			)
+	
+	ORDER BY VacancyReferenceNumber;
 
 	RETURN
 END;
