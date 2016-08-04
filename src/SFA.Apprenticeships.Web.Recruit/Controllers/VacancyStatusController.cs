@@ -1,13 +1,29 @@
-﻿using System.Web.Mvc;
-
-namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    public class VacancyStatusController : Controller
+    using System.Web.Mvc;
+    using Attributes;
+    using Constants;
+    using Domain.Entities.Raa;
+    using Mediators.VacancyPosting;
+    using Mediators.VacancyStatus;
+    using SFA.Infrastructure.Interfaces;
+
+    [AuthorizeUser(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+    public class VacancyStatusController : RecruitmentControllerBase
     {
-        // GET: VacancyStatus
-        public ActionResult Archive()
+        private readonly IVacancyStatusMediator _vacancyStatusMediator;
+
+        public VacancyStatusController(IVacancyStatusMediator vacancyStatusMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
-            return View();
+            _vacancyStatusMediator = vacancyStatusMediator;
+        }
+
+        // GET: VacancyStatus
+        public ActionResult Archive(int vacancyReferenceNumber)
+        {
+            var response = _vacancyStatusMediator.GetArchiveVacancyViewModel(vacancyReferenceNumber);
+            return View(response.ViewModel);
         }
     }
 }

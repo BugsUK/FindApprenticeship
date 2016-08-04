@@ -392,6 +392,9 @@
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
+    <Compile Include="Mediators\VacancyStatus\IVacancyStatusMediator.cs" />
+    <Compile Include="Mediators\VacancyStatus\VacancyStatusMediatorCodes.cs" />
+    <Compile Include="Mediators\VacancyStatus\VacancyStatusMediator.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -400,6 +403,7 @@
     <Compile Include="ViewModels\Report\ApplicationsReceivedParameters.cs" />
     <Compile Include="ViewModels\Report\CandidatesWithApplicationsParameters.cs" />
     <Compile Include="ViewModels\Report\ReportMenu.cs" />
+    <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />
     <Compile Include="Views\Home\Cookies.generated.cs">
       <DependentUpon>Cookies.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
