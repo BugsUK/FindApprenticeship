@@ -23,3 +23,10 @@
         @Html.RouteLink("Share applications", RecruitmentRouteNames.ShareApplications, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
     </p>
 }
+
+@if (Model.Status.CanArchiveVacancy())
+{
+    <p class="small-btm-margin">
+        @Html.RouteLink("Archive vacancy", RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+    </p>
+}

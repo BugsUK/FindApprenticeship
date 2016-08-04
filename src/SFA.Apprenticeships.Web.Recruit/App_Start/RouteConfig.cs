@@ -332,6 +332,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.ArchiveVacancy,
+               url: "vacancy/archivevacancy",
+               defaults: new { controller = "VacancyStatus", action = "Archive" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewApprenticeshipApplication,
                url: "apprenticeshipapplication/review",
                defaults: new { controller = "ApprenticeshipApplication", action = "Review" }

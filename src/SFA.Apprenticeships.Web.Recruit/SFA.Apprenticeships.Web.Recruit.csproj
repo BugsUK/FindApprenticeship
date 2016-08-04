@@ -353,6 +353,7 @@
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\VacancyStatusController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mediators\Application\ITraineeshipApplicationMediator.cs" />
@@ -854,6 +855,7 @@
     <Content Include="Views\Report\CandidatesWithApplications.cshtml" />
     <Content Include="Views\EmployerApplication\ViewAnonymisedTraineeship.cshtml" />
     <Content Include="Views\Shared\_AnonymousLayout.cshtml" />
+    <Content Include="Views\VacancyStatus\Archive.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -59,6 +59,7 @@
         public const string ShowLocations = "ShowLocations";
         public const string ManageDates = "ManageDates";
         public const string AutoSaveManageDates = "AutoSaveManageDates";
+        public const string ArchiveVacancy = "ArchiveVacancy";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
