@@ -403,7 +403,6 @@
     <Compile Include="ViewModels\Report\ApplicationsReceivedParameters.cs" />
     <Compile Include="ViewModels\Report\CandidatesWithApplicationsParameters.cs" />
     <Compile Include="ViewModels\Report\ReportMenu.cs" />
-    <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />
     <Compile Include="Views\Home\Cookies.generated.cs">
       <DependentUpon>Cookies.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>

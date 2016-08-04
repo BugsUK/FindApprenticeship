@@ -208,6 +208,7 @@
     <Compile Include="Providers\GeoCodingProvider.cs" />
     <Compile Include="Providers\IGeoCodingProvider.cs" />
     <Compile Include="Providers\IReportingProvider.cs" />
+    <Compile Include="Providers\IVacancyStatusChangeProvider.cs" />
     <Compile Include="Providers\QAActionResultCode.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
+    <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />

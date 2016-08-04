@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyStatus
 {
     using Common.Mediators;
-    using ViewModels.VacancyStatus;
+    using Raa.Common.ViewModels.VacancyStatus;
 
     public class VacancyStatusMediator : IVacancyStatusMediator
     {

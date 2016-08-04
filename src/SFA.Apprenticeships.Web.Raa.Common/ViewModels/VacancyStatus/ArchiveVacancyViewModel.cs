@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyStatus
+namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyStatus
 {
     public class ArchiveVacancyViewModel
     {
