@@ -69,5 +69,7 @@
                 return UpdatedDateTime ?? new DateTime(2016, 6, 30, 0, 0, 0, DateTimeKind.Utc);
             }
         }
+
+        public string EmployerName { get; set; }
     }
 }

@@ -1482,6 +1482,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
 
                 // TODO: Won't be set for uploaded vacancies, but this is an issue throughout
                 VacancyType = (VacancyType)record.VacancyTypeId;
+                EmployerName = record.EmployerName;
             }
 
             public int VacancyId { get; private set; }
@@ -1506,6 +1507,8 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             public DateTime SyntheticUpdatedDateTime { get; private set; }
 
             public VacancyType VacancyType { get; private set; }
+
+            public string EmployerName { get; set; }
         }
 
         private class VacancyPlus : Vacancy

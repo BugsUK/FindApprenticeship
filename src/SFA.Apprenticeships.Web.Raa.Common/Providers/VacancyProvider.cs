@@ -21,6 +21,8 @@
     using SFA.Infrastructure.Interfaces;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Web.Mvc;
     using ViewModels.Provider;
@@ -701,6 +703,9 @@
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
             if (isVacancySearch)
             {
@@ -735,16 +740,29 @@
             // Get vacancies for selected filter
             var filteredVacancies = (IEnumerable<IMinimalVacancyDetails>)Filter(minimalVacancyDetails, vacanciesSummarySearch.FilterType, applicationCountsByVacancyId).ToList();
 
+            var vacancyPartyIds = new HashSet<int>(filteredVacancies.Select(v => v.OwnerPartyId));
+            var employers = _employerService.GetEmployers(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct());
+            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
+
+            filteredVacancies = filteredVacancies.Select(v =>
+            {
+                v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).Name; // vacancyPartyToEmployerMap[v.OwnerPartyId].Name;
+                return v;
+            });
+
             // If doing a vacancy search then all the vacancies need to be fetched now, otherwise just fetch the first page
             var vacanciesToFetch = isVacancySearch ? filteredVacancies : Sort(filteredVacancies, vacanciesSummarySearch.FilterType).GetCurrentPage(vacanciesSummarySearch).ToList();
-
-            var vacancyPartyIds = new HashSet<int>(vacanciesToFetch.Select(v => v.OwnerPartyId));
-            var employers = _employerService.GetEmployers(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct());
-
+            
             var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
 
-            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
-            var vacancies = Sort(_vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId)), vacanciesSummarySearch.FilterType);
+            var vacanciesWithoutEmployerName =
+                _vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId));
+
+            var vacancies = Sort(vacanciesWithoutEmployerName.Select(v =>
+            {
+                v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).Name;
+                return v;
+            }), vacanciesSummarySearch.FilterType);
 
             if (isVacancySearch)
             {
@@ -796,6 +814,11 @@
                 Vacancies = vacancyPage
             };
 
+            stopWatch.Stop();
+            var milis = stopWatch.ElapsedMilliseconds;
+
+            //File.AppendAllLines("C:\\Temp\\DashboardTimes.txt", new []{$"{milis} Milliseconds" });
+
             return vacanciesSummary;
         }
 
@@ -829,11 +852,10 @@
                 case VacanciesSummaryFilterTypes.NewApplications:
                     return data.OrderBy(v => v.LiveClosingDate).ThenByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
                 case VacanciesSummaryFilterTypes.Closed:
-                    return data.OrderByDescending(v => v.LiveClosingDate).ThenByDescending(v => v.VacancyId);
-                case VacanciesSummaryFilterTypes.Completed:
-                    return data.OrderByDescending(v => v.SyntheticUpdatedDateTime).ThenByDescending(v => v.VacancyId);
-                case VacanciesSummaryFilterTypes.All:
                 case VacanciesSummaryFilterTypes.Live:
+                case VacanciesSummaryFilterTypes.Completed:
+                    return data.OrderBy(v => v.EmployerName);
+                case VacanciesSummaryFilterTypes.All:
                 case VacanciesSummaryFilterTypes.Submitted:
                 case VacanciesSummaryFilterTypes.Rejected:
                 case VacanciesSummaryFilterTypes.Draft:
