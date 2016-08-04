@@ -2,6 +2,7 @@
 {
     public class InformationRadiatorViewModel
     {
+        public int TotalProviderUserAccounts { get; set; }
         public int TotalVacanciesSubmittedViaRaa { get; set; }
         public int TotalVacanciesApprovedViaRaa { get; set; }
         public int TotalApplicationsSubmittedForRaaVacancies { get; set; }
