@@ -8,7 +8,7 @@
 }
 
 <h1 class="heading-xlarge">
-    Manage vacancy dates
+    Change vacancy dates
 </h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, FormMethod.Post))
@@ -17,13 +17,19 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     @Html.HiddenFor(m => m.WarningsHash)
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
+    @Html.HiddenFor(m => m.VacancyStatus)
     @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
-    
+
     <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate))">
         <a name="@Html.NameFor(m => m.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
         <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
         @Html.EditorFor(m => m.ClosingDate)
         @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
+
+        <div>
+            We advise using a date more than two weeks from now<br />
+            Vacancies will close at midnight on your chosen date
+        </div>
     </fieldset>
 
     <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate))">
