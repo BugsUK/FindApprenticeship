@@ -196,11 +196,17 @@
                 _logService.Info($"Processing {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName}");
                 BulkUpsert(applicationsWithHistory, applicationIds);
 
-                if (syncType == SyncType.Full || syncType == SyncType.PartialByDateCreated)
+                if (syncType == SyncType.Full)
+                {
+                    _vacancyApplicationsUpdater.UpdateLastCreatedSyncDate(maxDateCreated);
+                    //Deliberate as date updated could skip some updates post full sync
+                    _vacancyApplicationsUpdater.UpdateLastUpdatedSyncDate(maxDateCreated);
+                }
+                if (syncType == SyncType.PartialByDateCreated)
                 {
                     _vacancyApplicationsUpdater.UpdateLastCreatedSyncDate(maxDateCreated);
                 }
-                if (syncType == SyncType.Full || syncType == SyncType.PartialByDateUpdated)
+                if (syncType == SyncType.PartialByDateUpdated)
                 {
                     _vacancyApplicationsUpdater.UpdateLastUpdatedSyncDate(maxDateUpdated);
                 }
