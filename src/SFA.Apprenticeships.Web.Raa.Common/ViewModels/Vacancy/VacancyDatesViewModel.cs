@@ -2,6 +2,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Raa.Vacancies;
     using Web.Common.ViewModels;
 
     public class VacancyDatesViewModel
@@ -21,6 +22,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public int WarningsHash { get; set; }
 
         public int VacancyReferenceNumber { get; set; }
+
+        public VacancyStatus VacancyStatus { get; set; }
 
         public UpdateVacancyDatesState State { get; set; }
 

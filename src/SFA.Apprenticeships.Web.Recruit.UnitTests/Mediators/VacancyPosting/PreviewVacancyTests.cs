@@ -22,13 +22,14 @@
         public void ClosingDateWarnings()
         {
             //Arrange
-            var today = DateTime.Today;
+            var yesterday = DateTime.Today.AddDays(-1);
+
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
-                    ClosingDate = new DateViewModel(today),
-                    PossibleStartDate = new DateViewModel(today)
+                    ClosingDate = new DateViewModel(yesterday),
+                    PossibleStartDate = new DateViewModel(yesterday)
                 }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
