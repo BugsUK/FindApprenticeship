@@ -84,7 +84,7 @@
             var candidateUsers = _candidateUserRepository.GetAllCandidateUsers(cancellationToken).Result;
             var vacancyLocalAuthorities = _vacancyRepository.GetAllVacancyLocalAuthorities();
             var localAuthorityCountyIds = _localAuthorityRepository.GetLocalAuthorityCountyIds();
-            ProcessCandidates(candidateUsers, expectedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
+            ProcessCandidates(candidateUsers, expectedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.Full, cancellationToken);
         }
 
         private void ExecuteIncrementalSync(SyncParams syncParams, CancellationToken cancellationToken)
@@ -98,18 +98,18 @@
             _logService.Info("Processing new candidates");
             var expectedCreatedCount = _candidateUserRepository.GetCandidatesCreatedSinceCount(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
             var createdCursor = _candidateUserRepository.GetAllCandidateUsersCreatedSince(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
-            ProcessCandidates(createdCursor, expectedCreatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
+            ProcessCandidates(createdCursor, expectedCreatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.PartialByDateCreated, cancellationToken);
             _logService.Info("Completed processing new candidates");
 
             //Updates
             _logService.Info("Processing updated candidates");
             var expectedUpdatedCount = _candidateUserRepository.GetCandidatesUpdatedSinceCount(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
             var updatedCursor = _candidateUserRepository.GetAllCandidateUsersUpdatedSince(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
-            ProcessCandidates(updatedCursor, expectedUpdatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
+            ProcessCandidates(updatedCursor, expectedUpdatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.PartialByDateUpdated, cancellationToken);
             _logService.Info("Completed processing updated candidates");
         }
 
-        private void ProcessCandidates(IAsyncCursor<Candidate> cursor, long expectedCount, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, CancellationToken cancellationToken)
+        private void ProcessCandidates(IAsyncCursor<Candidate> cursor, long expectedCount, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, SyncType syncType, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -140,8 +140,14 @@
                 BulkUpsert(candidatesWithHistory, candidateSummaries);
 
                 var syncParams = _syncRepository.GetSyncParams();
-                syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
-                syncParams.CandidateLastUpdatedDate = maxDateUpdated > syncParams.CandidateLastUpdatedDate ? maxDateUpdated : syncParams.CandidateLastUpdatedDate;
+                if (syncType == SyncType.Full || syncType == SyncType.PartialByDateCreated)
+                {
+                    syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
+                }
+                if (syncType == SyncType.Full || syncType == SyncType.PartialByDateUpdated)
+                {
+                    syncParams.CandidateLastUpdatedDate = maxDateUpdated > syncParams.CandidateLastUpdatedDate ? maxDateUpdated : syncParams.CandidateLastUpdatedDate;
+                }
                 _syncRepository.SetCandidateSyncParams(syncParams);
 
                 var percentage = ((double)count / expectedCount) * 100;
