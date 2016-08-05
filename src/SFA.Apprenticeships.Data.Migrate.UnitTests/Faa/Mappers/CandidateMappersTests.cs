@@ -97,11 +97,27 @@
         [TestCase(30, 2)] //Inactive
         [TestCase(90, 2)] //Locked
         [TestCase(100, 2)] //Dormant
-        [TestCase(999, 2)] //PendingDeletion
         public void StatusTest(int status, int expectedCandidateStatusTypeId)
         {
             //Arrange
             var candidateUser = new CandidateUserBuilder().WithStatus(status).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.CandidateStatusTypeId.Should().Be(expectedCandidateStatusTypeId);
+        }
+
+        [TestCase(true, 0, 2)]
+        [TestCase(false, 0, 1)]
+        [TestCase(true, 456789, 2)]
+        [TestCase(false, 456789, 2)]
+        public void PendingDeletionStatusTest(bool activated, int legacyCandidateId, int expectedCandidateStatusTypeId)
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(999).WithActivated(activated).WithLegacyCandidateId(legacyCandidateId).Build();
 
             //Act
             var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
