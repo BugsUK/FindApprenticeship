@@ -8,6 +8,7 @@
 
     public static class ApplicationHistoryMappers
     {
+        private const int ApplicationStatusTypeIdSaved = 0;
         private const int ApplicationStatusTypeIdUnsent = 1;
         private const int ApplicationStatusTypeIdSent = 2;
         private const int ApplicationStatusTypeIdInProgress = 3;
@@ -18,12 +19,18 @@
 
         public static IList<ApplicationHistory> MapApplicationHistory(this VacancyApplication vacancyApplication, int applicationId, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
         {
-            var applicationHistory = new List<ApplicationHistory>
+            var applicationHistory = new List<ApplicationHistory>();
+
+            if (vacancyApplication.Status == 5)
+            {
+                //Saved
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateCreated, ApplicationStatusTypeIdSaved, applicationHistoryIds, sourceApplicationHistorySummaries));
+            }
+            if (vacancyApplication.Status >= 10)
             {
                 //Draft
-                GetApplicationHistory(applicationId, vacancyApplication.DateCreated, ApplicationStatusTypeIdUnsent, applicationHistoryIds, sourceApplicationHistorySummaries)
-            };
-
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateCreated, ApplicationStatusTypeIdUnsent, applicationHistoryIds, sourceApplicationHistorySummaries));
+            }
             if (vacancyApplication.Status == 15)
             {
                 //Withdrawn
