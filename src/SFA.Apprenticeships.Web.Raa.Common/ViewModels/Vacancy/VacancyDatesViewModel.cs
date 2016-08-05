@@ -25,15 +25,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public VacancyStatus VacancyStatus { get; set; }
 
-        public UpdateVacancyDatesState State { get; set; }
+        public VacancyApplicationsState VacancyApplicationsState { get; set; }
 
         public int AutoSaveTimeoutInSeconds { get; set; }
-    }
-
-    public enum UpdateVacancyDatesState
-    {
-        UpdatedHasApplications,
-        UpdatedNoApplications,
-        InvalidState
     }
 }
