@@ -3,6 +3,7 @@ GO
 
 MERGE INTO [dbo].[ApplicationStatusType] AS Target 
 USING (VALUES 
+	(0, N'SAV', N'SAV', N'Saved'),
 	(1, N'DRF', N'DRF', N'Unsent'),
 	(2, N'NEW', N'NEW', N'Sent'),
 	(3, N'APP', N'APP', N'In progress'),

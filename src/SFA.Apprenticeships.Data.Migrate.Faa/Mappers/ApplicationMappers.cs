@@ -205,6 +205,8 @@
         {
             switch (status)
             {
+                case 5:
+                    return 0;
                 case 10:
                 case 20:
                     return 1;
