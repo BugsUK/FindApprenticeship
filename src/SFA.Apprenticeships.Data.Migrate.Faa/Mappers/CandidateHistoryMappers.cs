@@ -32,13 +32,13 @@
             if (user.Status >= 20 && (user.Status < 999 || candidateUser.User.ActivationDate.HasValue || candidateUser.Candidate.LegacyCandidateId != 0))
             {
                 //Activation
-                candidateHistory.Add(GetCandidateHistory(candidateId, user.ActivationDate ?? user.DateUpdated ?? user.DateCreated, CandidateHistoryEventIdStatusChange, CandidateStatusTypeIdActivated, candidateHistoryIds));
+                candidateHistory.Add(GetCandidateHistory(candidateId, user.ActivationDate ?? user.DateCreated, CandidateHistoryEventIdStatusChange, CandidateStatusTypeIdActivated, candidateHistoryIds));
             }
 
             if (user.Status >= 20)
             {
                 //Note
-                candidateHistory.Add(GetCandidateHistory(candidateId, user.ActivationDate ?? user.DateUpdated ?? user.DateCreated, CandidateHistoryEventIdNote, 0, candidateHistoryIds));
+                candidateHistory.Add(GetCandidateHistory(candidateId, user.ActivationDate ?? user.DateCreated, CandidateHistoryEventIdNote, 0, candidateHistoryIds));
             }
 
             return candidateHistory;
