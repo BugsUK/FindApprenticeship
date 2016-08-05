@@ -8,6 +8,8 @@
     {
         IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
 
+        IEnumerable<ApprenticeshipApplicationSummary> GetApplicationSummaries(int vacancyId);
+
         ApprenticeshipApplicationDetail GetApplication(Guid applicationId);
 
         ApprenticeshipApplicationDetail GetApplicationForReview(Guid applicationId);

@@ -2,9 +2,9 @@
 {
     public static class VacancyStatusMediatorCodes
     {
-        public static class Archive
+        public static class GetArchiveVacancyViewModel
         {
-            public const string Ok = "VacancyPosting.Archive.Ok";
+            public const string Ok = "VacancyPosting.GetArchiveVacancyViewModelByVacancyReferenceNumber.Ok";
         }
     }
 }

@@ -75,6 +75,7 @@
             For<IGeoCodingProvider>().Use<GeoCodingProvider>();
             For<IReportingProvider>().Use<ReportingProvider>();
             For<IEncryptionProvider>().Use<AES256Provider>();
+            For<IVacancyStatusChangeProvider>().Use<VacancyStatusChangeProvider>();
         }
 
         private void RegisterServices()

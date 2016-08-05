@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyStatus
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyStatus
 {
     public class ArchiveVacancyViewModel
     {
-        public ArchiveVacancyViewModel(bool hasOutstandingActions1, int vacancyId1)
+        public ArchiveVacancyViewModel() { }
+
+        public ArchiveVacancyViewModel(bool hasOutstandingActions, int vacancyId, int vacancyReferenceNumber)
         {
-            HasOutstandingActions = hasOutstandingActions1;
-            VacancyId = vacancyId1;
+            VacancyReferenceNumber = vacancyReferenceNumber;
+            HasOutstandingActions = hasOutstandingActions;
+            VacancyId = vacancyId;
         }
 
-        public bool HasOutstandingActions { get; private set; }
+        public bool HasOutstandingActions { get; set; }
 
-        public int VacancyId { get; private set; }
+        public int VacancyId { get; set; }
+
+        public int VacancyReferenceNumber { get; set; }
     }
 }

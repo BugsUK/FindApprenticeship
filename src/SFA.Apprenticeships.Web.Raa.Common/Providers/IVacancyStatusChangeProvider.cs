@@ -4,6 +4,6 @@
 
     public interface IVacancyStatusChangeProvider
     {
-        ArchiveVacancyViewModel GetArchiveVacancyViewModelByVacancyId(int vacancyId);
+        ArchiveVacancyViewModel GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber);
     }
 }

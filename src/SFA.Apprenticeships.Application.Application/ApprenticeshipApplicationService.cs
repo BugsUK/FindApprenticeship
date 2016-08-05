@@ -36,6 +36,11 @@
             return _apprenticeshipApplicationReadRepository.GetSubmittedApplicationSummaries(vacancyId);
         }
 
+        public IEnumerable<ApprenticeshipApplicationSummary> GetApplicationSummaries(int vacancyId)
+        {
+            return _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyId);
+        }
+
         public int GetApplicationCount(int vacancyId)
         {
             return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new[] { vacancyId })[vacancyId].AllApplications;

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Applications;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Repositories;
@@ -10,20 +11,20 @@
 
     public class VacancyStatusChangeProvider : IVacancyStatusChangeProvider
     {
-        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
-        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
+        private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
+        private readonly ITraineeshipApplicationService _traineeshipApplicationService;
         private readonly IVacancyReadRepository _vacancyReadRepository;
 
-        public VacancyStatusChangeProvider(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository, IVacancyReadRepository vacancyReadRepository)
+        public VacancyStatusChangeProvider(IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyReadRepository vacancyReadRepository)
         {
-            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
-            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
+            _apprenticeshipApplicationService = apprenticeshipApplicationService;
+            _traineeshipApplicationService = traineeshipApplicationService;
             _vacancyReadRepository = vacancyReadRepository;
         }
 
-        public ArchiveVacancyViewModel GetArchiveVacancyViewModelByVacancyId(int vacancyId)
+        public ArchiveVacancyViewModel GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyReadRepository.Get(vacancyId);
+            var vacancy = _vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber);
             
             //TODO: Put this somewhwere more common
             var statusesRequiringAction = new List<ApplicationStatuses>()
@@ -35,20 +36,20 @@
 
             if (vacancy.VacancyType == VacancyType.Traineeship)
             {
-                var traineeshipApplicationSummaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(vacancyId);
+                var traineeshipApplicationSummaries = _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId);
                 var hasOutstandingActions = (!traineeshipApplicationSummaries.Any() ||
                                              traineeshipApplicationSummaries.Any(
                                                  a => statusesRequiringAction.Contains(a.Status)));
-                return new ArchiveVacancyViewModel(hasOutstandingActions, vacancyId);
+                return new ArchiveVacancyViewModel(hasOutstandingActions, vacancy.VacancyId, vacancyReferenceNumber);
 
             }
             else
             {
-                var apprenticeshipApplicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyId);
+                var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
                 var hasOutstandingActions = (!apprenticeshipApplicationSummaries.Any() ||
                                              apprenticeshipApplicationSummaries.Any(
                                                  a => statusesRequiringAction.Contains(a.Status)));
-                return new ArchiveVacancyViewModel(hasOutstandingActions, vacancyId);
+                return new ArchiveVacancyViewModel(hasOutstandingActions, vacancy.VacancyId, vacancyReferenceNumber);
             }
         }
     }
