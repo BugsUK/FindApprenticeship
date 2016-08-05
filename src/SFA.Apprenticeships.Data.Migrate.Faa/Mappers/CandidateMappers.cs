@@ -82,7 +82,7 @@
                 {
                     CandidateId = candidateId,
                     PersonId = candidateSummary.PersonId,
-                    CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser.User.Status),
+                    CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser),
                     DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
                     AddressLine1 = anonymise ? "" : address.AddressLine1,
                     AddressLine2 = address.AddressLine2 ?? "",
@@ -256,9 +256,9 @@
             return candidate.LegacyCandidateId;
         }
 
-        private int GetCandidateStatusTypeId(int status)
+        private int GetCandidateStatusTypeId(CandidateUser candidateUser)
         {
-            switch (status)
+            switch (candidateUser.User.Status)
             {
                 case 0:
                     return CandidateStatusTypeIdPreRegistered;
@@ -268,8 +268,9 @@
                 case 30:
                 case 90:
                 case 100:
-                case 999:
                     return CandidateStatusTypeIdActivated;
+                case 999:
+                    return candidateUser.User.ActivationDate.HasValue || candidateUser.Candidate.LegacyCandidateId != 0 ? CandidateStatusTypeIdActivated : CandidateStatusTypeIdPreRegistered;
                 //We don't feed back the status changes to AVMS so users never go from Activated to any other state. As a result always return Activated for reporting purposes
                 /*case 30:
                     return CandidateStatusTypeIdSuspended;
