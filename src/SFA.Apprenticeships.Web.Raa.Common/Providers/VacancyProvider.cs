@@ -494,7 +494,7 @@
             catch (CustomException)
             {
                 result = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
-                result.State = UpdateVacancyDatesState.InvalidState;
+                result.VacancyApplicationsState = VacancyApplicationsState.Invalid;
                 result.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
@@ -502,7 +502,9 @@
             }
 
             result = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
-            result.State = _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId) > 0 ? UpdateVacancyDatesState.UpdatedHasApplications : UpdateVacancyDatesState.UpdatedNoApplications;
+
+            result.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
+
             result.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
@@ -1511,13 +1513,19 @@
         public VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-
             var viewModel = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
+
+            viewModel.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
 
             viewModel.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
             return viewModel;
+        }
+
+        private VacancyApplicationsState GetVacancyApplicationsState(Vacancy vacancy)
+        {
+            return _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId) > 0 ? VacancyApplicationsState.HasApplications : VacancyApplicationsState.NoApplications;
         }
 
         private static class ExtensionMethods

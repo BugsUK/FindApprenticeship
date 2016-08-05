@@ -1,8 +1,10 @@
 ﻿@using SFA.Apprenticeships.Web.Common.Extensions
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyDatesViewModel
-    
+
+@model VacancyDatesViewModel
+
 @{
     ViewBag.Title = "Recruit an Apprentice - Change vacancy dates";
 }
@@ -41,6 +43,18 @@
 
     <div class="grid grid-1-2">
         <button class="button" type="submit">Save and return</button>
-        @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+
+        @{
+            var viewModel = new
+            {
+                vacancyReferenceNumber = Model.VacancyReferenceNumber
+            };
+
+            var routeName = Model.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
+                RecruitmentRouteNames.VacancyApplications :
+                RecruitmentRouteNames.PreviewVacancy;
+
+            @Html.RouteLink("Cancel", routeName, viewModel);
+        }
     </div>
 }
