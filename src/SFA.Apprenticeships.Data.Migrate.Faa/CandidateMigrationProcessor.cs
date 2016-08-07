@@ -136,7 +136,7 @@
                 var candidatesWithHistory = candidateUsers.Select(c => _candidateMappers.MapCandidateWithHistory(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, schoolAttendedIds, candidateHistoryIds, _anonymiseData)).Where(c => c != null).ToList();
                 
                 count += candidatesWithHistory.Count;
-                _logService.Info($"Processing {candidatesWithHistory.Count} active candidates");
+                _logService.Info($"Processing {candidatesWithHistory.Count} mapped candidates");
                 BulkUpsert(candidatesWithHistory, candidateSummaries);
 
                 var syncParams = _syncRepository.GetSyncParams();
