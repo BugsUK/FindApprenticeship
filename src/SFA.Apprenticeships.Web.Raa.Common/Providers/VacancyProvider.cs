@@ -740,16 +740,29 @@
             // Get vacancies for selected filter
             var filteredVacancies = (IEnumerable<IMinimalVacancyDetails>)Filter(minimalVacancyDetails, vacanciesSummarySearch.FilterType, applicationCountsByVacancyId).ToList();
 
+            var vacancyPartyIds = new HashSet<int>(filteredVacancies.Select(v => v.OwnerPartyId));
+            var employers = _employerService.GetMinimalEmployerDetails(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct());
+            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
+
+            filteredVacancies = filteredVacancies.Select(v =>
+            {
+                v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName; // vacancyPartyToEmployerMap[v.OwnerPartyId].Name;
+                return v;
+            });
+
             // If doing a vacancy search then all the vacancies need to be fetched now, otherwise just fetch the first page
             var vacanciesToFetch = isVacancySearch ? filteredVacancies : Sort(filteredVacancies, vacanciesSummarySearch.FilterType).GetCurrentPage(vacanciesSummarySearch).ToList();
 
-            var vacancyPartyIds = new HashSet<int>(vacanciesToFetch.Select(v => v.OwnerPartyId));
-            var employers = _employerService.GetEmployers(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct());
-
             var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
 
-            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
-            var vacancies = Sort(_vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId)), vacanciesSummarySearch.FilterType);
+            var vacanciesWithoutEmployerName =
+                _vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId));
+
+            var vacancies = Sort(vacanciesWithoutEmployerName.Select(v =>
+            {
+                v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName;
+                return v;
+            }), vacanciesSummarySearch.FilterType);
 
             if (isVacancySearch)
             {
@@ -757,7 +770,7 @@
 
                 vacancies = vacancies.Where(v =>
                     (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).Name.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
+                    vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
                 );
 
                 filteredVacancies = vacancies.ToList();
@@ -771,7 +784,7 @@
 
             foreach (var vacancySummary in vacancySummaries)
             {
-                vacancySummary.EmployerName = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId).Name;
+                vacancySummary.EmployerName = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId).FullName;
                 vacancySummary.ApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].AllApplications;
                 vacancySummary.NewApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].NewApplications;
                 vacancySummary.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancySummary.VacancyId)).ToList();
@@ -801,11 +814,10 @@
                 Vacancies = vacancyPage
             };
 
-
             stopWatch.Stop();
             var milis = stopWatch.ElapsedMilliseconds;
 
-            _logService.Info($"[DASHBOARD-OLD] (FilterType: {vacanciesSummarySearch.FilterType}) => Time: {milis} milliseconds.");
+            _logService.Info($"[DASHBOARD Minimal Employer Details] (FilterType: {vacanciesSummarySearch.FilterType}) => Time: {milis} milliseconds.");
 
             return vacanciesSummary;
         }

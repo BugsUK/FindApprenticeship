@@ -15,6 +15,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
         Employer GetEmployerWithoutStatusCheck(int employerId);
         Employer GetEmployer(string edsUrn);
         IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds);
+        IEnumerable<MinimalEmployerDetails> GetMinimalEmployerDetails(IEnumerable<int> employerIds);
         Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
         Employer SaveEmployer(Employer employer);
         void SendApplicationLinks(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
