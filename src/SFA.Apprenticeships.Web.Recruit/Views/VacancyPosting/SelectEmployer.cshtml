@@ -42,7 +42,10 @@
     }
 
     <section class="clearfix" id="providerSiteResults">
-        <a class="select-employer-link-to-new" href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
+        @if (noResults == false)
+        {
+            <a class="select-employer-link-to-new" href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
+        }
         <h2 class="heading-small">Search your employers</h2>
         <details @detailsOpen>
             <summary>Search your employers</summary>

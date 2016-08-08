@@ -20,7 +20,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
     public abstract class TestBase
     {
         private Mock<ILogService> _mockLogService;
-        private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService;
+        protected Mock<IApprenticeshipApplicationService> MockApprenticeshipApplicationService;
         private Mock<ITraineeshipApplicationService> _traineeshipApplicationService;
         private Mock<IVacancyLockingService> _mockVacancyLockingService;
         protected Mock<IConfigurationService> MockConfigurationService;
@@ -51,7 +51,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
                 .Returns(new RecruitWebConfiguration {AutoSaveTimeoutInSeconds = 60});
 
             MockTimeService = new Mock<IDateTimeService>();
-            _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
+            MockApprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
             _traineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
             _mockVacancyLockingService = new Mock<IVacancyLockingService>();
             _mockCurrentUserService = new Mock<ICurrentUserService>();
@@ -70,7 +70,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
                 MockEmployerService.Object,
                 MockTimeService.Object,
                 MockMapper.Object,
-                _apprenticeshipApplicationService.Object,
+                MockApprenticeshipApplicationService.Object,
                 _traineeshipApplicationService.Object,
                 _mockVacancyLockingService.Object,
                 _mockCurrentUserService.Object,

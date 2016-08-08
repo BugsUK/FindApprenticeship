@@ -9,7 +9,8 @@
         bool IsValidForIncrementalSync { get; }
         DateTime VacancyApplicationLastCreatedDate { get; }
         DateTime VacancyApplicationLastUpdatedDate { get; }
-        void UpdateSyncDates(DateTime maxDateCreated, DateTime maxDateUpdated);
+        void UpdateLastCreatedSyncDate(DateTime maxDateCreated);
+        void UpdateLastUpdatedSyncDate(DateTime maxDateUpdated);
     }
 
     public class ApprenticeshipApplicationsUpdater : IVacancyApplicationsUpdater
@@ -25,10 +26,15 @@
         public bool IsValidForIncrementalSync => _syncRepository.GetSyncParams().IsValidForApprenticeshipIncrementalSync;
         public DateTime VacancyApplicationLastCreatedDate => _syncRepository.GetSyncParams().ApprenticeshipLastCreatedDate;
         public DateTime VacancyApplicationLastUpdatedDate => _syncRepository.GetSyncParams().ApprenticeshipLastUpdatedDate;
-        public void UpdateSyncDates(DateTime maxDateCreated, DateTime maxDateUpdated)
+        public void UpdateLastCreatedSyncDate(DateTime maxDateCreated)
         {
             var syncParams = _syncRepository.GetSyncParams();
             syncParams.ApprenticeshipLastCreatedDate = maxDateCreated > syncParams.ApprenticeshipLastCreatedDate ? maxDateCreated : syncParams.ApprenticeshipLastCreatedDate;
+            _syncRepository.SetApprenticeshipSyncParams(syncParams);
+        }
+        public void UpdateLastUpdatedSyncDate(DateTime maxDateUpdated)
+        {
+            var syncParams = _syncRepository.GetSyncParams();
             syncParams.ApprenticeshipLastUpdatedDate = maxDateUpdated > syncParams.ApprenticeshipLastUpdatedDate ? maxDateUpdated : syncParams.ApprenticeshipLastUpdatedDate;
             _syncRepository.SetApprenticeshipSyncParams(syncParams);
         }
@@ -47,10 +53,15 @@
         public bool IsValidForIncrementalSync => _syncRepository.GetSyncParams().IsValidForTraineeshipIncrementalSync;
         public DateTime VacancyApplicationLastCreatedDate => _syncRepository.GetSyncParams().TraineeshipLastCreatedDate;
         public DateTime VacancyApplicationLastUpdatedDate => _syncRepository.GetSyncParams().TraineeshipLastUpdatedDate;
-        public void UpdateSyncDates(DateTime maxDateCreated, DateTime maxDateUpdated)
+        public void UpdateLastCreatedSyncDate(DateTime maxDateCreated)
         {
             var syncParams = _syncRepository.GetSyncParams();
             syncParams.TraineeshipLastCreatedDate = maxDateCreated > syncParams.TraineeshipLastCreatedDate ? maxDateCreated : syncParams.TraineeshipLastCreatedDate;
+            _syncRepository.SetTraineeshipSyncParams(syncParams);
+        }
+        public void UpdateLastUpdatedSyncDate(DateTime maxDateUpdated)
+        {
+            var syncParams = _syncRepository.GetSyncParams();
             syncParams.TraineeshipLastUpdatedDate = maxDateUpdated > syncParams.TraineeshipLastUpdatedDate ? maxDateUpdated : syncParams.TraineeshipLastUpdatedDate;
             _syncRepository.SetTraineeshipSyncParams(syncParams);
         }

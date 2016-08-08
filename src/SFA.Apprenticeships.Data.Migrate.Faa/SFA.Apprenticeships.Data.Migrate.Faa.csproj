@@ -163,6 +163,7 @@
     <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
     <Compile Include="Repository\Sql\SchoolAttendedTable.cs" />
     <Compile Include="Repository\Sql\SubVacancyTable.cs" />
+    <Compile Include="SyncType.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MigrateFromFaaToAvmsPlusConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />

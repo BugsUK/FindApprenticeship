@@ -38,7 +38,7 @@
         public void ActivatedCandidateUserTest(int status)
         {
             //Arrange
-            var candidateUser = new CandidateUserBuilder().WithStatus(20).Build();
+            var candidateUser = new CandidateUserBuilder().WithStatus(status).Build();
 
             //Act
             var candidateHistory = candidateUser.MapCandidateHistory(candidateUser.Candidate.LegacyCandidateId, new Dictionary<int, Dictionary<int, int>>());
@@ -62,6 +62,45 @@
             noteHistory.CandidateHistoryEventTypeId.Should().Be(3);
             noteHistory.CandidateHistorySubEventTypeId.Should().Be(0);
             noteHistory.EventDate.Should().Be(candidateUser.User.ActivationDate.Value);
+            noteHistory.Comment.Should().Be("NAS Exemplar registered Candidate.");
+            noteHistory.UserName.Should().Be("NAS Gateway");
+        }
+
+        [TestCase(true, 0, true)]
+        [TestCase(false, 0, false)]
+        [TestCase(true, 456789, true)]
+        [TestCase(false, 456789, true)]
+        public void PendingDeletionCandidateUserTest(bool activated, int legacyCandidateId, bool expectedActivated)
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(999).WithActivated(activated).WithLegacyCandidateId(legacyCandidateId).Build();
+
+            //Act
+            var candidateHistory = candidateUser.MapCandidateHistory(candidateUser.Candidate.LegacyCandidateId, new Dictionary<int, Dictionary<int, int>>());
+
+            //Assert
+            int expectedCount = expectedActivated ? 3 : 2;
+            candidateHistory.Should().NotBeNullOrEmpty();
+            candidateHistory.Count.Should().Be(expectedCount);
+            var createdHistory = candidateHistory[0];
+            createdHistory.CandidateHistoryEventTypeId.Should().Be(1);
+            createdHistory.CandidateHistorySubEventTypeId.Should().Be(1);
+            if (activated)
+            {
+                var activatedHistory = candidateHistory[1];
+                activatedHistory.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
+                activatedHistory.CandidateHistoryEventTypeId.Should().Be(1);
+                activatedHistory.CandidateHistorySubEventTypeId.Should().Be(2);
+                // ReSharper disable once PossibleInvalidOperationException
+                activatedHistory.EventDate.Should().Be(candidateUser.User.ActivationDate.Value);
+                activatedHistory.Comment.Should().BeNull();
+                activatedHistory.UserName.Should().Be("NAS Gateway");
+            }
+            var noteHistory = candidateHistory[expectedCount-1];
+            noteHistory.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
+            noteHistory.CandidateHistoryEventTypeId.Should().Be(3);
+            noteHistory.CandidateHistorySubEventTypeId.Should().Be(0);
+            noteHistory.EventDate.Should().Be(candidateUser.User.ActivationDate ?? candidateUser.User.DateCreated);
             noteHistory.Comment.Should().Be("NAS Exemplar registered Candidate.");
             noteHistory.UserName.Should().Be("NAS Gateway");
         }

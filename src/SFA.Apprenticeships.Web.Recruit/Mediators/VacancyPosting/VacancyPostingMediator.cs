@@ -657,13 +657,13 @@
             }
 
             var result = _vacancyPostingProvider.UpdateVacancy(viewModel);
-            switch (result.State)
+            switch (result.VacancyApplicationsState)
             {
-                case UpdateVacancyDatesState.UpdatedHasApplications:
+                case VacancyApplicationsState.HasApplications:
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.UpdatedHasApplications, viewModel);
-                case UpdateVacancyDatesState.UpdatedNoApplications:
+                case VacancyApplicationsState.NoApplications:
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications, viewModel);
-                case UpdateVacancyDatesState.InvalidState:
+                case VacancyApplicationsState.Invalid:
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.InvalidState, viewModel);
                 default:
                     throw new ArgumentOutOfRangeException();

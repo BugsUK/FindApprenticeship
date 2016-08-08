@@ -2,6 +2,7 @@
 {
     public class InformationRadiatorData
     {
+        public int TotalProviders { get; set; }
         public int TotalProviderUserAccounts { get; set; }
         public int TotalVacanciesSubmittedViaRaa { get; set; }
         public int TotalVacanciesApprovedViaRaa { get; set; }
