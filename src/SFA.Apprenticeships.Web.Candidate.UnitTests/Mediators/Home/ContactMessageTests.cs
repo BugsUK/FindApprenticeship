@@ -52,7 +52,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
         {
             var response = _homeMediator.GetContactMessageViewModel(null);
 
-            response.AssertCode(HomeMediatorCodes.GetContactMessageViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
             response.ViewModel.Name.Should().BeNull();
             response.ViewModel.Email.Should().BeNull();
         }
@@ -78,7 +78,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 
             var response = _homeMediator.GetContactMessageViewModel(candidateId);
 
-            response.AssertCode(HomeMediatorCodes.GetContactMessageViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
             response.ViewModel.Name.Should().Be(string.Format("{0} {1}", candidateFirstName, candidateLastName));
             response.ViewModel.Email.Should().Be(emailAddress);
         }
@@ -92,7 +92,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 
             var response = _homeMediator.GetContactMessageViewModel(candidateId);
 
-            response.AssertCode(HomeMediatorCodes.GetContactMessageViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
             response.ViewModel.Name.Should().BeNull();
             response.ViewModel.Email.Should().BeNull();
         }

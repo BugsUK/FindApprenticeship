@@ -119,7 +119,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
 
             var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AutoSave.IncorrectState);
+            response.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.AutoSave.IncorrectState);
         }
     }
 }

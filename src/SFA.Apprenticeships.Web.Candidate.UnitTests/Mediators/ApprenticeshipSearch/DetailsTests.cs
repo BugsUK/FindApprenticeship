@@ -71,7 +71,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             var response = Mediator.Details(Id, null);
 
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             var response = Mediator.Details(Id, Guid.NewGuid());
 
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             var response = Mediator.Details(Id, Guid.NewGuid());
 
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
         }
 
         [Test]

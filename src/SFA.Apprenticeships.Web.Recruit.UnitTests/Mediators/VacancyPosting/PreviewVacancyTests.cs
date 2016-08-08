@@ -45,11 +45,11 @@
             result.ValidationResult.Errors.Count(e => e.PropertyName == "FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate").Should().Be(2);
         }
 
-        [TestCase(VacancyStatus.Live)]
-        [TestCase(VacancyStatus.Closed)]
-        [TestCase(VacancyStatus.Completed)]
-        [TestCase(VacancyStatus.Withdrawn)]
-        public void CanHaveApplications_NoApplicationsRouteTest(VacancyStatus status)
+        [TestCase(VacancyStatus.Live, false)]
+        [TestCase(VacancyStatus.Closed, false)]
+        [TestCase(VacancyStatus.Completed, true)]
+        [TestCase(VacancyStatus.Withdrawn, false)]
+        public void CanHaveApplications_NoApplicationsRouteTest(VacancyStatus status, bool shouldHaveArchiveMessage)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
@@ -61,14 +61,21 @@
             var result = mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
-            result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
+            if (shouldHaveArchiveMessage)
+            {
+                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.VacancyHasBeenArchived+"<br/>"+ VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
+            }
+            else
+            {
+                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
+            }
         }
 
-        [TestCase(VacancyStatus.Live)]
-        [TestCase(VacancyStatus.Closed)]
-        [TestCase(VacancyStatus.Completed)]
-        [TestCase(VacancyStatus.Withdrawn)]
-        public void CanHaveApplications_OneApplicationRouteTest(VacancyStatus status)
+        [TestCase(VacancyStatus.Live, true)]
+        [TestCase(VacancyStatus.Closed, true)]
+        [TestCase(VacancyStatus.Completed, false)]
+        [TestCase(VacancyStatus.Withdrawn, true)]
+        public void CanHaveApplications_OneApplicationRouteTest(VacancyStatus status, bool messageShouldBeNull)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
@@ -80,7 +87,7 @@
             var result = mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
-            result.AssertCode(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
+            result.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, false, messageShouldBeNull);
         }
 
         [TestCase(VacancyStatus.Unknown)]
@@ -99,14 +106,14 @@
             var result = mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
-            result.AssertCode(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
+            result.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
         }
 
-        [TestCase(VacancyStatus.Live)]
-        [TestCase(VacancyStatus.Closed)]
-        [TestCase(VacancyStatus.Completed)]
-        [TestCase(VacancyStatus.Withdrawn)]
-        public void CanHaveClickThroughs_NoClickThroughsRouteTest(VacancyStatus status)
+        [TestCase(VacancyStatus.Live, false)]
+        [TestCase(VacancyStatus.Closed, false)]
+        [TestCase(VacancyStatus.Completed, true)]
+        [TestCase(VacancyStatus.Withdrawn, false)]
+        public void CanHaveClickThroughs_NoClickThroughsRouteTest(VacancyStatus status, bool shouldHaveArchiveMessage)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
@@ -119,14 +126,22 @@
             var result = mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
-            result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
+            if (shouldHaveArchiveMessage)
+            {
+                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.VacancyHasBeenArchived + "<br/>" + VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
+            }
+            else
+            {
+                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
+            }
+            
         }
 
-        [TestCase(VacancyStatus.Live)]
-        [TestCase(VacancyStatus.Closed)]
-        [TestCase(VacancyStatus.Completed)]
-        [TestCase(VacancyStatus.Withdrawn)]
-        public void CanHaveClickThroughs_OneClickThroughRouteTest(VacancyStatus status)
+        [TestCase(VacancyStatus.Live, true)]
+        [TestCase(VacancyStatus.Closed, true)]
+        [TestCase(VacancyStatus.Completed, false)]
+        [TestCase(VacancyStatus.Withdrawn, true)]
+        public void CanHaveClickThroughs_OneClickThroughRouteTest(VacancyStatus status, bool messageShouldBeNull)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
@@ -140,7 +155,7 @@
             var result = mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
-            result.AssertCode(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
+            result.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, false, messageShouldBeNull);
         }
     }
 }
