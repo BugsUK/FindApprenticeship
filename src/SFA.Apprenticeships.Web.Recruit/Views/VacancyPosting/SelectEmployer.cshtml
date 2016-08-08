@@ -84,6 +84,7 @@
                         @Html.HiddenFor(model => model.ProviderSiteId)
                         @Html.HiddenFor(model => model.VacancyGuid)
                         @Html.HiddenFor(model => model.ComeFromPreview)
+                        <input type="hidden" name="no-cache" value="@Guid.NewGuid()">
 
                         <div id="name-location-search-panel" class="toggle-content blocklabel-content">
                             @Html.FormTextFor(model => model.Name)
