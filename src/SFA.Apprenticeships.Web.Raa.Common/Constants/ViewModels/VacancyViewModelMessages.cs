@@ -126,6 +126,7 @@
         {
             public const string LabelText = "Closing date for applications";
             public const string RequiredErrorText = "Enter the closing date for applications";
+            public const string AfterTodayErrorText = "The closing date can't be today or earlier. We advise using a date more than two weeks from now";
             public const string TodayOrInTheFutureErrorText = "The closing date can't be in the past. We advise using a date more than two weeks from now";
             public const string TooSoonErrorText = "The closing date should be at least two weeks in the future";
         }
