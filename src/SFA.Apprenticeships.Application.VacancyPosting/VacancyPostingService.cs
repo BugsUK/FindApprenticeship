@@ -50,6 +50,12 @@
         {
             Condition.Requires(vacancy);
 
+            if (vacancy.Status == VacancyStatus.Completed)
+            {
+                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
+                throw new CustomException(message, ErrorCodes.EntityStateError);
+            }
+
             if (_currentUserService.IsInRole(Roles.Faa))
             {
                 var username = _currentUserService.CurrentUserName;
@@ -69,6 +75,21 @@
 
         public Vacancy UpdateVacancy(Vacancy vacancy)
         {
+            if (vacancy.Status == VacancyStatus.Completed)
+            {
+                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
+                throw new CustomException(message, ErrorCodes.EntityStateError);
+            }
+
+            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
+        }
+
+        public Vacancy ArchiveVacancy(Vacancy vacancy)
+        {
+            Condition.Requires(vacancy);
+
+            vacancy.Status = VacancyStatus.Completed;
+
             return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
         }
 
@@ -147,12 +168,6 @@
             Condition.Requires(vacancy);
 
             AuthoriseCurrentUser(vacancy);
-
-            if (vacancy.Status == VacancyStatus.Completed)
-            {
-                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
-                throw new CustomException(message, ErrorCodes.EntityStateError);
-            }
 
             if (_currentUserService.IsInRole(Roles.Faa))
             {
