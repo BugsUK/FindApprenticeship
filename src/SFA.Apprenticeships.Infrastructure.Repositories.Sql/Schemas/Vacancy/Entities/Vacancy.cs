@@ -3,6 +3,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Domain.Entities.Raa.Reference;
 
     [Table("dbo.Vacancy")]
     public class Vacancy
@@ -152,5 +153,20 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public DateTime? UpdatedDateTime { get; set; }
 
         public int VacancySourceId { get; set; }
+        public int ApprenticeshipLevel { get; set; }
+
+        public string FrameworkCodeName { get; set; }
+
+        public string SectorCodeName { get; set; }
+
+        public DateTime? CreatedDateTime { get; set; }
+
+        public string CreatedByProviderUsername { get; set; }
+
+        public RegionalTeam RegionalTeam { get; set; }
+
+        public string LocalAuthorityCode { get; set; }
+
+        public string County { get; set; }
     }
 }

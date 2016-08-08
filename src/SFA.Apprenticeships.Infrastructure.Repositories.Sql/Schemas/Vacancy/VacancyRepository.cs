@@ -78,11 +78,77 @@
             _logger.Debug("Calling database to get apprenticeship vacancy with Vacancy Reference Number={0}",
                 vacancyReferenceNumber);
 
-            var dbVacancy = _getOpenConnection.Query<Vacancy>(
-                "SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
-                new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
+            var result = _getOpenConnection.Query<VacancyPlus>(
+                @"
+DECLARE @VacancyId as int
+DECLARE @pos as int
+DECLARE @ApprenticeshipFrameworkName as NVARCHAR(200)
+DECLARE @ApprenticeshipFrameworkSanitisedName as NVARCHAR(200)
 
-            return MapVacancy(dbVacancy);
+SELECT 
+    @VacancyId = VacancyId,
+    @ApprenticeshipFrameworkName = af.FullName
+FROM dbo.Vacancy AS v
+    LEFT JOIN dbo.ApprenticeshipFramework as af ON v.ApprenticeshipFrameworkId = af.ApprenticeshipFrameworkId
+WHERE VacancyReferenceNumber = @VacancyReference
+
+SET @pos = CHARINDEX('(', @ApprenticeshipFrameworkName)
+IF(@pos > 0)
+    SET @ApprenticeshipFrameworkSanitisedName = LOWER(RTRIM(SUBSTRING(@ApprenticeshipFrameworkName, 1, @pos - 1)))
+ELSE
+    SET @ApprenticeshipFrameworkSanitisedName = LOWER(@ApprenticeshipFrameworkName)
+
+SELECT 
+    v.*, 
+    el.CodeName as ApprenticeshipLevel, 
+    af.FullName AS ApprenticeshipFrameworkName, 
+    --@ApprenticeshipFrameworkSanitisedName as ApprenticeshipFrameworkSanitisedName, 
+    --af.ApprenticeshipOccupationId, 
+    af.CodeName as FrameworkCodeName,
+    ao.CodeName as SectorCodeName, 
+    ps.PostCode, 
+    la.CodeName as LocalAuthority, 
+    c.FullName as County, 
+    ds.DateFirstSubmitted, ds.DateSubmitted, 
+    draft.HistoryDate as CreatedDateTime, 
+    draft.UserName as CreatedByProviderUsername, 
+    s.StandardId
+FROM dbo.Vacancy AS v
+    LEFT JOIN dbo.ApprenticeshipOccupation AS ao ON v.SectorId = ao.ApprenticeshipOccupationId
+    LEFT JOIN dbo.ApprenticeshipType AS at ON at.ApprenticeshipTypeId = v.ApprenticeshipType
+    LEFT JOIN Reference.EducationLevel AS el ON el.EducationLevelId = at.EducationLevelId
+    LEFT JOIN dbo.ApprenticeshipFramework AS af ON v.ApprenticeshipFrameworkId = af.ApprenticeshipFrameworkId
+    LEFT JOIN dbo.VacancyOwnerRelationship AS vor ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+    LEFT JOIN dbo.ProviderSite AS ps ON ps.ProviderSiteId = vor.ProviderSiteId
+    LEFT JOIN dbo.LocalAuthority AS la ON v.LocalAuthorityId = la.LocalAuthorityId
+    LEFT JOIN dbo.County AS c ON c.CountyId = v.CountyId
+    LEFT JOIN(
+        select VacancyId, MIN(HistoryDate) AS DateFirstSubmitted, MAX(HistoryDate) AS DateSubmitted
+        from dbo.VacancyHistory
+        where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @SubmittedTypeId
+        GROUP BY VacancyId) AS ds ON v.VacancyId = ds.VacancyId
+    LEFT JOIN(
+        select top 1 VacancyId, HistoryDate, UserName
+        from dbo.VacancyHistory
+        where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = 1
+        order by HistoryDate
+    ) AS draft ON v.VacancyId = draft.VacancyId
+    LEFT JOIN(
+        select top 1 VacancyId, HistoryDate as DateQAApproved
+        from dbo.VacancyHistory
+        where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = 2
+        order by HistoryDate desc
+    ) AS live ON v.VacancyId = live.VacancyId
+    LEFT JOIN Reference.Standard AS s ON s.FullName = @ApprenticeshipFrameworkSanitisedName
+WHERE v.VacancyId = @VacancyId
+",
+                new
+                {
+                    VacancyReference = vacancyReferenceNumber,
+                    SubmittedTypeId = VacancyStatus.Submitted
+                });
+
+            return MapVacancyNew(result.FirstOrDefault());
         }
 
         public DomainVacancy GetByVacancyGuid(Guid vacancyGuid)
@@ -309,6 +375,60 @@ FETCH NEXT @PageSize ROWS ONLY
 
             PatchTrainingType(result);
             GetAndTryToMapStandards(dbVacancy, result);
+
+            return result;
+        }
+
+        private DomainVacancy MapVacancyNew(VacancyPlus dbVacancy)
+        {
+            if (dbVacancy == null)
+                return null;
+            
+            var result = _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
+
+            GetAdditionalQuestions(dbVacancy, result);
+            GetAndMapTextFields(dbVacancy, result);
+            GetAndMapComments(dbVacancy, result);
+
+            //MapApprenticeshipType(dbVacancy, result);
+            //MapFrameworkId(dbVacancy, result);
+            //MapSectorId(dbVacancy, result);
+            result.DateFirstSubmitted = dbVacancy.DateFirstSubmitted;
+            result.DateSubmitted = dbVacancy.DateSubmitted;
+            result.DateQAApproved = dbVacancy.DateQAApproved;
+            if (dbVacancy.CreatedDateTime != null) result.CreatedDateTime = dbVacancy.CreatedDateTime.Value;
+
+            //.MapMemberFrom(v => v.ApprenticeshipLevel, av => av.ApprenticeshipLevel)
+            //.MapMemberFrom(v => v.FrameworkCodeName, av => av.FrameworkCodeName)
+            //.MapMemberFrom(v => v.SectorCodeName, av => av.SectorCodeName)
+            //.MapMemberFrom(v => v.CreatedDateTime.Value, av => av.CreatedDateTime)
+            //.MapMemberFrom(v => v.CreatedByProviderUsername, av => av.CreatedByProviderUsername)
+            //.MapMemberFrom(v => v.RegionalTeam, av => av.RegionalTeam)
+            //.MapMemberFrom(v => v.LocalAuthorityCode, av => av.LocalAuthorityCode)
+
+            result.Address.County = dbVacancy.County;
+            result.ApprenticeshipLevel = (ApprenticeshipLevel) dbVacancy.ApprenticeshipLevel;
+            result.FrameworkCodeName = dbVacancy.FrameworkCodeName;
+            result.SectorCodeName = dbVacancy.SectorCodeName;
+            result.CreatedByProviderUsername = dbVacancy.CreatedByProviderUsername;
+            result.RegionalTeam = dbVacancy.RegionalTeam;
+            result.LocalAuthorityCode = dbVacancy.LocalAuthorityCode;
+
+            //MapDateFirstSubmitted(dbVacancy, result);
+            //GetCreatedDateTime(dbVacancy, result);
+            //GetCreatedByProviderUsername(dbVacancy, result);
+            //GetDateSubmitted(dbVacancy, result);
+
+            //GetDateQAApproved(dbVacancy, result);
+
+
+            //GetRegionalTeam(result);
+            //GetLocalAuthorityCode(dbVacancy, result);
+            MapDuration(dbVacancy, result);
+            //GetCountyId(dbVacancy, result);
+
+            PatchTrainingType(result);
+            MapStandards(dbVacancy, result);
 
             return result;
         }
@@ -541,6 +661,21 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             }
         }
 
+        private void MapStandards(Vacancy dbVacancy, VacancySummary result)
+        {
+            if (dbVacancy.StandardId.HasValue)
+            {
+                    // This is a vacancy created in AVMS with an standard codified as framework
+                    result.TrainingType = TrainingType.Standards;
+                    result.FrameworkCodeName = null;
+
+                    // Try to get the standard id
+                    _logger.Info(
+                        result.StandardId.HasValue
+                            ? $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({dbVacancy.FrameworkCodeName}) and the new StandardId is {result.StandardId.Value}"
+                            : $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({dbVacancy.FrameworkCodeName}) but we haven't found any matching standard.");
+            }
+        }
         private void GetAndTryToMapStandards(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
