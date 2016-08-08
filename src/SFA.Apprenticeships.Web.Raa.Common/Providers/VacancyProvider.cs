@@ -703,9 +703,6 @@
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
-
             var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
             if (isVacancySearch)
             {
@@ -813,11 +810,6 @@
                 HasVacancies = hasVacancies,
                 Vacancies = vacancyPage
             };
-
-            stopWatch.Stop();
-            var milis = stopWatch.ElapsedMilliseconds;
-
-            _logService.Info($"[DASHBOARD Minimal Employer Details] (FilterType: {vacanciesSummarySearch.FilterType}) => Time: {milis} milliseconds.");
 
             return vacanciesSummary;
         }
