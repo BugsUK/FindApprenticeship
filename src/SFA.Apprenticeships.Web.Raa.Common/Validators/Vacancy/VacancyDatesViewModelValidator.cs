@@ -61,11 +61,21 @@
         internal static void AddServerCommonRules(this AbstractValidator<VacancyDatesViewModel> validator)
         {
             validator.RuleFor(x => x.ClosingDate)
+                .SetValidator(new DateViewModelClientValidator());
+
+            validator.RuleFor(x => x.ClosingDate)
                 .Must(Common.BeValidDate)
-                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
+                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText);
+
+            validator.RuleFor(x => x.ClosingDate)
+                .Must(Common.BeOneDayInTheFuture)
+                .WithMessage(VacancyViewModelMessages.ClosingDate.AfterTodayErrorText)
+                .When(IsNewVacancy);
+
+            validator.RuleFor(x => x.ClosingDate)
                 .Must(Common.BeTodayOrInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.TodayOrInTheFutureErrorText)
-                .SetValidator(new DateViewModelClientValidator());
+                .When(x => !IsNewVacancy(x));
 
             validator.RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeValidDate)
@@ -82,7 +92,7 @@
                 .Must(Common.BeTwoWeeksInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.TooSoonErrorText)
                 .WithState(s => ValidationType.Warning)
-                .When(x => !(x.VacancyStatus == VacancyStatus.Live || x.VacancyStatus == VacancyStatus.Closed));
+                .When(IsNewVacancy);
 
             validator.RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeTwoWeeksInTheFuture)
@@ -91,6 +101,11 @@
                 .When(x => x.ClosingDate == null || !x.ClosingDate.HasValue);
 
             validator.Custom(x => x.PossibleStartDateShouldBeAfterClosingDate(x.ClosingDate, parentPropertyName));
+        }
+
+        private static bool IsNewVacancy(VacancyDatesViewModel x)
+        {
+            return !(x.VacancyStatus == VacancyStatus.Live || x.VacancyStatus == VacancyStatus.Closed);
         }
     }
 }
