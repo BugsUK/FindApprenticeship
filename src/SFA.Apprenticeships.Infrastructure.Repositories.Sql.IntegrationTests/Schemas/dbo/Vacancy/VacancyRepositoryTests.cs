@@ -108,6 +108,7 @@
                     .Excluding(x => x.OtherInformation)
                     .Excluding(x => x.LiveClosingDate)
                     .Excluding(x => x.SyntheticUpdatedDateTime)
+                    .Excluding(x => x.EmployerName)
                     .Excluding(x => x.WageUnit)); // TODO: remove this after changes in DB
 
             entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");
