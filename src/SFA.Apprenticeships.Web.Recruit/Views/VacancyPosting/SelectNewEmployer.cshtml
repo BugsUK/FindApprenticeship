@@ -66,7 +66,7 @@
             </label>
         </div>
 
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "edsUrn-search-form" }))
+        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer), @id = "edsUrn-search-form" }))
         {
             @Html.HiddenFor(m => m.ProviderSiteId)
             @Html.HiddenFor(m => m.VacancyGuid)
@@ -83,7 +83,7 @@
             </div>
         }
 
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "name-location-search-form" }))
+        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer), @id = "name-location-search-form" }))
         {
             @Html.HiddenFor(m => m.ProviderSiteId)
             @Html.HiddenFor(m => m.VacancyGuid)
@@ -104,7 +104,7 @@
 
     @if (Model.EmployerResultsPage.ResultsCount > 0)
     {
-        <section class="clearfix" id="providerSiteResults">
+        <section class="clearfix">
             @{
                 var resultsMessage = Model.EmployerResultsPage.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.EmployerResultsPage.ResultsCount) : "Found one employer";
             }

@@ -41,7 +41,7 @@
         </div>
     }
 
-    <section class="clearfix" id="providerSiteResults">
+    <section class="clearfix">
         @if (noResults == false)
         {
             <a class="select-employer-link-to-new" href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
@@ -64,7 +64,7 @@
                         </label>
                     </div>
 
-                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "edsUrn-search-form"}))
+                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer), @id = "edsUrn-search-form"}))
                     {
                         @Html.HiddenFor(model => model.ProviderSiteId)
                         @Html.HiddenFor(model => model.VacancyGuid)
@@ -79,11 +79,12 @@
                         </div>
                     }
 
-                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "name-location-search-form"}))
+                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer), @id = "name-location-search-form"}))
                     {
                         @Html.HiddenFor(model => model.ProviderSiteId)
                         @Html.HiddenFor(model => model.VacancyGuid)
                         @Html.HiddenFor(model => model.ComeFromPreview)
+                        <input type="hidden" name="no-cache" value="@Guid.NewGuid()">
 
                         <div id="name-location-search-panel" class="toggle-content blocklabel-content">
                             @Html.FormTextFor(model => model.Name)
