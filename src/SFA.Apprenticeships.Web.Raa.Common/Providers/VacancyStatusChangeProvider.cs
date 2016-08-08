@@ -52,13 +52,10 @@
                                              traineeshipApplicationSummaries.Any(
                                                  a => statusesRequiringAction.Contains(a.Status)));
             }
-            else
-            {
-                var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
-                return (!apprenticeshipApplicationSummaries.Any() ||
-                                             apprenticeshipApplicationSummaries.Any(
-                                                 a => statusesRequiringAction.Contains(a.Status)));
-            }
+            var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
+            return (!apprenticeshipApplicationSummaries.Any() ||
+                                            apprenticeshipApplicationSummaries.Any(
+                                                a => statusesRequiringAction.Contains(a.Status)));
         }
 
         public ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel)
@@ -70,8 +67,7 @@
 
             if (!hasOustandingActions)
             {
-                vacancy.Status = VacancyStatus.Completed;
-                vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
+                vacancy = _vacancyPostingService.ArchiveVacancy(vacancy);
             }
 
             return new ArchiveVacancyViewModel(hasOustandingActions, vacancy.VacancyId, vacancy.VacancyReferenceNumber);

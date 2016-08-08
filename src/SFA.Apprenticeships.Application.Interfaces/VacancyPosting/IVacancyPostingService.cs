@@ -35,6 +35,8 @@
 
         Vacancy UpdateVacancy(Vacancy vacancy);
 
+        Vacancy ArchiveVacancy(Vacancy vacancy);
+
         /// <summary>
         /// 
         /// </summary>
