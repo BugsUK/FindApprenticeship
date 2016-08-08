@@ -6,5 +6,11 @@
         {
             public const string Ok = "VacancyPosting.GetArchiveVacancyViewModelByVacancyReferenceNumber.Ok";
         }
+
+        public static class ArchiveVacancy
+        {
+            public const string Ok = "VacancyPosting.ArchiveVacancy.Ok";
+            public const string OutstandingActions = "VacancyPosting.ArchiveVacancy.OutstandingActions";
+        }
     }
 }

@@ -29,9 +29,19 @@
         }
 
         [HttpPost]
-        public ActionResult Archive(ArchiveVacancyViewModel viewModel)
+        public ActionResult ConfirmArchive(ArchiveVacancyViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var response = _vacancyStatusMediator.ArchiveVacancy(viewModel);
+
+            switch (response.Code)
+            {
+                case VacancyStatusMediatorCodes.ArchiveVacancy.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = viewModel.VacancyReferenceNumber });
+                case VacancyStatusMediatorCodes.ArchiveVacancy.OutstandingActions:
+                    return RedirectToRoute(RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = viewModel.VacancyReferenceNumber });
+                default:
+                    throw new InvalidOperationException();
+            }
         }
     }
-}
+}   

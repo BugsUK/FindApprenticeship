@@ -23,5 +23,25 @@
                 Code = VacancyStatusMediatorCodes.GetArchiveVacancyViewModel.Ok
             };
         }
+
+        public MediatorResponse<ArchiveVacancyViewModel> ArchiveVacancy(ArchiveVacancyViewModel viewModel)
+        {
+            var model = _vacancyStatusChangeProvider.ArchiveVacancy(viewModel);
+
+            if (model.HasOutstandingActions)
+            {
+                return new MediatorResponse<ArchiveVacancyViewModel>()
+                {
+                    ViewModel = model,
+                    Code = VacancyStatusMediatorCodes.ArchiveVacancy.OutstandingActions
+                };
+            }
+
+            return new MediatorResponse<ArchiveVacancyViewModel>()
+            {
+                ViewModel = model,
+                Code = VacancyStatusMediatorCodes.ArchiveVacancy.Ok
+            };
+        }
     }
 }

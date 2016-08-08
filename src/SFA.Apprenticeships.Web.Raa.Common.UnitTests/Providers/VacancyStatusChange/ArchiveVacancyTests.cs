@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using Application.Interfaces.Applications;
+    using Application.Interfaces.VacancyPosting;
     using Common.Providers;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
@@ -32,12 +32,13 @@
             var mockTraineeshipService = new Mock<ITraineeshipApplicationService>();
             var mockVacancy = new Fixture().Build<Vacancy>().With(v => v.VacancyId, vacancyId)
                 .With(v => v.VacancyType, VacancyType.Apprenticeship).Create();
+            var mockVacancyPostingService = new Mock<IVacancyPostingService>();
             var mockVacancyRepo = new Mock<IVacancyReadRepository>();
             mockVacancyRepo.Setup(m => m.GetByReferenceNumber(It.IsAny<int>())).Returns(mockVacancy);
             var mockApprenticeshipService = new Mock<IApprenticeshipApplicationService>();
             mockApprenticeshipService.Setup(m => m.GetApplicationSummaries(It.IsAny<int>()))
                 .Returns(applicationSummaries);
-            var providerUnderTest = new VacancyStatusChangeProvider(mockApprenticeshipService.Object, mockTraineeshipService.Object, mockVacancyRepo.Object);
+            var providerUnderTest = new VacancyStatusChangeProvider(mockApprenticeshipService.Object, mockTraineeshipService.Object, mockVacancyRepo.Object, mockVacancyPostingService.Object);
 
             //Act
             var result = providerUnderTest.GetArchiveVacancyViewModelByVacancyReferenceNumber(vacancyId);
@@ -62,13 +63,14 @@
                 expiredOrWithdrawn, submitting, submitted, inProgress, successful, unsuccessful);
             var mockVacancy = new Fixture().Build<Vacancy>().With(v => v.VacancyId, vacancyId)
                 .With(v => v.VacancyType, VacancyType.Traineeship).Create();
+            var mockVacancyPostingService = new Mock<IVacancyPostingService>();
             var mockVacancyRepo = new Mock<IVacancyReadRepository>();
             mockVacancyRepo.Setup(m => m.GetByReferenceNumber(It.IsAny<int>())).Returns(mockVacancy);
             var mockApprenticeshipService = new Mock<IApprenticeshipApplicationService>();
             var mockTraineeshipService = new Mock<ITraineeshipApplicationService>();
             mockTraineeshipService.Setup(m => m.GetSubmittedApplicationSummaries(It.IsAny<int>()))
                 .Returns(applicationSummaries);
-            var providerUnderTest = new VacancyStatusChangeProvider(mockApprenticeshipService.Object, mockTraineeshipService.Object, mockVacancyRepo.Object);
+            var providerUnderTest = new VacancyStatusChangeProvider(mockApprenticeshipService.Object, mockTraineeshipService.Object, mockVacancyRepo.Object, mockVacancyPostingService.Object);
 
             //Act
             var result = providerUnderTest.GetArchiveVacancyViewModelByVacancyReferenceNumber(vacancyId);

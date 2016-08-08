@@ -6,5 +6,7 @@
     public interface IVacancyStatusMediator
     {
         MediatorResponse<ArchiveVacancyViewModel> GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber);
+
+        MediatorResponse<ArchiveVacancyViewModel> ArchiveVacancy(ArchiveVacancyViewModel viewModel);
     }
 }
