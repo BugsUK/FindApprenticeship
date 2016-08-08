@@ -829,18 +829,26 @@
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
             vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateEditable();
 
+            var messages = new List<string>();
+            if (vacancyViewModel.Status == VacancyStatus.Completed)
+            {
+                messages.Add(VacancyViewModelMessages.VacancyHasBeenArchived);
+            }
+
             if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())
             {
                 if (vacancyViewModel.NewVacancyViewModel.OfflineVacancy == true)
                 {
                     if (vacancyViewModel.OfflineApplicationClickThroughCount == 0)
                     {
-                        return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
+                        messages.Add(VacancyViewModelMessages.NoClickThroughs);
+                        return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
                     }
                 }
                 else if (vacancyViewModel.ApplicationCount == 0)
                 {
-                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
+                    messages.Add(VacancyViewModelMessages.NoApplications);
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
                 }
             }
             else if(vacancyViewModel.Status.IsStateEditable())
@@ -853,7 +861,7 @@
                 }
             }
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
         }
 
         public MediatorResponse<VacancyViewModel> SubmitVacancy(int vacancyReferenceNumber, bool resubmitOptin)

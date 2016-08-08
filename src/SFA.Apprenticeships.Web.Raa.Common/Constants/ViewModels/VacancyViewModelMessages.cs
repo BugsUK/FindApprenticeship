@@ -5,6 +5,7 @@
     public class VacancyViewModelMessages
     {
         public const string NoApplications = "There have not been any applications for this vacancy";
+        public const string VacancyHasBeenArchived = "This vacancy has been archived";
         public const string NoClickThroughs = "There have not been any click-throughs to your application page for this vacancy";
 
         public static class Title
