@@ -14,6 +14,7 @@
         private string _emailAddress = "Test@TEST.CoM";
         private string _postCode = "B26 2LW";
         private ApplicationTemplate _applicationTemplate;
+        private CommunicationPreferences _communicationPreferences;
         private DateTime? _activationDate;
 
         public CandidateUser Build()
@@ -47,6 +48,7 @@
                     PhoneNumber = "07895123456"
                 },
                 ApplicationTemplate = _applicationTemplate,
+                CommunicationPreferences = _communicationPreferences,
                 MonitoringInformation = new MonitoringInformation
                 {
                     Gender = _gender,
@@ -127,6 +129,12 @@
         public CandidateUserBuilder WithApplicationTemplate(ApplicationTemplate applicationTemplate)
         {
             _applicationTemplate = applicationTemplate;
+            return this;
+        }
+
+        public CandidateUserBuilder WithCommunicationPreferences(CommunicationPreferences communicationPreferences)
+        {
+            _communicationPreferences = communicationPreferences;
             return this;
         }
 

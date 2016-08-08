@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using Constants.ViewModels;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
@@ -11,6 +12,7 @@
         {
             this.AddCommonRules();
             this.AddServerCommonRules();
+
             RuleSet(RuleSets.Errors, this.AddCommonRules);
             RuleSet(RuleSets.Errors, this.AddServerCommonRules);
             RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(null));
@@ -59,18 +61,28 @@
         internal static void AddServerCommonRules(this AbstractValidator<VacancyDatesViewModel> validator)
         {
             validator.RuleFor(x => x.ClosingDate)
+                .SetValidator(new DateViewModelClientValidator());
+
+            validator.RuleFor(x => x.ClosingDate)
                 .Must(Common.BeValidDate)
-                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
+                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText);
+
+            validator.RuleFor(x => x.ClosingDate)
                 .Must(Common.BeOneDayInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.AfterTodayErrorText)
-                .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
+                .When(IsNewVacancy);
+
+            validator.RuleFor(x => x.ClosingDate)
+                .Must(Common.BeTodayOrInTheFuture)
+                .WithMessage(VacancyViewModelMessages.ClosingDate.TodayOrInTheFutureErrorText)
+                .When(x => !IsNewVacancy(x));
 
             validator.RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeValidDate)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.RequiredErrorText)
                 .Must(Common.BeOneDayInTheFuture)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.AfterTodayErrorText)
-                .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
+                .SetValidator(new DateViewModelClientValidator());
         }
 
         internal static void AddServerWarningRules(this AbstractValidator<VacancyDatesViewModel> validator,
@@ -79,7 +91,8 @@
             validator.RuleFor(x => x.ClosingDate)
                 .Must(Common.BeTwoWeeksInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.TooSoonErrorText)
-                .WithState(s => ValidationType.Warning);
+                .WithState(s => ValidationType.Warning)
+                .When(IsNewVacancy);
 
             validator.RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeTwoWeeksInTheFuture)
@@ -88,6 +101,11 @@
                 .When(x => x.ClosingDate == null || !x.ClosingDate.HasValue);
 
             validator.Custom(x => x.PossibleStartDateShouldBeAfterClosingDate(x.ClosingDate, parentPropertyName));
+        }
+
+        private static bool IsNewVacancy(VacancyDatesViewModel x)
+        {
+            return !(x.VacancyStatus == VacancyStatus.Live || x.VacancyStatus == VacancyStatus.Closed);
         }
     }
 }

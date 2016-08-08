@@ -14,7 +14,6 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -119,7 +118,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorGenerator.Mvc.2.3.12\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <HintPath>..\packages\RazorGenerator.Mvc.2.4.2\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -154,11 +153,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -209,6 +208,7 @@
     <Compile Include="Providers\GeoCodingProvider.cs" />
     <Compile Include="Providers\IGeoCodingProvider.cs" />
     <Compile Include="Providers\IReportingProvider.cs" />
+    <Compile Include="Providers\IVacancyStatusChangeProvider.cs" />
     <Compile Include="Providers\QAActionResultCode.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
@@ -227,6 +227,7 @@
     <Compile Include="Providers\EuCookieDirectiveProvider.cs" />
     <Compile Include="Providers\ReportingProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
+    <Compile Include="Providers\VacancyStatusChangeProvider.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
+    <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />
@@ -307,6 +309,7 @@
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\TrainingDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancyApplicationsState.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyDatesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyLinksViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
@@ -460,7 +463,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Views\razorgenerator.directives" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml">

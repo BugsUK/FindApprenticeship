@@ -100,7 +100,7 @@
             noteHistory.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
             noteHistory.CandidateHistoryEventTypeId.Should().Be(3);
             noteHistory.CandidateHistorySubEventTypeId.Should().Be(0);
-            noteHistory.EventDate.Should().Be(candidateUser.User.ActivationDate ?? candidateUser.User.DateUpdated ?? candidateUser.User.DateCreated);
+            noteHistory.EventDate.Should().Be(candidateUser.User.ActivationDate ?? candidateUser.User.DateCreated);
             noteHistory.Comment.Should().Be("NAS Exemplar registered Candidate.");
             noteHistory.UserName.Should().Be("NAS Gateway");
         }

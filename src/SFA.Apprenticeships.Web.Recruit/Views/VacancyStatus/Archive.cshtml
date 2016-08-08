@@ -1,0 +1,39 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyStatus.ArchiveVacancyViewModel
+
+@{
+    ViewBag.Title = "Archive";
+}
+<section>
+    <div class="grid-wrapper">
+        <div class="grid grid-2-3">
+            <h1 id="heading" class="heading-xlarge">
+                <span>Archive vacancy</span>
+            </h1>
+        </div>
+    </div>
+</section>
+
+    @if (Model.HasOutstandingActions)
+    {
+        <p>You can only archive this vacancy once you have given all applicants an outcome</p>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Return to applications</a>
+    }
+    else
+    {
+        <p>This vacancy will now be stored in your archive</p>
+
+        using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmArchiveVacancy, FormMethod.Post))
+        {
+             @Html.HiddenFor(m => m.VacancyId)
+             @Html.HiddenFor(m => m.HasOutstandingActions)
+             @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+             <section>
+                 <div class="form-group">
+                     <button type="submit" class="button">Confirm</button>
+                     <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Cancel</a>
+                 </div>
+             </section>
+         }
+    }

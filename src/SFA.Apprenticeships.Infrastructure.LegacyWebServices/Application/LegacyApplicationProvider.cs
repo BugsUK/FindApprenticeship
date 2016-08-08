@@ -69,7 +69,7 @@
             }
             catch (DomainException e)
             {
-                if (e.Code == ErrorCodes.ApplicationCreationFailed)
+                if (e.Code == ErrorCodes.ApplicationCreationFailed || e.Code == ErrorCodes.VacancyNotFoundError)
                     _logger.Error(e);
                 else
                     _logger.Warn(e);
@@ -120,7 +120,6 @@
             return response.ApplicationId;
         }
 
-
         private static bool IsDuplicateError(CreateApplicationResponse response)
         {
             return response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication);
@@ -134,7 +133,8 @@
                 { ValidationErrorCodes.CandidateNotFound, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError },
                 { ValidationErrorCodes.UnknownCandidate, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError },
                 { ValidationErrorCodes.InvalidVacancyState, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError },
-                { ValidationErrorCodes.SchoolNotEntered, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError }
+                { ValidationErrorCodes.SchoolNotEntered, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError },
+                { ValidationErrorCodes.UnknownVacancy, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.VacancyNotFoundError }
             };
 
             foreach (var pair in map)

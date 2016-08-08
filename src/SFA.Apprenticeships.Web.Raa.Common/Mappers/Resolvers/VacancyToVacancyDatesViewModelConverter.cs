@@ -15,11 +15,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
 
             var destination = new VacancyDatesViewModel
             {
+                VacancyReferenceNumber = source.VacancyReferenceNumber,
+                VacancyStatus = source.Status,
                 ClosingDate = context.Engine.Map<DateTime?, DateViewModel>(source.ClosingDate),
                 PossibleStartDate = context.Engine.Map<DateTime?, DateViewModel>(source.PossibleStartDate),
                 ClosingDateComment = source.ClosingDateComment,
-                PossibleStartDateComment = source.PossibleStartDateComment,
-                VacancyReferenceNumber = source.VacancyReferenceNumber
+                PossibleStartDateComment = source.PossibleStartDateComment
             };
 
 

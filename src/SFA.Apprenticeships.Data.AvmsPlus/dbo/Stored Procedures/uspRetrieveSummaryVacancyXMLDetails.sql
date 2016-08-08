@@ -73,7 +73,7 @@ BEGIN
                 vac.Town as 'Town',
                 Cty.FullName as 'County',
                 vac.PostCode as 'Postcode',
-                fwk.FullName as 'ApprenticeshipFramework',
+                COALESCE(fwk.FullName, std.FullName) as 'ApprenticeshipFramework',
                 vac.ApplicationClosingDate as 'ClosingDateForApplicationsDate', 
                 convert(varchar, vac.ApplicationClosingDate, 111) as 'ClosingDateForApplications', 
                 vac.GeocodeEasting as 'GeocodeEasting',
@@ -107,10 +107,9 @@ BEGIN
                     on vpr.[ProviderSiteID] = tp.ProviderSiteID
                 inner join Employer emp
                     on vpr.EmployerId = emp.EmployerId
-                inner join ApprenticeshipFramework fwk
-                    on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
-                inner join ApprenticeshipOccupation occ
-                    on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
+                left join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
+                left join [Reference].[Standard] std on vac.StandardId = std.StandardId
+                left join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
                 inner join ApprenticeshipType apt
                     on vac.ApprenticeshipType = apt.ApprenticeshipTypeId 
                 inner join VacancyHistory vh
@@ -252,10 +251,9 @@ BEGIN
                     on vpr.[ProviderSiteID] = tp.ProviderSiteID
                 inner join Employer emp
                     on vpr.EmployerId = emp.EmployerId
-                inner join ApprenticeshipFramework fwk
-                    on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
-                inner join ApprenticeshipOccupation occ
-                    on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
+                left join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
+                left join [Reference].[Standard] std on vac.StandardId = std.StandardId
+                left join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
                 inner join ApprenticeshipType apt
                     on vac.ApprenticeshipType = apt.ApprenticeshipTypeId 
                 inner join VacancyHistory vh

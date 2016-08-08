@@ -133,10 +133,10 @@
                 var candidateSummaries = _candidateRepository.GetCandidateSummariesByGuid(candidateUsers.Select(c => c.Candidate.Id));
                 var schoolAttendedIds = _schoolAttendedRepository.GetSchoolAttendedIdsByCandidateIds(candidateSummaries.Values.Select(cs => cs.CandidateId));
                 var candidateHistoryIds = _candidateHistoryRepository.GetCandidateHistoryIdsByCandidateIds(candidateSummaries.Values.Select(cs => cs.CandidateId).Distinct());
-                var candidatesWithHistory = candidateUsers.Where(c => c.User.Status >= 10 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidateWithHistory(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, schoolAttendedIds, candidateHistoryIds, _anonymiseData)).Where(c => c != null).ToList();
+                var candidatesWithHistory = candidateUsers.Select(c => _candidateMappers.MapCandidateWithHistory(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, schoolAttendedIds, candidateHistoryIds, _anonymiseData)).Where(c => c != null).ToList();
                 
                 count += candidatesWithHistory.Count;
-                _logService.Info($"Processing {candidatesWithHistory.Count} active candidates");
+                _logService.Info($"Processing {candidatesWithHistory.Count} mapped candidates");
                 BulkUpsert(candidatesWithHistory, candidateSummaries);
 
                 var syncParams = _syncRepository.GetSyncParams();

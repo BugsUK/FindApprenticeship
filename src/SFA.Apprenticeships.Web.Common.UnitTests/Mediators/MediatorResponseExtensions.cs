@@ -6,10 +6,10 @@ namespace SFA.Apprenticeships.Web.Common.UnitTests.Mediators
 {
     public static class MediatorResponseExtensions
     {
-        public static void AssertCode(this MediatorResponse response, string code, bool parametersShouldNotBeNull = false)
+        public static void AssertCodeAndMessage(this MediatorResponse response, string code, bool parametersShouldNotBeNull = false, bool messageShouldBeNull = true)
         {
             response.Code.Should().Be(code);
-            response.Message.Should().BeNull();
+            if (messageShouldBeNull) response.Message.Should().BeNull();
             response.AssertParameters(parametersShouldNotBeNull);
             response.ValidationResult.Should().BeNull();
         }

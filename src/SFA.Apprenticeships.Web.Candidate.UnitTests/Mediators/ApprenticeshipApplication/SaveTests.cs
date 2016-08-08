@@ -30,7 +30,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
             
             var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Save.VacancyNotFound);
+            response.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.Save.VacancyNotFound);
         }
 
         [Test]

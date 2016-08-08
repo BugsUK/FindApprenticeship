@@ -59,7 +59,7 @@ BEGIN
         tp.ContactDetailsForCandidate   AS 'ContactDetails',
         apt.ApprenticeshipTypeId        AS 'ApprenticeshipTypeId',
         apt.FullName                    AS 'VacancyType',
-        fwk.FullName                    AS 'ApprenticeshipFramework',
+        COALESCE(fwk.FullName, std.FullName) as 'ApprenticeshipFramework',
         CASE WHEN ssr.New = 1 THEN NULL ELSE ssr.PassRate END AS 'LearningProviderSectorPassRate',
         vac.ExpectedDuration            AS 'ExpectedDuration',
         isnull(vt.SkillsRequired,'')    AS 'SkillsRequired',        
@@ -88,7 +88,7 @@ BEGIN
 		DO.TrainingProviderStatusTypeId AS 'DeliveryOrganisationStatusId',
 		vac.VacancyManagerId            AS 'VacancyManagerId',
         vac.VacancyManagerAnonymous     AS 'VacancyManagerAnonymous',
-		vac.WageType                    AS 'WageType',
+		case when vac.WageType > 1 then 0 else vac.WageType end as 'WageType',
 		vac.WageText                    AS 'WageText',
 		vac.SmallEmployerWageIncentive  AS 'SmallEmployerWageIncentive',
 		DOR.ProviderID                  AS 'VacancyOwnerOwnerOrgID',			-- These lines added
@@ -100,8 +100,9 @@ BEGIN
         INNER JOIN [VacancyOwnerRelationship] vpr ON  vac.[VacancyOwnerRelationshipId] = vpr.[VacancyOwnerRelationshipId]
         INNER JOIN [ProviderSite]             tp  ON  vpr.[ProviderSiteID]             = tp.ProviderSiteID
         INNER JOIN Employer                   emp ON  vpr.EmployerId                   = emp.EmployerId
-        INNER JOIN ApprenticeshipFramework    fwk ON  vac.ApprenticeshipFrameworkId    = fwk.ApprenticeshipFrameworkId
-        INNER JOIN ApprenticeshipOccupation   occ ON  fwk.ApprenticeshipOccupationId   = occ.ApprenticeshipOccupationId
+		left outer join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
+        left outer join [Reference].[Standard] std on vac.StandardId = std.StandardId
+        left outer join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
         INNER JOIN ApprenticeshipType         apt ON  vac.ApprenticeshipType           = apt.ApprenticeshipTypeId 
         INNER JOIN VacancyHistory             vh  ON  vh.VacancyId                     = vac.VacancyId 
 		                                          AND vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
@@ -149,7 +150,7 @@ BEGIN
     WHERE	vac.Vacancyid IN (
 				SELECT VacancyId
 				FROM   #AllRecords
-				ORDER BY VacancyReferenceNumber
+				ORDER BY Sort_Id
 				OFFSET   (@pageIndex-1) * @pageSize ROWS FETCH NEXT @pageSize ROWS ONLY
 			)
 	AND     lagt.LocalAuthorityGroupTypeName      = 'Region'

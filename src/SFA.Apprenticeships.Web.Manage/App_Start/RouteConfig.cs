@@ -236,6 +236,12 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.ReportRegisteredCandidates,
+               url: "reports/registeredcandidates",
+               defaults: new { controller = "Report", action = "RegisteredCandidatesCsv" }
+               );
+
+            routes.MapRoute(
                 name: ManagementRouteNames.WebTrendsOptOut,
                 url: "webtrendsoptout",
                 defaults: new { controller = "Home", action = "WebTrendsOptOut" }

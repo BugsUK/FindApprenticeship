@@ -17,7 +17,7 @@
     [TestFixture]
     public class VacancyControllerIntegrationTests : ManageWebIntegrationTestsBase
     {
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void GetBasicDetailsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
             // Arrange
@@ -44,7 +44,7 @@
             vacancyViewModel.Title.Should().Be(title);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void GetBasicDetailsWithAVacancyWithErrorsShouldReturnTheVacancyWithAModelStateFilled()
         {
             // Arrange
@@ -72,7 +72,7 @@
             vacancyViewModel.Title.Should().Be(title);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void PostBasicDetailsShouldRedirectToVacancyReviewIfVacancyIsCorrect()
         {
             // Arrange
@@ -98,7 +98,7 @@
             redirection.RouteValues.Values.First().As<long>().Should().Be(vacancyReferenceNumber);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void PostBasicDetailsWithErrorsShouldReturnTheViewWithModelStateFilled()
         {
             // Arrange
@@ -128,7 +128,7 @@
             vacancyViewModel.Title.Should().Be(newVacancyViewModel.Title);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void GetSummaryWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
             // Arrange
@@ -154,7 +154,7 @@
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void GetSummaryWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
         {
             // Arrange
@@ -184,7 +184,7 @@
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void PostSummaryWithACorrectVacancyShouldRedirectToPreviewPage()
         {
             const int vacancyReferenceNumber = 1;
@@ -209,7 +209,7 @@
             redirection.RouteValues.Values.First().As<long>().Should().Be(vacancyReferenceNumber);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void PostSummaryWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
         {
             const int vacancyReferenceNumber = 1;
@@ -236,7 +236,7 @@
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void GetRequirementsAndProspectsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
             // Arrange
@@ -263,7 +263,7 @@
         }
 
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void GetRequirementsProspectsWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
         {
             // Arrange
@@ -290,7 +290,7 @@
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void PostRequirementsAndProspectsWithACorrectVacancyShouldRedirectToPreviewPage()
         {
             const int vacancyReferenceNumber = 1;
@@ -316,7 +316,7 @@
         }
 
         
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void PostRequirementsAndProspectsWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
         {
             const int vacancyReferenceNumber = 1;
@@ -343,7 +343,7 @@
 
         
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void GetQuestionsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
             // Arrange
@@ -369,7 +369,7 @@
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
         
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void GetQuestionsWithAnIncorrectVacancyShouldReturnTheVacancyWithTheModelStateFilled()
         {
             // Arrange
@@ -396,7 +396,7 @@
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void PostQuestionsWithACorrectVacancyShouldRedirectToPreviewPage()
         {
             const int vacancyReferenceNumber = 1;
@@ -421,7 +421,7 @@
             redirection.RouteValues.Values.First().As<long>().Should().Be(vacancyReferenceNumber);
         }
         
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void PostQuestionsWithAVacancyWithErrorsAndWarningsShouldReturnTheViewWithTheModelStateFilled()
         {
             const int vacancyReferenceNumber = 1;
@@ -446,7 +446,7 @@
         }
 
 
-        [Test, Category("Integration"), Ignore("Need to mock Url object")]
+        [Test, Category("Acceptance"), Ignore("Need to mock Url object")]
         public void ReviewAVacancyInQAChangesStatusInDatabaseToReservedForQA()
         {
             const int vacancyReferenceNumber = 1;
@@ -468,7 +468,7 @@
             vacancyInDb.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void AcceptAVacancyInQAChangesStatusInDatabaseToLive()
         {
             const int vacancyReferenceNumber = 1;
@@ -488,7 +488,7 @@
             vacancyInDb.Status.Should().Be(VacancyStatus.Live);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void ShouldComeBackToDashboardAfterAcceptingTheVacancyIfTheresOnlyOneVacancyWaitingForQA()
         {
             const int vacancyReferenceNumber = 1;
@@ -506,7 +506,7 @@
             redirection.RouteName.Should().Be("Dashboard");
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void ShouldRedirectToTheNextVacancyAfterAcceptingTheVacancyIfTheresMoreThanOneVacancyWaitingForQA()
         {
             const int vacancyReferenceNumber = 1;
@@ -530,7 +530,7 @@
             redirection.RouteValues.Values.First().As<long>().Should().Be(secondVacancyReferenceNumber);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void RejectAVacancyInQAChangesStatusInDatabaseToRejectedByQA()
         {
             const int vacancyReferenceNumber = 1;
@@ -550,7 +550,7 @@
             vacancyInDb.Status.Should().Be(VacancyStatus.Referred);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void ShouldComeBackToDashboardAfterRejectingTheVacancyIfTheresOnlyOneVacancyWaitingForQA()
         {
             const int vacancyReferenceNumber = 1;
@@ -568,7 +568,7 @@
             redirection.RouteName.Should().Be("Dashboard");
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Acceptance")]
         public void ShouldRedirectToTheNextVacancyAfterRejectingTheVacancyIfTheresMoreThanOneVacancyWaitingForQA()
         {
             const int vacancyReferenceNumber = 1;

@@ -58,6 +58,11 @@
             return _getByIdsStrategy.Get(employerIds);
         }
 
+        public IEnumerable<MinimalEmployerDetails> GetMinimalEmployerDetails(IEnumerable<int> employerIds)
+        {
+            return _getByIdsStrategy.GetMinimalDetails(employerIds);
+        }
+
         public Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize)
         {
             return _getPagedEmployerSearchResultsStrategy.Get(edsUrn, name, location, currentPage, pageSize);

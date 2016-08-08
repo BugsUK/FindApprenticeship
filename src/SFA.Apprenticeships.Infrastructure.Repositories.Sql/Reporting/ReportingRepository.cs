@@ -488,5 +488,75 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
 
             return data;
         }
+
+        public IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(DateTime fromDate, DateTime toDate)
+        {
+            _logger.Debug($"Executing ReportRegisteredCandidates report with toDate {toDate} and fromdate {fromDate}...");
+
+            var response = new List<ReportRegisteredCandidatesResultItem>();
+
+            var command = new SqlCommand("dbo.ReportRegisteredCandidatesList", (SqlConnection)_getOpenConnection.GetOpenConnection());
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("type", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
+            command.Parameters.Add("FromDate", SqlDbType.DateTime).Value = fromDate;
+            command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = toDate;
+            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("IncludeDeregisteredCandidates", SqlDbType.Int).Value = 0;
+            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = 0;
+            command.Parameters.Add("EthnicityID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("GenderID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Rowcount", SqlDbType.Int).Value = 0;
+            command.Parameters.Add("ManagedBy", SqlDbType.Int).Value = -1;
+
+            command.CommandTimeout = 180;
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(new ReportRegisteredCandidatesResultItem()
+                {
+                    CandidateId = Convert.ToInt32(reader["CandidateId"].ToString()),
+                    Name = reader["Name"].ToString(),
+                    DateofBirth = Convert.ToDateTime(reader["DateofBirth"]).ToString("dd/MM/yyy"),
+                    Region = reader["Region"].ToString(),
+                    AddressLine1 = reader["AddressLine1"].ToString(),
+                    AddressLine2 = reader["AddressLine2"].ToString(),
+                    AddressLine3 = reader["AddressLine3"].ToString(),
+                    AddressLine4 = reader["AddressLine4"].ToString(),
+                    AddressLine5 = reader["AddressLine5"].ToString(),
+                    Town = reader["Town"].ToString(),
+                    County = reader["County"].ToString(),
+                    Postcode = reader["Postcode"].ToString(),
+                    ShortAddress = reader["ShortAddress"].ToString(),
+                    LastSchool = reader["LastSchool"].ToString(),
+                    DateLastActive = Convert.ToDateTime(reader["DateLastActive"]).ToString("dd/MM/yyy"),
+                    RegistrationDate = Convert.ToDateTime(reader["RegistrationDate"]).ToString("dd/MM/yyy"),
+                    Address = reader["Address"].ToString(),
+                    LandlineNumber = reader["LandlineNumber"].ToString(),
+                    Email = reader["Email"].ToString(),
+                    Gender = reader["Gender"].ToString(),
+                    ApplicationCount = Convert.ToInt32(reader["ApplicationCount"].ToString()),
+                    FirstName = reader["FirstName"].ToString(),
+                    MiddleNames = reader["MiddleNames"].ToString(),
+                    Surname = reader["Surname"].ToString(),
+                    MobileNumber = reader["MobileNumber"].ToString(),
+                    Ethnicity = reader["Ethnicity"].ToString(),
+                    Inactive = reader["Inactive"].ToString() != "0",
+                    Sector = reader["Sector"].ToString(),
+                    Framework = reader["Framework"].ToString(),
+                    Keyword = reader["Keyword"].ToString(),
+                    CandidateStatus = reader["CandidateStatus"].ToString(),
+                    DregisteredCandidate = reader["DregisteredCandidate"].ToString() != "0",
+                    AllowMarketingMessages = Convert.ToBoolean(reader["AllowMarketingMessages"].ToString()) ? "Yes" : "No"
+                });
+            }
+
+            _logger.Debug($"Done executing report with toDate {toDate} and fromdate {fromDate}.");
+
+            return response.ToList();
+        }
     }
 }

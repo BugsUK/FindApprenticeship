@@ -657,13 +657,13 @@
             }
 
             var result = _vacancyPostingProvider.UpdateVacancy(viewModel);
-            switch (result.State)
+            switch (result.VacancyApplicationsState)
             {
-                case UpdateVacancyDatesState.UpdatedHasApplications:
+                case VacancyApplicationsState.HasApplications:
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.UpdatedHasApplications, viewModel);
-                case UpdateVacancyDatesState.UpdatedNoApplications:
+                case VacancyApplicationsState.NoApplications:
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications, viewModel);
-                case UpdateVacancyDatesState.InvalidState:
+                case VacancyApplicationsState.Invalid:
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.InvalidState, viewModel);
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -829,18 +829,26 @@
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
             vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateEditable();
 
+            var messages = new List<string>();
+            if (vacancyViewModel.Status == VacancyStatus.Completed)
+            {
+                messages.Add(VacancyViewModelMessages.VacancyHasBeenArchived);
+            }
+
             if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())
             {
                 if (vacancyViewModel.NewVacancyViewModel.OfflineVacancy == true)
                 {
                     if (vacancyViewModel.OfflineApplicationClickThroughCount == 0)
                     {
-                        return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
+                        messages.Add(VacancyViewModelMessages.NoClickThroughs);
+                        return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
                     }
                 }
                 else if (vacancyViewModel.ApplicationCount == 0)
                 {
-                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
+                    messages.Add(VacancyViewModelMessages.NoApplications);
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
                 }
             }
             else if(vacancyViewModel.Status.IsStateEditable())
@@ -853,7 +861,10 @@
                 }
             }
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel);
+            return messages.Any()
+                ? GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel,
+                    messages, UserMessageLevel.Info)
+                : GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel);
         }
 
         public MediatorResponse<VacancyViewModel> SubmitVacancy(int vacancyReferenceNumber, bool resubmitOptin)

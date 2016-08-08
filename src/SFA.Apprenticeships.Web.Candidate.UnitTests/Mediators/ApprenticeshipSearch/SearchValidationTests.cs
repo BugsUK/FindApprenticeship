@@ -68,7 +68,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             var response = Mediator.SearchValidation(null, searchViewModel);
 
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn);
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             var response = Mediator.SearchValidation(Guid.NewGuid(), searchViewModel);
 
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch);
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch);
         }
     }
 }

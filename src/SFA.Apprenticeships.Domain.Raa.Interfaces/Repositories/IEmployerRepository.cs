@@ -12,6 +12,8 @@
         Employer GetByEdsUrn(string edsUrn);
 
         List<Employer> GetByIds(IEnumerable<int> employerIds);
+
+        IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds);
     }
 
     public interface IEmployerWriteRepository

@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCode(LoginMediatorCodes.Index.AccountLocked);
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.AccountLocked);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCode(LoginMediatorCodes.Index.PendingActivation);
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.PendingActivation);
         }
 
         [Test]
@@ -240,7 +240,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCode(LoginMediatorCodes.Index.Ok);
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
         }
 
         [Test]
@@ -262,7 +262,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCode(LoginMediatorCodes.Index.Ok);
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
             var count = applicationStatusSummaries.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
             userDataProvider.Verify(x => x.Push(UserDataItemNames.SavedAndDraftCount, count.ToString(CultureInfo.InvariantCulture)), Times.Once);
         }
@@ -305,7 +305,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCode(LoginMediatorCodes.Index.Ok);
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
             response.ViewModel.MobileVerificationRequired.Should().BeTrue();
         }
 
@@ -329,7 +329,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
             var response = mediator.Index(viewModel);
 
             // Assert.
-            response.AssertCode(LoginMediatorCodes.Index.Ok);
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
             response.ViewModel.PendingUsernameVerificationRequired.Should().Be(expectedValue);
         }
     }

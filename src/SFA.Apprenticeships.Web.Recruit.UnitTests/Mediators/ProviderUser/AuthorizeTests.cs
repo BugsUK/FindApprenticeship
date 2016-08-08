@@ -184,7 +184,7 @@
             var response = mediator.Authorize(principal);
 
             // Assert.
-            response.AssertCode(ProviderUserMediatorCodes.Authorize.Ok);
+            response.AssertCodeAndMessage(ProviderUserMediatorCodes.Authorize.Ok);
         }
 
         [Test(Description = "User has all claims, a complete provider profile and has verified their email address")]
@@ -208,7 +208,7 @@
             var response = mediator.Authorize(principal);
 
             // Assert.
-            response.AssertCode(ProviderUserMediatorCodes.Authorize.Ok);
+            response.AssertCodeAndMessage(ProviderUserMediatorCodes.Authorize.Ok);
         }
 
         [Test(
@@ -248,7 +248,7 @@
             var response = mediator.Authorize(principal);
 
             // Assert.
-            response.AssertCode(ProviderUserMediatorCodes.Authorize.Ok);
+            response.AssertCodeAndMessage(ProviderUserMediatorCodes.Authorize.Ok);
             response.ViewModel.ProviderId.Should().Be(providerViewModel.ProviderId);
         }
     }

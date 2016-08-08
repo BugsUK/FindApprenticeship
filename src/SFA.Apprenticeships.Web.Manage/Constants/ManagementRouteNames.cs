@@ -48,6 +48,7 @@
         public const string ReportSuccessfulCandidates = "ReportSuccessfulCandidates";
         public const string ReportUnsuccessfulCandidates = "ReportUnsuccessfulCandidates";
         public const string ReportVacancyExtensions = "ReportVacancyExtensions";
+        public const string ReportRegisteredCandidates = "ReportRegisteredCandidates";
 
     }
 }
