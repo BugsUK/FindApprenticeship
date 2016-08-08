@@ -2,6 +2,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Raa.Vacancies;
     using Web.Common.ViewModels;
 
     public class VacancyDatesViewModel
@@ -22,15 +23,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public int VacancyReferenceNumber { get; set; }
 
-        public UpdateVacancyDatesState State { get; set; }
+        public VacancyStatus VacancyStatus { get; set; }
+
+        public VacancyApplicationsState VacancyApplicationsState { get; set; }
 
         public int AutoSaveTimeoutInSeconds { get; set; }
-    }
-
-    public enum UpdateVacancyDatesState
-    {
-        UpdatedHasApplications,
-        UpdatedNoApplications,
-        InvalidState
     }
 }

@@ -306,6 +306,7 @@
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\TrainingDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancyApplicationsState.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyDatesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyLinksViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />

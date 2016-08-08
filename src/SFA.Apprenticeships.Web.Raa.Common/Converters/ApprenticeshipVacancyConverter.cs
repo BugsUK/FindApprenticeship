@@ -31,7 +31,7 @@
                     ClosingDate = new DateViewModel(vacancy.ClosingDate),
                     PossibleStartDate = new DateViewModel(vacancy.PossibleStartDate),
                     ClosingDateComment = vacancy.ClosingDateComment,
-                    PossibleStartDateComment = vacancy.PossibleStartDateComment,
+                    PossibleStartDateComment = vacancy.PossibleStartDateComment
                 },
                 LongDescription = vacancy.LongDescription,
                 WageComment = vacancy.WageComment,
