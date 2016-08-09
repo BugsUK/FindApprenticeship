@@ -115,7 +115,7 @@ WHERE  FullName = @CountyFullName",
                     new
                     {
                         CountyFullName = entity.Address.County
-                    }).Single();
+                    }).SingleOrDefault();
             }
         }
 

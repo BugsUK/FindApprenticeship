@@ -163,6 +163,7 @@ $(document).ready(function () {
         var specialCities = [];
         specialCities["London"] = "London";
         specialCities["York"] = "North Yorkshire";
+        specialCities["Leicester"] = "Leicestershire";
 
         var provinceName = address.ProvinceName;
 
