@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Applications;
@@ -44,13 +45,8 @@
                 ApplicationStatuses.Submitted
             };
 
-            if (vacancy.VacancyType == VacancyType.Traineeship)
-            {
-                var traineeshipApplicationSummaries =
-                    _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId);
-                return (traineeshipApplicationSummaries.Any(a => statusesRequiringAction.Contains(a.Status)));
-            }
             var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
+
             return (apprenticeshipApplicationSummaries.Any(a => statusesRequiringAction.Contains(a.Status)));
         }
 
@@ -58,7 +54,11 @@
         {
             var vacancy = _vacancyReadRepository.GetByReferenceNumber(viewModel.VacancyReferenceNumber);
 
-            //Ensure this vacancy has no outstanding actions
+            if (vacancy.VacancyType == VacancyType.Traineeship)
+            {
+                throw new InvalidOperationException("Traineeships cannot be archived");
+            }
+
             var hasOustandingActions = HasOutstandingActions(vacancy);
 
             if (!hasOustandingActions)
