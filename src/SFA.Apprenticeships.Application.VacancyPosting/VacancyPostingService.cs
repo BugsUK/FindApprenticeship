@@ -81,7 +81,27 @@
                 throw new CustomException(message, ErrorCodes.EntityStateError);
             }
 
+            // Make sure the standard is null if the vacancy is a traineeship (RA-30)
+            SetStandardAsNullIfTraineeship(vacancy);
+            SetSectorAsNullIfApprenticeship(vacancy);
+
             return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
+        }
+
+        private void SetSectorAsNullIfApprenticeship(Vacancy vacancy)
+        {
+            if (vacancy.VacancyType == VacancyType.Apprenticeship)
+            {
+                vacancy.SectorCodeName = null;
+            }
+        }
+
+        private static void SetStandardAsNullIfTraineeship(Vacancy vacancy)
+        {
+            if (vacancy.VacancyType == VacancyType.Traineeship)
+            {
+                vacancy.StandardId = null;
+            }
         }
 
         public Vacancy ArchiveVacancy(Vacancy vacancy)
