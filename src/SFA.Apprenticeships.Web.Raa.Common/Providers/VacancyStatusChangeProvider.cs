@@ -48,14 +48,10 @@
             {
                 var traineeshipApplicationSummaries =
                     _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId);
-                return (!traineeshipApplicationSummaries.Any() ||
-                                             traineeshipApplicationSummaries.Any(
-                                                 a => statusesRequiringAction.Contains(a.Status)));
+                return (traineeshipApplicationSummaries.Any(a => statusesRequiringAction.Contains(a.Status)));
             }
             var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
-            return (!apprenticeshipApplicationSummaries.Any() ||
-                                            apprenticeshipApplicationSummaries.Any(
-                                                a => statusesRequiringAction.Contains(a.Status)));
+            return (apprenticeshipApplicationSummaries.Any(a => statusesRequiringAction.Contains(a.Status)));
         }
 
         public ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel)
