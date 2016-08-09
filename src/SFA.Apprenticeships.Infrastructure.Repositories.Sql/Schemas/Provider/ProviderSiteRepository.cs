@@ -153,6 +153,8 @@
                 WHERE ps.ProviderSiteId = @providerSiteId
                 ORDER BY psr.ProviderSiteRelationshipTypeID"; //Forces non Subcontractors and Recruitment Consultants to the end of the list to prioritize owners
 
+            // TODO: change to ProviderSiteRelationshipTypeID = 1?
+
             var sqlParams = new
             {
                 providerSiteId,
