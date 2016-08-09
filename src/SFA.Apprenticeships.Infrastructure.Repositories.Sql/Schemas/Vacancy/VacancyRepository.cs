@@ -102,8 +102,6 @@ SELECT
     v.*, 
     el.CodeName as ApprenticeshipLevel, 
     af.FullName AS ApprenticeshipFrameworkName, 
-    --@ApprenticeshipFrameworkSanitisedName as ApprenticeshipFrameworkSanitisedName, 
-    --af.ApprenticeshipOccupationId, 
     af.CodeName as FrameworkCodeName,
     ao.CodeName as SectorCodeName, 
     ps.PostCode, 
@@ -148,7 +146,7 @@ WHERE v.VacancyId = @VacancyId
                     SubmittedTypeId = VacancyStatus.Submitted
                 });
 
-            return MapVacancyNew(result.FirstOrDefault());
+            return MapVacancyDetails(result.FirstOrDefault());
         }
 
         public DomainVacancy GetByVacancyGuid(Guid vacancyGuid)
@@ -379,7 +377,7 @@ FETCH NEXT @PageSize ROWS ONLY
             return result;
         }
 
-        private DomainVacancy MapVacancyNew(VacancyPlus dbVacancy)
+        private DomainVacancy MapVacancyDetails(VacancyPlus dbVacancy)
         {
             if (dbVacancy == null)
                 return null;
@@ -390,23 +388,14 @@ FETCH NEXT @PageSize ROWS ONLY
             GetAndMapTextFields(dbVacancy, result);
             GetAndMapComments(dbVacancy, result);
 
-            //MapApprenticeshipType(dbVacancy, result);
-            //MapFrameworkId(dbVacancy, result);
-            //MapSectorId(dbVacancy, result);
             result.DateFirstSubmitted = dbVacancy.DateFirstSubmitted;
             result.DateSubmitted = dbVacancy.DateSubmitted;
             result.DateQAApproved = dbVacancy.DateQAApproved;
-            if (dbVacancy.CreatedDateTime != null) result.CreatedDateTime = dbVacancy.CreatedDateTime.Value;
+            if (dbVacancy.CreatedDateTime.HasValue)
+            {
+                result.CreatedDateTime = dbVacancy.CreatedDateTime.Value;
+            }
 
-            //.MapMemberFrom(v => v.ApprenticeshipLevel, av => av.ApprenticeshipLevel)
-            //.MapMemberFrom(v => v.FrameworkCodeName, av => av.FrameworkCodeName)
-            //.MapMemberFrom(v => v.SectorCodeName, av => av.SectorCodeName)
-            //.MapMemberFrom(v => v.CreatedDateTime.Value, av => av.CreatedDateTime)
-            //.MapMemberFrom(v => v.CreatedByProviderUsername, av => av.CreatedByProviderUsername)
-            //.MapMemberFrom(v => v.RegionalTeam, av => av.RegionalTeam)
-            //.MapMemberFrom(v => v.LocalAuthorityCode, av => av.LocalAuthorityCode)
-
-            result.Address.County = dbVacancy.County;
             result.ApprenticeshipLevel = (ApprenticeshipLevel) dbVacancy.ApprenticeshipLevel;
             result.FrameworkCodeName = dbVacancy.FrameworkCodeName;
             result.SectorCodeName = dbVacancy.SectorCodeName;
@@ -414,19 +403,7 @@ FETCH NEXT @PageSize ROWS ONLY
             result.RegionalTeam = dbVacancy.RegionalTeam;
             result.LocalAuthorityCode = dbVacancy.LocalAuthorityCode;
 
-            //MapDateFirstSubmitted(dbVacancy, result);
-            //GetCreatedDateTime(dbVacancy, result);
-            //GetCreatedByProviderUsername(dbVacancy, result);
-            //GetDateSubmitted(dbVacancy, result);
-
-            //GetDateQAApproved(dbVacancy, result);
-
-
-            //GetRegionalTeam(result);
-            //GetLocalAuthorityCode(dbVacancy, result);
             MapDuration(dbVacancy, result);
-            //GetCountyId(dbVacancy, result);
-
             PatchTrainingType(result);
             MapStandards(dbVacancy, result);
 
