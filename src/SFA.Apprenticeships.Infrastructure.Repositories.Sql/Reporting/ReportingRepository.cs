@@ -482,8 +482,13 @@
                 @"SELECT 
 (SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser]) as TotalProviders,
 (SELECT COUNT(*) FROM [Provider].[ProviderUser]) as TotalProviderUserAccounts,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesSubmittedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesCreatedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 1) as TotalDraftVacanciesCreatedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 5) as TotalVacanciesInReviewViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 3) as TotalVacanciesReferredViaRaa,
 (SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 2) as TotalVacanciesApprovedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 6) as TotalVacanciesClosedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 8) as TotalVacanciesArchivedViaRaa,
 (SELECT COUNT(*)
 FROM [dbo].[Application] a
 WHERE a.VacancyId < -1) as TotalApplicationsStartedForRaaVacancies,
@@ -507,8 +512,13 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
                 {
                     TotalProviders = Convert.ToInt32(reader["TotalProviders"]),
                     TotalProviderUserAccounts = Convert.ToInt32(reader["TotalProviderUserAccounts"]),
-                    TotalVacanciesSubmittedViaRaa = Convert.ToInt32(reader["TotalVacanciesSubmittedViaRaa"]),
+                    TotalVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalVacanciesCreatedViaRaa"]),
+                    TotalDraftVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalDraftVacanciesCreatedViaRaa"]),
+                    TotalVacanciesReferredViaRaa = Convert.ToInt32(reader["TotalVacanciesReferredViaRaa"]),
+                    TotalVacanciesInReviewViaRaa = Convert.ToInt32(reader["TotalVacanciesInReviewViaRaa"]),
                     TotalVacanciesApprovedViaRaa = Convert.ToInt32(reader["TotalVacanciesApprovedViaRaa"]),
+                    TotalVacanciesClosedViaRaa = Convert.ToInt32(reader["TotalVacanciesClosedViaRaa"]),
+                    TotalVacanciesArchivedViaRaa = Convert.ToInt32(reader["TotalVacanciesArchivedViaRaa"]),
                     TotalApplicationsStartedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsStartedForRaaVacancies"]),
                     TotalApplicationsSubmittedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsSubmittedForRaaVacancies"]),
                     TotalUnsuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsViaRaa"]),
