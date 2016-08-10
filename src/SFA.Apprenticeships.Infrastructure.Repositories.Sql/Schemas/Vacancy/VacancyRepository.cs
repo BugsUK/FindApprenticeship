@@ -48,7 +48,8 @@
             { "Motor Vehicle Service and Maintenance Technician (light vehicle) (L3)", "Motor Vehicle Service and Maintenance Technician [light vehicle] (L3)" },
             { "Public Service - Operational delivery officer (Level 3)", "Public Service Operational Delivery Officer"},
             { "Cyber Security", "Cyber security technologist" },
-            { "Workplace Pensions (Administrator or Consultant)", "Workplace Pensions (Administrator or Consultant)()"}
+            { "Workplace Pensions (Administrator or Consultant)", "Workplace Pensions (Administrator or Consultant)()"},
+            { "Digital & technology solutions professional (Level 6)", "Digital & Technology Solutions Professional – degree apprenticeship"}
         };
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
