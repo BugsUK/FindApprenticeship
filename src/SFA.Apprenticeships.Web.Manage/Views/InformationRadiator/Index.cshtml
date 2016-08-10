@@ -4,7 +4,7 @@
 }
 
 <section>
-    <h1 class="heading-xlarge">Information radiator</h1>
+    <!--<h1 class="heading-xlarge">Information radiator</h1>-->
     <div class="grid-wrapper" style="Margin-Bottom: 20px">
         <h2 class="heading-medium">Providers</h2>
         <ul class="vacancies-summary">
@@ -31,9 +31,33 @@
         <ul class="vacancies-summary">
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalVacanciesSubmittedViaRaa</p>
+                    <p class="count">@Model.TotalVacanciesCreatedViaRaa</p>
                     <figcaption>
-                        <h2>Total submitted via recruit</h2>
+                        <h2>Total created via recruit</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalDraftVacanciesCreatedViaRaa</p>
+                    <figcaption>
+                        <h2>Total in draft via recruit</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesInReviewViaRaa</p>
+                    <figcaption>
+                        <h2>Total waiting review via manage</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesReferredViaRaa</p>
+                    <figcaption>
+                        <h2>Total referred via manage</h2>
                     </figcaption>
                 </figure>
             </li>
@@ -42,6 +66,22 @@
                     <p class="count">@Model.TotalVacanciesApprovedViaRaa</p>
                     <figcaption>
                         <h2>Total made live via manage</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesClosedViaRaa</p>
+                    <figcaption>
+                        <h2>Total closed via closing date</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesArchivedViaRaa</p>
+                    <figcaption>
+                        <h2>Total archived via recruit</h2>
                     </figcaption>
                 </figure>
             </li>
