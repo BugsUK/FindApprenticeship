@@ -23,6 +23,7 @@
                 TotalProviderUserAccounts = data.TotalProviderUserAccounts,
                 TotalVacanciesApprovedViaRaa = data.TotalVacanciesApprovedViaRaa,
                 TotalVacanciesSubmittedViaRaa = data.TotalVacanciesSubmittedViaRaa,
+                TotalApplicationsStartedForRaaVacancies = data.TotalApplicationsStartedForRaaVacancies,
                 TotalApplicationsSubmittedForRaaVacancies = data.TotalApplicationsSubmittedForRaaVacancies,
                 TotalUnsuccessfulApplicationsViaRaa = data.TotalUnsuccessfulApplicationsViaRaa,
                 TotalSuccessfulApplicationsViaRaa = data.TotalSuccessfulApplicationsViaRaa
