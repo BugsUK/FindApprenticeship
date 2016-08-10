@@ -44,7 +44,7 @@
                     <p class="small-btm-margin">
                         Closing date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
                     </p>
-                    @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status, Model.TotalNumberOfApplications), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
+                    @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status, Model.TotalNumberOfApplications, Model.VacancyType), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
                 </div>
             </div>
         </section>
