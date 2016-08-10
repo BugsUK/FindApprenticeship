@@ -241,6 +241,32 @@
             return response;
         }
 
+        public Dictionary<string, string> GetLocalAuthorities()
+        {
+            _logger.Debug($"Getting local authorities for report [dbo].[ReportGetLocalAuthority]...");
+
+            var response = new Dictionary<string, string>
+            {
+                { "n/a", "-1" }
+            };
+
+            var command = new SqlCommand("dbo.ReportGetLocalAuthority", (SqlConnection) _getOpenConnection.GetOpenConnection())
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            command.Parameters.Add("type", SqlDbType.Int).Value = 2;
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(reader[1].ToString(), reader[0].ToString());
+            }
+
+            _logger.Debug($"Done getting local authorities.");
+
+            return response;
+        }
+
         public IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate, int? providerUkprn, int? vacancyStatus)
         {
             var ukprn = providerUkprn?.ToString() ?? "ALL";
@@ -460,7 +486,10 @@
 (SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 2) as TotalVacanciesApprovedViaRaa,
 (SELECT COUNT(*)
 FROM [dbo].[Application] a
-WHERE a.VacancyId < -1) as TotalApplicationsSubmittedForRaaVacancies,
+WHERE a.VacancyId < -1) as TotalApplicationsStartedForRaaVacancies,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId >= 2) as TotalApplicationsSubmittedForRaaVacancies,
 (SELECT COUNT(*)
 FROM [dbo].[Application] a
 JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
@@ -480,6 +509,7 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
                     TotalProviderUserAccounts = Convert.ToInt32(reader["TotalProviderUserAccounts"]),
                     TotalVacanciesSubmittedViaRaa = Convert.ToInt32(reader["TotalVacanciesSubmittedViaRaa"]),
                     TotalVacanciesApprovedViaRaa = Convert.ToInt32(reader["TotalVacanciesApprovedViaRaa"]),
+                    TotalApplicationsStartedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsStartedForRaaVacancies"]),
                     TotalApplicationsSubmittedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsSubmittedForRaaVacancies"]),
                     TotalUnsuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsViaRaa"]),
                     TotalSuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalSuccessfulApplicationsViaRaa"]),
@@ -489,7 +519,7 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
             return data;
         }
 
-        public IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(DateTime fromDate, DateTime toDate)
+        public IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string region, string localAuthority, bool marketMessagesOnly)
         {
             _logger.Debug($"Executing ReportRegisteredCandidates report with toDate {toDate} and fromdate {fromDate}...");
 
@@ -497,15 +527,15 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
 
             var command = new SqlCommand("dbo.ReportRegisteredCandidatesList", (SqlConnection)_getOpenConnection.GetOpenConnection());
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("type", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = region;
+            command.Parameters.Add("type", SqlDbType.Int).Value = type;
+            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = localAuthority;
             command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
             command.Parameters.Add("FromDate", SqlDbType.DateTime).Value = fromDate;
             command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = toDate;
-            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = ageRange;
             command.Parameters.Add("IncludeDeregisteredCandidates", SqlDbType.Int).Value = 0;
-            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = 0;
+            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = marketMessagesOnly ? 1 : 0;
             command.Parameters.Add("EthnicityID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("GenderID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
