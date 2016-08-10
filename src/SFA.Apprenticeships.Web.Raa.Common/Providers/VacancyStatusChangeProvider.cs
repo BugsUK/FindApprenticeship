@@ -14,17 +14,14 @@
     public class VacancyStatusChangeProvider : IVacancyStatusChangeProvider
     {
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
-        private readonly ITraineeshipApplicationService _traineeshipApplicationService;
         private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IVacancyPostingService _vacancyPostingService;
 
         public VacancyStatusChangeProvider(IApprenticeshipApplicationService apprenticeshipApplicationService,
-            ITraineeshipApplicationService traineeshipApplicationService,
             IVacancyReadRepository vacancyReadRepository,
             IVacancyPostingService vacancyPostingService)
         {
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
-            _traineeshipApplicationService = traineeshipApplicationService;
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyPostingService = vacancyPostingService;
         }
