@@ -191,6 +191,7 @@
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
+    <Compile Include="Converters\ProviderViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
