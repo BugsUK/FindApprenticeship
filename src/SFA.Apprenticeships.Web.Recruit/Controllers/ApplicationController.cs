@@ -37,6 +37,12 @@
             }
         }
 
+        [HttpPost]
+        public ActionResult VacancyApplications(VacancyApplicationsViewModel vacancyApplications)
+        {
+            return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, vacancyApplications.VacancyApplicationsSearch.RouteValues);
+        }
+
         [HttpGet]
         public ActionResult ShareApplications(int vacancyReferenceNumber)
         {
@@ -68,12 +74,6 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
-        }
-
-        [HttpPost]
-        public ActionResult VacancyApplications(VacancyApplicationsViewModel vacancyApplications)
-        {
-            return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, vacancyApplications.VacancyApplicationsSearch);
         }
     }
 }
