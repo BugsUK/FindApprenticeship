@@ -181,7 +181,7 @@
             var viewModel = new ProviderViewModel
             {
                 ProviderId = provider.ProviderId,
-                ProviderName = provider.Name,
+                ProviderName = provider.TradingName,
                 IsMigrated = provider.IsMigrated,
                 ProviderSiteViewModels = providerSites.Select(ps => ps.Convert()).ToList()
             };

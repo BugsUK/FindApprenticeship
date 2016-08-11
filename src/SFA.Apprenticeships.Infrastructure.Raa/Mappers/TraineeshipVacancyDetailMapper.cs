@@ -69,7 +69,7 @@
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
                 RecruitmentAgency = providerSite.TradingName,
-                ProviderName = provider.Name,
+                ProviderName = provider.TradingName,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = vacancy.GetContactInformation(providerSite),

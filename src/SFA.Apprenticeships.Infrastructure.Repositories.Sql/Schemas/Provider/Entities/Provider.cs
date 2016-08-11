@@ -16,6 +16,8 @@
 
         public string FullName { get; set; }
 
+        public string TradingName { get; set; }
+
         public int? ProviderToUseFAA { get; set; }
 
         // public string TradingName { get; set; }
