@@ -29,7 +29,9 @@
             _logger = logger;
         }
 
-        public void Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
+        public void Update(
+            ApprenticeshipApplicationDetail apprenticeshipApplication,
+            ApplicationStatusSummary applicationStatusSummary)
         {
             var originalLegacyApplicationId = apprenticeshipApplication.LegacyApplicationId;
             var originalStatus = apprenticeshipApplication.Status;

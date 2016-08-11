@@ -51,5 +51,10 @@
                 _logService.Warn(message + " failed!", e);
             }
         }
+
+        public void Send(ApplicationStatuses originalStatus, ApplicationStatusSummary applicationStatusSummary)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

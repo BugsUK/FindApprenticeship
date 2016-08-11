@@ -129,6 +129,7 @@
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyBuilder.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyTests.cs" />
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
+    <Compile Include="Applications\Strategies\ApplicationStatusUpdateStrategyTests.cs" />
     <Compile Include="Application\ApprenticeshipApplicationServiceTests.cs" />
     <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSearchResultsBuilder.cs" />
