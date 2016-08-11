@@ -53,6 +53,8 @@
 
             //Assert
             viewModel.Should().NotBeNull();
+            viewModel.FirstName.Should().Be(source.CandidateDetails.FirstName);
+            viewModel.LastName.Should().Be(source.CandidateDetails.LastName);
             viewModel.ApplicantName.Should().Be(source.CandidateDetails.FirstName + " " + source.CandidateDetails.LastName);
             viewModel.DateApplied.Should().Be(source.DateApplied.Value);
             viewModel.Status.Should().Be(source.Status);
