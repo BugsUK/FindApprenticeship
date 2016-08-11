@@ -115,7 +115,7 @@
                 detail.SupplementaryQuestion2.Should().Be(vacancy.SecondQuestion);
 
                 detail.RecruitmentAgency.Should().Be(providerSite.TradingName);
-                detail.ProviderName.Should().Be(provider.Name);
+                detail.ProviderName.Should().Be(provider.TradingName);
                 detail.TradingName.Should().Be(employer.TradingName);
                 detail.ProviderDescription.Should().BeNull();
 
