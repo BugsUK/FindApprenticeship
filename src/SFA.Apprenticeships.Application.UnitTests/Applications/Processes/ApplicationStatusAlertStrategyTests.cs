@@ -20,10 +20,10 @@
         [TestCase(ApplicationStatuses.Unsuccessful, ApplicationStatuses.Unsuccessful, false)]
         [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.Successful, true)]
         [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.Unsuccessful, true)]
-        public void ShouldSendAlertWhenNewApplicationStatusIsSuccessfulOrUnsuccessful(
+        public void ShouldSendAlertWhenApplicationStatusHasChangedToSuccessfulOrUnsuccessful(
             ApplicationStatuses currentStatus,
             ApplicationStatuses newStatus,
-            bool shouldPublish)
+            bool shouldSendAlert)
         {
             // Arrange.
             var serviceBus = new Mock<IServiceBus>();
@@ -39,7 +39,7 @@
             strategy.Send(currentStatus, summary);
 
             // Assert.
-            var times = shouldPublish ? Times.Once() : Times.Never();
+            var times = shouldSendAlert ? Times.Once() : Times.Never();
 
             serviceBus.Verify(mock => mock
                 .PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
