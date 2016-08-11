@@ -3,6 +3,10 @@
     public class InformationRadiatorData
     {
         public int TotalProviders { get; set; }
+        public int TotalProvidersAskedToOnboard { get; set; }
+        public int TotalProvidersForcedToMigrate { get; set; }
+        public int TotalProvidersOnboarded { get; set; }
+        public int TotalProvidersMigrated { get; set; }
         public int TotalProviderUserAccounts { get; set; }
         public int TotalVacanciesCreatedViaRaa { get; set; }
         public int TotalDraftVacanciesCreatedViaRaa { get; set; }
