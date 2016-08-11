@@ -380,22 +380,22 @@ WriteLiteral(">");
 
             
             #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                         Write(Model.ProviderSite.Name);
+                                         Write(Model.Provider.ProviderName);
 
             
             #line default
             #line hidden
 WriteLiteral("</p>\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4105), Tuple.Create("\"", 4136)
-, Tuple.Create(Tuple.Create("", 4113), Tuple.Create("text", 4113), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4109), Tuple.Create("\"", 4140)
+, Tuple.Create(Tuple.Create("", 4117), Tuple.Create("text", 4117), true)
             
             #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4117), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create(" ", 4121), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 4118), false)
+, 4122), false)
 );
 
 WriteLiteral(">\r\n                <h3");

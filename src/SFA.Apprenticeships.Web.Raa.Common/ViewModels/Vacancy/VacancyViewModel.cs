@@ -34,6 +34,8 @@
 
         public string SectorName { get; set; }
 
+        public ProviderViewModel Provider { get; set; }
+
         public ProviderSiteViewModel ProviderSite { get; set; }
 
         public VacancyStatus Status { get; set; }
