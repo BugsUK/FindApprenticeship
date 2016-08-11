@@ -82,6 +82,7 @@
             var apprenticeshipApplicationDetail = new ApprenticeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
+                Status = ApplicationStatuses.Submitted,
                 Vacancy = new ApprenticeshipSummary
                 {
                     ClosingDate = tomorrow
@@ -100,7 +101,7 @@
             var times = updated ? 1 : 0;
 
             _mockApplicationStatusAlertStrategy.Verify(mock => mock
-                .Send(applicationStatusSummary), Times.Exactly(times));
+                .Send(apprenticeshipApplicationDetail.Status, applicationStatusSummary), Times.Exactly(times));
         }
 
         [TestCase(false)]

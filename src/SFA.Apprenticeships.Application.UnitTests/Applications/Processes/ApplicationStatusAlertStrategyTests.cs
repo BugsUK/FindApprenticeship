@@ -11,15 +11,19 @@
     [TestFixture]
     public class ApplicationStatusAlertStrategyTests
     {
-        [TestCase(ApplicationStatuses.Unknown, false)]
-        [TestCase(ApplicationStatuses.Draft, false)]
-        [TestCase(ApplicationStatuses.ExpiredOrWithdrawn, false)]
-        [TestCase(ApplicationStatuses.Submitting, false)]
-        [TestCase(ApplicationStatuses.Submitted, false)]
-        [TestCase(ApplicationStatuses.InProgress, false)]
-        [TestCase(ApplicationStatuses.Successful, true)]
-        [TestCase(ApplicationStatuses.Unsuccessful, true)]
-        public void ShouldSendAlertWhenApplicationStatusIsSuccessfulOrUnsuccessful(ApplicationStatuses applicationStatus, bool shouldPublish)
+        [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.Draft, false)]
+        [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.ExpiredOrWithdrawn, false)]
+        [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.Submitting, false)]
+        [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.Submitted, false)]
+        [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.InProgress, false)]
+        [TestCase(ApplicationStatuses.Successful, ApplicationStatuses.Successful, false)]
+        [TestCase(ApplicationStatuses.Unsuccessful, ApplicationStatuses.Unsuccessful, false)]
+        [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.Successful, true)]
+        [TestCase(ApplicationStatuses.Unknown, ApplicationStatuses.Unsuccessful, true)]
+        public void ShouldSendAlertWhenNewApplicationStatusIsSuccessfulOrUnsuccessful(
+            ApplicationStatuses currentStatus,
+            ApplicationStatuses newStatus,
+            bool shouldPublish)
         {
             // Arrange.
             var serviceBus = new Mock<IServiceBus>();
@@ -28,20 +32,21 @@
                 .With(serviceBus)
                 .Build();
 
-            var summary = new ApplicationStatusSummaryBuilder(applicationStatus)
+            var summary = new ApplicationStatusSummaryBuilder(newStatus)
                 .Build();
 
             // Act.
-            strategy.Send(summary);
+            strategy.Send(currentStatus, summary);
 
             // Assert.
             var times = shouldPublish ? Times.Once() : Times.Never();
 
-            serviceBus.Verify(mb => mb.PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
+            serviceBus.Verify(mock => mock
+                .PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
         }
 
-        [TestCase(true)]
         [TestCase(false)]
+        [TestCase(true)]
         public void ShouldSendAlertWhenLegacySystemUpdate(bool isLegacySystemUpdate)
         {
             // Arrange.
@@ -56,19 +61,22 @@
                 .Build();
 
             // Act.
-            strategy.Send(summary);
+            strategy.Send(ApplicationStatuses.Unknown,  summary);
 
             // Assert.
             var times = isLegacySystemUpdate ? Times.Once() : Times.Never();
 
-            serviceBus.Verify(mb => mb.PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
+            serviceBus.Verify(mock => mock
+                .PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
         }
 
         [Test]
         public void ShouldSendWellFormedAlert()
         {
             // Arrange.
-            const ApplicationStatuses applicationStatus = ApplicationStatuses.Successful;
+            const ApplicationStatuses currentStatus = ApplicationStatuses.Submitted;
+            const ApplicationStatuses newStatus = ApplicationStatuses.Successful;
+
             const int legacyApplicationId = 3456789;
             const string unsuccessfulReason = "You do not have the required grades";
 
@@ -87,18 +95,18 @@
                 .With(serviceBus)
                 .Build();
 
-            var summary = new ApplicationStatusSummaryBuilder(applicationStatus)
+            var summary = new ApplicationStatusSummaryBuilder(newStatus)
                 .WithLegacyApplicationId(legacyApplicationId)
                 .WithUnsuccessfulReason(unsuccessfulReason)
                 .Build();
 
             // Act.
-            strategy.Send(summary);
+            strategy.Send(currentStatus, summary);
 
             // Assert.
             applicationStatusChanged.Should().NotBeNull();
             applicationStatusChanged.LegacyApplicationId.Should().Be(legacyApplicationId);
-            applicationStatusChanged.ApplicationStatus.Should().Be(applicationStatus);
+            applicationStatusChanged.ApplicationStatus.Should().Be(newStatus);
             applicationStatusChanged.UnsuccessfulReason.Should().Be(unsuccessfulReason);
         }
     }

@@ -18,9 +18,14 @@
             _serviceBus = serviceBus;
         }
 
-        public void Send(ApplicationStatusSummary applicationStatusSummary)
+        public void Send(ApplicationStatuses currentStatus, ApplicationStatusSummary applicationStatusSummary)
         {
             if (!applicationStatusSummary.IsLegacySystemUpdate())
+            {
+                return;
+            }
+
+            if (currentStatus == applicationStatusSummary.ApplicationStatus)
             {
                 return;
             }
@@ -50,11 +55,6 @@
             {
                 _logService.Warn(message + " failed!", e);
             }
-        }
-
-        public void Send(ApplicationStatuses originalStatus, ApplicationStatusSummary applicationStatusSummary)
-        {
-            throw new NotImplementedException();
         }
     }
 }

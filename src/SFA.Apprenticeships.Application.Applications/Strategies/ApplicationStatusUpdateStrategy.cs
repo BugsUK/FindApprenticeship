@@ -72,7 +72,7 @@
                     applicationStatusSummary.UnsuccessfulReason); // 12
 
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-                _applicationStatusAlertStrategy.Send(applicationStatusSummary);
+                _applicationStatusAlertStrategy.Send(originalStatus, applicationStatusSummary);
             }
         }
 

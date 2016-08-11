@@ -5,7 +5,6 @@
 
     public interface IApplicationStatusAlertStrategy
     {
-        void Send(ApplicationStatusSummary applicationStatusSummary);
-        void Send(ApplicationStatuses originalStatus, ApplicationStatusSummary applicationStatusSummary);
+        void Send(ApplicationStatuses currentStatus, ApplicationStatusSummary applicationStatusSummary);
     }
 }
