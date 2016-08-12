@@ -19,15 +19,14 @@
         private readonly Mock<IProviderVacancyAuthorisationService> _mockProviderVacancyAuthorisationService = new Mock<IProviderVacancyAuthorisationService>();
 
         private IGetVacancyStrategies _getVacancyStrategies;
-        private IAuthoriseCurrentUserStrategy _authoriseCurrentUserStrategy;
 
         [SetUp]
         public void SetUp()
         {
             _mockProviderVacancyAuthorisationService.Setup(mock => mock.Authorise(_testVacancy)).Throws<UnauthorizedAccessException>();
 
-            _authoriseCurrentUserStrategy = new AuthoriseCurrentUserStrategy(_mockProviderVacancyAuthorisationService.Object);
-            _getVacancyStrategies = new GetVacancyStrategies(_mockApprenticeshipVacancyReadRepository.Object, _authoriseCurrentUserStrategy);
+            var authoriseCurrentUserStrategy = new AuthoriseCurrentUserStrategy(_mockProviderVacancyAuthorisationService.Object);
+            _getVacancyStrategies = new GetVacancyStrategies(_mockApprenticeshipVacancyReadRepository.Object, authoriseCurrentUserStrategy);
         }
 
         [Test]

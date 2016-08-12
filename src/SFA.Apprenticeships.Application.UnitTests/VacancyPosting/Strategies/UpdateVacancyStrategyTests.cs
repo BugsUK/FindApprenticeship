@@ -2,7 +2,6 @@
 {
     using System;
     using Apprenticeships.Application.VacancyPosting.Strategies;
-    using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
@@ -24,15 +23,14 @@
         private readonly Mock<IProviderVacancyAuthorisationService> _mockProviderVacancyAuthorisationService = new Mock<IProviderVacancyAuthorisationService>();
 
         private IUpdateVacancyStrategy _updateVacancyStrategy;
-        private IUpsertVacancyStrategy _upsertVacancyStrategy;
 
         [SetUp]
         public void SetUp()
         {
             _mockProviderVacancyAuthorisationService.Setup(mock => mock.Authorise(_testVacancy)).Throws<UnauthorizedAccessException>();
 
-            _upsertVacancyStrategy = new UpsertVacancyStrategy(_mockCurrentUserService.Object, _mockProviderUserReadRepository.Object, _mockApprenticeshipVacancyReadRepository.Object, _mockProviderVacancyAuthorisationService.Object);
-            _updateVacancyStrategy = new UpdateVacancyStrategy(_mockApprenticeshipVacancyWriteRepository.Object, _upsertVacancyStrategy);
+            var upsertVacancyStrategy = new UpsertVacancyStrategy(_mockCurrentUserService.Object, _mockProviderUserReadRepository.Object, _mockApprenticeshipVacancyReadRepository.Object, new AuthoriseCurrentUserStrategy(_mockProviderVacancyAuthorisationService.Object), new Mock<IPublishVacancySummaryUpdateStrategy>().Object);
+            _updateVacancyStrategy = new UpdateVacancyStrategy(_mockApprenticeshipVacancyWriteRepository.Object, upsertVacancyStrategy);
         }
 
         [Test]

@@ -12,8 +12,6 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
-    using Factories;
-    using ViewModels;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -142,8 +140,8 @@
             {
                 case VacancyApplicationsSearchViewModel.OrderByFieldLastName:
                     page = order == Order.Descending
-                        ? applications.OrderByDescending(a => a.CandidateDetails.LastName).ThenBy(a => a.DateApplied)
-                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.DateApplied);
+                        ? applications.OrderByDescending(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied)
+                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied);
                     break;
                 default:
                     page = applications;

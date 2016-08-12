@@ -38,7 +38,6 @@
         private readonly Mock<IProviderVacancyAuthorisationService> _mockProviderVacancyAuthorisationService = new Mock<IProviderVacancyAuthorisationService>();
 
         private ICreateVacancyStrategy _createVacancyStrategy;
-        private IUpsertVacancyStrategy _upsertVacancyStrategy;
 
         [SetUp]
         public void SetUp()
@@ -47,8 +46,8 @@
             _mockProviderUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
             _mockProviderVacancyAuthorisationService.Setup(mock => mock.Authorise(_testVacancy)).Throws<UnauthorizedAccessException>();
 
-            _upsertVacancyStrategy = new UpsertVacancyStrategy(_mockCurrentUserService.Object, _mockProviderUserReadRepository.Object, _mockApprenticeshipVacancyReadRepository.Object, _mockProviderVacancyAuthorisationService.Object);
-            _createVacancyStrategy = new CreateVacancyStrategy(_mockApprenticeshipVacancyWriteRepository.Object, _mockProviderUserReadRepository.Object, _mockCurrentUserService.Object, _upsertVacancyStrategy);
+            var upsertVacancyStrategy = new UpsertVacancyStrategy(_mockCurrentUserService.Object, _mockProviderUserReadRepository.Object, _mockApprenticeshipVacancyReadRepository.Object, new AuthoriseCurrentUserStrategy(_mockProviderVacancyAuthorisationService.Object), new Mock<IPublishVacancySummaryUpdateStrategy>().Object);
+            _createVacancyStrategy = new CreateVacancyStrategy(_mockApprenticeshipVacancyWriteRepository.Object, _mockProviderUserReadRepository.Object, _mockCurrentUserService.Object, upsertVacancyStrategy);
         }
 
         [Test]

@@ -6,28 +6,34 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Interfaces;
-    using Interfaces.Providers;
 
     public class UpsertVacancyStrategy : IUpsertVacancyStrategy
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IProviderUserReadRepository _providerUserReadRepository;
         private readonly IVacancyReadRepository _vacancyReadRepository;
-        private readonly IProviderVacancyAuthorisationService _providerVacancyAuthorisationService;
+        private readonly IAuthoriseCurrentUserStrategy _authoriseCurrentUserStrategy;
+        private readonly IPublishVacancySummaryUpdateStrategy _publishVacancySummaryUpdateStrategy;
 
-        public UpsertVacancyStrategy(ICurrentUserService currentUserService, IProviderUserReadRepository providerUserReadRepository, IVacancyReadRepository vacancyReadRepository, IProviderVacancyAuthorisationService providerVacancyAuthorisationService)
+        public UpsertVacancyStrategy(
+            ICurrentUserService currentUserService, 
+            IProviderUserReadRepository providerUserReadRepository, 
+            IVacancyReadRepository vacancyReadRepository, 
+            IAuthoriseCurrentUserStrategy authoriseCurrentUserStrategy, 
+            IPublishVacancySummaryUpdateStrategy publishVacancySummaryUpdateStrategy)
         {
             _currentUserService = currentUserService;
             _providerUserReadRepository = providerUserReadRepository;
             _vacancyReadRepository = vacancyReadRepository;
-            _providerVacancyAuthorisationService = providerVacancyAuthorisationService;
+            _authoriseCurrentUserStrategy = authoriseCurrentUserStrategy;
+            _publishVacancySummaryUpdateStrategy = publishVacancySummaryUpdateStrategy;
         }
 
         public Vacancy UpsertVacancy(Vacancy vacancy, Func<Vacancy, Vacancy> operation)
         {
             Condition.Requires(vacancy);
 
-            AuthoriseCurrentUser(vacancy);
+            _authoriseCurrentUserStrategy.AuthoriseCurrentUser(vacancy);
 
             if (_currentUserService.IsInRole(Roles.Faa))
             {
@@ -41,15 +47,9 @@
 
             vacancy = operation(vacancy);
 
-            return _vacancyReadRepository.Get(vacancy.VacancyId);
-        }
+            _publishVacancySummaryUpdateStrategy.PublishVacancySummaryUpdate(vacancy);
 
-        private void AuthoriseCurrentUser(Vacancy vacancy)
-        {
-            if (vacancy != null)
-            {
-                _providerVacancyAuthorisationService.Authorise(vacancy);
-            }
+            return _vacancyReadRepository.Get(vacancy.VacancyId);
         }
     }
 }

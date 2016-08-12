@@ -6,7 +6,7 @@
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
 
     public class CreateVacancyStrategy : ICreateVacancyStrategy
     {

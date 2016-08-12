@@ -67,6 +67,11 @@
 
         private static GeoPoint GetGeoPoint(VacancySummary vacancy)
         {
+            if (vacancy.Address?.GeoPoint == null)
+            {
+                return new GeoPoint();
+            }
+
             return new GeoPoint
             {
                 Latitude = vacancy.Address.GeoPoint.Latitude,
