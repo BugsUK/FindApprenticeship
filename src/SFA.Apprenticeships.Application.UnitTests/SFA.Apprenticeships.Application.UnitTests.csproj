@@ -214,9 +214,10 @@
     <Compile Include="Vacancies\VacancyStatusProcessorTests\ProcessVacancyClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\QueueVacanciesForClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\VacancyStatusProcessorBuilder.cs" />
-    <Compile Include="VacancyPosting\TestBase.cs" />
-    <Compile Include="VacancyPosting\VacancyPostingServiceAuthorisationTests.cs" />
-    <Compile Include="VacancyPosting\VacancyPostingServiceTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\CreateVacancyStrategyTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\GetNextVacancyReferenceNumberStrategyTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\GetVacancyStrategiesTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\UpdateVacancyStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

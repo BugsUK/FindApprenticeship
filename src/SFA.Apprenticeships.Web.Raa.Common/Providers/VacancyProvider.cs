@@ -1101,7 +1101,7 @@
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
-        private void CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
+        private Vacancy CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
         {
             var newVacancy = (Vacancy)vacancy.Clone();
             newVacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
@@ -1113,7 +1113,7 @@
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
-            _vacancyPostingService.CreateVacancy(newVacancy);
+            return _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
         public QAActionResultCode ApproveVacancy(int vacancyReferenceNumber)
@@ -1125,6 +1125,8 @@
             {
                 return QAActionResultCode.InvalidVacancy;
             }
+
+            var approvedVacancies = new List<Vacancy>();
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
@@ -1139,7 +1141,8 @@
 
                     foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
                     {
-                        CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                        var childVacancy = CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                        approvedVacancies.Add(childVacancy);
                     }
 
                     _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
@@ -1148,7 +1151,8 @@
 
             submittedVacancy.Status = VacancyStatus.Live;
             submittedVacancy.DateQAApproved = qaApprovalDate;
-            _vacancyPostingService.UpdateVacancy(submittedVacancy);
+            var approvedVacancy = _vacancyPostingService.UpdateVacancy(submittedVacancy);
+            approvedVacancies.Add(approvedVacancy);
 
             return QAActionResultCode.Ok;
         }
