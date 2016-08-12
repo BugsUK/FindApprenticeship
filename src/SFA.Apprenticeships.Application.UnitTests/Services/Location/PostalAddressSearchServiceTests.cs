@@ -53,7 +53,7 @@
             Assert.IsNull(result);
         }
 
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void ShouldReturnExceptionIfMultipleAddressesFound()
         {
             //Arrange
@@ -62,11 +62,8 @@
             _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(multipleResults);
 
-            //Act
-            var result = _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>());
-
-            //Assert
-            //expected exception
+            //Act & Assert
+            Assert.Throws<InvalidOperationException>(() => _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>()));
         }
 
         [Test]
