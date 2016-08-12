@@ -9,6 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class VerifyAccountUnlockCodeTests
     {
         private const string EmailAddress = "test@test.com";

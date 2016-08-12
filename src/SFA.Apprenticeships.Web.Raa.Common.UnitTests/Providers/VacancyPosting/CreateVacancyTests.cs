@@ -11,9 +11,9 @@
     using Ploeh.AutoFixture;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
-    using ViewModels.VacancyPosting;
-
+    
     [TestFixture]
+    [Parallelizable]
     public class CreateVacancyTests : TestBase
     {
         private const string Ukprn = "12345";

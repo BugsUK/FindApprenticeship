@@ -12,6 +12,7 @@
     using Web.Common.Configuration;
 
     [TestFixture]
+    [Parallelizable]
     public class TrainingDetailsTests : TestBase
     {
         private const string EdsUrn = "112";

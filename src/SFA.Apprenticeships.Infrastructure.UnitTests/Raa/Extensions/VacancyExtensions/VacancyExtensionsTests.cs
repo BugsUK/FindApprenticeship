@@ -8,6 +8,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyExtensionsTests
     {
         [TestCase(VacancyStatus.Unknown, VacancyStatuses.Unknown)]

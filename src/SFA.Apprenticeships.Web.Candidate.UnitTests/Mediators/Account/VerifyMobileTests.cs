@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
     using Moq;
     using NUnit.Framework;
 
+    [TestFixture]
     public class VerifyMobileTests
     {
        private const string MobileNumber = "123456789";

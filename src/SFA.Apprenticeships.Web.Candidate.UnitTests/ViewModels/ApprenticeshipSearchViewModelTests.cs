@@ -7,6 +7,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipSearchViewModelTests
     {
         [TestCase(ApprenticeshipLevel.Intermediate, "admin", 51.51713, -0.10619, "London (City of London, Greater London)", ApprenticeshipLocationType.NonNational, 1, SearchAction.Search, "All", ApprenticeshipSearchMode.Keyword, VacancySearchSortType.Relevancy, 5, null, null, "/apprenticeships?ApprenticeshipLevel=Intermediate&Hash=0&Keywords=admin&Latitude=51.51713&Longitude=-0.10619&Location=London%20%28City%20of%20London%2C%20Greater%20London%29&LocationType=NonNational&PageNumber=1&ResultsPerPage=5&SearchAction=Search&SearchField=All&SearchMode=Keyword&SortType=Relevancy&WithinDistance=5")]

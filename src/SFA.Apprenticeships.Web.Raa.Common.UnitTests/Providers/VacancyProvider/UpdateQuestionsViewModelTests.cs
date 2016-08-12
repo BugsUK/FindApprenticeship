@@ -14,6 +14,7 @@
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateQuestionsViewModelTests
     {
         [Test]

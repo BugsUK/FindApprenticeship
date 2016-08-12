@@ -7,6 +7,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancySummaryViewModelClientValidatorTests
     {
         private VacancySummaryViewModelClientValidator _validator;

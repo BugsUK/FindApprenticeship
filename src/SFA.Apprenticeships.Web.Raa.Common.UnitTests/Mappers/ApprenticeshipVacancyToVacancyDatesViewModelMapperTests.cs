@@ -10,6 +10,7 @@
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipVacancyToVacancyDatesViewModelMapperTests
     {
         private IMapper _mapper;

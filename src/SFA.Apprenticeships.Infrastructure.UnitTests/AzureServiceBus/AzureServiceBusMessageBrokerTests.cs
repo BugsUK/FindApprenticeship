@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Application.Candidate;
     using Azure.ServiceBus.Factory;
     using Azure.ServiceBus.Model;
@@ -13,6 +12,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class AzureServiceBusMessageBrokerTests
     {
         [Test]

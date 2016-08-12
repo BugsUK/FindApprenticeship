@@ -13,10 +13,10 @@
     using Domain.Entities.Raa.Parties;
     using FluentAssertions;
     using Ploeh.AutoFixture;
-    using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class CreateVacancyTests : TestsBase
     {
         private const string Ukprn = "12345";

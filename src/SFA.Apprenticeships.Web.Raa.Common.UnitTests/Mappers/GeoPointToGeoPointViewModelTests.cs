@@ -8,11 +8,12 @@
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class GeoPointToGeoPointViewModelTests
     {
         private IMapper mapper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             mapper = new RaaCommonWebMappers();
