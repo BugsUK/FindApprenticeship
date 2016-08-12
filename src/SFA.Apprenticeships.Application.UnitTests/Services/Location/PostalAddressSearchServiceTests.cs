@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Apprenticeships.Application.Location;
@@ -11,6 +10,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class PostalAddressSearchServiceTests
     {
         private PostalAddressSearchService _serviceUnderTest;

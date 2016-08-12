@@ -7,7 +7,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    [Parallelizable]
+    //[Parallelizable]
     public class DateViewModelServerValidatorTests
     {
         [Test]
