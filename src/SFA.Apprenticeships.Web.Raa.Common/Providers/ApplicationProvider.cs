@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.UI;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
@@ -14,11 +13,13 @@
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Factories;
+    using ViewModels;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using Order = ViewModels.Order;
 
     public class ApplicationProvider : IApplicationProvider
     {
@@ -70,7 +71,7 @@
             viewModel.ViewedApplicationsCount = viewed.Count;
             viewModel.SuccessfulApplicationsCount = successful.Count;
             viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
-            viewModel.ApplicationSummaries = _mapper.Map<List<ApplicationSummary>, List<ApplicationSummaryViewModel>>(applications);
+            viewModel.ApplicationSummaries = _mapper.Map<List<ApplicationSummary>, List<ApplicationSummaryViewModel>>(applications.OrderBy(a => a.CandidateDetails.LastName).ToList());
 
             return viewModel;
         }
@@ -115,12 +116,10 @@
             viewModel.SuccessfulApplicationsCount = successful.Count;
             viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
 
-            vacancyApplicationsSearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacancyApplicationsSearch.PageSize);
-
             viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;
             viewModel.ApplicationSummaries = new PageableViewModel<ApplicationSummaryViewModel>
             {
-                Page = applications.Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
+                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications).Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
                 ResultsCount = applications.Count,
                 CurrentPage = vacancyApplicationsSearch.CurrentPage,
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
@@ -134,6 +133,23 @@
             }
 
             return viewModel;
+        }
+
+        private static IEnumerable<ApplicationSummary> GetOrderedApplicationSummaries(string orderByField, Order order, IEnumerable<ApplicationSummary> applications)
+        {
+            IEnumerable<ApplicationSummary> page;
+            switch (orderByField)
+            {
+                case VacancyApplicationsSearchViewModel.OrderByFieldLastName:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.CandidateDetails.LastName).ThenBy(a => a.DateApplied)
+                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.DateApplied);
+                    break;
+                default:
+                    page = applications;
+                    break;
+            }
+            return page;
         }
 
         public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)

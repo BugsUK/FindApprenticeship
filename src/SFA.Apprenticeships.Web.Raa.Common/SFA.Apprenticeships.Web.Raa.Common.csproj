@@ -271,6 +271,10 @@
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\Order.cs" />
+    <Compile Include="ViewModels\OrderedPageableSearchViewModel.cs" />
+    <Compile Include="ViewModels\OrderedSearchViewModel.cs" />
+    <Compile Include="ViewModels\PageableSearchViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />
