@@ -50,25 +50,6 @@
         }
 
         [Test]
-        public void ShouldReturnNullIfMultipleAddressesFound()
-        {
-            //Arrange
-            var multipleResults = new Fixture().Build<PostalAddress>()
-                .CreateMany().ToList();
-            var postalAddressLookupProvider = new Mock<IPostalAddressLookupProvider>();
-            var serviceUnderTest = new PostalAddressSearchService(postalAddressLookupProvider.Object);
-
-            postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(multipleResults);
-
-            //Act
-            var result = serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>());
-
-            //Asset
-            result.Should().BeNull();
-        }
-
-        [Test]
         public void ShouldReturnMultipleAddresses()
         {
             //Arrange
