@@ -69,7 +69,7 @@
             }
             catch (DomainException e)
             {
-                if (e.Code == ErrorCodes.ApplicationCreationFailed)
+                if (e.Code == ErrorCodes.ApplicationCreationFailed || e.Code == ErrorCodes.VacancyNotFoundError)
                     _logger.Error(e);
                 else
                     _logger.Warn(e);

@@ -139,7 +139,7 @@
 
             var cex = ex as DomainException;
 // ReSharper disable once PossibleNullReferenceException
-            cex.Code.Should().Be(ErrorCodes.ApplicationCreationFailed);
+            cex.Code.Should().Be(ErrorCodes.VacancyNotFoundError);
         }
 
         public void CheckForLegacyCandidateNotFoundErrorException(Exception ex)

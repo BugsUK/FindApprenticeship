@@ -50,6 +50,12 @@
         {
             Condition.Requires(vacancy);
 
+            if (vacancy.Status == VacancyStatus.Completed)
+            {
+                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
+                throw new CustomException(message, ErrorCodes.EntityStateError);
+            }
+
             if (_currentUserService.IsInRole(Roles.Faa))
             {
                 var username = _currentUserService.CurrentUserName;
@@ -69,6 +75,41 @@
 
         public Vacancy UpdateVacancy(Vacancy vacancy)
         {
+            if (vacancy.Status == VacancyStatus.Completed)
+            {
+                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
+                throw new CustomException(message, ErrorCodes.EntityStateError);
+            }
+
+            // Make sure the standard is null if the vacancy is a traineeship (RA-30)
+            SetStandardAsNullIfTraineeship(vacancy);
+            SetSectorAsNullIfApprenticeship(vacancy);
+
+            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
+        }
+
+        private void SetSectorAsNullIfApprenticeship(Vacancy vacancy)
+        {
+            if (vacancy.VacancyType == VacancyType.Apprenticeship)
+            {
+                vacancy.SectorCodeName = null;
+            }
+        }
+
+        private static void SetStandardAsNullIfTraineeship(Vacancy vacancy)
+        {
+            if (vacancy.VacancyType == VacancyType.Traineeship)
+            {
+                vacancy.StandardId = null;
+            }
+        }
+
+        public Vacancy ArchiveVacancy(Vacancy vacancy)
+        {
+            Condition.Requires(vacancy);
+
+            vacancy.Status = VacancyStatus.Completed;
+
             return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
         }
 
@@ -147,12 +188,6 @@
             Condition.Requires(vacancy);
 
             AuthoriseCurrentUser(vacancy);
-
-            if (vacancy.Status == VacancyStatus.Completed)
-            {
-                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
-                throw new CustomException(message, ErrorCodes.EntityStateError);
-            }
 
             if (_currentUserService.IsInRole(Roles.Faa))
             {

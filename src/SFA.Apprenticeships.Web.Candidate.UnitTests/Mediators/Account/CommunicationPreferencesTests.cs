@@ -45,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             }
             else
             {
-                result.AssertCode(expectedCode);
+                result.AssertCodeAndMessage(expectedCode);
             }
         }
 
@@ -75,7 +75,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             }
             else
             {
-                result.AssertCode(expectedCode);
+                result.AssertCodeAndMessage(expectedCode);
             }
         }
     }

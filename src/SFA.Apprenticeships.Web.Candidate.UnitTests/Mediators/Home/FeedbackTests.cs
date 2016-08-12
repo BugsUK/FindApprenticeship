@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
+﻿
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 {
     using System;
     using Candidate.Mediators.Home;
@@ -21,6 +22,7 @@
     [Parallelizable]
     public class FeedbackTests : MediatorBase
     {
+
         [SetUp]
         public void SetUp()
         {
@@ -35,7 +37,6 @@
                 _contactMessageServerViewModelValidator.Object,
                 _feedbackServerViewModelValidatorMock.Object);
         }
-
         private const string ValidName = "Jane Doe";
         private const string ValidEmail = "jane.doe@example.com";
         private const string ValidDetails = "Some feedback";
@@ -55,7 +56,7 @@
             const string candidateFirstName = "Jane";
             const string candidateLastName = "Doe";
             const string emailAddress = ValidEmail;
-
+            
             _candidateServiceProviderMock.Setup(mock => mock.GetCandidate(candidateId)).Returns(new Candidate
             {
                 RegistrationDetails = new RegistrationDetails
@@ -68,7 +69,7 @@
 
             var response = _homeMediator.GetFeedbackViewModel(candidateId);
 
-            response.AssertCode(HomeMediatorCodes.GetFeedbackViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetFeedbackViewModel.Successful);
             response.ViewModel.Name.Should().Be(string.Format("{0} {1}", candidateFirstName, candidateLastName));
             response.ViewModel.Email.Should().Be(emailAddress);
         }
@@ -82,19 +83,19 @@
 
             var response = _homeMediator.GetFeedbackViewModel(candidateId);
 
-            response.AssertCode(HomeMediatorCodes.GetFeedbackViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetFeedbackViewModel.Successful);
 
             response.ViewModel.Name.Should().BeNull();
             response.ViewModel.Email.Should().BeNull();
             response.ViewModel.Details.Should().BeNull();
         }
-
+    
         [Test]
         public void GetFeedbackViewModelWithoutCandidateId()
         {
             var response = _homeMediator.GetFeedbackViewModel(null);
 
-            response.AssertCode(HomeMediatorCodes.GetFeedbackViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetFeedbackViewModel.Successful);
             response.ViewModel.Name.Should().BeNull();
             response.ViewModel.Email.Should().BeNull();
             response.ViewModel.Details.Should().BeNull();
@@ -154,7 +155,7 @@
             };
 
             _feedbackServerViewModelValidatorMock.Setup(mock => mock.Validate(It.IsAny<FeedbackViewModel>()))
-                .Returns(new ValidationResult(new[] {new ValidationFailure("Name", "Error")}));
+                .Returns(new ValidationResult(new []{new ValidationFailure("Name", "Error") }));
 
             _candidateServiceProviderMock.Setup(mock => mock.SendFeedback(null, viewModel)).Returns(false);
 

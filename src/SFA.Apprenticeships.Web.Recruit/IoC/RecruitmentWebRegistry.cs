@@ -32,6 +32,7 @@
     using Mediators.ProviderUser;
     using Mediators.Report;
     using Mediators.VacancyPosting;
+    using Mediators.VacancyStatus;
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Application;
@@ -74,6 +75,7 @@
             For<IGeoCodingProvider>().Use<GeoCodingProvider>();
             For<IReportingProvider>().Use<ReportingProvider>();
             For<IEncryptionProvider>().Use<AES256Provider>();
+            For<IVacancyStatusChangeProvider>().Use<VacancyStatusChangeProvider>();
         }
 
         private void RegisterServices()
@@ -126,6 +128,7 @@
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IProviderUserMediator>().Use<ProviderUserMediator>();
             For<IVacancyPostingMediator>().Use<VacancyPostingMediator>();
+            For<IVacancyStatusMediator>().Use<VacancyStatusMediator>();
             For<IApplicationMediator>().Use<ApplicationMediator>();
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();

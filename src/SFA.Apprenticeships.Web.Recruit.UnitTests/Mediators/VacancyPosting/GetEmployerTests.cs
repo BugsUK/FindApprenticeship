@@ -86,7 +86,7 @@
             var mediator = GetMediator();
             var mediatorResponse = mediator.GetEmployer(providerSiteId, edsurn, Guid.NewGuid(), null, null);
 
-            mediatorResponse.AssertCode(VacancyPostingMediatorCodes.GetEmployer.Ok);
+            mediatorResponse.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetEmployer.Ok);
         }
     }
 }

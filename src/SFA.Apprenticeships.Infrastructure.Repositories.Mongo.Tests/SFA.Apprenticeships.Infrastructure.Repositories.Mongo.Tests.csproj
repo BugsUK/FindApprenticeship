@@ -144,8 +144,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryIntegrationTest.cs" />
     <Compile Include="Users\UserRepositoryTests.cs" />
-    <Compile Include="Vacancies\ApprenticeshipVacancyRepositoryTests.cs" />
-    <Compile Include="Vacancies\ApprenticeshipVacancyWriteRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

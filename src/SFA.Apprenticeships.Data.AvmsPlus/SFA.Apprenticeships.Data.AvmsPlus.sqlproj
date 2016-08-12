@@ -126,6 +126,7 @@
     <Folder Include="Reference" />
     <Folder Include="Vacancy" />
     <Folder Include="dbo\Sequences" />
+    <Folder Include="WebProxy" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -953,9 +954,9 @@
     <Build Include="dbo\Stored Procedures\ReportCandidatesWithApplicationsList.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportGetAllEmployers.proc.sql" />
     <Build Include="Schemas\WebProxy.sql" />
-    <Build Include="dbo\Tables\WebProxy.WebProxyConsumer.sql" />
     <Build Include="dbo\Stored Procedures\ReportRegisteredCandidatesList.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportGetEthnicOrigin.proc.sql" />
+    <Build Include="WebProxy\WebProxy.WebProxyConsumer.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

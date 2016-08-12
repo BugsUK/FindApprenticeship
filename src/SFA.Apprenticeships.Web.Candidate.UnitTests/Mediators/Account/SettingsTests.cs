@@ -21,7 +21,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
 
             var response = accountMediator.Settings(Guid.NewGuid(), SettingsViewModel.SettingsMode.YourAccount);
-            response.AssertCode(AccountMediatorCodes.Settings.Success);
+            response.AssertCodeAndMessage(AccountMediatorCodes.Settings.Success);
         }
     }
 }

@@ -94,7 +94,15 @@
                         }
                         else
                         {
-                            _logService.Warn($"Found application id {candidateApplicationId.ApplicationId} for application guid {vacancyApplication.Id} via candidate id {candidateId} and vacancy id {vacancyId} rather than via application guid {candidateApplicationId.ApplicationGuid}. This suggests the id has changed post submission");
+                            var message = $"Found application id {candidateApplicationId.ApplicationId} for application guid {vacancyApplication.Id} via candidate id {candidateId} and vacancy id {vacancyId} rather than via application guid {candidateApplicationId.ApplicationGuid}.";
+                            if (vacancyApplication.Status <= 20)
+                            {
+                                _logService.Info(message + " This suggests the old id was for a deleted saved vacancy that was recreated");
+                            }
+                            else
+                            {
+                                _logService.Warn(message + " This suggests the id has changed post submission");
+                            }
                         }
 
                         applicationIds[vacancyApplication.Id] = candidateApplicationId.ApplicationId;
@@ -205,6 +213,8 @@
         {
             switch (status)
             {
+                case 5:
+                    return 0;
                 case 10:
                 case 20:
                     return 1;

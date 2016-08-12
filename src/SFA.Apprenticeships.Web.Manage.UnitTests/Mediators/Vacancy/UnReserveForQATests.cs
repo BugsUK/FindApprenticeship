@@ -24,7 +24,7 @@
 
             var result = mediator.UnReserveVacancyForQA(vacancyReferenceNumber);
 
-            result.AssertCode(VacancyMediatorCodes.UnReserveVacancyForQA.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.UnReserveVacancyForQA.Ok);
         }
 
         [Test]

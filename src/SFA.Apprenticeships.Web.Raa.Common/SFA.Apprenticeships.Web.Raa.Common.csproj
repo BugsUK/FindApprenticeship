@@ -191,6 +191,7 @@
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
+    <Compile Include="Converters\ProviderViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Providers\GeoCodingProvider.cs" />
     <Compile Include="Providers\IGeoCodingProvider.cs" />
     <Compile Include="Providers\IReportingProvider.cs" />
+    <Compile Include="Providers\IVacancyStatusChangeProvider.cs" />
     <Compile Include="Providers\QAActionResultCode.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
@@ -226,6 +228,7 @@
     <Compile Include="Providers\EuCookieDirectiveProvider.cs" />
     <Compile Include="Providers\ReportingProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
+    <Compile Include="Providers\VacancyStatusChangeProvider.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
@@ -270,6 +273,7 @@
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
+    <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />
@@ -306,6 +310,7 @@
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\TrainingDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancyApplicationsState.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyDatesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyLinksViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />

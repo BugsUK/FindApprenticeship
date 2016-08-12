@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
+﻿
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 {
     using System;
     using Candidate.Mediators.Home;
@@ -21,6 +22,7 @@
     [Parallelizable]
     public class ContactMessageTests : MediatorBase
     {
+
         [SetUp]
         public void SetUp()
         {
@@ -35,7 +37,6 @@
                 _contactMessageServerViewModelValidatorMock.Object,
                 _feedbackServerViewModelValidator.Object);
         }
-
         private const string AString = "A string";
         private const string AnEmail = "valtechnas@gmail.com";
 
@@ -54,7 +55,7 @@
             const string candidateFirstName = "John";
             const string candidateLastName = "Doe";
             const string emailAddress = "someemail@gmail.com";
-
+            
             _candidateServiceProviderMock.Setup(csp => csp.GetCandidate(candidateId)).Returns(new Candidate
             {
                 RegistrationDetails = new RegistrationDetails
@@ -67,7 +68,7 @@
 
             var response = _homeMediator.GetContactMessageViewModel(candidateId);
 
-            response.AssertCode(HomeMediatorCodes.GetContactMessageViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
             response.ViewModel.Name.Should().Be(string.Format("{0} {1}", candidateFirstName, candidateLastName));
             response.ViewModel.Email.Should().Be(emailAddress);
         }
@@ -81,7 +82,7 @@
 
             var response = _homeMediator.GetContactMessageViewModel(candidateId);
 
-            response.AssertCode(HomeMediatorCodes.GetContactMessageViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
             response.ViewModel.Name.Should().BeNull();
             response.ViewModel.Email.Should().BeNull();
         }
@@ -91,7 +92,7 @@
         {
             var response = _homeMediator.GetContactMessageViewModel(null);
 
-            response.AssertCode(HomeMediatorCodes.GetContactMessageViewModel.Successful);
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
             response.ViewModel.Name.Should().BeNull();
             response.ViewModel.Email.Should().BeNull();
         }
@@ -112,7 +113,7 @@
                 .Returns(new ValidationResult());
 
             _candidateServiceProviderMock.Setup(hp => hp.SendContactMessage(null, viewModel)).Returns(true);
-
+            
             var response = _homeMediator.SendContactMessage(null, viewModel);
 
             response.AssertMessage(HomeMediatorCodes.SendContactMessage.SuccessfullySent,
@@ -135,7 +136,7 @@
                 .Returns(new ValidationResult());
 
             _candidateServiceProviderMock.Setup(hp => hp.SendContactMessage(null, viewModel)).Returns(false);
-
+            
             var response = _homeMediator.SendContactMessage(null, viewModel);
 
             response.AssertMessage(HomeMediatorCodes.SendContactMessage.Error,
@@ -155,7 +156,7 @@
             };
 
             _contactMessageServerViewModelValidatorMock.Setup(v => v.Validate(It.IsAny<ContactMessageViewModel>()))
-                .Returns(new ValidationResult(new[] {new ValidationFailure("Name", "Error")}));
+                .Returns(new ValidationResult(new []{new ValidationFailure("Name", "Error") }));
 
             _candidateServiceProviderMock.Setup(hp => hp.SendContactMessage(null, viewModel)).Returns(false);
             var response = _homeMediator.SendContactMessage(null, viewModel);

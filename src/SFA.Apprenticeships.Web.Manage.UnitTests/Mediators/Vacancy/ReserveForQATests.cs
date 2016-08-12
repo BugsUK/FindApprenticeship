@@ -50,7 +50,7 @@
 
             var result = mediator.ReserveVacancyForQA(vacancyReferenceNumber);
 
-            result.AssertCode(VacancyMediatorCodes.ReserveVacancyForQA.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.ReserveVacancyForQA.Ok);
             result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 

@@ -56,7 +56,7 @@
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
             var result = mediator.UpdateVacancy(vacancy.VacancyRequirementsProspectsViewModel);
-            result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.UpdateVacancy.Ok);
             result.ViewModel.ShouldBeEquivalentTo(vacancy.VacancyRequirementsProspectsViewModel);
         }
     }

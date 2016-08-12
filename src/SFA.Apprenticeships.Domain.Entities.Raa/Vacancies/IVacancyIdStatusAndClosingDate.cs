@@ -17,5 +17,9 @@
         DateTime SyntheticUpdatedDateTime { get; }
 
         VacancyType VacancyType { get; }
+
+        string EmployerName { get; set; }
+
+        string Title { get; set; }
     }
 }

@@ -19,8 +19,20 @@
 
             var viewModel = new InformationRadiatorViewModel
             {
+                TotalProviders = data.TotalProviders,
+                TotalProvidersAskedToOnboard = data.TotalProvidersAskedToOnboard,
+                TotalProvidersForcedToMigrate = data.TotalProvidersForcedToMigrate,
+                TotalProvidersOnboarded = data.TotalProvidersOnboarded,
+                TotalProvidersMigrated = data.TotalProvidersMigrated,
+                TotalProviderUserAccounts = data.TotalProviderUserAccounts,
+                TotalVacanciesCreatedViaRaa = data.TotalVacanciesCreatedViaRaa,
+                TotalDraftVacanciesCreatedViaRaa = data.TotalDraftVacanciesCreatedViaRaa,
+                TotalVacanciesInReviewViaRaa = data.TotalVacanciesInReviewViaRaa,
+                TotalVacanciesReferredViaRaa = data.TotalVacanciesReferredViaRaa,
                 TotalVacanciesApprovedViaRaa = data.TotalVacanciesApprovedViaRaa,
-                TotalVacanciesSubmittedViaRaa = data.TotalVacanciesSubmittedViaRaa,
+                TotalVacanciesClosedViaRaa = data.TotalVacanciesClosedViaRaa,
+                TotalVacanciesArchivedViaRaa = data.TotalVacanciesArchivedViaRaa,
+                TotalApplicationsStartedForRaaVacancies = data.TotalApplicationsStartedForRaaVacancies,
                 TotalApplicationsSubmittedForRaaVacancies = data.TotalApplicationsSubmittedForRaaVacancies,
                 TotalUnsuccessfulApplicationsViaRaa = data.TotalUnsuccessfulApplicationsViaRaa,
                 TotalSuccessfulApplicationsViaRaa = data.TotalSuccessfulApplicationsViaRaa

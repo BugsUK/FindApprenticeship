@@ -13,6 +13,27 @@
     public class ApplicationHistoryMappersTests
     {
         [Test]
+        public void SavedVacancyApplicationTest()
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(5).Build();
+
+            //Act
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
+
+            //Assert
+            applicationHistory.Should().NotBeNullOrEmpty();
+            applicationHistory.Count.Should().Be(1);
+            var draftHistory = applicationHistory.First();
+            draftHistory.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
+            draftHistory.UserName.Should().Be("");
+            draftHistory.ApplicationHistoryEventDate.Should().Be(vacancyApplication.DateCreated);
+            draftHistory.ApplicationHistoryEventTypeId.Should().Be(1);
+            draftHistory.ApplicationHistoryEventSubTypeId.Should().Be(0);
+            draftHistory.Comment.Should().Be("Status Change");
+        }
+
+        [Test]
         public void DraftVacancyApplicationTest()
         {
             //Arrange

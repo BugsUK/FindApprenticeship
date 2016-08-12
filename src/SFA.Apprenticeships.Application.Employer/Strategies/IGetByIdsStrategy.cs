@@ -6,5 +6,7 @@
     public interface IGetByIdsStrategy
     {
         IEnumerable<Employer> Get(IEnumerable<int> employerIds);
+
+        IEnumerable<MinimalEmployerDetails> GetMinimalDetails(IEnumerable<int> employerIds);
     }
 }

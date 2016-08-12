@@ -39,7 +39,8 @@
             // Assert.
             domainProvider.ProviderId.Should().Be(dbProvider.ProviderId);
             domainProvider.Ukprn.Should().Be(dbProvider.Ukprn.ToString());
-            domainProvider.Name.Should().Be(dbProvider.FullName);
+            domainProvider.FullName.Should().Be(dbProvider.FullName);
+            domainProvider.TradingName.Should().Be(dbProvider.TradingName);
         }
 
         [Test]
@@ -56,7 +57,8 @@
             //Act
             var dbProvider = _mapper.Map<DomainProvider, DatabaseProvider>(domainProvider);
             dbProvider.Ukprn.ToString().Should().Be(domainProvider.Ukprn);
-            dbProvider.FullName.Should().Be(domainProvider.Name);
+            dbProvider.FullName.Should().Be(domainProvider.FullName);
+            dbProvider.TradingName.Should().Be(domainProvider.TradingName);
         }
 
         [TestCase(null, false)]

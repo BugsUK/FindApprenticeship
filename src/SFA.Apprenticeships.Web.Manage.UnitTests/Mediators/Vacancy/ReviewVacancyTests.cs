@@ -35,7 +35,7 @@
 
             var result = mediator.ReviewVacancy(vacancyReferenceNumber);
 
-            result.AssertCode(VacancyMediatorCodes.ReviewVacancy.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.ReviewVacancy.Ok);
             result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 

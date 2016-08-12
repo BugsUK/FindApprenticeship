@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{22CE73E4-F469-434C-AC5D-D926EBBAC3D5}"
 EndProject
@@ -72,7 +72,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Can
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Entities.UnitTests", "SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj", "{4741B9B0-C694-4D34-8D30-D5B82BC87724}"
 EndProject
-Project("{BB40F520-413E-3EBA-ABD4-2177801094F0}") = "SFA.Apprenticeships.Web.Candidate.Azure", "SFA.Apprenticeships.Web.Candidate.Azure\SFA.Apprenticeships.Web.Candidate.Azure.ccproj", "{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Web.Candidate.Azure", "SFA.Apprenticeships.Web.Candidate.Azure\SFA.Apprenticeships.Web.Candidate.Azure.ccproj", "{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Candidate", "SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj", "{984F8CD2-61B3-48A4-B0CC-5D05E235983D}"
 EndProject
@@ -92,7 +92,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Can
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Monitor", "SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj", "{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}"
 EndProject
-Project("{BB40F520-413E-3EBA-ABD4-2177801094F0}") = "SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure", "SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure\SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure.ccproj", "{3F950894-DDC7-436F-9DF7-8236C76CBCEC}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure", "SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure\SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure.ccproj", "{3F950894-DDC7-436F-9DF7-8236C76CBCEC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{37F78283-62CA-418D-9548-4EF7A6C126B7}"
 EndProject
@@ -138,7 +138,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SearchService", "SearchServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Recruit", "SFA.Apprenticeships.Web.Recruit\SFA.Apprenticeships.Web.Recruit.csproj", "{AF7E6460-86F4-40D6-8C46-AB97C283479B}"
 EndProject
-Project("{BB40F520-413E-3EBA-ABD4-2177801094F0}") = "SFA.Apprenticeships.Web.Recruit.Azure", "SFA.Apprenticeships.Web.Recruit.Azure\SFA.Apprenticeships.Web.Recruit.Azure.ccproj", "{CE530672-D25F-410B-B966-66E297AA3669}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Web.Recruit.Azure", "SFA.Apprenticeships.Web.Recruit.Azure\SFA.Apprenticeships.Web.Recruit.Azure.ccproj", "{CE530672-D25F-410B-B966-66E297AA3669}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Organisation", "SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj", "{1B92E84D-F15A-4521-BDB9-2BE321236167}"
 EndProject
@@ -154,7 +154,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Rec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Manage", "SFA.Apprenticeships.Web.Manage\SFA.Apprenticeships.Web.Manage.csproj", "{456A5D7B-80BB-486A-B521-861691836145}"
 EndProject
-Project("{BB40F520-413E-3EBA-ABD4-2177801094F0}") = "SFA.Apprenticeships.Web.Manage.Azure", "SFA.Apprenticeships.Web.Manage.Azure\SFA.Apprenticeships.Web.Manage.Azure.ccproj", "{502F1A87-8037-4CFB-B1A0-EE1664B45189}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Web.Manage.Azure", "SFA.Apprenticeships.Web.Manage.Azure\SFA.Apprenticeships.Web.Manage.Azure.ccproj", "{502F1A87-8037-4CFB-B1A0-EE1664B45189}"
 	ProjectSection(ProjectDependencies) = postProject
 		{456A5D7B-80BB-486A-B521-861691836145} = {456A5D7B-80BB-486A-B521-861691836145}
 	EndProjectSection
@@ -205,7 +205,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests", "SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests\SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.csproj", "{4E423F21-5A4F-444D-AD72-2E2566AFF713}"
 EndProject
-Project("{BB40F520-413E-3EBA-ABD4-2177801094F0}") = "SFA.Apprenticeships.Infrastructure.MigrateRole.Azure", "SFA.Apprenticeships.Infrastructure.MigrateRole.Azure\SFA.Apprenticeships.Infrastructure.MigrateRole.Azure.ccproj", "{90752230-6869-4DE6-8264-CDECFA8A5AC0}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Infrastructure.MigrateRole.Azure", "SFA.Apprenticeships.Infrastructure.MigrateRole.Azure\SFA.Apprenticeships.Infrastructure.MigrateRole.Azure.ccproj", "{90752230-6869-4DE6-8264-CDECFA8A5AC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Entities.Raa.UnitTests", "SFA.Apprenticeships.Domain.Entities.Raa.UnitTests\SFA.Apprenticeships.Domain.Entities.Raa.UnitTests.csproj", "{E9B83262-916C-4AF9-A55C-F89F623847AE}"
 EndProject
@@ -222,8 +222,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{B72A90ED-6BD6-4AED-8863-36F2F3793ECC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acceptance", "Acceptance", "{4F6A1B64-A291-4CF4-A22C-17C8B412E207}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{27FAEE86-BE68-4162-933B-8B4533D61403}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2178AB6A-A503-4F98-8C14-7BF4CDE1EED3}"
 EndProject
@@ -1351,8 +1349,8 @@ Global
 		{DD096F97-415D-4676-9F90-7AEE60213F49} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 		{700D41DD-527A-42BD-94D2-FD49A5F00A18} = {6A45D40D-5A49-4E50-8574-4706291CA578}
 		{C156404C-5CD4-47F8-BBAF-BD4C36906103} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
-		{D30D15E0-A837-4D69-B2F7-BE2E1FE33D76} = {27FAEE86-BE68-4162-933B-8B4533D61403}
-		{5CC6A121-E5EF-452B-A326-145822014CC6} = {27FAEE86-BE68-4162-933B-8B4533D61403}
+		{D30D15E0-A837-4D69-B2F7-BE2E1FE33D76} = {4F6A1B64-A291-4CF4-A22C-17C8B412E207}
+		{5CC6A121-E5EF-452B-A326-145822014CC6} = {4F6A1B64-A291-4CF4-A22C-17C8B412E207}
 		{1F4776F3-884B-4B00-BA97-22BFA06C034E} = {CCED2B84-BCDF-4E9B-AE7C-0597B7E7CCB8}
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E} = {CCED2B84-BCDF-4E9B-AE7C-0597B7E7CCB8}
 		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
@@ -1377,7 +1375,6 @@ Global
 		{386A0F54-B4E6-4A2F-9A79-6E565A54F904} = {E4F43B40-7F9C-4355-BAA9-0EF1B56FB9E4}
 		{B72A90ED-6BD6-4AED-8863-36F2F3793ECC} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
 		{4F6A1B64-A291-4CF4-A22C-17C8B412E207} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
-		{27FAEE86-BE68-4162-933B-8B4533D61403} = {B72A90ED-6BD6-4AED-8863-36F2F3793ECC}
 		{2178AB6A-A503-4F98-8C14-7BF4CDE1EED3} = {E4F43B40-7F9C-4355-BAA9-0EF1B56FB9E4}
 		{6A45D40D-5A49-4E50-8574-4706291CA578} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}
 		{C7144529-8462-4D82-9AD9-D2C8E01D2A57} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}

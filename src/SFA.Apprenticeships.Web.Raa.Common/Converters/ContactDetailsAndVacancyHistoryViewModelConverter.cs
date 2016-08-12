@@ -15,7 +15,7 @@
             return new ContactDetailsAndVacancyHistoryViewModel
             {
                 FullName = providerUser.Fullname,
-                ProviderName = provider.Name,
+                ProviderName = provider.TradingName,
                 Email = providerUser.Email,
                 PhoneNumber = providerUser.PhoneNumber,
                 DateSubmitted = vacancy.DateSubmitted,

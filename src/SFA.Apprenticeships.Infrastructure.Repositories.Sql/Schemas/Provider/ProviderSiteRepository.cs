@@ -11,6 +11,7 @@
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
         private const int ActivatedEmployerTrainingProviderStatusId = 1;
+        private const int OwnerRelationship = 1;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -91,12 +92,15 @@
                 SELECT ps.* FROM dbo.ProviderSite ps
                 INNER JOIN dbo.ProviderSiteRelationship psr
                 ON psr.ProviderSiteID = ps.ProviderSiteID
-                WHERE psr.ProviderID = @providerId AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+                WHERE psr.ProviderID = @providerId 
+                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId
+                and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
 
             var sqlParams = new
             {
                 providerId,
-                ActivatedEmployerTrainingProviderStatusId
+                ActivatedEmployerTrainingProviderStatusId,
+                OwnerRelationship
             };
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
@@ -148,6 +152,8 @@
                 JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
                 WHERE ps.ProviderSiteId = @providerSiteId
                 ORDER BY psr.ProviderSiteRelationshipTypeID"; //Forces non Subcontractors and Recruitment Consultants to the end of the list to prioritize owners
+
+            // TODO: change to ProviderSiteRelationshipTypeID = 1?
 
             var sqlParams = new
             {

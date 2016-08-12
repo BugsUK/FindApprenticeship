@@ -26,7 +26,7 @@
             var mediator = GetMediator();
             var result = mediator.GetNewVacancyViewModel(vacancyReferenceNumber, true, null);
             
-            result.AssertCode(VacancyPostingMediatorCodes.GetNewVacancyViewModel.LocationNotSet);
+            result.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetNewVacancyViewModel.LocationNotSet);
         }
     }
 }

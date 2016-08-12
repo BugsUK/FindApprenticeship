@@ -4,15 +4,84 @@
 }
 
 <section>
-    <h1 class="heading-xlarge">Information radiator</h1>
+    <!--<h1 class="heading-xlarge">Information radiator</h1>-->
+    <div class="grid-wrapper" style="Margin-Bottom: 20px">
+        <h2 class="heading-medium">Providers (@Model.TotalProviders in total)</h2>
+        <ul class="vacancies-summary">
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalProvidersAskedToOnboard</p>
+                    <figcaption>
+                        <h2>Total providers asked to onboard</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalProvidersOnboarded</p>
+                    <figcaption>
+                        <h2>Total providers onboarded</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalProvidersForcedToMigrate</p>
+                    <figcaption>
+                        <h2>Total providers forced to migrate</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalProvidersMigrated</p>
+                    <figcaption>
+                        <h2>Total providers fully migrated</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <!--<li>
+                <figure class="data">
+                    <p class="count">@Model.TotalProviderUserAccounts</p>
+                    <figcaption>
+                        <h2>Total provider users onboarded</h2>
+                    </figcaption>
+                </figure>
+            </li>-->
+        </ul>
+    </div>
     <div class="grid-wrapper" style="Margin-Bottom: 20px">
         <h2 class="heading-medium">Vacancies</h2>
         <ul class="vacancies-summary">
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalVacanciesSubmittedViaRaa</p>
+                    <p class="count">@Model.TotalVacanciesCreatedViaRaa</p>
                     <figcaption>
-                        <h2>Total submitted via recruit</h2>
+                        <h2>Total created via recruit</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalDraftVacanciesCreatedViaRaa</p>
+                    <figcaption>
+                        <h2>Total in draft via recruit</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesInReviewViaRaa</p>
+                    <figcaption>
+                        <h2>Total waiting review via manage</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesReferredViaRaa</p>
+                    <figcaption>
+                        <h2>Total referred via manage</h2>
                     </figcaption>
                 </figure>
             </li>
@@ -24,11 +93,35 @@
                     </figcaption>
                 </figure>
             </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesClosedViaRaa</p>
+                    <figcaption>
+                        <h2>Total closed via closing date</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalVacanciesArchivedViaRaa</p>
+                    <figcaption>
+                        <h2>Total archived via recruit</h2>
+                    </figcaption>
+                </figure>
+            </li>
         </ul>
     </div>
     <div class="grid-wrapper" style="Margin-Bottom: 20px">
         <h2 class="heading-medium">Applications</h2>
         <ul class="vacancies-summary">
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalApplicationsStartedForRaaVacancies</p>
+                    <figcaption>
+                        <h2>Total started for recruit vacancies</h2>
+                    </figcaption>
+                </figure>
+            </li>
             <li>
                 <figure class="data">
                     <p class="count">@Model.TotalApplicationsSubmittedForRaaVacancies</p>

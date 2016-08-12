@@ -191,7 +191,11 @@
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult RegisteredCandidatesCsv()
         {
-            return View(new ReportRegisteredCandidatesParameters());
+            var response = _reportingMediator.GetRegisteredCandidatesReportParams();
+            if (response.Code != ReportingMediatorCodes.ReportCodes.Ok)
+                RedirectToAction("Index");
+
+            return View(response.ViewModel);
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "RegisteredCandidatesCsv")]
@@ -199,7 +203,7 @@
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult ValidateRegisteredCandidatesCsv(ReportRegisteredCandidatesParameters parameters)
         {
-            var validationResponse = _reportingMediator.Validate(parameters);
+            var validationResponse = _reportingMediator.ValidateRegisteredCandidatesParameters(parameters);
 
             switch (validationResponse.Code)
             {

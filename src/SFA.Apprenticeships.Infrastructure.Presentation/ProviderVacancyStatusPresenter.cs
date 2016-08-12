@@ -55,5 +55,10 @@
         {
             return totalNumberOfApplications > 0 && (status == VacancyStatus.Live || status == VacancyStatus.Closed || status == VacancyStatus.Completed);
         }
+
+        public static bool CanArchiveVacancy(this VacancyStatus status)
+        {
+            return status == VacancyStatus.Live || status == VacancyStatus.Closed;
+        }
     }
 }

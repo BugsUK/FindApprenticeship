@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
+﻿
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using System;
     using Candidate.Mediators.Search;
@@ -11,6 +12,7 @@
     [Parallelizable]
     public class SearchValidationTests : TestsBase
     {
+
         [Test]
         public void CategoryModeValidationError()
         {
@@ -25,7 +27,6 @@
 
             response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, true);
         }
-
         [Test]
         public void KeywordModeValidationError()
         {
@@ -52,7 +53,7 @@
 
             var response = Mediator.SearchValidation(null, searchViewModel);
 
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn);
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn);
         }
 
         [Test]
@@ -66,7 +67,7 @@
 
             var response = Mediator.SearchValidation(Guid.NewGuid(), searchViewModel);
 
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch);
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch);
         }
 
         [Test]
