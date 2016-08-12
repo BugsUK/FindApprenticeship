@@ -5,6 +5,7 @@
     using System.Linq;
     using Apprenticeships.Application.Location;
     using Domain.Entities.Raa.Locations;
+    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -35,7 +36,7 @@
             var result = _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>());
 
             //Assert
-            Assert.IsNotNull(result);
+            result.Should().NotBeNull();
         }
 
         [Test]
@@ -50,11 +51,11 @@
             var result = _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>());
 
             //Assert
-            Assert.IsNull(result);
+            result.Should().BeNull();
         }
 
         [Test]
-        public void ShouldReturnExceptionIfMultipleAddressesFound()
+        public void ShouldReturnNullIfMultipleAddressesFound()
         {
             //Arrange
             var multipleResults = new Fixture().Build<PostalAddress>()
@@ -62,8 +63,11 @@
             _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(multipleResults);
 
-            //Act & Assert
-            Assert.Throws<InvalidOperationException>(() => _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>()));
+            //Act
+            var result = _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>());
+
+            //Asset
+            result.Should().BeNull();
         }
 
         [Test]
@@ -94,7 +98,7 @@
             var result = _serviceUnderTest.GetValidatedAddresses(It.IsAny<string>());
 
             //Assert
-            Assert.IsNull(result);
+            result.Should().BeNull();
         }
     }
 }
