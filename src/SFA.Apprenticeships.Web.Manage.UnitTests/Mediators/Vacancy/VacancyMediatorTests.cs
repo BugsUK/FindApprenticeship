@@ -6,6 +6,7 @@
     using Raa.Common.Providers;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyMediatorTests
     {
         [Test]

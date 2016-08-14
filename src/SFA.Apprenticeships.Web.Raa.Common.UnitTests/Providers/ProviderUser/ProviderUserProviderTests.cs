@@ -12,6 +12,7 @@
     using ViewModels.ProviderUser;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderUserProviderTests
     {
         private Mock<IUserProfileService> _mockUserProfileService;

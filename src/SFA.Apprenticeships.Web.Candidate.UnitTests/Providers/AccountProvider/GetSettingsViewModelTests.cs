@@ -14,6 +14,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class GetSettingsViewModelTests
     {
         [Test]

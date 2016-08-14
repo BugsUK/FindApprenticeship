@@ -5,6 +5,8 @@
     using Moq;
     using NUnit.Framework;
 
+    [TestFixture]
+    [Parallelizable]
     public class UnReserveForQATests
     {
         [Test]

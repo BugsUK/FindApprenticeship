@@ -10,6 +10,7 @@
     using Database = Schemas.dbo.Entities;
 
     [TestFixture]
+    [Parallelizable]
     public class EmployerMappersTests
     {
         private readonly IMapper _mapper = new EmployerMappers();

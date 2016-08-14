@@ -10,6 +10,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class DeleteSavedSearchTests
     {
         [Test]

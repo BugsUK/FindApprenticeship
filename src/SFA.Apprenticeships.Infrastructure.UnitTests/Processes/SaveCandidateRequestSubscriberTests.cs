@@ -15,6 +15,8 @@
     using Moq;
     using NUnit.Framework;
 
+    [TestFixture]
+    [Parallelizable]
     public class SaveCandidateRequestSubscriberTests
     {
         private Mock<ILogService> _logger;

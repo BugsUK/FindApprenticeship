@@ -9,6 +9,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class CloneVacancyTests : TestBase
     {
         [Test]

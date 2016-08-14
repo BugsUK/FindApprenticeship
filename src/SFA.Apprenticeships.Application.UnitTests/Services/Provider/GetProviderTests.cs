@@ -14,7 +14,7 @@
 
         private Provider _provider1;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
             _provider1 = new Fixture().Build<Provider>().Create();

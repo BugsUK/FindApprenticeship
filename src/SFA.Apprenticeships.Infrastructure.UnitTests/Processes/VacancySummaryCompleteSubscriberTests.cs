@@ -13,6 +13,7 @@
     using VacancyIndexer;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancySummaryCompleteSubscriberTests
     {
         private Mock<ILogService> _mockLogService;

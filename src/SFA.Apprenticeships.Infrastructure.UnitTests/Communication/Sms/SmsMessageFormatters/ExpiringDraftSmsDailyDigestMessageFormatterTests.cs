@@ -6,11 +6,12 @@
     using Application.Interfaces.Communications;
     using Domain.Entities.Communication;
     using FluentAssertions;
-    using Infrastructure.UnitTests.Communication.Builders;
+    using Builders;
     using Newtonsoft.Json;
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ExpiringDraftSmsDailyDigestMessageFormatterTests : SmsDailyDigestMessageFormatterTestsBase
     {
         [Test]

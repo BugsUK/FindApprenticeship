@@ -11,7 +11,7 @@
     [TestFixture]
     public class GivenAFaultedServer
     {
-        [TestCase, ExpectedException(typeof(Exception))]
+        [Test]
         public void WhenCreatingANewApplication_ShouldThrowACustomException()
         {
             var vacancyDataProvider = new Mock<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();
@@ -26,7 +26,7 @@
                 applicationReadRepository.Object, applicationWriteRepository.Object,
                 candidateReadRepository.Object);
 
-            createApplicationStrategy.CreateApplication(Guid.NewGuid(), 1);
+            Assert.Throws<Exception>(() => createApplicationStrategy.CreateApplication(Guid.NewGuid(), 1));
         }
     }
 }

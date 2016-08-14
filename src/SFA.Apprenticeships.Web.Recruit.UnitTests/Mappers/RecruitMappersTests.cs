@@ -10,11 +10,12 @@
     using Recruit.Mappers;
 
     [TestFixture]
+    [Parallelizable]
     public class RecruitMappersTests
     {
         private IMapper _mapper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _mapper = new RecruitMappers();

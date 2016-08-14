@@ -14,6 +14,7 @@
     using SendGrid;
 
     [TestFixture]
+    [Parallelizable]
     public class SavedSearchAlertEmailMessageFormatterTests
     {
         protected const string CandidateFirstNameTag = "-Candidate.FirstName-";

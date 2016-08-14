@@ -7,6 +7,7 @@
     using ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class CandidateSearchResultsViewModelClientValidatorTests
     {
         private CandidateSearchResultsViewModelClientValidator _validator;

@@ -9,6 +9,7 @@
     using Raa.Common.ViewModels.Provider;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderSiteEmployerLinkViewModelValidatorTests
     {
         [TestCase(null, true)]

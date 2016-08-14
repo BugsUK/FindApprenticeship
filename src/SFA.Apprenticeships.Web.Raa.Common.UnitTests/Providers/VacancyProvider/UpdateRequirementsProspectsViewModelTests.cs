@@ -19,6 +19,7 @@
     using Web.Common.Configuration;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateRequirementsProspectsViewModelTests
     {
         [Test]

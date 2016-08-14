@@ -7,10 +7,11 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Provider
     using Recruit.Mediators.Provider;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderMediatorTests
     {
         [Test]
-        [Ignore]
+        [Ignore("Review")]
         public void AddSite_ShouldDefaultSearchMode()
         {
             // Arrange.

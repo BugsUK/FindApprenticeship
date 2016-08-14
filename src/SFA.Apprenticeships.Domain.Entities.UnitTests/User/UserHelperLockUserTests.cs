@@ -5,6 +5,7 @@
     using Users;
 
     [TestFixture]
+    [Parallelizable]
     public class UserHelperLockUserTests
     {
         [TestCase]

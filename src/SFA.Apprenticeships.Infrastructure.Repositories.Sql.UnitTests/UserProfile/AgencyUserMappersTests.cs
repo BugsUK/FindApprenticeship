@@ -4,6 +4,7 @@
     using Schemas.UserProfile;
 
     [TestFixture]
+    [Parallelizable]
     public class AgencyUserMappersTests
     {
         [Test]

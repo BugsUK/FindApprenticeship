@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using System;
     using Candidate.Mediators.Search;
@@ -8,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
     using Candidate.ViewModels.Account;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Common.UnitTests.Mediators;
     using Constants.Pages;
     using FluentAssertions;
     using Moq;
@@ -15,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class RunSavedSearchTests
     {
         [Test]
@@ -52,7 +52,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
         }
 
         [Test]
-        public void SavedSearchNotFound_UnknownSavedSearchId()
+        public void RunSaveSearchFailed()
         {
             // Arrange.
             var candidateId = Guid.NewGuid();
@@ -65,7 +65,11 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
             };
 
             candidateServiceProvider
-                .Setup(p => p.GetSavedSearch(candidateId, savedSearchId)).Returns((SavedSearchViewModel)null);
+                .Setup(p => p.GetSavedSearch(candidateId, savedSearchId))
+                .Returns(new SavedSearchViewModel
+                {
+                    ViewModelMessage = "Error"
+                });
 
             var mediator = new ApprenticeshipSearchMediatorBuilder()
                 .With(candidateServiceProvider).Build();
@@ -77,10 +81,10 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
             candidateServiceProvider.Verify(p => p.GetSavedSearch(candidateId, savedSearchId), Times.Once);
 
             response.AssertMessage(
-                ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound,
-                ApprenticeshipsSearchPageMessages.SavedSearchNotFound,
+                ApprenticeshipSearchMediatorCodes.SavedSearch.RunSaveSearchFailed,
+                ApprenticeshipsSearchPageMessages.RunSavedSearchFailed,
                 UserMessageLevel.Error,
-                false);
+                true);
         }
 
         [Test]
@@ -112,7 +116,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
         }
 
         [Test]
-        public void RunSaveSearchFailed()
+        public void SavedSearchNotFound_UnknownSavedSearchId()
         {
             // Arrange.
             var candidateId = Guid.NewGuid();
@@ -125,11 +129,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
             };
 
             candidateServiceProvider
-                .Setup(p => p.GetSavedSearch(candidateId, savedSearchId))
-                .Returns(new SavedSearchViewModel
-                {
-                    ViewModelMessage = "Error" 
-                });
+                .Setup(p => p.GetSavedSearch(candidateId, savedSearchId)).Returns((SavedSearchViewModel) null);
 
             var mediator = new ApprenticeshipSearchMediatorBuilder()
                 .With(candidateServiceProvider).Build();
@@ -141,10 +141,10 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
             candidateServiceProvider.Verify(p => p.GetSavedSearch(candidateId, savedSearchId), Times.Once);
 
             response.AssertMessage(
-                ApprenticeshipSearchMediatorCodes.SavedSearch.RunSaveSearchFailed,
-                ApprenticeshipsSearchPageMessages.RunSavedSearchFailed,
+                ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound,
+                ApprenticeshipsSearchPageMessages.SavedSearchNotFound,
                 UserMessageLevel.Error,
-                true);
+                false);
         }
     }
 }

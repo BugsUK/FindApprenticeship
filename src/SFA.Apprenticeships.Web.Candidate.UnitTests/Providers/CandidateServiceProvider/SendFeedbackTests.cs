@@ -11,6 +11,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class SendFeedbackTests
     {
         private Mock<ICandidateService> _candidateServiceMock;

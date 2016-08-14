@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancySummaryViewModelServerValidatorTests
     {
         private const string RuleSet = RuleSets.ErrorsAndWarnings;

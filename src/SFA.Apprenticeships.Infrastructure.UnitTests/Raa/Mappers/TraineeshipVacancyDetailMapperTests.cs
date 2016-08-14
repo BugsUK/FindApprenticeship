@@ -12,6 +12,7 @@
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class TraineeshipVacancyDetailMapperTests
     {
         private Mock<ILogService> _mockLogService;

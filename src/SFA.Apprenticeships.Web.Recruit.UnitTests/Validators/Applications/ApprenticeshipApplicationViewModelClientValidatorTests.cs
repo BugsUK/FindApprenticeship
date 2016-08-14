@@ -7,6 +7,7 @@
     using Raa.Common.ViewModels.Application.Apprenticeship;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipApplicationViewModelClientValidatorTests
     {
         private ApprenticeshipApplicationViewModelClientValidator _validator;

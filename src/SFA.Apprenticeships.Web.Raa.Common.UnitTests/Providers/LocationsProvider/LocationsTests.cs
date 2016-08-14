@@ -14,6 +14,7 @@
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class LocationsTests : TestBase
     {
         private readonly Guid _vacancyGuid = Guid.NewGuid();

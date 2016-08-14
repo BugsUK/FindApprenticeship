@@ -5,6 +5,7 @@
     using FluentAssertions;
 
     [TestFixture]
+    [Parallelizable]
     public class UriValidatorTests
     {
 

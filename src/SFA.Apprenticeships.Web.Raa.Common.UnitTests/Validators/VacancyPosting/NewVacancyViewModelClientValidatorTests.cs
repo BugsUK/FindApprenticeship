@@ -7,6 +7,7 @@
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class NewVacancyViewModelClientValidatorTests
     {
         private NewVacancyViewModelClientValidator _validator;

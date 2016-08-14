@@ -8,6 +8,7 @@
     using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class SubmitVacancyTests : TestsBase
     {
         [Test]

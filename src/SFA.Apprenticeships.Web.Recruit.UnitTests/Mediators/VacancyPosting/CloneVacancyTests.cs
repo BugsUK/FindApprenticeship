@@ -7,6 +7,7 @@
     using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class CloneVacancyTests : TestsBase
     {
         [Test]
