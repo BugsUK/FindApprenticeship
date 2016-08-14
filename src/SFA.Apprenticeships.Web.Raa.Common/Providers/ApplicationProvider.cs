@@ -142,8 +142,8 @@
             {
                 case VacancyApplicationsSearchViewModel.OrderByFieldLastName:
                     page = order == Order.Descending
-                        ? applications.OrderByDescending(a => a.CandidateDetails.LastName).ThenBy(a => a.DateApplied)
-                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.DateApplied);
+                        ? applications.OrderByDescending(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied)
+                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied);
                     break;
                 default:
                     page = applications;
