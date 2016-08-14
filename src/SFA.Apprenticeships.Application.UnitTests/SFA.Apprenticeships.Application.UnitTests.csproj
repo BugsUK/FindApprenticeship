@@ -218,9 +218,11 @@
     <Compile Include="Vacancies\VacancyStatusProcessorTests\ProcessVacancyClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\QueueVacanciesForClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\VacancyStatusProcessorBuilder.cs" />
-    <Compile Include="VacancyPosting\TestBase.cs" />
-    <Compile Include="VacancyPosting\VacancyPostingServiceAuthorisationTests.cs" />
-    <Compile Include="VacancyPosting\VacancyPostingServiceTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\CreateVacancyStrategyTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\GetNextVacancyReferenceNumberStrategyTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\GetVacancyStrategiesTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\UpdateVacancyStrategyTests.cs" />
+    <Compile Include="VacancyPosting\Strategies\UpsertVacancyStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -264,6 +266,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
       <Project>{920F5834-459D-4E20-9B17-AAD52D2CC8FE}</Project>
       <Name>SFA.Apprenticeships.Application.Provider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
+      <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
+      <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>

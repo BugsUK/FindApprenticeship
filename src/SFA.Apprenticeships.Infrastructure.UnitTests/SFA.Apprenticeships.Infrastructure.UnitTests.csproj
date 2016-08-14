@@ -217,6 +217,7 @@
     <Compile Include="Raa\Mappers\TraineeshipSummaryMapperTests.cs" />
     <Compile Include="Raa\Mappers\ApprenticeshipSummaryMapperTests.cs" />
     <Compile Include="Raa\Mappers\ApprenticeshipVacancyDetailMapperTests.cs" />
+    <Compile Include="Raa\PublishVacancySummaryUpdateStrategyTests.cs" />
     <Compile Include="Raa\ReferenceDataProviderTests.cs" />
     <Compile Include="ScheduledJobs\Application\ApplicationStatusSummarySubscriberTests.cs" />
     <Compile Include="ScheduledJobs\Vacancy\ApprenticeshipSummaryUpdateProcessorTests.cs" />
@@ -263,6 +264,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
+      <Project>{ce04b708-ff21-41d4-b796-a36edce2960d}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
