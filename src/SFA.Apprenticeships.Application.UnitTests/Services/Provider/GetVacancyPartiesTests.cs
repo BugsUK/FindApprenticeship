@@ -39,7 +39,7 @@
         private Mock<IEmployerService> _employerService;
         private Mock<IVacancyPartyReadRepository> _vacancyPartyReadRepository;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
             _employer1 = new Fixture().Build<Employer>().With(e => e.EdsUrn, EdsUrn1).With(e => e.EmployerId, EmployerId1).Create();

@@ -14,6 +14,7 @@
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class GeoCodeVacancyTests : TestBase
     {
         private const string Ukprn = "12345";

@@ -16,6 +16,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class ApplicationStatusChangedSubscriberTests
     {
         [Test]

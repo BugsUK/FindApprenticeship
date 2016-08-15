@@ -5,6 +5,7 @@
     using Raa.Reference;
 
     [TestFixture]
+    [Parallelizable]
     public class RegionalTeamMapperTests
     {
         [Test]

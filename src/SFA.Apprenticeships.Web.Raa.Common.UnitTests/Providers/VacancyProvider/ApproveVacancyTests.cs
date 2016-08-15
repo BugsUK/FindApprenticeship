@@ -15,6 +15,7 @@
     using Web.Common.Configuration;
 
     [TestFixture]
+    [Parallelizable]
     public class ApproveVacancyTests
     {
         [TestCase(1)]

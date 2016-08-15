@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using Domain.Entities.Extensions;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
@@ -91,7 +90,8 @@
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
-                EditedInRaa = vacancy.EditedInRaa
+                EditedInRaa = vacancy.EditedInRaa,
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
             };
 
             return detail;

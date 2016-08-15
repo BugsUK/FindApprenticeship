@@ -21,6 +21,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class GetWhatHappensNextViewModelTests
     {
         const int ValidVacancyId = 1;

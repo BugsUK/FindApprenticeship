@@ -1,16 +1,14 @@
-﻿using SFA.Apprenticeships.Web.Common.Mediators;
-using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
+﻿
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 {
     using System;
-    using SFA.Infrastructure.Interfaces;
-    using Candidate.Mediators;
     using Candidate.Mediators.Home;
     using Candidate.Providers;
     using Candidate.Validators;
     using Candidate.ViewModels.Home;
     using Common.Constants;
+    using Common.Mediators;
+    using Common.UnitTests.Mediators;
     using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -18,20 +16,12 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
     using FluentValidation.Results;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class FeedbackTests : MediatorBase
     {
-        private const string ValidName = "Jane Doe";
-        private const string ValidEmail = "jane.doe@example.com";
-        private const string ValidDetails = "Some feedback";
-
-        private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
-        private Mock<ILogService> _logServiceMock;
-        private Mock<ContactMessageServerViewModelValidator> _contactMessageServerViewModelValidator;
-        private Mock<FeedbackServerViewModelValidator> _feedbackServerViewModelValidatorMock;
-
-        private HomeMediator _homeMediator;
 
         [SetUp]
         public void SetUp()
@@ -47,17 +37,16 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
                 _contactMessageServerViewModelValidator.Object,
                 _feedbackServerViewModelValidatorMock.Object);
         }
-    
-        [Test]
-        public void GetFeedbackViewModelWithoutCandidateId()
-        {
-            var response = _homeMediator.GetFeedbackViewModel(null);
+        private const string ValidName = "Jane Doe";
+        private const string ValidEmail = "jane.doe@example.com";
+        private const string ValidDetails = "Some feedback";
 
-            response.AssertCodeAndMessage(HomeMediatorCodes.GetFeedbackViewModel.Successful);
-            response.ViewModel.Name.Should().BeNull();
-            response.ViewModel.Email.Should().BeNull();
-            response.ViewModel.Details.Should().BeNull();
-        }
+        private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
+        private Mock<ILogService> _logServiceMock;
+        private Mock<ContactMessageServerViewModelValidator> _contactMessageServerViewModelValidator;
+        private Mock<FeedbackServerViewModelValidator> _feedbackServerViewModelValidatorMock;
+
+        private HomeMediator _homeMediator;
 
         [Test]
         public void GetFeedbackViewModelWithCandidateId()
@@ -96,6 +85,17 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 
             response.AssertCodeAndMessage(HomeMediatorCodes.GetFeedbackViewModel.Successful);
 
+            response.ViewModel.Name.Should().BeNull();
+            response.ViewModel.Email.Should().BeNull();
+            response.ViewModel.Details.Should().BeNull();
+        }
+    
+        [Test]
+        public void GetFeedbackViewModelWithoutCandidateId()
+        {
+            var response = _homeMediator.GetFeedbackViewModel(null);
+
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetFeedbackViewModel.Successful);
             response.ViewModel.Name.Should().BeNull();
             response.ViewModel.Email.Should().BeNull();
             response.ViewModel.Details.Should().BeNull();

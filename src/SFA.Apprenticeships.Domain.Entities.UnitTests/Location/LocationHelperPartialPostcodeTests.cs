@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.UnitTests.Location
 {
-    using System;
     using NUnit.Framework;
     using Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class LocationHelperPartialPostcodeTests
     {
         [TestCase("CV1")]

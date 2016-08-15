@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
     using Candidate.Mediators.Application;
@@ -8,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Common.UnitTests.Mediators;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
@@ -15,23 +14,26 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class PreviewAndSubmitTests : TestsBase
     {
         private const int ValidVacancyId = 1;
 
         [Test]
-        public void VacancyNotFound()
+        public void Error()
         {
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn, VacancyDetail = new ApprenticeshipVacancyDetailViewModel() });
-            
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
+                .Returns(new ApprenticeshipApplicationViewModel("Has error") {Status = ApplicationStatuses.Draft});
+
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error,
+                ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -42,51 +44,51 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Submitting, VacancyDetail = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyStatus = VacancyStatuses.Live
-            }});
-            
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
+                .Returns(new ApprenticeshipApplicationViewModel
+                {
+                    Status = ApplicationStatuses.Submitting,
+                    VacancyDetail = new ApprenticeshipVacancyDetailViewModel
+                    {
+                        VacancyStatus = VacancyStatuses.Live
+                    }
+                });
+
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState,
+                MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info, false);
         }
 
         [Test]
-        public void Error()
+        public void OfflineVacancy()
         {
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel("Has error") { Status = ApplicationStatuses.Draft });
-            
-            var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
-
-            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error, ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning, true);
-        }
-
-        [Test]
-        public void ValidationError()
-        {
-            var viewModel = new ApprenticeshipApplicationViewModel
-            {
-                Candidate = new ApprenticeshipCandidateViewModel
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
+                .Returns(new ApprenticeshipApplicationViewModel
                 {
-                    AboutYou = new AboutYouViewModel()
-                },
-                VacancyDetail = new ApprenticeshipVacancyDetailViewModel(),
-            };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyStatus = VacancyStatuses.Live
-            }});
-            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
-            
+                    Status = ApplicationStatuses.Draft,
+                    VacancyDetail = new ApprenticeshipVacancyDetailViewModel
+                    {
+                        ApplyViaEmployerWebsite = true
+                    }
+                });
+            ApprenticeshipApplicationProvider.Setup(
+                p =>
+                    p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(),
+                        It.IsAny<ApprenticeshipApplicationViewModel>()))
+                .Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>(
+                    (cid, svm, vm) => vm);
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(viewModel);
+
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertValidationResult(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.ValidationError);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.OfflineVacancy, false);
         }
 
         [Test]
@@ -97,13 +99,24 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyStatus = VacancyStatuses.Live
-            }});
-            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
-            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
-            
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
+                .Returns(new ApprenticeshipApplicationViewModel
+                {
+                    Status = ApplicationStatuses.Draft,
+                    VacancyDetail = new ApprenticeshipVacancyDetailViewModel
+                    {
+                        VacancyStatus = VacancyStatuses.Live
+                    }
+                });
+            ApprenticeshipApplicationProvider.Setup(
+                p =>
+                    p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(),
+                        It.IsAny<ApprenticeshipApplicationViewModel>()))
+                .Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>(
+                    (cid, svm, vm) => vm);
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(viewModel);
+
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Ok, false, true);
@@ -117,12 +130,23 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyStatus = VacancyStatuses.Expired
-            }});
-            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
-            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
+                .Returns(new ApprenticeshipApplicationViewModel
+                {
+                    Status = ApplicationStatuses.Draft,
+                    VacancyDetail = new ApprenticeshipVacancyDetailViewModel
+                    {
+                        VacancyStatus = VacancyStatuses.Expired
+                    }
+                });
+            ApprenticeshipApplicationProvider.Setup(
+                p =>
+                    p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(),
+                        It.IsAny<ApprenticeshipApplicationViewModel>()))
+                .Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>(
+                    (cid, svm, vm) => vm);
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(viewModel);
 
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
@@ -130,27 +154,55 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
         }
 
         [Test]
-        public void OfflineVacancy()
+        public void VacancyNotFound()
         {
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
-            {
-                Status = ApplicationStatuses.Draft,
-                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
+                .Returns(new ApprenticeshipApplicationViewModel
                 {
-                    ApplyViaEmployerWebsite = true
-                }
-            });
-            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
-            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+                    Status = ApplicationStatuses.ExpiredOrWithdrawn,
+                    VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
+                });
 
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.OfflineVacancy, false);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound, false);
+        }
+
+        [Test]
+        public void ValidationError()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel
+                {
+                    AboutYou = new AboutYouViewModel()
+                },
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId))
+                .Returns(new ApprenticeshipApplicationViewModel
+                {
+                    Status = ApplicationStatuses.Draft,
+                    VacancyDetail = new ApprenticeshipVacancyDetailViewModel
+                    {
+                        VacancyStatus = VacancyStatuses.Live
+                    }
+                });
+            ApprenticeshipApplicationProvider.Setup(
+                p =>
+                    p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(),
+                        It.IsAny<ApprenticeshipApplicationViewModel>()))
+                .Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>(
+                    (cid, svm, vm) => vm);
+
+            var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertValidationResult(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.ValidationError);
         }
     }
 }

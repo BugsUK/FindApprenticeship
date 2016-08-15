@@ -15,6 +15,7 @@
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     [TestFixture]
+    [Parallelizable]
     public class TraineeshipApplicationProviderTest
     {
         private const int ValidVacancyId = 1;

@@ -7,6 +7,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class CookieAuthorizationDataProviderTests
     {
         private const string CookieName = "User.Authorization";

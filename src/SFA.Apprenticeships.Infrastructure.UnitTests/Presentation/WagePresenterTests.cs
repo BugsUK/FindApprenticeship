@@ -7,6 +7,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class WagePresenterTests
     {
         [TestCase(WageUnit.Weekly, WagePresenter.WeeklyWageText)]

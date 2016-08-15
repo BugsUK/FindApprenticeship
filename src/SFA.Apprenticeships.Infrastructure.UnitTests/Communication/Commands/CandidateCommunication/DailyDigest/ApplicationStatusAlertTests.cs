@@ -11,6 +11,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ApplicationStatusAlertTests : CommandTestsBase
     {
         [SetUp]

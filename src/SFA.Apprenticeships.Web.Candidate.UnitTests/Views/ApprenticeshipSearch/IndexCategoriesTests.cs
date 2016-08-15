@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using RazorGenerator.Testing;
 
+    [TestFixture]
     public class IndexCategoriesTests : MediatorTestsBase
     {
         [Test]

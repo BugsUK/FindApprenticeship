@@ -8,6 +8,7 @@
     using DomainProvider = Domain.Entities.Raa.Parties.Provider;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderMappersTests
     {
         private ProviderMappers _mapper;

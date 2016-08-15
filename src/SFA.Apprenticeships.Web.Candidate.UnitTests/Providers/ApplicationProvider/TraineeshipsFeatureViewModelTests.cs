@@ -16,6 +16,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class TraineeshipsFeatureViewModelTests
     {
         const int UnsuccessfulApplications = 3;

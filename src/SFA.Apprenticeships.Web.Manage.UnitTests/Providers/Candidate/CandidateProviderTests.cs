@@ -21,6 +21,7 @@
     using ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class CandidateProviderTests
     {
         private ICandidateProvider _provider;

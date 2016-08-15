@@ -1,13 +1,11 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
     using System;
     using Candidate.Mediators.Login;
-    using Candidate.Mediators.Register;
     using Candidate.Providers;
     using Candidate.ViewModels.Register;
     using Common.Constants;
+    using Common.UnitTests.Mediators;
     using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -15,6 +13,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ResetPasswordTests
     {
         private const string ValidPassword = "?Password01!";
@@ -78,8 +77,10 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
             var resetPasswordViewModel = GetValidPasswordResetViewModel();
 
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            candidateServiceProvider.Setup(csp => csp.VerifyPasswordReset(It.IsAny<PasswordResetViewModel>())).Returns(new PasswordResetViewModel { IsPasswordResetCodeValid = true });
-            candidateServiceProvider.Setup(gc => gc.GetCandidate(It.IsAny<string>())).Returns(new Candidate() { EntityId = Guid.NewGuid() });
+            candidateServiceProvider.Setup(csp => csp.VerifyPasswordReset(It.IsAny<PasswordResetViewModel>()))
+                .Returns(new PasswordResetViewModel {IsPasswordResetCodeValid = true});
+            candidateServiceProvider.Setup(gc => gc.GetCandidate(It.IsAny<string>()))
+                .Returns(new Candidate {EntityId = Guid.NewGuid()});
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
 
             var response = mediator.ResetPassword(resetPasswordViewModel);
@@ -107,6 +108,28 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
         }
 
         [Test]
+        public void UserUnactivated()
+        {
+            var resetPasswordViewModel = GetValidPasswordResetViewModel();
+
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(csp => csp.VerifyPasswordReset(It.IsAny<PasswordResetViewModel>()))
+                .Returns(new PasswordResetViewModel
+                {
+                    UserStatus = UserStatuses.PendingActivation,
+                    IsPasswordResetCodeValid = true
+                });
+            candidateServiceProvider.Setup(gc => gc.GetCandidate(It.IsAny<string>()))
+                .Returns(new Candidate {EntityId = Guid.NewGuid()});
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
+
+            var response = mediator.ResetPassword(resetPasswordViewModel);
+
+            response.AssertMessage(LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword,
+                PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success, true);
+        }
+
+        [Test]
         public void ValidationFailure()
         {
             var resetPasswordViewModel = new PasswordResetViewModel
@@ -119,22 +142,6 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
             var response = mediator.ResetPassword(resetPasswordViewModel);
 
             response.AssertValidationResult(LoginMediatorCodes.ResetPassword.FailedValidation, true);
-        }
-
-        [Test]
-        public void UserUnactivated()
-        {
-            var resetPasswordViewModel = GetValidPasswordResetViewModel();
-
-            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            candidateServiceProvider.Setup(csp => csp.VerifyPasswordReset(It.IsAny<PasswordResetViewModel>())).Returns(new PasswordResetViewModel { UserStatus = UserStatuses.PendingActivation, IsPasswordResetCodeValid = true });
-            candidateServiceProvider.Setup(gc => gc.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.NewGuid() });
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
-
-            var response = mediator.ResetPassword(resetPasswordViewModel);
-
-            response.AssertMessage(LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword,
-                PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success, true);
         }
     }
 }

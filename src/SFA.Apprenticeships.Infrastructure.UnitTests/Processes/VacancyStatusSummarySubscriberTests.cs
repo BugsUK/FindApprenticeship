@@ -15,6 +15,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyStatusSummarySubscriberTests
     {
         private Mock<IConfigurationService> _configurationServiceMock;

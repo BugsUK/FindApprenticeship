@@ -40,6 +40,18 @@
             }).ToList();
         }
 
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
+        {
+            // TODO: Handle >2000 records - Shoma
+            return _getOpenConnection.Query<VacancyLocation>(@"
+                        SELECT *
+                        FROM   dbo.VacancyLocation
+                        WHERE  VacancyId IN @Ids",
+                        new { Ids = vacancyIds })
+                                    .GroupBy(x => x.VacancyId)
+            .ToDictionary(x => x.Key, x => (IEnumerable<VacancyLocation>)x);
+        }
+
         public List<VacancyLocation> Save(List<VacancyLocation> locationAddresses)
         {
             foreach (var vacancyLocationAddress in locationAddresses)

@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     internal class DifferentVacancySourceValidationTests
 
     {

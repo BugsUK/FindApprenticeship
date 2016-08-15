@@ -8,6 +8,7 @@
     using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipVacancyLocationMappersUnitTests : TestBase
     {
         

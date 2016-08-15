@@ -177,6 +177,9 @@
 
                 .ForMember(dest => dest.EditedInRaa,
                     opt => opt.UseValue(false))
+
+                .ForMember(dest => dest.AdditionalLocationInformation,
+                    opt => opt.Ignore())
             ;
         }
     }

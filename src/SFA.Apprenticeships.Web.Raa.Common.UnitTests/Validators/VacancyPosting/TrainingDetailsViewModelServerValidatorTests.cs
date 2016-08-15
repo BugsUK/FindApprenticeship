@@ -11,6 +11,7 @@
     using Web.Common.Validators;
 
     [TestFixture]
+    [Parallelizable]
     public class TrainingDetailsViewModelServerValidatorTests
     {
         private TrainingDetailsViewModelServerValidator _validator;

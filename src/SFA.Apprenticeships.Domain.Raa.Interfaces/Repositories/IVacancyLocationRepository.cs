@@ -6,6 +6,8 @@
     public interface IVacancyLocationReadRepository
     {
         List<VacancyLocation> GetForVacancyId(int vacancyId);
+
+        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds);
     }
 
     public interface IVacancyLocationWriteRepository
