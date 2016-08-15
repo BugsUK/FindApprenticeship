@@ -86,6 +86,8 @@
 
         public Address VacancyAddress { get; set; }
 
+        public string AdditionalLocationInformation { get; set; }
+
         public bool IsRecruitmentAgencyAnonymous { get; set; }
 
         public bool IsSmallEmployerWageIncentive { get; set; }

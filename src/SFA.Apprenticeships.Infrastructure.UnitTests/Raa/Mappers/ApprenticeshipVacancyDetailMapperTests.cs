@@ -139,6 +139,8 @@
                 detail.PersonalQualities.Should().Be(vacancy.PersonalQualities);
                 detail.QualificationRequired.Should().Be(vacancy.DesiredQualifications);
                 detail.SkillsRequired.Should().Be(vacancy.DesiredSkills);
+
+                detail.AdditionalLocationInformation.Should().Be(vacancy.AdditionalLocationInformation);
             }
         }
 
