@@ -451,7 +451,7 @@
                                         }
                                         @if (vacancy.Status == VacancyStatus.Draft)
                                         {
-                                            <a href="@Url.RouteUrl(RecruitmentRouteNames.DeleteVacancy, new {vacancyId = vacancy.VacancyId})" title="Delete @title for @vacancy.EmployerName">Delete</a>
+                                            <a href="@Url.RouteUrl(RecruitmentRouteNames.DeleteVacancy, new DeleteVacancyViewModel(Model.VacanciesSummary.VacanciesSummarySearch) {VacancyId = vacancy.VacancyId})" title="Delete @title for @vacancy.EmployerName">Delete</a>
                                         }
                                     </td>
                                 </tr>

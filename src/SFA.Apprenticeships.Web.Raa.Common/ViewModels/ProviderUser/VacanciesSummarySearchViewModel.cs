@@ -14,7 +14,7 @@
             CurrentPage = 1;
         }
 
-        private VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel) : this()
+        internal VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel) : this()
         {
             VacancyType = viewModel.VacancyType;
             FilterType = viewModel.FilterType;

@@ -20,21 +20,20 @@
 
         [HttpGet]
         [ActionName("Delete")]
-        public ActionResult DeleteGet(int vacancyId)
+        public ActionResult DeleteGet(DeleteVacancyViewModel vacancyViewModel)
         {
             //TODO add VacanciesSummarySearchViewModel
-            var vacancyViewModel = new DeleteVacancyViewModel {VacancyId = vacancyId};
             var result = _vacancyManagementMediator.ConfirmDelete(vacancyViewModel);
             return View(result.ViewModel);
         }
 
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult DeletePost(int vacancyId)
+        public ActionResult DeletePost(DeleteVacancyViewModel vacancyViewModel)
         {
-            var vacancyViewModel = new DeleteVacancyViewModel { VacancyId = vacancyId };
             _vacancyManagementMediator.Delete(vacancyViewModel);
             // TODO redirect with VacanciesSummarySearchViewModel
+            // TODO alert on home page
             return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
         }
     }

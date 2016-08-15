@@ -1,5 +1,6 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.DeleteVacancyViewModel
 @using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 @{
@@ -20,6 +21,6 @@
     <div>You will not be able to retreive this vacancy once it has been deleted</div>
     <div class="grid grid-1-1">
         <button class="button" id="confirmDeleteVacancy" name="ConfirmDeleteVacancy" value="ConfirmDeleteVacancy">Confirm and return to recruitment home</button>
-        @Html.RouteLink("Cancel",  RecruitmentRouteNames.RecruitmentHome, Model.VacanciesSummarySearch)
+        @Html.RouteLink("Cancel",  RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel)
     </div>
 }

@@ -36,10 +36,16 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    
+    #line 3 "..\..\Views\VacancyManagement\Delete.cshtml"
+    using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 3 "..\..\Views\VacancyManagement\Delete.cshtml"
+    #line 4 "..\..\Views\VacancyManagement\Delete.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
@@ -57,7 +63,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
 WriteLiteral("\r\n");
 
             
-            #line 5 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 6 "..\..\Views\VacancyManagement\Delete.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Delete a draft vacancy";
 
@@ -80,7 +86,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n            Delete ");
 
             
-            #line 13 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 14 "..\..\Views\VacancyManagement\Delete.cshtml"
               Write(Model.VacancyTitle);
 
             
@@ -89,7 +95,7 @@ WriteLiteral(">\r\n            Delete ");
 WriteLiteral(" vacancy\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 18 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 19 "..\..\Views\VacancyManagement\Delete.cshtml"
  using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post))
 {
 
@@ -118,8 +124,8 @@ WriteLiteral(">Confirm and return to recruitment home</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 23 "..\..\Views\VacancyManagement\Delete.cshtml"
-   Write(Html.RouteLink("Cancel",  RecruitmentRouteNames.RecruitmentHome, Model.VacanciesSummarySearch));
+            #line 24 "..\..\Views\VacancyManagement\Delete.cshtml"
+   Write(Html.RouteLink("Cancel",  RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel));
 
             
             #line default
@@ -127,7 +133,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 25 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 26 "..\..\Views\VacancyManagement\Delete.cshtml"
 }
             
             #line default
