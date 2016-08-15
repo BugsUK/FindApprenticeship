@@ -90,7 +90,8 @@
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
-                EditedInRaa = vacancy.EditedInRaa
+                EditedInRaa = vacancy.EditedInRaa,
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
             };
 
             return detail;
