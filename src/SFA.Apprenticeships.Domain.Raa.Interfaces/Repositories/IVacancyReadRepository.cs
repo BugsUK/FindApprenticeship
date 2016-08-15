@@ -13,7 +13,9 @@
         Vacancy GetByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
-        
+
+        VacancySummary GetById(int vacancyId);
+
         List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);

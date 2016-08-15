@@ -861,7 +861,23 @@
             }
         }
 
+        public VacancyPartyViewModel DeleteVacancy(int vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            vacancy.Status = VacancyStatus.Deleted;
 
+            _vacancyPostingService.UpdateVacancy(vacancy);
+
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, true);
+            if (vacancyParty == null)
+                throw new Exception($"Vacancy Party {vacancy.OwnerPartyId} not found / no longer current");
+
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var result = vacancyParty.Convert(employer);
+            result.VacancyGuid = vacancy.VacancyGuid;
+
+            return result;
+        }
 
         public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)
         {
@@ -1253,7 +1269,7 @@
         public QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
-                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
+                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyId required for update");
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
@@ -1296,7 +1312,7 @@
         public QAActionResult<TrainingDetailsViewModel> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
-                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
+                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyId required for update");
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
@@ -1344,7 +1360,7 @@
         public NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
-                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
+                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyId required for update");
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 

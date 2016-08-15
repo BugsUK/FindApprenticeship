@@ -449,6 +449,10 @@
                                         {
                                             <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Edit and resubmit @title for @vacancy.EmployerName">Edit and resubmit</a>
                                         }
+                                        @if (vacancy.Status == VacancyStatus.Draft)
+                                        {
+                                            <a href="@Url.RouteUrl(RecruitmentRouteNames.DeleteVacancy, new {vacancyId = vacancy.VacancyId})" title="Delete @title for @vacancy.EmployerName">Delete</a>
+                                        }
                                     </td>
                                 </tr>
                             }

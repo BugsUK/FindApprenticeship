@@ -51,6 +51,7 @@
         public const string SubmitVacancy = "SubmitVacancy";
         public const string VacancySubmitted = "VacancySubmitted";
         public const string CloneVacancy = "CloneVacancy";
+        public const string DeleteVacancy = "DeleteVacancy";
         public const string ConfirmEmployerSelection = "ConfirmEmployerSelection";
         public const string ConfirmNewEmployerSelection = "ConfirmNewEmployerSelection";
         public const string SearchAddresses = "SearchAddresses";

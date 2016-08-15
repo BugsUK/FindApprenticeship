@@ -111,6 +111,11 @@
             return dbVacancy;
         }
 
+        public VacancySummary GetById(int vacancyId)
+        {
+            return GetByIds(new[] {vacancyId}).FirstOrDefault();
+        }
+
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
             var vacancyIdsArray
@@ -1466,6 +1471,14 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                         new { Ids = vacancyIds })
                                     .GroupBy(x => x.VacancyId)
             .ToDictionary(x => x.Key, x => (IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>)x);
+        }
+
+        public string FindTitle(int vacancyReferenceNumber)
+        {
+            return
+                _getOpenConnection.Query<string>(
+                    @"SELECT Title FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
+                    new {VacancyReferenceNumber = vacancyReferenceNumber}).FirstOrDefault();
         }
 
         private class MinimalVacancyDetails : IMinimalVacancyDetails

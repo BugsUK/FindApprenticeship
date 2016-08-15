@@ -3,8 +3,6 @@
     using System.Web;
     using Application.Candidate;
     using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
-    using Application.Candidate.Strategies.Traineeships;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Employer.Strategies;
@@ -32,6 +30,7 @@
     using Application.Interfaces.Vacancies;
     using Application.Location;
     using Application.ReferenceData;
+    using Application.Vacancy;
     using Mappers;
     using Mediators.Candidate;
     using Mediators.InformationRadiator;
