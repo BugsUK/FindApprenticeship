@@ -5,16 +5,7 @@
         public ApprenticeshipSummary()
         {
         }
-
-        public ApprenticeshipSummary(ApprenticeshipSummary apprenticeshipSummary) : base(apprenticeshipSummary)
-        {
-            VacancyLocationType = apprenticeshipSummary.VacancyLocationType;
-            ApprenticeshipLevel = apprenticeshipSummary.ApprenticeshipLevel;
-            Wage = apprenticeshipSummary.Wage;
-            WageUnit = apprenticeshipSummary.WageUnit;
-            WorkingWeek = apprenticeshipSummary.WorkingWeek;
-        }
-
+        
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
