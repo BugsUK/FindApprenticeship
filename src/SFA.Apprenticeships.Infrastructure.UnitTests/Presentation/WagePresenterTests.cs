@@ -17,29 +17,12 @@
         public void ShouldGetHeaderDisplayTextForCustomWageType(WageUnit wageUnit, string expected)
         {
             // Arrange.
-            var wage = new Wage(WageType.Custom, null, null, wageUnit);
 
             // Act.
-            var actual = wage.GetHeaderDisplayText();
+            var actual = wageUnit.GetHeaderDisplayText();
 
             // Assert.
             actual.Should().Be(expected);
-        }
-
-        [TestCase(WageType.LegacyText)]
-        [TestCase(WageType.LegacyWeekly)]
-        [TestCase(WageType.ApprenticeshipMinimum)]
-        [TestCase(WageType.NationalMinimum)]
-        public void ShouldGetHeaderDisplayTextForNonCustomWageTypes(WageType wageType)
-        {
-            // Arrange.
-            var wage = new Wage(wageType, null, null, WageUnit.NotApplicable);
-
-            // Act.
-            var actual = wage.GetHeaderDisplayText();
-
-            // Assert.
-            actual.Should().Be(WagePresenter.WeeklyWageText);
         }
 
         [TestCase(Domain.Entities.Vacancies.WageUnit.Weekly, WagePresenter.WeeklyWageText)]

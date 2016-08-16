@@ -64,8 +64,6 @@
 
         public VacancyStatus Status { get; set; }
 
-        public string WageUnitDisplayText => new Wage(WageType, Wage, null, WageUnit).GetHeaderDisplayText();
-
         public string DurationTypeDisplayText 
         {
             get

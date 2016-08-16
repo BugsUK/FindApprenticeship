@@ -18,13 +18,6 @@
 
         private const string WageAmountFormat = "N2";
 
-        public static string GetHeaderDisplayText(this Wage wage)
-        {
-            return wage.Type == WageType.Custom
-                ? wage.Unit.GetHeaderDisplayText()
-                : WeeklyWageText;
-        }
-
         public static string GetHeaderDisplayText(this WageUnit wageUnit)
         {
             switch (wageUnit)

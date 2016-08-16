@@ -277,7 +277,7 @@ WriteLiteral("                    ");
 
             
             #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-               Write(Model.FurtherVacancyDetailsViewModel.WageUnitDisplayText);
+               Write(Model.FurtherVacancyDetailsViewModel.WageUnit.GetHeaderDisplayText());
 
             
             #line default
