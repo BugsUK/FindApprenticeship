@@ -1473,14 +1473,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             .ToDictionary(x => x.Key, x => (IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>)x);
         }
 
-        public string FindTitle(int vacancyReferenceNumber)
-        {
-            return
-                _getOpenConnection.Query<string>(
-                    @"SELECT Title FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
-                    new {VacancyReferenceNumber = vacancyReferenceNumber}).FirstOrDefault();
-        }
-
         private class MinimalVacancyDetails : IMinimalVacancyDetails
         {
             public MinimalVacancyDetails(dynamic record)

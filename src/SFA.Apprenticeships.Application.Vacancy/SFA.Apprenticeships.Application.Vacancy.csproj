@@ -91,7 +91,7 @@
     <Compile Include="IAllTraineeshipVacanciesProvider.cs" />
     <Compile Include="IAllApprenticeshipVacanciesProvider.cs" />
     <Compile Include="IDeleteValidationStrategy.cs" />
-    <Compile Include="IServiceStrategy.cs" />
+    <Compile Include="IServiceStrategy{T}.cs" />
     <Compile Include="IVacancyDataProvider.cs" />
     <Compile Include="IAllVacanciesProvider.cs" />
     <Compile Include="IVacancyManagementService.cs" />
@@ -103,8 +103,9 @@
     <Compile Include="SiteMap\SiteMapVacancy.cs" />
     <Compile Include="SiteMap\SiteMapVacancyHelper.cs" />
     <Compile Include="SiteMap\SiteMapVacancyProvider.cs" />
-    <Compile Include="StrategyResult.cs" />
+    <Compile Include="StrategyResult{T}.cs" />
     <Compile Include="VacancyManagementService.cs" />
+    <Compile Include="VacancyManagementServiceCodes.cs" />
     <Compile Include="VacancySearchService.cs" />
   </ItemGroup>
   <ItemGroup>
