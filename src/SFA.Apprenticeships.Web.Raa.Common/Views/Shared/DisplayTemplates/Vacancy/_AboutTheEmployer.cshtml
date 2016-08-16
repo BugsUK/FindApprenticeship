@@ -1,4 +1,5 @@
 ﻿@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.Validators
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model VacancyViewModel
 
@@ -11,7 +12,7 @@
     <div class="grid-wrapper">
         <div class="grid">
             <h3 class="bold-small">Employer</h3>
-            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.OwnerParty.Employer.Name</p>
+            <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.OwnerParty.Employer.Name</p>
         </div>
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
@@ -37,7 +38,7 @@
         }
         <div class="@gridClass">
             <div class="inner-block-padr">
-                @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl))
+                @if (Common.IsValidUrl(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl))
                 {
                     var employerWebsiteUri = new UriBuilder(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl).Uri;
                     <div class="editable-item">
