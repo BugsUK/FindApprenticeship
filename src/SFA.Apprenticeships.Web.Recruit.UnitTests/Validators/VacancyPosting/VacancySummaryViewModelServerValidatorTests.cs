@@ -4,12 +4,14 @@
     using Common.UnitTests.Validators;
     using Common.Validators;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     [Parallelizable]

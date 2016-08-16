@@ -4,11 +4,13 @@
     using System.Security.Cryptography.X509Certificates;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentValidation;
     using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Validators.Common;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancySummaryViewModelClientValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
     {

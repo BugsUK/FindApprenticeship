@@ -7,11 +7,13 @@
     using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
     using DbPostalAddress = Address.Entities.PostalAddress;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Infrastructure.Common.Mappers;
     using Presentation;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using DbVacancy = Entities.Vacancy;
     using DbVacancyLocation = Entities.VacancyLocation;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class ShortToIntConverter : ValueResolver<short?, int?>
     {

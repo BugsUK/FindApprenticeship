@@ -4,6 +4,7 @@
     using Common.UnitTests.Validators;
     using Common.Validators;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;

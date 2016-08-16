@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using NUnit.Framework;

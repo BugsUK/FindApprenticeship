@@ -7,6 +7,7 @@
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Manage.Views.Vacancy;
     using Moq;
@@ -16,6 +17,7 @@
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Views.Shared.DisplayTemplates.Vacancy;
     using RazorGenerator.Testing;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     public class ReviewVacancyTests : ViewUnitTest

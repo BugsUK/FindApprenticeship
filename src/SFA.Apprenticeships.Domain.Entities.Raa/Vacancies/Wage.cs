@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
+    using Entities.Vacancies;
+
     public class Wage
     {
         public Wage(WageType type, decimal? amount, string text, WageUnit unit)

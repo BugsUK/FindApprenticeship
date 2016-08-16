@@ -5,9 +5,11 @@
     using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentValidation.Attributes;
     using Infrastructure.Presentation;
     using Validators.Vacancy;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [Validator(typeof(VacancySummaryViewModelClientValidator))]
     public class FurtherVacancyDetailsViewModel : IPartialVacancyViewModel

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
     using System;
+    using Entities.Vacancies;
     using Locations;
     using Reference;
 

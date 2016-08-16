@@ -10,12 +10,14 @@
     using RazorGenerator.Testing;
     using Common.ViewModels.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Moq;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Views.Shared.DisplayTemplates.Vacancy;
     using Recruit.Views.VacancyPosting;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     public class PreviewVacancyTests : ViewUnitTest

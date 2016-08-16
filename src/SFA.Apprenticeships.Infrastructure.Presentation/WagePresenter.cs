@@ -3,6 +3,7 @@
     using System;
     using Constants;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
 
     public static class WagePresenter
     {
@@ -38,28 +39,7 @@
                     throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
             }
         }
-
-        public static string GetHeaderDisplayText(this Domain.Entities.Vacancies.WageUnit wageUnit)
-        {
-            switch (wageUnit)
-            {
-                case Domain.Entities.Vacancies.WageUnit.Annually:
-                    return AnnualWageText;
-
-                case Domain.Entities.Vacancies.WageUnit.Monthly:
-                    return MonthlyWageText;
-
-                case Domain.Entities.Vacancies.WageUnit.Weekly:
-                    return WeeklyWageText;
-
-                case Domain.Entities.Vacancies.WageUnit.NotApplicable:
-                    return string.Empty;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
-            }
-        }
-
+        
         public static string GetWagePostfix(this Domain.Entities.Vacancies.WageUnit wageUnit)
         {
             switch (wageUnit)
