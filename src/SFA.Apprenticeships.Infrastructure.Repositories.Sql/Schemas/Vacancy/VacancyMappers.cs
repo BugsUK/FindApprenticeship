@@ -41,11 +41,15 @@
         }
     }
 
-    public class IsEmployerLocationMainApprenticeshipLocationResolver : ValueResolver<int?, bool>
+    public class IsEmployerLocationMainApprenticeshipLocationResolver : ValueResolver<int?, bool?>
     {
-        protected override bool ResolveCore(int? source)
+        protected override bool? ResolveCore(int? source)
         {
-            return source != (int)VacancyLocationType.MultipleLocations;
+            if (source.HasValue)
+            {
+                return source != (int)VacancyLocationType.MultipleLocations;
+            }
+            return null;
         }
     }
 
@@ -257,22 +261,25 @@
                         };
                     }
 
-                    if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
+                    if (av.Address != null)
+                    {
+                        if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
                         (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue))
-                    {
-                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
-                    }
+                        {
+                            av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                        }
 
-                    if (v.Latitude.HasValue && v.Longitude.HasValue)
-                    {
-                        av.Address.GeoPoint.Latitude = (double)v.Latitude.Value;
-                        av.Address.GeoPoint.Longitude = (double)v.Longitude.Value;
-                    }
+                        if (v.Latitude.HasValue && v.Longitude.HasValue)
+                        {
+                            av.Address.GeoPoint.Latitude = (double)v.Latitude.Value;
+                            av.Address.GeoPoint.Longitude = (double)v.Longitude.Value;
+                        }
 
-                    if (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue)
-                    {
-                        av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
-                        av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
+                        if (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue)
+                        {
+                            av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
+                            av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
+                        }
                     }
                 })
 
