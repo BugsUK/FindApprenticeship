@@ -54,7 +54,10 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
 
         protected void SetUserMessage(MediatorResponseMessage message)
         {
-            SetUserMessage(message.Text, message.Level);
+            if (message != null)
+            {
+                SetUserMessage(message.Text, message.Level);
+            }
         }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)

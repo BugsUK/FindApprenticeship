@@ -22,7 +22,6 @@
         [ActionName("Delete")]
         public ActionResult DeleteGet(DeleteVacancyViewModel vacancyViewModel)
         {
-            //TODO add VacanciesSummarySearchViewModel
             var result = _vacancyManagementMediator.ConfirmDelete(vacancyViewModel);
             return View(result.ViewModel);
         }
@@ -31,8 +30,8 @@
         [ActionName("Delete")]
         public ActionResult DeletePost(DeleteVacancyViewModel vacancyViewModel)
         {
-            _vacancyManagementMediator.Delete(vacancyViewModel);
-            // TODO alert on home page
+            var response = _vacancyManagementMediator.Delete(vacancyViewModel);
+            SetUserMessage(response.Message);
             return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, vacancyViewModel);
         }
     }

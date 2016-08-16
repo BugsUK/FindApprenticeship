@@ -2,6 +2,7 @@
 {
     using System;
     using Apprenticeships.Application.Vacancy;
+    using Common.Constants;
     using Common.Mediators;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
@@ -18,8 +19,17 @@
 
         public MediatorResponse<DeleteVacancyViewModel> Delete(DeleteVacancyViewModel vacancyViewModel)
         {
-            _vacancyManagementProvider.Delete(vacancyViewModel.VacancyId);
-            return GetMediatorResponse(VacancyManagementMediatorCodes.DeleteVacancy.Ok, vacancyViewModel);
+            MediatorResponseMessage message;
+
+            var result = _vacancyManagementProvider.Delete(vacancyViewModel.VacancyId);
+            if (result.Code == VacancyManagementServiceCodes.Delete.Ok)
+            {
+                message = new MediatorResponseMessage {Text = $"You have deleted {vacancyViewModel.VacancyTitle} vacancy"};
+                return GetMediatorResponse(VacancyManagementMediatorCodes.DeleteVacancy.Ok, vacancyViewModel, null, null, message);
+            }
+
+            message = new MediatorResponseMessage { Text = $"There was a problem deleting {vacancyViewModel.VacancyTitle} vacancy", Level = UserMessageLevel.Error };
+            return GetMediatorResponse(VacancyManagementMediatorCodes.DeleteVacancy.VacancyInIncorrectState, vacancyViewModel, null, null, message);
         }
 
         public MediatorResponse<DeleteVacancyViewModel> ConfirmDelete(DeleteVacancyViewModel vacancyViewModel)
