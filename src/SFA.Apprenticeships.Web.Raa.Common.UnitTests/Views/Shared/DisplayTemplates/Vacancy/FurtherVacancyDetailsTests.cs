@@ -145,6 +145,30 @@
         }
 
         [Test]
+        public void ShouldHaveWageRegardlessOfWageTextValue()
+        {
+            //Arrange
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
+                .Create();
+            var details = new FurtherVacancyDetails();
+
+            //Act
+            var view = details.RenderAsHtml(viewModel);
+
+            //Assert
+            view.GetElementbyId("custom-wage").Should().NotBeNull();
+            view.GetElementbyId("national-minimum-wage").Should().NotBeNull();
+            view.GetElementbyId("apprenticeship-minimum-wage").Should().NotBeNull();
+            var wage = view.GetElementbyId("Wage");
+            wage.Should().NotBeNull();
+            wage.Attributes["type"].Value.Should().Be("tel");
+            var wageUnit = view.GetElementbyId("WageUnit");
+            wageUnit.Should().NotBeNull();
+            wageUnit.Name.Should().Be("select");
+        }
+
+        [Test]
         public void ShouldNotHaveWageWhenTraineeship()
         {
             //Arrange
