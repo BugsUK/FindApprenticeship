@@ -11,6 +11,7 @@
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class CreateVacancyTests : TestBase
     {
         [Test]
@@ -115,7 +116,7 @@
             MockProviderService.Verify(s => s.SaveVacancyParty(providerSiteEmployerLink), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
-                    s.SaveVacancy(
+                    s.CreateVacancy(
                         It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Never);
         }
     }

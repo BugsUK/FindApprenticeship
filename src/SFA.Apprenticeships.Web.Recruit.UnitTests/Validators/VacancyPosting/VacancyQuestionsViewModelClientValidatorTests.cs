@@ -7,6 +7,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyQuestionsViewModelClientValidatorTests
     {
         private VacancyQuestionsViewModelClientValidator _validator;
@@ -28,7 +29,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void FirstQuestionInvalidCharacters(string firstQuestion, bool expectValid)
@@ -51,7 +52,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void SecondQuestionInvalidCharacters(string secondQuestion, bool expectValid)

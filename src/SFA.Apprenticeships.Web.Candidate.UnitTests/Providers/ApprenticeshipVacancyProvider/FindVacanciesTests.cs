@@ -18,6 +18,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class FindVacanciesTests
     {
         private const int PageSize = 10;

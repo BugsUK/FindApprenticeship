@@ -42,7 +42,7 @@
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
                     EmployerName = string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
-                    ProviderName = provider.Name,
+                    ProviderName = provider.TradingName,
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
                     CategoryCode = category.CodeName,
@@ -62,6 +62,11 @@
 
         private static GeoPoint GetGeoPoint(VacancySummary vacancy)
         {
+            if (vacancy.Address?.GeoPoint == null)
+            {
+                return new GeoPoint();
+            }
+
             return new GeoPoint
             {
                 Latitude = vacancy.Address.GeoPoint.Latitude,

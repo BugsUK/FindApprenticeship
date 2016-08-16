@@ -16,6 +16,7 @@
         public const string ContactUs = "ContactUs";
         public const string WebTrendsOptOut = "WebTrendsOptOut";
         public const string Cookies = "Cookies";
+        public const string InformationRadiator = "InformationRadiator";
 
         //QA
         public const string ReviewVacancy = "ReviewVacancy";
@@ -47,6 +48,7 @@
         public const string ReportSuccessfulCandidates = "ReportSuccessfulCandidates";
         public const string ReportUnsuccessfulCandidates = "ReportUnsuccessfulCandidates";
         public const string ReportVacancyExtensions = "ReportVacancyExtensions";
+        public const string ReportRegisteredCandidates = "ReportRegisteredCandidates";
 
     }
 }

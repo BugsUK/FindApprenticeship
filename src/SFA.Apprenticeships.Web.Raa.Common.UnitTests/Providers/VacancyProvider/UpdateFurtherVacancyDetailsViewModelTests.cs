@@ -22,6 +22,7 @@
     using Web.Common.ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateFurtherVacancyDetailsViewModelTests
     {
         [Test]

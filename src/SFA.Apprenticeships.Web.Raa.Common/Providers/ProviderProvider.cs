@@ -8,7 +8,6 @@
     using Application.Interfaces.VacancyPosting;
     using Configuration;
     using Converters;
-    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
 
     using SFA.Apprenticeships.Application.Interfaces;
@@ -37,7 +36,7 @@
             var provider = _providerService.GetProvider(ukprn);
             var providerSites = _providerService.GetProviderSites(ukprn);
 
-            return Convert(provider, providerSites);
+            return provider.Convert(providerSites);
         }
 
         public ProviderViewModel GetProviderViewModel(int providerId)
@@ -45,7 +44,7 @@
             var provider = _providerService.GetProvider(providerId);
             var providerSites = _providerService.GetProviderSites(provider.Ukprn);
 
-            return Convert(provider, providerSites);
+            return provider.Convert(providerSites);
         }
 
         public ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn)
@@ -174,19 +173,6 @@
                     .ConvertToResult()));
 
             viewModel.EmployerResultsPage = resultsPage;
-
-            return viewModel;
-        }
-
-        private static ProviderViewModel Convert(Provider provider, IEnumerable<ProviderSite> providerSites)
-        {
-            var viewModel = new ProviderViewModel
-            {
-                ProviderId = provider.ProviderId,
-                ProviderName = provider.Name,
-                IsMigrated = provider.IsMigrated,
-                ProviderSiteViewModels = providerSites.Select(ps => ps.Convert()).ToList()
-            };
 
             return viewModel;
         }

@@ -17,6 +17,7 @@
 @Html.HiddenFor(m => m.Status)
 @Html.HiddenFor(m => m.VacancyType)
 @Html.HiddenFor(m => m.ComeFromPreview)
+@Html.HiddenFor(m => m.VacancySource)
 
 <section>
     <div class="form-group">
@@ -45,16 +46,3 @@
         @Html.ValidationMessageFor(m => m.ThingsToConsiderComment)
     </div>
 </section>
-
-<script>CKEDITOR.replace('LongDescription');</script>
-<script>CKEDITOR.replace('DesiredSkills');</script>
-<script>CKEDITOR.replace('DesiredQualifications');</script>
-<script>CKEDITOR.replace('PersonalQualities');</script>
-
-<script>
-    nanospell.ckeditor('all',
-    {
-        dictionary: "en_uk", // 24 free international dictionaries
-        server: "asp.net" // can be php, asp, asp.net or java
-    });
-</script>

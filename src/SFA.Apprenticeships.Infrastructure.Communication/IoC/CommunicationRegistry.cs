@@ -63,9 +63,15 @@
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.ProviderContactUsMessage, new EmailSimpleMessageFormatter())
             };
 
+            var employerEmailFormatters = new[]
+            {
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendEmployerApplicationLinks, new EmployerApplicationLinksMessageFormatter(configurationService))
+            };
+
             return
                 candidateEmailFormatters
-                .Union(providerUserEmailFormatters);
+                .Union(providerUserEmailFormatters)
+                .Union(employerEmailFormatters);
         }
 
         private static IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> BuildSmsFormatters(IContext context)

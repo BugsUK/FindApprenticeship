@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.UI.WebControls;
+    using Raa.Common.ViewModels.Report;
 
     public class ReportSuccessfulCandidatesParameters : ReportParameterBase
     {
@@ -17,7 +18,7 @@
         {
             new ListItem("All", "-1"),
             new ListItem("Region", "1"),
-            //new ListItem("LocalAuthority", "2"),
+            //new ListItem("Local Authority", "2"),
             //new ListItem("Postcode", "3")
         };
 

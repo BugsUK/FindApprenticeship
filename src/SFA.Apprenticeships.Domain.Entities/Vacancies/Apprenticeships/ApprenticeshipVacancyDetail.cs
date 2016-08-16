@@ -5,5 +5,7 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
+
+        public decimal? HoursPerWeek { get; set; }
     }
 }

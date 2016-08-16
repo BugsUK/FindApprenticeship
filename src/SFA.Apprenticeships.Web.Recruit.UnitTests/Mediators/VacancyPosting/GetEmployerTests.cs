@@ -3,8 +3,6 @@
     using System;
     using Common.Constants;
     using Common.UnitTests.Mediators;
-    using Common.ViewModels.Locations;
-    using Moq;
     using NUnit.Framework;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
@@ -13,6 +11,7 @@
     using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class GetEmployerTests : TestsBase
     {
         [Test]
@@ -55,7 +54,8 @@
                     }
                 });
 
-            GeoCodingProvider.Setup(gp => gp.EmployerHasAValidAddress(employerId)).Returns(GeoCodeAddressResult.InvalidAddress);
+            GeoCodingProvider.Setup(gp => gp.EmployerHasAValidAddress(employerId))
+                .Returns(GeoCodeAddressResult.InvalidAddress);
 
             var mediator = GetMediator();
             var mediatorResponse = mediator.GetEmployer(providerSiteId, edsurn, Guid.NewGuid(), null, null);
@@ -86,7 +86,7 @@
             var mediator = GetMediator();
             var mediatorResponse = mediator.GetEmployer(providerSiteId, edsurn, Guid.NewGuid(), null, null);
 
-            mediatorResponse.AssertCode(VacancyPostingMediatorCodes.GetEmployer.Ok);
+            mediatorResponse.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetEmployer.Ok);
         }
     }
 }

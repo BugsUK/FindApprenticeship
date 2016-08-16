@@ -7,6 +7,7 @@
     using Candidate.Validators;
 
     [TestFixture]
+    [Parallelizable]
     public class EducationViewModelValidatorTests
     {
         [Test]

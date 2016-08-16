@@ -14,6 +14,8 @@
         private string _emailAddress = "Test@TEST.CoM";
         private string _postCode = "B26 2LW";
         private ApplicationTemplate _applicationTemplate;
+        private CommunicationPreferences _communicationPreferences;
+        private DateTime? _activationDate;
 
         public CandidateUser Build()
         {
@@ -46,6 +48,7 @@
                     PhoneNumber = "07895123456"
                 },
                 ApplicationTemplate = _applicationTemplate,
+                CommunicationPreferences = _communicationPreferences,
                 MonitoringInformation = new MonitoringInformation
                 {
                     Gender = _gender,
@@ -60,7 +63,7 @@
                 DateCreated = DateTime.Now.AddDays(-7),
                 DateUpdated = DateTime.Now,
                 Status = _status,
-                ActivationDate = DateTime.Now.AddDays(-6),
+                ActivationDate = _activationDate,
                 LastLogin = DateTime.Now.AddHours(-12)
             };
 
@@ -86,6 +89,10 @@
         public CandidateUserBuilder WithStatus(int status)
         {
             _status = status;
+            if (status >= 20 && _status < 999)
+            {
+                _activationDate = DateTime.Now.AddDays(-6);
+            }
             return this;
         }
 
@@ -122,6 +129,25 @@
         public CandidateUserBuilder WithApplicationTemplate(ApplicationTemplate applicationTemplate)
         {
             _applicationTemplate = applicationTemplate;
+            return this;
+        }
+
+        public CandidateUserBuilder WithCommunicationPreferences(CommunicationPreferences communicationPreferences)
+        {
+            _communicationPreferences = communicationPreferences;
+            return this;
+        }
+
+        public CandidateUserBuilder WithActivated(bool activationDate)
+        {
+            if (activationDate)
+            {
+                _activationDate = DateTime.Now.AddDays(-6);
+            }
+            else
+            {
+                _activationDate = null;
+            }
             return this;
         }
     }

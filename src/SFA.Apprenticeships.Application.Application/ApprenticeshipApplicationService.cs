@@ -36,6 +36,11 @@
             return _apprenticeshipApplicationReadRepository.GetSubmittedApplicationSummaries(vacancyId);
         }
 
+        public IEnumerable<ApprenticeshipApplicationSummary> GetApplicationSummaries(int vacancyId)
+        {
+            return _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyId);
+        }
+
         public int GetApplicationCount(int vacancyId)
         {
             return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new[] { vacancyId })[vacancyId].AllApplications;
@@ -76,14 +81,18 @@
         private void SetDecision(Guid applicationId, ApplicationStatuses applicationStatus)
         {
             var apprenticeshipApplication = GetApplication(applicationId);
-            var nextLegacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
+            var legacyApplicationId = apprenticeshipApplication.LegacyApplicationId;
+            if (legacyApplicationId == 0)
+            {
+                legacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
+            }
 
             var applicationStatusSummary = new ApplicationStatusSummary
             {
                 // CRITICAL: make the update look like it came from legacy AVMS application
                 ApplicationId = Guid.Empty,
                 ApplicationStatus = applicationStatus,
-                LegacyApplicationId = nextLegacyApplicationId,
+                LegacyApplicationId = legacyApplicationId,
                 LegacyCandidateId = 0, // not required
                 LegacyVacancyId = 0, // not required
                 VacancyStatus = apprenticeshipApplication.VacancyStatus,

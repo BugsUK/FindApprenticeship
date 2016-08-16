@@ -18,6 +18,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class ApplicationStatusChangedSubscriberTests
     {
         [Test]

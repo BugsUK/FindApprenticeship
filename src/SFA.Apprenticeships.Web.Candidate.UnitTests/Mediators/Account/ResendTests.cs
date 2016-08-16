@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ResendTests
     {
         private const string MobileNumber = "123456789";

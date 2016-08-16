@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
     using Recruit.Mediators.ProviderUser;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateUserTests : TestBase
     {
         [Test]

@@ -83,7 +83,7 @@
                 {
                     CandidateId = candidateId,
                     PersonId = candidateSummary.PersonId,
-                    CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser.User.Status),
+                    CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser),
                     DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
                     AddressLine1 = anonymise ? "" : address.AddressLine1,
                     AddressLine2 = address.AddressLine2 ?? "",
@@ -127,7 +127,7 @@
                     LockedForSupportUntil = null,
                     NewVacancyAlertEmail = null,
                     NewVacancyAlertSMS = null,
-                    AllowMarketingMessages = false,
+                    AllowMarketingMessages = GetAllowMarketingMessages(candidateUser.Candidate.CommunicationPreferences),
                     ReminderMessageSent = true,
                     CandidateGuid = candidateGuid
                 };
@@ -159,6 +159,17 @@
                 _logService.Error($"Failed to map Candidate with Id {candidateUser.Candidate.Id}", ex);
                 return null;
             }
+        }
+
+        private bool? GetAllowMarketingMessages(CommunicationPreferences communicationPreferences)
+        {
+            if (communicationPreferences == null || communicationPreferences.MarketingPreferences == null)
+                return false;
+
+            var allowMarketingTexts = communicationPreferences.MarketingPreferences.EnableText && communicationPreferences.VerifiedMobile;
+            var allowMarketingEmails = communicationPreferences.MarketingPreferences.EnableEmail;
+
+            return allowMarketingTexts || allowMarketingEmails;
         }
 
         public CandidateWithHistory MapCandidateWithHistory(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, IDictionary<int, int> schoolAttendedIds, IDictionary<int, Dictionary<int, int>> candidateHistoryIds, bool anonymise)
@@ -257,9 +268,9 @@
             return candidate.LegacyCandidateId;
         }
 
-        private int GetCandidateStatusTypeId(int status)
+        private int GetCandidateStatusTypeId(CandidateUser candidateUser)
         {
-            switch (status)
+            switch (candidateUser.User.Status)
             {
                 case 0:
                     return CandidateStatusTypeIdPreRegistered;
@@ -269,8 +280,9 @@
                 case 30:
                 case 90:
                 case 100:
-                case 999:
                     return CandidateStatusTypeIdActivated;
+                case 999:
+                    return candidateUser.User.ActivationDate.HasValue || candidateUser.Candidate.LegacyCandidateId != 0 ? CandidateStatusTypeIdActivated : CandidateStatusTypeIdPreRegistered;
                 //We don't feed back the status changes to AVMS so users never go from Activated to any other state. As a result always return Activated for reporting purposes
                 /*case 30:
                     return CandidateStatusTypeIdSuspended;

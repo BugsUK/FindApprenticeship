@@ -3,8 +3,6 @@
     using System.Web;
     using Application.Candidate;
     using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
-    using Application.Candidate.Strategies.Traineeships;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Employer.Strategies;
@@ -13,11 +11,9 @@
     using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Users;
-    using Application.Interfaces.VacancyPosting;
     using Application.Organisation;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
-    using Application.VacancyPosting;
     using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
@@ -29,11 +25,14 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Vacancies;
     using Application.Location;
     using Application.ReferenceData;
+    using Application.VacancyPosting.Strategies;
+    using Infrastructure.Raa;
+    using Infrastructure.Raa.Mappers;
     using Mappers;
     using Mediators.Candidate;
+    using Mediators.InformationRadiator;
     using Mediators.Reporting;
     using Raa.Common.Providers;
 
@@ -76,8 +75,7 @@
             For<IOrganisationService>().Use<OrganisationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
-            For<IVacancyPostingService>().Use<VacancyPostingService>();
-            For<IVacancyLockingService>().Use<VacancyLockingService>();
+            For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
@@ -97,6 +95,7 @@
             var codeGenerator = configurationService.Get<CommonWebConfiguration>().CodeGenerator;
 
             For<ISendProviderUserCommunicationStrategy>().Use<QueueProviderUserCommunicationStrategy>();
+            For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
             For<ISendEmailVerificationCodeStrategy>().Use<SendEmailVerificationCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
@@ -108,6 +107,9 @@
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
+            For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
+
+            For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
         }
 
         private void RegisterMediators()
@@ -116,6 +118,7 @@
             For<ICandidateMediator>().Use<CandidateMediator>();
             For<IVacancyMediator>().Use<VacancyMediator>();
             For<IReportingMediator>().Use<ReportingMediator>();
+            For<IInformationRadiatorMediator>().Use<InformationRadiatorMediator>();
         }
     }
 }

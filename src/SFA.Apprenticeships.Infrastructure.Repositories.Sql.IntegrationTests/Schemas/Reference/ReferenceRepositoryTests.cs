@@ -18,7 +18,7 @@
         private readonly IMapper _mapper = new ReferenceMappers();
         private IGetOpenConnection _connection;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void SetUpFixture()
         {
             _connection =

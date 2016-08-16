@@ -26,10 +26,24 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            Action mapApplicationAction = () => _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>()).Application;
 
             //Assert
-            mapApplicationAction.ShouldThrow<ArgumentException>();
+            application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
+            application.CandidateId.Should().Be(candidate.LegacyCandidateId);
+            application.VacancyId.Should().Be(vacancyApplication.Vacancy.Id);
+            application.ApplicationStatusTypeId.Should().Be(0);
+            application.WithdrawnOrDeclinedReasonId.Should().Be(0);
+            application.UnsuccessfulReasonId.Should().Be(0);
+            application.OutcomeReasonOther.Should().Be(null);
+            application.NextActionId.Should().Be(0);
+            application.NextActionOther.Should().Be(null);
+            application.AllocatedTo.Should().Be(null);
+            application.CVAttachmentId.Should().Be(null);
+            application.BeingSupportedBy.Should().Be(null);
+            application.LockedForSupportUntil.Should().Be(null);
+            application.WithdrawalAcknowledged.Should().Be(true);
+            application.ApplicationGuid.Should().Be(vacancyApplication.Id);
         }
 
         [Test]

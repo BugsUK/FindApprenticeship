@@ -10,6 +10,7 @@
     using ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class CandidateMediatorTests
     {
         private Mock<ICandidateProvider> _candidateProvider;
@@ -49,7 +50,7 @@
             var result = _mediator.Search(viewModel);
 
             //Assert
-            result.AssertCode(CandidateMediatorCodes.Search.Ok);
+            result.AssertCodeAndMessage(CandidateMediatorCodes.Search.Ok);
             _candidateProvider.Verify(p => p.SearchCandidates(viewModel));
         }
     }

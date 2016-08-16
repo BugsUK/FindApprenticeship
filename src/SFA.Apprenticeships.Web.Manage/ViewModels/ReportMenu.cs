@@ -15,7 +15,8 @@ namespace SFA.Apprenticeships.Web.Manage.ViewModels
                 {"Live Vacancies", ManagementRouteNames.ReportVacanciesList},
                 {"Successful Candidates", ManagementRouteNames.ReportSuccessfulCandidates},
                 {"Unsuccessful Candidates", ManagementRouteNames.ReportUnsuccessfulCandidates},
-                {"Vacancy Extensions", ManagementRouteNames.ReportVacancyExtensions}
+                {"Vacancy Extensions", ManagementRouteNames.ReportVacancyExtensions},
+                {"Registered Candidates", ManagementRouteNames.ReportRegisteredCandidates}
             };
         }
 

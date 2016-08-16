@@ -13,6 +13,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class SendContactMessageTests
     {
         private Mock<ICandidateService> _candidateServiceMock;

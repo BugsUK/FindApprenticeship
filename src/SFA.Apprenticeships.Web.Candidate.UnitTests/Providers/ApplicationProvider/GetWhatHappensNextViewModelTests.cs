@@ -23,6 +23,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class GetWhatHappensNextViewModelTests
     {
         const int ValidVacancyId = 1;

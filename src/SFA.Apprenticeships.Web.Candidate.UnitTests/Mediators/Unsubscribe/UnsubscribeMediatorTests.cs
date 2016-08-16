@@ -9,6 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class UnsubscribeMediatorTests
     {
         private Mock<ICandidateServiceProvider> _mockCandidateServiceProvider;

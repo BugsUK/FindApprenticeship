@@ -60,7 +60,8 @@
             // Arrange.
             var provider = _providerReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
 
-            provider.Name = new string(provider.Name.Reverse().ToArray());
+            provider.FullName = new string(provider.FullName.Reverse().ToArray());
+            provider.TradingName = new string(provider.TradingName.Reverse().ToArray());
 
             // Act.
             var newProvider = _providerWriteRepository.Update(provider);

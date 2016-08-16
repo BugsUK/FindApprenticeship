@@ -7,5 +7,7 @@
         DateTime UtcNow { get; }
 
         DateTime MinValue { get; }
+
+        DateTime TwoWeeksFromUtcNow { get; }
     }
 }

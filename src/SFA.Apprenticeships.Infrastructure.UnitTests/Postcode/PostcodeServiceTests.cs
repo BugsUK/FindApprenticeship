@@ -11,6 +11,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class PostcodeServiceTests
     {
         private Mock<PostcodeLookupProvider> _postcodeService;

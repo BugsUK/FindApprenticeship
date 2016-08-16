@@ -27,19 +27,25 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    
+    #line 2 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Manage;
     
-    #line 2 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+    #line 3 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
     using SFA.Apprenticeships.Web.Manage.Constants;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+    #line 4 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
     
     #line default
@@ -58,7 +64,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
 WriteLiteral("\r\n");
 
             
-            #line 5 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+            #line 6 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
  using (Html.BeginRouteForm(ManagementRouteNames.RequirementsAndProspoects, FormMethod.Post))
 {
     
@@ -66,14 +72,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 7 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+            #line 8 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
 Write(Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView));
 
             
             #line default
             #line hidden
             
-            #line 7 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+            #line 8 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
                                                                                
 
 
@@ -95,7 +101,7 @@ WriteLiteral(">Save</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 11 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+            #line 12 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
    Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
@@ -104,12 +110,81 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 13 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+            #line 14 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
 }
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n\r\n");
+
+DefineSection("scripts", () => {
+
+WriteLiteral("\r\n    <script");
+
+WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js\"");
+
+WriteLiteral("></script>\r\n    <script");
+
+WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/adapters/jquery.js\"");
+
+WriteLiteral(@"></script>
+    <script>
+        if (typeof CKEDITOR == 'undefined') {
+            document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E""));
+            document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/adapters/jquery.js' type='text/javascript'%3E%3C/script%3E""));
+        }
+    </script>
+
+    <script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 1233), Tuple.Create("\"", 1288)
+, Tuple.Create(Tuple.Create("", 1239), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 1239), false)
+);
+
+WriteLiteral("></script>\r\n    <script>\r\n\r\n        var isApprenticeship;\r\n        isApprenticesh" +
+"ip = \"");
+
+            
+            #line 32 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+                        Write(Model.VacancyType == VacancyType.Apprenticeship);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@""";
+
+        CKEDITOR.replace('DesiredSkills',
+        {
+            customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+            contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
+        });
+
+        if (isApprenticeship === ""True"") {
+            CKEDITOR.replace('DesiredQualifications',
+            {
+                customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+                contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
+            });
+        }
+
+        CKEDITOR.replace('PersonalQualities',
+        {
+            customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
+            contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
+        });
+
+        nanospell.ckeditor('all',
+        {
+            dictionary: ""en_uk"", // 24 free international dictionaries
+            server: ""asp.net"" // can be php, asp, asp.net or java
+        });
+    </script>
+");
+
+});
+
         }
     }
 }

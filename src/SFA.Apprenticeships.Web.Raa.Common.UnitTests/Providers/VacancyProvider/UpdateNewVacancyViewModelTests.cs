@@ -21,6 +21,7 @@
     using Web.Common.Configuration;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateNewVacancyViewModelTests
     {
         private const int QAVacancyTimeout = 10;

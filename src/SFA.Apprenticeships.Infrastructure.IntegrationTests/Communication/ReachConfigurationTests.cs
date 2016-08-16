@@ -11,11 +11,13 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     using StructureMap;
+    using FluentAssertions;
 
     [TestFixture]
     public class ReachConfigurationTests
     {
-        private SmsConfiguration _smsConfiguration = null;
+        private SmsConfiguration _smsConfiguration;
+
         [SetUp]
         public void SetUp()
         {
@@ -34,25 +36,25 @@
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetUsernameConfiguration()
         {
-            Assert.IsNotNullOrEmpty(_smsConfiguration.Username);
+            _smsConfiguration.Username.Should().NotBeNullOrEmpty();
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetPasswordConfiguration()
         {
-            Assert.IsNotNullOrEmpty(_smsConfiguration.Password);
+            _smsConfiguration.Password.Should().NotBeNullOrEmpty();
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetOriginatorFromConfiguration()
         {
-            Assert.IsNotNullOrEmpty(_smsConfiguration.Originator);
+            _smsConfiguration.Originator.Should().NotBeNullOrEmpty();
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetUrlFromConfiguration()
         {
-            Assert.IsNotNullOrEmpty(_smsConfiguration.Url);
+            _smsConfiguration.Url.Should().NotBeNullOrEmpty();
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
@@ -77,8 +79,8 @@
             var template = _smsConfiguration.Templates.ElementAt(index);
 
             Assert.IsNotNull(template);
-            Assert.IsNotNullOrEmpty(template.Name);
-            Assert.IsNotNullOrEmpty(template.Message);
+            template.Name.Should().NotBeNullOrEmpty();
+            template.Message.Should().NotBeNullOrEmpty();
         }
 
         [Test, Category("IntegrationProd"), Category("SmokeTests")]

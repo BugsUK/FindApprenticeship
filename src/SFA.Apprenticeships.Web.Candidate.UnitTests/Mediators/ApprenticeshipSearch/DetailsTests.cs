@@ -1,11 +1,11 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
+﻿
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using System;
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Common.UnitTests.Mediators;
     using Constants;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
@@ -13,18 +13,11 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class DetailsTests : TestsBase
     {
         private const string Id = "1";
         private const string VacancyDistance = "10";
-
-        [Test]
-        public void VacancyNotFound()
-        {
-            var response = Mediator.Details(Id, null);
-
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound, false);
-        }
 
         [TestCase(null)]
         [TestCase("")]
@@ -59,55 +52,6 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
         }
 
         [Test]
-        public void VacancyIsUnavailable_CandidateNotLoggedIn()
-        {
-            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyStatus = VacancyStatuses.Unavailable
-            };
-
-            ApprenticeshipVacancyProvider.Setup(
-                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-
-            var response = Mediator.Details(Id, null);
-
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
-        }
-
-        [Test]
-        public void VacancyIsUnavailble_CandidateLoggedInButHasNeverAppliedForVacancy()
-        {
-            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyStatus = VacancyStatuses.Unavailable
-            };
-
-            ApprenticeshipVacancyProvider.Setup(
-                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-
-            var response = Mediator.Details(Id, Guid.NewGuid());
-
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
-        }
-
-        [Test]
-        public void VacancyIsUnavailable_CandidateLoggedInAndHasPreviouslyAppliedForVacancy()
-        {
-            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
-            {
-                CandidateApplicationStatus = ApplicationStatuses.Submitted,
-                VacancyStatus = VacancyStatuses.Unavailable
-            };
-
-            ApprenticeshipVacancyProvider.Setup(
-                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-
-            var response = Mediator.Details(Id, Guid.NewGuid());
-
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
-        }
-
-        [Test]
         public void Ok()
         {
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
@@ -138,6 +82,63 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
             var response = Mediator.Details(Id, null);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.Ok, true);
+        }
+
+        [Test]
+        public void VacancyIsUnavailable_CandidateNotLoggedIn()
+        {
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            ApprenticeshipVacancyProvider.Setup(
+                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+
+            var response = Mediator.Details(Id, null);
+
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+        }
+
+        [Test]
+        public void VacancyIsUnavailble_CandidateLoggedInButHasNeverAppliedForVacancy()
+        {
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            ApprenticeshipVacancyProvider.Setup(
+                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+
+            var response = Mediator.Details(Id, Guid.NewGuid());
+
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+        }
+
+        [Test]
+        public void VacancyIsUnavailable_CandidateLoggedInAndHasPreviouslyAppliedForVacancy()
+        {
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
+            {
+                CandidateApplicationStatus = ApplicationStatuses.Submitted,
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            ApprenticeshipVacancyProvider.Setup(
+                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+
+            var response = Mediator.Details(Id, Guid.NewGuid());
+
+            response.AssertCodeAndMessage(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+        }
+
+        [Test]
+        public void VacancyNotFound()
+        {
+            var response = Mediator.Details(Id, null);
+
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
     }
 }

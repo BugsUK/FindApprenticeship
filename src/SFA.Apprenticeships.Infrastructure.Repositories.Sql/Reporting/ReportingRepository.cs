@@ -6,6 +6,7 @@
     using System.Data.SqlClient;
     using System.Linq;
     using Common;
+    using Domain.Entities.Raa.Reporting;
     using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
 
@@ -241,6 +242,32 @@
             return response;
         }
 
+        public Dictionary<string, string> GetLocalAuthorities()
+        {
+            _logger.Debug($"Getting local authorities for report [dbo].[ReportGetLocalAuthority]...");
+
+            var response = new Dictionary<string, string>
+            {
+                { "n/a", "-1" }
+            };
+
+            var command = new SqlCommand("dbo.ReportGetLocalAuthority", (SqlConnection) _getOpenConnection.GetOpenConnection())
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            command.Parameters.Add("type", SqlDbType.Int).Value = 2;
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(reader[1].ToString(), reader[0].ToString());
+            }
+
+            _logger.Debug($"Done getting local authorities.");
+
+            return response;
+        }
+
         public IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate, int? providerUkprn, int? vacancyStatus)
         {
             var ukprn = providerUkprn?.ToString() ?? "ALL";
@@ -279,6 +306,306 @@
             _logger.Debug($"Done executing vacancy extensions report with toDate {toDate} and fromdate {fromDate} for provider with ukprn {ukprn} and for vacancies with status {status}.");
 
             return response;
+        }
+
+        public IList<ApplicationsReceivedResultItem> GetApplicationsReceivedResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId)
+        {
+            _logger.Info($"Executing GetApplicationsReceivedResultItems report with dateFrom {dateFrom} and dateTo {dateTo} for providerSiteId {providerSiteId}...");
+
+            var response = new List<ApplicationsReceivedResultItem>();
+
+            var command = new SqlCommand("dbo.ReportApplicationsReceivedList", (SqlConnection) _getOpenConnection.GetOpenConnection())
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("ManagedBy", SqlDbType.VarChar).Value = -1;
+            command.Parameters.Add("GeoRegion", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "-1";
+            command.Parameters.Add("FromDate", SqlDbType.DateTime).Value = dateFrom;
+            command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = dateTo;
+            command.Parameters.Add("Sector", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Framework", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSIteID", SqlDbType.Int).Value = providerSiteId;
+            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Gender", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Ethnicity", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ApplicationStatus", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("InOrOutOfRegion", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("RecAgentID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("rowcount", SqlDbType.Int).Value = 0;
+
+            command.CommandTimeout = 180;
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(new ApplicationsReceivedResultItem
+                {
+                    CandidateName = reader["CandidateName"].ToString(),
+                    Email = reader["Email"].ToString(),
+                    AddressLine1 = reader["AddressLine1"].ToString(),
+                    AddressLine2 = reader["AddressLine2"].ToString(),
+                    AddressLine3 = reader["AddressLine3"].ToString(),
+                    AddressLine4 = reader["AddressLine4"].ToString(),
+                    AddressLine5 = reader["AddressLine5"].ToString(),
+                    Town = reader["Town"].ToString(),
+                    County = reader["County"].ToString(),
+                    Postcode = reader["Postcode"].ToString(),
+                    ShortAddress = reader["ShortAddress"].ToString(),
+                    CandidateTelephone = reader["CandidateTelephone"].ToString(),
+                    School = reader["School"].ToString(),
+                    DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]).ToString("dd/MM/yyy"),
+                    EthnicOrigin = reader["EthnicOrigin"].ToString(),
+                    Gender = reader["Gender"].ToString(),
+                    Sector = reader["Sector"].ToString(),
+                    Framework = reader["Framework"].ToString(),
+                    FrameworkStatus = reader["FrameworkStatus"].ToString(),
+                    Employer = reader["Employer"].ToString(),
+                    VacancyPostcode = reader["VacancyPostcode"].ToString(),
+                    TrainingProvider = reader["TrainingProvider"].ToString(),
+                    ApplicationClosingDate = Convert.ToDateTime(reader["ApplicationClosingDate"]).ToString("dd/MM/yyy"),
+                    ApplicationDate = Convert.ToDateTime(reader["ApplicationDate"]).ToString("dd/MM/yyy"),
+                    ApplicationStatus = reader["ApplicationStatus"].ToString(),
+                    AllocatedTo = reader["AllocatedTo"].ToString(),
+                    VacancyID = reader["VacancyID"].ToString()
+                });
+            }
+
+            _logger.Info($"Done executing report with dateFrom {dateFrom} and dateTo {dateTo} for providerSiteId {providerSiteId}.");
+
+            return response;
+        }
+
+        public IList<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId)
+        {
+            _logger.Info($"Executing GetCandidatesWithApplicationsResultItems report with dateFrom {dateFrom} and dateTo {dateTo} for providerSiteId {providerSiteId}...");
+
+            var response = new List<CandidatesWithApplicationsResultItem>();
+
+            var command = new SqlCommand("dbo.ReportCandidatesWithApplicationsList", (SqlConnection)_getOpenConnection.GetOpenConnection())
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("ManagedBy", SqlDbType.VarChar).Value = -1;
+            command.Parameters.Add("GeoRegion", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("type", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
+            command.Parameters.Add("GenderID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("EthnicityID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("DisabilityID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = providerSiteId;
+            command.Parameters.Add("ApplicationStatus", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("EmployerID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("FromDate", SqlDbType.DateTime).Value = dateFrom;
+            command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = dateTo;
+            command.Parameters.Add("LSCInOut", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("VacancyReferenceNumber", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("VacancyTitle", SqlDbType.VarChar).Value = "";
+            command.Parameters.Add("RecAgentID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("rowcount", SqlDbType.Int).Value = 0;
+
+            command.CommandTimeout = 180;
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(new CandidatesWithApplicationsResultItem
+                {
+                    CandidateId = reader["CandidateId"].ToString(),
+                    Name = reader["Name"].ToString(),
+                    DateofBirth = Convert.ToDateTime(reader["DateofBirth"]).ToString("dd/MM/yyy"),
+                    Gender = reader["Gender"].ToString(),
+                    Email = reader["Email"].ToString(),
+                    Ethnicity = reader["Ethnicity"].ToString(),
+                    Disability = reader["Disability"].ToString(),
+                    Postcode = reader["Postcode"].ToString(),
+                    LastSchool = reader["LastSchool"].ToString(),
+                    SchoolName = reader["SchoolName"].ToString(),
+                    SchoolAddress1 = reader["SchoolAddress1"].ToString(),
+                    SchoolAddress2 = reader["SchoolAddress2"].ToString(),
+                    SchoolArea = reader["SchoolArea"].ToString(),
+                    SchoolTown = reader["SchoolTown"].ToString(),
+                    SchoolCounty = reader["SchoolCounty"].ToString(),
+                    SchoolPostcode = reader["SchoolPostcode"].ToString(),
+                    LearningProvider = reader["LearningProvider"].ToString(),
+                    VacancyReferenceNumber = reader["VacancyReferenceNumber"].ToString(),
+                    FirstName = reader["FirstName"].ToString(),
+                    MiddleNames = reader["MiddleNames"].ToString(),
+                    Surname = reader["Surname"].ToString(),
+                    addressLine1 = reader["addressLine1"].ToString(),
+                    addressLine2 = reader["addressLine2"].ToString(),
+                    addressLine3 = reader["addressLine3"].ToString(),
+                    town = reader["town"].ToString(),
+                    CandidateRegion = reader["CandidateRegion"].ToString(),
+                    FullName = reader["FullName"].ToString(),
+                    LandlineNumber = reader["LandlineNumber"].ToString(),
+                    MobileNumber = reader["MobileNumber"].ToString(),
+                    DateRegistered = Convert.ToDateTime(reader["DateRegistered"]).ToString("dd/MM/yyy"),
+                    DateLastLoggedOn = Convert.ToDateTime(reader["DateLastLoggedOn"]).ToString("dd/MM/yyy"),
+                    EmployerName = reader["EmployerName"].ToString(),
+                    empAddressLine1 = reader["empAddressLine1"].ToString(),
+                    empAddressLine2 = reader["empAddressLine2"].ToString(),
+                    empAddressLine3 = reader["empAddressLine3"].ToString(),
+                    empAddressLine4 = reader["empAddressLine4"].ToString(),
+                    empAddressLine5 = reader["empAddressLine5"].ToString(),
+                    empTown = reader["empTown"].ToString(),
+                    empCounty = reader["empCounty"].ToString(),
+                    empPostCode = reader["empPostCode"].ToString(),
+                    VacancyTitle = reader["VacancyTitle"].ToString(),
+                    VancacyType = reader["VancacyType"].ToString(),
+                    VacancyCategory = reader["VacancyCategory"].ToString(),
+                    VacancySector = reader["VacancySector"].ToString(),
+                    ApplicationStatus = reader["ApplicationStatus"].ToString(),
+                    NumberOfDaysApplicationAtThisStatus = reader["NumberOfDaysApplicationAtThisStatus"].ToString(),
+                    ApplicationHistoryEventDate = Convert.ToDateTime(reader["ApplicationHistoryEventDate"]).ToString("dd/MM/yyy HH:mm"),
+                    ApplicationStatusSetDate = Convert.ToDateTime(reader["ApplicationStatusSetDate"]).ToString("dd/MM/yyy HH:mm"),
+                    VacancyClosingDate = Convert.ToDateTime(reader["VacancyClosingDate"]).ToString("dd/MM/yyy HH:mm"),
+                    addressLine4 = reader["addressLine4"].ToString(),
+                    addressLine5 = reader["addressLine5"].ToString(),
+                    ShortAddress = reader["ShortAddress"].ToString(),
+                    VacancyStatus = reader["VacancyStatus"].ToString()
+                });
+            }
+
+            _logger.Info($"Done executing report with dateFrom {dateFrom} and dateTo {dateTo} for providerSiteId {providerSiteId}.");
+
+            return response;
+        }
+
+        public InformationRadiatorData GetInformationRadiatorData()
+        {
+            var data = new InformationRadiatorData();
+
+            var command = new SqlCommand(
+                @"SELECT 
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider) as TotalProviders,
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider WHERE ProviderToUseFAA = 1) as TotalProvidersAskedToOnboard,
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider WHERE ProviderToUseFAA = 2) as TotalProvidersForcedToMigrate,
+(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser] WHERE ProviderId NOT IN (SELECT ProviderId FROM Provider WHERE ProviderToUseFAA = 2)) as TotalProvidersOnboarded,
+(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser] WHERE ProviderId IN (SELECT ProviderId FROM Provider WHERE ProviderToUseFAA = 2)) as TotalProvidersMigrated,
+(SELECT COUNT(*) FROM [Provider].[ProviderUser]) as TotalProviderUserAccounts,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesCreatedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 1) as TotalDraftVacanciesCreatedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 5) as TotalVacanciesInReviewViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 3) as TotalVacanciesReferredViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 2) as TotalVacanciesApprovedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 6) as TotalVacanciesClosedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 8) as TotalVacanciesArchivedViaRaa,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+WHERE a.VacancyId < -1) as TotalApplicationsStartedForRaaVacancies,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId >= 2) as TotalApplicationsSubmittedForRaaVacancies,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
+WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 5 and ah.ApplicationHistoryEventSubTypeId = 5) as TotalUnsuccessfulApplicationsViaRaa,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
+WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHistoryEventSubTypeId = 6) as TotalSuccessfulApplicationsViaRaa"
+                , (SqlConnection) _getOpenConnection.GetOpenConnection());
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                data = new InformationRadiatorData
+                {
+                    TotalProviders = Convert.ToInt32(reader["TotalProviders"]),
+                    TotalProvidersAskedToOnboard = Convert.ToInt32(reader["TotalProvidersAskedToOnboard"]),
+                    TotalProvidersForcedToMigrate = Convert.ToInt32(reader["TotalProvidersForcedToMigrate"]),
+                    TotalProvidersOnboarded = Convert.ToInt32(reader["TotalProvidersOnboarded"]),
+                    TotalProvidersMigrated = Convert.ToInt32(reader["TotalProvidersMigrated"]),
+                    TotalProviderUserAccounts = Convert.ToInt32(reader["TotalProviderUserAccounts"]),
+                    TotalVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalVacanciesCreatedViaRaa"]),
+                    TotalDraftVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalDraftVacanciesCreatedViaRaa"]),
+                    TotalVacanciesReferredViaRaa = Convert.ToInt32(reader["TotalVacanciesReferredViaRaa"]),
+                    TotalVacanciesInReviewViaRaa = Convert.ToInt32(reader["TotalVacanciesInReviewViaRaa"]),
+                    TotalVacanciesApprovedViaRaa = Convert.ToInt32(reader["TotalVacanciesApprovedViaRaa"]),
+                    TotalVacanciesClosedViaRaa = Convert.ToInt32(reader["TotalVacanciesClosedViaRaa"]),
+                    TotalVacanciesArchivedViaRaa = Convert.ToInt32(reader["TotalVacanciesArchivedViaRaa"]),
+                    TotalApplicationsStartedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsStartedForRaaVacancies"]),
+                    TotalApplicationsSubmittedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsSubmittedForRaaVacancies"]),
+                    TotalUnsuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsViaRaa"]),
+                    TotalSuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalSuccessfulApplicationsViaRaa"]),
+                };
+            }
+
+            return data;
+        }
+
+        public IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string region, string localAuthority, bool marketMessagesOnly)
+        {
+            _logger.Debug($"Executing ReportRegisteredCandidates report with toDate {toDate} and fromdate {fromDate}...");
+
+            var response = new List<ReportRegisteredCandidatesResultItem>();
+
+            var command = new SqlCommand("dbo.ReportRegisteredCandidatesList", (SqlConnection)_getOpenConnection.GetOpenConnection());
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = region;
+            command.Parameters.Add("type", SqlDbType.Int).Value = type;
+            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = localAuthority;
+            command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
+            command.Parameters.Add("FromDate", SqlDbType.DateTime).Value = fromDate;
+            command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = toDate;
+            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = ageRange;
+            command.Parameters.Add("IncludeDeregisteredCandidates", SqlDbType.Int).Value = 0;
+            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = marketMessagesOnly ? 1 : 0;
+            command.Parameters.Add("EthnicityID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("GenderID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Rowcount", SqlDbType.Int).Value = 0;
+            command.Parameters.Add("ManagedBy", SqlDbType.Int).Value = -1;
+
+            command.CommandTimeout = 180;
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(new ReportRegisteredCandidatesResultItem()
+                {
+                    CandidateId = Convert.ToInt32(reader["CandidateId"].ToString()),
+                    Name = reader["Name"].ToString(),
+                    DateofBirth = Convert.ToDateTime(reader["DateofBirth"]).ToString("dd/MM/yyy"),
+                    Region = reader["Region"].ToString(),
+                    AddressLine1 = reader["AddressLine1"].ToString(),
+                    AddressLine2 = reader["AddressLine2"].ToString(),
+                    AddressLine3 = reader["AddressLine3"].ToString(),
+                    AddressLine4 = reader["AddressLine4"].ToString(),
+                    AddressLine5 = reader["AddressLine5"].ToString(),
+                    Town = reader["Town"].ToString(),
+                    County = reader["County"].ToString(),
+                    Postcode = reader["Postcode"].ToString(),
+                    ShortAddress = reader["ShortAddress"].ToString(),
+                    LastSchool = reader["LastSchool"].ToString(),
+                    DateLastActive = Convert.ToDateTime(reader["DateLastActive"]).ToString("dd/MM/yyy"),
+                    RegistrationDate = Convert.ToDateTime(reader["RegistrationDate"]).ToString("dd/MM/yyy"),
+                    Address = reader["Address"].ToString(),
+                    LandlineNumber = reader["LandlineNumber"].ToString(),
+                    Email = reader["Email"].ToString(),
+                    Gender = reader["Gender"].ToString(),
+                    ApplicationCount = Convert.ToInt32(reader["ApplicationCount"].ToString()),
+                    FirstName = reader["FirstName"].ToString(),
+                    MiddleNames = reader["MiddleNames"].ToString(),
+                    Surname = reader["Surname"].ToString(),
+                    MobileNumber = reader["MobileNumber"].ToString(),
+                    Ethnicity = reader["Ethnicity"].ToString(),
+                    Inactive = reader["Inactive"].ToString() != "0",
+                    Sector = reader["Sector"].ToString(),
+                    Framework = reader["Framework"].ToString(),
+                    Keyword = reader["Keyword"].ToString(),
+                    CandidateStatus = reader["CandidateStatus"].ToString(),
+                    DregisteredCandidate = reader["DregisteredCandidate"].ToString() != "0",
+                    AllowMarketingMessages = Convert.ToBoolean(reader["AllowMarketingMessages"].ToString()) ? "Yes" : "No"
+                });
+            }
+
+            _logger.Debug($"Done executing report with toDate {toDate} and fromdate {fromDate}.");
+
+            return response.ToList();
         }
     }
 }

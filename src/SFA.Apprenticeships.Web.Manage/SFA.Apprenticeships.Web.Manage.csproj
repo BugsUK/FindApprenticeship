@@ -103,7 +103,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.2.14.2\lib\net45\CsvHelper.dll</HintPath>
+      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -116,6 +116,10 @@
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -159,8 +163,8 @@
       <HintPath>..\packages\Microsoft.ReportViewer.2012.Runtime.11.0.3452.0\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
@@ -172,6 +176,10 @@
     <Reference Include="NanoSpell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Content\_assets\js\vendor\nanospell\bin\NanoSpell.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.5.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -185,7 +193,7 @@
       <HintPath>..\packages\NLog.Contrib.1.0.0.2\lib\net45\NLog.Contrib.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorGenerator.Mvc.2.3.12\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <HintPath>..\packages\RazorGenerator.Mvc.2.4.2\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ReportViewerForMvc, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -274,12 +282,13 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="WebActivatorEx">
-      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease">
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -343,16 +352,17 @@
     <Compile Include="Constants\ManagementRouteNames.cs" />
     <Compile Include="Constants\Messages\ReportingMessages.cs" />
     <Compile Include="Constants\Url.cs" />
-    <Compile Include="Constants\ViewModels\ReportViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\InformationRadiatorController.cs" />
     <Compile Include="Controllers\ManagementControllerBase.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
+    <Compile Include="CsvClassMaps\ReportRegisteredCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportSuccessfulCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportUnsuccessfulCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
@@ -372,6 +382,9 @@
     <Compile Include="Mediators\Candidate\CandidateMediator.cs" />
     <Compile Include="Mediators\Candidate\CandidateMediatorCodes.cs" />
     <Compile Include="Mediators\Candidate\ICandidateMediator.cs" />
+    <Compile Include="Mediators\InformationRadiator\IInformationRadiatorMediator.cs" />
+    <Compile Include="Mediators\InformationRadiator\InformationRadiatorMediator.cs" />
+    <Compile Include="Mediators\InformationRadiator\InformationRadiatorMediatorCodes.cs" />
     <Compile Include="Mediators\Reporting\IReportingMediator.cs" />
     <Compile Include="Mediators\Reporting\ReportingMediator.cs" />
     <Compile Include="Mediators\Reporting\ReportingMediatorCodes.cs" />
@@ -383,7 +396,6 @@
     <Compile Include="Providers\ICandidateProvider.cs" />
     <Compile Include="Validators\CandidateSearchResultsViewModelValidator.cs" />
     <Compile Include="Validators\CandidateSearchViewModelValidator.cs" />
-    <Compile Include="Validators\ReportParametersDateRangeValidator.cs" />
     <Compile Include="ViewModels\AgencyUserViewModel.cs" />
     <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -396,11 +408,12 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\CandidateApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\CandidateTraineeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\InformationRadiatorViewModel.cs" />
     <Compile Include="ViewModels\ReportMenu.cs" />
-    <Compile Include="ViewModels\ReportParameterBase.cs" />
     <Compile Include="ViewModels\ReportUnsuccessfulCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportSuccessfulCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportVacanciesParameters.cs" />
+    <Compile Include="ViewModels\ReportRegisteredCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportVacancyExtensionsParameters.cs" />
     <Compile Include="Views\Home\Cookies.generated.cs">
       <DependentUpon>Cookies.cshtml</DependentUpon>
@@ -842,6 +855,8 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\license\key.lic" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\license\web.config" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
+    <Content Include="Views\InformationRadiator\Index.cshtml" />
+    <Content Include="Views\Report\RegisteredCandidatesCsv.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -876,7 +891,9 @@
     <Folder Include="Constants\Pages\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.eot" />
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.woff" />
     <Content Include="Content\_assets\fonts\NTA-Light-20130221.eot" />

@@ -1,24 +1,24 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
+    using Application.Interfaces.Security;
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
-    using Factories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using Order = ViewModels.Order;
 
     public class ApplicationProvider : IApplicationProvider
     {
@@ -30,8 +30,10 @@
         private readonly IEmployerService _employerService;
         private readonly IMapper _mapper;
         private readonly ILogService _logService;
+        private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
+        private readonly IDateTimeService _dateTimeService;
 
-        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IProviderService providerService, IEmployerService employerService, IMapper mapper, ILogService logService)
+        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IProviderService providerService, IEmployerService employerService, IMapper mapper, ILogService logService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
         {
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
@@ -41,6 +43,36 @@
             _employerService = employerService;
             _mapper = mapper;
             _logService = logService;
+            _encryptionService = encryptionService;
+            _dateTimeService = dateTimeService;
+        }
+
+        public ShareApplicationsViewModel GetShareApplicationsViewModel(int vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var viewModel = new ShareApplicationsViewModel();
+            viewModel.EmployerName = employer.Name;
+            viewModel.VacancyType = vacancy.VacancyType;
+            viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
+
+            var applications = vacancy.VacancyType == VacancyType.Traineeship
+                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
+                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList();
+
+            var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
+            var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
+            var successful = applications.Where(v => v.Status == ApplicationStatuses.Successful).ToList();
+            var unsuccessful = applications.Where(v => v.Status == ApplicationStatuses.Unsuccessful).ToList();
+
+            viewModel.NewApplicationsCount = @new.Count;
+            viewModel.ViewedApplicationsCount = viewed.Count;
+            viewModel.SuccessfulApplicationsCount = successful.Count;
+            viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
+            viewModel.ApplicationSummaries = _mapper.Map<List<ApplicationSummary>, List<ApplicationSummaryViewModel>>(applications.OrderBy(a => a.CandidateDetails.LastName).ToList());
+
+            return viewModel;
         }
 
         public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
@@ -83,18 +115,40 @@
             viewModel.SuccessfulApplicationsCount = successful.Count;
             viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
 
-            vacancyApplicationsSearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacancyApplicationsSearch.PageSize);
-
             viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;
             viewModel.ApplicationSummaries = new PageableViewModel<ApplicationSummaryViewModel>
             {
-                Page = applications.Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(a => _mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>(a)).ToList(),
+                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications).Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
                 ResultsCount = applications.Count,
                 CurrentPage = vacancyApplicationsSearch.CurrentPage,
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
             };
 
+            foreach (var application in viewModel.ApplicationSummaries.Page)
+            {
+                application.AnonymousLinkData =
+                    _encryptionService.Encrypt(new AnonymisedApplicationLink(application.ApplicationId,
+                        _dateTimeService.TwoWeeksFromUtcNow));
+            }
+
             return viewModel;
+        }
+
+        private static IEnumerable<ApplicationSummary> GetOrderedApplicationSummaries(string orderByField, Order order, IEnumerable<ApplicationSummary> applications)
+        {
+            IEnumerable<ApplicationSummary> page;
+            switch (orderByField)
+            {
+                case VacancyApplicationsSearchViewModel.OrderByFieldLastName:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied)
+                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied);
+                    break;
+                default:
+                    page = applications;
+                    break;
+            }
+            return page;
         }
 
         public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
@@ -155,6 +209,13 @@
         public void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes)
         {
             _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
+        }
+
+        public void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            _employerService.SendApplicationLinks(vacancy.Title, providerName, applicationLinks, linkExpiryDateTime, recipientEmailAddress);
         }
 
         #region Helpers

@@ -12,6 +12,7 @@
     using Web.Common.Configuration;
 
     [TestFixture]
+    [Parallelizable]
     public class TrainingDetailsTests : TestBase
     {
         private const string EdsUrn = "112";
@@ -65,11 +66,7 @@
         {
             MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(_existingVacancy);
-            MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
-                .Returns<Vacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.SaveVacancy(It.IsAny<Vacancy>()))
-                .Returns<Vacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.SaveVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>

@@ -39,6 +39,7 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Raa
             container = new Container(x =>
             {
                 x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<SourceRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry(new RaaRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Raa }));
             });

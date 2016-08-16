@@ -7,7 +7,6 @@
     using System.Web;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
-    using Common.Framework;
     using Common.ViewModels.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;

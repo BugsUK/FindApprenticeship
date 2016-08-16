@@ -10,6 +10,7 @@
     using Candidate = Domain.Entities.Candidates.Candidate;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateCandidateTests
     {
         [Test]

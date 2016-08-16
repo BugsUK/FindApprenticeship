@@ -7,6 +7,7 @@
     using Raa.Common.ViewModels.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class LocationsTests : TestsBase
     {
         [Test]

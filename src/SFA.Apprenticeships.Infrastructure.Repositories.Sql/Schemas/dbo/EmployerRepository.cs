@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common;
+    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
 
     using SFA.Apprenticeships.Application.Interfaces;
@@ -62,6 +63,20 @@
             }                                 
             return employers.Select(MapEmployer).ToList();
         }
+
+        public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds)
+        {
+            var employers = new List<MinimalEmployerDetails>();
+            var splitEmployerIds = DbHelpers.SplitIds(employerIds);
+            foreach (var employersIds in splitEmployerIds)
+            {
+                var splitEmployer = _getOpenConnection.Query<MinimalEmployerDetails>("SELECT EmployerId, FullName FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",
+                    new { EmployerIds = employersIds }).ToList();
+                employers.AddRange(splitEmployer);
+            }
+
+            return employers;
+        } 
 
         public DomainEmployer Save(DomainEmployer employer)
         {

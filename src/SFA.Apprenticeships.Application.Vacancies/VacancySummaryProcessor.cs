@@ -8,8 +8,7 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Messaging;
     using Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {

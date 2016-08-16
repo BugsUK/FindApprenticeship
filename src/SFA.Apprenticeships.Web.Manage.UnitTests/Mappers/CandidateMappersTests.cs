@@ -10,11 +10,13 @@
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
+    [TestFixture]
+    [Parallelizable]
     public class CandidateMappersTests
     {
         private IMapper _mapper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _mapper = new CandidateMappers();

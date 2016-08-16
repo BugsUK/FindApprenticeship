@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
@@ -72,7 +71,7 @@
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
                 RecruitmentAgency = providerSite.TradingName,
-                ProviderName = provider.Name,
+                ProviderName = provider.TradingName,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = vacancy.GetContactInformation(providerSite),
@@ -84,7 +83,8 @@
                 PersonalQualities = vacancy.PersonalQualities,
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
-                TrainingType = vacancy.TrainingType.GetTrainingType()
+                TrainingType = vacancy.TrainingType.GetTrainingType(),
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
             };
 
             return detail;

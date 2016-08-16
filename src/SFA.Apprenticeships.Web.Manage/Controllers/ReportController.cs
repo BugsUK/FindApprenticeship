@@ -189,5 +189,54 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult RegisteredCandidatesCsv()
+        {
+            var response = _reportingMediator.GetRegisteredCandidatesReportParams();
+            if (response.Code != ReportingMediatorCodes.ReportCodes.Ok)
+                RedirectToAction("Index");
+
+            return View(response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "RegisteredCandidatesCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ValidateRegisteredCandidatesCsv(ReportRegisteredCandidatesParameters parameters)
+        {
+            var validationResponse = _reportingMediator.ValidateRegisteredCandidatesParameters(parameters);
+
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return View("RegisteredCandidatesCsv", validationResponse.ViewModel);
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("RegisteredCandidatesCsv", validationResponse.ViewModel);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "RegisteredCandidatesCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadRegisteredCandidatesCsv(ReportRegisteredCandidatesParameters parameters)
+        {
+            var response = _reportingMediator.GetRegisteredCandidatesReportBytes(parameters);
+
+            switch (response.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return File(response.ViewModel, "text/csv", "RegisteredCandidatesCsv.csv");
+                case ReportingMediatorCodes.ReportCodes.Error:
+                    SetUserMessage(response.Message);
+                    return View("RegisteredCandidatesCsv", parameters);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
     }
 }

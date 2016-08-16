@@ -11,6 +11,7 @@
     using Web.Common.Validators;
 
     [TestFixture]
+    [Parallelizable]
     public class NewVacancyViewModelServerValidatorTests
     {
         private NewVacancyViewModelServerValidator _validator;
@@ -116,7 +117,8 @@
             var viewModel = new NewVacancyViewModel
             {
                 OfflineVacancy = true,
-                OfflineApplicationUrl = url
+                OfflineApplicationUrl = url,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

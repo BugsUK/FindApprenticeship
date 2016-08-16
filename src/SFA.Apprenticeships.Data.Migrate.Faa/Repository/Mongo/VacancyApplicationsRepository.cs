@@ -12,7 +12,7 @@
 
     public class VacancyApplicationsRepository
     {
-        private const int Status = 30;
+        private const int Status = 5;
 
         private readonly string _collectionName;
         private readonly ILogService _logService;
@@ -56,7 +56,7 @@
                 BatchSize = 1000,
                 Projection = GetVacancyApplicationProjection()
             };
-            var cursor = _database.GetCollection<VacancyApplication>(_collectionName).FindAsync(Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10), options, cancellationToken);
+            var cursor = _database.GetCollection<VacancyApplication>(_collectionName).FindAsync(Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status), options, cancellationToken);
             return await cursor;
         }
 

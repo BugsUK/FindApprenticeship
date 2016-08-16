@@ -11,6 +11,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class EditCommentTests
     {
         [Test]
@@ -66,7 +67,7 @@
 
             var response = mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
-            response.AssertCode(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok);
+            response.AssertCodeAndMessage(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok);
         }
 
 
@@ -107,7 +108,7 @@
 
             var result = mediator.UpdateVacancy(viewModel);
 
-            result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.UpdateVacancy.Ok);
             vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel));
         }
 
@@ -138,7 +139,7 @@
 
             var result = mediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
 
-            result.AssertCode(VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok);
             vacancyProvider.Verify(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber));
         }
 

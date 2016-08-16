@@ -175,7 +175,7 @@ WriteLiteral("</p>\r\n");
             #line hidden
             
             #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-     if (Model.VacancyType == VacancyType.Apprenticeship)
+     if (Model.VacancyType == VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.HoursPerWeek.HasValue)
     {
 
             
@@ -187,11 +187,15 @@ WriteLiteral(" name=\"furthervacancydetailsviewmodel_hoursperweek\"");
 
 WriteLiteral("></a>\r\n");
 
-WriteLiteral("        <p>Total hours per week: ");
+WriteLiteral("        <p");
+
+WriteLiteral(" id=\"total-hours-per-week\"");
+
+WriteLiteral(">Total hours per week: ");
 
             
             #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                            Write(Model.FurtherVacancyDetailsViewModel.HoursPerWeek);
+                                                      Write(Model.FurtherVacancyDetailsViewModel.HoursPerWeek);
 
             
             #line default
@@ -237,14 +241,14 @@ WriteLiteral("\r\n</div>\r\n\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1742), Tuple.Create("\"", 1768)
+WriteAttribute("class", Tuple.Create(" class=\"", 1830), Tuple.Create("\"", 1856)
             
             #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 1750), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1838), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1750), false)
+, 1838), false)
 );
 
 WriteLiteral(">\r\n        <h3");

@@ -29,7 +29,9 @@
             _logger = logger;
         }
 
-        public void Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
+        public void Update(
+            ApprenticeshipApplicationDetail apprenticeshipApplication,
+            ApplicationStatusSummary applicationStatusSummary)
         {
             var originalLegacyApplicationId = apprenticeshipApplication.LegacyApplicationId;
             var originalStatus = apprenticeshipApplication.Status;
@@ -70,7 +72,7 @@
                     applicationStatusSummary.UnsuccessfulReason); // 12
 
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-                _applicationStatusAlertStrategy.Send(applicationStatusSummary);
+                _applicationStatusAlertStrategy.Send(originalStatus, applicationStatusSummary);
             }
         }
 

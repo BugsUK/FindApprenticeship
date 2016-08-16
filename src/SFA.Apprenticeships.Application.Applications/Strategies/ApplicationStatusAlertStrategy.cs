@@ -5,8 +5,7 @@
     using Domain.Interfaces.Messaging;
     using Entities;
     using Extensions;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class ApplicationStatusAlertStrategy : IApplicationStatusAlertStrategy
     {
@@ -19,30 +18,42 @@
             _serviceBus = serviceBus;
         }
 
-        public void Send(ApplicationStatusSummary applicationStatusSummary)
+        public void Send(ApplicationStatuses currentStatus, ApplicationStatusSummary applicationStatusSummary)
         {
-            if (!applicationStatusSummary.IsLegacySystemUpdate()) return;
-
-            var applicationStatus = applicationStatusSummary.ApplicationStatus;
-            if (applicationStatus == ApplicationStatuses.Successful || applicationStatus == ApplicationStatuses.Unsuccessful)
+            if (!applicationStatusSummary.IsLegacySystemUpdate())
             {
-                var applicationStatusChanged = new ApplicationStatusChanged
-                {
-                    LegacyApplicationId = applicationStatusSummary.LegacyApplicationId,
-                    ApplicationStatus = applicationStatusSummary.ApplicationStatus,
-                    UnsuccessfulReason = applicationStatusSummary.UnsuccessfulReason
-                };
+                return;
+            }
 
-                var message = string.Format("Queuing application status changed for LegacyApplicationId: {0} with ApplicationStatus: {1}, UnsuccessfulReason: {2}", applicationStatusChanged.LegacyApplicationId, applicationStatusChanged.ApplicationStatus, applicationStatusChanged.UnsuccessfulReason);
-                try
-                {
-                    _logService.Debug(message);
-                    _serviceBus.PublishMessage(applicationStatusChanged);
-                }
-                catch (Exception ex)
-                {
-                    _logService.Warn(message + " failed!", ex);
-                }
+            if (currentStatus == applicationStatusSummary.ApplicationStatus)
+            {
+                return;
+            }
+
+            if (!(applicationStatusSummary.ApplicationStatus == ApplicationStatuses.Successful ||
+                applicationStatusSummary.ApplicationStatus == ApplicationStatuses.Unsuccessful))
+            {
+                return;
+            }
+
+            var applicationStatusChanged = new ApplicationStatusChanged
+            {
+                LegacyApplicationId = applicationStatusSummary.LegacyApplicationId,
+                ApplicationStatus = applicationStatusSummary.ApplicationStatus,
+                UnsuccessfulReason = applicationStatusSummary.UnsuccessfulReason
+            };
+
+            var message =
+                $"Queuing application status changed for LegacyApplicationId: {applicationStatusChanged.LegacyApplicationId} with ApplicationStatus: {applicationStatusChanged.ApplicationStatus}, UnsuccessfulReason: {applicationStatusChanged.UnsuccessfulReason}";
+
+            try
+            {
+                _logService.Debug(message);
+                _serviceBus.PublishMessage(applicationStatusChanged);
+            }
+            catch (Exception e)
+            {
+                _logService.Warn(message + " failed!", e);
             }
         }
     }

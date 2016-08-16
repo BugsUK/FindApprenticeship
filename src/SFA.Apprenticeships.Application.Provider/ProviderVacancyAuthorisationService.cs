@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Vacancies;
     using Interfaces;
     using Interfaces.Providers;
 
@@ -10,26 +11,31 @@
         private readonly ICurrentUserService _currentUserService;
         private readonly IProviderService _providerService;
 
-        public ProviderVacancyAuthorisationService(ICurrentUserService currentUserService, IProviderService providerService)
+        public ProviderVacancyAuthorisationService(
+            ICurrentUserService currentUserService,
+            IProviderService providerService)
         {
             _currentUserService = currentUserService;
             _providerService = providerService;
         }
 
-        public void Authorise(int providerId, int? providerSiteId)
+        public void Authorise(Vacancy vacancy)
         {
             if (!_currentUserService.IsInRole(Roles.Faa))
             {
-                // Only Provider Users require authorisation.
+                // Only Provider Users require authorisation (QA users are always authorised).
                 return;
             }
 
             var ukprn = _currentUserService.GetClaimValue("ukprn");
             var provider = _providerService.GetProvider(ukprn);
+            var vacancyId = vacancy.VacancyId;
+            var providerId = vacancy.ProviderId;
+            var providerSiteId = vacancy.VacancyManagerId;
 
             if (provider == null)
             {
-                var message = $"Provider user '{_currentUserService.CurrentUserName}' signed in with invalid UKPRN '{ukprn}' attempted to view vacancy for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
+                var message = $"Provider user '{_currentUserService.CurrentUserName}' signed in with invalid UKPRN '{ukprn}' attempted to view Vacancy Id '{vacancyId}' for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
 
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, Interfaces.ErrorCodes.ProviderVacancyAuthorisation.InvalidUkprn);
@@ -40,10 +46,7 @@
                 return;
             }
 
-            // Fall back to Provider Site Id as the assigned provider for a vacancy could be a sub-contractor
-
-            // TODO: US1464: if fallback to Provider Site Id is problematic, consider extending this check to include Vacancy Owner Relationship.
-
+            // Fall back to Provider Site Id as the assigned provider for a vacancy could be a sub-contractor.
             if (providerSiteId.HasValue)
             {
                 var providerSites = _providerService.GetProviderSites(ukprn);
@@ -55,7 +58,7 @@
             }
 
             {
-                var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view vacancy for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
+                var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view Vacancy Id '{vacancyId}' for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
 
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, Interfaces.ErrorCodes.ProviderVacancyAuthorisation.Failed);

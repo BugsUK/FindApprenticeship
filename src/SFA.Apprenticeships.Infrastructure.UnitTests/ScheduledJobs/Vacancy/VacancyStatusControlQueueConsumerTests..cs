@@ -12,6 +12,7 @@
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyStatusControlQueueConsumerTests
     {
         private Mock<ILogService> _logService;

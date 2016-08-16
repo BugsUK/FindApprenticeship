@@ -90,7 +90,7 @@ Begin
                 tp.ContactDetailsForCandidate as 'ContactDetails',
                 apt.ApprenticeshipTypeId as 'ApprenticeshipTypeId',
                 apt.FullName as 'VacancyType',
-                fwk.FullName as 'ApprenticeshipFramework',
+                COALESCE(fwk.FullName, std.FullName) as 'ApprenticeshipFramework',
                 CASE WHEN ssr.New = 1 THEN NULL ELSE ssr.PassRate END as 'LearningProviderSectorPassRate',
                 vac.ExpectedDuration as 'ExpectedDuration',
                 isnull(vt.SkillsRequired,'') as 'SkillsRequired',        
@@ -116,11 +116,11 @@ Begin
 				la.CodeName as 'LocalAuthority',
 				vac.DeliveryOrganisationId as 'DeliveryOrganisationId',
 				tp.ProviderSiteId as 'TrainingProviderId',
-				DOP.IsNASProvider as 'IsNasProvider',
+				DOP.IsNasProvider as 'IsNasProvider',
 				DO.TrainingProviderStatusTypeId as 'DeliveryOrganisationStatusId',
 				vac.VacancyManagerId as 'VacancyManagerId',
 				vac.VacancyManagerAnonymous as 'VacancyManagerAnonymous', 
-				vac.WageType as 'WageType',
+				case when vac.WageType > 1 then 0 else vac.WageType end as 'WageType',
 				vac.WageText as 'WageText',
 				vac.SmallEmployerWageIncentive as 'SmallEmployerWageIncentive',
                 ROW_NUMBER() OVER (ORDER BY vac.VacancyReferenceNumber) AS 'RowNumber',
@@ -133,8 +133,9 @@ Begin
                 join [VacancyOwnerRelationship] vpr on vac.[VacancyOwnerRelationshipId] = vpr.[VacancyOwnerRelationshipId]
                 join [ProviderSite] tp on vpr.[ProviderSiteID] = tp.ProviderSiteID
                 join Employer emp on vpr.EmployerId = emp.EmployerId
-                join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
-                join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
+                left join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
+                left join [Reference].[Standard] std on vac.StandardId = std.StandardId
+                left join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
                 join ApprenticeshipType apt on vac.ApprenticeshipType = apt.ApprenticeshipTypeId 
                 join VacancyHistory vh on vh.VacancyId = vac.VacancyId 
                     and vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
@@ -290,8 +291,9 @@ Begin
                 join [VacancyOwnerRelationship] vpr on vac.[VacancyOwnerRelationshipId] = vpr.[VacancyOwnerRelationshipId]
                 join [ProviderSite] tp on vpr.[ProviderSiteID] = tp.ProviderSiteID
                 join Employer emp on vpr.EmployerId = emp.EmployerId
-                join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
-                join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
+                left join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
+                left join [Reference].[Standard] std on vac.StandardId = std.StandardId
+                left join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
                 join ApprenticeshipType apt on vac.ApprenticeshipType = apt.ApprenticeshipTypeId 
                 join VacancyHistory vh on vh.VacancyId = vac.VacancyId 
                     and vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID

@@ -5,6 +5,7 @@
     public class VacancyViewModelMessages
     {
         public const string NoApplications = "There have not been any applications for this vacancy";
+        public const string VacancyHasBeenArchived = "This vacancy has been archived";
         public const string NoClickThroughs = "There have not been any click-throughs to your application page for this vacancy";
 
         public static class Title
@@ -112,6 +113,11 @@
                 "The minimum expected duration is 12 months based on the hours per week selected";
         }
 
+        public static class LegacyExpectedDuration
+        {
+            public const string LabelText = "Expected duration (from Apprenticeship vacancies or uploaded via the API)";
+        }
+
         public static class DurationComment
         {
             public const string LabelText = "Expected duration comment";
@@ -122,6 +128,7 @@
             public const string LabelText = "Closing date for applications";
             public const string RequiredErrorText = "Enter the closing date for applications";
             public const string AfterTodayErrorText = "The closing date can't be today or earlier. We advise using a date more than two weeks from now";
+            public const string TodayOrInTheFutureErrorText = "The closing date can't be in the past. We advise using a date more than two weeks from now";
             public const string TooSoonErrorText = "The closing date should be at least two weeks in the future";
         }
 
@@ -371,6 +378,7 @@
             public const string LabelText = "Contact name (optional)";
             public const string TooLongErrorText = "Contact name must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string FreeTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Contact name " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
@@ -421,6 +429,13 @@
         public class OfflineVacancy
         {
             public const string RequiredErrorText = "Select whether the vacancy will be managed through the find an apprentice site or not";
+        }
+
+        public static class ExpectedDuration
+        {
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The expected duration " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The expected duration " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
     }
 }

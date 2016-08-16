@@ -59,6 +59,8 @@
         public const string ShowLocations = "ShowLocations";
         public const string ManageDates = "ManageDates";
         public const string AutoSaveManageDates = "AutoSaveManageDates";
+        public const string ArchiveVacancy = "Archive";
+        public const string ConfirmArchiveVacancy = "ConfirmArchive";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
@@ -76,11 +78,21 @@
 
         // Applications
         public const string VacancyApplications = "VacancyApplications";
+        public const string ShareApplications = "ShareApplications";
+
         // Apprenticeships
         public const string ReviewApprenticeshipApplication = "ReviewApprenticeshipApplication";
         public const string ConfirmSuccessfulApprenticeshipApplication = "ConfirmSuccessfulApprenticeshipApplication";
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
+        public const string ViewAnonymousApprenticeshipApplication = "ViewAnonymousApprenticeshipApplication";
+
         // Traineeships
         public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
+        public const string ViewAnonymousTraineeshipApplication = "ViewAnonymousTraineeshipApplication";
+
+        //Reports
+        public const string ReportList = "ReportList";
+        public const string ReportApplicationsReceived = "ReportApplicationsReceived";
+        public const string ReportCandidatesWithApplications = "ReportCandidatesWithApplications";
     }
 }

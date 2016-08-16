@@ -7,6 +7,7 @@
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyRequirementsProspectsViewModelClientValidatorTests
     {
         private VacancyRequirementsProspectsViewModelClientValidator _validator;
@@ -28,7 +29,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void DesiredSkillsInvalidCharacters(string desiredSkills, bool expectValid)
@@ -74,7 +75,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void PersonalQualitiesInvalidCharacters(string personalQualities, bool expectValid)
@@ -120,7 +121,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void DesiredQualificationsInvalidCharacters(string desiredQualifications, bool expectValid)

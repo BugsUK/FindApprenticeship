@@ -236,6 +236,12 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.ReportRegisteredCandidates,
+               url: "reports/registeredcandidates",
+               defaults: new { controller = "Report", action = "RegisteredCandidatesCsv" }
+               );
+
+            routes.MapRoute(
                 name: ManagementRouteNames.WebTrendsOptOut,
                 url: "webtrendsoptout",
                 defaults: new { controller = "Home", action = "WebTrendsOptOut" }
@@ -245,6 +251,12 @@
                 name: ManagementRouteNames.Cookies,
                 url: "cookies",
                 defaults: new { controller = "Home", action = "Cookies" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.InformationRadiator,
+                url: "informationradiator",
+                defaults: new { controller = "InformationRadiator", action = "Index" }
                 );
 
             routes.LowercaseUrls = true;

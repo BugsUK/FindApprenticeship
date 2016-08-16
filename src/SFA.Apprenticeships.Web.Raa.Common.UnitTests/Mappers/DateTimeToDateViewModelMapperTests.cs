@@ -11,6 +11,7 @@
     using Web.Common.ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class DateTimeToDateViewModelMapperTests
     {
         private IMapper mapper;

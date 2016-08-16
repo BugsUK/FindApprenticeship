@@ -3,15 +3,14 @@
     using System;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Candidate.ViewModels.Applications;
     using Common.Constants;
-    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class TrackTests
     {
         [Test]

@@ -1,0 +1,156 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
+
+@model ShareApplicationsViewModel
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Share vacancy applications";
+}
+
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ShareApplications, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+    <div>
+        <section>
+            <div class="hgroup text">
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
+                    Select the applications you would like to share
+                </h1>
+                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
+            </div>
+        </section>
+
+        <section class="no-btm-margin" id="applicationsSection">
+
+            <section class="grid-wrapper">
+                <ul class="applications-summary">
+                    <li>
+                        <figure class="data">
+                            <p class="count">@Model.NewApplicationsCount</p>
+                            <figcaption>
+                                <h2>New</h2></figcaption>
+                        </figure>
+                    </li>
+                    <li>
+                        <figure class="data">
+                            <p class="count">@Model.ViewedApplicationsCount</p>
+                            <figcaption>
+                                <h2>Viewed</h2></figcaption>
+                        </figure>
+                    </li>
+
+                    @if (Model.VacancyType != VacancyType.Traineeship)
+                    {
+                        <li>
+                            <figure class="data">
+                                <p class="count">@Model.SuccessfulApplicationsCount</p>
+                                <figcaption>
+                                    <h2>Successful</h2></figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure class="data">
+                                <p class="count">@Model.UnsuccessfulApplicationsCount</p>
+                                <figcaption>
+                                    <h2>Unsuccessful</h2></figcaption>
+                            </figure>
+                        </li>
+                    }
+                </ul>
+            </section>
+
+            <table class="vert-top" id="applicationTable">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>
+                        <span class="font-black">Surname</span>
+                    </th>
+                    <th>
+                        <span class="font-black">First name</span>
+                    </th>
+                    <th>
+                        <span class="font-black">Applicant ID</span>
+                    </th>
+                    <th>
+                        <span class="font-black">Vacancy manager notes</span>
+                    </th>
+                    <th>
+                        <span class="font-black">Submitted</span>
+                    </th>
+                    <th>
+                        <span class="font-black">Status</span>
+                    </th>
+                    <th>
+                        <span class="font-black">Select application</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var applicationSummary in Model.ApplicationSummaries)
+                {
+                    <tr class="applicant">
+                        <td>
+                            <h4 class="applicant-name">@applicationSummary.LastName</h4>
+                        </td>
+                        <td>
+                            <h4 class="applicant-name">@applicationSummary.FirstName</h4>
+                        </td>
+                        <td>
+                            @applicationSummary.ApplicantID
+                        </td>
+                        <td>
+                            @{
+                                var notes = applicationSummary.Notes;
+                                if (notes != null && notes.Length > 20)
+                                {
+                                    notes = notes.Substring(0, 20) + "...";
+                                }
+                            }
+                            @notes
+                        </td>
+                        <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
+                        <td>
+                            @Html.Partial("_applicationStatus", applicationSummary.Status)
+                        </td>
+                        <td>
+                            @{
+                                var selected = Model.SelectedApplicationIds.Contains(applicationSummary.ApplicationId) ? "checked" : string.Empty;
+                            }
+                            <input type="checkbox" name="@Html.NameFor(m => m.SelectedApplicationIds)" value="@applicationSummary.ApplicationId" @selected/>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <p>Enter an email address for the person/organisation you would like to share this vacancy's application/s with.</p>
+            @Html.FormTextFor(m => m.RecipientEmailAddress, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-small"})
+            <p>They'll receive an email containing a link to the application/s. The link will expire in 2 weeks (@DateTime.UtcNow.AddDays(14).ToString("d MMMM yyyy")).</p>
+        </section>
+
+        <section>
+            <div class="form-group">
+                <button type="submit" class="button">Submit</button>
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.VacancyReferenceNumber })
+            </div>
+        </section>
+
+    </div>
+}

@@ -18,6 +18,7 @@
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class HomeMediatorTests
     {        
         private Mock<IProviderUserProvider> _userProfileService;

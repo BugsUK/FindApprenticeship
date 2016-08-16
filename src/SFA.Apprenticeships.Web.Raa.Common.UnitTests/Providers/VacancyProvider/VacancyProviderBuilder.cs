@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 
     public class VacancyProviderBuilder
     {
-        private readonly Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService =
+        private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService =
             new Mock<IApprenticeshipApplicationService>();
 
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
@@ -48,6 +48,25 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
         }
 
         public IVacancyQAProvider Build()
+        {
+            return new VacancyProvider(_logService.Object,
+                _configurationService.Object,
+                _vacancyPostingService.Object,
+                _referenceDataService.Object,
+                _providerService.Object,
+                _employerService.Object,
+                _dateTimeService.Object,
+                _mapper.Object,
+                _apprenticeshipApplicationService.Object,
+                _traineeshipApplicationService.Object,
+                _vacancyLockingService.Object,
+                _currentUserService.Object,
+                _userProfileService.Object,
+                _mockGeoCodeLookupService.Object,
+                _mockLocalAuthorityLookupService.Object);
+        }
+
+        public IVacancyPostingProvider BuildVacancyPostingProvider()
         {
             return new VacancyProvider(_logService.Object,
                 _configurationService.Object,
@@ -126,6 +145,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
         public VacancyProviderBuilder With(Mock<IGeoCodeLookupService> geocodeService)
         {
             _mockGeoCodeLookupService = geocodeService;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<IApprenticeshipApplicationService> apprenticeshipApplicationService)
+        {
+            _apprenticeshipApplicationService = apprenticeshipApplicationService;
             return this;
         }
     }

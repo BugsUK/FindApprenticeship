@@ -87,8 +87,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MongoDB.Bson, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
@@ -125,6 +125,8 @@
     <Compile Include="Entities\Mongo\ApplicationTemplate.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />
     <Compile Include="Entities\Mongo\CandidateUser.cs" />
+    <Compile Include="Entities\Mongo\CommunicationPreference.cs" />
+    <Compile Include="Entities\Mongo\CommunicationPreferences.cs" />
     <Compile Include="Entities\Mongo\Education.cs" />
     <Compile Include="Entities\Mongo\GeoPoint.cs" />
     <Compile Include="Entities\Mongo\MonitoringInformation.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
     <Compile Include="Repository\Sql\SchoolAttendedTable.cs" />
     <Compile Include="Repository\Sql\SubVacancyTable.cs" />
+    <Compile Include="SyncType.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MigrateFromFaaToAvmsPlusConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />

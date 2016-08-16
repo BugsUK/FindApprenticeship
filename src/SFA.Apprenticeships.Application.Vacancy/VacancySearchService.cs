@@ -4,11 +4,9 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
+    using Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
     public class VacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters> : IVacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters>
@@ -73,7 +71,7 @@
             }
             catch (Exception e)
             {
-                var message = string.Format("Get vacancy failed for vacancy {0}.", vacancyId);
+                var message = $"Get vacancy failed for vacancy {vacancyId}.";
                 _logger.Debug(message, e);
                 throw new CustomException(message, e, ErrorCodes.GetVacancyDetailsFailed);
             }

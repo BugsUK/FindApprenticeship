@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Locations;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvider
 {
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -13,8 +11,47 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvid
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class GeoCodingProviderTests
     {
+        [Test]
+        public void GivenAInvalidAddressShouldReturnInvalidAddress()
+        {
+            const int employerId = 2;
+            var employerService = new Mock<IEmployerService>();
+            var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
+            var postalAddress = new PostalAddress();
+
+            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
+            geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(GeoPoint.NotSet);
+
+            var geoCodingProvider =
+                new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
+
+            var result = geoCodingProvider.EmployerHasAValidAddress(employerId);
+
+            result.Should().Be(GeoCodeAddressResult.InvalidAddress);
+        }
+
+        [Test]
+        public void GivenAInvalidCountyShouldReturnInvalidAddress()
+        {
+            const int employerId = 2;
+            var employerService = new Mock<IEmployerService>();
+            var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
+            var postalAddress = new PostalAddress {County = ""};
+
+            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
+            geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(new Fixture().Create<GeoPoint>());
+
+            var geoCodingProvider =
+                new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
+
+            var result = geoCodingProvider.EmployerHasAValidAddress(employerId);
+
+            result.Should().Be(GeoCodeAddressResult.Ok);
+        }
+
         [Test]
         public void GivenAnAlreadyGeoCodedAddressShouldNotCallGeoCodingService()
         {
@@ -44,7 +81,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvid
             var postalAddress = new PostalAddress {County = "something"};
             geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(GeoPoint.NotSet);
 
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer { Address = postalAddress });
+            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
 
             var geoCodingProvider =
                 new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
@@ -63,7 +100,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvid
             var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
             var postalAddress = new PostalAddress {County = "something"};
 
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer { Address = postalAddress });
+            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
             geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(new Fixture().Create<GeoPoint>());
 
             var geoCodingProvider =
@@ -73,45 +110,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvid
 
             result.Should().Be(GeoCodeAddressResult.Ok);
         }
-
-        [Test]
-        public void GivenAInvalidAddressShouldReturnInvalidAddress()
-        {
-            const int employerId = 2;
-            var employerService = new Mock<IEmployerService>();
-            var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
-            var postalAddress = new PostalAddress();
-
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer { Address = postalAddress });
-            geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(GeoPoint.NotSet);
-
-            var geoCodingProvider =
-                new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
-
-            var result = geoCodingProvider.EmployerHasAValidAddress(employerId);
-
-            result.Should().Be(GeoCodeAddressResult.InvalidAddress);
-        }
-
-        [Test]
-        public void GivenAInvalidCountyShouldReturnInvalidAddress()
-        {
-            const int employerId = 2;
-            var employerService = new Mock<IEmployerService>();
-            var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
-            var postalAddress = new PostalAddress { County = "" };
-
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer { Address = postalAddress });
-            geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(new Fixture().Create<GeoPoint>());
-
-            var geoCodingProvider =
-                new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
-
-            var result = geoCodingProvider.EmployerHasAValidAddress(employerId);
-
-            result.Should().Be(GeoCodeAddressResult.Ok);
-        }
-
     }
 
     public class GeoCodingProviderBuilder

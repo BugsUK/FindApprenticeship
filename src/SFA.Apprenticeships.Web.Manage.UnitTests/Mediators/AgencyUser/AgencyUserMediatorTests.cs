@@ -21,6 +21,7 @@
     using ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class AgencyUserMediatorTests
     {
         private const string ValidAuthorisationGroupClaim = "validGroupClaim";
@@ -92,7 +93,7 @@
             var principal = new ClaimsPrincipalBuilder().WithName("User001").WithGroup(ValidAuthorisationGroupClaim).Build();
 
             var response = mediator.Authorize(principal);
-            response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
+            response.AssertCodeAndMessage(AgencyUserMediatorCodes.Authorize.Ok);
         }
 
         [Test]
@@ -107,7 +108,7 @@
             var mediator = new AgencyUserMediatorBuilder().With(configurationService).Build();
 
             var response = mediator.Authorize(principal);
-            response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
+            response.AssertCodeAndMessage(AgencyUserMediatorCodes.Authorize.Ok);
         }
 
         [Test] //TODO: remove roleListPart
@@ -130,7 +131,7 @@
 
             var response = mediator.GetHomeViewModel(principal, new DashboardVacancySummariesSearchViewModel());
 
-            response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
+            response.AssertCodeAndMessage(AgencyUserMediatorCodes.GetHomeViewModel.OK);
             response.ViewModel.AgencyUser.RoleId.Should().Be(roleList);
             userProvider.Verify(up => up.GetAgencyUser(userName), Times.Once);
         }
@@ -156,7 +157,7 @@
 
             var response = mediator.GetHomeViewModel(principal, searchViewModel);
 
-            response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
+            response.AssertCodeAndMessage(AgencyUserMediatorCodes.GetHomeViewModel.OK);
             vacancyProvider.Verify(vp => vp.GetPendingQAVacanciesOverview(searchViewModel), Times.Once);
             response.ViewModel.VacancySummaries.Vacancies.ShouldBeEquivalentTo(vacancies);
         }

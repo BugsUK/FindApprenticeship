@@ -15,6 +15,7 @@
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class PostalAddressDetailsServiceTests
     {
         private PostalAddressDetailsService _serviceUnderTest;
@@ -37,14 +38,13 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ShouldExpectAddressId()
         {
             //Arrange
             string nullArgument = null;
-            //Act
-            _serviceUnderTest.RetrieveValidatedAddress(nullArgument);
+            
             //Assert
+            Assert.Throws(typeof (ArgumentNullException), () => _serviceUnderTest.RetrieveValidatedAddress(nullArgument));
         }
 
         [Test]

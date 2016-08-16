@@ -3,6 +3,7 @@
     public static class ErrorCodes
     {
         public const string ApplicationCreationFailed = "Application.ApplicationCreationFailed";
+        public const string VacancyNotFoundError = "Vacancy.VacancyNotFoundError";
         public const string ApplicationNotFoundError = "Application.ApplicationNotFoundError";
         public const string ApplicationInIncorrectStateError = "Application.ApplicationInIncorrectStateError";
         public const string ApplicationTypeMismatch = "Application.ApplicationTypeMismatch";

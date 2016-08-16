@@ -18,6 +18,7 @@
     using SFA.Apprenticeships.Application.Interfaces.Caching;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyStatusSummarySubscriberTests
     {
         private Mock<IConfigurationService> _configurationServiceMock;

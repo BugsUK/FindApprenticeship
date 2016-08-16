@@ -14,11 +14,12 @@
     using DomainOccupation = Domain.Entities.Raa.Reference.Occupation;
 
     [TestFixture]
+    [Parallelizable]
     public class ReferenceMappersTests
     {
         private IMapper _mapper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _mapper = new ReferenceMappers();

@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class MandatoryDateChecks
     {
         private const string RuleSet = RuleSets.Errors;
@@ -29,8 +30,7 @@
         [Test]
         public void ClosingDateTwoWeeksAway_PossibleStartDateAfterClosingDate()
         {
-            var today = DateTime.UtcNow;
-            today = new DateTime(today.Year, today.Month, today.Day);
+            var today = DateTime.Today;
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
@@ -57,8 +57,7 @@
         [Test]
         public void ClosingDateLessThanTwoWeeksAway_PossibleStartDateBeforeClosingDate()
         {
-            var today = DateTime.UtcNow;
-            today = new DateTime(today.Year, today.Month, today.Day);
+            var today = DateTime.Today;
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
@@ -85,17 +84,16 @@
         }
 
         [Test]
-        public void DateCannotBeToday()
+        public void DateCannotBeYesterday()
         {
-            var today = DateTime.UtcNow;
-            today = new DateTime(today.Year, today.Month, today.Day);
+            var yesterday = DateTime.Today.AddDays(-1);
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
-                    ClosingDate = new DateViewModel(today),
-                    PossibleStartDate = new DateViewModel(today)
+                    ClosingDate = new DateViewModel(yesterday),
+                    PossibleStartDate = new DateViewModel(yesterday)
                 }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
@@ -113,17 +111,16 @@
         }
 
         [Test]
-        public void DateCanBeTomorrow()
+        public void DateCanBeToday()
         {
-            var today = DateTime.UtcNow;
-            today = new DateTime(today.Year, today.Month, today.Day);
+            var today = DateTime.Today;
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
-                    ClosingDate = new DateViewModel(today.AddDays(1)),
-                    PossibleStartDate = new DateViewModel(today.AddDays(1))
+                    ClosingDate = new DateViewModel(today),
+                    PossibleStartDate = new DateViewModel(today)
                 }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();

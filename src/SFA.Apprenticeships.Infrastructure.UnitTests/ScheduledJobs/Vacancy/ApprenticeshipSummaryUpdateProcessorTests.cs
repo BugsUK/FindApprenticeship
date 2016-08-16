@@ -17,6 +17,7 @@
     using VacancyIndexer;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipSummaryUpdateProcessorTests
     {
         private const int VacancyAboutToExpireNotificationHours = 96;

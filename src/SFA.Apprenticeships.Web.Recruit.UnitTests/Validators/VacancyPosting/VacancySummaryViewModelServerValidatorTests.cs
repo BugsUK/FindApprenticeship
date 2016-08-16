@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancySummaryViewModelServerValidatorTests
     {
         private const string RuleSet = RuleSets.ErrorsAndWarnings;
@@ -31,7 +32,8 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                VacancyDatesViewModel = new VacancyDatesViewModel()
+                VacancyDatesViewModel = new VacancyDatesViewModel(),
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -39,9 +41,9 @@
             var aggregateResults = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Count.Should().BeGreaterThan(5);
+            result.Errors.Count.Should().BeGreaterThan(4);
             aggregateResults.IsValid.Should().BeFalse();
-            aggregateResults.Errors.Count.Should().BeGreaterThan(5);
+            aggregateResults.Errors.Count.Should().BeGreaterThan(4);
         }
 
         [TestCase(null, false)]
@@ -104,7 +106,8 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                HoursPerWeek = hoursPerWeek
+                HoursPerWeek = hoursPerWeek,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -388,7 +391,8 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Duration = duration
+                Duration = duration,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

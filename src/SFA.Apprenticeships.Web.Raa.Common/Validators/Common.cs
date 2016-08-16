@@ -50,5 +50,10 @@
             }
             return true;
         }
+
+        public static bool IsNotEmpty(string input)
+        {
+            return !string.IsNullOrWhiteSpace(input);
+        }
     }
 }

@@ -86,7 +86,7 @@
             var candidateUsers = _candidateUserRepository.GetAllCandidateUsers(cancellationToken).Result;
             var vacancyLocalAuthorities = _vacancyRepository.GetAllVacancyLocalAuthorities();
             var localAuthorityCountyIds = _localAuthorityRepository.GetLocalAuthorityCountyIds();
-            ProcessCandidates(candidateUsers, expectedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
+            ProcessCandidates(candidateUsers, expectedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.Full, cancellationToken);
         }
 
         private void ExecuteIncrementalSync(SyncParams syncParams, CancellationToken cancellationToken)
@@ -100,18 +100,18 @@
             _logService.Info("Processing new candidates");
             var expectedCreatedCount = _candidateUserRepository.GetCandidatesCreatedSinceCount(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
             var createdCursor = _candidateUserRepository.GetAllCandidateUsersCreatedSince(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
-            ProcessCandidates(createdCursor, expectedCreatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
+            ProcessCandidates(createdCursor, expectedCreatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.PartialByDateCreated, cancellationToken);
             _logService.Info("Completed processing new candidates");
 
             //Updates
             _logService.Info("Processing updated candidates");
             var expectedUpdatedCount = _candidateUserRepository.GetCandidatesUpdatedSinceCount(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
             var updatedCursor = _candidateUserRepository.GetAllCandidateUsersUpdatedSince(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
-            ProcessCandidates(updatedCursor, expectedUpdatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
+            ProcessCandidates(updatedCursor, expectedUpdatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.PartialByDateUpdated, cancellationToken);
             _logService.Info("Completed processing updated candidates");
         }
 
-        private void ProcessCandidates(IAsyncCursor<Candidate> cursor, long expectedCount, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, CancellationToken cancellationToken)
+        private void ProcessCandidates(IAsyncCursor<Candidate> cursor, long expectedCount, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, SyncType syncType, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -135,15 +135,27 @@
                 var candidateSummaries = _candidateRepository.GetCandidateSummariesByGuid(candidateUsers.Select(c => c.Candidate.Id));
                 var schoolAttendedIds = _schoolAttendedRepository.GetSchoolAttendedIdsByCandidateIds(candidateSummaries.Values.Select(cs => cs.CandidateId));
                 var candidateHistoryIds = _candidateHistoryRepository.GetCandidateHistoryIdsByCandidateIds(candidateSummaries.Values.Select(cs => cs.CandidateId).Distinct());
-                var candidatesWithHistory = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidateWithHistory(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, schoolAttendedIds, candidateHistoryIds, _anonymiseData)).Where(c => c != null).ToList();
+                var candidatesWithHistory = candidateUsers.Select(c => _candidateMappers.MapCandidateWithHistory(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, schoolAttendedIds, candidateHistoryIds, _anonymiseData)).Where(c => c != null).ToList();
                 
                 count += candidatesWithHistory.Count;
-                _logService.Info($"Processing {candidatesWithHistory.Count} active candidates");
+                _logService.Info($"Processing {candidatesWithHistory.Count} mapped candidates");
                 BulkUpsert(candidatesWithHistory, candidateSummaries);
 
                 var syncParams = _syncRepository.GetSyncParams();
-                syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
-                syncParams.CandidateLastUpdatedDate = maxDateUpdated > syncParams.CandidateLastUpdatedDate ? maxDateUpdated : syncParams.CandidateLastUpdatedDate;
+                if (syncType == SyncType.Full)
+                {
+                    syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
+                    //Deliberate as date updated could skip some updates post full sync
+                    syncParams.CandidateLastUpdatedDate = syncParams.CandidateLastCreatedDate;
+                }
+                if (syncType == SyncType.PartialByDateCreated)
+                {
+                    syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
+                }
+                if (syncType == SyncType.PartialByDateUpdated)
+                {
+                    syncParams.CandidateLastUpdatedDate = maxDateUpdated > syncParams.CandidateLastUpdatedDate ? maxDateUpdated : syncParams.CandidateLastUpdatedDate;
+                }
                 _syncRepository.SetCandidateSyncParams(syncParams);
 
                 var percentage = ((double)count / expectedCount) * 100;

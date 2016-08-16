@@ -13,6 +13,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class GetApplicationPreviewViewModelTests
     {
         private const int ValidVacancyId = 42;

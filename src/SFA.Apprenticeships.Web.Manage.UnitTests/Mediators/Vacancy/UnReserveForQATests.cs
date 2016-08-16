@@ -1,15 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
-    using Common.Constants;
     using Common.UnitTests.Mediators;
-    using FluentAssertions;
     using Manage.Mediators.Vacancy;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Providers;
-    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class UnReserveForQATests
     {
         [Test]
@@ -26,7 +24,7 @@
 
             var result = mediator.UnReserveVacancyForQA(vacancyReferenceNumber);
 
-            result.AssertCode(VacancyMediatorCodes.UnReserveVacancyForQA.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.UnReserveVacancyForQA.Ok);
         }
 
         [Test]
@@ -42,7 +40,7 @@
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
             mediator.UnReserveVacancyForQA(vacancyReferenceNumber);
-        
+
             provider.Verify(p => p.UnReserveVacancyForQA(vacancyReferenceNumber), Times.Once);
         }
     }

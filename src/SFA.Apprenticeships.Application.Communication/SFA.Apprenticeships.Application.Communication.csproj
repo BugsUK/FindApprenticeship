@@ -84,7 +84,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CommunicationService.cs" />
+    <Compile Include="EmployerCommunicationService.cs" />
     <Compile Include="ProviderCommunicationService.cs" />
+    <Compile Include="Strategies\ISendEmployerCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendProviderUserCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendUsernameUpdateCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendContactMessageStrategy.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\LegacyQueueTraineeshipApplicationSubmittedStrategy.cs" />
     <Compile Include="Strategies\LegacyQueueApprenticeshipApplicationSubmittedStrategy.cs" />
+    <Compile Include="Strategies\QueueEmployerCommunicationStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

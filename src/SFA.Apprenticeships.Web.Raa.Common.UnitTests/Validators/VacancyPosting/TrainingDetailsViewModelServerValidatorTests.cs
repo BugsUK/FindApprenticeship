@@ -11,6 +11,7 @@
     using Web.Common.Validators;
 
     [TestFixture]
+    [Parallelizable]
     public class TrainingDetailsViewModelServerValidatorTests
     {
         private TrainingDetailsViewModelServerValidator _validator;
@@ -296,7 +297,8 @@
             {
                 ContactName = fullName,
                 ContactEmail = email,
-                ContactNumber = phoneNumber
+                ContactNumber = phoneNumber,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -325,7 +327,8 @@
             {
                 ContactName = fullName,
                 ContactEmail = email,
-                ContactNumber = phoneNumber
+                ContactNumber = phoneNumber,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -358,7 +361,8 @@
         {
             var viewModel = new TrainingDetailsViewModel
             {
-                TrainingProvided = trainingProvided
+                TrainingProvided = trainingProvided,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

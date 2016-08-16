@@ -12,7 +12,6 @@
 
     using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
-    using Sql.Schemas.Vacancy.IoC;
     using StructureMap;
 
     [SetUpFixture]
@@ -32,7 +31,6 @@
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
-                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<VacancyReferenceNumberRegistry>();
             });
 

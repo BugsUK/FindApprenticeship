@@ -1,0 +1,100 @@
+﻿@model SFA.Apprenticeships.Web.Manage.ViewModels.ReportRegisteredCandidatesParameters
+
+@{
+    ViewBag.Title = "Registered Candidates Csv";
+}
+
+<h2>Registered Candidates CSV</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr/>
+        @Html.Partial("ValidationSummary", ViewData.ModelState)
+        <div class="form-group , inline-fixed">
+            @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group, inline-fixed">
+            @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Type, new SelectList(Model.TypeList, "Value", "Text"))
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="type-1" class="form-group" style="display: none;">
+            @Html.LabelFor(model => model.Region, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Region, new SelectList(Model.RegionList, "Value", "Text"))
+                @Html.ValidationMessageFor(model => model.Region, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="type-2" class="form-group" style="display: none;">
+            @Html.LabelFor(model => model.LocalAuthority, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.LocalAuthority, new SelectList(Model.LocalAuthoritiesList, "Value", "Text"))
+                @Html.ValidationMessageFor(model => model.LocalAuthority, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AgeRange, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.AgeRange, new SelectList(Model.AgeRangeList, "Value", "Text"))
+                @Html.ValidationMessageFor(model => model.AgeRange, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MarketMessagesOnly, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.MarketMessagesOnly)
+                @Html.ValidationMessageFor(model => model.MarketMessagesOnly, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="btnValidate" type="submit" class="button" name="RegisteredCandidatesCsv" value="ValidateRegisteredCandidatesCsv">Get CSV Link</button>
+                @if (Model.IsValid)
+                {
+                    <button id="btnReject" type="submit" class="button-link" name="RegisteredCandidatesCsv" value="DownloadRegisteredCandidatesCsv">Download CSV</button>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function() {
+            $('#Type')
+                .change(function() {
+                    $('#type-1').hide();
+                    $('#type-2').hide();
+                    $('#type-' + this.value).show();
+                });
+        });
+    </script>
+}

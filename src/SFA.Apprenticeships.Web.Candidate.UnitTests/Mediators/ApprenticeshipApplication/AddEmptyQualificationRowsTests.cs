@@ -1,16 +1,16 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System.Collections.Generic;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
+    using Common.UnitTests.Mediators;
     using FluentAssertions;
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class AddEmptyQualificationRowsTests : TestsBase
     {
         private const bool SomeBoolean = false;
@@ -19,6 +19,33 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
         private const string SomeGrade = "A";
         private const string SomeQualificationType = "QualificationType";
         private const string SomeSubject = "Subject";
+
+        private static ApprenticeshipCandidateViewModel CreateCandidateWithOneQualificationAndTwoEmptyQualifications()
+        {
+            return new ApprenticeshipCandidateViewModel
+            {
+                Qualifications = new List<QualificationsViewModel>
+                {
+                    new QualificationsViewModel(),
+                    new QualificationsViewModel
+                    {
+                        Grade = SomeGrade,
+                        IsPredicted = SomeBoolean,
+                        QualificationType = SomeQualificationType,
+                        Subject = SomeSubject,
+                        Year = SomeYear
+                    },
+                    new QualificationsViewModel
+                    {
+                        Grade = BlankSpace,
+                        IsPredicted = SomeBoolean,
+                        QualificationType = BlankSpace,
+                        Subject = BlankSpace,
+                        Year = BlankSpace
+                    }
+                }
+            };
+        }
 
         [Test]
         public void Ok()
@@ -47,33 +74,6 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.AddEmptyQualificationRows.Ok, true);
             response.ViewModel.Candidate.Qualifications.Should().HaveCount(1);
-        }
-
-        private static ApprenticeshipCandidateViewModel CreateCandidateWithOneQualificationAndTwoEmptyQualifications()
-        {
-            return new ApprenticeshipCandidateViewModel
-            {
-                Qualifications = new List<QualificationsViewModel>
-                {
-                    new QualificationsViewModel(),
-                    new QualificationsViewModel
-                    {
-                        Grade = SomeGrade,
-                        IsPredicted = SomeBoolean,
-                        QualificationType = SomeQualificationType,
-                        Subject = SomeSubject,
-                        Year = SomeYear
-                    },
-                    new QualificationsViewModel
-                    {
-                        Grade = BlankSpace,
-                        IsPredicted = SomeBoolean,
-                        QualificationType = BlankSpace,
-                        Subject = BlankSpace,
-                        Year = BlankSpace
-                    }
-                }
-            };
         }
     }
 }

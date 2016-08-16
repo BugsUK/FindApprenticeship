@@ -14,6 +14,7 @@
     using Web.Common.Configuration;
 
     [TestFixture]
+    [Parallelizable]
     public class RejectVacancyTests
     {
         [Test]

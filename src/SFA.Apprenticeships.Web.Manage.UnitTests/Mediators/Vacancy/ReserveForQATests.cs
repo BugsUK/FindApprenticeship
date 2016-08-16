@@ -10,6 +10,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class ReserveForQATests
     {
         [Test]
@@ -49,7 +50,7 @@
 
             var result = mediator.ReserveVacancyForQA(vacancyReferenceNumber);
 
-            result.AssertCode(VacancyMediatorCodes.ReserveVacancyForQA.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.ReserveVacancyForQA.Ok);
             result.ViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 

@@ -14,6 +14,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class SearchProviderTests
     {
         private Mock<ILogService> _logService;

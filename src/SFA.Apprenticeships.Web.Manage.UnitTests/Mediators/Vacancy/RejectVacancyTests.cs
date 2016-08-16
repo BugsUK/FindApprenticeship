@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class RejectVacancyTests
     {
         [Test]
@@ -77,7 +78,7 @@
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
             var result = mediator.RejectVacancy(vacancyReferenceNumber);
-            result.AssertCode(VacancyMediatorCodes.RejectVacancy.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.RejectVacancy.Ok);
             result.ViewModel.VacancyReferenceNumber.Should().Be(nextVacancyReferenceNumber);
         }
 

@@ -44,7 +44,7 @@
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
                     EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
-                    ProviderName = provider.Name,
+                    ProviderName = provider.TradingName,
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
@@ -69,6 +69,11 @@
 
         private static GeoPoint GetGeoPoint(VacancySummary vacancy)
         {
+            if (vacancy.Address?.GeoPoint == null)
+            {
+                return new GeoPoint();
+            }
+
             return new GeoPoint
             {
                 Latitude = vacancy.Address.GeoPoint.Latitude,

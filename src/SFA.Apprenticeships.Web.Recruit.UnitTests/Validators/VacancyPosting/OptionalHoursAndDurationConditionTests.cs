@@ -14,6 +14,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class OptionalHoursAndDurationConditionTests
     {
         private const string RuleSet = RuleSets.Warnings;

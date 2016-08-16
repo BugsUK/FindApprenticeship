@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Application.Provider;
     using Application.UserAccount;
     using Application.UserProfile;
+    using Application.VacancyPosting.IoC;
     using Common.IoC;
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
@@ -73,6 +74,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry<VacancySourceRegistry>();
+                x.AddRegistry<VacancyPostingServiceRegistry>();
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();

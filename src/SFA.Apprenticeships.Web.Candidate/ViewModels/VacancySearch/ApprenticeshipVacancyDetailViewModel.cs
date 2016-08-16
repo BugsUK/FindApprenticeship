@@ -14,5 +14,7 @@
         }
 
         public bool IsMultiLocation { get; set; }
+
+        public decimal? HoursPerWeek { get; set; }
     }
 }

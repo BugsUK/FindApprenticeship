@@ -20,6 +20,7 @@
     using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     [TestFixture]
+    [Parallelizable]
     public class ReachSmsDispatcherTests
     {
         private static class RestResponses

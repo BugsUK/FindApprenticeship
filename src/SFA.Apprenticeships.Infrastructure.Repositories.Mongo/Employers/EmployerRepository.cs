@@ -63,6 +63,11 @@
             return mongoEntities.Select(e => _mapper.Map<MongoEmployer, Employer>(e)).ToList();
         }
 
+        public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds)
+        {
+            throw new NotImplementedException();
+        }
+
         public Employer Save(Employer employer)
         {
             _logger.Debug("Called Mongodb to save employer with ERN={0}", employer.EdsUrn);

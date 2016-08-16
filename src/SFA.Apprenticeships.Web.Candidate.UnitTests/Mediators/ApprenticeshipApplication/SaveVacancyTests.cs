@@ -1,19 +1,17 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
-    using System.ComponentModel.Design.Serialization;
     using System.Globalization;
     using Candidate.Mediators.Application;
-    using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Common.UnitTests.Mediators;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class SaveVacancyTests : TestsBase
     {
         private const int TestVacancyId = 42;
@@ -94,7 +92,10 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
 
             // Assert.
             UserDataProvider.Verify(mock => mock.Get(UserDataItemNames.SavedAndDraftCount), Times.Once);
-            UserDataProvider.Verify(mock => mock.Push(UserDataItemNames.SavedAndDraftCount, (savedAndDraftCount + 1).ToString(CultureInfo.InvariantCulture)), Times.Once);
+            UserDataProvider.Verify(
+                mock =>
+                    mock.Push(UserDataItemNames.SavedAndDraftCount,
+                        (savedAndDraftCount + 1).ToString(CultureInfo.InvariantCulture)), Times.Once);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.SaveVacancy.Ok, true);
             response.ViewModel.Should().Be(viewModel);
@@ -120,7 +121,10 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
 
             // Assert.
             UserDataProvider.Verify(mock => mock.Get(UserDataItemNames.SavedAndDraftCount), Times.Once);
-            UserDataProvider.Verify(mock => mock.Push(UserDataItemNames.SavedAndDraftCount, (savedAndDraftCount - 1).ToString(CultureInfo.InvariantCulture)), Times.Once);
+            UserDataProvider.Verify(
+                mock =>
+                    mock.Push(UserDataItemNames.SavedAndDraftCount,
+                        (savedAndDraftCount - 1).ToString(CultureInfo.InvariantCulture)), Times.Once);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.DeleteSavedVacancy.Ok, true);
             response.ViewModel.Should().Be(viewModel);

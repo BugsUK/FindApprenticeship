@@ -8,5 +8,6 @@
         public const string UnknownCandidate = "UNKNOWN_CANDIDATE";
         public const string InvalidVacancyState = "INVALID_VACANCY_STATE";
         public const string SchoolNotEntered = "SCHOOL_NOT_ENTERED";
+        public const string UnknownVacancy = "UNKNOWN_VACANCY";
     }
 }

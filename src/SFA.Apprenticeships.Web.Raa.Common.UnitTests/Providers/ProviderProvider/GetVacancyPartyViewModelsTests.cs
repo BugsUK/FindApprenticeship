@@ -16,6 +16,7 @@
     using Web.Common.ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class GetVacancyPartyViewModelsTests : TestBase
     {
         private const int PageSize = 10;

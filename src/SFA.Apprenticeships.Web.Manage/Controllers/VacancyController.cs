@@ -53,10 +53,20 @@
             {
                 case VacancyMediatorCodes.ReviewVacancy.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    var view = View(vacancyViewModel);
-                    return view;
+                    return View(vacancyViewModel);
+
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors:
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors:
+                    SetUserMessage(response.Message);
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(vacancyViewModel);
 
                 case VacancyMediatorCodes.ReviewVacancy.Ok:
+                    return View(vacancyViewModel);
+
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvms:
+                case VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApi:
+                    SetUserMessage(response.Message);
                     return View(vacancyViewModel);
 
                 case VacancyMediatorCodes.ReviewVacancy.InvalidVacancy:

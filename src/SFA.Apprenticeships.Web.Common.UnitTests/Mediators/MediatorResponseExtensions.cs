@@ -6,10 +6,10 @@ namespace SFA.Apprenticeships.Web.Common.UnitTests.Mediators
 {
     public static class MediatorResponseExtensions
     {
-        public static void AssertCode(this MediatorResponse response, string code, bool parametersShouldNotBeNull = false)
+        public static void AssertCodeAndMessage(this MediatorResponse response, string code, bool parametersShouldNotBeNull = false, bool messageShouldBeNull = true)
         {
             response.Code.Should().Be(code);
-            response.Message.Should().BeNull();
+            if (messageShouldBeNull) response.Message.Should().BeNull();
             response.AssertParameters(parametersShouldNotBeNull);
             response.ValidationResult.Should().BeNull();
         }
@@ -55,6 +55,16 @@ namespace SFA.Apprenticeships.Web.Common.UnitTests.Mediators
             response.Code.Should().Be(code);
             response.AssertViewModel(viewModelShouldNotBeNull);
             response.Message.Should().BeNull();
+            response.AssertParameters(parametersShouldNotBeNull);
+            response.ValidationResult.Should().NotBeNull();
+        }
+
+        public static void AssertValidationResultWithMessage<T>(this MediatorResponse<T> response, string code, string message, UserMessageLevel messageLevel, bool viewModelShouldNotBeNull, bool parametersShouldNotBeNull = false)
+        {
+            response.Code.Should().Be(code);
+            response.AssertViewModel(viewModelShouldNotBeNull);
+            response.Message.Text.Should().Be(message);
+            response.Message.Level.Should().Be(messageLevel);
             response.AssertParameters(parametersShouldNotBeNull);
             response.ValidationResult.Should().NotBeNull();
         }

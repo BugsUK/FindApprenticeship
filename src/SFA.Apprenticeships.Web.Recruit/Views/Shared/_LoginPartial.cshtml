@@ -7,7 +7,7 @@
         <div class="small-btm-margin">
             <a id="signout-link" href="@Url.RouteUrl(RecruitmentRouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
-        @if (User.IsInRole(Roles.VerifiedEmail))
+        @if (User.IsInRole(Roles.VerifiedEmail) && (ViewBag.ShowHomeLink == null || ViewBag.ShowHomeLink))
         {
             <div>
                 <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Home</a>
@@ -18,13 +18,6 @@
 else
 {
     <div class="account-info" id="bannerSignedOut">
-        @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
-        {
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
-        }
-        else
-        {
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
-        }
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
     </div>
 }

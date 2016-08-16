@@ -3,8 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Interfaces.Communications;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
     using Strategies;
 
     public class ProviderCommunicationService : IProviderCommunicationService

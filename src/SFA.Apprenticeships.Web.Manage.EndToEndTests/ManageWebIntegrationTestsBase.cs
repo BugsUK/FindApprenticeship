@@ -13,14 +13,13 @@
     using IoC;
     using MongoDB.Driver;
     using Moq;
-    using NUnit.Framework;
     using Recruit.EndToEndTests;
 
     using SFA.Apprenticeships.Application.Interfaces;
 
     using StructureMap;
     using StructureMap.Web.Pipeline;
-
+    using NUnit.Framework;
     public class ManageWebIntegrationTestsBase
     {
         protected MongoConfiguration MongoConfiguration;

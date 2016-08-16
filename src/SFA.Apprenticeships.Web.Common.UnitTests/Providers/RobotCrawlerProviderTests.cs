@@ -9,6 +9,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class RobotCrawlerProviderTests
     {
         private readonly RobotCrawlerProvider _robotCrawlerProvider;

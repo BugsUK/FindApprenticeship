@@ -11,9 +11,9 @@
     using Ploeh.AutoFixture;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
-    using ViewModels.VacancyPosting;
-
+    
     [TestFixture]
+    [Parallelizable]
     public class CreateVacancyTests : TestBase
     {
         private const string Ukprn = "12345";
@@ -46,14 +46,10 @@
                 OfflineVacancy = false,
                 OwnerParty = new VacancyPartyViewModel()
             };
-            
+
             MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
                 .Returns(_existingVacancy);
-            MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
-                .Returns<Vacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.SaveVacancy(It.IsAny<Vacancy>()))
-                .Returns<Vacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.SaveVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>

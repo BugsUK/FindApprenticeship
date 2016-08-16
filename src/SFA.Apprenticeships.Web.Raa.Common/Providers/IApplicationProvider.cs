@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
+    using System.Collections.Generic;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -8,6 +9,8 @@
     public interface IApplicationProvider
     {
         VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch);
+
+        ShareApplicationsViewModel GetShareApplicationsViewModel(int vacancyReferenceNumber);
 
         ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
 
@@ -24,5 +27,7 @@
         TraineeshipApplicationViewModel GetTraineeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes);
+
+        void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
     }
 }

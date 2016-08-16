@@ -5,6 +5,7 @@
     using Raa.Common.Validators;
 
     [TestFixture]
+    [Parallelizable]
     public class ValidFreeTextTest
     {        
         [TestCase("")]       

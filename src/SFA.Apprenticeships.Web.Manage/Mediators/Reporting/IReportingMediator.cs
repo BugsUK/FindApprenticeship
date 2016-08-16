@@ -2,6 +2,7 @@
 {
     using System;
     using Common.Mediators;
+    using Raa.Common.ViewModels.Report;
     using ViewModels;
 
     public interface IReportingMediator
@@ -13,5 +14,8 @@
         MediatorResponse<byte[]> GetUnsuccessfulCandidatesReportBytes(ReportUnsuccessfulCandidatesParameters parameters);
         MediatorResponse<ReportUnsuccessfulCandidatesParameters> GetUnsuccessfulCandidatesReportParams();
         MediatorResponse<byte[]> GetVacancyExtensionsReportBytes(ReportVacancyExtensionsParameters parameters);
+        MediatorResponse<ReportRegisteredCandidatesParameters> GetRegisteredCandidatesReportParams();
+        MediatorResponse<ReportRegisteredCandidatesParameters> ValidateRegisteredCandidatesParameters(ReportRegisteredCandidatesParameters parameters);
+        MediatorResponse<byte[]> GetRegisteredCandidatesReportBytes(ReportRegisteredCandidatesParameters parameters);
     }
 }

@@ -34,6 +34,8 @@
 
         public string SectorName { get; set; }
 
+        public ProviderViewModel Provider { get; set; }
+
         public ProviderSiteViewModel ProviderSite { get; set; }
 
         public VacancyStatus Status { get; set; }
@@ -81,5 +83,7 @@
         public bool IsSingleLocation => NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true;
 
         public bool IsCandidateView { get; set; }
+
+        public VacancySource VacancySource { get; set; }
     }
 }

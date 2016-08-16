@@ -14,6 +14,7 @@
     /// Testing business rules on page https://valtech-uk.atlassian.net/wiki/display/NAS/QA+a+vacancy#QAavacancy-Businessrulesforadvertisingvacancies
     /// </summary>
     [TestFixture]
+    [Parallelizable]
     public class MandatoryHoursAndDurationConditionTests
     {
         private const string RuleSet = RuleSets.Errors;
@@ -74,7 +75,8 @@
             {
                 HoursPerWeek = hoursPerWeek,
                 Duration = expectedDuration,
-                DurationType = durationType
+                DurationType = durationType,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -222,7 +224,8 @@
             {
                 HoursPerWeek = hoursPerWeek,
                 Duration = expectedDuration,
-                DurationType = durationType
+                DurationType = durationType,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -272,7 +275,8 @@
             {
                 Duration = expectedDuration,
                 DurationType = durationType,
-                VacancyType = VacancyType.Traineeship
+                VacancyType = VacancyType.Traineeship,
+                VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

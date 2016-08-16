@@ -13,10 +13,10 @@
     using Domain.Entities.Raa.Parties;
     using FluentAssertions;
     using Ploeh.AutoFixture;
-    using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class CreateVacancyTests : TestsBase
     {
         private const string Ukprn = "12345";
@@ -313,7 +313,7 @@
             MockEmployerService.Verify(s => s.GetEmployer(employerId));
             MockProviderService.Verify(s => s.GetProvider(ukprn));
             MockLocalAuthorityService.Verify(s => s.GetLocalAuthorityCode(employersPostcode));
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => 
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => 
                 v.VacancyGuid == vacancyGuid 
                 && v.VacancyReferenceNumber == vacancyReferenceNumber 
                 && v.Title == null 
@@ -380,7 +380,7 @@
             });
 
             // Assert.
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v =>
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v =>
                 v.Address == null
             )));
         }

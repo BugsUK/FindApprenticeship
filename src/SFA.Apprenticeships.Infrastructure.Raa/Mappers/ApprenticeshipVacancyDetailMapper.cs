@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using Domain.Entities.Extensions;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
@@ -29,7 +28,7 @@
 
             var subcategory = vacancy.GetSubCategory(categories);
             LogSubCategory(vacancy, logService, subcategory);
-
+            
             var detail = new ApprenticeshipVacancyDetail
             {
                 Id = vacancy.VacancyId,
@@ -48,6 +47,7 @@
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
                 WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
+                HoursPerWeek = vacancy.HoursPerWeek,
                 OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?
@@ -77,7 +77,7 @@
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
                 RecruitmentAgency = providerSite.TradingName,
-                ProviderName = provider.Name,
+                ProviderName = provider.TradingName,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = vacancy.GetContactInformation(providerSite),
@@ -93,7 +93,8 @@
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
-                EditedInRaa = vacancy.EditedInRaa
+                EditedInRaa = vacancy.EditedInRaa,
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
             };
 
             return detail;

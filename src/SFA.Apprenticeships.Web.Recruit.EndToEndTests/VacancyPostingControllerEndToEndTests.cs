@@ -16,7 +16,7 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
 
-    [TestFixture, Category("Integration")]
+    [TestFixture, Category("Acceptance")]
     public class VacancyPostingControllerEndToEndTests : RecruitWebEndToEndTestsBase
     {
         

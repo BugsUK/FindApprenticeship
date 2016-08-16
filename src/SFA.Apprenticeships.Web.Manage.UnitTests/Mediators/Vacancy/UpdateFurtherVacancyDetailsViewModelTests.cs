@@ -11,6 +11,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateFurtherVacancyDetailsViewModelTests
     {
         [Test]
@@ -55,7 +56,7 @@
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
             var result = mediator.UpdateVacancy(vacancy.FurtherVacancyDetailsViewModel);
-            result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
+            result.AssertCodeAndMessage(VacancyMediatorCodes.UpdateVacancy.Ok);
             result.ViewModel.ShouldBeEquivalentTo(vacancy.FurtherVacancyDetailsViewModel);
         }
     }
