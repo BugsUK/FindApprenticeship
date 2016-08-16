@@ -724,7 +724,7 @@
                 .SelectMany(a => a)
                 .Where(
                     v => (v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown)
-                         && v.Status != VacancyStatus.Withdrawn);
+                         && v.Status != VacancyStatus.Withdrawn && v.Status != VacancyStatus.Deleted);
 
             var hasVacancies = minimalVacancyDetails.Any();
 
