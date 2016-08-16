@@ -6,6 +6,11 @@
     {
         public StrategyResult<VacancySummary> Execute(VacancySummary input)
         {
+            if (input == null)
+            {
+                return new StrategyResult<VacancySummary>(VacancyManagementServiceCodes.Delete.VacancyNotFound);
+            }
+
             if (input.Status != VacancyStatus.Draft)
             {
                 return new StrategyResult<VacancySummary>(VacancyManagementServiceCodes.Delete.VacancyInIncorrectState);

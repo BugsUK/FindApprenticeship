@@ -1010,7 +1010,15 @@ order by HistoryDate desc
 
         public void Delete(int vacancyId)
         {
-            throw new NotImplementedException();
+            _getOpenConnection.MutatingQuery<int>(@"
+                UPDATE dbo.Vacancy
+                SET VacancyStatusId = @VacancyStatus
+                WHERE VacancyId = @VacancyId",
+                new
+                {
+                    VacancyId = vacancyId,
+                    VacancyStatus = VacancyStatus.Deleted
+                });
         }
 
         public void IncrementOfflineApplicationClickThrough(int vacancyId)

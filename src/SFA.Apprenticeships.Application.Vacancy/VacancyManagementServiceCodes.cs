@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Application.Vacancy
         {
             public const string Ok = "VacancyManagement.Delete.Ok";
             public const string VacancyInIncorrectState = "Vacancy.Delete.VacancyInIncorrectState";
+            public const string VacancyNotFound = "Vacancy.Delete.VacancyNotFound";
         }
 
         public class FindSummary

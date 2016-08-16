@@ -32,9 +32,8 @@
         public ActionResult DeletePost(DeleteVacancyViewModel vacancyViewModel)
         {
             _vacancyManagementMediator.Delete(vacancyViewModel);
-            // TODO redirect with VacanciesSummarySearchViewModel
             // TODO alert on home page
-            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, vacancyViewModel);
         }
     }
 }

@@ -109,7 +109,39 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"grid grid-1-1\"");
 
-WriteLiteral(">\r\n        <button");
+WriteLiteral(">\r\n");
+
+            
+            #line 23 "..\..\Views\VacancyManagement\Delete.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 23 "..\..\Views\VacancyManagement\Delete.cshtml"
+         foreach (var prop in Model.GetType().GetProperties())
+        {
+            var getter = prop.GetGetMethod();
+            
+            
+            #line default
+            #line hidden
+            
+            #line 26 "..\..\Views\VacancyManagement\Delete.cshtml"
+       Write(Html.Hidden(prop.Name, getter.Invoke(Model, new object[] {})));
+
+            
+            #line default
+            #line hidden
+            
+            #line 26 "..\..\Views\VacancyManagement\Delete.cshtml"
+                                                                          ;
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        <button");
 
 WriteLiteral(" class=\"button\"");
 
@@ -124,8 +156,8 @@ WriteLiteral(">Confirm and return to recruitment home</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 24 "..\..\Views\VacancyManagement\Delete.cshtml"
-   Write(Html.RouteLink("Cancel",  RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel));
+            #line 29 "..\..\Views\VacancyManagement\Delete.cshtml"
+   Write(Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel));
 
             
             #line default
@@ -133,7 +165,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 26 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 31 "..\..\Views\VacancyManagement\Delete.cshtml"
 }
             
             #line default
