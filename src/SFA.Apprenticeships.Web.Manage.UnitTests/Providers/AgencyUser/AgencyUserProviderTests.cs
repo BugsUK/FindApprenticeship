@@ -10,6 +10,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class AgencyUserProviderTests
     {
         private const string Username = "user@agency.com";

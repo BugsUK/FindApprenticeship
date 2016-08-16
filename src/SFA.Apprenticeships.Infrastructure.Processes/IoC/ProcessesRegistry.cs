@@ -143,6 +143,8 @@
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
             RegisterServiceBusMessageBroker<VacancyStatusProcessorSubscriber, VacancyEligibleForClosure>();
             RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
+            RegisterServiceBusMessageBroker<ApprenticeshipSummaryUpdateSubscriber, ApprenticeshipSummaryUpdate>();
+            RegisterServiceBusMessageBroker<TraineeshipsSummaryUpdateSubscriber, TraineeshipSummaryUpdate>();
         }
 
         private void RegisterCommunicationServiceBusMessageBrokers(Container container)

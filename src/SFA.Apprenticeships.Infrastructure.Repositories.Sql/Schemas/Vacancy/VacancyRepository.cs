@@ -1457,18 +1457,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));               
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
-        {
-            // TODO: Handle >2000 records - Shoma
-            return _getOpenConnection.Query<Domain.Entities.Raa.Locations.VacancyLocation> (@"
-                        SELECT *
-                        FROM   dbo.VacancyLocation
-                        WHERE  VacancyId IN @Ids",
-                        new { Ids = vacancyIds })
-                                    .GroupBy(x => x.VacancyId)
-            .ToDictionary(x => x.Key, x => (IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>)x);
-        }
-
         private class MinimalVacancyDetails : IMinimalVacancyDetails
         {
             public MinimalVacancyDetails(dynamic record)

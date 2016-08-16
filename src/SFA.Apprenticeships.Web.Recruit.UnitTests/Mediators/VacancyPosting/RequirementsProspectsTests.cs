@@ -8,6 +8,7 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class RequirementsProspectsTests : TestsBase
     {
         const string SomeString = "SomeString";

@@ -14,6 +14,7 @@
     using VacancyIndexer;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancySchedulerConsumerTests
     {
         private Mock<ILogService> _logService;

@@ -6,11 +6,11 @@
     using FluentAssertions;
     using Infrastructure.Processes.Communications.Commands;
     using Builders;
-    using Newtonsoft.Json;
     using NUnit.Framework;
     using JsonConvert = Newtonsoft.Json.JsonConvert;
 
     [TestFixture]
+    [Parallelizable]
     public class ExpiringDraftTests : CommandTestsBase
     {
         [SetUp]

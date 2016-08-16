@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using System;
     using Builders;
@@ -8,12 +6,14 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipAppli
     using Candidate.Providers;
     using Common.Constants;
     using Common.Models.Application;
+    using Common.UnitTests.Mediators;
     using Constants.Pages;
     using Domain.Entities.Vacancies;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ViewTests
     {
         private const int TestVacancyId = 5;
@@ -28,8 +28,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipAppli
             traineeshipApplicationProvider
                 .Setup(p => p.GetApplicationViewModelEx(candidateId, TestVacancyId))
                 .Returns(new TraineeshipApplicationViewModelBuilder()
-                .WithVacancyStatus(vacancyStatus)
-                .Build());
+                    .WithVacancyStatus(vacancyStatus)
+                    .Build());
 
             var mediator = new TraineeshipApplicationMediatorBuilder()
                 .With(traineeshipApplicationProvider)

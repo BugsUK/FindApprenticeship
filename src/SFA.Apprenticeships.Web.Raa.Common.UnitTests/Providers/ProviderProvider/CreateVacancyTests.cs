@@ -11,6 +11,7 @@
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class CreateVacancyTests : TestBase
     {
         [Test]

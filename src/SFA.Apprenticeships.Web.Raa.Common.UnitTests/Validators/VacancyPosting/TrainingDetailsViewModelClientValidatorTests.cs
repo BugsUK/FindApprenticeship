@@ -8,6 +8,7 @@
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class TrainingDetailsViewModelClientValidatorTests
     {
         private TrainingDetailsViewModelClientValidator _validator;

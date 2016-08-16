@@ -7,6 +7,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderSiteEmployerLinkViewModelConverterTests
     {
         [TestCase("Anon Corp")]

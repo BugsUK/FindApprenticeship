@@ -11,6 +11,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class ResendTests
     {
         private const string PhoneNumber = "123456789";

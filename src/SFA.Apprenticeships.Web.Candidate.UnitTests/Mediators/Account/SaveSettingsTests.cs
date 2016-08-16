@@ -19,6 +19,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class SaveSettingsTests
     {
         [Test]

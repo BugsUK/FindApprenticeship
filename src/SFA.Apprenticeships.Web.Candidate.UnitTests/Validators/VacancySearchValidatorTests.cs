@@ -7,6 +7,7 @@
     using Candidate.ViewModels.VacancySearch;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancySearchValidatorTests
     {
         [Test]

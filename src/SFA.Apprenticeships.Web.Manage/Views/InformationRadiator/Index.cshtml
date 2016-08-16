@@ -6,11 +6,19 @@
 <section>
     <!--<h1 class="heading-xlarge">Information radiator</h1>-->
     <div class="grid-wrapper" style="Margin-Bottom: 20px">
-        <h2 class="heading-medium">Providers</h2>
+        <h2 class="heading-medium">Providers (@Model.TotalProviders in total)</h2>
         <ul class="vacancies-summary">
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalProviders</p>
+                    <p class="count">@Model.TotalProvidersAskedToOnboard</p>
+                    <figcaption>
+                        <h2>Total providers asked to onboard</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalProvidersOnboarded</p>
                     <figcaption>
                         <h2>Total providers onboarded</h2>
                     </figcaption>
@@ -18,12 +26,28 @@
             </li>
             <li>
                 <figure class="data">
+                    <p class="count">@Model.TotalProvidersForcedToMigrate</p>
+                    <figcaption>
+                        <h2>Total providers forced to migrate</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalProvidersMigrated</p>
+                    <figcaption>
+                        <h2>Total providers fully migrated</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <!--<li>
+                <figure class="data">
                     <p class="count">@Model.TotalProviderUserAccounts</p>
                     <figcaption>
                         <h2>Total provider users onboarded</h2>
                     </figcaption>
                 </figure>
-            </li>
+            </li>-->
         </ul>
     </div>
     <div class="grid-wrapper" style="Margin-Bottom: 20px">

@@ -480,7 +480,11 @@
 
             var command = new SqlCommand(
                 @"SELECT 
-(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser]) as TotalProviders,
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider) as TotalProviders,
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider WHERE ProviderToUseFAA = 1) as TotalProvidersAskedToOnboard,
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider WHERE ProviderToUseFAA = 2) as TotalProvidersForcedToMigrate,
+(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser] WHERE ProviderId NOT IN (SELECT ProviderId FROM Provider WHERE ProviderToUseFAA = 2)) as TotalProvidersOnboarded,
+(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser] WHERE ProviderId IN (SELECT ProviderId FROM Provider WHERE ProviderToUseFAA = 2)) as TotalProvidersMigrated,
 (SELECT COUNT(*) FROM [Provider].[ProviderUser]) as TotalProviderUserAccounts,
 (SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesCreatedViaRaa,
 (SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 1) as TotalDraftVacanciesCreatedViaRaa,
@@ -511,6 +515,10 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
                 data = new InformationRadiatorData
                 {
                     TotalProviders = Convert.ToInt32(reader["TotalProviders"]),
+                    TotalProvidersAskedToOnboard = Convert.ToInt32(reader["TotalProvidersAskedToOnboard"]),
+                    TotalProvidersForcedToMigrate = Convert.ToInt32(reader["TotalProvidersForcedToMigrate"]),
+                    TotalProvidersOnboarded = Convert.ToInt32(reader["TotalProvidersOnboarded"]),
+                    TotalProvidersMigrated = Convert.ToInt32(reader["TotalProvidersMigrated"]),
                     TotalProviderUserAccounts = Convert.ToInt32(reader["TotalProviderUserAccounts"]),
                     TotalVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalVacanciesCreatedViaRaa"]),
                     TotalDraftVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalDraftVacanciesCreatedViaRaa"]),

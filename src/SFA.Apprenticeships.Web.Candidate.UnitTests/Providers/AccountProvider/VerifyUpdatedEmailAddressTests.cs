@@ -10,6 +10,7 @@
     using ErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     [TestFixture]
+    [Parallelizable]
     public class VerifyUpdatedEmailAddressTests
     {
         [Test]

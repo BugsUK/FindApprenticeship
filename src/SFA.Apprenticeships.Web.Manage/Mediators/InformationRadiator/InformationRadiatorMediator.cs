@@ -20,6 +20,10 @@
             var viewModel = new InformationRadiatorViewModel
             {
                 TotalProviders = data.TotalProviders,
+                TotalProvidersAskedToOnboard = data.TotalProvidersAskedToOnboard,
+                TotalProvidersForcedToMigrate = data.TotalProvidersForcedToMigrate,
+                TotalProvidersOnboarded = data.TotalProvidersOnboarded,
+                TotalProvidersMigrated = data.TotalProvidersMigrated,
                 TotalProviderUserAccounts = data.TotalProviderUserAccounts,
                 TotalVacanciesCreatedViaRaa = data.TotalVacanciesCreatedViaRaa,
                 TotalDraftVacanciesCreatedViaRaa = data.TotalDraftVacanciesCreatedViaRaa,

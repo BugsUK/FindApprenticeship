@@ -19,6 +19,7 @@
     using ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class AgencyUserMediatorTests
     {
         private const string ValidAuthorisationGroupClaim = "validGroupClaim";

@@ -6,10 +6,11 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class IndexTests : TestsBase
     {
         [Test]
-        [Ignore]
+        [Ignore("Review")]
         public void ShouldGetNewVacancy()
         {
             // Arrange.

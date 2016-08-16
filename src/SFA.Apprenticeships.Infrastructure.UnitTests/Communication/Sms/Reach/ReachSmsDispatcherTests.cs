@@ -16,6 +16,7 @@
     using SmsMessageFormatters;
 
     [TestFixture]
+    [Parallelizable]
     public class ReachSmsDispatcherTests
     {
         private static class RestResponses

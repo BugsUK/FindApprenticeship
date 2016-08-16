@@ -9,6 +9,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class GetCategoryTests
     {
         private List<Category> _categories;

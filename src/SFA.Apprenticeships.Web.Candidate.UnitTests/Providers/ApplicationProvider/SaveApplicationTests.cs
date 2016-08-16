@@ -9,6 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class SaveApplicationTests
     {
         const int ValidVacancyId = 1;

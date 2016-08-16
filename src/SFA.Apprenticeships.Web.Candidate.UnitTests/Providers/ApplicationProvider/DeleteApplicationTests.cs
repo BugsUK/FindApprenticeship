@@ -10,6 +10,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class DeleteApplicationTests
     {
         const int ValidVacancyId = 1;
