@@ -28,6 +28,11 @@
             }
 
             var ukprn = _currentUserService.GetClaimValue("ukprn");
+            var ukprnoverride = _currentUserService.GetClaimValue("ukprnoverride");
+            if (!string.IsNullOrEmpty(ukprnoverride))
+            {
+                ukprn = ukprnoverride;
+            }
             var provider = _providerService.GetProvider(ukprn);
             var vacancyId = vacancy.VacancyId;
             var providerId = vacancy.ProviderId;
