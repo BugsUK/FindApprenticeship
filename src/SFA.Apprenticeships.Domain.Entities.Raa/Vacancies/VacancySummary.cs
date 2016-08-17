@@ -18,6 +18,7 @@
         public decimal? WageAmount { get; set; }
         public string WageText { get; set; }
         public WageUnit WageUnit { get; set; }
+        public Wage Wage { get; set; }
         public string ExpectedDuration { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }

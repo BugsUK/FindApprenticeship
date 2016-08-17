@@ -26,8 +26,6 @@
 
                 var location = GetGeoPoint(vacancy);
 
-                var wage = new Wage(vacancy.WageType, vacancy.WageAmount, vacancy.WageText, vacancy.WageUnit);
-
                 var category = vacancy.GetCategory(categories);
                 var subcategory = vacancy.GetSubCategory(categories);
                 LogCategoryAndSubCategory(vacancy, logService, category, subcategory);
@@ -51,8 +49,8 @@
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
-                    Wage = wage.GetDisplayAmount(vacancy.HoursPerWeek),
-                    WageUnit = wage.Unit,
+                    Wage = vacancy.Wage.GetDisplayAmount(vacancy.HoursPerWeek),
+                    WageUnit = vacancy.Wage.Unit,
                     WorkingWeek = vacancy.WorkingWeek,
                     CategoryCode = category.CodeName,
                     Category = category.FullName,

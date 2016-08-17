@@ -26,6 +26,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
+    using Domain.Entities.Vacancies;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -33,6 +34,9 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
@@ -402,6 +406,7 @@
             vacancy.WageType = viewModel.WageType;
             vacancy.WageAmount = viewModel.Wage;
             vacancy.WageUnit = viewModel.WageUnit;
+            vacancy.Wage = new Wage(viewModel.WageType, viewModel.Wage, null, viewModel.WageUnit);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -1222,6 +1227,7 @@
             vacancy.WageType = viewModel.WageType;
             vacancy.WageAmount = viewModel.Wage;
             vacancy.WageUnit = viewModel.WageUnit;
+            vacancy.Wage = new Wage(viewModel.WageType, viewModel.Wage, null, viewModel.WageUnit);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
