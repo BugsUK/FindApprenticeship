@@ -26,7 +26,7 @@
 
                 var location = GetGeoPoint(vacancy);
 
-                var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
+                var wage = new Wage(vacancy.WageType, vacancy.WageAmount, vacancy.WageText, vacancy.WageUnit);
 
                 var category = vacancy.GetCategory(categories);
                 var subcategory = vacancy.GetSubCategory(categories);

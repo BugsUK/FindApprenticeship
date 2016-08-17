@@ -18,7 +18,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 WorkingWeek = WorkingWeek,
                 HoursPerWeek = HoursPerWeek,
                 WageType = WageType,
-                Wage = Wage,
+                WageAmount = WageAmount,
                 WageText = WageText,
                 WageUnit = WageUnit,
                 ExpectedDuration = ExpectedDuration,

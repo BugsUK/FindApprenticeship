@@ -20,7 +20,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 LongDescription = source.LongDescription,
                 LongDescriptionComment = source.LongDescriptionComment,
                 VacancyReferenceNumber = source.VacancyReferenceNumber,
-                Wage = source.Wage,
+                Wage = source.WageAmount,
                 WageComment = source.WageComment,
                 WageType = source.WageType,
                 WageUnit = source.WageUnit,

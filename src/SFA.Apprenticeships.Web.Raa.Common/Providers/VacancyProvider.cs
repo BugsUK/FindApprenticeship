@@ -400,7 +400,7 @@
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
             vacancy.WageType = viewModel.WageType;
-            vacancy.Wage = viewModel.Wage;
+            vacancy.WageAmount = viewModel.Wage;
             vacancy.WageUnit = viewModel.WageUnit;
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
@@ -1220,7 +1220,7 @@
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
             vacancy.WageType = viewModel.WageType;
-            vacancy.Wage = viewModel.Wage;
+            vacancy.WageAmount = viewModel.Wage;
             vacancy.WageUnit = viewModel.WageUnit;
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
