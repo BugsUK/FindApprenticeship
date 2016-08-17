@@ -3,7 +3,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Interfaces.Service;
 
-    public interface IDeleteValidationStrategy : IServiceStrategy<VacancySummary>
+    public interface IDeleteVacancyStrategy : IServiceStrategy<VacancySummary>
     {
     }
 }

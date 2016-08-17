@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyManagement
 {
-    using System;
     using Apprenticeships.Application.Vacancy;
     using Common.Constants;
     using Common.Mediators;
@@ -29,7 +28,7 @@
             }
 
             message = new MediatorResponseMessage { Text = $"There was a problem deleting {vacancyViewModel.VacancyTitle} vacancy", Level = UserMessageLevel.Error };
-            return GetMediatorResponse(VacancyManagementMediatorCodes.DeleteVacancy.VacancyInIncorrectState, vacancyViewModel, null, null, message);
+            return GetMediatorResponse(VacancyManagementMediatorCodes.DeleteVacancy.Failure, vacancyViewModel, null, null, message);
         }
 
         public MediatorResponse<DeleteVacancyViewModel> ConfirmDelete(DeleteVacancyViewModel vacancyViewModel)
@@ -39,6 +38,10 @@
             {
                 vacancyViewModel.VacancyTitle = serviceResult.Result.Title;
                 return GetMediatorResponse(VacancyManagementMediatorCodes.ConfirmDelete.Ok, vacancyViewModel);
+            }
+            if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.NotFound)
+            {
+                return GetMediatorResponse(VacancyManagementMediatorCodes.ConfirmDelete.NotFound, vacancyViewModel);
             }
 
             return GetMediatorResponse(serviceResult.Code, vacancyViewModel);

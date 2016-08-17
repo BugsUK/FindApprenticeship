@@ -20,6 +20,10 @@
         public ActionResult DeleteGet(DeleteVacancyViewModel vacancyViewModel)
         {
             var result = _vacancyManagementMediator.ConfirmDelete(vacancyViewModel);
+            if (result.Code == VacancyManagementMediatorCodes.ConfirmDelete.NotFound)
+            {
+                return HttpNotFound();
+            }
             return View(result.ViewModel);
         }
 

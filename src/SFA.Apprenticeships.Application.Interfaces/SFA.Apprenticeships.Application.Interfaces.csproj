@@ -123,6 +123,9 @@
     <Compile Include="Search\AggregationResult.cs" />
     <Compile Include="Security\IDecryptionService.cs" />
     <Compile Include="Security\IEncryptionService.cs" />
+    <Compile Include="Service\ServiceResult.cs" />
+    <Compile Include="Service\ServiceResult{T}.cs" />
+    <Compile Include="Service\StrategyResult.cs" />
     <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />

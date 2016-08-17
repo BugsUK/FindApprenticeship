@@ -6,26 +6,19 @@
 
     public class VacancyManagementService : IVacancyManagementService
     {
-        private readonly IVacancyWriteRepository _writeRepository;
         private readonly IVacancyReadRepository _readRepository;
-        private readonly IDeleteValidationStrategy _deleteValidationStrategy;
+        private readonly IDeleteVacancyStrategy _deleteVacancyStrategy;
 
-        public VacancyManagementService(IVacancyWriteRepository writeRepository, IVacancyReadRepository readRepository, IDeleteValidationStrategy deleteValidationStrategy)
+        public VacancyManagementService(IVacancyReadRepository readRepository, IDeleteVacancyStrategy deleteVacancyStrategy)
         {
-            _writeRepository = writeRepository;
             _readRepository = readRepository;
-            _deleteValidationStrategy = deleteValidationStrategy;
+            _deleteVacancyStrategy = deleteVacancyStrategy;
         }
 
         public IServiceResult Delete(int vacancyId)
         {
             var summary =_readRepository.GetById(vacancyId);
-            var result = _deleteValidationStrategy.Execute(summary);
-
-            if (result.Code == VacancyManagementServiceCodes.Delete.Ok)
-            {
-                _writeRepository.Delete(vacancyId);
-            }
+            var result = _deleteVacancyStrategy.Execute(summary);
 
             return new ServiceResult(result.Code);
         }

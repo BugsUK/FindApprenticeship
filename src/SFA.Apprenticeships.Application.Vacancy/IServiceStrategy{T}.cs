@@ -1,7 +1,9 @@
 namespace SFA.Apprenticeships.Application.Vacancy
 {
-    public interface IServiceStrategy<T> where T : class
+    using Interfaces.Service;
+
+    public interface IServiceStrategy<T>
     {
-        StrategyResult<T> Execute(T input);
+        StrategyResult Execute(T input);
     }
 }

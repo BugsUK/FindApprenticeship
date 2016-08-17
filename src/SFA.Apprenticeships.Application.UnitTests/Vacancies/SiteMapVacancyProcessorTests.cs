@@ -5,13 +5,13 @@
     using System.Linq;
     using Apprenticeships.Application.Vacancies;
     using Apprenticeships.Application.Vacancies.Entities.SiteMap;
+    using Apprenticeships.Application.Vacancy;
+    using Apprenticeships.Application.Vacancy.SiteMap;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
     using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
-    using Vacancy;
-    using Vacancy.SiteMap;
 
     [TestFixture]
     public class SiteMapVacancyProcessorTests

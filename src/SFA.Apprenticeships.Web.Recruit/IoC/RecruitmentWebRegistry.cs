@@ -125,7 +125,7 @@
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
             For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
-            For<IDeleteValidationStrategy>().Use<DeleteValidationStrategy>();
+            For<IDeleteVacancyStrategy>().Use<DeleteVacancyStrategy>();
         }
 
         private void RegisterMediators()

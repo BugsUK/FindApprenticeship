@@ -1,7 +1,5 @@
-﻿namespace SFA.Apprenticeships.Application.Vacancy
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Service
 {
-    using Interfaces.Service;
-
     public class ServiceResult<T> : ServiceResult, IServiceResult<T>
     {
         public ServiceResult(string code, T result) : base(code)

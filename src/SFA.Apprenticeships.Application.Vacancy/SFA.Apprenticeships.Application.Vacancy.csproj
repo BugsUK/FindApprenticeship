@@ -87,23 +87,20 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CandidateVacancyService.cs" />
-    <Compile Include="DeleteValidationStrategy.cs" />
+    <Compile Include="DeleteVacancyStrategy.cs" />
     <Compile Include="IAllTraineeshipVacanciesProvider.cs" />
     <Compile Include="IAllApprenticeshipVacanciesProvider.cs" />
-    <Compile Include="IDeleteValidationStrategy.cs" />
+    <Compile Include="IDeleteVacancyStrategy.cs" />
     <Compile Include="IServiceStrategy{T}.cs" />
     <Compile Include="IVacancyDataProvider.cs" />
     <Compile Include="IAllVacanciesProvider.cs" />
     <Compile Include="IVacancyManagementService.cs" />
     <Compile Include="IVacancySearchProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceResult.cs" />
-    <Compile Include="ServiceResult{T}.cs" />
     <Compile Include="SiteMap\ISiteMapVacancyProvider.cs" />
     <Compile Include="SiteMap\SiteMapVacancy.cs" />
     <Compile Include="SiteMap\SiteMapVacancyHelper.cs" />
     <Compile Include="SiteMap\SiteMapVacancyProvider.cs" />
-    <Compile Include="StrategyResult{T}.cs" />
     <Compile Include="VacancyManagementService.cs" />
     <Compile Include="VacancyManagementServiceCodes.cs" />
     <Compile Include="VacancySearchService.cs" />
