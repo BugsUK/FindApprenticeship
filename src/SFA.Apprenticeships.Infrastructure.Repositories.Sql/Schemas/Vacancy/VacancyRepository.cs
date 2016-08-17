@@ -11,6 +11,7 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using Newtonsoft.Json;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
@@ -914,12 +915,18 @@ order by HistoryDate desc
         {
             _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.VacancyId);
 
+            _logger.Info(
+                $"Calling database to create the following domain vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented)}");
+
             UpdateEntityTimestamps(entity);
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
 
             PopulateIds(entity, dbVacancy);
 
+            _logger.Info(
+                $"Calling database to create the following database vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented)}");
+            
             dbVacancy.VacancyId = (int) _getOpenConnection.Insert(dbVacancy);
 
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
@@ -937,6 +944,9 @@ order by HistoryDate desc
         {
             _logger.Debug("Calling database to update apprenticeship vacancy with id={0}", entity.VacancyId);
 
+            _logger.Info(
+                $"Calling database to update the following vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented)}");
+            
             UpdateEntityTimestamps(entity); // Do we need this?
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
@@ -944,6 +954,9 @@ order by HistoryDate desc
             PopulateIds(entity, dbVacancy);
 
             var previousVacancyState = GetVacancyByVacancyId(entity.VacancyId);
+
+            _logger.Info(
+                $"Calling database to update the following vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented)}");
 
             _getOpenConnection.UpdateSingle(dbVacancy);
 
