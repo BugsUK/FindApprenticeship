@@ -120,10 +120,12 @@
 
             SetLoggingInfo("Headers", () =>
             {
-                var lines = new List<string>();
-                lines.Add(Request.HttpMethod + " " + Request.RawUrl);
-                lines.Add("Remote Address: " + Request.UserHostAddress);
-                lines.Add("");
+                var lines = new List<string>
+                {
+                    Request.HttpMethod + " " + Request.RawUrl,
+                    "Remote Address: " + Request.UserHostAddress,
+                    ""
+                };
 
                 return string.Join("\n", lines.Concat(Request.Headers.AllKeys.Select(key =>
                     $"{key}: {Request.Headers[key]}")));
