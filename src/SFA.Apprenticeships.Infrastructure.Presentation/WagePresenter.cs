@@ -93,41 +93,6 @@
             }
         }
 
-        public static Domain.Entities.Vacancies.WageUnit GetWageUnit(this Wage wage)
-        {
-            if (wage.Type == WageType.LegacyWeekly)
-            {
-                return Domain.Entities.Vacancies.WageUnit.Weekly;
-            }
-            if (wage.Type == WageType.LegacyText)
-            {
-                return Domain.Entities.Vacancies.WageUnit.NotApplicable;
-            }
-
-            if (wage.Type != WageType.Custom)
-            {
-                return Domain.Entities.Vacancies.WageUnit.Weekly;
-            }
-
-            switch (wage.Unit)
-            {
-                case WageUnit.Weekly:
-                    return Domain.Entities.Vacancies.WageUnit.Weekly;
-
-                case WageUnit.Monthly:
-                    return Domain.Entities.Vacancies.WageUnit.Monthly;
-
-                case WageUnit.Annually:
-                    return Domain.Entities.Vacancies.WageUnit.Annually;
-
-                case WageUnit.NotApplicable:
-                    return Domain.Entities.Vacancies.WageUnit.NotApplicable;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wage.Unit), $"Invalid Wage Unit: {wage.Unit}");
-            }
-        }
-
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
         {
             var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);

@@ -40,7 +40,7 @@
                 //TODO: Where should this come from?
                 InterviewFromDate = DateTime.MinValue,
                 Wage = vacancy.Wage ?? 0,
-                WageUnit = wage.GetWageUnit(),
+                WageUnit = wage.Unit,
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
                 WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,

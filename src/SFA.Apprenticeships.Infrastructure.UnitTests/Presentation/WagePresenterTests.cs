@@ -26,11 +26,11 @@
             actual.Should().Be(expected);
         }
 
-        [TestCase(Domain.Entities.Vacancies.WageUnit.Weekly, WagePresenter.WeeklyWageText)]
-        [TestCase(Domain.Entities.Vacancies.WageUnit.Monthly, WagePresenter.MonthlyWageText)]
-        [TestCase(Domain.Entities.Vacancies.WageUnit.Annually, WagePresenter.AnnualWageText)]
-        [TestCase(Domain.Entities.Vacancies.WageUnit.NotApplicable, "")]
-        public void ShouldGetHeaderDisplayTextForWageUnit(Domain.Entities.Vacancies.WageUnit wageUnit, string expected)
+        [TestCase(WageUnit.Weekly, WagePresenter.WeeklyWageText)]
+        [TestCase(WageUnit.Monthly, WagePresenter.MonthlyWageText)]
+        [TestCase(WageUnit.Annually, WagePresenter.AnnualWageText)]
+        [TestCase(WageUnit.NotApplicable, "")]
+        public void ShouldGetHeaderDisplayTextForWageUnit(WageUnit wageUnit, string expected)
         {
             // Act.
             var actual = wageUnit.GetHeaderDisplayText();
@@ -39,11 +39,11 @@
             actual.Should().Be(expected);
         }
 
-        [TestCase(Domain.Entities.Vacancies.WageUnit.Weekly, WagePresenter.PerWeekText)]
-        [TestCase(Domain.Entities.Vacancies.WageUnit.Monthly, WagePresenter.PerMonthText)]
-        [TestCase(Domain.Entities.Vacancies.WageUnit.Annually, WagePresenter.PerYearText)]
-        [TestCase(Domain.Entities.Vacancies.WageUnit.NotApplicable, "")]
-        public void ShouldGetWagePostfix(Domain.Entities.Vacancies.WageUnit wageUnit, string expected)
+        [TestCase(WageUnit.Weekly, WagePresenter.PerWeekText)]
+        [TestCase(WageUnit.Monthly, WagePresenter.PerMonthText)]
+        [TestCase(WageUnit.Annually, WagePresenter.PerYearText)]
+        [TestCase(WageUnit.NotApplicable, "")]
+        public void ShouldGetWagePostfix(WageUnit wageUnit, string expected)
         {
             // Act.
             var actual = wageUnit.GetWagePostfix();
@@ -81,29 +81,29 @@
             actual.Should().Be(expected);
         }
 
-        [TestCase(WageType.LegacyWeekly, Domain.Entities.Vacancies.WageUnit.Weekly)]
-        [TestCase(WageType.LegacyText, Domain.Entities.Vacancies.WageUnit.NotApplicable)]
-        [TestCase(WageType.ApprenticeshipMinimum, Domain.Entities.Vacancies.WageUnit.Weekly)]
-        [TestCase(WageType.NationalMinimum, Domain.Entities.Vacancies.WageUnit.Weekly)]
-        public void ShouldGetTheCorrectWageUnitForNonCustomWages(WageType wageType, Domain.Entities.Vacancies.WageUnit expected)
+        [TestCase(WageType.LegacyWeekly, WageUnit.Weekly)]
+        [TestCase(WageType.LegacyText, WageUnit.NotApplicable)]
+        [TestCase(WageType.ApprenticeshipMinimum, WageUnit.Weekly)]
+        [TestCase(WageType.NationalMinimum, WageUnit.Weekly)]
+        public void ShouldGetTheCorrectWageUnitForNonCustomWages(WageType wageType, WageUnit expected)
         {
             var wage = new Wage(wageType, null, string.Empty, WageUnit.NotApplicable);
             // Act.
-            var actual = wage.GetWageUnit();
+            var actual = wage.Unit;
 
             // Assert.
             actual.Should().Be(expected);
         }
 
-        [TestCase(WageUnit.Weekly, Domain.Entities.Vacancies.WageUnit.Weekly)]
-        [TestCase(WageUnit.Monthly, Domain.Entities.Vacancies.WageUnit.Monthly)]
-        [TestCase(WageUnit.Annually, Domain.Entities.Vacancies.WageUnit.Annually)]
-        [TestCase(WageUnit.NotApplicable, Domain.Entities.Vacancies.WageUnit.NotApplicable)]
-        public void ShouldGetTheCorrectWageUnitForCustomWages(WageUnit wageUnit, Domain.Entities.Vacancies.WageUnit expected)
+        [TestCase(WageUnit.Weekly, WageUnit.Weekly)]
+        [TestCase(WageUnit.Monthly, WageUnit.Monthly)]
+        [TestCase(WageUnit.Annually, WageUnit.Annually)]
+        [TestCase(WageUnit.NotApplicable, WageUnit.NotApplicable)]
+        public void ShouldGetTheCorrectWageUnitForCustomWages(WageUnit wageUnit, WageUnit expected)
         {
             var wage = new Wage(WageType.Custom, null, string.Empty, wageUnit);
 
-            var actual = wage.GetWageUnit();
+            var actual = wage.Unit;
 
             actual.Should().Be(expected);
         }
