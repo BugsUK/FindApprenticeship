@@ -1,11 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
-    using Common.Extensions;
     using Constants;
     using Mediators.VacancyManagement;
-    using Mediators.VacancyPosting;
-    using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using SFA.Infrastructure.Interfaces;
 
@@ -32,7 +29,7 @@
         {
             var response = _vacancyManagementMediator.Delete(vacancyViewModel);
             SetUserMessage(response.Message);
-            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, vacancyViewModel);
+            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, vacancyViewModel.RouteValues);
         }
     }
 }
