@@ -916,7 +916,7 @@ order by HistoryDate desc
             _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.VacancyId);
 
             _logger.Info(
-                $"Calling database to create the following domain vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented)}");
+                $"Calling database to create the following domain vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new ExcludeLiveClosingDateResolver()})}");
 
             UpdateEntityTimestamps(entity);
 
@@ -925,7 +925,7 @@ order by HistoryDate desc
             PopulateIds(entity, dbVacancy);
 
             _logger.Info(
-                $"Calling database to create the following database vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented)}");
+                $"Calling database to create the following database vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
             
             dbVacancy.VacancyId = (int) _getOpenConnection.Insert(dbVacancy);
 
@@ -945,7 +945,7 @@ order by HistoryDate desc
             _logger.Debug("Calling database to update apprenticeship vacancy with id={0}", entity.VacancyId);
 
             _logger.Info(
-                $"Calling database to update the following vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented)}");
+                $"Calling database to update the following vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
             
             UpdateEntityTimestamps(entity); // Do we need this?
 
@@ -956,7 +956,7 @@ order by HistoryDate desc
             var previousVacancyState = GetVacancyByVacancyId(entity.VacancyId);
 
             _logger.Info(
-                $"Calling database to update the following vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented)}");
+                $"Calling database to update the following vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
 
             _getOpenConnection.UpdateSingle(dbVacancy);
 
