@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using Constants;
     using Mediators.VacancyManagement;
+    using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Vacancy;
     using SFA.Infrastructure.Interfaces;
 
