@@ -1,7 +1,6 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     using System;
-    using Entities.Vacancies;
 
     public class Wage
     {

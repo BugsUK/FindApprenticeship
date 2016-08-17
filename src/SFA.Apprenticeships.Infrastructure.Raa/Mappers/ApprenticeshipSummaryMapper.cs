@@ -8,9 +8,11 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class ApprenticeshipSummaryMapper
     {
