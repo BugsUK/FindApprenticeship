@@ -5,6 +5,8 @@
     using Infrastructure.Communication.Email.EmailMessageFormatters;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class EmailDailyDigestMessageFormatterBuilder
     {
         private readonly Mock<IConfigurationService> _configurationService;

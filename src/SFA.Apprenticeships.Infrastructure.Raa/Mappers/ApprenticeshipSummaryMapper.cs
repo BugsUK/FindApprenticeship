@@ -14,6 +14,8 @@
     using Presentation;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApprenticeshipSummaryMapper
     {
         public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IList<Category> categories, ILogService logService)

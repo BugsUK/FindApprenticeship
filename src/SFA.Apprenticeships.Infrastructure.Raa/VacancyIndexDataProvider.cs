@@ -12,6 +12,8 @@
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     /// <summary>
     /// TODO: This class will eventually use an RAA service for the data rather than referencing repositories directly.
     /// This service does not exist yet and so the simplest approach has been used for now

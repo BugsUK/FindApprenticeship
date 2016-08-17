@@ -7,7 +7,8 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using Strategies;
 
     public class ApplicationStatusProcessor : IApplicationStatusProcessor

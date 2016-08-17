@@ -5,7 +5,8 @@
     using Configuration;
     using Domain.Entities.Raa.Vacancies;
     using Interfaces.Vacancies;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class VacancyLockingService : IVacancyLockingService
     {

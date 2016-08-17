@@ -14,6 +14,9 @@
     using Logging.IoC;
     using Nest;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
 
     [TestFixture]

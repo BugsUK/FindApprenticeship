@@ -7,6 +7,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;

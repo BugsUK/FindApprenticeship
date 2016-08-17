@@ -9,7 +9,7 @@ using SFA.Apprenticeships.Web.Common.Models.Common;
 
 namespace SFA.Apprenticeships.Web.Common.Providers
 {
-    using SFA.Infrastructure.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class CookieAuthorizationDataProvider : ICookieAuthorizationDataProvider
     {

@@ -5,7 +5,7 @@
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using Interfaces;
 
     public class UpsertVacancyStrategy : IUpsertVacancyStrategy
     {

@@ -18,6 +18,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     [Parallelizable]
     public class FeedbackTests : MediatorBase

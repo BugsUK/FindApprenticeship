@@ -5,6 +5,8 @@
     using Application.Vacancies;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyStatusControlQueueConsumer : AzureControlQueueConsumer

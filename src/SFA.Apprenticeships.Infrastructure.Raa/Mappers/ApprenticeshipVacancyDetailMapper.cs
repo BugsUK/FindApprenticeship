@@ -13,6 +13,9 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 

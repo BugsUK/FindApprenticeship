@@ -8,6 +8,8 @@
     using Common.Framework;
     using Raa.Common.Constants.Pages;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class HomeController : ManagementControllerBase
     {
         public HomeController(IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)

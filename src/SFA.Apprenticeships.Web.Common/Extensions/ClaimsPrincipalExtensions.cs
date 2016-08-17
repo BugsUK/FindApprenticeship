@@ -11,8 +11,9 @@
         {
             var claimsPrincipal = principal as ClaimsPrincipal;
             var ukprnClaim = claimsPrincipal?.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Ukprn);
+            var ukprnOverrideClaim = claimsPrincipal?.Claims.SingleOrDefault(c => c.Type == ClaimTypes.UkprnOverride);
 
-            return ukprnClaim?.Value;
+            return !string.IsNullOrEmpty(ukprnOverrideClaim?.Value) ? ukprnOverrideClaim.Value : ukprnClaim?.Value;
         }
 
         public static string GetRoleList(this IPrincipal principal)

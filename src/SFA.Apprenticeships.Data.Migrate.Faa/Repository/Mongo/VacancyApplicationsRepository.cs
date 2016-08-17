@@ -6,6 +6,8 @@
     using Configuration;
     using Entities.Mongo;
     using MongoDB.Driver;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyApplicationsRepository

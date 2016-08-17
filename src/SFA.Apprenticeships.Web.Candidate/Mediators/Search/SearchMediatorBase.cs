@@ -12,6 +12,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Common.Constants;
     using Common.Models.Common;
     using Common.Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels.VacancySearch;
 

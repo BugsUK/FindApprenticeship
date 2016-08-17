@@ -5,6 +5,9 @@
     using Common.Providers;
     using SFA.Infrastructure.Interfaces;
     using Search;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Candidate;
 
     public abstract class ApplicationMediatorBase : SearchMediatorBase

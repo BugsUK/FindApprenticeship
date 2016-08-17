@@ -9,6 +9,7 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using System.Collections;
+    using Application.Interfaces;
 
     public class CommonApplicationRepository
     {

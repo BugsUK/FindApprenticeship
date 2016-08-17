@@ -5,6 +5,9 @@
     using Domain.Entities.Raa.Locations;
     using FluentAssertions;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]

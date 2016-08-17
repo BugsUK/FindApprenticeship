@@ -8,6 +8,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Home
     using Common.Constants;
     using Constants.Pages;
     using Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Validators;
     using ViewModels.Home;
 

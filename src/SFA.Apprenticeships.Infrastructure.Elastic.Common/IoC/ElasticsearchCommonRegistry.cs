@@ -2,6 +2,9 @@
 {
     using SFA.Infrastructure.Interfaces;
     using Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap.Configuration.DSL;
 
     public class ElasticsearchCommonRegistry : Registry

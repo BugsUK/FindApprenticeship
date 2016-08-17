@@ -11,6 +11,8 @@
     using MongoDB.Driver;
     using Repository.Mongo;
     using Repository.Sql;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyApplicationsMigrationProcessor : IMigrationProcessor

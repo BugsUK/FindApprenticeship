@@ -5,9 +5,11 @@
     using Configuration;
     using CurrentUser;
     using DateTime;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
-    using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
 
     public class CommonRegistry : Registry

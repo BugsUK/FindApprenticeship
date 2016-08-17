@@ -13,6 +13,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
     using Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
     using Domain.Entities.Raa.Users;
     using Domain.Raa.Interfaces.Repositories;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]

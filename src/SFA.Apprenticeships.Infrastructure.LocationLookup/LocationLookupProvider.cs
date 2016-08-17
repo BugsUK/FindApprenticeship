@@ -8,6 +8,9 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     internal class LocationLookupProvider : ILocationLookupProvider

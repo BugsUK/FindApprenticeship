@@ -6,6 +6,9 @@
     using Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Mappers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap.Configuration.DSL;
 
     public class VacancySearchRegistry : Registry

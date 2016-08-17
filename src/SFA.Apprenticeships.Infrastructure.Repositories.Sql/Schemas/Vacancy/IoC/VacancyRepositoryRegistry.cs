@@ -4,7 +4,7 @@
     using SFA.Infrastructure.Interfaces;
     using Vacancy;
     using StructureMap.Configuration.DSL;
-
+    using Application.Interfaces;
     public class VacancyRepositoryRegistry : Registry
     {
         public VacancyRepositoryRegistry()

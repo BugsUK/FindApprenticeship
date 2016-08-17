@@ -10,6 +10,9 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using MongoUser = Infrastructure.Repositories.Mongo.Users.Entities.MongoUser;
 
 

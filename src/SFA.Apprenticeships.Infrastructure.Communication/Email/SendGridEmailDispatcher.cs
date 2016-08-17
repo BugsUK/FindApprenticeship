@@ -7,12 +7,14 @@
     using System.Net;
     using System.Net.Mail;
     using Application.Interfaces.Communications;
-    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Exceptions;
     using EmailFromResolvers;
     using Exceptions;
     using SendGrid;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     public class SendGridEmailDispatcher : IEmailDispatcher

@@ -11,6 +11,8 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class TraineeshipSummaryMapper
     {
         public static TraineeshipSummary GetTraineeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IList<Category> categories, ILogService logService)

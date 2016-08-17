@@ -11,6 +11,8 @@
     using Domain.Interfaces.Repositories;
     using Newtonsoft.Json;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CandidateDailyDigestCommunicationCommand : CandidateCommunicationCommand
     {
         public CandidateDailyDigestCommunicationCommand(

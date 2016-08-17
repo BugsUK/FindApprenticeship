@@ -11,6 +11,8 @@
     using Entities;
     using Rest;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class PostcodeLookupProvider : RestService, IPostcodeLookupProvider
     {
         private readonly ILogService _logger;

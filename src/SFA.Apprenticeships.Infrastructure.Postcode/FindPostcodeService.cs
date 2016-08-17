@@ -9,6 +9,8 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
     using Entities;
     using Rest;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class FindPostcodeService : RestService, IFindPostcodeService
     {
         private readonly ILogService _logger;

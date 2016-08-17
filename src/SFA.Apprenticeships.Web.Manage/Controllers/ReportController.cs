@@ -7,6 +7,9 @@
     using Common.Validators.Extensions;
     using Domain.Entities.Raa;
     using Mediators.Reporting;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels;
     using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Raa)]

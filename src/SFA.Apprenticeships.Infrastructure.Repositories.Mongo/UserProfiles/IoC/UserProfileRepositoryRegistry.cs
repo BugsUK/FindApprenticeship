@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.IoC
 {
-    using Domain.Raa.Interfaces.Repositories;
     using Mappers;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using StructureMap.Configuration.DSL;
 
     public class UserProfileRepositoryRegistry : Registry

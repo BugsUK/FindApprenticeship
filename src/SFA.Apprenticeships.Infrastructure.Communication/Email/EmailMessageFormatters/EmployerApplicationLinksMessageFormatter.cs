@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Application.Interfaces;
     using Application.Interfaces.Communications;
     using Configuration;
     using Newtonsoft.Json;

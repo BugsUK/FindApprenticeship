@@ -4,7 +4,7 @@
     using Configuration;
     using Domain.Entities.Communication;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using Interfaces;
 
     public class SubmitContactMessageStrategy : ISubmitContactMessageStrategy
     {

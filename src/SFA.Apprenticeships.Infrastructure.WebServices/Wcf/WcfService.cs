@@ -5,8 +5,9 @@
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
     using SFA.Infrastructure.Interfaces;
-    using Common.Configuration;
     using Domain.Entities.Exceptions;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class WcfService<T> : IWcfService<T>
     {
@@ -73,19 +74,19 @@
             }
             catch (ServerTooBusyException e)
             {
-                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+                throw new BoundaryException(WebServices.ErrorCodes.WebServiceFailed, e);
             }
             catch (EndpointNotFoundException e)
             {
-                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+                throw new BoundaryException(WebServices.ErrorCodes.WebServiceFailed, e);
             }
             catch (CommunicationException e)
             {
-                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+                throw new BoundaryException(WebServices.ErrorCodes.WebServiceFailed, e);
             }
             catch (TimeoutException e)
             {
-                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+                throw new BoundaryException(WebServices.ErrorCodes.WebServiceFailed, e);
             }
             finally
             {

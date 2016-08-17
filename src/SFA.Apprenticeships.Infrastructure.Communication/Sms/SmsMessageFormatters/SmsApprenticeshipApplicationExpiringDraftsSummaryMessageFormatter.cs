@@ -8,6 +8,8 @@
     using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SmsApprenticeshipApplicationExpiringDraftsSummaryMessageFormatter : SmsMessageFormatter
     {
         public SmsApprenticeshipApplicationExpiringDraftsSummaryMessageFormatter(IConfigurationService configurationService)

@@ -3,7 +3,7 @@
     using System.Linq;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
-    using Infrastructure.Interfaces;
+    using Interfaces;
     using Interfaces.Providers;
 
     public class ProviderVacancyAuthorisationService : IProviderVacancyAuthorisationService
@@ -28,6 +28,11 @@
             }
 
             var ukprn = _currentUserService.GetClaimValue("ukprn");
+            var ukprnoverride = _currentUserService.GetClaimValue("ukprnoverride");
+            if (!string.IsNullOrEmpty(ukprnoverride))
+            {
+                ukprn = ukprnoverride;
+            }
             var provider = _providerService.GetProvider(ukprn);
             var vacancyId = vacancy.VacancyId;
             var providerId = vacancy.ProviderId;

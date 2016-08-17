@@ -8,6 +8,8 @@
     using Infrastructure.LegacyWebServices.Wcf;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class LegacyCandidateProviderBuilder
     {
         private IWcfService<GatewayServiceContract> _service = new Mock<IWcfService<GatewayServiceContract>>().Object;

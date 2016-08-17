@@ -1,16 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Common;
     using Common.Configuration;
     using Domain.Entities.Raa.Users;
-    using Domain.Interfaces.Repositories;
-    using Domain.Raa.Interfaces.Repositories;
     using Entities;
     using MongoDB.Driver.Builders;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class UserProfileRepository : GenericMongoClient2<MongoProviderUser>//, IProviderUserReadRepository, IProviderUserWriteRepository
     {

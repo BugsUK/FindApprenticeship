@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Security
 {
     using System;
+    using Application.Interfaces;
     using FluentAssertions;
     using Infrastructure.Security;
     using Infrastructure.Security.Configuration;

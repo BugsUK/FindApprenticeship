@@ -3,6 +3,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Report
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using Apprenticeships.Application.Interfaces;
     using Common.Mediators;
     using CsvHelper.Configuration;
     using Domain.Entities.Raa.Reporting;

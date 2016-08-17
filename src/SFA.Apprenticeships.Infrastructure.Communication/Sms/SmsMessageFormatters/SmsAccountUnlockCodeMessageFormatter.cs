@@ -4,7 +4,8 @@
     using System.Linq;
     using Application.Interfaces.Communications;
     using Configuration;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SmsAccountUnlockCodeMessageFormatter : SmsMessageFormatter
     {

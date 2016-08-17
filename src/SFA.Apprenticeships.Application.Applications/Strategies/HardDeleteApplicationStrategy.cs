@@ -3,7 +3,8 @@
     using System;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class HardDeleteApplicationStrategy : IHardDeleteApplicationStrategy
     {

@@ -7,6 +7,7 @@
     using Interfaces.Providers;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
 
     public class ProviderServiceBuilder

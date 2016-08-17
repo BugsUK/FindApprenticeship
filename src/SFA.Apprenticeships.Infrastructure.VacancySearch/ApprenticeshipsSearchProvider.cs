@@ -13,6 +13,9 @@
     using Elastic.Common.Configuration;
     using Nest;
     using Newtonsoft.Json.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ApprenticeshipSummary = Elastic.Common.Entities.ApprenticeshipSummary;
 
     public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>

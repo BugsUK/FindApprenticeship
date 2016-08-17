@@ -11,6 +11,8 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
@@ -438,7 +440,7 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
             // Not all the vacancies have CountyId (before being accepted by QA).
             // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
             
-            if (dbVacancy.CountyId > 0)
+            if (result.Address != null && dbVacancy.CountyId > 0)
             {
                 result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT FullName

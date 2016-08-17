@@ -6,8 +6,8 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
-    using Interfaces.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SaveCandidateStrategy : ISaveCandidateStrategy
     {

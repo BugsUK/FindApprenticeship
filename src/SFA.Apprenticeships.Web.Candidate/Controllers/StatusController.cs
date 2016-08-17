@@ -6,6 +6,8 @@
     using SFA.Infrastructure.Interfaces;
     using Providers;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class StatusController : CandidateControllerBase
     {
         private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;

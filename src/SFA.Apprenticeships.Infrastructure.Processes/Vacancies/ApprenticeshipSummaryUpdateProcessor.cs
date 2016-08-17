@@ -12,6 +12,8 @@
     using Elastic = Elastic.Common.Entities;
     using Extensions;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApprenticeshipSummaryUpdateProcessor : IApprenticeshipSummaryUpdateProcessor
     {
         private readonly ILogService _logService;

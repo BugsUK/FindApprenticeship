@@ -15,6 +15,8 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     [Parallelizable]
     public class SubmitApprenticeshipApplicationRequestSubscriberTests

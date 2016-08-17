@@ -10,6 +10,8 @@
     using Mongo.Common.Configuration;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class SavedSearchRepository : GenericMongoClient<MongoSavedSearch>, ISavedSearchReadRepository, ISavedSearchWriteRepository

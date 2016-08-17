@@ -3,6 +3,8 @@
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AzureControlQueue : IJobControlQueue<StorageQueueMessage>
     {
         private readonly ILogService _logger;

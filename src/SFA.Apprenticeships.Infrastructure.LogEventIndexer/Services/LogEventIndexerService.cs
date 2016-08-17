@@ -7,6 +7,8 @@
     using Nest;
     using Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class LogEventIndexerService : ILogEventIndexerService
     {
         private IConfigurationService _configurationService;

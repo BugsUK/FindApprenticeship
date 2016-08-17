@@ -14,6 +14,8 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
     using SFA.Infrastructure.Interfaces;
     using Logging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class WorkerRole : RoleEntryPoint
     {
         private const string ProcessName = "Log Processor";

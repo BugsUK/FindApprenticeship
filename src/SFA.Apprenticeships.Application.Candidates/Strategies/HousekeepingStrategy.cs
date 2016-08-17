@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
 {
     using System;
-    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public abstract class HousekeepingStrategy : IHousekeepingStrategy
     {

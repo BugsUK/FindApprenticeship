@@ -6,6 +6,8 @@
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute

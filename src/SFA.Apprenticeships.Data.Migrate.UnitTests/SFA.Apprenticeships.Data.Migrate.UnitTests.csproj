@@ -163,6 +163,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Data.Migrate.Faa\SFA.Apprenticeships.Data.Migrate.Faa.csproj">
       <Project>{a8bfd333-2d6b-4d91-b544-97c269212b06}</Project>
       <Name>SFA.Apprenticeships.Data.Migrate.Faa</Name>

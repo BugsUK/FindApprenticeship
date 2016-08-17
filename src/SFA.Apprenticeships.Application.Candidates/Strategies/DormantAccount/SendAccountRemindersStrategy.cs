@@ -1,12 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.DormantAccount
 {
     using System;
-    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SendAccountRemindersStrategy : HousekeepingStrategy
     {

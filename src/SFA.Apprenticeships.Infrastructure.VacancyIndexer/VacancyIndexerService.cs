@@ -11,6 +11,8 @@
 
     using Application.Candidate.Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
         where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
         where TDestinationSummary : class, IVacancySummary

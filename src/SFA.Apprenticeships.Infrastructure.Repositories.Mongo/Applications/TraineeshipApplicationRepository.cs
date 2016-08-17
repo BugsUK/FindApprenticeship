@@ -11,6 +11,8 @@
     using Common.Configuration;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 

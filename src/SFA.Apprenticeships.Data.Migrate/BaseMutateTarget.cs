@@ -3,6 +3,8 @@
     using SFA.Infrastructure.Interfaces;
     using System;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public abstract class BaseMutateTarget
     {
         protected ILogService _log;

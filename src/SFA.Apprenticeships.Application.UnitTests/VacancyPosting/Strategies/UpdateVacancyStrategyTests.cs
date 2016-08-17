@@ -5,6 +5,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
+    using Interfaces;
     using Interfaces.Providers;
     using Moq;
     using NUnit.Framework;

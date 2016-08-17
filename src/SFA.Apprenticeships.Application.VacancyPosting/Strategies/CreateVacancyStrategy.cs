@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
 {
     using CuttingEdge.Conditions;
-    using Domain.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Interfaces;
+    using ErrorCodes = Domain.Entities.ErrorCodes;
 
     public class CreateVacancyStrategy : ICreateVacancyStrategy
     {
