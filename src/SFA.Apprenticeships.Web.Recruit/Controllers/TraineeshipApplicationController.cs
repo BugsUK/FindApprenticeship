@@ -68,7 +68,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewTraineeshipApplication, viewModel);
 
                 case TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
