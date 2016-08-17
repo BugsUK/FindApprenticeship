@@ -267,7 +267,7 @@
                             @Html.Partial("_applicationStatus", applicationSummary.Status)
                         </td>
                         <td>
-                            <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId))" title="View @applicationSummary.ApplicantName application">View application</a><br/>
+                            <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId).RouteValues)" title="View @applicationSummary.ApplicantName application">View application</a><br/>
                             <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new { application = applicationSummary.AnonymousLinkData })" title="View anonymous application">Anonymous view</a>
                         </td>
                     </tr>
