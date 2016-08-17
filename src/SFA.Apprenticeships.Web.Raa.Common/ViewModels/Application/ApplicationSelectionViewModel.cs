@@ -20,5 +20,16 @@
         }
 
         public Guid ApplicationId { get; set; }
+
+        public override object RouteValues => new
+        {
+            ApplicationId,
+            VacancyReferenceNumber,
+            FilterType,
+            OrderByField,
+            Order,
+            PageSize,
+            CurrentPage
+        };
     }
 }
