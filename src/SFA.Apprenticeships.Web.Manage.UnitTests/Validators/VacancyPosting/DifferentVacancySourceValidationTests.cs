@@ -5,11 +5,14 @@
     using Common.Validators;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentValidation;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     [Parallelizable]

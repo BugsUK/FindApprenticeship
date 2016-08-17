@@ -2,9 +2,12 @@
 {
     using System;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Ploeh.AutoFixture;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyViewModelBuilder
     {

@@ -53,35 +53,7 @@
             // Assert.
             actual.Should().Be(expected);
         }
-
-        [TestCase(WageUnit.Weekly, null)]
-        [TestCase(WageUnit.Monthly, "")]
-        [TestCase(WageUnit.Annually, "  ")]
-        [TestCase(WageUnit.NotApplicable, "")]
-        public void ShouldExpectDisplayAmountBeforeAddingFrequencyPostfix(WageUnit wageUnit, string displayAmount)
-        {
-            // Act.
-            try
-            {
-                wageUnit.GetDisplayAmountWithFrequencyPostfix(displayAmount);
-            }
-            catch (Exception ex)
-            {
-                // Assert.
-                if (displayAmount == null)
-                {
-                    ex.Should().BeOfType<ArgumentNullException>();
-                }
-                else
-                {
-                    ex.Should().BeOfType<ArgumentException>();
-                }
-            }
-
-            // Assert.
-            Assert.Pass();
-        }
-
+        
         [TestCase(WageType.LegacyText, "Competitive salary", "123.45", null, "Competitive salary")]
         [TestCase(WageType.LegacyText, null, "123.45", null, WagePresenter.UnknownText)]
         public void ShouldGetDisplayText(

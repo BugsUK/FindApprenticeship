@@ -7,12 +7,14 @@
     using Common.ViewModels;
     using Controllers;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Vacancy;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
 
     [TestFixture]
     public class VacancyControllerIntegrationTests : ManageWebIntegrationTestsBase

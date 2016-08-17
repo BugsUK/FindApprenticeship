@@ -1,4 +1,5 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -10,7 +11,7 @@
 
 <div class="@editableItemClass">
     <h3 class="bold-small">
-        @if (Model.VacancyType == VacancyType.Traineeship)
+        @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
         {
             <span>Weekly hours</span>
         }
@@ -21,7 +22,7 @@
         }
     </h3>
     <p id="vacancy-working-week" itemprop="workHours" class="@Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">@Model.FurtherVacancyDetailsViewModel.WorkingWeek</p>
-    @if (Model.VacancyType == VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.HoursPerWeek.HasValue)
+    @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.HoursPerWeek.HasValue)
     {
         <a name="furthervacancydetailsviewmodel_hoursperweek"></a>
         <p id="total-hours-per-week">Total hours per week: @Model.FurtherVacancyDetailsViewModel.HoursPerWeek</p>
@@ -33,7 +34,7 @@
     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WorkingWeek, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WorkingWeekComment))
 </div>
 
-@if (Model.VacancyType == VacancyType.Apprenticeship)
+@if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship)
 {
     <div class="@editableItemClass">
         <h3 class="bold-small">

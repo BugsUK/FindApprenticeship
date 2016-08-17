@@ -4,6 +4,7 @@
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Manage.Mediators.Vacancy;
     using Moq;
     using NUnit.Framework;

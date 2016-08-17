@@ -155,6 +155,7 @@
     <Compile Include="Vacancies\VacancySummary.cs" />
     <Compile Include="Vacancies\VacancyType.cs" />
     <Compile Include="Vacancies\LegacyWageType.cs" />
+    <Compile Include="Vacancies\WageType.cs" />
     <Compile Include="Vacancies\WageUnit.cs" />
   </ItemGroup>
   <ItemGroup />

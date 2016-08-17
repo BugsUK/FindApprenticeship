@@ -9,12 +9,14 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
 
     [TestFixture, Category("Acceptance")]
     public class VacancyPostingControllerEndToEndTests : RecruitWebEndToEndTestsBase
