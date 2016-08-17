@@ -11,6 +11,8 @@
     [Parallelizable]
     public class WagePresenterTests
     {
+        private const string Space = " ";
+
         [TestCase(WageUnit.Weekly, WagePresenter.WeeklyWageText)]
         [TestCase(WageUnit.Annually, WagePresenter.AnnualWageText)]
         [TestCase(WageUnit.Monthly, WagePresenter.MonthlyWageText)]
@@ -39,17 +41,45 @@
             actual.Should().Be(expected);
         }
 
-        [TestCase(WageUnit.Weekly, WagePresenter.PerWeekText)]
-        [TestCase(WageUnit.Monthly, WagePresenter.PerMonthText)]
-        [TestCase(WageUnit.Annually, WagePresenter.PerYearText)]
-        [TestCase(WageUnit.NotApplicable, "")]
-        public void ShouldGetWagePostfix(WageUnit wageUnit, string expected)
+        [TestCase(WageUnit.Weekly, "5", "5" + Space + WagePresenter.PerWeekText)]
+        [TestCase(WageUnit.Monthly, "5", "5" + Space + WagePresenter.PerMonthText)]
+        [TestCase(WageUnit.Annually, "5", "5" + Space + WagePresenter.PerYearText)]
+        [TestCase(WageUnit.NotApplicable, "5", "5" + Space)]
+        public void ShouldGetDisplayAmountWithFrequencyPostfix(WageUnit wageUnit, string displayAmount, string expected)
         {
             // Act.
-            var actual = wageUnit.GetWagePostfix();
+            var actual = wageUnit.GetDisplayAmountWithFrequencyPostfix(displayAmount);
 
             // Assert.
             actual.Should().Be(expected);
+        }
+
+        [TestCase(WageUnit.Weekly, null)]
+        [TestCase(WageUnit.Monthly, "")]
+        [TestCase(WageUnit.Annually, "  ")]
+        [TestCase(WageUnit.NotApplicable, "")]
+        public void ShouldExpectDisplayAmountBeforeAddingFrequencyPostfix(WageUnit wageUnit, string displayAmount)
+        {
+            // Act.
+            try
+            {
+                wageUnit.GetDisplayAmountWithFrequencyPostfix(displayAmount);
+            }
+            catch (Exception ex)
+            {
+                // Assert.
+                if (displayAmount == null)
+                {
+                    ex.Should().BeOfType<ArgumentNullException>();
+                }
+                else
+                {
+                    ex.Should().BeOfType<ArgumentException>();
+                }
+            }
+
+            // Assert.
+            Assert.Pass();
         }
 
         [TestCase(WageType.LegacyText, "Competitive salary", "123.45", null, "Competitive salary")]
@@ -75,7 +105,7 @@
             var wage = new Wage(wageType, wageAmount, wageText, WageUnit.NotApplicable);
 
             // Act.
-            var actual = wage.GetDisplayText(Convert.ToDecimal(hoursPerWeek));
+            var actual = wage.GetDisplayAmount(Convert.ToDecimal(hoursPerWeek));
 
             // Assert.
             actual.Should().Be(expected);

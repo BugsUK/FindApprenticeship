@@ -47,7 +47,7 @@
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
-                    Wage = wage.GetDisplayText(vacancy.HoursPerWeek),
+                    Wage = wage.GetDisplayAmount(vacancy.HoursPerWeek),
                     WageUnit = wage.Unit,
                     WorkingWeek = vacancy.WorkingWeek,
                     CategoryCode = category.CodeName,

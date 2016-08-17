@@ -2,6 +2,7 @@
 {
     using System;
     using Constants;
+    using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
 
@@ -39,18 +40,25 @@
                     throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
             }
         }
-        
-        public static string GetWagePostfix(this Domain.Entities.Vacancies.WageUnit wageUnit)
+
+        public static string GetDisplayAmountWithFrequencyPostfix(this WageUnit wageUnit, string displayAmount)
+        {
+            Condition.Requires(displayAmount).IsNotNullOrEmpty();
+
+            return $"{displayAmount} {wageUnit.GetWagePostfix()}";
+        }
+
+        private static string GetWagePostfix(this WageUnit wageUnit)
         {
             switch (wageUnit)
             {
-                case Domain.Entities.Vacancies.WageUnit.Annually:
+                case WageUnit.Annually:
                     return PerYearText;
 
-                case Domain.Entities.Vacancies.WageUnit.Monthly:
+                case WageUnit.Monthly:
                     return PerMonthText;
 
-                case Domain.Entities.Vacancies.WageUnit.Weekly:
+                case WageUnit.Weekly:
                     return PerWeekText;
 
                 // TODO: HOTFIX: should revert this change.
@@ -58,7 +66,7 @@
                     return string.Empty;
 
                     /*
-                    case Domain.Entities.Vacancies.WageUnit.NotApplicable:
+                    case WageUnit.NotApplicable:
                         return string.Empty;
 
                     default:
@@ -67,7 +75,7 @@
             }
         }
 
-        public static string GetDisplayText(this Wage wage, decimal? hoursPerWeek)
+        public static string GetDisplayAmount(this Wage wage, decimal? hoursPerWeek)
         {
             switch (wage.Type)
             {
