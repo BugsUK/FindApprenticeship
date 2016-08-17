@@ -9,6 +9,8 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class VacancyAboutToExpireSubscriber : IServiceBusSubscriber<VacancyAboutToExpire>
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;

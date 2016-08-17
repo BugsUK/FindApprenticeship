@@ -8,6 +8,8 @@
     using Infrastructure.Repositories.Mongo.Communication.Entities;
     using MongoDB.Driver.Linq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ExpiringDraftsMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationExpiringDraft>, IExpiringDraftsMetricsRepository
     {
         public ExpiringDraftsMetricsRepository(IConfigurationService configurationService)

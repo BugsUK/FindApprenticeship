@@ -5,7 +5,7 @@
     using Domain.Interfaces.Messaging;
     using Entities;
     using Extensions;
-    using Infrastructure.Interfaces;
+    using Interfaces;
 
     public class ApplicationStatusAlertStrategy : IApplicationStatusAlertStrategy
     {

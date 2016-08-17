@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Interfaces.Communications;
-    using Infrastructure.Interfaces;
+    using Interfaces;
     using Strategies;
 
     public class ProviderCommunicationService : IProviderCommunicationService

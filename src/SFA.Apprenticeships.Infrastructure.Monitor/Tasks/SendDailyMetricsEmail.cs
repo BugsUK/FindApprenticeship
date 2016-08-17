@@ -13,6 +13,8 @@
     using Provider;
     using Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SendDailyMetricsEmail : IDailyMetricsTask
     {
         private const string DailyMetricsEmailFromSettingName = "Monitor.DailyMetrics.Email.From";

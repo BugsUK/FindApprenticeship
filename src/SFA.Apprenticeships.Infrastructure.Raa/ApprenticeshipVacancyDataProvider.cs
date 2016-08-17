@@ -12,6 +12,9 @@
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+    using ErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
+
     public class ApprenticeshipVacancyDataProvider : IVacancyDataProvider<ApprenticeshipVacancyDetail>
     {
         private readonly IVacancyReadRepository _vacancyReadRepository;

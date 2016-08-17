@@ -8,6 +8,9 @@
     using Infrastructure.Communication.IoC;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
 
     [TestFixture]

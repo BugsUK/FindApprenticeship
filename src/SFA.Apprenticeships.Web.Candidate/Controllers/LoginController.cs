@@ -21,6 +21,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Mediators;
     using Mediators.Login;
     using Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Login;
     using ViewModels.Register;
 

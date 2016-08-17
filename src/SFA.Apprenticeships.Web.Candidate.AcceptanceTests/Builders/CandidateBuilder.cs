@@ -6,7 +6,9 @@
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using IoC;
-    
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CandidateBuilder
     {
         public CandidateBuilder(string emailAddress)

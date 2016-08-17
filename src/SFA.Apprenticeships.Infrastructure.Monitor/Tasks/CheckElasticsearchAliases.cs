@@ -7,6 +7,8 @@
     using Elastic.Common.Configuration;
     using Nest;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     internal class CheckElasticsearchAliases : IMonitorTask
     {
         private readonly SearchConfiguration _elasticsearchConfiguration;

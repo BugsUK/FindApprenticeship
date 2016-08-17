@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Web.Mvc;
+    using Apprenticeships.Application.Interfaces;
     using Common.Constants;
     using Common.Mediators;
     using Common.Models.Azure.AccessControlService;

@@ -12,6 +12,8 @@
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     public class AuthenticateCandidateStrategyTests
     {

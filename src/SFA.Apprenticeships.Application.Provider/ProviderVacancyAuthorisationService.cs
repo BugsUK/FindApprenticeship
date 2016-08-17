@@ -3,7 +3,7 @@
     using System.Linq;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
-    using Infrastructure.Interfaces;
+    using Interfaces;
     using Interfaces.Providers;
 
     public class ProviderVacancyAuthorisationService : IProviderVacancyAuthorisationService

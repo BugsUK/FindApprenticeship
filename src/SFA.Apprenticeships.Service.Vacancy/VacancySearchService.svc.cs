@@ -12,6 +12,9 @@
     using Infrastructure.VacancySearch;
     using Infrastructure.VacancySearch.Configuration;
     using Infrastructure.VacancySearch.IoC;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
     using Types;
 

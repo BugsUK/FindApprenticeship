@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Candidate;
+    using Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     using Domain.Entities.Users;

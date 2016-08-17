@@ -28,6 +28,8 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
     using Application.Candidate.Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;

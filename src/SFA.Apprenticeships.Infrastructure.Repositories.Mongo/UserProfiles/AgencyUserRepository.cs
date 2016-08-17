@@ -7,7 +7,8 @@
     using Common.Configuration;
     using Entities;
     using MongoDB.Driver.Builders;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class AgencyUserRepository : GenericMongoClient2<MongoAgencyUser>, IAgencyUserReadRepository, IAgencyUserWriteRepository
     {

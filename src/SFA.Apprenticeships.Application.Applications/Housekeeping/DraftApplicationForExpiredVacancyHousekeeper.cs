@@ -5,8 +5,10 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
     using System.Linq;
     using Candidates.Configuration;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Strategies;
 
     public class DraftApplicationForExpiredVacancyHousekeeper : IDraftApplicationForExpiredVacancyHousekeeper

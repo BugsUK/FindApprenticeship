@@ -13,6 +13,8 @@
     using RestSharp;
     using RestSharp.Deserializers;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     /// <summary>
     /// Checks that Logstash log entries are being created.
     /// </summary>

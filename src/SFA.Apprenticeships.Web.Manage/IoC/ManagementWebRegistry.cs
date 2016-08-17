@@ -36,6 +36,8 @@
     using Mediators.Reporting;
     using Raa.Common.Providers;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ManagementWebRegistry : Registry
     {
         public ManagementWebRegistry()

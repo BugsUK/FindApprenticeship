@@ -2,6 +2,8 @@
 {
     using System.Web.Mvc;
     using Common.Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class SiteRootRedirect : ActionFilterAttribute

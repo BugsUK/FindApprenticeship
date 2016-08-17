@@ -3,8 +3,9 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
     using System.Diagnostics;
     using System.Linq;
     using Candidates.Configuration;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class RootApplicationHousekeeper : IRootApplicationHousekeeper
     {

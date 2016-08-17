@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces;
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;

@@ -14,6 +14,8 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Raa
     using Repositories.Sql.IoC;
 
     using Application.Candidate.Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using StructureMap;
 

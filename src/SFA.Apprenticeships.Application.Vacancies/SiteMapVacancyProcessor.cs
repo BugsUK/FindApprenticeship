@@ -5,7 +5,8 @@
     using System.Linq;
     using Domain.Entities.Vacancies;
     using Entities.SiteMap;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using Vacancy;
     using Vacancy.SiteMap;
 

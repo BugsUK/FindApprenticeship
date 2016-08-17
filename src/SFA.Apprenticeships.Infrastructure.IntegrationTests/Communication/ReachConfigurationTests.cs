@@ -7,6 +7,9 @@
     using Infrastructure.Communication.IoC;
     using Logging.IoC;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
     using FluentAssertions;
 

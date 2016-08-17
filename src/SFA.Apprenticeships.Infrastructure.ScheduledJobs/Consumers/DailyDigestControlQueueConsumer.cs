@@ -9,6 +9,8 @@
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class DailyDigestControlQueueConsumer : AzureControlQueueConsumer
     {
         private readonly ICommunicationProcessor _communicationProcessor;

@@ -10,6 +10,9 @@
     using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Vacancy;
     using Vacancy.SiteMap;
 

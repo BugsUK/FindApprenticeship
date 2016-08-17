@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
-    using Configuration;
     using Domain.Entities.Communication;
-    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SmsApprenticeshipApplicationUnsuccessfulMessageFormatter : SmsMessageFormatter
     {

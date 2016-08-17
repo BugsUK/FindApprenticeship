@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Application.Interfaces;
     using Common;
     using Common.Configuration;
     using Domain.Entities.Raa.Vacancies;

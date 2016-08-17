@@ -10,6 +10,8 @@
     using Domain.Interfaces.Repositories;
     using Extensions;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApplicationStatusChangedSubscriber : IServiceBusSubscriber<ApplicationStatusChanged>
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;

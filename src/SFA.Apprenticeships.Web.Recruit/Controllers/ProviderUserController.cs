@@ -14,6 +14,9 @@
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels;
     using SFA.Infrastructure.Interfaces;
     using SystemClaimTypes = System.Security.Claims.ClaimTypes;

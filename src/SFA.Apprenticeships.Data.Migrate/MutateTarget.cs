@@ -5,6 +5,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     /// <summary>
     /// Simple, single threaded synchronous implementation
     /// </summary>

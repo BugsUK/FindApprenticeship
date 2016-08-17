@@ -14,6 +14,9 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.VacancySearch;
 
     public class ApprenticeshipVacancyProvider : IApprenticeshipVacancyProvider

@@ -6,6 +6,8 @@
     using Infrastructure.Processes.Configuration;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApplicationStatusChangedSubscriberBuilder
     {
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();

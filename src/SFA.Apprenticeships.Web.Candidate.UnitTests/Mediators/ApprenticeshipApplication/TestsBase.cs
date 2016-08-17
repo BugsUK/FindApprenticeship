@@ -9,6 +9,8 @@
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public abstract class TestsBase
     {
         protected Mock<IApprenticeshipApplicationProvider> ApprenticeshipApplicationProvider;

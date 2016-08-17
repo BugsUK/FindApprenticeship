@@ -19,6 +19,8 @@
     using Common.Configuration;
     using Raa.Common.Configuration;
     using Recruit.Mediators.VacancyPosting;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class TestsBase

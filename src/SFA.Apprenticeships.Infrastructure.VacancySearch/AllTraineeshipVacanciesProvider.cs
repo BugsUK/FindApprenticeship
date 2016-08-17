@@ -5,6 +5,8 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AllTraineeshipVacanciesProvider : AllVacanciesProviderBase<TraineeshipSummary>, IAllTraineeshipVacanciesProvider
     {
         public AllTraineeshipVacanciesProvider(

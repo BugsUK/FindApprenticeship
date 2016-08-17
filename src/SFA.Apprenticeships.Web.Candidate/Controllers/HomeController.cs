@@ -14,6 +14,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using SFA.Infrastructure.Interfaces;
     using FluentValidation.Mvc;
     using Mediators.Home;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Home;
 
     public class HomeController : CandidateControllerBase

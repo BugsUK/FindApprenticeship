@@ -8,6 +8,8 @@
     using Monitor.Tasks;
     using Repository;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CheckUnsetTraineeshipApplicationLegacyId : IMonitorTask
     {
         private readonly ITraineeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;

@@ -6,7 +6,7 @@
     using Entities.Mongo;
     using Entities.Sql;
     using Repository.Sql;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
 
     public class ApplicationMappers : IApplicationMappers
     {

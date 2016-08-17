@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
     using System;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Security;
     using Common.Constants;
     using Common.Mediators;

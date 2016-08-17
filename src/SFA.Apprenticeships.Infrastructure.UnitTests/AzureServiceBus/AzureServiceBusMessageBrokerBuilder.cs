@@ -8,6 +8,8 @@
     using Domain.Interfaces.Messaging;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AzureServiceBusMessageBrokerBuilder<TMessage> where TMessage : class
     {
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();

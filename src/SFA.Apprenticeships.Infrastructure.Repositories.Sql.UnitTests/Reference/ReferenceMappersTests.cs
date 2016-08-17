@@ -6,6 +6,9 @@
     using SFA.Infrastructure.Interfaces;
     using Schemas.Reference;
     using Schemas.Reference.Entities;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using DomainSector = Domain.Entities.Raa.Vacancies.Sector;
     using DomainFramework = Domain.Entities.Raa.Reference.Framework;
     using DomainOccupation = Domain.Entities.Raa.Reference.Occupation;

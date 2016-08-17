@@ -9,6 +9,9 @@
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.Candidate;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels;
     using SFA.Infrastructure.Interfaces;
     public class CandidateController : ManagementControllerBase

@@ -19,6 +19,9 @@
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging;
     using Infrastructure.Logging.IoC;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
 
     public class MvcApplication : HttpApplication

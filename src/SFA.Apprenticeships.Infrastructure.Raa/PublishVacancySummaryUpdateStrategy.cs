@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.ReferenceData;
@@ -14,7 +15,6 @@
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
-    using SFA.Infrastructure.Interfaces;
 
     public class PublishVacancySummaryUpdateStrategy : IPublishVacancySummaryUpdateStrategy
     {

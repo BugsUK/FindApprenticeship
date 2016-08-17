@@ -6,6 +6,8 @@
     using SFA.Infrastructure.Interfaces;
     using Monitor.Tasks;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class MessageLossCheckTaskRunner : IMessageLossCheckTaskRunner
     {
         private readonly ILogService _logger;

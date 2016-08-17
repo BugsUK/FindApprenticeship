@@ -13,6 +13,8 @@
     using Raa.Common.Configuration;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 

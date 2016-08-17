@@ -2,8 +2,9 @@
 {
     using System.Text;
     using System.Security.Cryptography;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class RandomCodeGenerator : ICodeGenerator
     {
