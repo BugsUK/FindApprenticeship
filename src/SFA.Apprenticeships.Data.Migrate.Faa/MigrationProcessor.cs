@@ -46,7 +46,7 @@
 
             var migrationProcessors = new List<IMigrationProcessor>
             {
-                new CandidateMigrationProcessor(new CandidateMappers(_logService), syncRepository, genericSyncRespository, targetDatabase, _configurationService, _logService),
+                //new CandidateMigrationProcessor(new CandidateMappers(_logService), syncRepository, genericSyncRespository, targetDatabase, _configurationService, _logService),
                 new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService),
                 new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService)
             };
