@@ -11,6 +11,7 @@
     [Parallelizable]
     public class GatewayTraineeshipVacancySummaryMapperTests
     {
+        [Ignore("These are going to be deleted and are not to be used")]
         [Test]
         public void ShouldCreateAMap()
         {

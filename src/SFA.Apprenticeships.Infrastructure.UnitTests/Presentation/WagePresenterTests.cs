@@ -74,7 +74,7 @@
                 hoursPerWeek = tempDecimal;
             }
 
-            var wage = new Wage(wageType, wageAmount, wageText, WageUnit.NotApplicable);
+            var wage = new Wage(wageType, wageAmount, wageText, WageUnit.NotApplicable, hoursPerWeek);
 
             // Act.
             var actual = wage.GetDisplayAmount(Convert.ToDecimal(hoursPerWeek));

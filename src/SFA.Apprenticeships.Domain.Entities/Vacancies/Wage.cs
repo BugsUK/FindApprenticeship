@@ -1,16 +1,22 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     using System;
+    using Newtonsoft.Json;
 
     public class Wage
     {
-        public Wage(WageType type, decimal? amount, string text, WageUnit unit)
+        [JsonConstructor]
+        public Wage(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
         {
             Type = type;
             Amount = amount;
             Text = text;
+            HoursPerWeek = hoursPerWeek;
             Unit = CorrectWageUnit(type, unit);
         }
+
+        public Wage(WageType type, decimal? amount, string text, WageUnit unit)
+            : this(type, amount, text, unit, null) { }
 
         public WageType Type { get; private set; }
 
@@ -19,6 +25,8 @@
         public string Text { get; private set; }
 
         public WageUnit Unit { get; private set; }
+
+        public decimal? HoursPerWeek { get; private set; }
 
         private static WageUnit CorrectWageUnit(WageType type, WageUnit unit)
         {

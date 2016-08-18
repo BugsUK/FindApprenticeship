@@ -71,7 +71,7 @@
             var wageType = vacancy.WageType == (int) WageType.LegacyWeekly ? WageType.Custom : (WageType)vacancy.WageType;
             var wageUnit = vacancy.WageUnitId.HasValue ? (WageUnit)vacancy.WageUnitId.Value : vacancy.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable;
             var wageAmount = RoundMoney(vacancy.WeeklyWage);
-            return new Wage(wageType, wageAmount, vacancy.WageText, wageUnit);
+            return new Wage(wageType, wageAmount, vacancy.WageText, wageUnit, vacancy.HoursPerWeek);
         }
 
         public override void Initialise()
