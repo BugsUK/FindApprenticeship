@@ -3,6 +3,8 @@
     public class ApplicationSummary
     {
         public int ApplicationId { get; set; }
+        public int ApplicationStatusTypeId { get; set; }
         public string OutcomeReasonOther { get; set; }
+        public string AllocatedTo { get; set; }
     }
 }

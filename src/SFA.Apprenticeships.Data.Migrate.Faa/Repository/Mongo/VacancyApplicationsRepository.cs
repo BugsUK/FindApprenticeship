@@ -12,7 +12,7 @@
 
     public class VacancyApplicationsRepository
     {
-        private const int Status = 5;
+        private const ApplicationStatuses Status = ApplicationStatuses.Saved;
 
         private readonly string _collectionName;
         private readonly ILogService _logService;
@@ -101,6 +101,7 @@
                 .Include(a => a.CandidateInformation.EducationHistory.Institution)
                 .Include(a => a.CandidateInformation.EducationHistory.FromYear)
                 .Include(a => a.CandidateInformation.EducationHistory.ToYear)
+                .Include(a => a.Notes)
                 .Include(a => a.SuccessfulDateTime)
                 .Include(a => a.UnsuccessfulDateTime)
                 .Include(a => a.WithdrawnOrDeclinedReason)

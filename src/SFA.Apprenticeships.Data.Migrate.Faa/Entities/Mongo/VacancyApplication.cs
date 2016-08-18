@@ -15,13 +15,15 @@
 
         public DateTime? DateApplied { get; set; }
 
-        public int Status { get; set; }
+        public ApplicationStatuses Status { get; set; }
 
         public Guid CandidateId { get; set; }
 
         public int LegacyApplicationId { get; set; }
 
         public ApplicationTemplate CandidateInformation { get; set; }
+
+        public string Notes { get; set; }
 
         public DateTime? SuccessfulDateTime { get; set; }
 

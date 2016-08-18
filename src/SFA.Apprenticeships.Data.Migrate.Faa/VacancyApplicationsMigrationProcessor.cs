@@ -33,6 +33,7 @@
         private readonly SchoolAttendedRepository _schoolAttendedRepository;
         private readonly SubVacancyRepository _destinationSubVacancyRepository;
         private readonly VacancyApplicationsRepository _vacancyApplicationsRepository;
+        private readonly UpdateVacancyApplicationsRepository _updateVacancyApplicationsRepository;
 
         private readonly ITableSpec _applicationTable = new ApplicationTable();
         private readonly ITableSpec _applicationHistoryTable = new ApplicationHistoryTable();
@@ -57,6 +58,7 @@
             _schoolAttendedRepository = new SchoolAttendedRepository(targetDatabase);
             _destinationSubVacancyRepository = new SubVacancyRepository(targetDatabase);
             _vacancyApplicationsRepository = new VacancyApplicationsRepository(_vacancyApplicationsUpdater.CollectionName, configurationService, logService);
+            _updateVacancyApplicationsRepository = new UpdateVacancyApplicationsRepository(_vacancyApplicationsUpdater.CollectionName, configurationService, logService);
         }
 
         public void Process(CancellationToken cancellationToken)
@@ -164,6 +166,19 @@
 
             //Update existing sub vacancies
             _genericSyncRespository.BulkUpdate(_subVacanciesTable, subVacancies.Where(sv => existingSubVacancies.ContainsKey(sv.AllocatedApplicationId)).Select(sv => _applicationMappers.MapSubVacancyDictionary(sv)));
+
+            //Patch in any changes to the applications in Mongo based on what was discovered through processing
+            foreach (var applicationWithSubVacancy in applicationsWithHistory.Select(a => a.ApplicationWithSubVacancy))
+            {
+                if (applicationWithSubVacancy.UpdateNotes)
+                {
+                    _updateVacancyApplicationsRepository.UpdateApplicationNotes(applicationWithSubVacancy.Application.ApplicationGuid, applicationWithSubVacancy.Application.AllocatedTo);
+                }
+                if (applicationWithSubVacancy.UpdateStatusTo.HasValue)
+                {
+                    _updateVacancyApplicationsRepository.UpdateApplicationStatus(applicationWithSubVacancy.Application.ApplicationGuid, applicationWithSubVacancy.UpdateStatusTo.Value);
+                }
+            }
         }
 
         private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, int> candidateIds, SyncType syncType, CancellationToken cancellationToken)

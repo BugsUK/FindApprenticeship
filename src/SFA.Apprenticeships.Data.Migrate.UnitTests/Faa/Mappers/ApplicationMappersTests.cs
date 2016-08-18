@@ -22,7 +22,7 @@
         public void SavedVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(5).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Saved).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -50,7 +50,7 @@
         public void DraftVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Draft).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -78,7 +78,7 @@
         public void SubmittingVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(20).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitting).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -106,7 +106,7 @@
         public void SubmittedVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -134,7 +134,7 @@
         public void InProgressVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(40).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.InProgress).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -174,7 +174,7 @@
         public void WithdrawnVacancyApplicationTest(string withdrawnOrDeclinedReason, int expectedWithdrawnOrDeclinedReasonId)
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(15).WithWithdrawnOrDeclinedReason(withdrawnOrDeclinedReason).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.ExpiredOrWithdrawn).WithWithdrawnOrDeclinedReason(withdrawnOrDeclinedReason).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -222,7 +222,7 @@
         public void UnsuccessfulVacancyApplicationTest(string unsuccessfulReason, int expectedUnsuccessfulReasonId)
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(90).WithUnsuccessfulReason(unsuccessfulReason).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Unsuccessful).WithUnsuccessfulReason(unsuccessfulReason).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -250,7 +250,7 @@
         public void SuccessfulVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Successful).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -278,7 +278,7 @@
         public void SuccessfulApplicationWithHistoryTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Successful).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -309,7 +309,7 @@
         public void NoLegacyIdsVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).WithLegacyApplicationId(0).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Draft).WithLegacyApplicationId(0).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
 
             //Act
@@ -324,7 +324,7 @@
         public void MatchingIdVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).WithLegacyApplicationId(0).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Draft).WithLegacyApplicationId(0).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
             const int applicationId = 42;
             var applicationIds = new Dictionary<Guid, int>
@@ -344,7 +344,7 @@
         public void SubmittedVacancyApplicationDictionaryTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -373,7 +373,7 @@
         public void SubmittedApplicationWithHistoryDictionaryTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -406,7 +406,7 @@
         public void SourceApplicationOutcomeReasonOtherTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).WithLegacyApplicationId(0).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Draft).WithLegacyApplicationId(0).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
             const int applicationId = 42;
             var applicationIds = new Dictionary<Guid, int>
@@ -428,12 +428,108 @@
             application.OutcomeReasonOther.Should().Be(outcomeReasonOther);
         }
 
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("Note from RAA")]
+        public void AllocatedToTest(string notes)
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Draft).WithLegacyApplicationId(0).WithNotes(notes).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
+            const int applicationId = 42;
+            var applicationIds = new Dictionary<Guid, int>
+            {
+                {vacancyApplication.Id, applicationId}
+            };
+            const string allocatedTo = "registration completed. CV to be sent to employer ";
+            var sourceApplicationSummaries = new Dictionary<int, ApplicationSummary>
+            {
+                { applicationId, new ApplicationSummary {AllocatedTo = allocatedTo} }
+            };
+
+            //Act
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds, sourceApplicationSummaries, new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
+            var application = applicationWithSubVacancy.Application;
+
+            //Assert
+            application.ApplicationId.Should().Be(applicationId);
+            application.CandidateId.Should().Be(candidate.LegacyCandidateId);
+            if (string.IsNullOrEmpty(notes))
+            {
+                application.AllocatedTo.Should().Be(allocatedTo);
+                applicationWithSubVacancy.UpdateNotes.Should().BeTrue();
+            }
+            else
+            {
+                application.AllocatedTo.Should().Be(notes);
+                applicationWithSubVacancy.UpdateNotes.Should().BeFalse();
+            }
+        }
+
+        [Test]
+        public void SourceApplicationStatusTypeIdInProgressTest()
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).WithLegacyApplicationId(0).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
+            const int applicationId = 42;
+            var applicationIds = new Dictionary<Guid, int>
+            {
+                {vacancyApplication.Id, applicationId}
+            };
+            const int applicationStatusTypeIdInProgress = 3;
+            var sourceApplicationSummaries = new Dictionary<int, ApplicationSummary>
+            {
+                { applicationId, new ApplicationSummary {ApplicationStatusTypeId = applicationStatusTypeIdInProgress} }
+            };
+
+            //Act
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds, sourceApplicationSummaries, new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
+            var application = applicationWithSubVacancy.Application;
+
+            //Assert
+            application.ApplicationId.Should().Be(applicationId);
+            application.CandidateId.Should().Be(candidate.LegacyCandidateId);
+            //Should only update in progress status
+            application.ApplicationStatusTypeId.Should().Be(applicationStatusTypeIdInProgress);
+            applicationWithSubVacancy.UpdateStatusTo.Should().Be(ApplicationStatuses.InProgress);
+        }
+
+        [Test]
+        public void SourceApplicationStatusTypeIdSuccessfulTest()
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).WithLegacyApplicationId(0).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
+            const int applicationId = 42;
+            var applicationIds = new Dictionary<Guid, int>
+            {
+                {vacancyApplication.Id, applicationId}
+            };
+            const int applicationStatusTypeIdSuccessful = 6;
+            var sourceApplicationSummaries = new Dictionary<int, ApplicationSummary>
+            {
+                { applicationId, new ApplicationSummary {ApplicationStatusTypeId = applicationStatusTypeIdSuccessful} }
+            };
+
+            //Act
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds, sourceApplicationSummaries, new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
+            var application = applicationWithSubVacancy.Application;
+
+            //Assert
+            application.ApplicationId.Should().Be(applicationId);
+            application.CandidateId.Should().Be(candidate.LegacyCandidateId);
+            //Should only update in progress status
+            application.ApplicationStatusTypeId.Should().Be(2);
+            applicationWithSubVacancy.UpdateStatusTo.Should().Be(null);
+        }
+
         [Test]
         public void SourceSubVacancyTest()
         {
             //Arrange
             const int legacyApplicationId = 42;
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).WithLegacyApplicationId(legacyApplicationId).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Unsuccessful).WithLegacyApplicationId(legacyApplicationId).Build();
             const int applicationId = -42;
             var applicationIds = new Dictionary<Guid, int>
             {
@@ -459,7 +555,7 @@
         {
             //Arrange
             const int legacyApplicationId = 42;
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).WithLegacyApplicationId(legacyApplicationId).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Unsuccessful).WithLegacyApplicationId(legacyApplicationId).Build();
             const int applicationId = -42;
             var applicationIds = new Dictionary<Guid, int>
             {
@@ -496,7 +592,7 @@
                     ToYear = 1997
                 }
             };
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithApplicationTemplate(applicationTemplate).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).WithApplicationTemplate(applicationTemplate).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -527,7 +623,7 @@
                     ToYear = 1997
                 }
             };
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithApplicationTemplate(applicationTemplate).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).WithApplicationTemplate(applicationTemplate).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
@@ -560,7 +656,7 @@
                     ToYear = 1997
                 }
             };
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithLegacyApplicationId(legacyApplicationId).WithApplicationTemplate(applicationTemplate).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).WithLegacyApplicationId(legacyApplicationId).WithApplicationTemplate(applicationTemplate).Build();
             const int applicationId = -42;
             var applicationIds = new Dictionary<Guid, int>
             {
@@ -595,7 +691,7 @@
             {
                 EducationHistory = new Education()
             };
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithApplicationTemplate(applicationTemplate).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).WithApplicationTemplate(applicationTemplate).Build();
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
