@@ -70,8 +70,9 @@
                 .ForMember(dest => dest.Wage,
                     opt => opt.ResolveUsing<LegacyVacancySummaryWageResolver>().FromMember(src => src))
 
-                .ForMember(dest => dest.WageUnit,
-                    opt => opt.ResolveUsing<LegacyVacancySummaryWageUnitResolver>().FromMember(src => src.WageType))
+                //TODO: Delete this when deleting the legacy code 
+                //.ForMember(dest => dest.WageUnit,
+                //    opt => opt.ResolveUsing<LegacyVacancySummaryWageUnitResolver>().FromMember(src => src.WageType))
 
                 .ForMember(dest => dest.WorkingWeek,
                     opt => opt.MapFrom(src => src.WorkingWeek))

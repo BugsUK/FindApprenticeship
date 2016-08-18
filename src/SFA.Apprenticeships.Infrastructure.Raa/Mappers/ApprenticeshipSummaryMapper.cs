@@ -49,7 +49,6 @@
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                     Wage = vacancy.Wage.GetDisplayAmount(vacancy.HoursPerWeek),
                     WageObject = vacancy.Wage,
-                    WageUnit = vacancy.Wage.Unit,
                     WorkingWeek = vacancy.WorkingWeek,
                     CategoryCode = category.CodeName,
                     Category = category.FullName,

@@ -119,7 +119,7 @@
                     new ApprenticeshipSearchResponse
                     {
                         VacancyLocationType = locationType,
-                        WageUnit = WageUnit.Weekly
+                        WageObject = new Wage(WageType.Custom, null, null, WageUnit.Weekly)
                     }
                 }, new List<AggregationResult>(0), asp));
 
@@ -130,7 +130,7 @@
                     new ApprenticeshipSearchResponse
                     {
                         VacancyLocationType = locationType,
-                        WageUnit = WageUnit.Weekly
+                        WageObject = new Wage(WageType.Custom, null, null, WageUnit.Weekly)
                     }
                 }, new List<AggregationResult>(0), asp));
         }
