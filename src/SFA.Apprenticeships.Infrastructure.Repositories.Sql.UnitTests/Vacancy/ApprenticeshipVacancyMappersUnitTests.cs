@@ -110,7 +110,7 @@
             var domainVacancy = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
 
             // Assert
-            domainVacancy.WageAmount.Should().Be(expectedWeeklyWage);
+            domainVacancy.Wage.Amount.Should().Be(expectedWeeklyWage);
         }
     }
 }

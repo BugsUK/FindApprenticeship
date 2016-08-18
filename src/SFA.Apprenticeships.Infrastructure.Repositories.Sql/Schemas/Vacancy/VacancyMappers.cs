@@ -70,7 +70,8 @@
             //TODO: ensure that moving this from the db => domain entity mapper will not cause issues, then move this logic into Wage object ctor
             var wageType = vacancy.WageType == (int) WageType.LegacyWeekly ? WageType.Custom : (WageType)vacancy.WageType;
             var wageUnit = vacancy.WageUnitId.HasValue ? (WageUnit)vacancy.WageUnitId.Value : vacancy.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable;
-            return new Wage(wageType, vacancy.WeeklyWage, vacancy.WageText, wageUnit);
+            var wageAmount = RoundMoney(vacancy.WeeklyWage);
+            return new Wage(wageType, wageAmount, vacancy.WageText, wageUnit);
         }
 
         public override void Initialise()
@@ -109,7 +110,7 @@
                 .IgnoreMember(v => v.ApprenticeshipType) 
                 .MapMemberFrom(v => v.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(v => v.Description, av => av.LongDescription)
-                .MapMemberFrom(v => v.WeeklyWage, av => av.WageAmount)
+                .MapMemberFrom(v => v.WeeklyWage, av => av.Wage.Amount)
                 .MapMemberFrom(v => v.WageType, av => av.Wage.Type)
                 .ForMember(v => v.WageText, opt => opt.MapFrom(av => av.Wage.Text))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
@@ -162,7 +163,6 @@
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(av => av.LongDescription, v => v.Description)
-                .MapMemberFrom(av => av.WageAmount, v => RoundMoney(v.WeeklyWage))
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
@@ -300,7 +300,6 @@
                 .MapMemberFrom(av => av.OwnerPartyId, v => v.VacancyOwnerRelationshipId)
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
-                .MapMemberFrom(av => av.WageAmount, v => v.WeeklyWage)
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
