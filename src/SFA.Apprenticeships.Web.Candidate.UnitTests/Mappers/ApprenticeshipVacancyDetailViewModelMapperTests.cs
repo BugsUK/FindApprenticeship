@@ -54,7 +54,6 @@
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 WageType = LegacyWageType.LegacyWeekly,
-                Wage = 101.19m,
                 WageObject = new Wage(WageType.Custom, 101.19m, null, WageUnit.NotApplicable)
             };
 

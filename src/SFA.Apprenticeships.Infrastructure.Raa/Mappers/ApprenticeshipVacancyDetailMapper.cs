@@ -41,7 +41,6 @@
                 PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
                 //TODO: Where should this come from?
                 InterviewFromDate = DateTime.MinValue,
-                Wage = vacancy.Wage.Amount ?? 0,
                 WageObject = vacancy.Wage,
                 WageUnit = vacancy.Wage.Unit,
                 WageDescription = vacancy.Wage.GetDisplayAmount(),

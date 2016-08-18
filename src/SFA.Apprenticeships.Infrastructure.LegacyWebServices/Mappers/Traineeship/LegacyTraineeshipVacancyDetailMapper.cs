@@ -154,8 +154,9 @@
                 .ForMember(dest => dest.WageType,
                     opt => opt.ResolveUsing<WageTypeResolver>().FromMember(src => src.WageType))
 
-                .ForMember(dest => dest.Wage,
-                    opt => opt.MapFrom(src => src.WeeklyWage))
+                //TODO: This should be deleted soon, as we no longer use the legacy services
+                //.ForMember(dest => dest.Wage,
+                //    opt => opt.MapFrom(src => src.WeeklyWage))
 
                 .ForMember(dest => dest.WageUnit,
                     opt => opt.Ignore())

@@ -28,8 +28,6 @@
 
         public DateTime InterviewFromDate { get; set; }
 
-        public decimal Wage { get; set; }
-
         public Wage WageObject { get; set; }
 
         public WageUnit WageUnit { get; set; }
