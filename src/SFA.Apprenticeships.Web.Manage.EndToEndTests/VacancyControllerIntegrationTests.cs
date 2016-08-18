@@ -19,6 +19,8 @@
     [TestFixture]
     public class VacancyControllerIntegrationTests : ManageWebIntegrationTestsBase
     {
+        //TODO: Alter these acceptance tests to use SQL repo
+
         [Test, Category("Acceptance")]
         public void GetBasicDetailsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
@@ -664,7 +666,7 @@
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
-                Wage = new Wage(WageType.ApprenticeshipMinimum, 0, null, WageUnit.NotApplicable)
+                Wage = new Wage(WageType.Custom, 0, null, WageUnit.NotApplicable)
                 // Ukprn = "10003816"
             };
         }

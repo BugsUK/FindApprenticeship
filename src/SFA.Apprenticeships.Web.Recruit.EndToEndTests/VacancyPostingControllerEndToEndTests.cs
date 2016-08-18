@@ -21,7 +21,8 @@
     [TestFixture, Category("Acceptance")]
     public class VacancyPostingControllerEndToEndTests : RecruitWebEndToEndTestsBase
     {
-        
+        //TODO: Alter these acceptance tests to use SQL repo
+
         [Test]
         public void CloneAVacancyShouldCreateANewOneWithSomeFieldsReset()
         {
@@ -248,7 +249,7 @@
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
-                Wage = new Wage(WageType.ApprenticeshipMinimum,0, null, WageUnit.NotApplicable)
+                Wage = new Wage(WageType.Custom, 0, null, WageUnit.NotApplicable)
             };
         }
 
