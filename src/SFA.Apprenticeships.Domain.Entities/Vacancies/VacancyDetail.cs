@@ -30,6 +30,8 @@
 
         public decimal Wage { get; set; }
 
+        public Wage WageObject { get; set; }
+
         public WageUnit WageUnit { get; set; }
 
         public string WageDescription { get; set; }

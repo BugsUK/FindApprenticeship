@@ -43,7 +43,7 @@
 
                     case LegacyWageType.LegacyWeekly:
                     case LegacyWageType.Custom:
-                        return $"£{vacancyDetail.Wage:N2}";
+                        return $"£{vacancyDetail.WageObject.Amount??0:N2}";
 
                     default:
                         throw new ArgumentOutOfRangeException(
