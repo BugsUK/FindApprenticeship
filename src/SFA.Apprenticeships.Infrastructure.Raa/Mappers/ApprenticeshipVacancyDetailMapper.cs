@@ -43,7 +43,7 @@
                 InterviewFromDate = DateTime.MinValue,
                 Wage = vacancy.Wage.Amount ?? 0,
                 WageUnit = vacancy.Wage.Unit,
-                WageDescription = vacancy.Wage.GetDisplayAmount(vacancy.HoursPerWeek),
+                WageDescription = vacancy.Wage.GetDisplayAmount(),
                 WageType = (LegacyWageType)vacancy.Wage.Type,
                 WorkingWeek = vacancy.WorkingWeek,
                 HoursPerWeek = vacancy.HoursPerWeek,

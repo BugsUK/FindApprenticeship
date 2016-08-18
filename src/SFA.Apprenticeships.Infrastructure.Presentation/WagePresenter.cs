@@ -78,7 +78,7 @@
             }
         }
 
-        public static string GetDisplayAmount(this Wage wage, decimal? hoursPerWeek)
+        public static string GetDisplayAmount(this Wage wage)
         {
             switch (wage.Type)
             {
@@ -87,13 +87,13 @@
                     return $"£{wage.Amount?.ToString(WageAmountFormat) ?? UnknownText}";
 
                 case WageType.ApprenticeshipMinimum:
-                    return hoursPerWeek.HasValue
-                        ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value)
+                    return wage.HoursPerWeek.HasValue
+                        ? GetWeeklyApprenticeshipMinimumWage(wage.HoursPerWeek.Value)
                         : UnknownText;
 
                 case WageType.NationalMinimum:
-                    return hoursPerWeek.HasValue
-                        ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value)
+                    return wage.HoursPerWeek.HasValue
+                        ? GetWeeklyNationalMinimumWage(wage.HoursPerWeek.Value)
                         : UnknownText;
 
                 case WageType.LegacyText:
