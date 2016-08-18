@@ -15,7 +15,6 @@
         public string WorkingWeek { get; set; }
         public decimal? HoursPerWeek { get; set; }
         public decimal? WageAmount { get; set; }
-        public string WageText { get; set; }
         public Wage Wage { get; set; }
         public string ExpectedDuration { get; set; }
         public DurationType DurationType { get; set; }
