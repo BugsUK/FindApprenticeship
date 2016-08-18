@@ -10,9 +10,7 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
-        public Wage WageObject { get; set; }
-
-        public string Wage { get; set; }
+        public Wage Wage { get; set; }
 
         public string WorkingWeek { get; set; }
     }

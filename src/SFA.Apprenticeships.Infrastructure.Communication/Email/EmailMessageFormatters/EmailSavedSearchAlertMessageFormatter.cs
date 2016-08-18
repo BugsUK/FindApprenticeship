@@ -116,7 +116,7 @@
                     startDate = FormatDate(result.StartDate),
                     distance = FormatDistance(result.Distance),
                     apprenticeshipLevel = result.ApprenticeshipLevel.ToString(),
-                    wage = result.WageObject.Amount,
+                    wage = result.Wage.Amount,
                     displaySubCategory = savedSearchAlert.Parameters.SearchMode == ApprenticeshipSearchMode.Category && savedSearchAlert.Parameters.DisplaySubCategory,
                     displayDescription = savedSearchAlert.Parameters.DisplayDescription,
                     displayDistance = savedSearchAlert.Parameters.DisplayDistance,
