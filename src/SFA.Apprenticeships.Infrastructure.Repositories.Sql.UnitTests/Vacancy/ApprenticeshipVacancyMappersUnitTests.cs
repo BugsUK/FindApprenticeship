@@ -62,11 +62,15 @@
         public void DatabaseToDomainWageTypeTests(int databaseWageType, WageType expectedWageType)
         {
             var mapper = new VacancyMappers();
-            var databaseVacancy = new Fixture().Build<Vacancy>().With(v => v.WageType, databaseWageType).Create();
+            var databaseVacancy = new Fixture()
+                .Build<Vacancy>()
+                .With(v => v.WageType, databaseWageType)
+                .With(v => v.WageUnitId, 1)
+                .Create();
 
             var domainVacancy = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
 
-            domainVacancy.WageType.Should().Be(expectedWageType);
+            domainVacancy.Wage.Type.Should().Be(expectedWageType);
         }
 
         

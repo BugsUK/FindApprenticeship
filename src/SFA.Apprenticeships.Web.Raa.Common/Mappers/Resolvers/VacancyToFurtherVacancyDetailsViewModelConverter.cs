@@ -22,7 +22,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 VacancyReferenceNumber = source.VacancyReferenceNumber,
                 Wage = source.WageAmount,
                 WageComment = source.WageComment,
-                WageType = source.WageType,
+                WageType = source.Wage.Type,
                 WageUnit = source.WageUnit,
                 WorkingWeek = source.WorkingWeek,
                 WorkingWeekComment = source.WorkingWeekComment,

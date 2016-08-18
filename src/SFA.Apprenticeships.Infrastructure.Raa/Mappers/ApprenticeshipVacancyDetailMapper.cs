@@ -44,7 +44,7 @@
                 Wage = vacancy.WageAmount ?? 0,
                 WageUnit = vacancy.Wage.Unit,
                 WageDescription = vacancy.Wage.GetDisplayAmount(vacancy.HoursPerWeek),
-                WageType = (LegacyWageType)vacancy.WageType,
+                WageType = (LegacyWageType)vacancy.Wage.Type,
                 WorkingWeek = vacancy.WorkingWeek,
                 HoursPerWeek = vacancy.HoursPerWeek,
                 OtherInformation = vacancy.OtherInformation,

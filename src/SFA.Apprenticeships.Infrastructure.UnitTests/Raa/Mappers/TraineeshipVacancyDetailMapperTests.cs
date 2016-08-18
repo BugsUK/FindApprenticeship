@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using Infrastructure.Raa.Extensions;
@@ -35,7 +36,7 @@
 
                 var vacancy = fixture
                     .Build<Domain.Entities.Raa.Vacancies.Vacancy>()
-                    .With(each => each.WageType, Domain.Entities.Vacancies.WageType.NationalMinimum)
+                    .With(each => each.Wage, new Wage(WageType.NationalMinimum, 0, string.Empty, WageUnit.NotApplicable))
                     .Create();
 
                 var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
@@ -71,7 +72,7 @@
                 detail.Wage.Should().Be(vacancy.WageAmount ?? 0m);
                 detail.WageUnit.Should().Be(Domain.Entities.Vacancies.WageUnit.Weekly);
                 detail.WageDescription.Should().NotBeNull();
-                detail.WageType.Should().Be((Domain.Entities.Vacancies.LegacyWageType) vacancy.WageType);
+                detail.WageType.Should().Be((Domain.Entities.Vacancies.LegacyWageType) vacancy.Wage.Type);
 
                 detail.WorkingWeek.Should().Be(vacancy.WorkingWeek);
 

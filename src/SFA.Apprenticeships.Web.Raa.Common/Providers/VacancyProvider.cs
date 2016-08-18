@@ -403,7 +403,6 @@
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
-            vacancy.WageType = viewModel.WageType;
             vacancy.WageAmount = viewModel.Wage;
             vacancy.WageUnit = viewModel.WageUnit;
             vacancy.Wage = new Wage(viewModel.WageType, viewModel.Wage, null, viewModel.WageUnit);
@@ -1224,7 +1223,6 @@
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
-            vacancy.WageType = viewModel.WageType;
             vacancy.WageAmount = viewModel.Wage;
             vacancy.WageUnit = viewModel.WageUnit;
             vacancy.Wage = new Wage(viewModel.WageType, viewModel.Wage, null, viewModel.WageUnit);

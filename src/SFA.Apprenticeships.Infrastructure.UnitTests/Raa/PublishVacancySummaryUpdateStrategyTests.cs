@@ -10,6 +10,7 @@
     using Application.VacancyPosting.Strategies;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Raa;
@@ -17,6 +18,8 @@
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     public class PublishVacancySummaryUpdateStrategyTests
@@ -38,6 +41,7 @@
                 DateQAApproved = DateTime.UtcNow,
                 PossibleStartDate = DateTime.UtcNow,
                 ClosingDate = DateTime.UtcNow,
+                Wage = new Wage(WageType.ApprenticeshipMinimum, 0, null, WageUnit.NotApplicable)
             } });
             _mockProviderService.Setup(r => r.GetVacancyParties(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, VacancyParty> { { 1, new VacancyParty() } });
             _mockEmployerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>())).Returns(new List<Employer> { new Employer() });

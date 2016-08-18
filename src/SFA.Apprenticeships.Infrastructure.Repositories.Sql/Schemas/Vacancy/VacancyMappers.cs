@@ -64,6 +64,15 @@
                 : new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText();
         }
 
+        private Wage MapWage(DbVacancy vacancy)
+        {
+            //not sure why we are doing this here??
+            //TODO: ensure that moving this from the db => domain entity mapper will not cause issues, then move this logic into Wage object ctor
+            var wageType = vacancy.WageType == (int) WageType.LegacyWeekly ? WageType.Custom : (WageType)vacancy.WageType;
+            var wageUnit = vacancy.WageUnitId ?? 1;
+            return new Wage(wageType, vacancy.WeeklyWage, vacancy.WageText, (WageUnit) wageUnit);
+        }
+
         public override void Initialise()
         {
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
@@ -101,9 +110,9 @@
                 .MapMemberFrom(v => v.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(v => v.Description, av => av.LongDescription)
                 .MapMemberFrom(v => v.WeeklyWage, av => av.WageAmount)
-                .MapMemberFrom(v => v.WageType, av => av.WageType)
+                .MapMemberFrom(v => v.WageType, av => av.Wage.Type)
                 .MapMemberFrom(v => v.WageUnitId, av => av.WageUnit)
-                .ForMember(v => v.WageText, opt => opt.MapFrom(av => new Wage(av.WageType, av.WageAmount, av.WageText, av.WageUnit).GetDisplayAmount(av.HoursPerWeek)))
+                .ForMember(v => v.WageText, opt => opt.MapFrom(av => av.Wage.Text))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
@@ -201,10 +210,7 @@
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
-                // .MapMemberFrom(av => av.WageType, v => v.WageType)
-                .ForMember(av => av.WageType, opt => opt.MapFrom(v =>
-                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : v.WageType
-                ))
+                .ForMember(av => av.Wage, opt => opt.MapFrom(v => MapWage(v)))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .IgnoreMember(av => av.DesiredSkills)
@@ -316,10 +322,7 @@
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
-                // .MapMemberFrom(av => av.WageType, v => v.WageType)
-                .ForMember(av => av.WageType, opt => opt.MapFrom(v =>
-                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : v.WageType
-                ))
+                .ForMember(av => av.Wage, opt => opt.MapFrom(v => MapWage(v)))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .IgnoreMember(av => av.QAUserName)

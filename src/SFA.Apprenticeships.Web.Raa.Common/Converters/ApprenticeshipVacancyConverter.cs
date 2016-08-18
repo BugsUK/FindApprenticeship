@@ -19,7 +19,7 @@
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                 WorkingWeek = vacancy.WorkingWeek,
                 HoursPerWeek = vacancy.HoursPerWeek,
-                WageType = vacancy.WageType,
+                WageType = vacancy.Wage.Type,
                 Wage = vacancy.WageAmount,
                 WageUnit = vacancy.WageUnit,
                 WageUnits = GetWageUnits(),
