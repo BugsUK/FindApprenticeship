@@ -17,7 +17,7 @@
     using Presentation;
     using SendGrid;
 
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
 
     public class EmailSavedSearchAlertMessageFormatter : EmailMessageFormatter
     {
@@ -116,7 +116,7 @@
                     startDate = FormatDate(result.StartDate),
                     distance = FormatDistance(result.Distance),
                     apprenticeshipLevel = result.ApprenticeshipLevel.ToString(),
-                    wage = result.Wage,
+                    wage = result.WageObject.Amount,
                     displaySubCategory = savedSearchAlert.Parameters.SearchMode == ApprenticeshipSearchMode.Category && savedSearchAlert.Parameters.DisplaySubCategory,
                     displayDescription = savedSearchAlert.Parameters.DisplayDescription,
                     displayDistance = savedSearchAlert.Parameters.DisplayDistance,

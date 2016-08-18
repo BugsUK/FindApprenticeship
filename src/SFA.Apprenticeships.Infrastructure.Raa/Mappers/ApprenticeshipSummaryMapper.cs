@@ -3,12 +3,10 @@
     using System;
     using System.Collections.Generic;
     using Domain.Entities.Extensions;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
@@ -50,6 +48,7 @@
                     VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                     Wage = vacancy.Wage.GetDisplayAmount(vacancy.HoursPerWeek),
+                    WageObject = vacancy.Wage,
                     WageUnit = vacancy.Wage.Unit,
                     WorkingWeek = vacancy.WorkingWeek,
                     CategoryCode = category.CodeName,

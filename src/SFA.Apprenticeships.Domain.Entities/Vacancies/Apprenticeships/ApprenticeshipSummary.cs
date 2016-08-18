@@ -10,6 +10,8 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
+        public Wage WageObject { get; set; }
+
         public string Wage { get; set; }
 
         public WageUnit WageUnit { get; set; }
