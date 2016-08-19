@@ -5,12 +5,12 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies.Candidates
     using Domain.Interfaces.Repositories;
     using Infrastructure.Interfaces;
 
-    public class MongoRepositorySearchCandidatesStrategy : ISearchCandidatesStrategy
+    public class SearchCandidatesStrategy : ISearchCandidatesStrategy
     {
         private readonly ILogService _logger;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public MongoRepositorySearchCandidatesStrategy(ICandidateReadRepository candidateReadRepository, ILogService logger)
+        public SearchCandidatesStrategy(ICandidateReadRepository candidateReadRepository, ILogService logger)
         {
             _candidateReadRepository = candidateReadRepository;
             _logger = logger;

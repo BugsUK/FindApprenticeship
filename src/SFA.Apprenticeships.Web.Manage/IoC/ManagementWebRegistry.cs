@@ -29,8 +29,10 @@
     using Application.Location;
     using Application.ReferenceData;
     using Application.VacancyPosting.Strategies;
+    using Domain.Interfaces.Repositories;
     using Infrastructure.Raa.Mappers;
     using Infrastructure.Raa.Strategies;
+    using Infrastructure.Repositories.Sql.Schemas.dbo;
     using Mappers;
     using Mediators.Candidate;
     using Mediators.InformationRadiator;
@@ -110,7 +112,7 @@
 
             For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
 
-            For<ISearchCandidatesStrategy>().Use<MongoRepositorySearchCandidatesStrategy>();
+            For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
         }
 
         private void RegisterMediators()
