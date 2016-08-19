@@ -33,7 +33,6 @@
     using Infrastructure.Raa.Mappers;
     using Infrastructure.Raa.Strategies;
     using Infrastructure.Repositories.Sql.Schemas.dbo;
-    using Mappers;
     using Mediators.Candidate;
     using Mediators.InformationRadiator;
     using Mediators.Reporting;
@@ -45,7 +44,7 @@
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
-            For<IMapper>().Singleton().Use<CandidateMappers>().Name = "CandidateMappers";
+            For<IMapper>().Singleton().Use<Mappers.CandidateMappers>().Name = "CandidateMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
