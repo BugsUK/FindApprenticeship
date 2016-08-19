@@ -99,6 +99,8 @@
     <Compile Include="CandidateService.cs" />
     <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="Configuration\ServicesConfiguration.cs" />
+    <Compile Include="Strategies\Candidates\ISearchCandidatesStrategy.cs" />
+    <Compile Include="Strategies\Candidates\SearchCandidatesStrategy.cs" />
     <Compile Include="Strategies\GetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="SaveCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\GetCandidateApprenticeshipApplicationsStrategy.cs" />

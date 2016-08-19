@@ -11,8 +11,8 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Raa;
     using Infrastructure.Raa.Mappers;
+    using Infrastructure.Raa.Strategies;
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
