@@ -21,13 +21,14 @@
             MediatorResponseMessage message;
 
             var result = _vacancyManagementProvider.Delete(vacancyViewModel.VacancyId);
+            var vacancyTitle = string.IsNullOrEmpty(vacancyViewModel.VacancyTitle) ? "(No Title)" : vacancyViewModel.VacancyTitle;
             if (result.Code == VacancyManagementServiceCodes.Delete.Ok)
             {
-                message = new MediatorResponseMessage {Text = $"You have deleted {vacancyViewModel.VacancyTitle} vacancy"};
+                message = new MediatorResponseMessage {Text = $"You have deleted {vacancyTitle} vacancy"};
                 return GetMediatorResponse(VacancyManagementMediatorCodes.DeleteVacancy.Ok, vacancyViewModel, null, null, message);
             }
 
-            message = new MediatorResponseMessage { Text = $"There was a problem deleting {vacancyViewModel.VacancyTitle} vacancy", Level = UserMessageLevel.Error };
+            message = new MediatorResponseMessage { Text = $"There was a problem deleting {vacancyTitle} vacancy", Level = UserMessageLevel.Error };
             return GetMediatorResponse(VacancyManagementMediatorCodes.DeleteVacancy.Failure, vacancyViewModel, null, null, message);
         }
 

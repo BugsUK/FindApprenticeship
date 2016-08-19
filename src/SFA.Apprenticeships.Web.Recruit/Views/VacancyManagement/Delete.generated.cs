@@ -66,82 +66,73 @@ WriteLiteral("\r\n");
             #line 6 "..\..\Views\VacancyManagement\Delete.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Delete a draft vacancy";
-
+    var vacancyTitle = string.IsNullOrEmpty(Model.VacancyTitle) ? "(No Title)" : Model.VacancyTitle;
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
-
-WriteLiteral(" class=\"grid-wrapper\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"hgroup\"");
-
-WriteLiteral(">\r\n        <h1");
+WriteLiteral("\r\n\r\n<h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n            Delete ");
+WriteLiteral(">\r\n    Delete ");
 
             
-            #line 14 "..\..\Views\VacancyManagement\Delete.cshtml"
-              Write(Model.VacancyTitle);
+            #line 12 "..\..\Views\VacancyManagement\Delete.cshtml"
+      Write(vacancyTitle);
 
             
             #line default
             #line hidden
-WriteLiteral(" vacancy\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
+WriteLiteral(" vacancy\r\n</h1>\r\n\r\n");
 
             
-            #line 19 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 15 "..\..\Views\VacancyManagement\Delete.cshtml"
  using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post))
 {
 
             
             #line default
             #line hidden
-WriteLiteral("    <div>You will not be able to retreive this vacancy once it has been deleted</" +
-"div>\r\n");
-
-WriteLiteral("    <div");
+WriteLiteral("    <div>\r\n        <p>You will not be able to retreive this vacancy once it has b" +
+"een deleted</p>\r\n        <div");
 
 WriteLiteral(" class=\"grid grid-1-1\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 23 "..\..\Views\VacancyManagement\Delete.cshtml"
-        
+            #line 20 "..\..\Views\VacancyManagement\Delete.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 20 "..\..\Views\VacancyManagement\Delete.cshtml"
+             foreach (var prop in Model.GetType().GetProperties())
+            {
+                var getter = prop.GetGetMethod();
+                
             
             #line default
             #line hidden
             
             #line 23 "..\..\Views\VacancyManagement\Delete.cshtml"
-         foreach (var prop in Model.GetType().GetProperties())
-        {
-            var getter = prop.GetGetMethod();
-            
-            
-            #line default
-            #line hidden
-            
-            #line 26 "..\..\Views\VacancyManagement\Delete.cshtml"
-       Write(Html.Hidden(prop.Name, getter.Invoke(Model, new object[] {})));
+           Write(Html.Hidden(prop.Name, getter.Invoke(Model, new object[] { })));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\VacancyManagement\Delete.cshtml"
-                                                                          ;
-        }
+            #line 23 "..\..\Views\VacancyManagement\Delete.cshtml"
+                                                                               
+                ;
+            }
 
             
             #line default
             #line hidden
-WriteLiteral("        <button");
+WriteLiteral("            <button");
 
 WriteLiteral(" class=\"button\"");
 
@@ -153,19 +144,19 @@ WriteLiteral(" value=\"ConfirmDeleteVacancy\"");
 
 WriteLiteral(">Confirm and return to recruitment home</button>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 29 "..\..\Views\VacancyManagement\Delete.cshtml"
-   Write(Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel));
+            #line 27 "..\..\Views\VacancyManagement\Delete.cshtml"
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 31 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 30 "..\..\Views\VacancyManagement\Delete.cshtml"
 }
             
             #line default
