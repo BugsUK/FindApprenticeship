@@ -206,7 +206,7 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
 
             if (filterByProviderBeenMigrated)
             {
-                sql += " AND ProviderToUseFAA = 2";
+                sql += " AND ( ProviderToUseFAA = 2 OR EditedInRaa = 1)";
             }
 
             if (pageSize > 0)
