@@ -14,6 +14,7 @@
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     [TestFixture]
+    [Parallelizable]
     public class SubmitApplicationTests
     {
         const int ValidVacancyId = 1;

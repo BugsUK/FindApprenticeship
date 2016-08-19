@@ -9,6 +9,8 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Application.Vacancy;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CheckNasGateway : IMonitorTask
     {
         private readonly ILogService _logger;

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;

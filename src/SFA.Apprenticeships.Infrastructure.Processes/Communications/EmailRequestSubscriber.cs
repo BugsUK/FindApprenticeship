@@ -6,6 +6,9 @@
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
+
     public class EmailRequestSubscriber : IServiceBusSubscriber<EmailRequest>
     {
         private readonly IEmailDispatcher _dispatcher;

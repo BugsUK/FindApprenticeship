@@ -6,10 +6,11 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Interfaces.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ResetForgottenPasswordStrategy : IResetForgottenPasswordStrategy
     {

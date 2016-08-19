@@ -6,6 +6,8 @@
     using SFA.Infrastructure.Interfaces;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class VacancyStatusProcessorBuilder
     {
         private Mock<IVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();

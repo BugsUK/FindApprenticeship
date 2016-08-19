@@ -129,10 +129,6 @@
       <Project>{CF497DD1-550D-4203-8FBF-C0A3B0109D2B}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
-      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
-      <Name>SFA.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

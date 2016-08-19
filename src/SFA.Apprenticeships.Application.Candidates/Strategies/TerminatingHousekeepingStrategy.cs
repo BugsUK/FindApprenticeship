@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
 {
-    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class TerminatingHousekeepingStrategy : HousekeepingStrategy
     {

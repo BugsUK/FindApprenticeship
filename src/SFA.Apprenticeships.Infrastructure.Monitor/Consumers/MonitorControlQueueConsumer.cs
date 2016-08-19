@@ -5,6 +5,9 @@
     using Configuration;
     using Domain.Interfaces.Messaging;
     using Azure.Common.Messaging;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Tasks;
 
     public class MonitorControlQueueConsumer : AzureControlQueueConsumer

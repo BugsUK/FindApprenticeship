@@ -6,6 +6,8 @@
     using Infrastructure.Communication.Sms.SmsMessageFormatters;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SmsDailyDigestMessageFormatterBuilder
     {
         private List<SmsTemplate> _templates;

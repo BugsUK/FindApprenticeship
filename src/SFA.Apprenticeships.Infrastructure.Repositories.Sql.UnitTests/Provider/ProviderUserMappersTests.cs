@@ -9,6 +9,7 @@
     using Domain = Domain.Entities.Raa.Users;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderUserMappersTests
     {
         private ProviderUserMappers _mapper;

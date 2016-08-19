@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.VacancyParty
 {
     using NUnit.Framework;
-    using Sql.Schemas.dbo;
+    using Schemas.dbo;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyPartyMappersTests
     {
         [Test]

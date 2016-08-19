@@ -8,6 +8,8 @@
     using Monitor.Tasks;
     using Repository;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CheckExpiredDrafts : IMonitorTask
     {
         private readonly ILogService _logger;

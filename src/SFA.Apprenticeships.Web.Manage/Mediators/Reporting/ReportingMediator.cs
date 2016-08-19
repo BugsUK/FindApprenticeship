@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Application.Interfaces;
     using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;
@@ -173,11 +174,49 @@
             }
         }
 
+        public MediatorResponse<ReportRegisteredCandidatesParameters> GetRegisteredCandidatesReportParams()
+        {
+            var result = new ReportRegisteredCandidatesParameters();
+
+            try
+            {
+                var regions = _reportingRepo.GeoRegionsIncludingAll();
+                result.RegionList = regions.ToListItemList();
+                var localAuthorities = _reportingRepo.GetLocalAuthorities();
+                result.LocalAuthoritiesList = localAuthorities.ToListItemList();
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, result);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, result);
+            }
+        }
+
+        public MediatorResponse<ReportRegisteredCandidatesParameters> ValidateRegisteredCandidatesParameters(ReportRegisteredCandidatesParameters parameters)
+        {
+            var response = GetRegisteredCandidatesReportParams();
+            if(response.Code == ReportingMediatorCodes.ReportCodes.Error)
+                return response;
+
+            parameters.RegionList = response.ViewModel.RegionList;
+            parameters.LocalAuthoritiesList = response.ViewModel.LocalAuthoritiesList;
+
+            var validationResult = _reportDateRangeValidator.Validate(parameters);
+            parameters.IsValid = validationResult.IsValid;
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.ValidationError, parameters, validationResult);
+            }
+
+            return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, parameters, validationResult);
+        }
+
         public MediatorResponse<byte[]> GetRegisteredCandidatesReportBytes(ReportRegisteredCandidatesParameters parameters)
         {
             try
             {
-                var reportResult = _reportingRepo.ReportRegisteredCandidates(parameters.FromDate.Date, parameters.ToDate.Date);
+                var reportResult = _reportingRepo.ReportRegisteredCandidates(parameters.Type, parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange, parameters.Region, parameters.LocalAuthority, parameters.MarketMessagesOnly);
 
                 var headerBuilder = new StringBuilder();
                 headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,");

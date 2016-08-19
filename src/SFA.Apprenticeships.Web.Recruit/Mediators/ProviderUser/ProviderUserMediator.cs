@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Web.Mvc;
+    using Apprenticeships.Application.Interfaces;
     using Common.Constants;
     using Common.Mediators;
     using Common.Models.Azure.AccessControlService;
@@ -13,6 +14,7 @@
     using Domain.Entities.Raa;
     using Raa.Common.Validators.ProviderUser;
     using Apprenticeships.Application.Interfaces.Users;
+    using Common.Extensions;
     using Domain.Entities.Communication;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
@@ -76,7 +78,7 @@
                 viewModel.EmailAddressVerified = userProfile.EmailAddressVerified;
             }
 
-            var ukprn = principal.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Ukprn)?.Value;
+            var ukprn = principal.GetUkprn();
 
             if (string.IsNullOrWhiteSpace(ukprn))
             {

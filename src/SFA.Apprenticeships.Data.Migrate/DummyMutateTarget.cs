@@ -3,6 +3,8 @@
     using SFA.Infrastructure.Interfaces;
     using System;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class DummyMutateTarget : BaseMutateTarget, IMutateTarget
     {
         public DummyMutateTarget(ILogService log, ITableDetails table) : base(log, table)

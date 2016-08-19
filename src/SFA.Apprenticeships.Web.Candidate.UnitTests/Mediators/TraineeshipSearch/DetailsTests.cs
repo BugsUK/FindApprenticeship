@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearch
 {
     using System;
     using System.Collections.Generic;
@@ -11,36 +9,31 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
     using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
+    using Common.UnitTests.Mediators;
     using Constants;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class DetailsTests : TestsBase
     {
-        private const string VacancyId = "1";
-        private const string Distance = "42";
-        private const string SearchReturnUrl = "http://www.example.com";
-
-        private Dictionary<string, string> _userData;
-
         [SetUp]
         public void SetUp()
         {
             _userData = new Dictionary<string, string>();
         }
 
-        [Test]
-        public void VacancyNotFound()
-        {
-            var mediator = GetMediator(null);
-            var response = mediator.Details(VacancyId, null);
+        private const string VacancyId = "1";
+        private const string Distance = "42";
+        private const string SearchReturnUrl = "http://www.example.com";
 
-            response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
-        }
+        private Dictionary<string, string> _userData;
 
         [TestCase(null)]
         [TestCase("")]
@@ -55,61 +48,6 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
             var response = mediator.Details(vacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
-        }
-
-        [Test]
-        public void VacancyUnavailable()
-        {
-            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
-            {
-                VacancyStatus = VacancyStatuses.Unavailable,
-            };
-
-            var mediator = GetMediator(vacancyDetailViewModel);
-            var response = mediator.Details(VacancyId, null);
-
-            response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
-        }
-
-        [Test]
-        public void VacancyHasError()
-        {
-            const string message = "The vacancy has an error";
-
-            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
-            {
-                VacancyStatus = VacancyStatuses.Live,
-                ViewModelMessage = message
-            };
-
-            var mediator = GetMediator(vacancyDetailViewModel);
-
-            var response = mediator.Details(VacancyId, null);
-
-            response.AssertMessage(TraineeshipSearchMediatorCodes.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
-        }
-
-        [Test]
-        public void Ok()
-        {
-            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
-            {
-                Id = int.Parse(VacancyId),
-                VacancyStatus = VacancyStatuses.Live
-            };
-
-            var mediator = GetMediator(vacancyDetailViewModel);
-            var response = mediator.Details(VacancyId, null);
-
-            response.AssertCode(TraineeshipSearchMediatorCodes.Details.Ok, true);
-            
-            response.ViewModel.Distance.Should().Be(Distance);
-
-            _userData.ContainsKey(CandidateDataItemNames.VacancyDistance).Should().BeTrue();
-            _userData[CandidateDataItemNames.VacancyDistance].Should().Be(Distance);
-
-            _userData.ContainsKey(CandidateDataItemNames.LastViewedVacancy).Should().BeTrue();
-            _userData[CandidateDataItemNames.LastViewedVacancy].Should().Be(VacancyType.Traineeship + "_" + VacancyId.ToString(CultureInfo.InvariantCulture));
         }
 
         private Mock<IUserDataProvider> GetUserDataProvider()
@@ -135,7 +73,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
         {
             var configurationManager = new Mock<IConfigurationService>();
             configurationManager.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration() {VacancyResultsPerPage = 5});
+                .Returns(new CommonWebConfiguration {VacancyResultsPerPage = 5});
             var searchProvider = new Mock<ISearchProvider>();
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
@@ -145,7 +83,74 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
 
             var userDataProvider = GetUserDataProvider();
 
-            return GetMediator(configurationManager.Object, searchProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object, candidateServiceProvider.Object);
+            return GetMediator(configurationManager.Object, searchProvider.Object, userDataProvider.Object,
+                traineeshipVacancyProvider.Object, candidateServiceProvider.Object);
+        }
+
+        [Test]
+        public void Ok()
+        {
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
+            {
+                Id = int.Parse(VacancyId),
+                VacancyStatus = VacancyStatuses.Live
+            };
+
+            var mediator = GetMediator(vacancyDetailViewModel);
+            var response = mediator.Details(VacancyId, null);
+
+            response.AssertCode(TraineeshipSearchMediatorCodes.Details.Ok, true);
+
+            response.ViewModel.Distance.Should().Be(Distance);
+
+            _userData.ContainsKey(CandidateDataItemNames.VacancyDistance).Should().BeTrue();
+            _userData[CandidateDataItemNames.VacancyDistance].Should().Be(Distance);
+
+            _userData.ContainsKey(CandidateDataItemNames.LastViewedVacancy).Should().BeTrue();
+            _userData[CandidateDataItemNames.LastViewedVacancy].Should()
+                .Be(VacancyType.Traineeship + "_" + VacancyId.ToString(CultureInfo.InvariantCulture));
+        }
+
+        [Test]
+        public void VacancyHasError()
+        {
+            const string message = "The vacancy has an error";
+
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Live,
+                ViewModelMessage = message
+            };
+
+            var mediator = GetMediator(vacancyDetailViewModel);
+
+            var response = mediator.Details(VacancyId, null);
+
+            response.AssertMessage(TraineeshipSearchMediatorCodes.Details.VacancyHasError, message,
+                UserMessageLevel.Warning, true);
+        }
+
+        [Test]
+        public void VacancyNotFound()
+        {
+            var mediator = GetMediator(null);
+            var response = mediator.Details(VacancyId, null);
+
+            response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
+        }
+
+        [Test]
+        public void VacancyUnavailable()
+        {
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            var mediator = GetMediator(vacancyDetailViewModel);
+            var response = mediator.Details(VacancyId, null);
+
+            response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
     }
 }

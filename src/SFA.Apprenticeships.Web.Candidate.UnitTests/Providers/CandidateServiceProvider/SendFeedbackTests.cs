@@ -10,7 +10,10 @@
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
+    [Parallelizable]
     public class SendFeedbackTests
     {
         private Mock<ICandidateService> _candidateServiceMock;

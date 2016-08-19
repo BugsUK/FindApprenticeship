@@ -2,7 +2,7 @@
 {
     using System;
     using Application.Candidate;
-    using Application.Interfaces.Candidates;
+    using Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -14,7 +14,10 @@
     using Infrastructure.Processes.Candidates;
     using Moq;
     using NUnit.Framework;
+    using ErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
+    [TestFixture]
+    [Parallelizable]
     public class SaveCandidateRequestSubscriberTests
     {
         private Mock<ILogService> _logger;

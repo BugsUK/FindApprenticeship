@@ -14,10 +14,13 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class GetPendingQAVacanciesOverviewTests
     {
         private const int ExpectedSubmittedTodayCount = 5;

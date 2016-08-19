@@ -12,6 +12,9 @@
     using Domain.Entities.Raa.Parties;
     using EmployerDataService;
     using Mappers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using WebServices.Wcf;
     using ErrorCodes = ErrorCodes;
 

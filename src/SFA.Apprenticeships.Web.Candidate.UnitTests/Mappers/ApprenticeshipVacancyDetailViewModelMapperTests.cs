@@ -8,6 +8,7 @@
     using Candidate.Mappers;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipVacancyDetailViewModelMapperTests
     {
         [Test]

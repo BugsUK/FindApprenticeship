@@ -11,10 +11,14 @@
     using Raa.Common.Providers;
     using Recruit.Mediators.ProviderUser;
     using Recruit.Validators;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Home;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class HomeMediatorTests
     {        
         private Mock<IProviderUserProvider> _userProfileService;

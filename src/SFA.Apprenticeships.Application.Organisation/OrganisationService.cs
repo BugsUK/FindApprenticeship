@@ -3,8 +3,9 @@
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Organisations;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class OrganisationService : IOrganisationService
     {

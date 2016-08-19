@@ -5,9 +5,13 @@
     using Common.Mappers;
     using FluentAssertions;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Web.Common.ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class DateTimeToDateViewModelMapperTests
     {
         private IMapper mapper;

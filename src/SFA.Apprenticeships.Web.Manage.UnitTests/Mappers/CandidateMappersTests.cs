@@ -5,14 +5,18 @@
     using Manage.Mappers;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
+    [TestFixture]
+    [Parallelizable]
     public class CandidateMappersTests
     {
         private IMapper _mapper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _mapper = new CandidateMappers();

@@ -9,6 +9,9 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Traineeships;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.VacancySearch;
 
     public class TraineeshipVacancyProvider : ITraineeshipVacancyProvider

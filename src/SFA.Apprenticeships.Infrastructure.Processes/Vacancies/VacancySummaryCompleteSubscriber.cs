@@ -4,6 +4,9 @@
     using Application.Vacancies.Entities;
     using Application.Vacancies.Entities.SiteMap;
     using Domain.Interfaces.Messaging;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using VacancyIndexer;
     using Elastic = Elastic.Common.Entities;
 

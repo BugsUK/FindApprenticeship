@@ -4,7 +4,8 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Users;
     using Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class ResendEmailVerificationCodeStrategy : IResendEmailVerificationCodeStrategy

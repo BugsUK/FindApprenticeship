@@ -9,6 +9,8 @@
     using Common.Services;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class LoginMediatorBuilder
     {
         private Mock<IUserDataProvider> _userDataProvider;

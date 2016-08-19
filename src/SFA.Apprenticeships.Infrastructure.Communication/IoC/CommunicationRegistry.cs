@@ -8,6 +8,9 @@
     using Email.EmailFromResolvers;
     using Email.EmailMessageFormatters;
     using RestSharp;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Sms;
     using Sms.SmsMessageFormatters;
     using StructureMap;

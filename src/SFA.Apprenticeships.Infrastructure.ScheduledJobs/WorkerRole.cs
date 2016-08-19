@@ -36,6 +36,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
     using Application.Candidate.Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;

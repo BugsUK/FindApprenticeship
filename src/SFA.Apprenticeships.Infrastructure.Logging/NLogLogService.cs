@@ -5,6 +5,8 @@
     using Domain.Entities.Exceptions;
     using NLog;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class NLogLogService : ILogService
     {
         private readonly Logger _logger;

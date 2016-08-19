@@ -6,6 +6,7 @@
     using Candidate.Validators;
 
     [TestFixture]
+    [Parallelizable]
     public class ContactMessageViewModelValidatorTests
     {
         [Test]

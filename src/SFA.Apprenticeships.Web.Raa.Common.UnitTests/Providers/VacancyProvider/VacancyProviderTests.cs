@@ -3,24 +3,21 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces;
     using Application.Interfaces.Providers;
-    using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
-    using Configuration;
-    using Domain.Entities.Raa.Parties; 
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using Moq.Language.Flow;
     using NUnit.Framework;
-    using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
-    using ViewModels.Vacancy;
     using Web.Common.Configuration;
-    using Web.Common.ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyProviderTests
     {
         private const int QAVacancyTimeout = 10;
@@ -76,12 +73,14 @@
             vacancyLockingService.Setup(
                 vls =>
                     vls.IsVacancyAvailableToQABy(username,
-                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyAvailableToQAReferenceNumber))).Returns(true);
+                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyAvailableToQAReferenceNumber)))
+                .Returns(true);
 
             vacancyLockingService.Setup(
                 vls =>
                     vls.IsVacancyAvailableToQABy(username,
-                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyNotAvailableToQAReferenceNumber))).Returns(false);
+                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyNotAvailableToQAReferenceNumber)))
+                .Returns(false);
 
             var currentUserService = new Mock<ICurrentUserService>();
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(username);
@@ -98,7 +97,6 @@
             var vacancies = vacancyProvider.GetPendingQAVacancies();
             vacancies.Should().HaveCount(1);
             vacancies.Single().VacancyReferenceNumber.Should().Be(vacancyAvailableToQAReferenceNumber);
-
         }
 
         [Test]

@@ -88,6 +88,8 @@
 
         public AddressViewModel VacancyAddress { get; set; }
 
+        public string AdditionalLocationInformation { get; set; }
+
         public string SupplementaryQuestion1 { get; set; }
 
         public string SupplementaryQuestion2 { get; set; }

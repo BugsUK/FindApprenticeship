@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
@@ -13,6 +12,9 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     public class TraineeshipVacancyDetailMapper
@@ -69,7 +71,7 @@
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
                 RecruitmentAgency = providerSite.TradingName,
-                ProviderName = provider.Name,
+                ProviderName = provider.TradingName,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = vacancy.GetContactInformation(providerSite),
@@ -81,7 +83,8 @@
                 PersonalQualities = vacancy.PersonalQualities,
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
-                TrainingType = vacancy.TrainingType.GetTrainingType()
+                TrainingType = vacancy.TrainingType.GetTrainingType(),
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
             };
 
             return detail;

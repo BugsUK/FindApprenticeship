@@ -27,6 +27,9 @@
     using Domain.Interfaces.Repositories;
     using Processes.Vacancies;
     using Repositories.Mongo.Audit;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap.Configuration.DSL;
     using VacancyEtlMapper = Mappers.VacancyEtlMapper;
 

@@ -5,6 +5,7 @@
     using Application.Communication.Strategies;
     using Application.Employer;
     using Application.Employer.Strategies;
+    using Application.Interfaces;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -21,11 +22,15 @@
     using Application.Reporting;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
+    using Application.VacancyPosting.Strategies;
     using Application.Vacancy;
     using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
+    using Infrastructure.Raa;
+    using Infrastructure.Raa.Mappers;
+    using Infrastructure.Raa.Strategies;
     using Infrastructure.Security;
     using Mappers;
     using Mediators.Application;
@@ -38,8 +43,7 @@
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Application;
-    using Raa.Common.Views.Shared.DisplayTemplates.Application;
-    using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
+    using Mediators.Home;
 
     using StructureMap;
     using StructureMap.Configuration.DSL;
@@ -125,6 +129,8 @@
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
             For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
+
+            For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
             For<IDeleteVacancyStrategy>().Use<DeleteVacancyStrategy>();
         }
 

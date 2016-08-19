@@ -12,6 +12,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
     using Domain.Entities.Applications;
     using SFA.Infrastructure.Interfaces;
     using Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Validators;
     using ViewModels.Applications;
 

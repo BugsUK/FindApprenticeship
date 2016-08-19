@@ -12,6 +12,8 @@
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApprenticeshipMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipMetricsRepository
     {
         public ApprenticeshipMetricsRepository(IConfigurationService configurationService)

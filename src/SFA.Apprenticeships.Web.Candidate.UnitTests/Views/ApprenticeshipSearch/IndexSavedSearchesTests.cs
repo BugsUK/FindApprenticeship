@@ -13,6 +13,7 @@
     using Ploeh.AutoFixture;
     using RazorGenerator.Testing;
 
+    [TestFixture]
     public class IndexSavedSearchesTests : MediatorTestsBase
     {
         [Test]

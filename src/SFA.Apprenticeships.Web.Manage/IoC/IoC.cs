@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Application.Provider;
     using Application.UserAccount;
     using Application.UserProfile;
+    using Application.VacancyPosting.IoC;
     using Common.IoC;
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
@@ -29,6 +30,9 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.Repositories.Sql.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
     using StructureMap.Web;
     using EuCookieDirectiveProvider = Raa.Common.Providers.EuCookieDirectiveProvider;
@@ -70,6 +74,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry<VacancySourceRegistry>();
+                x.AddRegistry<VacancyPostingServiceRegistry>();
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();

@@ -5,6 +5,8 @@
     using Application.Location;
     using Configuration;
     using Domain.Entities.Raa.Locations;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class GeoCodeLookupProvider : IGeoCodeLookupProvider

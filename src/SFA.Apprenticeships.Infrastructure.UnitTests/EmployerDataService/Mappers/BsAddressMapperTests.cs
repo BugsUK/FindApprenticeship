@@ -30,6 +30,7 @@
     */
 
     [TestFixture]
+    [Parallelizable]
     public class BsAddressMapperTests
     {
         private BsAddressMapper _mapper;

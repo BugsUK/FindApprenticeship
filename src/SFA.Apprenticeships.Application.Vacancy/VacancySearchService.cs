@@ -4,7 +4,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
+    using Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
@@ -71,7 +71,7 @@
             }
             catch (Exception e)
             {
-                var message = string.Format("Get vacancy failed for vacancy {0}.", vacancyId);
+                var message = $"Get vacancy failed for vacancy {vacancyId}.";
                 _logger.Debug(message, e);
                 throw new CustomException(message, e, ErrorCodes.GetVacancyDetailsFailed);
             }

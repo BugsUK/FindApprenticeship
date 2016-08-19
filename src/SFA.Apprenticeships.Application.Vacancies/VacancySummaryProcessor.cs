@@ -8,7 +8,7 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Messaging;
     using Entities;
-    using SFA.Infrastructure.Interfaces;
+    using Interfaces;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {

@@ -5,6 +5,8 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Sql.Common;
     using Sql.Reporting;
@@ -17,7 +19,7 @@
         private Mock<ILogService> _logger;
 
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void SetUpFixture()
         {
             _connection = new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);

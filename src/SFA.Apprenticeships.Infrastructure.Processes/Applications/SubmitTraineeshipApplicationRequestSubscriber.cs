@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Candidate;
+    using Application.Interfaces;
     using Domain.Entities.Applications;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Exceptions;

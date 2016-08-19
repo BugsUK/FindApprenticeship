@@ -5,6 +5,8 @@
     using Configuration;
     using Infrastructure.Repositories.Mongo.Common;
     using MongoDB.Bson;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class CheckMongoReplicaSets : IMonitorTask

@@ -11,6 +11,9 @@
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+    using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
+
     public class SubmitApprenticeshipApplicationRequestSubscriber : IServiceBusSubscriber<SubmitApprenticeshipApplicationRequest>
     {
         private readonly ILogService _logger;

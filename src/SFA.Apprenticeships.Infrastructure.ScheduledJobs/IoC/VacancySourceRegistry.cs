@@ -17,8 +17,11 @@
     using Raa;
 
     using Application.Candidate.Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
     using SFA.Infrastructure.Interfaces;
-    using SFA.Infrastructure.Interfaces.Caching;
+
     using StructureMap.Configuration.DSL;
 
     public class VacancySourceRegistry : Registry

@@ -14,6 +14,7 @@
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class LocalAuthorityTests : TestBase
     {
         private const string Ukprn = "12345";

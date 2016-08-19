@@ -13,10 +13,11 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
     using Presentation;
     using SendGrid;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class EmailSavedSearchAlertMessageFormatter : EmailMessageFormatter
     {

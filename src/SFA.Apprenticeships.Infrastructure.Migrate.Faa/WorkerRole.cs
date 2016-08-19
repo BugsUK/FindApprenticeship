@@ -11,6 +11,8 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
     using SFA.Infrastructure.Interfaces;
     using Logging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class WorkerRole : RoleEntryPoint
     {
         private const string ProcessName = "Migrate.Faa";

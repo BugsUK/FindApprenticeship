@@ -5,6 +5,7 @@
     using Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class GeoPointExtensionMethodTests
     {
         [Test]

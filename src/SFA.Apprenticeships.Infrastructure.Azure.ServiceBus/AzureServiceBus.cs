@@ -3,11 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Interfaces.Messaging;
     using Microsoft.ServiceBus.Messaging;
     using Newtonsoft.Json;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class AzureServiceBus : IServiceBus
     {

@@ -14,6 +14,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
     using NUnit.Framework;
     using Common.Providers;
     using Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 

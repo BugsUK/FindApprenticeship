@@ -9,9 +9,12 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipVacancyDetailMapperTests
     {
         private Mock<ILogService> _mockLogService;
@@ -123,7 +126,7 @@
                 detail.SupplementaryQuestion2.Should().Be(vacancy.SecondQuestion);
 
                 detail.RecruitmentAgency.Should().Be(providerSite.TradingName);
-                detail.ProviderName.Should().Be(provider.Name);
+                detail.ProviderName.Should().Be(provider.TradingName);
                 detail.TradingName.Should().Be(employer.TradingName);
                 detail.ProviderDescription.Should().BeNull();
 
@@ -138,6 +141,8 @@
                 detail.PersonalQualities.Should().Be(vacancy.PersonalQualities);
                 detail.QualificationRequired.Should().Be(vacancy.DesiredQualifications);
                 detail.SkillsRequired.Should().Be(vacancy.DesiredSkills);
+
+                detail.AdditionalLocationInformation.Should().Be(vacancy.AdditionalLocationInformation);
             }
         }
 

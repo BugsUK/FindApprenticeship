@@ -11,6 +11,9 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+    using Newtonsoft.Json;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
@@ -48,7 +51,8 @@
             { "Motor Vehicle Service and Maintenance Technician (light vehicle) (L3)", "Motor Vehicle Service and Maintenance Technician [light vehicle] (L3)" },
             { "Public Service - Operational delivery officer (Level 3)", "Public Service Operational Delivery Officer"},
             { "Cyber Security", "Cyber security technologist" },
-            { "Workplace Pensions (Administrator or Consultant)", "Workplace Pensions (Administrator or Consultant)()"}
+            { "Workplace Pensions (Administrator or Consultant)", "Workplace Pensions (Administrator or Consultant)()"},
+            { "Digital & technology solutions professional (Level 6)", "Digital & Technology Solutions Professional – degree apprenticeship"}
         };
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
@@ -207,7 +211,7 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
 
             if (filterByProviderBeenMigrated)
             {
-                sql += " AND ProviderToUseFAA = 2";
+                sql += " AND ( ProviderToUseFAA = 2 OR EditedInRaa = 1)";
             }
 
             if (pageSize > 0)
@@ -442,7 +446,7 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
             // Not all the vacancies have CountyId (before being accepted by QA).
             // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
             
-            if (dbVacancy.CountyId > 0)
+            if (result.Address != null && dbVacancy.CountyId > 0)
             {
                 result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT FullName
@@ -918,12 +922,18 @@ order by HistoryDate desc
         {
             _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.VacancyId);
 
+            _logger.Info(
+                $"[{entity.VacancyGuid}] Calling database to create the following domain vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new ExcludeLiveClosingDateResolver()})}");
+
             UpdateEntityTimestamps(entity);
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
 
             PopulateIds(entity, dbVacancy);
 
+            _logger.Info(
+                $"[{entity.VacancyGuid}] Calling database to create the following database vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
+            
             dbVacancy.VacancyId = (int) _getOpenConnection.Insert(dbVacancy);
 
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
@@ -941,6 +951,9 @@ order by HistoryDate desc
         {
             _logger.Debug("Calling database to update apprenticeship vacancy with id={0}", entity.VacancyId);
 
+            _logger.Info(
+                $"[{entity.VacancyGuid}] Calling database to update the following vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
+            
             UpdateEntityTimestamps(entity); // Do we need this?
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
@@ -948,6 +961,9 @@ order by HistoryDate desc
             PopulateIds(entity, dbVacancy);
 
             var previousVacancyState = GetVacancyByVacancyId(entity.VacancyId);
+
+            _logger.Info(
+                $"[{entity.VacancyGuid}] Calling database to update the following vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
 
             _getOpenConnection.UpdateSingle(dbVacancy);
 
@@ -1467,18 +1483,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             return vacancyCollections
                 .GroupBy(x => (int) x.VacancyOwnerRelationshipId)
                 .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));               
-        }
-
-        public IReadOnlyDictionary<int, IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
-        {
-            // TODO: Handle >2000 records - Shoma
-            return _getOpenConnection.Query<Domain.Entities.Raa.Locations.VacancyLocation> (@"
-                        SELECT *
-                        FROM   dbo.VacancyLocation
-                        WHERE  VacancyId IN @Ids",
-                        new { Ids = vacancyIds })
-                                    .GroupBy(x => x.VacancyId)
-            .ToDictionary(x => x.Key, x => (IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>)x);
         }
 
         private class MinimalVacancyDetails : IMinimalVacancyDetails

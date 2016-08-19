@@ -6,6 +6,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class PaginationTests
     {
         [TestCase(100, 10, 10)]

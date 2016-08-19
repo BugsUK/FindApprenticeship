@@ -25,6 +25,7 @@
     using System.IO;
     using System.Linq;
     using System.Web.Mvc;
+    using Application.Interfaces;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -564,6 +565,7 @@
         {
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
             var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId);
+            viewModel.Provider = provider.Convert();
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Some current vacancies have non-current vacancy parties
             if (vacancyParty != null)
             {
@@ -1081,7 +1083,7 @@
                 ClosingDate = vacancy.ClosingDate,
                 DateSubmitted = vacancy.DateSubmitted,
                 DateFirstSubmitted = vacancy.DateFirstSubmitted,
-                ProviderName = provider.Name,
+                ProviderName = provider.TradingName,
                 Status = vacancy.Status,
                 Title = vacancy.Title,
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
@@ -1098,7 +1100,7 @@
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
-        private void CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
+        private Vacancy CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
         {
             var newVacancy = (Vacancy)vacancy.Clone();
             newVacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
@@ -1110,7 +1112,7 @@
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
-            _vacancyPostingService.CreateVacancy(newVacancy);
+            return _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
         public QAActionResultCode ApproveVacancy(int vacancyReferenceNumber)
@@ -1122,6 +1124,8 @@
             {
                 return QAActionResultCode.InvalidVacancy;
             }
+
+            var approvedVacancies = new List<Vacancy>();
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
@@ -1136,7 +1140,8 @@
 
                     foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
                     {
-                        CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                        var childVacancy = CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                        approvedVacancies.Add(childVacancy);
                     }
 
                     _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
@@ -1145,7 +1150,8 @@
 
             submittedVacancy.Status = VacancyStatus.Live;
             submittedVacancy.DateQAApproved = qaApprovalDate;
-            _vacancyPostingService.UpdateVacancy(submittedVacancy);
+            var approvedVacancy = _vacancyPostingService.UpdateVacancy(submittedVacancy);
+            approvedVacancies.Add(approvedVacancy);
 
             return QAActionResultCode.Ok;
         }

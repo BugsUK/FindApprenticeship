@@ -12,6 +12,8 @@
     using Model;
     using Newtonsoft.Json;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AzureServiceBusMessageBroker<TMessage> : IServiceBusMessageBroker<TMessage>
         where TMessage : class
     {

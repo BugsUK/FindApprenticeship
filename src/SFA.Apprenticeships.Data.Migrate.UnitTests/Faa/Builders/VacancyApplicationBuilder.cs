@@ -5,11 +5,12 @@
 
     public class VacancyApplicationBuilder
     {
-        private int _status = 30;
+        private ApplicationStatuses _status = ApplicationStatuses.Submitted;
         private int _legacyApplicationId = 123456;
         private string _unsuccessfulReason;
         private string _withdrawnOrDeclinedReason;
         private ApplicationTemplate _applicationTemplate;
+        private string _notes;
 
         public VacancyApplication Build()
         {
@@ -23,6 +24,7 @@
                 CandidateId = Guid.NewGuid(),
                 LegacyApplicationId = _legacyApplicationId,
                 CandidateInformation = _applicationTemplate,
+                Notes = _notes,
                 SuccessfulDateTime = DateTime.Now.AddDays(-1),
                 UnsuccessfulDateTime = DateTime.Now.AddDays(-2),
                 WithdrawnOrDeclinedReason = _withdrawnOrDeclinedReason,
@@ -36,7 +38,7 @@
             };
         }
 
-        public VacancyApplicationBuilder WithStatus(int status)
+        public VacancyApplicationBuilder WithStatus(ApplicationStatuses status)
         {
             _status = status;
             return this;
@@ -63,6 +65,12 @@
         public VacancyApplicationBuilder WithApplicationTemplate(ApplicationTemplate applicationTemplate)
         {
             _applicationTemplate = applicationTemplate;
+            return this;
+        }
+
+        public VacancyApplicationBuilder WithNotes(string notes)
+        {
+            _notes = notes;
             return this;
         }
     }

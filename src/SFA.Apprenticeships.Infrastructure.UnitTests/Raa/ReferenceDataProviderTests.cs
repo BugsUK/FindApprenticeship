@@ -11,6 +11,8 @@
     using FluentAssertions;
     using Infrastructure.Raa;
 
+    [TestFixture]
+    [Parallelizable]
     public class ReferenceDataProviderTests
     {
         private Mock<IReferenceRepository> _mockReferenceRepo;

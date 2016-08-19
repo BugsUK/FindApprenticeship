@@ -3,6 +3,8 @@
     using Domain.Interfaces.Repositories;
     using Applications;
     using Mappers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;
 

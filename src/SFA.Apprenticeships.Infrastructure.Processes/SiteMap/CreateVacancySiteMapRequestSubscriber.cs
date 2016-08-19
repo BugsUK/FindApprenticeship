@@ -6,6 +6,8 @@
     using Configuration;
     using Domain.Interfaces.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CreateVacancySiteMapRequestSubscriber : IServiceBusSubscriber<CreateVacancySiteMapRequest>
     {
         private readonly ILogService _logger;

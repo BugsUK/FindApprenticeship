@@ -11,6 +11,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class TrySaveSettingsTests
     {
         [TestCase("0123456789", CommunicationChannels.Email, false)]

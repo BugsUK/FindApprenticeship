@@ -380,9 +380,9 @@
             var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
             viewModel.ComeFromPreview = comeFromPreview ?? false;
 
-            if (viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
-                !viewModel.LocationAddresses.Any())
+            if (!viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue ||
+                (viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
+                !viewModel.LocationAddresses.Any()))
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.LocationNotSet, viewModel);
             }

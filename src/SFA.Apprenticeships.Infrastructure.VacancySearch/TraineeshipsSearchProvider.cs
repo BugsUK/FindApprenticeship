@@ -12,6 +12,8 @@
     using Elastic.Common.Entities;
     using Nest;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class TraineeshipsSearchProvider : IVacancySearchProvider<TraineeshipSearchResponse, TraineeshipSearchParameters>
     {
         private readonly ILogService _logger;

@@ -4,8 +4,9 @@
     using System.Linq;
     using Application.Interfaces.Communications;
     using Domain.Entities.Communication;
-    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SmsApprenticeshipApplicationExpiringDraftMessageFormatter : SmsMessageFormatter
     {

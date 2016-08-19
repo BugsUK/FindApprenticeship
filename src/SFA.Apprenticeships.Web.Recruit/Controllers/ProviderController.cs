@@ -10,6 +10,8 @@
     using Raa.Common.ViewModels.Provider;
     using Constants;
     using Domain.Entities.Raa;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [AuthorizeUser(Roles = Roles.Faa)]

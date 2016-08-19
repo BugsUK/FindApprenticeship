@@ -1,10 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Postcode
 {
-    using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
-    using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Infrastructure.Postcode;
     using Infrastructure.Postcode.Configuration;
@@ -13,9 +10,12 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using RestSharp;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class PostalAddressLookupProviderTests
     {
         private PostalAddressLookupProvider _palp;

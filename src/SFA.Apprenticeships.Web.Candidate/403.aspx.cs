@@ -6,6 +6,9 @@
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Microsoft.WindowsAzure;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
     using Views;
 

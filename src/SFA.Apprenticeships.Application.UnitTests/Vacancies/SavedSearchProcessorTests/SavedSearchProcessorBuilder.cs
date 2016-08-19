@@ -9,6 +9,9 @@
     using SFA.Infrastructure.Interfaces;
     using Interfaces.Vacancies;
     using Moq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Vacancy;
 
     public class SavedSearchProcessorBuilder

@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearch
 {
     using System;
     using System.Linq;
@@ -10,17 +8,37 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
     using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
+    using Common.UnitTests.Mediators;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class IndexTests : TestsBase
     {
+        private static ITraineeshipSearchMediator GetMediator(Mock<IUserDataProvider> mockUserDataProvider = null,
+            Mock<ICandidateServiceProvider> mockCandidateServiceProvider = null)
+        {
+            var configurationService = new Mock<IConfigurationService>();
+
+            configurationService.Setup(cm => cm.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {VacancyResultsPerPage = 5});
+
+            var searchProvider = new Mock<ISearchProvider>();
+            var userDataProvider = mockUserDataProvider ?? new Mock<IUserDataProvider>();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
+            var candidateServiceProvider = mockCandidateServiceProvider ?? new Mock<ICandidateServiceProvider>();
+            return GetMediator(configurationService.Object, searchProvider.Object, userDataProvider.Object,
+                traineeshipVacancyProvider.Object, candidateServiceProvider.Object);
+        }
+
         [Test]
         public void Ok()
         {
@@ -41,6 +59,23 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
             viewModel.SortTypes.Should().NotBeNull();
             viewModel.SortTypes.Count().Should().BeGreaterThan(0);
             viewModel.SortTypes.SelectedValue.Should().Be(VacancySearchSortType.Distance);
+        }
+
+        [Test]
+        public void PoputlateLocationCookieWithSearchedLocation()
+        {
+            var mockUserDataProvider = new Mock<IUserDataProvider>();
+            var mockCandidateServiceProvider = new Mock<ICandidateServiceProvider>();
+
+            mockUserDataProvider.Setup(x => x.Get(UserDataItemNames.LastSearchedLocation))
+                .Returns("TEST COOKIE LOCATION");
+
+            var mediator = GetMediator(mockUserDataProvider, mockCandidateServiceProvider);
+
+            var response = mediator.Index(null);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Index.Ok, true);
+            response.ViewModel.Location.Should().Be("TEST COOKIE LOCATION");
+            mockCandidateServiceProvider.Verify(x => x.GetCandidate(It.IsAny<Guid>()), Times.Never);
         }
 
         [Test]
@@ -66,38 +101,9 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
             response.AssertCode(TraineeshipSearchMediatorCodes.Index.Ok, true);
             response.ViewModel.Location.Should().Be("CANDIDATE POSTCODE");
 
-            mockUserDataProvider.Verify(x => x.Push(UserDataItemNames.LastSearchedLocation, "CANDIDATE POSTCODE"), Times.Once);
+            mockUserDataProvider.Verify(x => x.Push(UserDataItemNames.LastSearchedLocation, "CANDIDATE POSTCODE"),
+                Times.Once);
             mockCandidateServiceProvider.Verify(x => x.GetCandidate(It.IsAny<Guid>()), Times.Once);
-        }
-
-        [Test]
-        public void PoputlateLocationCookieWithSearchedLocation()
-        {
-            var mockUserDataProvider = new Mock<IUserDataProvider>();
-            var mockCandidateServiceProvider = new Mock<ICandidateServiceProvider>();
-
-            mockUserDataProvider.Setup(x => x.Get(UserDataItemNames.LastSearchedLocation)).Returns("TEST COOKIE LOCATION");
-
-            var mediator = GetMediator(mockUserDataProvider, mockCandidateServiceProvider);
-            
-            var response = mediator.Index(null);
-            response.AssertCode(TraineeshipSearchMediatorCodes.Index.Ok, true);
-            response.ViewModel.Location.Should().Be("TEST COOKIE LOCATION");
-            mockCandidateServiceProvider.Verify(x => x.GetCandidate(It.IsAny<Guid>()), Times.Never);
-        }
-
-        private static ITraineeshipSearchMediator GetMediator(Mock<IUserDataProvider> mockUserDataProvider = null, Mock<ICandidateServiceProvider> mockCandidateServiceProvider = null)
-        {
-            var configurationService = new Mock<IConfigurationService>();
-
-            configurationService.Setup(cm => cm.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration() {VacancyResultsPerPage = 5});
-
-            var searchProvider = new Mock<ISearchProvider>();
-            var userDataProvider = mockUserDataProvider ?? new Mock<IUserDataProvider>();
-            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            var candidateServiceProvider = mockCandidateServiceProvider ?? new Mock<ICandidateServiceProvider>();
-            return GetMediator(configurationService.Object, searchProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object, candidateServiceProvider.Object);
         }
     }
 }

@@ -7,6 +7,8 @@
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApplicationStatusSummarySubscriber : IServiceBusSubscriber<ApplicationStatusSummary>
     {
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;

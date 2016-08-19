@@ -9,7 +9,8 @@
     using Domain.Entities.Raa.Reporting;
     using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ReportingRepository : IReportingRepository
     {
@@ -241,6 +242,32 @@
             return response;
         }
 
+        public Dictionary<string, string> GetLocalAuthorities()
+        {
+            _logger.Debug($"Getting local authorities for report [dbo].[ReportGetLocalAuthority]...");
+
+            var response = new Dictionary<string, string>
+            {
+                { "n/a", "-1" }
+            };
+
+            var command = new SqlCommand("dbo.ReportGetLocalAuthority", (SqlConnection) _getOpenConnection.GetOpenConnection())
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            command.Parameters.Add("type", SqlDbType.Int).Value = 2;
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(reader[1].ToString(), reader[0].ToString());
+            }
+
+            _logger.Debug($"Done getting local authorities.");
+
+            return response;
+        }
+
         public IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate, int? providerUkprn, int? vacancyStatus)
         {
             var ukprn = providerUkprn?.ToString() ?? "ALL";
@@ -454,13 +481,25 @@
 
             var command = new SqlCommand(
                 @"SELECT 
-(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser]) as TotalProviders,
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider) as TotalProviders,
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider WHERE ProviderToUseFAA = 1) as TotalProvidersAskedToOnboard,
+(SELECT COUNT(DISTINCT UKPRN) FROM Provider WHERE ProviderToUseFAA = 2) as TotalProvidersForcedToMigrate,
+(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser] WHERE ProviderId NOT IN (SELECT ProviderId FROM Provider WHERE ProviderToUseFAA = 2)) as TotalProvidersOnboarded,
+(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser] WHERE ProviderId IN (SELECT ProviderId FROM Provider WHERE ProviderToUseFAA = 2)) as TotalProvidersMigrated,
 (SELECT COUNT(*) FROM [Provider].[ProviderUser]) as TotalProviderUserAccounts,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesSubmittedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesCreatedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 1) as TotalDraftVacanciesCreatedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 5) as TotalVacanciesInReviewViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 3) as TotalVacanciesReferredViaRaa,
 (SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 2) as TotalVacanciesApprovedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 6) as TotalVacanciesClosedViaRaa,
+(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 8) as TotalVacanciesArchivedViaRaa,
 (SELECT COUNT(*)
 FROM [dbo].[Application] a
-WHERE a.VacancyId < -1) as TotalApplicationsSubmittedForRaaVacancies,
+WHERE a.VacancyId < -1) as TotalApplicationsStartedForRaaVacancies,
+(SELECT COUNT(*)
+FROM [dbo].[Application] a
+WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId >= 2) as TotalApplicationsSubmittedForRaaVacancies,
 (SELECT COUNT(*)
 FROM [dbo].[Application] a
 JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
@@ -477,9 +516,19 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
                 data = new InformationRadiatorData
                 {
                     TotalProviders = Convert.ToInt32(reader["TotalProviders"]),
+                    TotalProvidersAskedToOnboard = Convert.ToInt32(reader["TotalProvidersAskedToOnboard"]),
+                    TotalProvidersForcedToMigrate = Convert.ToInt32(reader["TotalProvidersForcedToMigrate"]),
+                    TotalProvidersOnboarded = Convert.ToInt32(reader["TotalProvidersOnboarded"]),
+                    TotalProvidersMigrated = Convert.ToInt32(reader["TotalProvidersMigrated"]),
                     TotalProviderUserAccounts = Convert.ToInt32(reader["TotalProviderUserAccounts"]),
-                    TotalVacanciesSubmittedViaRaa = Convert.ToInt32(reader["TotalVacanciesSubmittedViaRaa"]),
+                    TotalVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalVacanciesCreatedViaRaa"]),
+                    TotalDraftVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalDraftVacanciesCreatedViaRaa"]),
+                    TotalVacanciesReferredViaRaa = Convert.ToInt32(reader["TotalVacanciesReferredViaRaa"]),
+                    TotalVacanciesInReviewViaRaa = Convert.ToInt32(reader["TotalVacanciesInReviewViaRaa"]),
                     TotalVacanciesApprovedViaRaa = Convert.ToInt32(reader["TotalVacanciesApprovedViaRaa"]),
+                    TotalVacanciesClosedViaRaa = Convert.ToInt32(reader["TotalVacanciesClosedViaRaa"]),
+                    TotalVacanciesArchivedViaRaa = Convert.ToInt32(reader["TotalVacanciesArchivedViaRaa"]),
+                    TotalApplicationsStartedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsStartedForRaaVacancies"]),
                     TotalApplicationsSubmittedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsSubmittedForRaaVacancies"]),
                     TotalUnsuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsViaRaa"]),
                     TotalSuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalSuccessfulApplicationsViaRaa"]),
@@ -489,7 +538,7 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
             return data;
         }
 
-        public IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(DateTime fromDate, DateTime toDate)
+        public IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string region, string localAuthority, bool marketMessagesOnly)
         {
             _logger.Debug($"Executing ReportRegisteredCandidates report with toDate {toDate} and fromdate {fromDate}...");
 
@@ -497,15 +546,15 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
 
             var command = new SqlCommand("dbo.ReportRegisteredCandidatesList", (SqlConnection)_getOpenConnection.GetOpenConnection());
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("type", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = region;
+            command.Parameters.Add("type", SqlDbType.Int).Value = type;
+            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = localAuthority;
             command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
             command.Parameters.Add("FromDate", SqlDbType.DateTime).Value = fromDate;
             command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = toDate;
-            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = ageRange;
             command.Parameters.Add("IncludeDeregisteredCandidates", SqlDbType.Int).Value = 0;
-            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = 0;
+            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = marketMessagesOnly ? 1 : 0;
             command.Parameters.Add("EthnicityID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("GenderID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;

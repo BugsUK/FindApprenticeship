@@ -1,16 +1,14 @@
-﻿using SFA.Apprenticeships.Web.Common.Mediators;
-using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
+﻿
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 {
     using System;
-    using SFA.Infrastructure.Interfaces;
-    using Candidate.Mediators;
     using Candidate.Mediators.Home;
     using Candidate.Providers;
     using Candidate.Validators;
     using Candidate.ViewModels.Home;
     using Common.Constants;
+    using Common.Mediators;
+    using Common.UnitTests.Mediators;
     using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -18,19 +16,14 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
     using FluentValidation.Results;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class ContactMessageTests : MediatorBase
     {
-        private const string AString = "A string";
-        private const string AnEmail = "valtechnas@gmail.com";
-
-        private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
-        private Mock<ILogService> _logServiceMock;
-
-        private Mock<ContactMessageServerViewModelValidator> _contactMessageServerViewModelValidatorMock;
-        private Mock<FeedbackServerViewModelValidator> _feedbackServerViewModelValidator;
-        private HomeMediator _homeMediator;
 
         [SetUp]
         public void SetUp()
@@ -46,16 +39,15 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
                 _contactMessageServerViewModelValidatorMock.Object,
                 _feedbackServerViewModelValidator.Object);
         }
+        private const string AString = "A string";
+        private const string AnEmail = "valtechnas@gmail.com";
 
-        [Test]
-        public void GetContactMessageViewModelWithoutCandidateId()
-        {
-            var response = _homeMediator.GetContactMessageViewModel(null);
+        private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
+        private Mock<ILogService> _logServiceMock;
 
-            response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
-            response.ViewModel.Name.Should().BeNull();
-            response.ViewModel.Email.Should().BeNull();
-        }
+        private Mock<ContactMessageServerViewModelValidator> _contactMessageServerViewModelValidatorMock;
+        private Mock<FeedbackServerViewModelValidator> _feedbackServerViewModelValidator;
+        private HomeMediator _homeMediator;
 
         [Test]
         public void GetContactMessageViewModelWithCandidateId()
@@ -91,6 +83,16 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
             _candidateServiceProviderMock.Setup(csp => csp.GetCandidate(candidateId)).Throws<ArgumentException>();
 
             var response = _homeMediator.GetContactMessageViewModel(candidateId);
+
+            response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
+            response.ViewModel.Name.Should().BeNull();
+            response.ViewModel.Email.Should().BeNull();
+        }
+
+        [Test]
+        public void GetContactMessageViewModelWithoutCandidateId()
+        {
+            var response = _homeMediator.GetContactMessageViewModel(null);
 
             response.AssertCodeAndMessage(HomeMediatorCodes.GetContactMessageViewModel.Successful);
             response.ViewModel.Name.Should().BeNull();

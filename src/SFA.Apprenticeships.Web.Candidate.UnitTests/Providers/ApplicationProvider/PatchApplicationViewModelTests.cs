@@ -8,6 +8,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class PatchApplicationViewModelTests
     {
         [Test]

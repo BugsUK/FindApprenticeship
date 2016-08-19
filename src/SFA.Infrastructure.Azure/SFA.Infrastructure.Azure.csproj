@@ -120,6 +120,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
       <Name>SFA.Infrastructure</Name>

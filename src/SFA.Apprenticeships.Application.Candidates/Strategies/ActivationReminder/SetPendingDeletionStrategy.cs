@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.ActivationReminder
 {
-    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SetPendingDeletionStrategy : HousekeepingStrategy
     {

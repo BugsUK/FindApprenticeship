@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
 {
-    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Interfaces.Communications;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SendMobileVerificationCodeReminderStrategy : HousekeepingStrategy
     {
