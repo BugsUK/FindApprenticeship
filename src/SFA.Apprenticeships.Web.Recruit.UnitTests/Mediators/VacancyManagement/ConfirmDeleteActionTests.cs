@@ -24,7 +24,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyManagement
 
             // Assert
             Assert.AreEqual(VacancyManagementMediatorCodes.ConfirmDelete.Ok, response.Code);
-            Assert.IsNotNullOrEmpty(response.ViewModel.VacancyTitle);
+            Assert.That(response.ViewModel.VacancyTitle, Is.Not.Null.And.Not.Empty);
             MockVacancyManagementProvider.Verify(x => x.FindSummary(It.IsAny<int>()));
         }
 

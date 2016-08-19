@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces;
     using Common;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
     using Candidate = Domain.Entities.Candidates.Candidate;
     using CandidateSummary = Domain.Entities.Candidates.CandidateSummary;
     using DbCandidateSummary = Entities.CandidateSummary;

@@ -3,7 +3,7 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies.Candidates
     using System.Collections.Generic;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using Interfaces;
 
     public class SearchCandidatesStrategy : ISearchCandidatesStrategy
     {

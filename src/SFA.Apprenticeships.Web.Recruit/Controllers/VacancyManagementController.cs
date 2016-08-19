@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
+    using Application.Interfaces;
     using Constants;
     using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Vacancy;
-    using SFA.Infrastructure.Interfaces;
 
     public class VacancyManagementController : RecruitmentControllerBase
     {
