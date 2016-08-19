@@ -83,6 +83,8 @@
     </Compile>
     <Compile Include="Applications\ErrorCodes.cs" />
     <Compile Include="Applications\ICommonApplicationService.cs" />
+    <Compile Include="Service\IServiceResult.cs" />
+    <Compile Include="Service\IServiceResult{T}.cs" />
     <Compile Include="Applications\ITraineeshipApplicationService.cs" />
     <Compile Include="Applications\IApprenticeshipApplicationService.cs" />
     <Compile Include="Caching\BaseCacheKey.cs" />
@@ -129,6 +131,9 @@
     <Compile Include="Search\AggregationResult.cs" />
     <Compile Include="Security\IDecryptionService.cs" />
     <Compile Include="Security\IEncryptionService.cs" />
+    <Compile Include="Service\ServiceResult.cs" />
+    <Compile Include="Service\ServiceResult{T}.cs" />
+    <Compile Include="Service\StrategyResult.cs" />
     <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />

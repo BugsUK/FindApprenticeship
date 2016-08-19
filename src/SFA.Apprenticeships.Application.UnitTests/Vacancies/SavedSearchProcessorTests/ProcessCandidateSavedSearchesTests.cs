@@ -5,6 +5,7 @@
     using System.Linq;
     using Apprenticeships.Application.Vacancies.Entities;
     using Apprenticeships.Application.Vacancies.Extensions;
+    using Apprenticeships.Application.Vacancy;
     using Builders;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;

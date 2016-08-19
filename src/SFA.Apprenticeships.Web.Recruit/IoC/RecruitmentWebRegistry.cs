@@ -23,6 +23,7 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Application.VacancyPosting.Strategies;
+    using Application.Vacancy;
     using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
@@ -36,6 +37,7 @@
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.Report;
+    using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
     using Raa.Common.Mappers;
@@ -72,6 +74,7 @@
             For<IProviderProvider>().Use<ProviderProvider>();
             For<IEmployerProvider>().Use<EmployerProvider>();
             For<IVacancyPostingProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
+            For<IVacancyManagementProvider>().Use<VacancyManagementProvider>();
             For<IProviderUserProvider>().Use<ProviderUserProvider>();
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
@@ -98,6 +101,7 @@
             For<IReportingService>().Use<ReportingService>();
             For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
             For<IDecryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
+            For<IVacancyManagementService>().Use<VacancyManagementService>();
         }
 
         private void RegisterStrategies()
@@ -127,6 +131,7 @@
             For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
 
             For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
+            For<IDeleteVacancyStrategy>().Use<DeleteVacancyStrategy>();
         }
 
         private void RegisterMediators()
@@ -139,7 +144,8 @@
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
             For<IHomeMediator>().Use<HomeMediator>();            
-            For<IReportMediator>().Use<ReportMediator>();            
+            For<IReportMediator>().Use<ReportMediator>();
+            For<IVacancyManagementMediator>().Use<VacancyManagementMediator>();
         }
     }
 }

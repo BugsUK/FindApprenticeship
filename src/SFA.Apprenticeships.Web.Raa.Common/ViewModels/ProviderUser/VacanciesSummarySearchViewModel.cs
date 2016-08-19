@@ -14,7 +14,7 @@
             CurrentPage = 1;
         }
 
-        private VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel) : this()
+        internal VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel) : this()
         {
             VacancyType = viewModel.VacancyType;
             FilterType = viewModel.FilterType;
@@ -52,6 +52,16 @@
         public int PageSize { get; set; }
         public List<SelectListItem> PageSizes { get; set; }
         public int CurrentPage { get; set; }
+
+        public object RouteValues => new
+        {
+            VacancyType,
+            FilterType,
+            ShowAllLotteryNumbers,
+            SearchString,
+            PageSize,
+            CurrentPage
+        };
     }
 
     public interface IPagedSearchCriteria

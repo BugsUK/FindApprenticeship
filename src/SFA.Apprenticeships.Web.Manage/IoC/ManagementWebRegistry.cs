@@ -3,6 +3,8 @@
     using System.Web;
     using Application.Candidate;
     using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Candidate.Strategies.Traineeships;
     using Application.Candidate.Strategies.Candidates;
     using Application.Communication;
     using Application.Communication.Strategies;
@@ -28,6 +30,7 @@
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
+    using Application.Vacancy;
     using Application.VacancyPosting.Strategies;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Raa.Mappers;

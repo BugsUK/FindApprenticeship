@@ -62,6 +62,11 @@
             return mongoEntity == null ? null : _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
         }
 
+        public VacancySummary GetById(int vacancyId)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
             var mongoEntities = Collection.Find(Query.In("VacancyId", new BsonArray(vacancyIds)));
