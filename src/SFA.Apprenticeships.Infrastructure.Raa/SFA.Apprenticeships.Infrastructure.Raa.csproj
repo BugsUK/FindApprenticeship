@@ -108,7 +108,7 @@
     <Compile Include="NullApplicationStatusesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApprenticeshipVacancyDataProvider.cs" />
-    <Compile Include="PublishVacancySummaryUpdateStrategy.cs" />
+    <Compile Include="Strategies\PublishVacancySummaryUpdateStrategy.cs" />
     <Compile Include="ReferenceDataProvider.cs" />
     <Compile Include="TraineeshipVacancyDataProvider.cs" />
     <Compile Include="VacancyIndexDataProvider.cs" />

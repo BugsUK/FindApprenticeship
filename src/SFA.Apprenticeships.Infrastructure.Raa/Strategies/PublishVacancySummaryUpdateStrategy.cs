@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Raa
+﻿namespace SFA.Apprenticeships.Infrastructure.Raa.Strategies
 {
     using System;
     using System.Collections.Generic;

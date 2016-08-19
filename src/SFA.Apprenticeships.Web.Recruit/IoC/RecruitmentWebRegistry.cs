@@ -29,6 +29,7 @@
     using Infrastructure.Logging.IoC;
     using Infrastructure.Raa;
     using Infrastructure.Raa.Mappers;
+    using Infrastructure.Raa.Strategies;
     using Infrastructure.Security;
     using Mappers;
     using Mediators.Application;

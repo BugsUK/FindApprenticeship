@@ -3,6 +3,7 @@
     using System.Web;
     using Application.Candidate;
     using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Candidates;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Employer.Strategies;
@@ -28,9 +29,10 @@
     using Application.Location;
     using Application.ReferenceData;
     using Application.VacancyPosting.Strategies;
-    using Infrastructure.Raa;
+    using Domain.Interfaces.Repositories;
     using Infrastructure.Raa.Mappers;
-    using Mappers;
+    using Infrastructure.Raa.Strategies;
+    using Infrastructure.Repositories.Sql.Schemas.dbo;
     using Mediators.Candidate;
     using Mediators.InformationRadiator;
     using Mediators.Reporting;
@@ -44,7 +46,7 @@
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
-            For<IMapper>().Singleton().Use<CandidateMappers>().Name = "CandidateMappers";
+            For<IMapper>().Singleton().Use<Mappers.CandidateMappers>().Name = "CandidateMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
@@ -110,6 +112,8 @@
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
 
             For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
+
+            For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
         }
 
         private void RegisterMediators()
