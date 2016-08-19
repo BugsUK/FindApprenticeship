@@ -30,6 +30,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
+            if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId, new ApprenticeshipApplicationViewModel());
+            }
+
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.Ok, viewModel);

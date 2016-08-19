@@ -4,6 +4,7 @@
     {
         public class Review
         {
+            public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId";
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.Review.Ok";
         }
 

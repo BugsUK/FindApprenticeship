@@ -34,6 +34,9 @@
                 case ApprenticeshipApplicationMediatorCodes.Review.Ok:
                     return View(response.ViewModel);
 
+                case ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId:
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
