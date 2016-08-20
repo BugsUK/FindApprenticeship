@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.UI.WebControls;
+    using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Report;
 
     public class ReportUnsuccessfulCandidatesParameters : ReportParameterBase
@@ -35,5 +37,8 @@
             new ListItem("19 -24", "4"),
             new ListItem("25 +", "5")
         };
+
+        [Display(Name = ReportParametersMessages.IncludeCandidateIds.LabelText)]
+        public bool IncludeCandidateIds { get; set; }
     }
 }
