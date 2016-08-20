@@ -5,6 +5,7 @@
     public class ReportRegisteredCandidatesResultItem
     {
         public int CandidateId { get; set; }
+        public Guid CandidateGuid { get; set; }
         public string Name { get; set; }
         public string DateofBirth { get; set; }
         public string Region { get; set; }

@@ -30,5 +30,10 @@
         {
             public const string LabelText = "Only Opted-in Candidates for Marketing Messages";
         }
+
+        public static class IncludeCandidateIds
+        {
+            public const string LabelText = "Include Candidate IDs in report";
+        }
     }
 }

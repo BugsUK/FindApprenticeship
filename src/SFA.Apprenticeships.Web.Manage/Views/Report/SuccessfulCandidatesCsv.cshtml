@@ -63,6 +63,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.IncludeCandidateIds, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IncludeCandidateIds)
+                @Html.ValidationMessageFor(model => model.IncludeCandidateIds, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button id="btnValidate" type="submit" class="button" name="SuccessfulCandidatesCsv" value="ValidateSuccessfulCandidatesCsv">Get CSV Link</button>
                 @if (Model.IsValid)
