@@ -17,7 +17,6 @@
     using Raa.Common.Validators.Report;
     using Raa.Common.ViewModels.Report;
     using SFA.Infrastructure.Interfaces;
-    using Validators;
     using ViewModels;
 
     public class ReportingMediator : MediatorBase, IReportingMediator
@@ -73,7 +72,11 @@
                 headerBuilder.AppendLine(",,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,");
 
-                var bytes = GetCsvBytes<ReportSuccessfulCandidatesResultItem, ReportSuccessfulCandidatesResultItemClassMap>(reportResult, headerBuilder.ToString());
+                var bytes = parameters.IncludeCandidateIds
+                    ? GetCsvBytes<ReportSuccessfulCandidatesResultItem, ReportSuccessfulCandidatesWithIdsResultItemClassMap>(
+                        reportResult, headerBuilder.ToString())
+                    : GetCsvBytes<ReportSuccessfulCandidatesResultItem, ReportSuccessfulCandidatesResultItemClassMap>(
+                        reportResult, headerBuilder.ToString());
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
             catch (Exception ex)
@@ -98,11 +101,18 @@
                 headerBuilder.AppendLine("Date,Total_Unsuccessful_Applications,Total_Candidates,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                 headerBuilder.Append(DateTime.Now.ToString("dd/MM/yyy")).Append(",");
                 headerBuilder.Append(reportResult.Count).Append(",");
-                headerBuilder.Append(reportResult.Select(i => i.candidateid).Distinct().Count());
+                headerBuilder.Append(reportResult.Select(i => i.CandidateId).Distinct().Count());
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
 
-                var bytes = GetCsvBytes<ReportUnsuccessfulCandidatesResultItem, ReportUnsuccessfulCandidatesResultItemClassMap>(reportResult, headerBuilder.ToString());
+                var bytes = parameters.IncludeCandidateIds
+                    ? GetCsvBytes
+                        <ReportUnsuccessfulCandidatesResultItem, ReportUnsuccessfulCandidatesWithIdsResultItemClassMap>(
+                            reportResult, headerBuilder.ToString())
+                    : GetCsvBytes
+                        <ReportUnsuccessfulCandidatesResultItem, ReportUnsuccessfulCandidatesResultItemClassMap>(
+                            reportResult, headerBuilder.ToString());
+
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
             catch (Exception ex)
@@ -223,7 +233,13 @@
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,");
 
-                var bytes = GetCsvBytes<ReportRegisteredCandidatesResultItem, ReportRegisteredCandidatesResultItemClassMap>(reportResult, headerBuilder.ToString());
+                var bytes = parameters.IncludeCandidateIds
+                    ? GetCsvBytes
+                        <ReportRegisteredCandidatesResultItem, ReportRegisteredCandidatesWithIdsResultItemClassMap>(
+                            reportResult, headerBuilder.ToString())
+                    : GetCsvBytes
+                        <ReportRegisteredCandidatesResultItem, ReportRegisteredCandidatesResultItemClassMap>(
+                            reportResult, headerBuilder.ToString());
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
             catch (Exception ex)

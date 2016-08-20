@@ -108,7 +108,9 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 								and AH.ApplicationHistoryEventSubTypeId = @SuccessfulApp
 																		), 103) SuccessfulAppDate,
 			CONVERT(varchar, sv.startdate, 103) ILRStartDate,
-			sv.ILRNumber ILRReference
+			sv.ILRNumber ILRReference,
+			c.CandidateId,
+			c.CandidateGuid
 
 
 		FROM Application a

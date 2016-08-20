@@ -125,6 +125,7 @@ Declare @CandidateInactiveDays int
  SET ROWCOUNT @Rowcount;    
  SELECT  DISTINCT 
 	c.CandidateId,
+	c.CandidateGuid,
    isnull (p.FirstName + ' ', '') + p.Surname as Name,  
    c.DateofBirth,  
    lscr.GeographicFullName Region,     

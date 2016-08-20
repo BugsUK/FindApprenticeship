@@ -1,7 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Reporting.Models
 {
+    using System;
+
     public class ReportSuccessfulCandidatesResultItem
     {
+        public int CandidateId { get; set; }
+        public Guid CandidateGuid { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
         public string Postcode { get; set; }
