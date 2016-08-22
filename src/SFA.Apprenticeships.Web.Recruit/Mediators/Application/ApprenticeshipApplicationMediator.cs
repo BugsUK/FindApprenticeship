@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Apprenticeships.Application.Interfaces.Security;
     using Common.Constants;
     using Common.Mediators;
+    using Constants.Messages;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Application;
@@ -17,22 +18,26 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelServerValidator;
         private readonly IDecryptionService<AnonymisedApplicationLink> _decryptionService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly ILogService _logService;
 
-        public ApprenticeshipApplicationMediator(IApplicationProvider applicationProvider, 
+        public ApprenticeshipApplicationMediator(IApplicationProvider applicationProvider,
             ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelServerValidator,
-            IDecryptionService<AnonymisedApplicationLink> decryptionService, IDateTimeService dateTimeService )
+            IDecryptionService<AnonymisedApplicationLink> decryptionService, IDateTimeService dateTimeService,
+            ILogService logService)
         {
             _applicationProvider = applicationProvider;
             _apprenticeshipApplicationViewModelServerValidator = apprenticeshipApplicationViewModelServerValidator;
             _decryptionService = decryptionService;
             _dateTimeService = dateTimeService;
+            _logService = logService;
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
             {
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId, new ApprenticeshipApplicationViewModel());
+                _logService.Error("Review vacancy failed: VacancyGuid is empty.");
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
             }
 
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
