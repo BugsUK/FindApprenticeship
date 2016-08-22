@@ -74,6 +74,11 @@
 
         public VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel)
         {
+            if (_providerService.IsADeletedVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn))
+            {
+                _providerService.ResurrectVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
+            } 
+
             var vacancyParty = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
             vacancyParty.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             vacancyParty.EmployerDescription = viewModel.EmployerDescription;

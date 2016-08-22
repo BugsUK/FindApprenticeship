@@ -133,6 +133,34 @@ namespace SFA.Apprenticeships.Application.Provider
             return vacancyParty;
         }
 
+        public bool IsADeletedVacancyParty(int providerSiteId, string edsUrn)
+        {
+            Condition.Requires(providerSiteId);
+            Condition.Requires(edsUrn).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling Employer Service to get employer with EDSURN='{0}'.", edsUrn);
+
+            var employer = _employerService.GetEmployer(edsUrn);
+
+            _logService.Debug("Calling VacancyPartyReadRepository to check if the vacancy party has been deleted for provider site with Id='{0}' and employer with Id='{1}'.", providerSiteId, employer.EmployerId);
+
+            return _vacancyPartyReadRepository.IsADeletedVacancyParty(providerSiteId, employer.EmployerId);
+        }
+
+        public void ResurrectVacancyParty(int providerSiteId, string edsUrn)
+        {
+            Condition.Requires(providerSiteId);
+            Condition.Requires(edsUrn).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling Employer Service to get employer with EDSURN='{0}'.", edsUrn);
+
+            var employer = _employerService.GetEmployer(edsUrn);
+
+            _logService.Debug("Calling VacancyPartyWriteRepository to resurrect the vacancy party for provider site with Id='{0}' and employer with Id='{1}'.", providerSiteId, employer.EmployerId);
+
+            _vacancyPartyWriteRepository.ResurrectVacancyParty(providerSiteId, employer.EmployerId);
+        }
+
         public VacancyParty SaveVacancyParty(VacancyParty vacancyParty)
         {
             return _vacancyPartyWriteRepository.Save(vacancyParty);
