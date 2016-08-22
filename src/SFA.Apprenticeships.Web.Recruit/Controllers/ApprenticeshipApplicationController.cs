@@ -36,6 +36,10 @@
                 case ApprenticeshipApplicationMediatorCodes.Review.Ok:
                     return View(response.ViewModel);
 
+                case ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -52,7 +56,7 @@
 
             if (response.Message != null)
             {
-                SetUserMessage(response.Message.Text, response.Message.Level);
+                SetUserMessage(response.Message);
             }
 
             switch (response.Code)
@@ -83,7 +87,7 @@
 
             if (response.Message != null)
             {
-                SetUserMessage(response.Message.Text, response.Message.Level);
+                SetUserMessage(response.Message);
             }
 
             switch (response.Code)
@@ -114,7 +118,7 @@
 
             if (response.Message != null)
             {
-                SetUserMessage(response.Message.Text, response.Message.Level);
+                SetUserMessage(response.Message);
             }
 
             switch (response.Code)
@@ -160,7 +164,7 @@
                 case ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok:
                     if (response.Message != null)
                     {
-                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        SetUserMessage(response.Message);
                     }
 
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel.RouteValues);
@@ -196,7 +200,7 @@
                 case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
                     if (response.Message != null)
                     {
-                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        SetUserMessage(response.Message.Text);
                     }
 
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel.RouteValues);
