@@ -1076,7 +1076,7 @@
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)
         {
-            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId);
+            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId, false);
             var userName = _currentUserService.CurrentUserName;
 
             return new DashboardVacancySummaryViewModel
