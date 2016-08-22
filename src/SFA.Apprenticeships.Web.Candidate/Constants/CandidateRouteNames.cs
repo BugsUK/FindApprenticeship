@@ -44,5 +44,6 @@
         public const string DeleteSavedSearch = "DeleteSavedSearch";
         public const string LocationSearch = "LocationSearch";
         public const string RedirectToExternalWebsite = "RedirectToExternalWebsite";
+        public const string DeleteAccountSettings = "DeleteAccountSettings";
     }
 }

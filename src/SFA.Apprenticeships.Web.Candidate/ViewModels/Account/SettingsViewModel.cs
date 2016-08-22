@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Account
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using Applications;
     using Candidate;
     using Common.ViewModels.Locations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using Validators;
 
     [Validator(typeof(SettingsViewModelClientValidator))]
@@ -20,7 +20,8 @@
         public enum SettingsMode
         {
             YourAccount,
-            SavedSearches
+            SavedSearches,
+            DeleteAccount
         }
 
         public SettingsMode Mode { get; set; }

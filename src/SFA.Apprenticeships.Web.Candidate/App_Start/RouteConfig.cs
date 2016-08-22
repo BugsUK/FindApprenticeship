@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate
 {
-    using System.Web.Mvc;
-    using System.Web.Routing;
     using Common.Constants;
     using Constants;
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     public class RouteConfig
     {
@@ -132,6 +132,12 @@
                 name: CandidateRouteNames.SavedSearchesSettings,
                 url: "savedsearches",
                 defaults: new { controller = "Account", action = "SavedSearchesSettings" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.DeleteAccountSettings,
+                url: "deleteaccount",
+                defaults: new { controller = "Account", action = "DeleteAccountSettings" }
                 );
 
             routes.MapRoute(

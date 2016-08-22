@@ -30,11 +30,13 @@
         @{
             var yourAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.YourAccount ? " active" : "";
             var savedSearchesTabClass = Model.Mode == SettingsViewModel.SettingsMode.SavedSearches ? " active" : "";
+            var deleteAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.DeleteAccount ? " active" : "";
         }
 
         <nav class="tabbed-nav">
             @Html.RouteLink("Your account", CandidateRouteNames.Settings, null, new { @id = "your-account-tab-control", @class = "tabbed-tab" + yourAccountTabClass, tab = "#tab1" })
             @Html.RouteLink("Saved searches", CandidateRouteNames.SavedSearchesSettings, null, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabClass, tab = "#tab2" })
+            @Html.RouteLink("Delete your account", CandidateRouteNames.DeleteAccountSettings, null, new { @id = "delete-account-tab-control", @class = "tabbed-tab" + deleteAccountTabClass, tab = "#tab3" })
         </nav>
 
         @Html.HiddenFor(m => m.Mode)
