@@ -68,7 +68,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>(), It.IsAny<bool>())).Returns(new Provider());
 
             vacancyLockingService.Setup(
                 vls =>
@@ -123,7 +123,7 @@
                     }
                 });
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(ownerPartyId)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(ownerPartyId, It.IsAny<bool>())).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -137,7 +137,7 @@
 
             //Assert
             vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
-            providerService.Verify(ps => ps.GetProviderViaCurrentOwnerParty(ownerPartyId), Times.Once);
+            providerService.Verify(ps => ps.GetProviderViaCurrentOwnerParty(ownerPartyId, It.IsAny<bool>()), Times.Once);
         }
     }
 
