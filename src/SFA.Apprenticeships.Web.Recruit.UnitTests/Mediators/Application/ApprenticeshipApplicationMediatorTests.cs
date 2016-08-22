@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Application
 {
     using System;
+    using Apprenticeships.Application.Interfaces;
     using Common.UnitTests.Mediators;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Application;
     using Recruit.Mediators.Application;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class ApprenticeshipApplicationMediatorTests

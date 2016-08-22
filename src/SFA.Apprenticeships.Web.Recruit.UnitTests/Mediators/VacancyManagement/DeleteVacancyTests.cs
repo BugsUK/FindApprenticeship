@@ -1,8 +1,7 @@
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyManagement
 {
-    using System;
-    using Application.Interfaces.Service;
-    using Application.Vacancy;
+    using Apprenticeships.Application.Interfaces.Service;
+    using Apprenticeships.Application.Vacancy;
     using Common.Constants;
     using Moq;
     using NUnit.Framework;
