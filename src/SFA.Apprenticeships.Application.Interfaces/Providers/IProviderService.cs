@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     /// </summary>
     public interface IProviderService
     {
-        Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId);
+        Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId, bool currentOnly = true);
 
         Provider GetProvider(int providerId);
 

@@ -36,7 +36,7 @@ namespace SFA.Apprenticeships.Application.Provider
             _employerService = employerService;            
         }
 
-        public Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId)
+        public Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId, bool currentOnly = true)
         {
             int providerSiteId = 0;
             var vacancyParty = _vacancyPartyReadRepository.GetByIds(new[] { vacancyPartyId }).FirstOrDefault();
