@@ -97,10 +97,24 @@
                         : UnknownText;
 
                 case WageType.LegacyText:
-                    return wage.Text ?? UnknownText;
+                    
+                    //if it's unknown, return standard unknown text
+                    var displayText = wage.Text ?? UnknownText;
+
+                    //if it's not unknown, then prepend a '£' sign to its decimal value.
+                    decimal wageDecimal;
+
+                    //if it's already got a '£' sign, or is text, fail to parse and all is good => return value.
+                    if (decimal.TryParse(displayText, out wageDecimal))
+                    {
+                        displayText = $"£{wageDecimal:N2}";
+                    }
+
+                    return displayText;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(wage.Type), $"Invalid Wage Type: {wage.Type}");
+                    throw new ArgumentOutOfRangeException(nameof(wage.Type), wage.Type,
+                        $"Invalid Wage Type: {wage.Type}");
             }
         }
 

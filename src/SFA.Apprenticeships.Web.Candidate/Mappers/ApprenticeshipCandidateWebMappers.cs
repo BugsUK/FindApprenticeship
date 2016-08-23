@@ -11,6 +11,7 @@
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.Mappers;
+    using Infrastructure.Presentation;
     using Resolvers;
     using ViewModels.Account;
     using ViewModels.Applications;
@@ -40,7 +41,7 @@
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
                 .ForMember(d => d.WageObject, opt => opt.MapFrom(src => new WageViewModel(src.WageObject)))
                 .ForMember(d => d.Wage,
-                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.WageResolver>())
+                    opt => opt.MapFrom(src => src.WageObject.GetDisplayAmount()))
                 .ForMember(d => d.RealityCheck,
                     opt => opt.MapFrom(src => src.RealityCheck))
                 .ForMember(d => d.OtherInformation,

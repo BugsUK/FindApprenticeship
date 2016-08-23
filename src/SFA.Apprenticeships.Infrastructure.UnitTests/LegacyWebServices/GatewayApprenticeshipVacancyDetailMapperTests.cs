@@ -417,6 +417,7 @@
             action.ShouldThrow<AutoMapperMappingException>();
         }
 
+        [Ignore("This is no longer used and relevant code will be deleted in forthcoming sprint.")]
         [Test]
         public void ShouldMapWageTypeWeekly()
         {
@@ -437,6 +438,7 @@
             dest.WageObject.Type.Should().Be(WageType.LegacyWeekly);
         }
 
+        [Ignore("This is no longer used and relevant code will be deleted in forthcoming sprint.")]
         [Test]
         public void ShouldMapWageTypeText()
         {
@@ -457,6 +459,7 @@
             dest.WageObject.Type.Should().Be(WageType.LegacyText);
         }
 
+        [Ignore("This is no longer used and relevant code will be deleted in forthcoming sprint.")]
         [Test]
         public void ShouldThrowIfUnknownWageType()
         {

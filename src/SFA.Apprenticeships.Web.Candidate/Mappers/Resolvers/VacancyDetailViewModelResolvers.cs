@@ -17,41 +17,6 @@
             }
         }
 
-        public class WageResolver : ValueResolver<VacancyDetail, string>
-        {
-            protected override string ResolveCore(VacancyDetail vacancyDetail)
-            {
-                switch (vacancyDetail.WageObject.Type)
-                {
-                    case WageType.ApprenticeshipMinimum:
-                    case WageType.NationalMinimum:
-                        return vacancyDetail.WageDescription;
-
-                    case WageType.LegacyText:
-                        {
-                            var wage = vacancyDetail.WageDescription;
-
-                            decimal wageDecimal;
-
-                            if (decimal.TryParse(wage, out wageDecimal))
-                            {
-                                wage = $"£{wageDecimal:N2}";
-                            }
-
-                            return wage;
-                        }
-
-                    case WageType.LegacyWeekly:
-                    case WageType.Custom:
-                        return $"£{vacancyDetail.WageObject.Amount??0:N2}";
-
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            nameof(vacancyDetail.WageObject.Type), vacancyDetail.WageObject.Type, $"Invalid Wage Type: {vacancyDetail.WageObject.Type}");
-                }
-            }
-        }
-
         public class UrlResolver : ValueResolver<string, string>
         {
             protected override string ResolveCore(string source)
