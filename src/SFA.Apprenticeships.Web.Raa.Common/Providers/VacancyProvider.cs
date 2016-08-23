@@ -728,7 +728,7 @@
                 .SelectMany(a => a)
                 .Where(
                     v => (v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown)
-                         && v.Status != VacancyStatus.Withdrawn);
+                         && v.Status != VacancyStatus.Withdrawn && v.Status != VacancyStatus.Deleted);
 
             var hasVacancies = minimalVacancyDetails.Any();
 
@@ -864,8 +864,6 @@
                     throw new ArgumentException($"{vacanciesSummaryFilterType}");
             }
         }
-
-
 
         public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)
         {
@@ -1079,7 +1077,7 @@
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)
         {
-            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId);
+            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId, false);
             var userName = _currentUserService.CurrentUserName;
 
             return new DashboardVacancySummaryViewModel

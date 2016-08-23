@@ -1,48 +1,51 @@
-﻿using SFA.Apprenticeships.Web.Common.Constants;
-
-namespace SFA.Apprenticeships.Web.Common.Controllers
+﻿namespace SFA.Apprenticeships.Web.Common.Controllers
 {
-    using System.Web.Mvc;
-    using Attributes;
-    using Mediators;
-    using Providers;
-    using Services;
-    using Configuration;
-    using StructureMap.Attributes;
-    using Application.Interfaces;
-    using Infrastructure.Logging;
-    using NLog.Contrib; // TODO: Inject logging context setter implementation rather than using directly (but use separate interface from ILogService)
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Web.Mvc;
+    using Attributes;
+    using Configuration;
+    using Constants;
+    using Application.Interfaces;
+    using Infrastructure.Logging;
+    using Mediators;
+    using NLog.Contrib;
+    using Providers;
+    using Services;
+    using StructureMap.Attributes;
+// TODO: Inject logging context setter implementation rather than using directly (but use separate interface from ILogService)
 
     [AuthenticateUser]
-    public abstract class ControllerBase<TContextType> : ControllerBase, IUserController<TContextType> where TContextType : UserContext
+    public abstract class ControllerBase<TContextType> : ControllerBase, IUserController<TContextType>
+        where TContextType : UserContext
     {
-        public TContextType UserContext { get; protected set; }
-
-        protected ControllerBase(IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
+        protected ControllerBase(IConfigurationService configurationService, ILogService logService)
+            : base(configurationService, logService)
         {
         }
+
+        public TContextType UserContext { get; protected set; }
     }
 
     public abstract class ControllerBase : Controller
     {
-        [SetterProperty]
-        public IUserDataProvider UserData { get; set; }
-
-        [SetterProperty]
-        public IAuthenticationTicketService AuthenticationTicketService { get; set; }
+        protected readonly IConfigurationService _configurationService;
 
         protected readonly ILogService _logService;
-        protected readonly IConfigurationService _configurationService;
 
         protected ControllerBase(IConfigurationService configurationService, ILogService loggingService)
         {
             _configurationService = configurationService;
             _logService = loggingService;
         }
+
+        [SetterProperty]
+        public IUserDataProvider UserData { get; set; }
+
+        [SetterProperty]
+        public IAuthenticationTicketService AuthenticationTicketService { get; set; }
 
         protected void SetAbout()
         {
@@ -54,7 +57,10 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
 
         protected void SetUserMessage(MediatorResponseMessage message)
         {
-            SetUserMessage(message.Text, message.Level);
+            if (message != null)
+            {
+                SetUserMessage(message.Text, message.Level);
+            }
         }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
@@ -92,8 +98,8 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
         }
 
         /// <summary>
-        /// Log that "OnActionExecuting" has been called.
-        /// Should be called early on in "OnActionExecuted" AFTER application-specific logging has been set up
+        ///     Log that "OnActionExecuting" has been called.
+        ///     Should be called early on in "OnActionExecuted" AFTER application-specific logging has been set up
         /// </summary>
         /// <param name="filterContext"></param>
         protected void LogOnActionExecuting(ActionExecutingContext filterContext)
@@ -102,25 +108,53 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
 
             // Kibana truncates the message even where there is plenty of space, so try and get as much useful info in at the beginning
             // Full URL is logged in the headers field.
-            _logService.Info("{0} {1}", filterContext.HttpContext.Request.HttpMethod, Abbreviate(filterContext.HttpContext.Request.Url));
+            _logService.Info("{0} {1}", filterContext.HttpContext.Request.HttpMethod,
+                Abbreviate(filterContext.HttpContext.Request.Url));
 
             ClearOneOffLoggingInfo();
         }
 
         private void SetOneOffLoggingInfo()
         {
-            SetLoggingInfo("UserLanguages", () => Request.UserLanguages == null ? "<unknown>" : string.Join(",", Request.UserLanguages));
+            SetLoggingInfo("UserLanguages",
+                () => Request.UserLanguages == null ? "<unknown>" : string.Join(",", Request.UserLanguages));
             SetLoggingInfo("CurrentCulture", () => CultureInfo.CurrentCulture.ToString());
             SetLoggingInfo("CurrentUICulture", () => CultureInfo.CurrentUICulture.ToString());
 
             SetLoggingInfo("Headers", () =>
             {
-                var lines = new List<string>();
-                lines.Add(Request.HttpMethod + " " + Request.RawUrl);
-                lines.Add("Remote Address: " + Request.UserHostAddress);
-                lines.Add("");
+                var lines = new List<string>
+                {
+                    Request.HttpMethod + " " + Request.RawUrl,
+                    "Remote Address: " + Request.UserHostAddress,
+                    ""
+                };
 
-                return string.Join("\n", lines.Concat(Request.Headers.AllKeys.Select(key => string.Format("{0}: {1}", key, Request.Headers[key]))));
+                return string.Join("\n", lines.Concat(Request.Headers.AllKeys.Select(key =>
+                    $"{key}: {Request.Headers[key]}")));
+            });
+
+            
+            SetLoggingInfo("QueryString", () =>
+            {
+                var queryStringKeysAndValues = new List<string>();
+
+                for (var i = 0; i < Request.QueryString.Count; i++)
+                {
+                    queryStringKeysAndValues.Add($"{Request.QueryString.GetKey(i)}:{string.Join(",", Request.QueryString.GetValues(i))}");
+                }
+                return string.Join("\n", queryStringKeysAndValues);
+            } );
+
+            SetLoggingInfo("FormData", () =>
+            {
+                var formData = new List<string>();
+
+                for (var i = 0; i < Request.Form.Count; i++)
+                {
+                    formData.Add($"{Request.Form.GetKey(i)}:{string.Join(",", Request.Form.GetValues(i))}");
+                }
+                return string.Join("\n", formData);
             });
         }
 
@@ -143,7 +177,7 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
         }
 
         /// <summary>
-        /// Safely set logging info with no fear of an exception.
+        ///     Safely set logging info with no fear of an exception.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="getValue"></param>
@@ -176,16 +210,11 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
                         // Intentionally taking no action
                     }
                 }
-                else
-                {
-                    // Intentionally taking no action
-                    // TODO: _logService.Trace("Error setting {key} logging info");
-                }
             }
         }
 
         /// <summary>
-        /// Safely remove logging info with no fear of an exception
+        ///     Safely remove logging info with no fear of an exception
         /// </summary>
         /// <param name="key"></param>
         protected void RemoveLoggingInfo(string key)
@@ -208,6 +237,5 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
 
             return uri.PathAndQuery;
         }
-
     }
 }

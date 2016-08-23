@@ -107,7 +107,7 @@
             {
                 response.Add(new ReportUnsuccessfulCandidatesResultItem()
                 {
-                    candidateid = reader[0].ToString(),
+                    CandidateId = Convert.ToInt32(reader[0].ToString()),
                     FirstName = reader[1].ToString(),
                     MiddleName = reader[2].ToString(),
                     SurName = reader[3].ToString(),
@@ -142,7 +142,8 @@
                     Framework = reader[32].ToString(),
                     UnsuccessfulReason = reader[33].ToString(),
                     Notes = reader[34].ToString(),
-                    Points = reader[35].ToString()
+                    Points = reader[35].ToString(),
+                    CandidateGuid = new Guid(reader[36].ToString())
                 });
             }
 
@@ -193,7 +194,9 @@
                     Employer = reader[10].ToString(),
                     SuccessfulAppDate = reader[11].ToString(),
                     ILRStartDate = reader[12].ToString(),
-                    ILRReference = reader[13].ToString()
+                    ILRReference = reader[13].ToString(),
+                    CandidateId = Convert.ToInt32(reader[14].ToString()),
+                    CandidateGuid = new Guid(reader[15].ToString())
                 });
             }
 
@@ -568,6 +571,7 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
                 response.Add(new ReportRegisteredCandidatesResultItem()
                 {
                     CandidateId = Convert.ToInt32(reader["CandidateId"].ToString()),
+                    CandidateGuid = new Guid(reader["CandidateGuid"].ToString()),
                     Name = reader["Name"].ToString(),
                     DateofBirth = Convert.ToDateTime(reader["DateofBirth"]).ToString("dd/MM/yyy"),
                     Region = reader["Region"].ToString(),

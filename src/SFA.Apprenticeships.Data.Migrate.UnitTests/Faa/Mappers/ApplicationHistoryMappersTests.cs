@@ -5,6 +5,7 @@
     using System.Linq;
     using Builders;
     using FluentAssertions;
+    using Migrate.Faa.Entities.Mongo;
     using Migrate.Faa.Entities.Sql;
     using Migrate.Faa.Mappers;
     using NUnit.Framework;
@@ -16,7 +17,7 @@
         public void SavedVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(5).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Saved).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -37,7 +38,7 @@
         public void DraftVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Draft).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -58,7 +59,7 @@
         public void SubmittingVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(20).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitting).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -79,7 +80,7 @@
         public void SubmittedVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -103,7 +104,7 @@
         public void InProgressVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(40).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.InProgress).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -129,7 +130,7 @@
         public void WithdrawnVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(15).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.ExpiredOrWithdrawn).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -153,7 +154,7 @@
         public void UnsuccessfulVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(90).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Unsuccessful).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -181,7 +182,7 @@
         public void SuccessfulVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Successful).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -209,7 +210,7 @@
         public void SuccessfulVacancyApplicationDictionaryTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Successful).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -238,7 +239,7 @@
         public void NoApplicationIdVacancyApplicationTest()
         {
             //Arrange
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).WithLegacyApplicationId(0).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Draft).WithLegacyApplicationId(0).Build();
 
             //Act
             var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
@@ -253,7 +254,7 @@
             //Arrange
             const int applicationId = 42;
             const int applicationHistoryId = 43;
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithLegacyApplicationId(applicationId).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).WithLegacyApplicationId(applicationId).Build();
             var applicationHistoryIds = new Dictionary<int, Dictionary<int, int>>
             {
                 { applicationId, new Dictionary<int, int> {{ 1, applicationHistoryId }}}
@@ -277,7 +278,7 @@
             {
                 { applicationId, new Dictionary<int, int> {{ 5, applicationHistoryId }}}
             };
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(90).WithLegacyApplicationId(applicationId).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Unsuccessful).WithLegacyApplicationId(applicationId).Build();
             var unsuccessfulDateTime = DateTime.Now.AddDays(-3);
             var sourceApplicationHistorySummaries = new Dictionary<int, List<ApplicationHistorySummary>>
             {
@@ -308,7 +309,7 @@
             {
                 { applicationId, new Dictionary<int, int> {{ 6, applicationHistoryId }}}
             };
-            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).WithLegacyApplicationId(applicationId).Build();
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Successful).WithLegacyApplicationId(applicationId).Build();
             var successfulDateTime = DateTime.Now.AddDays(-2);
             var sourceApplicationHistorySummaries = new Dictionary<int, List<ApplicationHistorySummary>>
             {

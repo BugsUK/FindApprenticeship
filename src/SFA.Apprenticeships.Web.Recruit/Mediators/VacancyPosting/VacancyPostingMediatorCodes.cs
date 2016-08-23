@@ -112,7 +112,7 @@
         public class CloneVacancy
         {
             public const string Ok = "VacancyPosting.CloneVacancy.Ok";
-            public const string VacancyInIncorrectState = "VacancyPosting.CloneVacancy.VacancyInIncorrectState";
+            public const string VacancyInIncorrectState = "VacancyPosting.CloneVacancy.Failure";
         }
 
         public class GetLocationAddressesViewModel

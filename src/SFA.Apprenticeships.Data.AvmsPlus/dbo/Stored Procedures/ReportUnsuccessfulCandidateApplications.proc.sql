@@ -124,7 +124,8 @@ set @enddatetime5 = dateadd(dd, -1, dateadd(year,25 * -1, cast(convert(varchar(1
 		fr.Fullname as Framework,
 		aurt.FullName as UnsuccessfulReason,
 		outerApp.OutcomeReasonOther as Notes,
-		aurt.ReferralPoints as Points		
+		aurt.ReferralPoints as Points,
+		can.CandidateGuid
 	
 	 from
 		[application] outerApp inner join candidate can on can.candidateid = outerApp.candidateid

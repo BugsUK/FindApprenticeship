@@ -353,6 +353,7 @@
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyStatusController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
@@ -388,7 +389,10 @@
     <Compile Include="Mediators\Report\ReportMediatorCodes.cs" />
     <Compile Include="Mediators\Report\IReportMediator.cs" />
     <Compile Include="Mediators\Report\ReportMediator.cs" />
+    <Compile Include="Mediators\VacancyManagement\IVacancyManagementMediator.cs" />
+    <Compile Include="Mediators\VacancyManagement\VacancyManagementMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\IVacancyPostingMediator.cs" />
+    <Compile Include="Mediators\VacancyPosting\VacancyManagementMediatorCodes.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
@@ -422,6 +426,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VacancyManagement\Delete.generated.cs">
+      <DependentUpon>Delete.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\VacancyPosting\ConfirmEmployer.generated.cs">
       <AutoGen>True</AutoGen>
@@ -859,6 +868,10 @@
     <Content Include="Views\EmployerApplication\ViewAnonymisedTraineeship.cshtml" />
     <Content Include="Views\Shared\_AnonymousLayout.cshtml" />
     <Content Include="Views\VacancyStatus\Archive.cshtml" />
+    <Content Include="Views\VacancyManagement\Delete.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Delete.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

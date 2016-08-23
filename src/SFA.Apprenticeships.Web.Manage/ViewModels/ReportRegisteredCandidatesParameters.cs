@@ -43,5 +43,8 @@ namespace SFA.Apprenticeships.Web.Manage.ViewModels
 
         [Display(Name = ReportParametersMessages.MarketMessagesOnly.LabelText)]
         public bool MarketMessagesOnly { get; set; }
+
+        [Display(Name = ReportParametersMessages.IncludeCandidateIds.LabelText)]
+        public bool IncludeCandidateIds { get; set; }
     }
 }

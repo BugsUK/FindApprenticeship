@@ -223,6 +223,8 @@
     <Compile Include="VacancyPosting\Strategies\GetVacancyStrategiesTests.cs" />
     <Compile Include="VacancyPosting\Strategies\UpdateVacancyStrategyTests.cs" />
     <Compile Include="VacancyPosting\Strategies\UpsertVacancyStrategyTests.cs" />
+    <Compile Include="Vacancy\DeleteVacancyStrategyTests.cs" />
+    <Compile Include="Vacancy\VacancyManagementServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

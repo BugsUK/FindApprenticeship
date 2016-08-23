@@ -13,6 +13,7 @@
     using Entities;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using Newtonsoft.Json;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
@@ -114,6 +115,11 @@
             return dbVacancy;
         }
 
+        public VacancySummary GetById(int vacancyId)
+        {
+            return GetByIds(new[] {vacancyId}).FirstOrDefault();
+        }
+
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
             var vacancyIdsArray
@@ -205,7 +211,7 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
 
             if (filterByProviderBeenMigrated)
             {
-                sql += " AND ProviderToUseFAA = 2";
+                sql += " AND ( ProviderToUseFAA = 2 OR EditedInRaa = 1)";
             }
 
             if (pageSize > 0)
@@ -916,12 +922,18 @@ order by HistoryDate desc
         {
             _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.VacancyId);
 
+            _logger.Info(
+                $"[{entity.VacancyGuid}] Calling database to create the following domain vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new ExcludeLiveClosingDateResolver()})}");
+
             UpdateEntityTimestamps(entity);
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
 
             PopulateIds(entity, dbVacancy);
 
+            _logger.Info(
+                $"[{entity.VacancyGuid}] Calling database to create the following database vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
+            
             dbVacancy.VacancyId = (int) _getOpenConnection.Insert(dbVacancy);
 
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
@@ -939,6 +951,9 @@ order by HistoryDate desc
         {
             _logger.Debug("Calling database to update apprenticeship vacancy with id={0}", entity.VacancyId);
 
+            _logger.Info(
+                $"[{entity.VacancyGuid}] Calling database to update the following vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
+            
             UpdateEntityTimestamps(entity); // Do we need this?
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
@@ -946,6 +961,9 @@ order by HistoryDate desc
             PopulateIds(entity, dbVacancy);
 
             var previousVacancyState = GetVacancyByVacancyId(entity.VacancyId);
+
+            _logger.Info(
+                $"[{entity.VacancyGuid}] Calling database to update the following vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
 
             _getOpenConnection.UpdateSingle(dbVacancy);
 
@@ -1008,7 +1026,15 @@ order by HistoryDate desc
 
         public void Delete(int vacancyId)
         {
-            throw new NotImplementedException();
+            _getOpenConnection.MutatingQuery<int>(@"
+                UPDATE dbo.Vacancy
+                SET VacancyStatusId = @VacancyStatus
+                WHERE VacancyId = @VacancyId",
+                new
+                {
+                    VacancyId = vacancyId,
+                    VacancyStatus = VacancyStatus.Deleted
+                });
         }
 
         public void IncrementOfflineApplicationClickThrough(int vacancyId)

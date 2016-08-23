@@ -122,6 +122,7 @@
     <Compile Include="Entities\CandidatePerson.cs" />
     <Compile Include="Entities\CandidateWithHistory.cs" />
     <Compile Include="Entities\Mongo\Address.cs" />
+    <Compile Include="Entities\Mongo\ApplicationStatuses.cs" />
     <Compile Include="Entities\Mongo\ApplicationTemplate.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />
     <Compile Include="Entities\Mongo\CandidateUser.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Entities\Sql\ApplicationHistory.cs" />
     <Compile Include="Entities\Sql\ApplicationHistorySummary.cs" />
     <Compile Include="Entities\Sql\ApplicationIds.cs" />
+    <Compile Include="Entities\Sql\ApplicationStatusTypeIds.cs" />
     <Compile Include="Entities\Sql\ApplicationSummary.cs" />
     <Compile Include="Entities\Sql\Candidate.cs" />
     <Compile Include="Entities\Sql\CandidateHistory.cs" />
@@ -147,6 +149,7 @@
     <Compile Include="Mappers\IApplicationMappers.cs" />
     <Compile Include="Mappers\ICandidateMappers.cs" />
     <Compile Include="Mappers\SchoolAttendedMappers.cs" />
+    <Compile Include="Repository\Mongo\UpdateVacancyApplicationsRepository.cs" />
     <Compile Include="Repository\Sql\CandidateHistoryRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationHistoryRepository.cs" />
@@ -195,6 +198,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Data.Migrate\SFA.Apprenticeships.Data.Migrate.csproj">
       <Project>{73c8a0c0-3b18-4ed6-8d14-15f3e009c26c}</Project>
       <Name>SFA.Apprenticeships.Data.Migrate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{a4de4af3-f06d-4d0f-af2e-e72a11bab49b}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
