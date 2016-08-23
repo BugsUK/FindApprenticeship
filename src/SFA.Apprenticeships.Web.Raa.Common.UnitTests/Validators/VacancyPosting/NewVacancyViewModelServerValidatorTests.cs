@@ -112,6 +112,7 @@
         [TestCase("www.google.com/someFolder/index.html", true)]
         [TestCase("www.google.com/someFolder/index.html?id=445667", true)]
         [TestCase("asdf://asdf.com", false)]
+        [TestCase("https://www.sheffcol.ac.uk/form/Apprenticeship Application Form/?lvacancyid=VACID-352&lstudy_type=Vacancy", true)]
         public void ShouldHaveAValidUrlIfTheVacancyIsOffline(string url, bool expectValid)
         {
             var viewModel = new NewVacancyViewModel

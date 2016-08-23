@@ -12,7 +12,13 @@
         {
             if (string.IsNullOrEmpty(uri)) { return false; }
             if (!Regex.Replace(uri, "www\\.", "", RegexOptions.IgnoreCase).Contains(".")) { return false; }
-            if (uri.Split(' ').Length > 1) return false;
+            var uriDomain = ProtocolRegex.Replace(uri, "");
+            if (uriDomain.Contains("/"))
+            {
+                uriDomain = uriDomain.Substring(0, uriDomain.IndexOf("/", StringComparison.Ordinal));
+            }
+            uriDomain = uri.Substring(0, uri.IndexOf(uriDomain, StringComparison.Ordinal) + uriDomain.Length);
+            if (uriDomain.Split(' ').Length > 1) return false;
             if (ProtocolRegex.IsMatch(uri))
             {
                 var protocol = ProtocolRegex.Match(uri).Groups[1].Value;
