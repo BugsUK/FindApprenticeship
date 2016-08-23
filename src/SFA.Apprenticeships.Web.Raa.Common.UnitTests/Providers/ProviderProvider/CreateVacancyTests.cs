@@ -119,5 +119,56 @@
                     s.CreateVacancy(
                         It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Never);
         }
+
+        [Test]
+        public void ShouldSetVacancyOwnerRelationshipToLiveIfItsDeleted()
+        {
+            // Arrange
+            var vacancyGuid = Guid.NewGuid();
+            var apprenticeshipVacancy = new Vacancy();
+            var vacancyPartyId = 42;
+            var providerSiteId = 1;
+            var employerId = 2;
+            var edsErn = "232";
+            var vacancyParty = new VacancyParty
+            {
+                VacancyPartyId = vacancyPartyId,
+                ProviderSiteId = providerSiteId,
+                EmployerId = employerId,
+                EmployerDescription = "Description",
+                EmployerWebsiteUrl = "Url"
+            };
+
+            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
+            MockProviderService.Setup(s => s.SaveVacancyParty(vacancyParty))
+                .Returns(vacancyParty);
+            MockProviderService.Setup(s => s.GetVacancyParty(providerSiteId, edsErn))
+                .Returns(vacancyParty);
+            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+                .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
+            MockProviderService.Setup(s => s.IsADeletedVacancyParty(providerSiteId, edsErn)).Returns(true);
+
+            var provider = GetProviderProvider();
+
+            // Act
+            provider.ConfirmVacancyParty(new VacancyPartyViewModel
+            {
+                ProviderSiteId = providerSiteId,
+                Employer = new EmployerViewModel
+                {
+                    EmployerId = employerId,
+                    EdsUrn = edsErn,
+                    Address = new AddressViewModel()
+                },
+                VacancyGuid = vacancyGuid,
+                IsEmployerLocationMainApprenticeshipLocation = true,
+                NumberOfPositions = 4
+            });
+
+            // Assert
+            MockProviderService.Verify(s => s.ResurrectVacancyParty(providerSiteId, edsErn));
+
+
+        }
     }
 }
