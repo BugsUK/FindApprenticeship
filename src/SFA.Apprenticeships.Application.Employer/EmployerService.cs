@@ -53,14 +53,14 @@
             return _getByEdsUrnStrategy.Get(edsUrn);
         }
 
-        public IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds)
+        public IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds, bool currentOnly = true)
         {
-            return _getByIdsStrategy.Get(employerIds);
+            return _getByIdsStrategy.Get(employerIds, currentOnly);
         }
 
-        public IEnumerable<MinimalEmployerDetails> GetMinimalEmployerDetails(IEnumerable<int> employerIds)
+        public IEnumerable<MinimalEmployerDetails> GetMinimalEmployerDetails(IEnumerable<int> employerIds, bool currentOnly = true)
         {
-            return _getByIdsStrategy.GetMinimalDetails(employerIds);
+            return _getByIdsStrategy.GetMinimalDetails(employerIds, currentOnly);
         }
 
         public Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize)
