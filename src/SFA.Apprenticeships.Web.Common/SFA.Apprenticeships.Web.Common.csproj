@@ -300,6 +300,7 @@
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\PageableViewModel.cs" />
+    <Compile Include="ViewModels\WageViewModel.cs" />
     <Compile Include="Views\Shared\_AboutDisguised.generated.cs">
       <DependentUpon>_AboutDisguised.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>

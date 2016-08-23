@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Vacancies;
@@ -57,6 +58,8 @@
         [UIHint("Date")]
         [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
+
+        public WageViewModel WageObject { get; set; }
 
         public WageType WageType { get; set; }
 

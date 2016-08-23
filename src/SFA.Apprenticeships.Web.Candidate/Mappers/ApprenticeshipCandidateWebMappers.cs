@@ -2,6 +2,7 @@
 {
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -37,6 +38,7 @@
                     opt => opt.MapFrom(src => src.VacancyStatus))
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
+                .ForMember(d => d.WageObject, opt => opt.MapFrom(src => new WageViewModel(src.WageObject)))
                 .ForMember(d => d.Wage,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.WageResolver>())
                 .ForMember(d => d.RealityCheck,
