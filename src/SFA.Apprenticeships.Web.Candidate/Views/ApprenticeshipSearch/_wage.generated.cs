@@ -74,7 +74,7 @@ WriteLiteral(">");
 
             
             #line 7 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-                      Write(Model.WageUnit.GetHeaderDisplayText());
+                      Write(Model.WageObject.Unit.GetHeaderDisplayText());
 
             
             #line default
