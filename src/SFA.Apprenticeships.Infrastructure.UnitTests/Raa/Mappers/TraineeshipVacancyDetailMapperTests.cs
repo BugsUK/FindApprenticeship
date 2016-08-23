@@ -70,7 +70,7 @@
 
                 // NOTE: hard to unit test.
                 detail.WageObject.Should().Be(vacancy.Wage);
-                detail.WageUnit.Should().Be(WageUnit.Weekly);
+                detail.WageObject.Unit.Should().Be(WageUnit.Weekly);
                 detail.WageDescription.Should().NotBeNull();
                 detail.WageType.Should().Be((LegacyWageType) vacancy.Wage.Type);
 
