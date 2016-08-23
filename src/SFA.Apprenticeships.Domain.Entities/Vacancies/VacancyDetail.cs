@@ -30,8 +30,6 @@
 
         public Wage WageObject { get; set; }
 
-        public string WageDescription { get; set; }
-
         public string WorkingWeek { get; set; }
 
         public string OtherInformation { get; set; }

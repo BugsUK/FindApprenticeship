@@ -6,6 +6,7 @@
     using FluentAssertions;
     using NUnit.Framework;
     using Candidate.Mappers;
+    using Infrastructure.Presentation;
 
     [TestFixture]
     [Parallelizable]
@@ -68,14 +69,13 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageObject = new Wage(WageType.LegacyText, null, null, WageUnit.NotApplicable),
-                WageDescription = "Competitive"
+                WageObject = new Wage(WageType.LegacyText, null, null, WageUnit.NotApplicable)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            model.Wage.Should().Be(vacancyDetail.WageDescription);
+            model.Wage.Should().Be(vacancyDetail.WageObject.GetDisplayAmount());
         }
 
         [Test]
@@ -83,8 +83,7 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageObject = new Wage(WageType.LegacyText, null, null, WageUnit.NotApplicable),
-                WageDescription = "123.45678"
+                WageObject = new Wage(WageType.LegacyText, null, "123.45678", WageUnit.NotApplicable)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);

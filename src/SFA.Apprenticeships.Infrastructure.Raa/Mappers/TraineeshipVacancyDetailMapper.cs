@@ -37,7 +37,6 @@
                 //TODO: Where should this come from?
                 InterviewFromDate = DateTime.MinValue,
                 WageObject = vacancy.Wage,
-                WageDescription = vacancy.Wage.GetDisplayAmount(),
                 WorkingWeek = vacancy.WorkingWeek,
                 OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
