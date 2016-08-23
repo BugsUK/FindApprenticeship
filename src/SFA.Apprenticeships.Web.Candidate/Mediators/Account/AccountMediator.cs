@@ -2,19 +2,17 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 {
-    using System;
-    using System.Linq;
+    using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.Candidates;
     using Common.Configuration;
     using Common.Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Linq;
     using Validators;
     using ViewModels.Account;
     using ViewModels.MyApplications;
@@ -28,9 +26,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
         private readonly IAccountProvider _accountProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator;
+        private readonly DeleteAccountSettingsViewModelServerValidator _deleteAccountSettingsViewModelServerValidator;
         private readonly VerifyMobileViewModelServerValidator _verifyMobileViewModelServerValidator;
         private readonly EmailViewModelServerValidator _emailViewModelServerValidator;
         private readonly VerifyUpdatedEmailViewModelServerValidator _verifyUpdatedEmailViewModelServerValidator;
+        private readonly ICandidateService _candidateService;
 
         public AccountMediator(
             IAccountProvider accountProvider,
@@ -42,7 +42,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             IConfigurationService configurationService,
             VerifyMobileViewModelServerValidator mobileViewModelServerValidator,
             EmailViewModelServerValidator emailViewModelServerValidator,
-            VerifyUpdatedEmailViewModelServerValidator verifyUpdatedEmailViewModelServerValidator
+            VerifyUpdatedEmailViewModelServerValidator verifyUpdatedEmailViewModelServerValidator,
+            ICandidateService candidateService,
+            DeleteAccountSettingsViewModelServerValidator deleteAccountSettingsViewModelServerValidator
             )
         {
             _accountProvider = accountProvider;
@@ -55,6 +57,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             _verifyMobileViewModelServerValidator = mobileViewModelServerValidator;
             _emailViewModelServerValidator = emailViewModelServerValidator;
             _verifyUpdatedEmailViewModelServerValidator = verifyUpdatedEmailViewModelServerValidator;
+            _candidateService = candidateService;
+            _deleteAccountSettingsViewModelServerValidator = deleteAccountSettingsViewModelServerValidator;
         }
 
         public MediatorResponse<MyApplicationsViewModel> Index(Guid candidateId, string deletedVacancyId, string deletedVacancyTitle)
@@ -186,6 +190,51 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             return GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
         }
 
+        public MediatorResponse<SettingsViewModel> DeleteAccountSettings(Guid candidateId, SettingsViewModel settingsViewModel)
+        {
+            var validationResult = _settingsViewModelServerValidator.Validate(settingsViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(AccountMediatorCodes.Settings.ValidationError, settingsViewModel, validationResult);
+            }
+
+            Candidate candidate;
+            var deleted = _accountProvider.TryDeleteSettings(candidateId, settingsViewModel, out candidate);
+
+            //if (!deleted)
+            //{
+            //    return GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
+            //}
+
+            //if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.DeleteAccount)
+            //{
+            //    return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedNotificationsAlertWarning, UserMessageLevel.Info);
+            //}
+
+            return GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
+        }
+
+        public MediatorResponse VerifyAccountSettings(Guid candidateId, DeleteAccountSettingsViewModel settingsViewModel)
+        {
+            var validationResult = _deleteAccountSettingsViewModelServerValidator.Validate(settingsViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                //return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError, settingsViewModel, validationResult, MyApplicationsPageMessages.EmptyUserAccount, UserMessageLevel.Error);
+                return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError, settingsViewModel, validationResult);
+            }
+
+            var candidate = _candidateService.Authenticate(settingsViewModel.EmailAddress, settingsViewModel.Password);
+
+            if (candidate != null && candidate.EntityId == candidateId)
+            {
+                return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok, settingsViewModel);
+            }
+
+            return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError, settingsViewModel, validationResult, MyApplicationsPageMessages.InvalidUserAccount, UserMessageLevel.Error);
+        }
+
         public MediatorResponse Track(Guid candidateId, int vacancyId)
         {
             var applicationViewModel = _apprenticeshipApplicationProvider.UnarchiveApplication(candidateId, vacancyId);
@@ -265,11 +314,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
         {
             var verifyMobileViewModel = _accountProvider.GetVerifyMobileViewModel(candidateId);
 
-             var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
-             verifyMobileViewModel.TraineeshipFeature = traineeshipFeature;
-             verifyMobileViewModel.ReturnUrl = returnUrl ?? string.Empty;
+            var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
+            verifyMobileViewModel.TraineeshipFeature = traineeshipFeature;
+            verifyMobileViewModel.ReturnUrl = returnUrl ?? string.Empty;
 
-             switch (verifyMobileViewModel.Status)
+            switch (verifyMobileViewModel.Status)
             {
                 case VerifyMobileState.Ok:
                     return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.Success, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationSuccessText, UserMessageLevel.Success);
@@ -280,7 +329,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             }
         }
 
-        
+
         public MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, VerifyMobileViewModel verifyMobileViewModel)
         {
             var validationResult = _verifyMobileViewModelServerValidator.Validate(verifyMobileViewModel);

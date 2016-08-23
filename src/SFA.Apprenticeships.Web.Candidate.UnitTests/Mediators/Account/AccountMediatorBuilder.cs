@@ -1,15 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
+    using Application.Interfaces.Candidates;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
-    using SFA.Infrastructure.Interfaces;
     using Moq;
 
     using SFA.Apprenticeships.Application.Interfaces;
 
     internal class AccountMediatorBuilder
     {
+
+        private Mock<ICandidateService> _candidateServiceMock = new Mock<ICandidateService>();
         private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
         private Mock<IApprenticeshipVacancyProvider> _apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
         private Mock<ITraineeshipVacancyProvider> _traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
@@ -20,6 +22,7 @@
         private readonly EmailViewModelServerValidator _emailViewModelServerValidatorMock = new EmailViewModelServerValidator();
         private Mock<IConfigurationService> _configurationServiceMock = new Mock<IConfigurationService>();
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
+        private readonly DeleteAccountSettingsViewModelServerValidator _deleteAccountSettingsViewModelServerValidatorMock = new DeleteAccountSettingsViewModelServerValidator();
 
         public AccountMediatorBuilder With(Mock<IApprenticeshipVacancyProvider> apprenticeshipVacancyProvider)
         {
@@ -74,7 +77,8 @@
                 _configurationServiceMock.Object,
                 _verifyMobileViewModelServerValidatorMock.Object,
                 _emailViewModelServerValidatorMock,
-                _verifyUpdatedEmailViewModelServerValidatorMock);
+                _verifyUpdatedEmailViewModelServerValidatorMock,
+                _candidateServiceMock.Object, _deleteAccountSettingsViewModelServerValidatorMock);
         }
     }
 }

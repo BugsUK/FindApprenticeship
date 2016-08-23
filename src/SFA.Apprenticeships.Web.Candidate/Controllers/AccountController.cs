@@ -2,6 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -11,7 +12,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Constants.Pages;
     using FluentValidation.Mvc;
     using Mediators.Account;
-    using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using System.Globalization;
     using System.Net;
@@ -100,6 +100,36 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             });
         }
 
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
+        public async Task<ActionResult> ConfirmAccountSettings(SettingsViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                DeleteAccountSettingsViewModel deleteAccountSettingsViewModel = new DeleteAccountSettingsViewModel()
+                {
+                    EmailAddress = model.EmailAddress,
+                    Password = model.Password
+                };
+                var response = _accountMediator.VerifyAccountSettings(UserContext.CandidateId, deleteAccountSettingsViewModel);
+                ModelState.Clear();
+
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("Settings", model);
+                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("Settings", model);
+                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
+                        return View("ConfirmAccountDeletion", model);
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -107,7 +137,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
+                if (model.Mode == SettingsViewModel.SettingsMode.DeleteAccount)
+                    return RedirectToAction("ConfirmAccountSettings", model);
                 var response = _accountMediator.SaveSettings(UserContext.CandidateId, model);
+
                 ModelState.Clear();
 
                 switch (response.Code)

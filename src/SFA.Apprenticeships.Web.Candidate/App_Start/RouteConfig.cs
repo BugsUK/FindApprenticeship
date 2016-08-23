@@ -138,7 +138,7 @@
                 name: CandidateRouteNames.DeleteAccountSettings,
                 url: "deleteaccount",
                 defaults: new { controller = "Account", action = "DeleteAccountSettings" }
-                );
+                );            
 
             routes.MapRoute(
                 name: CandidateRouteNames.VerifyMobile,

@@ -101,12 +101,14 @@
     <Compile Include="Configuration\ServicesConfiguration.cs" />
     <Compile Include="Strategies\Candidates\ISearchCandidatesStrategy.cs" />
     <Compile Include="Strategies\Candidates\SearchCandidatesStrategy.cs" />
+    <Compile Include="Strategies\Candidates\DeleteAccountStrategy.cs" />
     <Compile Include="Strategies\GetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="SaveCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\GetCandidateApprenticeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\SubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\GetCandidateByIdStrategy.cs" />
     <Compile Include="Strategies\GetCandidateByUsernameStrategy.cs" />
+    <Compile Include="Strategies\IDeleteApplicationStrategy.cs" />
     <Compile Include="Strategies\IGetCandidateByIdStrategy.cs" />
     <Compile Include="Strategies\IGetCandidateByUsernameStrategy.cs" />
     <Compile Include="Strategies\IRequestEmailReminderStrategy.cs" />
@@ -153,7 +155,7 @@
     <Compile Include="ILegacyCandidateProvider.cs" />
     <Compile Include="Strategies\IRegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />
-    <Compile Include="Strategies\IDeleteApplicationStrategy.cs" />
+    <Compile Include="Strategies\Candidates\IDeleteAccountStrategy.cs" />
     <Compile Include="Strategies\Traineeships\IGetCandidateTraineeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Traineeships\ISaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\ISaveApprenticeshipApplicationStrategy.cs" />

@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Candidates
 {
-    using System;
-    using System.Collections.Generic;
     using Communications;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -9,6 +7,8 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Search;
+    using System;
+    using System.Collections.Generic;
     using Vacancies;
 
     /// <summary>
@@ -28,6 +28,8 @@
         Candidate GetCandidate(string username);
 
         Candidate SaveCandidate(Candidate candidate);
+
+        void DeleteCandidate(Candidate candidate);
 
         ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
 
@@ -77,7 +79,7 @@
 
         IList<SavedSearch> GetSavedSearches(Guid candidateId);
 
-        SavedSearch UpdateSavedSearch(SavedSearch savedSearch) ;
+        SavedSearch UpdateSavedSearch(SavedSearch savedSearch);
 
         SavedSearch DeleteSavedSearch(Guid candidateId, Guid savedSearchId);
 
@@ -86,7 +88,7 @@
         void UpdateUsername(Guid userId, string verfiyCode, string password);
 
         void RequestEmailReminder(string phoneNumber);
-        
+
         bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType);
 
         SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(

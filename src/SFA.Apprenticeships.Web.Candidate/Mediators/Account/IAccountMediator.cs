@@ -20,6 +20,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 
         MediatorResponse<SettingsViewModel> SaveSettings(Guid candidateId, SettingsViewModel settingsViewModel);
 
+        MediatorResponse<SettingsViewModel> DeleteAccountSettings(Guid candidateId, SettingsViewModel settingsViewModel);
+
+        MediatorResponse VerifyAccountSettings(Guid candidateId, DeleteAccountSettingsViewModel settingsViewModel);
+
         MediatorResponse Track(Guid candidateId, int vacancyId);
 
         MediatorResponse AcceptTermsAndConditions(Guid candidateId);

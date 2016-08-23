@@ -411,6 +411,10 @@
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
+    <Content Include="Views\Account\AccountDeletion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AccountDeletion.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -800,6 +804,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_wage.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Account\ConfirmAccountDeletion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ConfirmAccountDeletion.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -923,10 +931,12 @@
     <Compile Include="Validators\EmailViewModelValidator.cs" />
     <Compile Include="Validators\ForgottenEmailViewModelValidator.cs" />
     <Compile Include="Validators\MonitoringInformationViewModelValidator.cs" />
+    <Compile Include="Validators\DeleteAccountSettingsViewModelValidator.cs" />
     <Compile Include="Validators\VerifyUpdatedEmailViewModelClientValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
     <Compile Include="Validators\TrainingCourseViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />
+    <Compile Include="ViewModels\Account\DeleteAccountSettingsViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileState.cs" />
     <Compile Include="ViewModels\Account\EmailViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyUpdatedEmailViewModel.cs" />
@@ -1088,6 +1098,11 @@
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\SavedVacancyViewModelStatuses.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\Account\AccountDeletion.generated.cs">
+      <DependentUpon>AccountDeletion.cshtml</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="Views\Account\Index.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1097,6 +1112,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Settings.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\ConfirmAccountDeletion.generated.cs">
+      <DependentUpon>ConfirmAccountDeletion.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\ApprenticeshipSearch\_wage.generated.cs">
       <DependentUpon>_wage.cshtml</DependentUpon>

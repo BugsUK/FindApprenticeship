@@ -1,0 +1,15 @@
+﻿@model object
+@{
+    ViewBag.Title = "Confirm account deletion - Find an apprenticeship";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="hgroup">
+    <div class="text">
+        <h1 class="heading-xlarge">Confirm account deletion</h1>
+        <h2 class="subtitle">You will no longer be able to use this service, and your account data will be lost.​</h2>
+    </div>
+</div>
+
+@Html.ActionLink("Delete account", "DeleteAccountSettings", "Account", Model, new { @class = "button" })
+@Html.ActionLink("Cancel", "DeleteAccountSettings", "Account")
