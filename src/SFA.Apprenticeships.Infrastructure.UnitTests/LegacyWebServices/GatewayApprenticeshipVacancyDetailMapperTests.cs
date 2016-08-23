@@ -434,7 +434,7 @@
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.WageType.Should().Be(LegacyWageType.LegacyWeekly);
+            dest.WageType.Should().Be(WageType.LegacyWeekly);
         }
 
         [Test]
@@ -454,7 +454,7 @@
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.WageType.Should().Be(LegacyWageType.LegacyText);
+            dest.WageType.Should().Be(WageType.LegacyText);
         }
 
         [Test]

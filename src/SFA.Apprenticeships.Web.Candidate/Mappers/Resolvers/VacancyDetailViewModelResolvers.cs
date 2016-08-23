@@ -23,11 +23,11 @@
             {
                 switch (vacancyDetail.WageType)
                 {
-                    case LegacyWageType.ApprenticeshipMinimum:
-                    case LegacyWageType.NationalMinimum:
+                    case WageType.ApprenticeshipMinimum:
+                    case WageType.NationalMinimum:
                         return vacancyDetail.WageDescription;
 
-                    case LegacyWageType.LegacyText:
+                    case WageType.LegacyText:
                         {
                             var wage = vacancyDetail.WageDescription;
 
@@ -41,8 +41,8 @@
                             return wage;
                         }
 
-                    case LegacyWageType.LegacyWeekly:
-                    case LegacyWageType.Custom:
+                    case WageType.LegacyWeekly:
+                    case WageType.Custom:
                         return $"£{vacancyDetail.WageObject.Amount??0:N2}";
 
                     default:

@@ -80,7 +80,7 @@
                 detail.WageObject.Should().Be(vacancy.Wage);
                 detail.WageObject.Unit.Should().Be(WageUnit.Weekly);
                 detail.WageDescription.Should().NotBeNull();
-                detail.WageType.Should().Be((LegacyWageType)vacancy.Wage.Type);
+                detail.WageType.Should().Be(vacancy.Wage.Type);
 
                 detail.WorkingWeek.Should().Be(vacancy.WorkingWeek);
 
