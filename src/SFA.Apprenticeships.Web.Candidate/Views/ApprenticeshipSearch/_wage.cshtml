@@ -10,7 +10,7 @@
     </p>
 </div>
 
-@if (Model.WageType == WageType.ApprenticeshipMinimum)
+@if (Model.WageObject.Type == WageType.ApprenticeshipMinimum)
 {
     <details>
         <summary>Wages explained</summary>
@@ -22,7 +22,7 @@
     </details>
 }
 
-@if (Model.WageType == WageType.NationalMinimum)
+@if (Model.WageObject.Type == WageType.NationalMinimum)
 {
     <details>
         <summary>Wages explained</summary>

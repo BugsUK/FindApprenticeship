@@ -98,7 +98,7 @@ WriteLiteral("\r\n    </p>\r\n</div>\r\n\r\n");
 
             
             #line 13 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
- if (Model.WageType == WageType.ApprenticeshipMinimum)
+ if (Model.WageObject.Type == WageType.ApprenticeshipMinimum)
 {
 
             
@@ -135,7 +135,7 @@ WriteLiteral("\r\n");
 
             
             #line 25 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
- if (Model.WageType == WageType.NationalMinimum)
+ if (Model.WageObject.Type == WageType.NationalMinimum)
 {
 
             

@@ -61,8 +61,6 @@
 
         public WageViewModel WageObject { get; set; }
 
-        public WageType WageType { get; set; }
-
         public string Wage { get; set; }
 
         public string WorkingWeek { get; set; }
