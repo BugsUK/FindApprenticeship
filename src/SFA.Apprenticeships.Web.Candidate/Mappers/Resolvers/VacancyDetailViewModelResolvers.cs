@@ -21,7 +21,7 @@
         {
             protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
-                switch (vacancyDetail.WageType)
+                switch (vacancyDetail.WageObject.Type)
                 {
                     case WageType.ApprenticeshipMinimum:
                     case WageType.NationalMinimum:
@@ -47,7 +47,7 @@
 
                     default:
                         throw new ArgumentOutOfRangeException(
-                            nameof(vacancyDetail.WageType), vacancyDetail.WageType, $"Invalid Wage Type: {vacancyDetail.WageType}");
+                            nameof(vacancyDetail.WageObject.Type), vacancyDetail.WageObject.Type, $"Invalid Wage Type: {vacancyDetail.WageObject.Type}");
                 }
             }
         }

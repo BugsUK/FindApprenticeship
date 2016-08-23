@@ -32,8 +32,6 @@
 
         public string WageDescription { get; set; }
 
-        public WageType WageType { get; set; }
-
         public string WorkingWeek { get; set; }
 
         public string OtherInformation { get; set; }

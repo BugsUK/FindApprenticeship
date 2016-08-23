@@ -151,8 +151,8 @@
                 .ForMember(dest => dest.VacancyUrl,
                 opt => opt.MapFrom(src => src.ApplyViaEmployerWebsite && string.IsNullOrEmpty(src.VacancyUrl) ? src.EmployerRecruitmentWebsite : src.VacancyUrl))
 
-                .ForMember(dest => dest.WageType,
-                    opt => opt.ResolveUsing<WageTypeResolver>().FromMember(src => src.WageType))
+                //.ForMember(dest => dest.WageType,
+                //    opt => opt.ResolveUsing<WageTypeResolver>().FromMember(src => src.WageType))
 
                 //TODO: This should be deleted soon, as we no longer use the legacy services
                 //.ForMember(dest => dest.Wage,
