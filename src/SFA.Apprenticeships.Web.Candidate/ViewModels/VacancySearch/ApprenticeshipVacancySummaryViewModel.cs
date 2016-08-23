@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
+    using Common.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.Apprenticeships;
 
@@ -10,6 +11,8 @@
         public ApplicationStatuses? CandidateApplicationStatus { get; set; }
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
+
+        public WageViewModel WageObject { get; set; }
 
         public string Wage { get; set; }
 

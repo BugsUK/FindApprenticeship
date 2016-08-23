@@ -39,9 +39,9 @@
                     opt => opt.MapFrom(src => src.VacancyStatus))
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
-                .ForMember(d => d.WageObject, opt => opt.MapFrom(src => new WageViewModel(src.WageObject)))
+                .ForMember(d => d.WageObject, opt => opt.MapFrom(src => new WageViewModel(src.Wage)))
                 .ForMember(d => d.Wage,
-                    opt => opt.MapFrom(src => src.WageObject.GetDisplayAmount()))
+                    opt => opt.MapFrom(src => src.Wage.GetDisplayAmount()))
                 .ForMember(d => d.RealityCheck,
                     opt => opt.MapFrom(src => src.RealityCheck))
                 .ForMember(d => d.OtherInformation,
@@ -86,6 +86,7 @@
             Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>()
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
+                .ForMember(d => d.WageObject, opt => opt.MapFrom(src => new WageViewModel(src.Wage)))
                 .ForMember(d => d.Wage, 
                     opt => opt.ResolveUsing<ApprenticeshipVacancySummaryViewModelResolvers.WageResolver>());
 
