@@ -7,7 +7,6 @@
     using Application.Candidate.Configuration;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
-    using Application.Candidate.Strategies.Candidates;
     using Application.Candidate.Strategies.SavedSearches;
     using Application.Candidate.Strategies.SuggestedVacancies;
     using Application.Candidate.Strategies.Traineeships;
@@ -180,7 +179,6 @@
             For<ISaveTraineeshipApplicationStrategy>().Use<SaveTraineeshipApplicationStrategy>();
             For<IArchiveApplicationStrategy>().Use<ArchiveApprenticeshipApplicationStrategy>();
             For<IDeleteApplicationStrategy>().Use<DeleteApprenticeshipApplicationStrategy>();
-            For<IDeleteAccountStrategy>().Use<DeleteAccountStrategy>();
             For<IDeleteSavedApprenticeshipVacancyStrategy>().Use<DeleteSavedApprenticeshipApprenticeshipVacancyStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();

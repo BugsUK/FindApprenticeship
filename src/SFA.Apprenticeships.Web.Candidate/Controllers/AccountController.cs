@@ -95,40 +95,46 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.DeleteAccount);
+                //var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.DeleteAccount);
+                var response = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
                 return View("Settings", response.ViewModel);
             });
         }
 
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [SessionTimeout]
-        public async Task<ActionResult> ConfirmAccountSettings(SettingsViewModel model)
-        {
-            return await Task.Run<ActionResult>(() =>
-            {
-                DeleteAccountSettingsViewModel deleteAccountSettingsViewModel = new DeleteAccountSettingsViewModel()
-                {
-                    EmailAddress = model.EmailAddress,
-                    Password = model.Password
-                };
-                var response = _accountMediator.VerifyAccountSettings(UserContext.CandidateId, deleteAccountSettingsViewModel);
-                ModelState.Clear();
+        //[AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        //[SessionTimeout]
+        //public async Task<ActionResult> ConfirmAccountSettings()
+        //{
+        //    return await Task.Run<ActionResult>(() =>
+        //    {
+        //        SettingsViewModel settingsViewModel = new SettingsViewModel();
+        //        if (ViewData["userInfo"] != null)
+        //        {
+        //            settingsViewModel = (SettingsViewModel)ViewData["userInfo"];
+        //        }
+        //        DeleteAccountSettingsViewModel deleteAccountSettingsViewModel = new DeleteAccountSettingsViewModel()
+        //        {
+        //            EmailAddress = settingsViewModel.EmailAddress,
+        //            Password = settingsViewModel.Password
+        //        };
+        //        var response = _accountMediator.VerifyAccountSettings(UserContext.CandidateId, deleteAccountSettingsViewModel);
+        //        ModelState.Clear();
 
-                switch (response.Code)
-                {
-                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View("Settings", model);
-                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View("Settings", model);
-                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
-                        return View("ConfirmAccountDeletion", model);
-                    default:
-                        throw new InvalidMediatorCodeException(response.Code);
-                }
-            });
-        }
+        //        switch (response.Code)
+        //        {
+        //            case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
+        //                response.ValidationResult.AddToModelState(ModelState, string.Empty);
+        //                return View("Settings", settingsViewModel);
+        //            case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
+        //                SetUserMessage(response.Message.Text, response.Message.Level);
+        //                return View("Settings", settingsViewModel);
+        //            case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
+        //                return View("ConfirmAccountDeletion", settingsViewModel);
+        //            default:
+        //                throw new InvalidMediatorCodeException(response.Code);
+        //        }
+        //    });
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -138,7 +144,29 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             return await Task.Run<ActionResult>(() =>
             {
                 if (model.Mode == SettingsViewModel.SettingsMode.DeleteAccount)
-                    return RedirectToAction("ConfirmAccountSettings", model);
+                {
+                    DeleteAccountSettingsViewModel deleteAccountSettingsViewModel = new DeleteAccountSettingsViewModel()
+                    {
+                        EmailAddress = model.EmailAddress,
+                        Password = model.Password
+                    };
+                    var verifyResponse = _accountMediator.VerifyAccountSettings(UserContext.CandidateId, deleteAccountSettingsViewModel);
+                    ModelState.Clear();
+
+                    switch (verifyResponse.Code)
+                    {
+                        case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
+                            verifyResponse.ValidationResult.AddToModelState(ModelState, string.Empty);
+                            return View("Settings", model);
+                        case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
+                            SetUserMessage(verifyResponse.Message.Text, verifyResponse.Message.Level);
+                            return View("Settings", model);
+                        case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
+                            return View("ConfirmAccountDeletion", model);
+                        default:
+                            throw new InvalidMediatorCodeException(verifyResponse.Code);
+                    }
+                }
                 var response = _accountMediator.SaveSettings(UserContext.CandidateId, model);
 
                 ModelState.Clear();
@@ -161,6 +189,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         else
                             SetUserMessage(AccountPageMessages.SettingsUpdated);
                         return RedirectToRoute(response.ViewModel.Mode == SettingsViewModel.SettingsMode.SavedSearches ? CandidateRouteNames.SavedSearchesSettings : CandidateRouteNames.Settings);
+                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("Settings", response.ViewModel);
+                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("Settings", response.ViewModel);
+                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
+                        return View("ConfirmAccountDeletion", response.ViewModel);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }

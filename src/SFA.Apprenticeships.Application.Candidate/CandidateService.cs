@@ -1,8 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -17,9 +14,14 @@
     using Interfaces.Vacancies;
     using Strategies;
     using Strategies.Apprenticeships;
+    using Strategies.Candidates;
     using Strategies.SavedSearches;
     using Strategies.SuggestedVacancies;
     using Strategies.Traineeships;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Candidates.Strategies;
     using UserAccount.Strategies;
     using IUpdateUsernameStrategy = Strategies.IUpdateUsernameStrategy;
 
@@ -48,6 +50,7 @@
         private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
+        private readonly ISetCandidateDeletionPendingStrategy _setCandidateDeletionPendingStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
         private readonly ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> _candidateApprenticeshipVacancyDetailStrategy;
         private readonly ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> _candidateTraineeshipVacancyDetailStrategy;
@@ -101,7 +104,8 @@
             IRequestEmailReminderStrategy requestEmailReminderStrategy,
             IUnsubscribeStrategy unsubscribeStrategy,
             IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy,
-            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy)
+            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy,
+            ISetCandidateDeletionPendingStrategy setCandidateDeletionPendingStrategy)
         {
             _getCandidateByIdStrategy = getCandidateByIdStrategy;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -140,6 +144,7 @@
             _unsubscribeStrategy = unsubscribeStrategy;
             _apprenticeshipVacancySuggestionsStrategy = apprenticeshipVacancySuggestionsStrategy;
             _getCandidateByUsernameStrategy = getCandidateByUsernameStrategy;
+            _setCandidateDeletionPendingStrategy = setCandidateDeletionPendingStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -196,6 +201,16 @@
             _logger.Debug("Calling CandidateService to save a candidate.");
 
             return _saveCandidateStrategy.SaveCandidate(candidate);
+        }
+
+        public void SetCandidateDeletionPending(Candidate candidate)
+        {
+            Condition.Requires(candidate);
+
+            _logger.Info(
+                $"Calling CandidateService to delete the apprenticeship account of the user with Id={candidate.EntityId}");
+
+            //_deleteAccountStrategy.DeleteAccount(candidate.EntityId);
         }
 
         public void UnlockAccount(string username, string accountUnlockCode)
@@ -499,12 +514,12 @@
 
             return _unsubscribeStrategy.Unsubscribe(subscriberId, subscriptionType);
         }
-        
+
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId)
         {
             Condition.Requires(searchParameters).IsNotNull();
             Condition.Requires(vacancyId);
-            
+
             var candidateApplications = GetApprenticeshipApplications(candidateId);
             return _apprenticeshipVacancySuggestionsStrategy.GetSuggestedApprenticeshipVacancies(searchParameters, candidateApplications, vacancyId);
         }

@@ -190,17 +190,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             return GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
         }
 
-        public MediatorResponse<SettingsViewModel> DeleteAccountSettings(Guid candidateId, SettingsViewModel settingsViewModel)
+        public MediatorResponse<SettingsViewModel> SetAccountStatusToDelete(Guid candidateId)
         {
-            var validationResult = _settingsViewModelServerValidator.Validate(settingsViewModel);
+            //var validationResult = _settingsViewModelServerValidator.Validate(settingsViewModel);
 
-            if (!validationResult.IsValid)
-            {
-                return GetMediatorResponse(AccountMediatorCodes.Settings.ValidationError, settingsViewModel, validationResult);
-            }
+            //if (!validationResult.IsValid)
+            //{
+            //    return GetMediatorResponse(AccountMediatorCodes.Settings.ValidationError, settingsViewModel, validationResult);
+            //}
 
             Candidate candidate;
-            var deleted = _accountProvider.TryDeleteSettings(candidateId, settingsViewModel, out candidate);
+            var deleted = _accountProvider.SetUserAccountDeletionPending(candidateId, out candidate);
 
             //if (!deleted)
             //{
@@ -212,7 +212,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             //    return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedNotificationsAlertWarning, UserMessageLevel.Info);
             //}
 
-            return GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
+            return GetMediatorResponse(AccountMediatorCodes.Settings.Success, new SettingsViewModel());
         }
 
         public MediatorResponse VerifyAccountSettings(Guid candidateId, DeleteAccountSettingsViewModel settingsViewModel)
@@ -221,7 +221,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 
             if (!validationResult.IsValid)
             {
-                //return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError, settingsViewModel, validationResult, MyApplicationsPageMessages.EmptyUserAccount, UserMessageLevel.Error);
                 return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError, settingsViewModel, validationResult);
             }
 

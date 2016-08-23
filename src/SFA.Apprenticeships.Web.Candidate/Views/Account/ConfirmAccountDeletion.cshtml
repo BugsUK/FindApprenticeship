@@ -11,5 +11,8 @@
     </div>
 </div>
 
-@Html.ActionLink("Delete account", "DeleteAccountSettings", "Account", Model, new { @class = "button" })
-@Html.ActionLink("Cancel", "DeleteAccountSettings", "Account")
+@*@using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post))*@
+//{
+    @Html.ActionLink("Delete account", "DeleteAccountSettings", "Account", Model, new {@class = "button"})
+    @Html.ActionLink("Cancel", "DeleteAccountSettings", "Account")
+//}

@@ -80,22 +80,30 @@ WriteLiteral(" class=\"subtitle\"");
 WriteLiteral(">You will no longer be able to use this service, and your account data will be lo" +
 "st.​</h2>\r\n    </div>\r\n</div>\r\n\r\n");
 
+WriteLiteral("\r\n//{\r\n");
+
+WriteLiteral("    ");
+
             
-            #line 14 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
-Write(Html.ActionLink("Delete account", "DeleteAccountSettings", "Account", Model, new { @class = "button" }));
+            #line 16 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+Write(Html.ActionLink("Delete account", "DeleteAccountSettings", "Account", Model, new {@class = "button"}));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
+WriteLiteral("    ");
+
             
-            #line 15 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+            #line 17 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
 Write(Html.ActionLink("Cancel", "DeleteAccountSettings", "Account"));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n//}");
+
         }
     }
 }

@@ -29,7 +29,7 @@
 
         Candidate SaveCandidate(Candidate candidate);
 
-        void DeleteCandidate(Candidate candidate);
+        void SetCandidateDeletionPending(Candidate candidate);
 
         ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
 

@@ -411,10 +411,6 @@
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
-    <Content Include="Views\Account\AccountDeletion.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>AccountDeletion.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1098,11 +1094,6 @@
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\SavedVacancyViewModelStatuses.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\Account\AccountDeletion.generated.cs">
-      <DependentUpon>AccountDeletion.cshtml</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Views\Account\Index.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
