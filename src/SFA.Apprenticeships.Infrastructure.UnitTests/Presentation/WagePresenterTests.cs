@@ -47,11 +47,8 @@
         [TestCase(WageUnit.NotApplicable, 5, "£5.00" + Space)]
         public void ShouldGetDisplayAmountWithFrequencyPostfix(WageUnit wageUnit, decimal displayAmount, string expected)
         {
-            // Arrange.
-            var wage = new Wage(WageType.Custom, displayAmount, null, wageUnit);
-
             // Act.
-            var actual = wage.GetDisplayAmountWithFrequencyPostfix();
+            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(WageType.Custom, displayAmount, null, wageUnit, null);
 
             // Assert.
             actual.Should().Be(expected);
@@ -77,10 +74,8 @@
                 hoursPerWeek = tempDecimal;
             }
 
-            var wage = new Wage(wageType, wageAmount, wageText, WageUnit.NotApplicable, Convert.ToDecimal(hoursPerWeek));
-
             // Act.
-            var actual = wage.GetDisplayAmount();
+            var actual = WagePresenter.GetDisplayAmount(wageType, wageAmount, wageText, WageUnit.NotApplicable, Convert.ToDecimal(hoursPerWeek));
 
             // Assert.
             actual.Should().Be(expected);

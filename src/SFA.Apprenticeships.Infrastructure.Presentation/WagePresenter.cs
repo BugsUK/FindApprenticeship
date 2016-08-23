@@ -41,17 +41,70 @@
             }
         }
 
-        public static string GetDisplayAmountWithFrequencyPostfix(this Wage wage)
+        public static string GetDisplayAmountWithFrequencyPostfix(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
         {
-            var postfix = wage.Unit.GetWagePostfix();
+            var postfix = unit.GetWagePostfix();
 
-            var displayAmount = wage.GetDisplayAmount();
+            var displayAmount = GetDisplayAmount(type, amount, text, unit, hoursPerWeek);
             if (string.IsNullOrWhiteSpace(displayAmount))
             {
                 return postfix;
             }
 
             return $"{displayAmount} {postfix}";
+        }
+
+        public static string GetDisplayAmount(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
+        {
+            switch (type)
+            {
+                case WageType.LegacyWeekly:
+                case WageType.Custom:
+                    return $"£{amount?.ToString(WageAmountFormat) ?? UnknownText}";
+
+                case WageType.ApprenticeshipMinimum:
+                    return hoursPerWeek.HasValue
+                        ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value)
+                        : UnknownText;
+
+                case WageType.NationalMinimum:
+                    return hoursPerWeek.HasValue
+                        ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value)
+                        : UnknownText;
+
+                case WageType.LegacyText:
+                    
+                    //if it's unknown, return standard unknown text
+                    var displayText = text ?? UnknownText;
+
+                    //if it's not unknown, then prepend a '£' sign to its decimal value.
+                    decimal wageDecimal;
+
+                    //if it's already got a '£' sign, or is text, fail to parse and all is good => return value.
+                    if (decimal.TryParse(displayText, out wageDecimal))
+                    {
+                        displayText = $"£{wageDecimal:N2}";
+                    }
+
+                    return displayText;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type,
+                        $"Invalid Wage Type: {type}");
+            }
+        }
+
+        private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
+        {
+            var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var higherRange = (Wages.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+
+            return $"£{lowerRange} - £{higherRange}";
+        }
+
+        private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek)
+        {
+            return $"£{(Wages.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
         }
 
         private static string GetWagePostfix(this WageUnit wageUnit)
@@ -81,57 +134,5 @@
             }
         }
 
-        public static string GetDisplayAmount(this Wage wage)
-        {
-            switch (wage.Type)
-            {
-                case WageType.LegacyWeekly:
-                case WageType.Custom:
-                    return $"£{wage.Amount?.ToString(WageAmountFormat) ?? UnknownText}";
-
-                case WageType.ApprenticeshipMinimum:
-                    return wage.HoursPerWeek.HasValue
-                        ? GetWeeklyApprenticeshipMinimumWage(wage.HoursPerWeek.Value)
-                        : UnknownText;
-
-                case WageType.NationalMinimum:
-                    return wage.HoursPerWeek.HasValue
-                        ? GetWeeklyNationalMinimumWage(wage.HoursPerWeek.Value)
-                        : UnknownText;
-
-                case WageType.LegacyText:
-                    
-                    //if it's unknown, return standard unknown text
-                    var displayText = wage.Text ?? UnknownText;
-
-                    //if it's not unknown, then prepend a '£' sign to its decimal value.
-                    decimal wageDecimal;
-
-                    //if it's already got a '£' sign, or is text, fail to parse and all is good => return value.
-                    if (decimal.TryParse(displayText, out wageDecimal))
-                    {
-                        displayText = $"£{wageDecimal:N2}";
-                    }
-
-                    return displayText;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wage.Type), wage.Type,
-                        $"Invalid Wage Type: {wage.Type}");
-            }
-        }
-
-        private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
-        {
-            var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
-            var higherRange = (Wages.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
-
-            return $"£{lowerRange} - £{higherRange}";
-        }
-
-        private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek)
-        {
-            return $"£{(Wages.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
-        }
     }
 }

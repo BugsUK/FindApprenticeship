@@ -79,7 +79,7 @@
             }
         }
 
-        public string WageDisplayText => new Wage(WageType, Wage, null, WageUnit, HoursPerWeek).GetDisplayAmount();
+        public string WageDisplayText => WagePresenter.GetDisplayAmount(WageType, Wage, null, WageUnit, HoursPerWeek);
 
         public bool ComeFromPreview { get; set; }
 

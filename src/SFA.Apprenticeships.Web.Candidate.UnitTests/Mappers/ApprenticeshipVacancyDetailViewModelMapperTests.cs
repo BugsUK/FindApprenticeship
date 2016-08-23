@@ -75,7 +75,9 @@
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            model.Wage.Should().Be(vacancyDetail.Wage.GetDisplayAmount());
+            model.Wage.Should()
+                .Be(WagePresenter.GetDisplayAmount(vacancyDetail.Wage.Type, vacancyDetail.Wage.Amount,
+                    vacancyDetail.Wage.Text, vacancyDetail.Wage.Unit, vacancyDetail.Wage.HoursPerWeek));
         }
 
         [Test]
