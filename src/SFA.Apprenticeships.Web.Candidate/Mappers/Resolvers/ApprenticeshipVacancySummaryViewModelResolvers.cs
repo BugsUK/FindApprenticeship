@@ -10,7 +10,7 @@
         {
             protected override string ResolveCore(ApprenticeshipSearchResponse source)
             {
-                return source.Wage.Unit.GetDisplayAmountWithFrequencyPostfix(source.Wage.GetDisplayAmount());
+                return source.Wage.GetDisplayAmountWithFrequencyPostfix();
             }
         }
     }

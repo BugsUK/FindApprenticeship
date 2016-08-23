@@ -41,14 +41,16 @@
             }
         }
 
-        public static string GetDisplayAmountWithFrequencyPostfix(this WageUnit wageUnit, string displayAmount)
+        public static string GetDisplayAmountWithFrequencyPostfix(this Wage wage)
         {
+            var displayAmount = wage.GetDisplayAmount();
+
             if (string.IsNullOrWhiteSpace(displayAmount))
             {
-                return wageUnit.GetWagePostfix();
+                return wage.Unit.GetWagePostfix();
             }
 
-            return $"{displayAmount} {wageUnit.GetWagePostfix()}";
+            return $"{displayAmount} {wage.Unit.GetWagePostfix()}";
         }
 
         private static string GetWagePostfix(this WageUnit wageUnit)

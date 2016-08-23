@@ -41,14 +41,17 @@
             actual.Should().Be(expected);
         }
 
-        [TestCase(WageUnit.Weekly, "5", "5" + Space + WagePresenter.PerWeekText)]
-        [TestCase(WageUnit.Monthly, "5", "5" + Space + WagePresenter.PerMonthText)]
-        [TestCase(WageUnit.Annually, "5", "5" + Space + WagePresenter.PerYearText)]
-        [TestCase(WageUnit.NotApplicable, "5", "5" + Space)]
-        public void ShouldGetDisplayAmountWithFrequencyPostfix(WageUnit wageUnit, string displayAmount, string expected)
+        [TestCase(WageUnit.Weekly, 5, "£5.00" + Space + WagePresenter.PerWeekText)]
+        [TestCase(WageUnit.Monthly, 5, "£5.00" + Space + WagePresenter.PerMonthText)]
+        [TestCase(WageUnit.Annually, 5, "£5.00" + Space + WagePresenter.PerYearText)]
+        [TestCase(WageUnit.NotApplicable, 5, "£5.00" + Space)]
+        public void ShouldGetDisplayAmountWithFrequencyPostfix(WageUnit wageUnit, decimal displayAmount, string expected)
         {
+            // Arrange.
+            var wage = new Wage(WageType.Custom, displayAmount, null, wageUnit);
+
             // Act.
-            var actual = wageUnit.GetDisplayAmountWithFrequencyPostfix(displayAmount);
+            var actual = wage.GetDisplayAmountWithFrequencyPostfix();
 
             // Assert.
             actual.Should().Be(expected);
