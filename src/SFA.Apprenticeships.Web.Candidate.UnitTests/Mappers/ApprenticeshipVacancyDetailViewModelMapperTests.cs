@@ -54,7 +54,7 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageObject = new Wage(WageType.LegacyWeekly, 101.19m, null, WageUnit.NotApplicable)
+                Wage = new Wage(WageType.LegacyWeekly, 101.19m, null, WageUnit.NotApplicable)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -69,13 +69,13 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageObject = new Wage(WageType.LegacyText, null, null, WageUnit.NotApplicable)
+                Wage = new Wage(WageType.LegacyText, null, null, WageUnit.NotApplicable)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            model.Wage.Should().Be(vacancyDetail.WageObject.GetDisplayAmount());
+            model.Wage.Should().Be(vacancyDetail.Wage.GetDisplayAmount());
         }
 
         [Test]
@@ -83,7 +83,7 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageObject = new Wage(WageType.LegacyText, null, "123.45678", WageUnit.NotApplicable)
+                Wage = new Wage(WageType.LegacyText, null, "123.45678", WageUnit.NotApplicable)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);

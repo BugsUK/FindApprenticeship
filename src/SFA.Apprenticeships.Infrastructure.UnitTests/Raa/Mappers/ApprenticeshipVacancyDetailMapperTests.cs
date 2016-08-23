@@ -77,10 +77,10 @@
                 detail.InterviewFromDate.Should().Be(DateTime.MinValue);
 
                 // NOTE: hard to unit test.
-                detail.WageObject.Should().Be(vacancy.Wage);
-                detail.WageObject.Unit.Should().Be(WageUnit.Weekly);
-                detail.WageObject.GetDisplayAmount().Should().NotBeNull();
-                detail.WageObject.Type.Should().Be(vacancy.Wage.Type);
+                detail.Wage.Should().Be(vacancy.Wage);
+                detail.Wage.Unit.Should().Be(WageUnit.Weekly);
+                detail.Wage.GetDisplayAmount().Should().NotBeNull();
+                detail.Wage.Type.Should().Be(vacancy.Wage.Type);
 
                 detail.WorkingWeek.Should().Be(vacancy.WorkingWeek);
 

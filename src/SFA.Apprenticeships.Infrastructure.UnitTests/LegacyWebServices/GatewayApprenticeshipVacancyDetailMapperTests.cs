@@ -435,7 +435,7 @@
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.WageObject.Type.Should().Be(WageType.LegacyWeekly);
+            dest.Wage.Type.Should().Be(WageType.LegacyWeekly);
         }
 
         [Ignore("This is no longer used and relevant code will be deleted in forthcoming sprint.")]
@@ -456,7 +456,7 @@
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.WageObject.Type.Should().Be(WageType.LegacyText);
+            dest.Wage.Type.Should().Be(WageType.LegacyText);
         }
 
         [Ignore("This is no longer used and relevant code will be deleted in forthcoming sprint.")]

@@ -36,7 +36,7 @@
                 PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
                 //TODO: Where should this come from?
                 InterviewFromDate = DateTime.MinValue,
-                WageObject = vacancy.Wage,
+                Wage = vacancy.Wage,
                 WorkingWeek = vacancy.WorkingWeek,
                 OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
