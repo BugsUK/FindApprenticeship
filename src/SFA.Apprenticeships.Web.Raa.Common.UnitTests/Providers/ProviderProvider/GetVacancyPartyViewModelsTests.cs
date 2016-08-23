@@ -61,7 +61,7 @@
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
 
             MockEmployerService.Setup(mock => mock
-                .GetEmployers(It.Is(matchingEmployerIds)))
+                .GetEmployers(It.Is(matchingEmployerIds), It.IsAny<bool>()))
                 .Returns(employers);
 
             var provider = GetProviderProvider();
@@ -114,7 +114,7 @@
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
 
             MockEmployerService.Setup(mock => mock
-                .GetEmployers(It.Is(matchingEmployerIds)))
+                .GetEmployers(It.Is(matchingEmployerIds), It.IsAny<bool>()))
                 .Returns(employers);
 
             var provider = GetProviderProvider();

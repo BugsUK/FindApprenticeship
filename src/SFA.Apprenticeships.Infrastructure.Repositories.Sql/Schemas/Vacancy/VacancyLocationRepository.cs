@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common;
+    using dbo;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
 
     using SFA.Apprenticeships.Application.Interfaces;
@@ -44,14 +46,22 @@
 
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
         {
-            // TODO: Handle >2000 records - Shoma
-            return _getOpenConnection.Query<VacancyLocation>(@"
-                        SELECT *
-                        FROM   dbo.VacancyLocation
-                        WHERE  VacancyId IN @Ids",
-                        new { Ids = vacancyIds })
-                                    .GroupBy(x => x.VacancyId)
-            .ToDictionary(x => x.Key, x => (IEnumerable<VacancyLocation>)x);
+            var vacancyLocations = new Dictionary<int, IEnumerable<VacancyLocation>>();
+
+            var splitVacancyIds = DbHelpers.SplitIds(vacancyIds);
+            foreach (var vacanciesIds in splitVacancyIds)
+            {
+                var splitVacancyLocations =
+                    _getOpenConnection.Query<VacancyLocation>(
+                        @"SELECT * FROM dbo.VacancyLocation WHERE  VacancyId IN @Ids", new {Ids = vacanciesIds})
+                        .GroupBy(x => x.VacancyId);
+                foreach (var splitVacancyLocation in splitVacancyLocations)
+                {
+                    vacancyLocations[splitVacancyLocation.Key] = splitVacancyLocation;
+                }
+            }
+
+            return vacancyLocations;
         }
 
         public List<VacancyLocation> Save(List<VacancyLocation> locationAddresses)
