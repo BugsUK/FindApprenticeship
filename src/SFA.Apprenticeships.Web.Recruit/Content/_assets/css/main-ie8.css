@@ -6422,6 +6422,9 @@ h2 a i.raa-icon-comment {
   margin-bottom: 15px;
   display: block; }
 
+.delete-vacancy-link {
+  margin-left: 10px; }
+
 .applicant-location,
 .applicant-distance {
   display: block; }

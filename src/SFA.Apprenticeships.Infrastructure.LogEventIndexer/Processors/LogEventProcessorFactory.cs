@@ -4,6 +4,8 @@
     using Microsoft.ServiceBus.Messaging;
     using Services;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class LogEventProcessorFactory : IEventProcessorFactory
     {
         private readonly ILogService _logService;

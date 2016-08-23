@@ -10,6 +10,8 @@
     using SFA.Infrastructure.Interfaces;
     using System.Threading.Tasks;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     // TODO: Move SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common back into its own project so that the false dependencies on
     // SFA.Apprenticeships.Avms.Domain.Entities and SFA.Apprenticeships.Domain.Interfaces can be removed.
 

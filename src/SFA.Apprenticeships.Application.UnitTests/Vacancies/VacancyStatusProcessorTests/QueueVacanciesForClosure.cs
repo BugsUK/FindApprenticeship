@@ -13,6 +13,8 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     public class QueueVacanciesForClosure
     {

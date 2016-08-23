@@ -13,6 +13,8 @@
     using Common.Attributes;
     using Common.Constants;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class LocationController : Controller
     {
         private readonly int _locationResultLimit;

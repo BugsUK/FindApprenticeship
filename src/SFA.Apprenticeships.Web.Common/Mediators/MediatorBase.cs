@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Web.Common.Mediators
 
     public abstract class MediatorBase
     {
+        // TODO replace with one constructor : http://c2.com/cgi/wiki?HighlanderPrinciple
         protected static MediatorResponse GetMediatorResponse(string code, ValidationResult validationResult = null, object parameters = null)
         {
             var response = new MediatorResponse
@@ -37,14 +38,15 @@ namespace SFA.Apprenticeships.Web.Common.Mediators
             return response;
         }
 
-        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel = default(T), ValidationResult validationResult = null, object parameters = null)
+        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel = default(T), ValidationResult validationResult = null, object parameters = null, MediatorResponseMessage message = null)
         {
             var response = new MediatorResponse<T>
             {
                 Code = code,
                 ViewModel = viewModel,
                 ValidationResult = validationResult,
-                Parameters = parameters
+                Parameters = parameters,
+                Message = message
             };
 
             return response;

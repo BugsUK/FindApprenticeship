@@ -10,9 +10,9 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Candidates;
     using Interfaces.Communications;
-    using Infrastructure.Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
     using Strategies;

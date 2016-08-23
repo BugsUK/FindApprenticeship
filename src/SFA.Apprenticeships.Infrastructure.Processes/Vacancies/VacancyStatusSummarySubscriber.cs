@@ -3,10 +3,13 @@
     using Application.Applications;
     using Application.Applications.Entities;
     using Configuration;
-    using SFA.Infrastructure.Interfaces.Caching;
+
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Extensions;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
 
     public class VacancyStatusSummarySubscriber : IServiceBusSubscriber<VacancyStatusSummary>
     {

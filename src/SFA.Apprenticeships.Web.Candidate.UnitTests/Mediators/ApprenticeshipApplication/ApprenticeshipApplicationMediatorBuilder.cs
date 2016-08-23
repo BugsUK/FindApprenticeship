@@ -8,6 +8,8 @@
     using SFA.Infrastructure.Interfaces;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApprenticeshipApplicationMediatorBuilder
     {
         private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProvider;

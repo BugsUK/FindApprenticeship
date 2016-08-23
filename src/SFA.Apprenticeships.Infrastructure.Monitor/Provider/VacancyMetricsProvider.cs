@@ -4,6 +4,8 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class VacancyMetricsProvider : IVacancyMetricsProvider
     {
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;

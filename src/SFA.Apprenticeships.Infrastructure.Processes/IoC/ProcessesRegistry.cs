@@ -37,6 +37,9 @@
     using Domain.Interfaces.Repositories;
     using Logging.IoC;
     using Repositories.Mongo.Audit;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using SiteMap;
     using StructureMap;
     using StructureMap.Configuration.DSL;

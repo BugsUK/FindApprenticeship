@@ -6,6 +6,9 @@
     using FluentAssertions;
     using Logging.IoC;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
 
     [TestFixture]

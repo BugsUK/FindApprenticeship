@@ -3,6 +3,8 @@
     using System.Data;
     using Application.Location;
     using Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class LocalAuthorityLookupProvider : ILocalAuthorityLookupProvider

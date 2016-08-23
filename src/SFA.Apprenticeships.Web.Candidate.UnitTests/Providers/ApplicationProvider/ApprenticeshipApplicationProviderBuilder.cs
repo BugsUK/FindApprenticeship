@@ -9,6 +9,8 @@
     using Common.Providers;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     internal class ApprenticeshipApplicationProviderBuilder
     {
         private Mock<IApprenticeshipVacancyProvider> _apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();

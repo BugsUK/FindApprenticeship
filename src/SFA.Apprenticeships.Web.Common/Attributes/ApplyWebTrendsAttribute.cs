@@ -4,6 +4,8 @@
     using SFA.Infrastructure.Interfaces;
     using Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApplyWebTrendsAttribute : ActionFilterAttribute
     {
         public IConfigurationService ConfigurationService { get; set; }

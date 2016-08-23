@@ -8,6 +8,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
     using Apprenticeships.Application.Candidates.Configuration;
     using Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class HardDeleteStrategyBuilder
     {
         private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();

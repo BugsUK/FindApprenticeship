@@ -1,0 +1,30 @@
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.DeleteVacancyViewModel
+@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
+@using SFA.Apprenticeships.Web.Recruit.Constants
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Delete a draft vacancy";
+    var vacancyTitle = string.IsNullOrEmpty(Model.VacancyTitle) ? "(No Title)" : Model.VacancyTitle;
+}
+
+<h1 class="heading-xlarge">
+    Delete @vacancyTitle vacancy
+</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post))
+{
+    <div>
+        <p>You will not be able to retreive this vacancy once it has been deleted</p>
+        <div class="grid grid-1-1">
+            @foreach (var prop in Model.GetType().GetProperties())
+            {
+                var getter = prop.GetGetMethod();
+                @Html.Hidden(prop.Name, getter.Invoke(Model, new object[] { }))
+                ;
+            }
+            <button class="button" id="confirmDeleteVacancy" name="ConfirmDeleteVacancy" value="ConfirmDeleteVacancy">Confirm and return to recruitment home</button>
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel)
+        </div>
+    </div>
+}

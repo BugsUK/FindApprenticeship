@@ -17,6 +17,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Extensions;
     using FluentValidation.Mvc;
     using Mediators.Search;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.VacancySearch;
 
     [UserJourneyContext(UserJourney.Apprenticeship, Order = 2)]

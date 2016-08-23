@@ -2,11 +2,14 @@
 {
     using System;
     using SFA.Infrastructure.Interfaces;
-    using SFA.Infrastructure.Interfaces.Caching;
+
     using FluentAssertions;
     using Infrastructure.Caching.Memory;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
 
     [TestFixture]
     public class MemoryCachingTests

@@ -7,6 +7,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
     using Manage.Mediators.AgencyUser;
     using Manage.Providers;
     using Moq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class AgencyUserMediatorBuilder

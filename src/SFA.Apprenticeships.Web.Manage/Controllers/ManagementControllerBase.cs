@@ -5,6 +5,8 @@
     using Common.Constants;
     using Constants;
     using Raa.Common.ViewModels.Vacancy;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [CookiesEnabled,

@@ -8,6 +8,8 @@
     using Domain.Entities.Raa.Locations;
     using Entities;
     using Rest;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class PostalAddressDetailsService : RestService, IPostalAddressDetailsService

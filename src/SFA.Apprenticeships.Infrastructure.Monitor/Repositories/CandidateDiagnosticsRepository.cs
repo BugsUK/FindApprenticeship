@@ -11,6 +11,8 @@
     using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CandidateDiagnosticsRepository : GenericMongoClient<MongoCandidate>, ICandidateDiagnosticsRepository
     {
         private readonly ILogService _logger;

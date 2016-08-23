@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using Application.Interfaces.Communications;
     using Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class SmsPasswordChangedMessageFormatter : SmsMessageFormatter

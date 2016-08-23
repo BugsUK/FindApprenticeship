@@ -10,6 +10,8 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate
     using SFA.Infrastructure.Interfaces;
     using Logging;
     using Data.Migrate;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common;
 
     public class WorkerRole : RoleEntryPoint

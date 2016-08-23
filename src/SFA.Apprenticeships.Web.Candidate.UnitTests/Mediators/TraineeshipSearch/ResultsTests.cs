@@ -17,6 +17,8 @@
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     [Parallelizable]
     public class ResultsTests : TestsBase

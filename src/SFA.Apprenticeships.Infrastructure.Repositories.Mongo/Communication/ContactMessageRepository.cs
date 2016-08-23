@@ -4,6 +4,8 @@
     using Domain.Entities.Communication;
     using Domain.Interfaces.Repositories;
     using Mongo.Communication.Entities;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class ContactMessageRepository : CommunicationRepository<ContactMessage>, IContactMessageRepository

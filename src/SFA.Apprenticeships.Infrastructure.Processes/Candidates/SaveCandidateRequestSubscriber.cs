@@ -7,6 +7,8 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SaveCandidateRequestSubscriber : IServiceBusSubscriber<SaveCandidateRequest>
     {
         private readonly ILogService _logService;

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;

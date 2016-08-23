@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Application.Interfaces;
     using Entities;
     using Entities.Mongo;
     using Infrastructure.Repositories.Sql.Common;
@@ -11,7 +12,6 @@
     using MongoDB.Driver;
     using Repository.Mongo;
     using Repository.Sql;
-    using SFA.Infrastructure.Interfaces;
 
     public class VacancyApplicationsMigrationProcessor : IMigrationProcessor
     {

@@ -10,6 +10,8 @@
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class SavedSearchAlertRepository : CommunicationRepository<SavedSearchAlert>, ISavedSearchAlertRepository

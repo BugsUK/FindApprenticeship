@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
     using System;
-    using Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Communications;
     using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 

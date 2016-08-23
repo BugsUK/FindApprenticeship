@@ -7,6 +7,8 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class Controller
     {
         private ILogService _log;

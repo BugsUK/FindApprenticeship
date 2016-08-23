@@ -1,4 +1,4 @@
-﻿namespace SFA.Infrastructure.Interfaces
+﻿namespace SFA.Apprenticeships.Application.Interfaces
 {
     public interface IMapper
     {

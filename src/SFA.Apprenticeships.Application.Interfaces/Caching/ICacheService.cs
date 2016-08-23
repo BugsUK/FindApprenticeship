@@ -1,4 +1,4 @@
-﻿namespace SFA.Infrastructure.Interfaces.Caching
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Caching
 {
     using System;
 

@@ -25,6 +25,7 @@
     using System.IO;
     using System.Linq;
     using System.Web.Mvc;
+    using Application.Interfaces;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -725,7 +726,7 @@
                 .SelectMany(a => a)
                 .Where(
                     v => (v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown)
-                         && v.Status != VacancyStatus.Withdrawn);
+                         && v.Status != VacancyStatus.Withdrawn && v.Status != VacancyStatus.Deleted);
 
             var hasVacancies = minimalVacancyDetails.Any();
 
@@ -861,8 +862,6 @@
                     throw new ArgumentException($"{vacanciesSummaryFilterType}");
             }
         }
-
-
 
         public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)
         {

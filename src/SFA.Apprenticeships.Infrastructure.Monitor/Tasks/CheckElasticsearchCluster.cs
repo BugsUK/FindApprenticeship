@@ -6,6 +6,8 @@
     using Elasticsearch.Net;
     using Nest;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     internal class CheckElasticsearchCluster : IMonitorTask
     {
         private readonly ILogService _logger;

@@ -4,7 +4,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
-    using Infrastructure.Interfaces;
+    using Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;

@@ -6,6 +6,8 @@
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SavedSearchControlQueueConsumer: AzureControlQueueConsumer
     {
         private readonly ILogService _logger;

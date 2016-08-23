@@ -2,7 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Infrastructure.Interfaces.Caching;
+
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
 
     public class SiteMapVacancyProvider : ISiteMapVacancyProvider
     {

@@ -5,7 +5,8 @@
     using Applications;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class LegacyGetCandidateApprenticeshipApplicationsStrategy : IGetCandidateApprenticeshipApplicationsStrategy
     {

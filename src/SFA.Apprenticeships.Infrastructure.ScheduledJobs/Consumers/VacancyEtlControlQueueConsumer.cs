@@ -7,6 +7,9 @@
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
     using Elastic.Common.Entities;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using VacancyIndexer;
 
     public class VacancyEtlControlQueueConsumer : AzureControlQueueConsumer

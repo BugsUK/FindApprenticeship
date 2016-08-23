@@ -13,6 +13,9 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Mappers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Account;
     using ErrorCodes = Application.Interfaces.Users.ErrorCodes;
 

@@ -4,6 +4,9 @@
     using Application.Vacancies.Entities;
     using Elastic.Common.Entities;
     using Mappers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap.Configuration.DSL;
 
     public class VacancyIndexerRegistry : Registry

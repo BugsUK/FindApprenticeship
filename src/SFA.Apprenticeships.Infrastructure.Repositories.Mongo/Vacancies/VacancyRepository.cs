@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Application.Interfaces;
     using Common;
     using Common.Configuration;
     using Domain.Entities.Raa.Vacancies;
@@ -59,6 +60,11 @@
             var mongoEntity = Collection.FindOne(Query<Vacancy>.EQ(v => v.VacancyGuid, vacancyGuid));
 
             return mongoEntity == null ? null : _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
+        }
+
+        public VacancySummary GetById(int vacancyId)
+        {
+            throw new NotImplementedException();
         }
 
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)

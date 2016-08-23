@@ -1,10 +1,10 @@
 namespace SFA.Apprenticeships.Data.Migrate.Faa.Repository.Mongo
 {
     using System;
+    using Application.Interfaces;
     using Entities.Mongo;
     using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Driver;
-    using SFA.Infrastructure.Interfaces;
 
     public class UpdateVacancyApplicationsRepository
     {

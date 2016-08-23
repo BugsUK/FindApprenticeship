@@ -3,8 +3,9 @@
     using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Communications;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SendAccountRemindersStrategy : HousekeepingStrategy
     {

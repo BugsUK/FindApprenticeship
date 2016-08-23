@@ -8,6 +8,8 @@
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class HousekeepingControlQueueConsumer : AzureControlQueueConsumer
     {
         private readonly ICandidateProcessor _candidateProcessor;

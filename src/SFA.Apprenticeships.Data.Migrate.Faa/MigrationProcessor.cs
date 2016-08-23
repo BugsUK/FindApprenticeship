@@ -7,6 +7,8 @@
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
     using Repository.Sql;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class MigrationProcessor

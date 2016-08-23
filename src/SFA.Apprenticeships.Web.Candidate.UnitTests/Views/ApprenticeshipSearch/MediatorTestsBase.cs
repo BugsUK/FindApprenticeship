@@ -12,6 +12,8 @@
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public abstract class MediatorTestsBase : ViewUnitTest
     {
         protected Mock<ICandidateServiceProvider> CandidateServiceProvider;

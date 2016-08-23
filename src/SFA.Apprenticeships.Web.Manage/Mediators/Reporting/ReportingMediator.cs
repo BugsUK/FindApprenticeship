@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Application.Interfaces;
     using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;

@@ -9,6 +9,8 @@
     using Raa.Common.ViewModels.Application;
     using Recruit.Mappers;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     [Parallelizable]
     public class RecruitMappersTests

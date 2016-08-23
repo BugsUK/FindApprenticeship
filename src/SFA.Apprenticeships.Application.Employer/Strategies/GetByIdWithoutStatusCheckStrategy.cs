@@ -2,7 +2,8 @@
 {
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
+
 
     //TODO: temporary clas. Remove after moving status checks to a higher tier
     public class GetByIdWithoutStatusCheckStrategy : IGetByIdWithoutStatusCheckStrategy

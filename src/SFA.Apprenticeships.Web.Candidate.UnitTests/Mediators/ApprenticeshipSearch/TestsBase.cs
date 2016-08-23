@@ -10,6 +10,8 @@
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public abstract class TestsBase
     {
         protected static IApprenticeshipSearchMediator GetMediator(IConfigurationService configurationService, ISearchProvider searchProvider, ICandidateServiceProvider candidateServiceProvider, IUserDataProvider userDataProvider, IReferenceDataService referenceDataService, IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)

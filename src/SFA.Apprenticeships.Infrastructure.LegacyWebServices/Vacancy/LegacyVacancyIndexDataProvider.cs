@@ -10,6 +10,9 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using GatewayServiceProxy;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Wcf;
 
     public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider
@@ -47,7 +50,7 @@
             catch (BoundaryException e)
             {
                 _logger.Error(e);
-                throw new DomainException(ErrorCodes.GetVacancySummariesServiceFailed, e);
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetVacancySummariesServiceFailed, e);
             }
             catch (Exception e)
             {
@@ -79,7 +82,7 @@
             catch (BoundaryException e)
             {
                 _logger.Error(e, context);
-                throw new DomainException(ErrorCodes.GetVacancySummariesServiceFailed, e, context);
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetVacancySummariesServiceFailed, e, context);
             }
             catch (Exception e)
             {
@@ -103,7 +106,7 @@
 
             if (response == null)
             {
-                throw new DomainException(ErrorCodes.GetVacancySummariesServiceFailed, new { pageNumber = request.PageNumber });
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetVacancySummariesServiceFailed, new { pageNumber = request.PageNumber });
             }
 
             return response.TotalPages;
@@ -122,7 +125,7 @@
 
             if (response == null)
             {
-                throw new DomainException(ErrorCodes.GetVacancySummariesServiceFailed, new { pageNumber });
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetVacancySummariesServiceFailed, new { pageNumber });
             }
 
             var apprenticeshipTypes = new[]

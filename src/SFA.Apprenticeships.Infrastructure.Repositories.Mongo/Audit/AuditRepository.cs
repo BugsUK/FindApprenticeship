@@ -5,6 +5,8 @@
     using Entities;
     using Common.Configuration;
     using MongoDB.Driver;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class AuditRepository : IAuditRepository

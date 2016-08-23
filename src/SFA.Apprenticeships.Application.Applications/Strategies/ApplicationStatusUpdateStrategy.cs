@@ -4,7 +4,7 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Extensions;
-    using Infrastructure.Interfaces;
+    using Interfaces;
 
     public class ApplicationStatusUpdateStrategy : IApplicationStatusUpdateStrategy
     {

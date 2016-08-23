@@ -5,6 +5,8 @@
     using Microsoft.ServiceBus;
     using Microsoft.ServiceBus.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AzureServiceBusInitialiser : IServiceBusInitialiser
     {
         private readonly ILogService _logService;
