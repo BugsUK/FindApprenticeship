@@ -9,6 +9,7 @@
     using FluentValidation.Attributes;
     using Infrastructure.Presentation;
     using Validators.Vacancy;
+    using Web.Common.ViewModels;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [Validator(typeof(VacancySummaryViewModelClientValidator))]
@@ -27,6 +28,8 @@
         [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; set; }
         
+        public WageViewModel WageObject { get; set; }
+
         //TODO: Probably create dedicated WageViewModel
         public WageType WageType { get; set; }
 

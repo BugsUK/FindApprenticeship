@@ -3,6 +3,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
     using AutoMapper;
     using Domain.Entities.Raa.Vacancies;
     using ViewModels.Vacancy;
+    using Web.Common.ViewModels;
 
     internal sealed class VacancyToFurtherVacancyDetailsViewModelConverter : ITypeConverter<Vacancy, FurtherVacancyDetailsViewModel>
     {
@@ -20,6 +21,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 LongDescription = source.LongDescription,
                 LongDescriptionComment = source.LongDescriptionComment,
                 VacancyReferenceNumber = source.VacancyReferenceNumber,
+                WageObject = new WageViewModel(source.Wage),
                 Wage = source.Wage.Amount,
                 WageComment = source.WageComment,
                 WageType = source.Wage.Type,
