@@ -5,6 +5,7 @@
 
     public class CandidateSummary : BaseEntity
     {
+        public int LegacyCandidateId { get; set; }
         public string FirstName { get; set; }
         public string MiddleNames { get; set; }
         public string LastName { get; set; }

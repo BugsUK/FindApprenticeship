@@ -731,7 +731,7 @@
             var hasVacancies = minimalVacancyDetails.Any();
 
             // Unfortunately (from a performance / load / scalability perspective), the view includes application counts for every vacancy, including those completed months/years ago
-            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()).Select(a => a.VacancyId);
+            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs() && v.Status != VacancyStatus.Completed).Select(a => a.VacancyId);
             //var vacanciesToCountNewApplicationsFor = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus.CanHaveApplicationsOrClickThroughs() && v.VacancyStatus != VacancyStatus.Completed).Select(a => a.VacancyId);
 
             var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);

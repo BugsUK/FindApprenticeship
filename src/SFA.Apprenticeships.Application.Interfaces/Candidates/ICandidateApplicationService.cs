@@ -8,6 +8,7 @@
     public interface ICandidateApplicationService
     {
         Candidate GetCandidate(Guid candidateId);
+        IList<CandidateSummary> GetCandidateSummaries(IEnumerable<Guid> candidateIds);
         IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
         IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId);
     }

@@ -105,7 +105,8 @@
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
             For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
-            
+            For<IGetCandidateSummariesStrategy>().Use<GetCandidateSummariesStrategy>();
+
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
             For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();

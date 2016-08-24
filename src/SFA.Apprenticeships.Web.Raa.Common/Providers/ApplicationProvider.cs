@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Security;
@@ -26,6 +26,7 @@
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
+        private readonly ICandidateApplicationService _candidateApplicationService;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
         private readonly IMapper _mapper;
@@ -33,12 +34,13 @@
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
 
-        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IProviderService providerService, IEmployerService employerService, IMapper mapper, ILogService logService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
+        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, ICandidateApplicationService candidateApplicationService, IProviderService providerService, IEmployerService employerService, IMapper mapper, ILogService logService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
         {
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
+            _candidateApplicationService = candidateApplicationService;
             _providerService = providerService;
             _employerService = employerService;
             _mapper = mapper;
@@ -124,11 +126,18 @@
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
             };
 
+            var candidateSummaries = _candidateApplicationService.GetCandidateSummaries(viewModel.ApplicationSummaries.Page.Select(@as => @as.CandidateId));
             foreach (var application in viewModel.ApplicationSummaries.Page)
             {
                 application.AnonymousLinkData =
                     _encryptionService.Encrypt(new AnonymisedApplicationLink(application.ApplicationId,
                         _dateTimeService.TwoWeeksFromUtcNow));
+                var candidateSummary = candidateSummaries.FirstOrDefault(cs => cs.EntityId == application.CandidateId);
+                if (candidateSummary != null && candidateSummary.LegacyCandidateId != 0)
+                {
+                    var legacyCandidateReference = candidateSummary.LegacyCandidateId.ToString("0###-###-###").Substring(1, 11);
+                    application.ApplicantID = $"{application.ApplicantID} ({legacyCandidateReference})";
+                }
             }
 
             return viewModel;
