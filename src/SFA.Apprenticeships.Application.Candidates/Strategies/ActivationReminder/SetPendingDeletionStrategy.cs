@@ -8,6 +8,7 @@
 
     public class SetPendingDeletionStrategy : HousekeepingStrategy
     {
+        //private readonly ISetCandidateDeletionPendingStrategy
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IAuditRepository _auditRepository;
         private readonly ILogService _logService;

@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
+    using Application.Application;
+    using Application.Application.Entities;
+    using Domain.Entities.Candidates;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Applications;
-    using Application.Applications.Entities;
-    using Domain.Entities.Candidates;
 
     public class NullApplicationStatusesProvider : ILegacyApplicationStatusesProvider
     {

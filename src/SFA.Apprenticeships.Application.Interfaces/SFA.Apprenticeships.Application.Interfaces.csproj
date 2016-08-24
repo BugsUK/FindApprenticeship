@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="Applications\ErrorCodes.cs" />
     <Compile Include="Applications\ICommonApplicationService.cs" />
+    <Compile Include="AuditEventTypes.cs" />
     <Compile Include="Service\IServiceResult.cs" />
     <Compile Include="Service\IServiceResult{T}.cs" />
     <Compile Include="Applications\ITraineeshipApplicationService.cs" />

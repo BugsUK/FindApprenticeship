@@ -102,7 +102,9 @@
     <Compile Include="Strategies\Candidates\GetCandidateSummariesStrategy.cs" />
     <Compile Include="Strategies\Candidates\IGetCandidateSummariesStrategy.cs" />
     <Compile Include="Strategies\Candidates\ISearchCandidatesStrategy.cs" />
+    <Compile Include="Strategies\Candidates\ISetUserStatusPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\Candidates\SearchCandidatesStrategy.cs" />
+    <Compile Include="Strategies\Candidates\SetUserStatusPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\GetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="SaveCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\GetCandidateApprenticeshipApplicationsStrategy.cs" />
@@ -181,13 +183,9 @@
     <Compile Include="SubmitTraineeshipApplicationRequest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
-      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
-      <Name>SFA.Apprenticeships.Application.Applications</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj">
-      <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>
-      <Name>SFA.Apprenticeships.Application.Candidates</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7d29ed20-ff3d-4fbb-b253-a44de1e42bcc}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>

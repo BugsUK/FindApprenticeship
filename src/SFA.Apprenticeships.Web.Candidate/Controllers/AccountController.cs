@@ -112,41 +112,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             });
         }
 
-        //[AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        //[SessionTimeout]
-        //public async Task<ActionResult> ConfirmAccountSettings()
-        //{
-        //    return await Task.Run<ActionResult>(() =>
-        //    {
-        //        SettingsViewModel settingsViewModel = new SettingsViewModel();
-        //        if (ViewData["userInfo"] != null)
-        //        {
-        //            settingsViewModel = (SettingsViewModel)ViewData["userInfo"];
-        //        }
-        //        DeleteAccountSettingsViewModel deleteAccountSettingsViewModel = new DeleteAccountSettingsViewModel()
-        //        {
-        //            EmailAddress = settingsViewModel.EmailAddress,
-        //            Password = settingsViewModel.Password
-        //        };
-        //        var response = _accountMediator.VerifyAccountSettings(UserContext.CandidateId, deleteAccountSettingsViewModel);
-        //        ModelState.Clear();
-
-        //        switch (response.Code)
-        //        {
-        //            case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
-        //                response.ValidationResult.AddToModelState(ModelState, string.Empty);
-        //                return View("Settings", settingsViewModel);
-        //            case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
-        //                SetUserMessage(response.Message.Text, response.Message.Level);
-        //                return View("Settings", settingsViewModel);
-        //            case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
-        //                return View("ConfirmAccountDeletion", settingsViewModel);
-        //            default:
-        //                throw new InvalidMediatorCodeException(response.Code);
-        //        }
-        //    });
-        //}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -185,13 +150,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         throw new InvalidMediatorCodeException(response.Code);
                 }
             });
-        }
-
-        private ViewResult SetDeletionPendingOfAccount(SettingsViewModel model)
-        {
-            var verifyResponse = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
-            ModelState.Clear();
-            return new ViewResult();
         }
 
         private ViewResult ConfirmValidityOfAccount(SettingsViewModel model)

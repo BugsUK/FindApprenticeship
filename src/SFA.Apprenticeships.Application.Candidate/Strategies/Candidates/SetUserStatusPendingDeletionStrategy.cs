@@ -1,6 +1,5 @@
-﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Candidates
 {
-    using Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces;

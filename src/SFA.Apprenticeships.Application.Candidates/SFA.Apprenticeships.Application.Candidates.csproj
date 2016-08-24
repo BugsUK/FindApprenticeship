@@ -82,7 +82,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AuditEventTypes.cs" />
     <Compile Include="CandidateProcessor.cs" />
     <Compile Include="Configuration\HousekeepingConfiguration.cs" />
     <Compile Include="Entities\CandidateHousekeeping.cs" />
@@ -99,14 +98,18 @@
     <Compile Include="Strategies\HousekeepingStrategy.cs" />
     <Compile Include="Strategies\IHousekeepingStrategy.cs" />
     <Compile Include="Strategies\ActivationReminder\SendAccountRemindersStrategy.cs" />
-    <Compile Include="Strategies\ISetCandidateDeletionPendingStrategy.cs" />
+    <Compile Include="Strategies\ISetUserStatusPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\MobileVerificationCodeReminderHousekeeping.cs" />
     <Compile Include="Strategies\SendMobileVerificationCodeReminderStrategy.cs" />
     <Compile Include="Strategies\ActivationReminder\SetPendingDeletionStrategy.cs" />
-    <Compile Include="Strategies\SetCandidateDeletionPendingStrategy.cs" />
+    <Compile Include="Strategies\SetUserStatusPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\TerminatingHousekeepingStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
+      <Project>{984f8cd2-61b3-48a4-b0cc-5d05e235983d}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

@@ -1,19 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Applications
 {
-    using System;
-    using System.Linq;
+    using Apprenticeships.Application.Application;
+    using Apprenticeships.Application.Application.Entities;
+    using Apprenticeships.Application.Application.Strategies;
     using Apprenticeships.Application.Applications;
     using Apprenticeships.Application.Applications.Entities;
-    using Apprenticeships.Application.Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
-
     using SFA.Apprenticeships.Application.Interfaces;
+    using System;
+    using System.Linq;
 
     [TestFixture]
     public class ApplicationStatusProcessorTests

@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Applications
 {
-    using System;
+    using Application.Strategies;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
+    using System;
 
     public class ApplicationVacancyUpdater : IApplicationVacancyUpdater
     {
@@ -46,7 +47,7 @@
 
                 if (updated)
                 {
-                    _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);                    
+                    _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
                 }
             }
             else

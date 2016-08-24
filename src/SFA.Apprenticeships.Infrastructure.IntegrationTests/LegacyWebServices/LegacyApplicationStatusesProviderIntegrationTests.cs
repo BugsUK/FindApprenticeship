@@ -1,12 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.LegacyWebServices
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
-    using Application.Applications;
-    using Application.Applications.Entities;
+    using Application.Application;
+    using Application.Application.Entities;
     using Application.Candidate;
+    using Application.Candidate.Configuration;
     using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Applications;
@@ -16,14 +13,15 @@
     using Helpers;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Monitor.IoC;
-    using Repositories.Mongo.Applications.IoC;
     using Logging.IoC;
     using Moq;
     using NUnit.Framework;
-
-    using Application.Candidate.Configuration;
-
+    using Repositories.Mongo.Applications.IoC;
     using StructureMap;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
 
     [TestFixture]
     public class LegacyApplicationStatusesProviderIntegrationTests
@@ -94,7 +92,7 @@
                     break;
                 Thread.Sleep(1000);
             }
-            
+
             // Assert.
             statuses.Should().NotBeNull();
             statuses.Count().Should().Be(1);

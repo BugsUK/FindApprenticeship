@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Candidates
 {
     using Domain.Entities.Users;
 

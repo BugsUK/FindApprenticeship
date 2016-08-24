@@ -85,6 +85,19 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ApplicationStatusChanged.cs" />
+    <Compile Include="Entities\ApplicationStatusSummary.cs" />
+    <Compile Include="Entities\VacancyStatusSummary.cs" />
+    <Compile Include="Extensions\ApplicationStatusSummaryExtensions.cs" />
+    <Compile Include="Extensions\ApprenticeshipApplicationDetailExtension.cs" />
+    <Compile Include="Extensions\TraineeshipApplicationDetailExtension.cs" />
+    <Compile Include="ILegacyApplicationStatusesProvider.cs" />
+    <Compile Include="Strategies\ApplicationStatusAlertStrategy.cs" />
+    <Compile Include="Strategies\ApplicationStatusUpdateStrategy.cs" />
+    <Compile Include="Strategies\IApplicationStatusAlertStrategy.cs" />
+    <Compile Include="Strategies\IApplicationStatusUpdater.cs" />
+    <Compile Include="Strategies\IApplicationStatusUpdateStrategy.cs" />
+    <Compile Include="Strategies\IApplicationVacancyUpdater.cs" />
     <Compile Include="Strategies\Traineeships\GetApplicationForReviewStrategy.cs" />
     <Compile Include="Strategies\Traineeships\IGetApplicationForReviewStrategy.cs" />
     <Compile Include="Strategies\Traineeships\IUpdateApplicationNotesStrategy.cs" />
@@ -99,10 +112,6 @@
     <Compile Include="Strategies\Apprenticeships\UpdateApplicationNotesStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
-      <Project>{f5f29922-2fbc-4bf4-9cbb-424a71fd98c1}</Project>
-      <Name>SFA.Apprenticeships.Application.Applications</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

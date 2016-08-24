@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
-    using Application.Applications;
+    using Application.Application;
     using Application.Candidate.Configuration;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
@@ -19,7 +19,6 @@
 
     using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Application.Interfaces.Caching;
-    using SFA.Infrastructure.Interfaces;
 
     using StructureMap.Configuration.DSL;
 
@@ -65,7 +64,7 @@
                 For<IMapper>().Use<LegacyTraineeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyTraineeshipVacancyDetailMapper";
             }
 
-            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy 
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy
                 || servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
             {
                 For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
@@ -147,6 +146,6 @@
             }
 
             //--
-        }     
+        }
     }
 }

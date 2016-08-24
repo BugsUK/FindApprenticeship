@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.Tasks
 {
-    using System.Linq;
-    using Application.Applications;
+    using Application.Application;
     using Application.Candidate;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Monitor.Tasks;
     using Repository;
-
     using SFA.Apprenticeships.Application.Interfaces;
+    using System.Linq;
 
     public class CheckUnsetTraineeshipApplicationLegacyId : IMonitorTask
     {

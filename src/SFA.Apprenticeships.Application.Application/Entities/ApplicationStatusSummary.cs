@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Application.Applications.Entities
+﻿namespace SFA.Apprenticeships.Application.Application.Entities
 {
-    using System;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
+    using System;
 
     public class ApplicationStatusSummary
     {
@@ -19,7 +19,7 @@
         public int LegacyCandidateId { get; set; }
 
         public ApplicationStatuses ApplicationStatus { get; set; }
-            
+
         public int LegacyVacancyId { get; set; }
 
         public VacancyStatuses VacancyStatus { get; set; }

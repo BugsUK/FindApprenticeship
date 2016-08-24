@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
+    using Application.Application.Strategies;
     using Application.Applications;
-    using Application.Applications.Strategies;
     using Application.Authentication;
     using Application.Candidate;
     using Application.Candidate.Configuration;

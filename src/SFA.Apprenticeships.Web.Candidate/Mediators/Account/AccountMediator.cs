@@ -192,13 +192,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 
         public MediatorResponse<SettingsViewModel> SetAccountStatusToDelete(Guid candidateId)
         {
-            //var validationResult = _settingsViewModelServerValidator.Validate(settingsViewModel);
-
-            //if (!validationResult.IsValid)
-            //{
-            //    return GetMediatorResponse(AccountMediatorCodes.Settings.ValidationError, settingsViewModel, validationResult);
-            //}
-
             Candidate candidate;
             var deleted = _accountProvider.SetUserAccountDeletionPending(candidateId, out candidate);
 
