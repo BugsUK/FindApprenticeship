@@ -4,13 +4,13 @@
 @model ApprenticeshipVacancyDetailViewModel
 
 <div>
-    <h3 class="bold-small">@Model.WageObject.Unit.GetHeaderDisplayText()</h3>
+    <h3 class="bold-small">@Model.Wage.Unit.GetHeaderDisplayText()</h3>
     <p id="vacancy-wage">
-        @WagePresenter.GetDisplayAmount(Model.WageObject.Type, Model.WageObject.Amount, Model.WageObject.Text, Model.WageObject.Unit, Model.WageObject.HoursPerWeek)
+        @WagePresenter.GetDisplayAmount(Model.Wage.Type, Model.Wage.Amount, Model.Wage.Text, Model.Wage.Unit, Model.Wage.HoursPerWeek)
     </p>
 </div>
 
-@if (Model.WageObject.Type == WageType.ApprenticeshipMinimum)
+@if (Model.Wage.Type == WageType.ApprenticeshipMinimum)
 {
     <details>
         <summary>Wages explained</summary>
@@ -22,7 +22,7 @@
     </details>
 }
 
-@if (Model.WageObject.Type == WageType.NationalMinimum)
+@if (Model.Wage.Type == WageType.NationalMinimum)
 {
     <details>
         <summary>Wages explained</summary>

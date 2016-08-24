@@ -74,7 +74,7 @@ WriteLiteral(">");
 
             
             #line 7 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-                      Write(Model.WageObject.Unit.GetHeaderDisplayText());
+                      Write(Model.Wage.Unit.GetHeaderDisplayText());
 
             
             #line default
@@ -89,7 +89,7 @@ WriteLiteral("        ");
 
             
             #line 9 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-   Write(WagePresenter.GetDisplayAmount(Model.WageObject.Type, Model.WageObject.Amount, Model.WageObject.Text, Model.WageObject.Unit, Model.WageObject.HoursPerWeek));
+   Write(WagePresenter.GetDisplayAmount(Model.Wage.Type, Model.Wage.Amount, Model.Wage.Text, Model.Wage.Unit, Model.Wage.HoursPerWeek));
 
             
             #line default
@@ -98,7 +98,7 @@ WriteLiteral("\r\n    </p>\r\n</div>\r\n\r\n");
 
             
             #line 13 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
- if (Model.WageObject.Type == WageType.ApprenticeshipMinimum)
+ if (Model.Wage.Type == WageType.ApprenticeshipMinimum)
 {
 
             
@@ -135,7 +135,7 @@ WriteLiteral("\r\n");
 
             
             #line 25 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
- if (Model.WageObject.Type == WageType.NationalMinimum)
+ if (Model.Wage.Type == WageType.NationalMinimum)
 {
 
             

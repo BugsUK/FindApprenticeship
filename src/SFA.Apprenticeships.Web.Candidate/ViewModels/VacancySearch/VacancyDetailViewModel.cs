@@ -59,7 +59,7 @@
         [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
 
-        public WageViewModel WageObject { get; set; }
+        public WageViewModel Wage { get; set; }
 
         public string WorkingWeek { get; set; }
 
