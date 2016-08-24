@@ -9,13 +9,10 @@
         public const string AnnualWageText = "Annual wage";
         public const string MonthlyWageText = "Monthly wage";
         public const string WeeklyWageText = "Weekly wage";
-
         public const string PerYearText = "per year";
         public const string PerMonthText = "per month";
         public const string PerWeekText = "per week";
-
         public const string UnknownText = "unknown";
-
         private const string WageAmountFormat = "N2";
 
         public static string GetHeaderDisplayText(this WageUnit wageUnit)
@@ -92,6 +89,8 @@
             }
         }
 
+        #region private convenience methods
+
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
         {
             var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
@@ -131,6 +130,8 @@
                     */
             }
         }
+        
+        #endregion
 
     }
 }
