@@ -146,16 +146,23 @@
                 return string.Join("\n", queryStringKeysAndValues);
             } );
 
-            SetLoggingInfo("FormData", () =>
-            {
-                var formData = new List<string>();
+            SetLoggingInfo("FormData", GetFormData);
+        }
 
-                for (var i = 0; i < Request.Form.Count; i++)
-                {
-                    formData.Add($"{Request.Form.GetKey(i)}:{string.Join(",", Request.Form.GetValues(i))}");
-                }
-                return string.Join("\n", formData);
-            });
+        private string GetFormData()
+        {
+            var formData = new List<string>();
+
+            for (var i = 0; i < Request.Unvalidated.Form.Count; i++)
+            {
+                formData.Add($"{Request.Unvalidated.Form.GetKey(i)}:{string.Join(",", EncodeHtmlTags(Request.Unvalidated.Form[i]))}");
+            }
+            return string.Join("\n", formData);
+        }
+
+        private string EncodeHtmlTags(string input)
+        {
+            return input.Replace("</", "(").Replace("<", "(").Replace(">", ")");
         }
 
         private void ClearOneOffLoggingInfo()
