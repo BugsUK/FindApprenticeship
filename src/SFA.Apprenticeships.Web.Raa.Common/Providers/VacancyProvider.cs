@@ -733,7 +733,7 @@
             var hasVacancies = minimalVacancyDetails.Any();
 
             // Unfortunately (from a performance / load / scalability perspective), the view includes application counts for every vacancy, including those completed months/years ago
-            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()).Select(a => a.VacancyId);
+            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs() && v.Status != VacancyStatus.Completed).Select(a => a.VacancyId);
             //var vacanciesToCountNewApplicationsFor = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus.CanHaveApplicationsOrClickThroughs() && v.VacancyStatus != VacancyStatus.Completed).Select(a => a.VacancyId);
 
             var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
@@ -744,7 +744,7 @@
             var filteredVacancies = (IEnumerable<IMinimalVacancyDetails>)Filter(minimalVacancyDetails, vacanciesSummarySearch.FilterType, applicationCountsByVacancyId).ToList();
 
             var vacancyPartyIds = new HashSet<int>(filteredVacancies.Select(v => v.OwnerPartyId));
-            var employers = _employerService.GetMinimalEmployerDetails(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct());
+            var employers = _employerService.GetMinimalEmployerDetails(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct(), false);
             var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
 
             filteredVacancies = filteredVacancies.Select(v =>

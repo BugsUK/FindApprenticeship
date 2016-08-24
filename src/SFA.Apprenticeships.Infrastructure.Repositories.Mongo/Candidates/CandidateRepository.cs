@@ -200,6 +200,19 @@
             return candidates;
         }
 
+        public List<CandidateSummary> GetCandidateSummaries(IEnumerable<Guid> candidateIds)
+        {
+            _logger.Debug("Calling repository to get all candidates matching supplied IDs");
+
+            var candidates = Collection.Find(Query.In("_id", new BsonArray(candidateIds)))
+                .SetFields(GetCandidateSummaryFieldsBuilder())
+                .Select(c => _mapper.Map<MongoCandidate, CandidateSummary>(c)).ToList();
+
+            _logger.Debug($"Found {candidates.Count} candidates matching supplied IDs");
+
+            return candidates;
+        }
+
         public void Delete(Guid id)
         {
             _logger.Debug("Calling repository to delete candidate with Id={0}", id);
@@ -252,6 +265,28 @@
             var entity = _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
 
             return entity;
+        }
+
+        private static FieldsBuilder<MongoCandidate> GetCandidateSummaryFieldsBuilder()
+        {
+            return Fields<MongoCandidate>
+                .Include(c => c.Id)
+                .Include(c => c.DateCreated)
+                .Include(c => c.DateUpdated)
+                .Include(c => c.LegacyCandidateId)
+                .Include(c => c.RegistrationDetails.FirstName)
+                .Include(c => c.RegistrationDetails.MiddleNames)
+                .Include(c => c.RegistrationDetails.LastName)
+                .Include(c => c.RegistrationDetails.DateOfBirth)
+                .Include(c => c.RegistrationDetails.Address.AddressLine1)
+                .Include(c => c.RegistrationDetails.Address.AddressLine2)
+                .Include(c => c.RegistrationDetails.Address.AddressLine3)
+                .Include(c => c.RegistrationDetails.Address.AddressLine4)
+                .Include(c => c.RegistrationDetails.Address.Postcode)
+                .Include(c => c.RegistrationDetails.Address.GeoPoint.Longitude)
+                .Include(c => c.RegistrationDetails.Address.GeoPoint.Latitude)
+                .Include(c => c.RegistrationDetails.EmailAddress)
+                .Include(c => c.RegistrationDetails.PhoneNumber);
         }
     }
 }

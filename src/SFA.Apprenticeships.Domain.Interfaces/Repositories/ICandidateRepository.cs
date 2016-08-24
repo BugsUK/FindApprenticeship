@@ -19,6 +19,8 @@
         Candidate GetBySubscriberId(Guid subscriberId, bool errorIfNotFound = true);
 
         List<CandidateSummary> SearchCandidates(CandidateSearchRequest request);
+
+        List<CandidateSummary> GetCandidateSummaries(IEnumerable<Guid> candidateIds);
     }
 
     public interface ICandidateWriteRepository : IWriteRepository<Candidate>

@@ -80,7 +80,7 @@
             };
 
             _employerService = new Mock<IEmployerService>();
-            _employerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>())).Returns(_employersFromService);
+            _employerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(_employersFromService);
             _vacancyPartyReadRepository = new Mock<IVacancyPartyReadRepository>();
             _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(_fromRepository);
         }

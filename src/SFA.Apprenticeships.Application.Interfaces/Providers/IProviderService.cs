@@ -51,6 +51,10 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
 
+        bool IsADeletedVacancyParty(int providerSiteId, string edsUrn);
+
+        void ResurrectVacancyParty(int providerSiteId, string edsUrn);
+
         VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
 
 
