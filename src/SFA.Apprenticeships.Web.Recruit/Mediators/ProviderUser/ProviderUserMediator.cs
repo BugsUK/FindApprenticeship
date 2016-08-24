@@ -20,9 +20,7 @@
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.ProviderUser;
     using ViewModels.Home;
-    using SFA.Infrastructure.Interfaces;
     using ViewModels;
-    using ClaimTypes = Common.Constants.ClaimTypes;
 
     public class ProviderUserMediator : MediatorBase, IProviderUserMediator
     {
@@ -289,13 +287,14 @@
         {
             try
             {
-                ProviderContactMessage contactMessage = _mapper.Map<ContactMessageViewModel, ProviderContactMessage>(contactMessageViewModel);                
+                var contactMessage = _mapper.Map<ContactMessageViewModel, ProviderContactMessage>(contactMessageViewModel);                
                 _providerService.SubmitContactMessage(contactMessage);
+
                 return true;
             }
             catch(Exception exception)
             {
-                _logService.Error($"Exception occured while sending contact us email:{exception.Message}");
+                _logService.Error($"Exception occured while sending contact us email:{exception.Message}", exception);
                 return false;
             }
         }
