@@ -148,6 +148,10 @@
                 case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok:
                     return View(response.ViewModel);
 
+                case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.NoApplicationId:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -183,6 +187,10 @@
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
                     return View(response.ViewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.NoApplicationId:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
