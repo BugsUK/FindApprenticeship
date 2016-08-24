@@ -89,7 +89,7 @@ WriteLiteral("        ");
 
             
             #line 9 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-   Write(Model.Wage);
+   Write(WagePresenter.GetDisplayAmount(Model.WageObject.Type, Model.WageObject.Amount, Model.WageObject.Text, Model.WageObject.Unit, Model.WageObject.HoursPerWeek));
 
             
             #line default

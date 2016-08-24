@@ -34,8 +34,6 @@
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
                 .ForMember(d => d.WageObject, opt => opt.MapFrom(src => new WageViewModel(src.Wage)))
-                .ForMember(d => d.Wage,
-                    opt => opt.MapFrom(src =>WagePresenter.GetDisplayAmount(src.Wage.Type, src.Wage.Amount, src.Wage.Text, src.Wage.Unit, src.Wage.HoursPerWeek)))
                 .ForMember(d => d.RealityCheck,
                     opt => opt.MapFrom(src => src.RealityCheck))
                 .ForMember(d => d.OtherInformation,

@@ -6,7 +6,7 @@
 <div>
     <h3 class="bold-small">@Model.WageObject.Unit.GetHeaderDisplayText()</h3>
     <p id="vacancy-wage">
-        @Model.Wage
+        @WagePresenter.GetDisplayAmount(Model.WageObject.Type, Model.WageObject.Amount, Model.WageObject.Text, Model.WageObject.Unit, Model.WageObject.HoursPerWeek)
     </p>
 </div>
 
