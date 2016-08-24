@@ -1259,7 +1259,7 @@ WriteLiteral("><b>Wage:</b> ");
 
             
             #line 190 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                                                                                                                                            Write(WagePresenter.GetDisplayAmountWithFrequencyPostfix(vacancy.WageObject.Type, vacancy.WageObject.Amount, vacancy.WageObject.Text, vacancy.WageObject.Unit, vacancy.WageObject.HoursPerWeek));
+                                                                                                                                                            Write(WagePresenter.GetDisplayAmountWithFrequencyPostfix(vacancy.Wage.Type, vacancy.Wage.Amount, vacancy.Wage.Text, vacancy.Wage.Unit, vacancy.Wage.HoursPerWeek));
 
             
             #line default
@@ -1288,15 +1288,15 @@ WriteLiteral(">\r\n                                        <a");
 
 WriteLiteral(" class=\"inl-block\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 13778), Tuple.Create("\"", 13818)
-, Tuple.Create(Tuple.Create("", 13783), Tuple.Create("positive-about-disabled-", 13783), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 13748), Tuple.Create("\"", 13788)
+, Tuple.Create(Tuple.Create("", 13753), Tuple.Create("positive-about-disabled-", 13753), true)
             
             #line 195 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-        , Tuple.Create(Tuple.Create("", 13807), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+        , Tuple.Create(Tuple.Create("", 13777), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 13807), false)
+, 13777), false)
 );
 
 WriteLiteral(" href=\"https://www.gov.uk/looking-for-work-if-disabled\"");
@@ -1305,14 +1305,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                                            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 13941), Tuple.Create("\"", 13987)
+WriteAttribute("src", Tuple.Create(" src=\"", 13911), Tuple.Create("\"", 13957)
             
             #line 196 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 13947), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-small-2x.png")
+, Tuple.Create(Tuple.Create("", 13917), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-small-2x.png")
             
             #line default
             #line hidden
-, 13947), false)
+, 13917), false)
 );
 
 WriteLiteral(" height=\"30\"");
@@ -1395,24 +1395,24 @@ WriteLiteral(" class=\"grid grid-1-3 map-container hide-nojs small-btm-margin to
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15101), Tuple.Create("\"", 15211)
-, Tuple.Create(Tuple.Create("", 15108), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 15108), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 15071), Tuple.Create("\"", 15181)
+, Tuple.Create(Tuple.Create("", 15078), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 15078), true)
             
             #line 213 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-        , Tuple.Create(Tuple.Create("", 15156), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+        , Tuple.Create(Tuple.Create("", 15126), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 15156), false)
-, Tuple.Create(Tuple.Create("", 15182), Tuple.Create(",", 15182), true)
+, 15126), false)
+, Tuple.Create(Tuple.Create("", 15152), Tuple.Create(",", 15152), true)
             
             #line 213 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                   , Tuple.Create(Tuple.Create("", 15183), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                   , Tuple.Create(Tuple.Create("", 15153), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 15183), false)
-, Tuple.Create(Tuple.Create("", 15210), Tuple.Create("\'", 15210), true)
+, 15153), false)
+, Tuple.Create(Tuple.Create("", 15180), Tuple.Create("\'", 15180), true)
 );
 
 WriteLiteral(" target=\"_blank\"");

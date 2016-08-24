@@ -12,7 +12,7 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
-        public WageViewModel WageObject { get; set; }
+        public WageViewModel Wage { get; set; }
 
         public string WorkingWeek { get; set; }
     }
