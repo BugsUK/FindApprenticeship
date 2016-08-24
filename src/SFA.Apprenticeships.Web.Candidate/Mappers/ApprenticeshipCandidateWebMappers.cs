@@ -11,7 +11,6 @@
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.Mappers;
-    using Infrastructure.Presentation;
     using Resolvers;
     using ViewModels.Account;
     using ViewModels.Applications;

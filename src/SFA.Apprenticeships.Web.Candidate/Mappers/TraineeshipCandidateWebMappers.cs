@@ -8,7 +8,6 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Common.Mappers;
-    using Infrastructure.Presentation;
     using Resolvers;
     using ViewModels.VacancySearch;
     using ViewModels.Applications;
