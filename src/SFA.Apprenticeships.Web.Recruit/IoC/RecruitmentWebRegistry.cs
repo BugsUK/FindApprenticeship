@@ -153,7 +153,7 @@
         private void RegisterMediators()
         {
             For<IProviderMediator>().Use<ProviderMediator>();
-            For<IProviderUserMediator>().Use<ProviderUserMediator>();
+            For<IProviderUserMediator>().Use<ProviderUserMediator>().Ctor<IMapper>().Named("RecruitMappers");
             For<IVacancyPostingMediator>().Use<VacancyPostingMediator>();
             For<IVacancyStatusMediator>().Use<VacancyStatusMediator>();
             For<IApplicationMediator>().Use<ApplicationMediator>();
