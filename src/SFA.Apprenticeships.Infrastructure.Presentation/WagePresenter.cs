@@ -2,8 +2,6 @@
 {
     using System;
     using Constants;
-    using CuttingEdge.Conditions;
-    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
 
     public static class WagePresenter
