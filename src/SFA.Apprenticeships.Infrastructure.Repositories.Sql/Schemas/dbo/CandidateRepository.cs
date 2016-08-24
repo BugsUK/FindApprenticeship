@@ -99,5 +99,10 @@ WHERE " + string.Join(" AND ", query),
 
             return candidates;
         }
+
+        public List<CandidateSummary> GetCandidateSummaries(IEnumerable<Guid> candidateIds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
