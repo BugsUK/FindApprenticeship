@@ -14,14 +14,12 @@
     using Interfaces.Vacancies;
     using Strategies;
     using Strategies.Apprenticeships;
-    using Strategies.Candidates;
     using Strategies.SavedSearches;
     using Strategies.SuggestedVacancies;
     using Strategies.Traineeships;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Candidates.Strategies;
     using UserAccount.Strategies;
     using IUpdateUsernameStrategy = Strategies.IUpdateUsernameStrategy;
 
@@ -50,7 +48,6 @@
         private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
-        private readonly ISetCandidateDeletionPendingStrategy _setCandidateDeletionPendingStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
         private readonly ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> _candidateApprenticeshipVacancyDetailStrategy;
         private readonly ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> _candidateTraineeshipVacancyDetailStrategy;
@@ -104,8 +101,7 @@
             IRequestEmailReminderStrategy requestEmailReminderStrategy,
             IUnsubscribeStrategy unsubscribeStrategy,
             IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy,
-            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy,
-            ISetCandidateDeletionPendingStrategy setCandidateDeletionPendingStrategy)
+            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy)
         {
             _getCandidateByIdStrategy = getCandidateByIdStrategy;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -144,7 +140,6 @@
             _unsubscribeStrategy = unsubscribeStrategy;
             _apprenticeshipVacancySuggestionsStrategy = apprenticeshipVacancySuggestionsStrategy;
             _getCandidateByUsernameStrategy = getCandidateByUsernameStrategy;
-            _setCandidateDeletionPendingStrategy = setCandidateDeletionPendingStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)

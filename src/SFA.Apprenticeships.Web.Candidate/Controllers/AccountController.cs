@@ -95,8 +95,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
-                //var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.DeleteAccount);
-                var response = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
+                var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.DeleteAccount);
+                //var response = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
                 return View("Settings", response.ViewModel);
             });
         }
