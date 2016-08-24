@@ -8,6 +8,7 @@
     using Application.Candidate.Configuration;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Candidate.Strategies.Candidates;
     using Application.Candidate.Strategies.SavedSearches;
     using Application.Candidate.Strategies.SuggestedVacancies;
     using Application.Candidate.Strategies.Traineeships;
@@ -198,6 +199,7 @@
             For<IApprenticeshipVacancySuggestionsStrategy>().Use<ApprenticeshipVacancySuggestionsStrategy>();
             For<IGetCandidateByUsernameStrategy>().Use<GetCandidateByUsernameStrategy>();
             For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
+            For<IGetCandidateSummariesStrategy>().Use<GetCandidateSummariesStrategy>();
 
             For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>().Ctor<ISaveCandidateStrategy>().Named("QueuedLegacySaveCandidateStrategy").Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);

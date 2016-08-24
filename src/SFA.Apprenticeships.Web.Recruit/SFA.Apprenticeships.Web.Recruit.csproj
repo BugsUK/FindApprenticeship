@@ -957,6 +957,10 @@
       <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
       <Name>SFA.Apprenticeships.Application.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
+      <Project>{984f8cd2-61b3-48a4-b0cc-5d05e235983d}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">
       <Project>{C91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
       <Name>SFA.Apprenticeships.Application.Communication</Name>
