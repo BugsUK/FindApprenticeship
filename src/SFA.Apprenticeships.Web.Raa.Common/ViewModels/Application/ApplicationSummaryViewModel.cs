@@ -6,6 +6,7 @@
     public class ApplicationSummaryViewModel
     {
         public Guid ApplicationId { get; set; }
+        public Guid CandidateId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ApplicantName { get; set; }

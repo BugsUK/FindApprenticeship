@@ -57,6 +57,11 @@
             return entities;
         }
 
+        public bool IsADeletedVacancyParty(int providerSiteId, int employerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public VacancyParty Save(VacancyParty vacancyParty)
         {
             _logger.Debug("Called Mongodb to save provider site employer link with ERN={0}", vacancyParty.EmployerId);
@@ -74,6 +79,11 @@
             _logger.Debug("Saved provider site employer link to Mongodb with ERN={0}", vacancyParty.EmployerId);
 
             return _mapper.Map<MongoVacancyParty, VacancyParty>(mongoEntity);
+        }
+
+        public void ResurrectVacancyParty(int providerSiteId, int employerId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

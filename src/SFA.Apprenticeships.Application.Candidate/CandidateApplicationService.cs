@@ -8,9 +8,10 @@ namespace SFA.Apprenticeships.Application.Candidate
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
 
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
     using Strategies;
     using Strategies.Apprenticeships;
+    using Strategies.Candidates;
     using Strategies.Traineeships;
 
     public class CandidateApplicationService : ICandidateApplicationService
@@ -18,13 +19,15 @@ namespace SFA.Apprenticeships.Application.Candidate
         private readonly ILogService _logService;
 
         private readonly IGetCandidateByIdStrategy _getCandidateByIdStrategy;
+        private readonly IGetCandidateSummariesStrategy _getCandidateSummariesStrategy;
         private readonly IGetCandidateApprenticeshipApplicationsStrategy _getCandidateApprenticeshipApplicationsStrategy;
         private readonly IGetCandidateTraineeshipApplicationsStrategy _getCandidateTraineeshipApplicationsStrategy;
 
-        public CandidateApplicationService(ILogService logService, IGetCandidateByIdStrategy getCandidateByIdStrategy, IGetCandidateApprenticeshipApplicationsStrategy getCandidateApprenticeshipApplicationsStrategy, IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy)
+        public CandidateApplicationService(ILogService logService, IGetCandidateByIdStrategy getCandidateByIdStrategy, IGetCandidateSummariesStrategy getCandidateSummariesStrategy, IGetCandidateApprenticeshipApplicationsStrategy getCandidateApprenticeshipApplicationsStrategy, IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy)
         {
             _logService = logService;
             _getCandidateByIdStrategy = getCandidateByIdStrategy;
+            _getCandidateSummariesStrategy = getCandidateSummariesStrategy;
             _getCandidateApprenticeshipApplicationsStrategy = getCandidateApprenticeshipApplicationsStrategy;
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
         }
@@ -36,6 +39,11 @@ namespace SFA.Apprenticeships.Application.Candidate
             _logService.Debug("Calling CandidateApplicationService to get the user with Id={0}.", candidateId);
 
             return _getCandidateByIdStrategy.GetCandidate(candidateId);
+        }
+
+        public IList<CandidateSummary> GetCandidateSummaries(IEnumerable<Guid> candidateIds)
+        {
+            return _getCandidateSummariesStrategy.GetCandidateSummaries(candidateIds);
         }
 
         public IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true)
