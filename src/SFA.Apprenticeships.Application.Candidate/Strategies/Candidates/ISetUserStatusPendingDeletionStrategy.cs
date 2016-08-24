@@ -2,7 +2,7 @@
 {
     using Domain.Entities.Users;
 
-    public interface ISetCandidateDeletionPendingStrategy
+    public interface ISetUserStatusPendingDeletionStrategy
     {
         bool SetUserStatusPendingDeletion(User user);
     }

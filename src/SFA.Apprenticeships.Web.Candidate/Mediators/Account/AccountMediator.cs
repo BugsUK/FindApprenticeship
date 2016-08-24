@@ -195,15 +195,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             Candidate candidate;
             var deleted = _accountProvider.SetUserAccountDeletionPending(candidateId, out candidate);
 
-            //if (!deleted)
-            //{
-            //    return GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
-            //}
-
-            //if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.DeleteAccount)
-            //{
-            //    return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedNotificationsAlertWarning, UserMessageLevel.Info);
-            //}
+            if (!deleted)
+            {
+                return GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, new SettingsViewModel(), AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
+            }
 
             return GetMediatorResponse(AccountMediatorCodes.Settings.Success, new SettingsViewModel());
         }
@@ -211,19 +206,24 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
         public MediatorResponse VerifyAccountSettings(Guid candidateId, DeleteAccountSettingsViewModel settingsViewModel)
         {
             var validationResult = _deleteAccountSettingsViewModelServerValidator.Validate(settingsViewModel);
-
-            if (!validationResult.IsValid)
+            try
             {
-                return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError, settingsViewModel, validationResult);
+                if (!validationResult.IsValid)
+                {
+                    return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError, settingsViewModel, validationResult);
+                }
+
+                var candidate = _candidateService.Authenticate(settingsViewModel.EmailAddress, settingsViewModel.Password);
+
+                if (candidate != null && candidate.EntityId == candidateId)
+                {
+                    return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok, settingsViewModel);
+                }
             }
-
-            var candidate = _candidateService.Authenticate(settingsViewModel.EmailAddress, settingsViewModel.Password);
-
-            if (candidate != null && candidate.EntityId == candidateId)
+            catch (Exception)
             {
-                return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok, settingsViewModel);
+                return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError, settingsViewModel, validationResult, MyApplicationsPageMessages.InvalidUserAccount, UserMessageLevel.Error);
             }
-
             return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError, settingsViewModel, validationResult, MyApplicationsPageMessages.InvalidUserAccount, UserMessageLevel.Error);
         }
 

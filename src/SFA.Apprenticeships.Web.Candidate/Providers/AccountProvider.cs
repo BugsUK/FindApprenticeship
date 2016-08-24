@@ -197,15 +197,15 @@
 
                 candidate = _candidateService.GetCandidate(candidateId);
 
-                if (candidate != null) _candidateService.SetCandidateDeletionPending(candidate);
+                if (candidate != null) return _candidateService.SetCandidateDeletionPending(candidate);
 
-                _logger.Debug("Account Settings deleted for candidate with Id={0}", candidateId);
+                _logger.Debug("Account Settings set for Pending deletetion for candidate with Id={0}", candidateId);
 
-                return true;
+                return false;
             }
             catch (Exception e)
             {
-                _logger.Error("Delete of Account settings failed for candidate " + candidateId, e);
+                _logger.Error("Pending Deletion of Account settings failed for candidate " + candidateId, e);
                 candidate = null;
                 return false;
             }

@@ -4,13 +4,13 @@
     using Domain.Interfaces.Repositories;
     using Interfaces;
 
-    public class SetCandidateDeletionPendingStrategy : ISetCandidateDeletionPendingStrategy
+    public class SetUserStatusPendingDeletionStrategy : ISetUserStatusPendingDeletionStrategy
     {
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IAuditRepository _auditRepository;
         private readonly ILogService _logService;
 
-        public SetCandidateDeletionPendingStrategy(IUserWriteRepository userWriteRepository,
+        public SetUserStatusPendingDeletionStrategy(IUserWriteRepository userWriteRepository,
             IAuditRepository auditRepository,
             ILogService logService)
         {

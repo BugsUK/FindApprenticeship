@@ -108,7 +108,16 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             {
                 var response = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
                 UserData.Push(CandidateDataItemNames.SetDeletetionPendingForCandidate, "true");
-                return RedirectToAction("SignOut", "Login");
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.Settings.SaveError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("Settings", response.ViewModel);
+                    case AccountMediatorCodes.Settings.Success:
+                        return RedirectToAction("SignOut", "Login");
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
             });
         }
 
