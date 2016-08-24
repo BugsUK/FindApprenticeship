@@ -12,6 +12,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using MongoDB.Bson;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
     public class CandidateRepository : GenericMongoClient<MongoCandidate>, ICandidateReadRepository,

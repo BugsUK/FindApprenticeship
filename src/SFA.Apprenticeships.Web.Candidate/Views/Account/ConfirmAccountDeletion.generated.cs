@@ -33,6 +33,12 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
     using SFA.Apprenticeships.Web.Candidate.Helpers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels;
+    
+    #line 1 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Account;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
@@ -53,7 +59,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
         public override void Execute()
         {
             
-            #line 2 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+            #line 3 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
   
     ViewBag.Title = "Confirm account deletion - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -80,30 +86,22 @@ WriteLiteral(" class=\"subtitle\"");
 WriteLiteral(">You will no longer be able to use this service, and your account data will be lo" +
 "st.​</h2>\r\n    </div>\r\n</div>\r\n\r\n");
 
-WriteLiteral("\r\n//{\r\n");
-
-WriteLiteral("    ");
-
             
-            #line 16 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
-Write(Html.ActionLink("Delete account", "DeleteAccountSettings", "Account", Model, new {@class = "button"}));
+            #line 15 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+Write(Html.ActionLink("Delete account", "SetDeletionPendingForAccount", "Account", new {@class = "button"}));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 17 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+            #line 16 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
 Write(Html.ActionLink("Cancel", "DeleteAccountSettings", "Account"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n//}");
-
         }
     }
 }

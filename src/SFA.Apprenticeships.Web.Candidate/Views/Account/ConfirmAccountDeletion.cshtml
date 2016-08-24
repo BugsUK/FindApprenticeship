@@ -1,4 +1,5 @@
-﻿@model object
+﻿@using SFA.Apprenticeships.Web.Candidate.ViewModels.Account
+@model object
 @{
     ViewBag.Title = "Confirm account deletion - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,8 +12,5 @@
     </div>
 </div>
 
-@*@using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post))*@
-//{
-    @Html.ActionLink("Delete account", "DeleteAccountSettings", "Account", Model, new {@class = "button"})
-    @Html.ActionLink("Cancel", "DeleteAccountSettings", "Account")
-//}
+@Html.ActionLink("Delete account", "SetDeletionPendingForAccount", "Account", new {@class = "button"})
+@Html.ActionLink("Cancel", "DeleteAccountSettings", "Account")

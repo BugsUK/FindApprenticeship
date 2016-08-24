@@ -96,8 +96,19 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             return await Task.Run<ActionResult>(() =>
             {
                 var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.DeleteAccount);
-                //var response = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
                 return View("Settings", response.ViewModel);
+            });
+        }
+
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
+        public async Task<ActionResult> SetDeletionPendingForAccount()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
+                UserData.Push(CandidateDataItemNames.SetDeletetionPendingForCandidate, "true");
+                return RedirectToAction("SignOut", "Login");
             });
         }
 
@@ -145,28 +156,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             {
                 if (model.Mode == SettingsViewModel.SettingsMode.DeleteAccount)
                 {
-                    DeleteAccountSettingsViewModel deleteAccountSettingsViewModel = new DeleteAccountSettingsViewModel()
-                    {
-                        EmailAddress = model.EmailAddress,
-                        Password = model.Password
-                    };
-                    var verifyResponse = _accountMediator.VerifyAccountSettings(UserContext.CandidateId, deleteAccountSettingsViewModel);
-                    ModelState.Clear();
-
-                    switch (verifyResponse.Code)
-                    {
-                        case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
-                            verifyResponse.ValidationResult.AddToModelState(ModelState, string.Empty);
-                            return View("Settings", model);
-                        case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
-                            SetUserMessage(verifyResponse.Message.Text, verifyResponse.Message.Level);
-                            return View("Settings", model);
-                        case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
-                            return View("ConfirmAccountDeletion", model);
-                        default:
-                            throw new InvalidMediatorCodeException(verifyResponse.Code);
-                    }
+                    return ConfirmValidityOfAccount(model);
                 }
+
                 var response = _accountMediator.SaveSettings(UserContext.CandidateId, model);
 
                 ModelState.Clear();
@@ -189,18 +181,42 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         else
                             SetUserMessage(AccountPageMessages.SettingsUpdated);
                         return RedirectToRoute(response.ViewModel.Mode == SettingsViewModel.SettingsMode.SavedSearches ? CandidateRouteNames.SavedSearchesSettings : CandidateRouteNames.Settings);
-                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View("Settings", response.ViewModel);
-                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View("Settings", response.ViewModel);
-                    case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
-                        return View("ConfirmAccountDeletion", response.ViewModel);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
             });
+        }
+
+        private ViewResult SetDeletionPendingOfAccount(SettingsViewModel model)
+        {
+            var verifyResponse = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
+            ModelState.Clear();
+            return new ViewResult();
+        }
+
+        private ViewResult ConfirmValidityOfAccount(SettingsViewModel model)
+        {
+            DeleteAccountSettingsViewModel deleteAccountSettingsViewModel = new DeleteAccountSettingsViewModel()
+            {
+                EmailAddress = model.EmailAddress,
+                Password = model.Password
+            };
+            var verifyResponse = _accountMediator.VerifyAccountSettings(UserContext.CandidateId, deleteAccountSettingsViewModel);
+            ModelState.Clear();
+
+            switch (verifyResponse.Code)
+            {
+                case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
+                    verifyResponse.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("Settings", model);
+                case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
+                    SetUserMessage(verifyResponse.Message.Text, verifyResponse.Message.Level);
+                    return View("Settings", model);
+                case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
+                    return View("ConfirmAccountDeletion", model);
+                default:
+                    throw new InvalidMediatorCodeException(verifyResponse.Code);
+            }
         }
 
         [HttpGet]
