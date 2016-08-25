@@ -203,9 +203,11 @@
     <Compile Include="Applications\Housekeeping\DraftApplicationForExpiredVacancyHousekeeperTests.cs" />
     <Compile Include="Strategies\HardDeleteApplicationStrategyTests.cs" />
     <Compile Include="UserAccount\Builders\RegisterUserStrategyBuilder.cs" />
+    <Compile Include="UserAccount\Builders\SetUserStatusDeletionPendingStrategyBuilder.cs" />
     <Compile Include="UserAccount\Builders\UserAccountServiceBuilder.cs" />
     <Compile Include="UserAccount\RegisterUserStrategyTests.cs" />
     <Compile Include="UserAccount\SendAccountUnlockTests.cs" />
+    <Compile Include="UserAccount\SetUserStatusPendingDeletionStrategyTests.cs" />
     <Compile Include="UserAccount\UnlockAccountStrategyTests.cs" />
     <Compile Include="UserAccount\UserAccountServiceTests.cs" />
     <Compile Include="Vacancies\Extensions\ApprenticeshipSummaryExtensionsTests.cs" />

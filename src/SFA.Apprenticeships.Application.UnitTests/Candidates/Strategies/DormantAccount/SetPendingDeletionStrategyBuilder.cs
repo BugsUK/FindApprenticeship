@@ -5,9 +5,8 @@
     using Apprenticeships.Application.Candidates.Strategies.DormantAccount;
     using Configuration;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Moq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SetPendingDeletionStrategyBuilder
     {
