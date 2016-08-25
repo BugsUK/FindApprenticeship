@@ -190,9 +190,11 @@
             var hourRate = GetHourRate(furtherVacancy.Wage.Value, furtherVacancy.WageUnit, furtherVacancy.HoursPerWeek.Value);
 
             var minimumWageChangeDate = new DateTime(2016, 10, 1);
-            var possibleStartDate = furtherVacancy.VacancyDatesViewModel.PossibleStartDate.HasValue
-                ? furtherVacancy.VacancyDatesViewModel.PossibleStartDate.Date
-                : minimumWageChangeDate;
+            var possibleStartDate = minimumWageChangeDate;
+            if (furtherVacancy.VacancyDatesViewModel != null && furtherVacancy.VacancyDatesViewModel.PossibleStartDate.HasValue)
+            {
+                possibleStartDate = furtherVacancy.VacancyDatesViewModel.PossibleStartDate.Date;
+            }
             var expectedHourlyRate = possibleStartDate >= minimumWageChangeDate
                 ? WagesAfter01102016.ApprenticeMinimumWage
                 : Wages.ApprenticeMinimumWage;
