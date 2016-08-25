@@ -34,8 +34,6 @@
         [Display(Name = VacancyViewModelMessages.Wage.LabelText)]
         public decimal? Wage { get; set; }
         
-        public WageUnit WageUnit { get; set; }
-
         public List<SelectListItem> WageUnits { get; set; }
 
         [Display(Name = VacancyViewModelMessages.WageComment.LabelText)]
@@ -80,7 +78,7 @@
             }
         }
 
-        public string WageDisplayText => WagePresenter.GetDisplayAmount(WageObject.Type, Wage, null, WageUnit, HoursPerWeek);
+        public string WageDisplayText => WagePresenter.GetDisplayAmount(WageObject.Type, Wage, null, WageObject.Unit, HoursPerWeek);
 
         public bool ComeFromPreview { get; set; }
 

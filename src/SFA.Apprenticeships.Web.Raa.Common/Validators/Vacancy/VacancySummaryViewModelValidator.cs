@@ -135,7 +135,7 @@
             validator.RuleFor(x => x.Wage)
                 .Must(HaveAValidHourRate)
                 .When(v => v.WageObject.Type == WageType.Custom)
-                .When(v => v.WageUnit != WageUnit.NotApplicable)
+                .When(v => v.WageObject.Unit != WageUnit.NotApplicable)
                 .When(v => v.HoursPerWeek.HasValue)
                 .WithMessage(VacancyViewModelMessages.Wage.WageLessThanMinimum);
 
@@ -189,7 +189,7 @@
             if (!furtherVacancy.Wage.HasValue || !furtherVacancy.HoursPerWeek.HasValue)
                 return false;
 
-            var hourRate = GetHourRate(furtherVacancy.Wage.Value, furtherVacancy.WageUnit, furtherVacancy.HoursPerWeek.Value);
+            var hourRate = GetHourRate(furtherVacancy.Wage.Value, furtherVacancy.WageObject.Unit, furtherVacancy.HoursPerWeek.Value);
 
             return !(hourRate < Wages.ApprenticeMinimumWage);
         }

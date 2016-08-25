@@ -24,7 +24,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 WageObject = new WageViewModel(source.Wage),
                 Wage = source.Wage.Amount,
                 WageComment = source.WageComment,
-                WageUnit = source.Wage.Unit,
                 WorkingWeek = source.WorkingWeek,
                 WorkingWeekComment = source.WorkingWeekComment,
                 Status = source.Status,

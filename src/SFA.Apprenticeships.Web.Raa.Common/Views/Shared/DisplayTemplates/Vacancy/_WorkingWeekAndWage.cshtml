@@ -41,7 +41,7 @@
             @if (Model.FurtherVacancyDetailsViewModel.WageObject.Type == WageType.Custom)
             {
                 <span>
-                    @Model.FurtherVacancyDetailsViewModel.WageUnit.GetHeaderDisplayText()
+                    @Model.FurtherVacancyDetailsViewModel.WageObject.Unit.GetHeaderDisplayText()
                     @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageObject.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
                 </span>
             }

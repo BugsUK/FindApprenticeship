@@ -289,8 +289,7 @@
             {
                 WageObject = new WageViewModel(wageType, wage, null, wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable, 37.5m),
                 HoursPerWeek = 37.5m,
-                Wage = wage,
-                WageUnit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable
+                Wage = wage
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -347,7 +346,6 @@
                 WageObject = new WageViewModel(wageType, wage, null, wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable, 37.5m),
                 HoursPerWeek = 37.5m,
                 Wage = wage,
-                WageUnit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable,
                 VacancyType = VacancyType.Traineeship
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();

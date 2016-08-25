@@ -227,8 +227,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null),
-                    WageUnit = wageUnit,
+                    WageObject = new WageViewModel(WageType.Custom, null, null, wageUnit, null),
                     Wage = wage
                 },
                 NewVacancyViewModel = new NewVacancyViewModel

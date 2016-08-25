@@ -49,7 +49,7 @@
         {
             @Html.HiddenFor(m => m.WageObject.Type)
             @Html.HiddenFor(m => m.Wage)
-            @Html.HiddenFor(m => m.WageUnit)
+            @Html.HiddenFor(m => m.WageObject.Unit)
             @Html.HiddenFor(m => m.WageComment)
         }
         else
@@ -80,7 +80,7 @@
                         <fieldset class="form-group inline-fixed">
                             £
                             @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
-                            @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
+                            @Html.DropDownListFor(m => m.WageObject.Unit, Model.WageUnits)
                         </fieldset>
                     </div>
                 </div>
