@@ -209,6 +209,7 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\WageViewModelMessages.cs" />
     <Compile Include="Controllers\VersionController.cs" />
     <Compile Include="ViewModels\VersionViewModel.cs" />
     <Compile Include="Converters\PageableConverters.cs" />

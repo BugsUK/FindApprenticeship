@@ -48,7 +48,7 @@
         @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
         {
             @Html.HiddenFor(m => m.WageObject.Type)
-            @Html.HiddenFor(m => m.Wage)
+            @Html.HiddenFor(m => m.WageObject.Amount)
             @Html.HiddenFor(m => m.WageObject.Unit)
             @Html.HiddenFor(m => m.WageComment)
         }
@@ -79,7 +79,7 @@
                     <div id="custom-wage-panel" class="toggle-content blocklabel-content">
                         <fieldset class="form-group inline-fixed">
                             £
-                            @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
+                            @Html.FormTextFor(m => m.WageObject.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
                             @Html.DropDownListFor(m => m.WageObject.Unit, Model.WageUnits)
                         </fieldset>
                     </div>

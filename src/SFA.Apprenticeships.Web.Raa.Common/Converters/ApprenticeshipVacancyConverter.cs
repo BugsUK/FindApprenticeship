@@ -20,7 +20,6 @@
                 WorkingWeek = vacancy.WorkingWeek,
                 HoursPerWeek = vacancy.HoursPerWeek,
                 WageObject = new WageViewModel(vacancy.Wage),
-                Wage = vacancy.Wage.Amount,
                 WageUnits = GetWageUnits(),
                 DurationType = vacancy.DurationType,
                 DurationTypes = GetDurationTypes(vacancy.VacancyType),

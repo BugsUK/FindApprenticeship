@@ -22,7 +22,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 LongDescriptionComment = source.LongDescriptionComment,
                 VacancyReferenceNumber = source.VacancyReferenceNumber,
                 WageObject = new WageViewModel(source.Wage),
-                Wage = source.Wage.Amount,
                 WageComment = source.WageComment,
                 WorkingWeek = source.WorkingWeek,
                 WorkingWeekComment = source.WorkingWeekComment,
