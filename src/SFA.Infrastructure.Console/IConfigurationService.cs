@@ -3,7 +3,7 @@
     using System;
     using Newtonsoft.Json;
     using System.Collections.Generic;
-    using Interfaces;
+    using Apprenticeships.Application.Interfaces;
 
     public class ConsoleConfigurationService : IConfigurationService
     {
