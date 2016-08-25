@@ -30,17 +30,6 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
         }
 
         [Test]
-        public void FailureTest()
-        {
-            var accountProviderMock = new Mock<IAccountProvider>();
-            accountProviderMock.Setup(x => x.SetUserAccountDeletionPending(It.IsAny<Guid>())).Returns(false);
-            var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
-
-            var response = accountMediator.SetAccountStatusToDelete(Guid.NewGuid());
-            response.AssertCodeAndMessage(AccountMediatorCodes.Settings.SaveError);
-        }
-
-        [Test]
         public void UserStatusChangeSuccess()
         {
             var candidateId = new Guid();
@@ -70,12 +59,6 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 
             var result = provider.SetUserAccountDeletionPending(candidateId);
             result.Should().BeTrue();
-        }
-
-        [Test]
-        public void UserStatusChangeFailed()
-        {
-
         }
     }
 }
