@@ -66,6 +66,12 @@
             return this;
         }
 
+        public AccountMediatorBuilder With(Mock<ICandidateService> candidateService)
+        {
+            _candidateServiceMock = candidateService;
+            return this;
+        }
+
         public IAccountMediator Build()
         {
             return new AccountMediator(_accountProvider,

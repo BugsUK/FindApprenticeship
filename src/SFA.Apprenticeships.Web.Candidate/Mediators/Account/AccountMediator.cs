@@ -192,39 +192,34 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 
         public MediatorResponse<SettingsViewModel> SetAccountStatusToDelete(Guid candidateId)
         {
-            Candidate candidate;
-            var deleted = _accountProvider.SetUserAccountDeletionPending(candidateId, out candidate);
-
+            var deleted = _accountProvider.SetUserAccountDeletionPending(candidateId);
             if (!deleted)
             {
                 return GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, new SettingsViewModel(), AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
             }
-
             return GetMediatorResponse(AccountMediatorCodes.Settings.Success, new SettingsViewModel());
         }
 
-        public MediatorResponse VerifyAccountSettings(Guid candidateId, DeleteAccountSettingsViewModel settingsViewModel)
+        public MediatorResponse VerifyAccountSettings(Guid candidateId, DeleteAccountSettingsViewModel deleteAccountSettingsViewModel)
         {
-            var validationResult = _deleteAccountSettingsViewModelServerValidator.Validate(settingsViewModel);
+            var validationResult = _deleteAccountSettingsViewModelServerValidator.Validate(deleteAccountSettingsViewModel);
             try
             {
                 if (!validationResult.IsValid)
                 {
-                    return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError, settingsViewModel, validationResult);
+                    return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError, deleteAccountSettingsViewModel, validationResult);
                 }
-
-                var candidate = _candidateService.Authenticate(settingsViewModel.EmailAddress, settingsViewModel.Password);
-
+                var candidate = _candidateService.Authenticate(deleteAccountSettingsViewModel.EmailAddress, deleteAccountSettingsViewModel.Password);
                 if (candidate != null && candidate.EntityId == candidateId)
                 {
-                    return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok, settingsViewModel);
+                    return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok, deleteAccountSettingsViewModel);
                 }
             }
             catch (Exception)
             {
-                return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError, settingsViewModel, validationResult, MyApplicationsPageMessages.InvalidUserAccount, UserMessageLevel.Error);
+                return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError, deleteAccountSettingsViewModel, validationResult, MyApplicationsPageMessages.InvalidUserAccount, UserMessageLevel.Error);
             }
-            return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError, settingsViewModel, validationResult, MyApplicationsPageMessages.InvalidUserAccount, UserMessageLevel.Error);
+            return GetMediatorResponse(AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError, deleteAccountSettingsViewModel, validationResult, MyApplicationsPageMessages.InvalidUserAccount, UserMessageLevel.Error);
         }
 
         public MediatorResponse Track(Guid candidateId, int vacancyId)

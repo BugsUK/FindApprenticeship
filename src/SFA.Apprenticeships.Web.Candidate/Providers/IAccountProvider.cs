@@ -11,7 +11,7 @@
 
         bool TrySaveSettings(Guid candidateId, SettingsViewModel model, out Candidate candidate);
 
-        bool SetUserAccountDeletionPending(Guid candidateId, out Candidate candidate);
+        bool SetUserAccountDeletionPending(Guid candidateId);
 
         bool DismissTraineeshipPrompts(Guid candidateId);
 

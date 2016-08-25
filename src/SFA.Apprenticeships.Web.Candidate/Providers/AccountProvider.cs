@@ -189,13 +189,13 @@
             }
         }
 
-        public bool SetUserAccountDeletionPending(Guid candidateId, out Candidate candidate)
+        public bool SetUserAccountDeletionPending(Guid candidateId)
         {
             try
             {
                 _logger.Debug("Calling AccountProvider to delete the account settings for candidate with Id={0}", candidateId);
 
-                candidate = _candidateService.GetCandidate(candidateId);
+                var candidate = _candidateService.GetCandidate(candidateId);
 
                 if (candidate != null) return _candidateService.SetCandidateDeletionPending(candidate);
 
@@ -206,7 +206,6 @@
             catch (Exception e)
             {
                 _logger.Error("Pending Deletion of Account settings failed for candidate " + candidateId, e);
-                candidate = null;
                 return false;
             }
         }
