@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using System;
     using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
+    using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
     using FluentValidation.TestHelper;
@@ -38,14 +40,61 @@
         [TestCase(49.5, WageUnit.Weekly, 15, true)] //3.30 pounds per hour
         [TestCase(214.5, WageUnit.Monthly, 15, true)] //3.30 pounds per hour
         [TestCase(2574, WageUnit.Annually, 15, true)] //3.30 pounds per hour
-        public void ApprenticeMinimumWage_PerHour(decimal wage, WageUnit wageUnit, decimal hoursPerWeek, bool expectValid)
+        public void ApprenticeMinimumWage_PerHour_BeforeOctFirst(decimal wage, WageUnit wageUnit, decimal hoursPerWeek, bool expectValid)
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 Wage = wage,
                 WageType = WageType.Custom,
                 WageUnit = wageUnit,
-                HoursPerWeek = hoursPerWeek
+                HoursPerWeek = hoursPerWeek,
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    PossibleStartDate = new DateViewModel(new DateTime(2016, 9, 30))
+                }
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vacancyViewModel, RuleSet);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vacancyViewModel, RuleSet);
+            }
+        }
+
+        [TestCase(49.35, WageUnit.Weekly, 15, false)] //3.29 pounds per hour
+        [TestCase(213.85, WageUnit.Monthly, 15, false)] //3.29 pounds per hour
+        [TestCase(2566.2, WageUnit.Annually, 15, false)] //3.29 pounds per hour
+        [TestCase(50.85, WageUnit.Weekly, 15, false)] //3.39 pounds per hour
+        [TestCase(220.35, WageUnit.Monthly, 15, false)] //3.39 pounds per hour
+        [TestCase(2644.2, WageUnit.Annually, 15, false)] //3.39 pounds per hour
+        [TestCase(51, WageUnit.Weekly, 15, true)] //3.40 pounds per hour
+        [TestCase(221, WageUnit.Monthly, 15, true)] //3.40 pounds per hour
+        [TestCase(2652, WageUnit.Annually, 15, true)] //3.40 pounds per hour
+        public void ApprenticeMinimumWage_PerHour_AfterOctFirst(decimal wage, WageUnit wageUnit, decimal hoursPerWeek, bool expectValid)
+        {
+            //After 1st of october 2016 the National Minimum Wage for Apprentices increases to £3.40/hour
+            var viewModel = new FurtherVacancyDetailsViewModel
+            {
+                Wage = wage,
+                WageType = WageType.Custom,
+                WageUnit = wageUnit,
+                HoursPerWeek = hoursPerWeek,
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    PossibleStartDate = new DateViewModel(new DateTime(2016, 10, 1))
+                }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
