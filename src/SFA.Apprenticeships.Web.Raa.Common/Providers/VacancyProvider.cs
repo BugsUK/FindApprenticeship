@@ -732,7 +732,6 @@
 
             // Unfortunately (from a performance / load / scalability perspective), the view includes application counts for every vacancy, including those completed months/years ago
             var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs() && v.Status != VacancyStatus.Completed).Select(a => a.VacancyId);
-            //var vacanciesToCountNewApplicationsFor = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus.CanHaveApplicationsOrClickThroughs() && v.VacancyStatus != VacancyStatus.Completed).Select(a => a.VacancyId);
 
             var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
 
@@ -751,8 +750,22 @@
                 return v;
             });
 
-            // If doing a vacancy search then all the vacancies need to be fetched now, otherwise just fetch the first page
-            var vacanciesToFetch = isVacancySearch ? filteredVacancies : Sort(filteredVacancies, vacanciesSummarySearch.FilterType).GetCurrentPage(vacanciesSummarySearch).ToList();
+            // try to filter as soon as we can to not get too many vacancies from DB
+            if (isVacancySearch)
+            {
+                // If doing a search then all the vacancies have been fetched and after filtering need to be cut down to the current page
+
+                filteredVacancies = filteredVacancies.Where(v =>
+                    (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
+                );
+
+                filteredVacancies = filteredVacancies
+                    .GetCurrentPage(vacanciesSummarySearch)
+                    .ToList();
+            }
+
+            var vacanciesToFetch = Sort(filteredVacancies, vacanciesSummarySearch.FilterType).GetCurrentPage(vacanciesSummarySearch).ToList();
 
             var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
 
@@ -764,22 +777,6 @@
                 v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName;
                 return v;
             }), vacanciesSummarySearch.FilterType);
-
-            if (isVacancySearch)
-            {
-                // If doing a search then all the vacancies have been fetched and after filtering need to be cut down to the current page
-
-                vacancies = vacancies.Where(v =>
-                    (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
-                );
-
-                filteredVacancies = vacancies.ToList();
-
-                vacancies = vacancies
-                    .GetCurrentPage(vacanciesSummarySearch)
-                    .ToList();
-            }
 
             var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
 
