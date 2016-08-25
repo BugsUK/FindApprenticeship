@@ -47,7 +47,7 @@
 
         @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
         {
-            @Html.HiddenFor(m => m.WageType)
+            @Html.HiddenFor(m => m.WageObject.Type)
             @Html.HiddenFor(m => m.Wage)
             @Html.HiddenFor(m => m.WageUnit)
             @Html.HiddenFor(m => m.WageComment)
@@ -56,25 +56,25 @@
         {
             <div class="blocklabel-single-container">
                 <div class="form-group">
-                    <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
+                    <a name="@Html.NameFor(m => m.WageObject.Type).ToString().ToLower()"></a>
                     <label class="form-label" for="weekly-wage">Wage</label>
-                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType)))" data-editable-x="">
+                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageObject.Type)))" data-editable-x="">
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.WageObject.Type, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
                             Custom wage
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="national-minimum-wage" class="block-label">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.WageObject.Type, WageType.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
                             National Minimum Wage
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="apprenticeship-minimum-wage" class="block-label">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.WageObject.Type, WageType.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
                             National Minimum Wage for apprentices
                         </label>
-                        @Html.ValidationMessageFor(m => m.WageType)
+                        @Html.ValidationMessageFor(m => m.WageObject.Type)
                     </div>
                     <div id="custom-wage-panel" class="toggle-content blocklabel-content">
                         <fieldset class="form-group inline-fixed">

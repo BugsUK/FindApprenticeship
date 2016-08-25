@@ -180,7 +180,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    WageType = wagetype,
+                    WageObject = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, null),
                     HoursPerWeek = hoursPerWeek
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
@@ -227,7 +227,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    WageType = WageType.Custom,
+                    WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null),
                     WageUnit = wageUnit,
                     Wage = wage
                 },

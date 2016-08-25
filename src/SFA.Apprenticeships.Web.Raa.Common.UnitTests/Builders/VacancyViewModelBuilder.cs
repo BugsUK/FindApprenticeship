@@ -51,7 +51,7 @@
             viewModel.FurtherVacancyDetailsViewModel.HoursPerWeek = 30;
             viewModel.FurtherVacancyDetailsViewModel.Duration = 12;
             viewModel.FurtherVacancyDetailsViewModel.DurationType = DurationType.Months;
-            viewModel.FurtherVacancyDetailsViewModel.WageType = WageType.NationalMinimum;
+            viewModel.FurtherVacancyDetailsViewModel.WageObject = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, null);
             viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
             {
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),

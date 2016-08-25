@@ -271,7 +271,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-             if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.Custom)
+             if (Model.FurtherVacancyDetailsViewModel.WageObject.Type == WageType.Custom)
             {
 
             
@@ -294,7 +294,7 @@ WriteLiteral("                    ");
 
             
             #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
+               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageObject.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
 
             
             #line default
@@ -316,7 +316,7 @@ WriteLiteral("                    ");
 
             
             #line 52 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
+               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageObject.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
 
             
             #line default
@@ -349,7 +349,7 @@ WriteLiteral("        ");
 
             
             #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-   Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageType, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
+   Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageObject.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
 
             
             #line default
@@ -359,7 +359,7 @@ WriteLiteral("\r\n    </div>\r\n");
             
             #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
 
-    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.ApprenticeshipMinimum)
+    if (Model.FurtherVacancyDetailsViewModel.WageObject.Type == WageType.ApprenticeshipMinimum)
     {
 
             
@@ -390,7 +390,7 @@ WriteLiteral(@" per hour.<br />
             #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
     }
 
-    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.NationalMinimum)
+    if (Model.FurtherVacancyDetailsViewModel.WageObject.Type == WageType.NationalMinimum)
     {
 
             

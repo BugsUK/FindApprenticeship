@@ -31,8 +31,6 @@
         public WageViewModel WageObject { get; set; }
 
         //TODO: Probably create dedicated WageViewModel
-        public WageType WageType { get; set; }
-
         [Display(Name = VacancyViewModelMessages.Wage.LabelText)]
         public decimal? Wage { get; set; }
         
@@ -82,7 +80,7 @@
             }
         }
 
-        public string WageDisplayText => WagePresenter.GetDisplayAmount(WageType, Wage, null, WageUnit, HoursPerWeek);
+        public string WageDisplayText => WagePresenter.GetDisplayAmount(WageObject.Type, Wage, null, WageUnit, HoursPerWeek);
 
         public bool ComeFromPreview { get; set; }
 

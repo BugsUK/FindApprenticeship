@@ -114,14 +114,14 @@
                 .When(
                     x =>
                         x.VacancySource == VacancySource.Raa || x.Duration.HasValue ||
-                        x.WageType == WageType.ApprenticeshipMinimum || x.WageType == WageType.NationalMinimum);
+                        x.WageObject.Type == WageType.ApprenticeshipMinimum || x.WageObject.Type == WageType.NationalMinimum);
 
             validator.RuleFor(x => x.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.HoursPerWeekShouldBeGreaterThan16)
                 .When(x => x.HoursPerWeek.HasValue);
 
-            validator.RuleFor(viewModel => (int)viewModel.WageType)
+            validator.RuleFor(viewModel => (int)viewModel.WageObject.Type)
                 .InclusiveBetween((int)WageType.ApprenticeshipMinimum, (int)WageType.Custom)
                 .WithMessage(VacancyViewModelMessages.WageType.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
@@ -129,12 +129,12 @@
             validator.RuleFor(x => x.Wage)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Wage.RequiredErrorText)
-                .When(x => x.WageType == WageType.Custom)
+                .When(x => x.WageObject.Type == WageType.Custom)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
             validator.RuleFor(x => x.Wage)
                 .Must(HaveAValidHourRate)
-                .When(v => v.WageType == WageType.Custom)
+                .When(v => v.WageObject.Type == WageType.Custom)
                 .When(v => v.WageUnit != WageUnit.NotApplicable)
                 .When(v => v.HoursPerWeek.HasValue)
                 .WithMessage(VacancyViewModelMessages.Wage.WageLessThanMinimum);

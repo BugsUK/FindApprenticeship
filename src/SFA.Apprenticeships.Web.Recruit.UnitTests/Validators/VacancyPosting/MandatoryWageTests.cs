@@ -3,6 +3,7 @@
     using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
+    using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using FluentValidation;
@@ -43,8 +44,8 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
+                WageObject = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek),
                 Wage = wage,
-                WageType = WageType.Custom,
                 WageUnit = wageUnit,
                 HoursPerWeek = hoursPerWeek
             };
