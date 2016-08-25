@@ -137,7 +137,7 @@
                 .MapMemberFrom(v => v.SubmissionCount, av => av.SubmissionCount)
                 .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)//changed to locked field
                 .MapMemberFrom(v => v.StandardId, av => av.StandardId)
-                .MapMemberFrom(v => v.HoursPerWeek, av => av.HoursPerWeek)
+                .MapMemberFrom(v => v.HoursPerWeek, av => av.Wage.HoursPerWeek)
                 .MapMemberFrom(v => v.AdditionalLocationInformation, av => av.AdditionalLocationInformation)
                 .ForMember(v => v.EditedInRaa, opt => opt.UseValue(true)) // Always true when saving
                 .MapMemberFrom(v => v.DurationTypeId, av => av.DurationType)
@@ -206,7 +206,6 @@
                 .IgnoreMember(av => av.ContactDetailsComment)
                 .IgnoreMember(av => av.TitleComment)
                 .IgnoreMember(av => av.ShortDescriptionComment)
-                .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.Wage, opt => opt.MapFrom(v => MapWage(v)))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
@@ -315,7 +314,6 @@
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
-                .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.Wage, opt => opt.MapFrom(v => MapWage(v)))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)

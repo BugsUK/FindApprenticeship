@@ -238,7 +238,6 @@
                 DurationType = DurationType.Years,
                 VacancyGuid = Guid.NewGuid(),
                 FutureProspects = "future prospects",
-                HoursPerWeek = 40,
                 LongDescription = "long description",
                 OfflineVacancy = false,
                 PersonalQualities = "personal qualities",
@@ -249,7 +248,7 @@
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
-                Wage = new Wage(WageType.Custom, 0, null, WageUnit.NotApplicable)
+                Wage = new Wage(WageType.Custom, 0, null, WageUnit.NotApplicable, 40)
             };
         }
 

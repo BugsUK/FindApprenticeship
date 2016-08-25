@@ -13,7 +13,6 @@
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string WorkingWeek { get; set; }
-        public decimal? HoursPerWeek { get; set; }
         public Wage Wage { get; set; }
         public string ExpectedDuration { get; set; }
         public DurationType DurationType { get; set; }

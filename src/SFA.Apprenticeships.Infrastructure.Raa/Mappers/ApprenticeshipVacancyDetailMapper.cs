@@ -43,7 +43,6 @@
                 InterviewFromDate = DateTime.MinValue,
                 Wage = vacancy.Wage,
                 WorkingWeek = vacancy.WorkingWeek,
-                HoursPerWeek = vacancy.HoursPerWeek,
                 OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?
