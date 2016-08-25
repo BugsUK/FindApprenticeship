@@ -189,7 +189,15 @@
 
             var hourRate = GetHourRate(furtherVacancy.Wage.Value, furtherVacancy.WageUnit, furtherVacancy.HoursPerWeek.Value);
 
-            return !(hourRate < Wages.ApprenticeMinimumWage);
+            var minimumWageChangeDate = new DateTime(2016, 10, 1);
+            var possibleStartDate = furtherVacancy.VacancyDatesViewModel.PossibleStartDate.HasValue
+                ? furtherVacancy.VacancyDatesViewModel.PossibleStartDate.Date
+                : minimumWageChangeDate;
+            var expectedHourlyRate = possibleStartDate >= minimumWageChangeDate
+                ? WagesAfter01102016.ApprenticeMinimumWage
+                : Wages.ApprenticeMinimumWage;
+
+            return !(hourRate < expectedHourlyRate);
         }
 
         private static bool HaveAValidApprenticeshipDuration(FurtherVacancyDetailsViewModel furtherVacancy, decimal? duration)
