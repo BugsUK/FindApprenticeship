@@ -714,17 +714,24 @@ WHERE VacancyId = @VacancyId
 
         private void GetAllDateSubmittedAndDateFirstSubmitted(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
-            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
-            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+            var map = new Dictionary<string, VacancyPlus>();
+            var splitVacancyIds = DbHelpers.SplitIds(dbVacancies.Select(v => v.VacancyId).Distinct());
+            foreach (var vacancyIds in splitVacancyIds)
+            {
+                var vacancyPluses = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
 SELECT VacancyId, MIN(HistoryDate) as DateFirstSubmitted, MAX(HistoryDate) as DateSubmitted
 FROM dbo.VacancyHistory
 WHERE VacancyId IN @Ids and VacancyHistoryEventSubTypeId = @VacancyStatus
-GROUP BY VacancyId",
-                new
+GROUP BY VacancyId", new
                 {
-                    Ids = ids,
+                    Ids = vacancyIds,
                     VacancyStatus = VacancyStatus.Submitted
-                }).ToDictionary(t => t.VacancyId.ToString(), t => t);
+                });
+                foreach (var vacancyPlus in vacancyPluses)
+                {
+                    map[vacancyPlus.VacancyId.ToString()] = vacancyPlus;
+                }
+            }
 
             foreach (var vacancySummary in results.Where(x => map.ContainsKey(x.VacancyId.ToString())))
             {
@@ -816,17 +823,25 @@ order by HistoryDate
 
         private void GetAllDateQAApproved(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
-            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
-            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+
+            var map = new Dictionary<string, VacancyPlus>();
+            var splitVacancyIds = DbHelpers.SplitIds(dbVacancies.Select(v => v.VacancyId).Distinct());
+            foreach (var vacancyIds in splitVacancyIds)
+            {
+                var vacancyPluses = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
 SELECT VacancyId, MAX(HistoryDate) as DateQAApproved
 FROM dbo.VacancyHistory
 WHERE VacancyId IN @Ids and VacancyHistoryEventSubTypeId = @VacancyStatus
-GROUP BY VacancyId",
-                new
+GROUP BY VacancyId", new
                 {
-                    Ids = ids,
+                    Ids = vacancyIds,
                     VacancyStatus = VacancyStatus.Live
-                }).ToDictionary(t => t.VacancyId.ToString(), t => t);
+                });
+                foreach (var vacancyPlus in vacancyPluses)
+                {
+                    map[vacancyPlus.VacancyId.ToString()] = vacancyPlus;
+                }
+            }
 
             foreach (var vacancySummary in results)
             {
@@ -865,19 +880,26 @@ order by HistoryDate desc
 
         private void GetAllRegionalTeams(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
-            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
-            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
-                SELECT v.VacancyId, ps.PostCode
-                FROM dbo.Vacancy v
-                INNER JOIN dbo.VacancyOwnerRelationship vor
-                ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
-                INNER JOIN dbo.ProviderSite ps
-                ON ps.ProviderSiteId = vor.ProviderSiteId
-                WHERE VacancyId IN @Ids",
-                new
+            var map = new Dictionary<string, string>();
+            var splitVacancyIds = DbHelpers.SplitIds(dbVacancies.Select(v => v.VacancyId).Distinct());
+            foreach (var vacancyIds in splitVacancyIds)
+            {
+                var vacancyPluses = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+SELECT v.VacancyId, ps.PostCode
+FROM dbo.Vacancy v
+INNER JOIN dbo.VacancyOwnerRelationship vor
+ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+INNER JOIN dbo.ProviderSite ps
+ON ps.ProviderSiteId = vor.ProviderSiteId
+WHERE VacancyId IN @Ids", new
                 {
-                    Ids = ids
-                }).ToDictionary(t => t.VacancyId.ToString(), t => t.PostCode);
+                    Ids = vacancyIds
+                });
+                foreach (var vacancyPlus in vacancyPluses)
+                {
+                    map[vacancyPlus.VacancyId.ToString()] = vacancyPlus.PostCode;
+                }
+            }
 
             foreach (var vacancySummary in results)
             {
