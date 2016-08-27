@@ -968,7 +968,7 @@
                     break;
             }
 
-            var providerMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId));
+            var providerMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId), false);
 
             var viewModel = new DashboardVacancySummariesViewModel
             {
