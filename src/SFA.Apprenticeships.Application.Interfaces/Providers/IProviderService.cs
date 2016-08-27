@@ -15,6 +15,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     {
         Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId, bool currentOnly = true);
 
+        IReadOnlyDictionary<int, Provider> GetProvidersViaCurrentOwnerParty(IEnumerable<int> vacancyPartyIds, bool currentOnly = true);
+
         Provider GetProvider(int providerId);
 
         Provider GetProvider(string ukprn);

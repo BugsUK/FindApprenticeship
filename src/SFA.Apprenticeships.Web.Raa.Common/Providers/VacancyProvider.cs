@@ -26,6 +26,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
+    using Domain.Entities.Raa.Parties;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -967,6 +968,8 @@
                     break;
             }
 
+            var providerMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId));
+
             var viewModel = new DashboardVacancySummariesViewModel
             {
                 SearchViewModel = searchViewModel,
@@ -974,7 +977,7 @@
                 SubmittedYesterdayCount = submittedYesterday.Count,
                 SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
                 ResubmittedCount = resubmitted.Count,
-                Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList(),
+                Vacancies = vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.OwnerPartyId])).ToList(),
                 RegionalTeamsMetrics = regionalTeamsMetrics
             };
 
@@ -988,7 +991,7 @@
             var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
                 vacancies); 
 
-            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy) : null;
+            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProviderViaCurrentOwnerParty(nextVacancy.OwnerPartyId, false)) : null;
         }
 
         public void UnReserveVacancyForQA(int vacancyReferenceNumber)
@@ -1070,9 +1073,8 @@
             };
         }
 
-        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)
+        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy, Provider provider)
         {
-            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId, false);
             var userName = _currentUserService.CurrentUserName;
 
             return new DashboardVacancySummaryViewModel
