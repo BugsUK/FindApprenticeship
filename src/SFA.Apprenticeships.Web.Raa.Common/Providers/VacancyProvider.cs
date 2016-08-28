@@ -402,7 +402,7 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.WageObject.Type, viewModel.WageObject.Amount, null, viewModel.WageObject.Unit, viewModel.HoursPerWeek);
+            vacancy.Wage = new Wage(viewModel.WageObject.Type, viewModel.WageObject.Amount, null, viewModel.WageObject.Unit, viewModel.WageObject.HoursPerWeek);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -1217,7 +1217,7 @@
             }
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.WageObject.Type, viewModel.WageObject.Amount, null, viewModel.WageObject.Unit, viewModel.HoursPerWeek);
+            vacancy.Wage = new Wage(viewModel.WageObject.Type, viewModel.WageObject.Amount, null, viewModel.WageObject.Unit, viewModel.WageObject.HoursPerWeek);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 

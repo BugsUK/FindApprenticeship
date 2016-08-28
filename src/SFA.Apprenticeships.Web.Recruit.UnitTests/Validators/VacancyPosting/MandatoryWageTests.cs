@@ -44,8 +44,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                WageObject = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek),
-                HoursPerWeek = hoursPerWeek
+                WageObject = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek)
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

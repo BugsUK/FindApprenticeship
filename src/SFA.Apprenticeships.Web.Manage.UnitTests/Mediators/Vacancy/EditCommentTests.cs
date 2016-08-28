@@ -26,7 +26,8 @@
                 {
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
-                }
+                },
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             });
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
@@ -47,7 +48,8 @@
                 {
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
-                }
+                },
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             });
 
             var mediator = new VacancyMediatorBuilder().With(vacancyPostingProvider).Build();
@@ -84,7 +86,8 @@
                 {
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
-                }
+                },
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
 
             var result = mediator.UpdateVacancy(viewModel);
@@ -157,8 +160,7 @@
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "A description",
-                WageObject = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, null),
-                HoursPerWeek = 30,
+                WageObject = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, 30),
                 WorkingWeek = "A working week"
             };
         }

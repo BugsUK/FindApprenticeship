@@ -17,7 +17,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 DurationComment = source.DurationComment,
                 DurationType = source.DurationType,
                 ExpectedDuration = source.ExpectedDuration,
-                HoursPerWeek = source.Wage.HoursPerWeek,
                 LongDescription = source.LongDescription,
                 LongDescriptionComment = source.LongDescriptionComment,
                 VacancyReferenceNumber = source.VacancyReferenceNumber,

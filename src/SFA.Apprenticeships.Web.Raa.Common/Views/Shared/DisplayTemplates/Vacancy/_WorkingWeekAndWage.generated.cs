@@ -181,7 +181,7 @@ WriteLiteral("</p>\r\n");
             #line hidden
             
             #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-     if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.HoursPerWeek.HasValue)
+     if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek.HasValue)
     {
 
             
@@ -201,7 +201,7 @@ WriteLiteral(">Total hours per week: ");
 
             
             #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                      Write(Model.FurtherVacancyDetailsViewModel.HoursPerWeek);
+                                                      Write(Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek);
 
             
             #line default
@@ -210,7 +210,7 @@ WriteLiteral("</p>\r\n");
 
             
             #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-        if (Model.FurtherVacancyDetailsViewModel.HoursPerWeek > 40)
+        if (Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek > 40)
         {
 
             
@@ -247,14 +247,14 @@ WriteLiteral("\r\n</div>\r\n\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2034), Tuple.Create("\"", 2060)
+WriteAttribute("class", Tuple.Create(" class=\"", 2067), Tuple.Create("\"", 2093)
             
             #line 39 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 2042), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 2075), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 2042), false)
+, 2075), false)
 );
 
 WriteLiteral(">\r\n        <h3");

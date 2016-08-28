@@ -65,8 +65,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
                     Duration = 3,
                     DurationType = DurationType.Years,
                     LongDescription = "A description",
-                    WageObject = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, null),
-                    HoursPerWeek = 30,
+                    WageObject = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, 30),
                     WorkingWeek = "A working week"
                 },
                 NewVacancyViewModel = new NewVacancyViewModel

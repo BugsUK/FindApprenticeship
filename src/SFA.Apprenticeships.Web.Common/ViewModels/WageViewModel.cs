@@ -15,6 +15,7 @@
 
         public WageUnit Unit { get; private set; }
 
+        [Display(Name = WageViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; private set; }
 
         public WageViewModel(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)

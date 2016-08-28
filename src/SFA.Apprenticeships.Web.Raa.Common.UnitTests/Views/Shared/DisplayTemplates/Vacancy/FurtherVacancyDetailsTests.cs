@@ -2,11 +2,14 @@
 {
     using Common.Views.Shared.DisplayTemplates.Vacancy;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using RazorGenerator.Testing;
     using ViewModels.Vacancy;
+    using Web.Common.ViewModels;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     public class FurtherVacancyDetailsTests : ViewUnitTest
@@ -90,6 +93,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
+                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -97,7 +101,7 @@
             var view = details.RenderAsHtml(viewModel);
 
             //Assert
-            var hoursPerWeek = view.GetElementbyId("HoursPerWeek");
+            var hoursPerWeek = view.GetElementbyId("WageObject_HoursPerWeek");
             hoursPerWeek.Should().NotBeNull();
             hoursPerWeek.Attributes["type"].Value.Should().Be("tel");
         }
@@ -108,6 +112,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
+                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -115,7 +120,7 @@
             var view = details.RenderAsHtml(viewModel);
 
             //Assert
-            var hoursPerWeek = view.GetElementbyId("HoursPerWeek");
+            var hoursPerWeek = view.GetElementbyId("WageObject_HoursPerWeek");
             hoursPerWeek.Should().NotBeNull();
             hoursPerWeek.Attributes["type"].Value.Should().Be("hidden");
         }
@@ -126,6 +131,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
+                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -136,10 +142,10 @@
             view.GetElementbyId("custom-wage").Should().NotBeNull();
             view.GetElementbyId("national-minimum-wage").Should().NotBeNull();
             view.GetElementbyId("apprenticeship-minimum-wage").Should().NotBeNull();
-            var wage = view.GetElementbyId("Wage");
+            var wage = view.GetElementbyId("WageObject_Amount");
             wage.Should().NotBeNull();
             wage.Attributes["type"].Value.Should().Be("tel");
-            var wageUnit = view.GetElementbyId("WageUnit");
+            var wageUnit = view.GetElementbyId("WageObject_Unit");
             wageUnit.Should().NotBeNull();
             wageUnit.Name.Should().Be("select");
         }
@@ -150,6 +156,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
+                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -160,10 +167,10 @@
             view.GetElementbyId("custom-wage").Should().NotBeNull();
             view.GetElementbyId("national-minimum-wage").Should().NotBeNull();
             view.GetElementbyId("apprenticeship-minimum-wage").Should().NotBeNull();
-            var wage = view.GetElementbyId("Wage");
+            var wage = view.GetElementbyId("WageObject_Amount");
             wage.Should().NotBeNull();
             wage.Attributes["type"].Value.Should().Be("tel");
-            var wageUnit = view.GetElementbyId("WageUnit");
+            var wageUnit = view.GetElementbyId("WageObject_Unit");
             wageUnit.Should().NotBeNull();
             wageUnit.Name.Should().Be("select");
         }
@@ -174,6 +181,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
+                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -184,13 +192,13 @@
             view.GetElementbyId("custom-wage").Should().BeNull();
             view.GetElementbyId("national-minimum-wage").Should().BeNull();
             view.GetElementbyId("apprenticeship-minimum-wage").Should().BeNull();
-            var wageType= view.GetElementbyId("WageType");
+            var wageType= view.GetElementbyId("WageObject_Type");
             wageType.Should().NotBeNull();
             wageType.Attributes["type"].Value.Should().Be("hidden");
-            var wage = view.GetElementbyId("Wage");
+            var wage = view.GetElementbyId("WageObject_Amount");
             wage.Should().NotBeNull();
             wage.Attributes["type"].Value.Should().Be("hidden");
-            var wageUnit = view.GetElementbyId("WageUnit");
+            var wageUnit = view.GetElementbyId("WageObject_Unit");
             wageUnit.Should().NotBeNull();
             wageUnit.Attributes["type"].Value.Should().Be("hidden");
         }

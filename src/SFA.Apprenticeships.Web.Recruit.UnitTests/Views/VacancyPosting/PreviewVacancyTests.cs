@@ -98,8 +98,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    WageObject = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, hoursPerWeek),
-                    HoursPerWeek = hoursPerWeek
+                    WageObject = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, hoursPerWeek)
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {

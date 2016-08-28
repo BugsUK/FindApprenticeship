@@ -725,9 +725,8 @@
                 },
                 Duration = 3,
                 DurationType = DurationType.Years,
-                HoursPerWeek = 40,
                 LongDescription = "Long description",
-                WageObject = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, null),
+                WageObject = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, 40),
                 WorkingWeek = "working week"
             };
 

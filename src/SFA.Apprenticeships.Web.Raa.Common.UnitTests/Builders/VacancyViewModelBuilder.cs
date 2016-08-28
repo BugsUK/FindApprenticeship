@@ -48,10 +48,9 @@
             viewModel.TrainingDetailsViewModel.ContactEmail = null;
             viewModel.FurtherVacancyDetailsViewModel.Status = status;
             viewModel.FurtherVacancyDetailsViewModel.VacancyType = vacancyType;
-            viewModel.FurtherVacancyDetailsViewModel.HoursPerWeek = 30;
             viewModel.FurtherVacancyDetailsViewModel.Duration = 12;
             viewModel.FurtherVacancyDetailsViewModel.DurationType = DurationType.Months;
-            viewModel.FurtherVacancyDetailsViewModel.WageObject = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, null);
+            viewModel.FurtherVacancyDetailsViewModel.WageObject = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, 30);
             viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
             {
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),

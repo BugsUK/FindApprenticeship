@@ -22,11 +22,11 @@
         }
     </h3>
     <p id="vacancy-working-week" itemprop="workHours" class="@Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">@Model.FurtherVacancyDetailsViewModel.WorkingWeek</p>
-    @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.HoursPerWeek.HasValue)
+    @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek.HasValue)
     {
         <a name="furthervacancydetailsviewmodel_hoursperweek"></a>
-        <p id="total-hours-per-week">Total hours per week: @Model.FurtherVacancyDetailsViewModel.HoursPerWeek</p>
-        if (Model.FurtherVacancyDetailsViewModel.HoursPerWeek > 40)
+        <p id="total-hours-per-week">Total hours per week: @Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek</p>
+        if (Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek > 40)
         {
             <p>(the hours are based on the candidate being over 18)</p>
         }
