@@ -66,7 +66,7 @@
 
             MockProviderService.Setup(s => s.GetProviderSite(It.IsAny<int>()))
                 .Returns(new Fixture().Build<ProviderSite>().Create());
-            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
+            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>(), It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().Create());
             _mockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
             _mockConfigurationService.Setup(mcs => mcs.Get<RecruitWebConfiguration>())

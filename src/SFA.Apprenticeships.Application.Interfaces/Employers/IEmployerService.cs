@@ -10,9 +10,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
 
     public interface IEmployerService
     {
-        Employer GetEmployer(int employerId);
-        //TODO: temporary method. Remove after moving status checks to a higher tier
-        Employer GetEmployerWithoutStatusCheck(int employerId);
+        Employer GetEmployer(int employerId, bool currentOnly);
         Employer GetEmployer(string edsUrn);
         IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds, bool currentOnly = true);
         IEnumerable<MinimalEmployerDetails> GetMinimalEmployerDetails(IEnumerable<int> employerIds, bool currentOnly = true);

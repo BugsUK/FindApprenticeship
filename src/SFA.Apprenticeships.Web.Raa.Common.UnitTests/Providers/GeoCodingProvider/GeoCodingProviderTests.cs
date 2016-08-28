@@ -22,7 +22,7 @@
             var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
             var postalAddress = new PostalAddress();
 
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
+            employerService.Setup(es => es.GetEmployer(employerId, It.IsAny<bool>())).Returns(new Employer {Address = postalAddress});
             geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(GeoPoint.NotSet);
 
             var geoCodingProvider =
@@ -41,7 +41,7 @@
             var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
             var postalAddress = new PostalAddress {County = ""};
 
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
+            employerService.Setup(es => es.GetEmployer(employerId, It.IsAny<bool>())).Returns(new Employer {Address = postalAddress});
             geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(new Fixture().Create<GeoPoint>());
 
             var geoCodingProvider =
@@ -61,7 +61,7 @@
 
             var postalAddress = new Fixture().Create<PostalAddress>();
 
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
+            employerService.Setup(es => es.GetEmployer(employerId, It.IsAny<bool>())).Returns(new Employer {Address = postalAddress});
 
             var geoCodingProvider =
                 new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
@@ -81,14 +81,14 @@
             var postalAddress = new PostalAddress {County = "something"};
             geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(GeoPoint.NotSet);
 
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
+            employerService.Setup(es => es.GetEmployer(employerId, It.IsAny<bool>())).Returns(new Employer {Address = postalAddress});
 
             var geoCodingProvider =
                 new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
 
             geoCodingProvider.EmployerHasAValidAddress(employerId);
 
-            employerService.Verify(es => es.GetEmployer(employerId));
+            employerService.Verify(es => es.GetEmployer(employerId, It.IsAny<bool>()));
             geoCodeLookupService.Verify(gs => gs.GetGeoPointFor(postalAddress), Times.Once());
         }
 
@@ -100,7 +100,7 @@
             var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
             var postalAddress = new PostalAddress {County = "something"};
 
-            employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer {Address = postalAddress});
+            employerService.Setup(es => es.GetEmployer(employerId, It.IsAny<bool>())).Returns(new Employer {Address = postalAddress});
             geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(new Fixture().Create<GeoPoint>());
 
             var geoCodingProvider =
