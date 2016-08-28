@@ -63,14 +63,14 @@
         public VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId)
         {
             var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId, true);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
             return vacancyParty.Convert(employer);
         }
 
         public VacancyPartyViewModel GetVacancyPartyViewModel(int providerSiteId, string edsUrn)
         {
             var vacancyParty = _providerService.GetVacancyParty(providerSiteId, edsUrn);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
             return vacancyParty.Convert(employer);
         }
 
@@ -100,7 +100,7 @@
                 _vacancyPostingService.UpdateVacancy(vacancy);
             }
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
             var result = vacancyParty.Convert(employer);
             
             return result;
