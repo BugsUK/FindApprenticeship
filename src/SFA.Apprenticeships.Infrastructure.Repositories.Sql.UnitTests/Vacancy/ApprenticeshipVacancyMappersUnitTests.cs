@@ -104,6 +104,7 @@
             var databaseVacancy = new Fixture()
                 .Build<Vacancy>()
                 .With(each => each.WeeklyWage, weeklyWage)
+                .With(each => each.WageUnitId, 1)
                 .Create();
 
             // Act
