@@ -38,7 +38,7 @@
                 .Returns(vacancyParty);
             MockProviderService.Setup(s => s.GetVacancyParty(providerSiteId, edsErn))
                 .Returns(vacancyParty);
-            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+            MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
 
             var provider = GetProviderProvider();
@@ -93,7 +93,7 @@
                 .Returns(providerSiteEmployerLink);
             MockProviderService.Setup(s => s.GetVacancyParty(providerSiteId, edsErn))
                 .Returns(providerSiteEmployerLink);
-            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+            MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
 
             var provider = GetProviderProvider();
@@ -144,7 +144,7 @@
                 .Returns(vacancyParty);
             MockProviderService.Setup(s => s.GetVacancyParty(providerSiteId, edsErn))
                 .Returns(vacancyParty);
-            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+            MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
             MockProviderService.Setup(s => s.IsADeletedVacancyParty(providerSiteId, edsErn)).Returns(true);
 

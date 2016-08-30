@@ -13,7 +13,7 @@
     using Moq;
     using Moq.Language.Flow;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
+    using Ploeh.AutoFixture;
     using Web.Common.Configuration;
 
     [TestFixture]
@@ -68,7 +68,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>(), It.IsAny<bool>())).Returns(new Provider());
+            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
 
             vacancyLockingService.Setup(
                 vls =>
@@ -123,7 +123,7 @@
                     }
                 });
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(ownerPartyId, It.IsAny<bool>())).Returns(new Provider());
+            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 42, new Fixture().Create<Provider>() } });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -137,7 +137,7 @@
 
             //Assert
             vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
-            providerService.Verify(ps => ps.GetProviderViaCurrentOwnerParty(ownerPartyId, It.IsAny<bool>()), Times.Once);
+            providerService.Verify(ps => ps.GetProvidersViaCurrentOwnerParty(new List<int> {ownerPartyId}, It.IsAny<bool>()), Times.Once);
         }
     }
 

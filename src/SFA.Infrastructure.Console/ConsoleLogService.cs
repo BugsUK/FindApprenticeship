@@ -1,7 +1,7 @@
 ﻿namespace SFA.Infrastructure.Console
 {
-    using Interfaces;
     using System;
+    using Apprenticeships.Application.Interfaces;
 
     public class ConsoleLogService : ILogService
     {

@@ -131,7 +131,6 @@
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
 
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
-            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
@@ -153,7 +152,7 @@
         private void RegisterMediators()
         {
             For<IProviderMediator>().Use<ProviderMediator>();
-            For<IProviderUserMediator>().Use<ProviderUserMediator>();
+            For<IProviderUserMediator>().Use<ProviderUserMediator>().Ctor<IMapper>().Named("RecruitMappers");
             For<IVacancyPostingMediator>().Use<VacancyPostingMediator>();
             For<IVacancyStatusMediator>().Use<VacancyStatusMediator>();
             For<IApplicationMediator>().Use<ApplicationMediator>();

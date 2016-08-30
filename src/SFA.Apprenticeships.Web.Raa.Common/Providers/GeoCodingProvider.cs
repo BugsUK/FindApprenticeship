@@ -18,7 +18,7 @@
 
         public GeoCodeAddressResult EmployerHasAValidAddress(int employerId)
         {
-            var employer = _employerService.GetEmployer(employerId);
+            var employer = _employerService.GetEmployer(employerId, true);
 
             if (NoGeoPoint(employer.Address) || InvalidGeopoint(employer.Address))
             {

@@ -122,7 +122,14 @@
             ApplicationStatuses? updateStatusTo = null;
             if (sourceApplicationSummary != null && (int)applicationStatusTypeId != sourceApplicationSummary.ApplicationStatusTypeId)
             {
-                _logService.Warn($"Application with guid {apprenticeshipApplication.Id} mapped to application id {applicationId} has a different state {applicationStatusTypeId} than the master copy on AVMS {sourceApplicationSummary.ApplicationStatusTypeId}.");
+                if (sourceApplicationSummary.ApplicationStatusTypeId < (int)applicationStatusTypeId)
+                {
+                    _logService.Info($"Application with guid {apprenticeshipApplication.Id} mapped to application id {applicationId} has a different state {applicationStatusTypeId} than the master copy on AVMS {(ApplicationStatusTypeIds)sourceApplicationSummary.ApplicationStatusTypeId}. However the state on FAA is more advanced so this is not a problem.");
+                }
+                else
+                {
+                    _logService.Warn($"Application with guid {apprenticeshipApplication.Id} mapped to application id {applicationId} has a different state {applicationStatusTypeId} than the master copy on AVMS {(ApplicationStatusTypeIds)sourceApplicationSummary.ApplicationStatusTypeId}.");
+                }
                 //We never copied over the InProgress status when getting application status via the NAS gateway so do it now
                 if (applicationStatusTypeId == ApplicationStatusTypeIds.ApplicationStatusTypeIdSent && sourceApplicationSummary.ApplicationStatusTypeId == (int)ApplicationStatusTypeIds.ApplicationStatusTypeIdInProgress)
                 {
