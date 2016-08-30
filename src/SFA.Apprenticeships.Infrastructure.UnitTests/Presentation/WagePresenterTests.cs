@@ -87,7 +87,7 @@
         [TestCase(WageType.NationalMinimum, WageUnit.Weekly)]
         public void ShouldGetTheCorrectWageUnitForNonCustomWages(WageType wageType, WageUnit expected)
         {
-            var wage = new Wage(wageType, null, string.Empty, WageUnit.NotApplicable);
+            var wage = new Wage(wageType, null, string.Empty, WageUnit.NotApplicable, null);
             // Act.
             var actual = wage.Unit;
 
@@ -101,7 +101,7 @@
         [TestCase(WageUnit.NotApplicable, WageUnit.NotApplicable)]
         public void ShouldGetTheCorrectWageUnitForCustomWages(WageUnit wageUnit, WageUnit expected)
         {
-            var wage = new Wage(WageType.Custom, null, string.Empty, wageUnit);
+            var wage = new Wage(WageType.Custom, null, string.Empty, wageUnit, null);
 
             var actual = wage.Unit;
 

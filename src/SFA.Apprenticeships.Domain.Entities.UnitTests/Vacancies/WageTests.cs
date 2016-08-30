@@ -32,7 +32,7 @@
         {
             //Arrange
             //Act
-            var result = new Wage(type, null, null, suppliedUnit);
+            var result = new Wage(type, null, null, suppliedUnit, null);
 
             //Assert
             result.Unit.Should().Be(expectedUnit);

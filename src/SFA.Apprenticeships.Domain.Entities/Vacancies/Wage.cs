@@ -15,9 +15,6 @@
             Unit = CorrectWageUnit(type, unit);
         }
 
-        public Wage(WageType type, decimal? amount, string text, WageUnit unit)
-            : this(type, amount, text, unit, null) { }
-
         public WageType Type { get; private set; }
 
         public decimal? Amount { get; private set; }
