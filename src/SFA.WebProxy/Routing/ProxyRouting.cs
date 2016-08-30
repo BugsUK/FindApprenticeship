@@ -43,7 +43,7 @@
 
     public class NasAvWebServicesRouting : IProxyRouting
     {
-        private static readonly Regex ExternalSystemIdRegex = new Regex("<ns:ExternalSystemId>(.+?)</ns:ExternalSystemId>");
+        private static readonly Regex ExternalSystemIdRegex = new Regex("<(ns\\d?:)?ExternalSystemId>(.+?)</(ns\\d?:)?ExternalSystemId>");
 
         private readonly IConfiguration _configuration;
         private readonly IWebProxyUserRepository _webProxyUserRepository;
@@ -90,7 +90,7 @@
                 if (externalSystemIdMatch.Success)
                 {
                     Guid externalSystemId;
-                    if (Guid.TryParse(externalSystemIdMatch.Groups[1].Value, out externalSystemId))
+                    if (Guid.TryParse(externalSystemIdMatch.Groups[2].Value, out externalSystemId))
                     {
                         var webProxyUser = _webProxyUserRepository.Get(externalSystemId);
                         if (webProxyUser != WebProxyConsumer.WebProxyConsumerNotFound && !string.IsNullOrEmpty(webProxyUser?.RouteToCompatabilityWebServiceRegex))

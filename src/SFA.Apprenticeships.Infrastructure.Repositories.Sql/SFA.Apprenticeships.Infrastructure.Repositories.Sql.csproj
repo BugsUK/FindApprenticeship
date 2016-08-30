@@ -144,6 +144,7 @@
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderSite.cs" />
+    <Compile Include="Schemas\Provider\Entities\ProviderSiteRelationship.cs" />
     <Compile Include="Schemas\Provider\ProviderSiteMappers.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />

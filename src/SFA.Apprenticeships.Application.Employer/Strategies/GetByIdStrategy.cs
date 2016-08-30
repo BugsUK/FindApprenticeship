@@ -17,11 +17,11 @@
         }
 
 
-        public Employer Get(int employerId)
+        public Employer Get(int employerId, bool currentOnly)
         {
             _logService.Debug("Calling Employer Repository to get employer with Id='{0}'.", employerId);
 
-            return _employerReadRepository.GetById(employerId);
+            return _employerReadRepository.GetById(employerId, currentOnly);
         }
     }
 }

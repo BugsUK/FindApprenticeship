@@ -14,6 +14,7 @@
 
     using SFA.Apprenticeships.Application.Interfaces;
     using Newtonsoft.Json;
+    using Reference.Entities;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
@@ -317,7 +318,7 @@ FETCH NEXT @PageSize ROWS ONLY
             GetCountyId(dbVacancy, result);
 
             PatchTrainingType(result);
-            GetAndTryToMapStandards(dbVacancy, result);
+            GetAndTryToMapStandards(new List<Vacancy> {dbVacancy}, new List<VacancySummary> {result});
 
             return result;
         }
@@ -332,6 +333,7 @@ FETCH NEXT @PageSize ROWS ONLY
             GetAllDateSubmittedAndDateFirstSubmitted(dbVacancies, results);
             GetAllDateQAApproved(dbVacancies, results);
             GetAllRegionalTeams(dbVacancies, results);
+            GetAndTryToMapStandards(dbVacancies, results);
 
             for (var i = 0; i < dbVacancies.Count; i++)
             {
@@ -339,7 +341,6 @@ FETCH NEXT @PageSize ROWS ONLY
                 var vacancySummary = results[i];
 
                 MapDuration(dbVacancy, vacancySummary);
-                GetAndTryToMapStandards(dbVacancy, vacancySummary);
             }
 
             return results;
@@ -550,29 +551,54 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             }
         }
 
-        private void GetAndTryToMapStandards(Vacancy dbVacancy, VacancySummary result)
+        private void GetAndTryToMapStandards(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
-            if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
+            var map = new Dictionary<int, ApprenticeshipFramework>();
+            var splitFrameworkIds = DbHelpers.SplitIds(dbVacancies.Where(v => v.ApprenticeshipFrameworkId.HasValue).Select(v => v.ApprenticeshipFrameworkId.Value).Distinct());
+            foreach (var frameworkIds in splitFrameworkIds)
             {
-                var apprenticeshipOccupationId =
-                    GetApprenticeshipOccupationIdFor(dbVacancy.ApprenticeshipFrameworkId.Value);
-
-                if (apprenticeshipOccupationId == StandardsApprenticeshipOccupationId)
+                var apprenticeshipFrameworks = _getOpenConnection.QueryCached<ApprenticeshipFramework>(_cacheDuration, @"
+SELECT *
+FROM   dbo.ApprenticeshipFramework
+WHERE  ApprenticeshipFrameworkId IN @ApprenticeshipFrameworkIds",
+                new
                 {
-                    // This is a vacancy created in AVMS with an standard codified as framework
-                    result.TrainingType = TrainingType.Standards;
-                    result.FrameworkCodeName = null;
+                    ApprenticeshipFrameworkIds = frameworkIds
+                });
+                foreach (var apprenticeshipFramework in apprenticeshipFrameworks)
+                {
+                    map[apprenticeshipFramework.ApprenticeshipFrameworkId] = apprenticeshipFramework;
+                }
+            }
 
-                    // Try to get the standard id
-                    var frameworkFullName = GetFrameworkFullNameFor(dbVacancy.ApprenticeshipFrameworkId.Value);
-                    var sanitizedFrameworkFullName = SanitizeFrameworkFullName(frameworkFullName);
+            foreach (var dbVacancy in dbVacancies)
+            {
+                if (dbVacancy.ApprenticeshipFrameworkId.HasValue && map.ContainsKey(dbVacancy.ApprenticeshipFrameworkId.Value))
+                {
+                    var apprenticeshipOccupationId =
+                        map[dbVacancy.ApprenticeshipFrameworkId.Value].ApprenticeshipOccupationId;
 
-                    result.StandardId = GetStandardIdWithFullName(sanitizedFrameworkFullName);
+                    if (apprenticeshipOccupationId == StandardsApprenticeshipOccupationId)
+                    {
+                        var result = results.FirstOrDefault(r => r.VacancyId == dbVacancy.VacancyId);
+                        if (result != null)
+                        {
+                            // This is a vacancy created in AVMS with an standard codified as framework
+                            result.TrainingType = TrainingType.Standards;
+                            result.FrameworkCodeName = null;
 
-                    _logger.Info(
-                        result.StandardId.HasValue
-                            ? $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({frameworkFullName}) and the new StandardId is {result.StandardId.Value}"
-                            : $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({frameworkFullName}) but we haven't found any matching standard.");
+                            // Try to get the standard id
+                            var frameworkFullName = GetFrameworkFullNameFor(dbVacancy.ApprenticeshipFrameworkId.Value);
+                            var sanitizedFrameworkFullName = SanitizeFrameworkFullName(frameworkFullName);
+
+                            result.StandardId = GetStandardIdWithFullName(sanitizedFrameworkFullName);
+
+                            _logger.Info(
+                                result.StandardId.HasValue
+                                    ? $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({frameworkFullName}) and the new StandardId is {result.StandardId.Value}"
+                                    : $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({frameworkFullName}) but we haven't found any matching standard.");
+                        }
+                    }
                 }
             }
         }
@@ -587,18 +613,6 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             sanitizedFrameworkFullName = sanitizedFrameworkFullName.Replace("\u00a0", " ");
 
             return sanitizedFrameworkFullName;
-        }
-
-        private int GetApprenticeshipOccupationIdFor(int frameworkId)
-        {
-            return _getOpenConnection.QueryCached<int>(_cacheDuration, @"
-SELECT ApprenticeshipOccupationId
-FROM   dbo.ApprenticeshipFramework
-WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
-                new
-                {
-                    ApprenticeshipFrameworkId = frameworkId
-                }).Single();
         }
 
         private string GetFrameworkFullNameFor(int frameworkId)
@@ -714,17 +728,24 @@ WHERE VacancyId = @VacancyId
 
         private void GetAllDateSubmittedAndDateFirstSubmitted(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
-            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
-            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+            var map = new Dictionary<string, VacancyPlus>();
+            var splitVacancyIds = DbHelpers.SplitIds(dbVacancies.Select(v => v.VacancyId).Distinct());
+            foreach (var vacancyIds in splitVacancyIds)
+            {
+                var vacancyPluses = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
 SELECT VacancyId, MIN(HistoryDate) as DateFirstSubmitted, MAX(HistoryDate) as DateSubmitted
 FROM dbo.VacancyHistory
 WHERE VacancyId IN @Ids and VacancyHistoryEventSubTypeId = @VacancyStatus
-GROUP BY VacancyId",
-                new
+GROUP BY VacancyId", new
                 {
-                    Ids = ids,
+                    Ids = vacancyIds,
                     VacancyStatus = VacancyStatus.Submitted
-                }).ToDictionary(t => t.VacancyId.ToString(), t => t);
+                });
+                foreach (var vacancyPlus in vacancyPluses)
+                {
+                    map[vacancyPlus.VacancyId.ToString()] = vacancyPlus;
+                }
+            }
 
             foreach (var vacancySummary in results.Where(x => map.ContainsKey(x.VacancyId.ToString())))
             {
@@ -816,17 +837,25 @@ order by HistoryDate
 
         private void GetAllDateQAApproved(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
-            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
-            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+
+            var map = new Dictionary<string, VacancyPlus>();
+            var splitVacancyIds = DbHelpers.SplitIds(dbVacancies.Select(v => v.VacancyId).Distinct());
+            foreach (var vacancyIds in splitVacancyIds)
+            {
+                var vacancyPluses = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
 SELECT VacancyId, MAX(HistoryDate) as DateQAApproved
 FROM dbo.VacancyHistory
 WHERE VacancyId IN @Ids and VacancyHistoryEventSubTypeId = @VacancyStatus
-GROUP BY VacancyId",
-                new
+GROUP BY VacancyId", new
                 {
-                    Ids = ids,
+                    Ids = vacancyIds,
                     VacancyStatus = VacancyStatus.Live
-                }).ToDictionary(t => t.VacancyId.ToString(), t => t);
+                });
+                foreach (var vacancyPlus in vacancyPluses)
+                {
+                    map[vacancyPlus.VacancyId.ToString()] = vacancyPlus;
+                }
+            }
 
             foreach (var vacancySummary in results)
             {
@@ -865,19 +894,26 @@ order by HistoryDate desc
 
         private void GetAllRegionalTeams(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
-            var ids = dbVacancies.Select(v => v.VacancyId).Distinct();
-            var map = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
-                SELECT v.VacancyId, ps.PostCode
-                FROM dbo.Vacancy v
-                INNER JOIN dbo.VacancyOwnerRelationship vor
-                ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
-                INNER JOIN dbo.ProviderSite ps
-                ON ps.ProviderSiteId = vor.ProviderSiteId
-                WHERE VacancyId IN @Ids",
-                new
+            var map = new Dictionary<string, string>();
+            var splitVacancyIds = DbHelpers.SplitIds(dbVacancies.Select(v => v.VacancyId).Distinct());
+            foreach (var vacancyIds in splitVacancyIds)
+            {
+                var vacancyPluses = _getOpenConnection.QueryCached<VacancyPlus>(_cacheDuration, @"
+SELECT v.VacancyId, ps.PostCode
+FROM dbo.Vacancy v
+INNER JOIN dbo.VacancyOwnerRelationship vor
+ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+INNER JOIN dbo.ProviderSite ps
+ON ps.ProviderSiteId = vor.ProviderSiteId
+WHERE VacancyId IN @Ids", new
                 {
-                    Ids = ids
-                }).ToDictionary(t => t.VacancyId.ToString(), t => t.PostCode);
+                    Ids = vacancyIds
+                });
+                foreach (var vacancyPlus in vacancyPluses)
+                {
+                    map[vacancyPlus.VacancyId.ToString()] = vacancyPlus.PostCode;
+                }
+            }
 
             foreach (var vacancySummary in results)
             {
@@ -1408,6 +1444,9 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                     VacancyReferenceNumber = vacancyReferenceNumber
                 })
                 .SingleOrDefault();
+            
+            // TODO add entry to VacancyHistory table
+
             // What should happen if QAUserName != UserName. Should we throw an exception?
             if (dbVacancy == null)
             {
@@ -1441,6 +1480,9 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                     VacancyReferenceNumber = vacancyReferenceNumber
                 })
                 .SingleOrDefault();
+
+            // TODO add entry to VacancyHistory table
+
             if (dbVacancy == null)
             {
                 _logger.Warn(
