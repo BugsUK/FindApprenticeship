@@ -28,7 +28,7 @@
             _aggregateValidator = new VacancyViewModelValidator();
             _furtherDetailsViewModel = new FurtherVacancyDetailsViewModel()
             {
-                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
         }
 

@@ -24,7 +24,7 @@
         {
             _validator = new VacancyQuestionsViewModelServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
-            _furtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel() {WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)};
+            _furtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel() {Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)};
         }
 
         [TestCase(null, true)]

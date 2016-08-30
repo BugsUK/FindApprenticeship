@@ -180,7 +180,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    WageObject = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, hoursPerWeek)
+                    Wage = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, hoursPerWeek)
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -226,7 +226,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    WageObject = new WageViewModel(WageType.Custom, wage, null, wageUnit, null)
+                    Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, null)
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -321,7 +321,7 @@
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
                     VacancyType = VacancyType.Apprenticeship,
-                    WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, (decimal?)hoursPerWeek)
+                    Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, (decimal?)hoursPerWeek)
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {

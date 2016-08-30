@@ -37,12 +37,12 @@
 
         public static bool HoursPerWeekBetween30And40(this FurtherVacancyDetailsViewModel viewModel)
         {
-            return viewModel.WageObject.HoursPerWeek.HasValue && viewModel.WageObject.HoursPerWeek >= 30 && viewModel.WageObject.HoursPerWeek <= 40;
+            return viewModel.Wage.HoursPerWeek.HasValue && viewModel.Wage.HoursPerWeek >= 30 && viewModel.Wage.HoursPerWeek <= 40;
         }
 
         public static bool HoursPerWeekGreaterThanOrEqualTo16(this FurtherVacancyDetailsViewModel viewModel)
         {
-            return viewModel.WageObject.HoursPerWeek.HasValue && viewModel.WageObject.HoursPerWeek >= 16;
+            return viewModel.Wage.HoursPerWeek.HasValue && viewModel.Wage.HoursPerWeek >= 16;
         }
 
         public static bool DurationGreaterThanOrEqualTo12Months(this FurtherVacancyDetailsViewModel viewModel)
@@ -81,7 +81,7 @@
                 return null;
             }
 
-            if (!viewModel.WageObject.HoursPerWeek.HasValue || !duration.HasValue)
+            if (!viewModel.Wage.HoursPerWeek.HasValue || !duration.HasValue)
             {
                 //Other errors will superceed this one so return valid
                 return null;
@@ -92,8 +92,8 @@
             var condition =
                 hoursAndMinDurationLookup.FirstOrDefault(
                     l =>
-                        viewModel.WageObject.HoursPerWeek.Value >= l.HoursInclusiveLowerBound &&
-                        ( viewModel.WageObject.HoursPerWeek.Value < l.HoursExclusiveUpperBound || l.HoursExclusiveUpperBound == null));
+                        viewModel.Wage.HoursPerWeek.Value >= l.HoursInclusiveLowerBound &&
+                        ( viewModel.Wage.HoursPerWeek.Value < l.HoursExclusiveUpperBound || l.HoursExclusiveUpperBound == null));
 
             if (condition == null)
             {

@@ -53,7 +53,7 @@
                 },
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 AutoSaveTimeoutInSeconds = autoSaveTimeoutInSeconds,
-                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
 
             var vacancy = new Fixture().Build<Vacancy>()

@@ -22,11 +22,11 @@
         }
     </h3>
     <p id="vacancy-working-week" itemprop="workHours" class="@Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">@Model.FurtherVacancyDetailsViewModel.WorkingWeek</p>
-    @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek.HasValue)
+    @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek.HasValue)
     {
         <a name="furthervacancydetailsviewmodel_hoursperweek"></a>
-        <p id="total-hours-per-week">Total hours per week: @Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek</p>
-        if (Model.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek > 40)
+        <p id="total-hours-per-week">Total hours per week: @Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek</p>
+        if (Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek > 40)
         {
             <p>(the hours are based on the candidate being over 18)</p>
         }
@@ -38,26 +38,26 @@
 {
     <div class="@editableItemClass">
         <h3 class="bold-small">
-            @if (Model.FurtherVacancyDetailsViewModel.WageObject.Type == WageType.Custom)
+            @if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.Custom)
             {
                 <span>
-                    @Model.FurtherVacancyDetailsViewModel.WageObject.Unit.GetHeaderDisplayText()
-                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageObject.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
+                    @Model.FurtherVacancyDetailsViewModel.Wage.Unit.GetHeaderDisplayText()
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
                 </span>
             }
             else
             {
                 <span>
                     Weekly wage
-                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageObject.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
                 </span>
             }
         </h3>
-        <p id="vacancy-wage">@Model.FurtherVacancyDetailsViewModel.WageObject.WageDisplayText</p>
-        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageObject.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
+        <p id="vacancy-wage">@Model.FurtherVacancyDetailsViewModel.Wage.WageDisplayText</p>
+        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
     </div>
 
-    if (Model.FurtherVacancyDetailsViewModel.WageObject.Type == WageType.ApprenticeshipMinimum)
+    if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
     {
         <details>
             <summary>Wages explained</summary>
@@ -69,7 +69,7 @@
         </details>
     }
 
-    if (Model.FurtherVacancyDetailsViewModel.WageObject.Type == WageType.NationalMinimum)
+    if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.NationalMinimum)
     {
         <details>
             <summary>Wages explained</summary>

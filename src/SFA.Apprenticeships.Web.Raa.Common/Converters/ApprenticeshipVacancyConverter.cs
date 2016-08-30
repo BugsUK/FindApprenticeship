@@ -18,7 +18,7 @@
             {
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                 WorkingWeek = vacancy.WorkingWeek,
-                WageObject = new WageViewModel(vacancy.Wage),
+                Wage = new WageViewModel(vacancy.Wage),
                 WageUnits = GetWageUnits(),
                 DurationType = vacancy.DurationType,
                 DurationTypes = GetDurationTypes(vacancy.VacancyType),

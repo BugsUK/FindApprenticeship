@@ -34,7 +34,7 @@
                     ClosingDate = new DateViewModel(yesterday),
                     PossibleStartDate = new DateViewModel(yesterday)
                 },
-                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);

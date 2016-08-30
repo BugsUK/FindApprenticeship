@@ -25,7 +25,7 @@
         [Display(Name = VacancyViewModelMessages.WorkingWeekComment.LabelText)]
         public string WorkingWeekComment { get; set; }
 
-        public WageViewModel WageObject { get; set; }
+        public WageViewModel Wage { get; set; }
 
         public List<SelectListItem> WageUnits { get; set; }
 

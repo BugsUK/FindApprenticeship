@@ -93,7 +93,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -112,7 +112,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
-                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -131,7 +131,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -156,7 +156,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -181,7 +181,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
-                .With(vm => vm.WageObject, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
                 .Create();
             var details = new FurtherVacancyDetails();
 

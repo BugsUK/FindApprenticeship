@@ -107,36 +107,36 @@
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.TraineeshipRequiredErrorText)
                 .When(x => x.VacancyType == VacancyType.Traineeship);
 
-            validator.RuleFor(x => x.WageObject.HoursPerWeek)
+            validator.RuleFor(x => x.Wage.HoursPerWeek)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship)
                 .When(
                     x =>
                         x.VacancySource == VacancySource.Raa || x.Duration.HasValue ||
-                        x.WageObject.Type == WageType.ApprenticeshipMinimum || x.WageObject.Type == WageType.NationalMinimum);
+                        x.Wage.Type == WageType.ApprenticeshipMinimum || x.Wage.Type == WageType.NationalMinimum);
 
-            validator.RuleFor(x => x.WageObject.HoursPerWeek)
+            validator.RuleFor(x => x.Wage.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.HoursPerWeekShouldBeGreaterThan16)
-                .When(x => x.WageObject.HoursPerWeek.HasValue);
+                .When(x => x.Wage.HoursPerWeek.HasValue);
 
-            validator.RuleFor(viewModel => (int)viewModel.WageObject.Type)
+            validator.RuleFor(viewModel => (int)viewModel.Wage.Type)
                 .InclusiveBetween((int)WageType.ApprenticeshipMinimum, (int)WageType.Custom)
                 .WithMessage(VacancyViewModelMessages.WageType.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
-            validator.RuleFor(x => x.WageObject.Amount)
+            validator.RuleFor(x => x.Wage.Amount)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Wage.RequiredErrorText)
-                .When(x => x.WageObject.Type == WageType.Custom)
+                .When(x => x.Wage.Type == WageType.Custom)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
-            validator.RuleFor(x => x.WageObject.Amount)
+            validator.RuleFor(x => x.Wage.Amount)
                 .Must(HaveAValidHourRate)
-                .When(v => v.WageObject.Type == WageType.Custom)
-                .When(v => v.WageObject.Unit != WageUnit.NotApplicable)
-                .When(v => v.WageObject.HoursPerWeek.HasValue)
+                .When(v => v.Wage.Type == WageType.Custom)
+                .When(v => v.Wage.Unit != WageUnit.NotApplicable)
+                .When(v => v.Wage.HoursPerWeek.HasValue)
                 .WithMessage(VacancyViewModelMessages.Wage.WageLessThanMinimum);
 
             validator.RuleFor(x => x.Duration)
@@ -148,7 +148,7 @@
                 .Must(HaveAValidApprenticeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months)
                 .When(x => x.VacancyType != VacancyType.Traineeship)
-                .When(x => x.VacancySource == VacancySource.Raa || x.WageObject.HoursPerWeek.HasValue);
+                .When(x => x.VacancySource == VacancySource.Raa || x.Wage.HoursPerWeek.HasValue);
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidTraineeshipDuration)
@@ -183,20 +183,20 @@
 
         private static bool HaveAValidHourRate(FurtherVacancyDetailsViewModel furtherVacancy, decimal? wage)
         {
-            if (furtherVacancy.VacancyType == VacancyType.Traineeship && !furtherVacancy.WageObject.Amount.HasValue)
+            if (furtherVacancy.VacancyType == VacancyType.Traineeship && !furtherVacancy.Wage.Amount.HasValue)
                 return true;
 
-            if (!furtherVacancy.WageObject.Amount.HasValue || !furtherVacancy.WageObject.HoursPerWeek.HasValue)
+            if (!furtherVacancy.Wage.Amount.HasValue || !furtherVacancy.Wage.HoursPerWeek.HasValue)
                 return false;
 
-            var hourRate = GetHourRate(furtherVacancy.WageObject.Amount.Value, furtherVacancy.WageObject.Unit, furtherVacancy.WageObject.HoursPerWeek.Value);
+            var hourRate = GetHourRate(furtherVacancy.Wage.Amount.Value, furtherVacancy.Wage.Unit, furtherVacancy.Wage.HoursPerWeek.Value);
 
             return !(hourRate < Wages.ApprenticeMinimumWage);
         }
 
         private static bool HaveAValidApprenticeshipDuration(FurtherVacancyDetailsViewModel furtherVacancy, decimal? duration)
         {
-            if (!furtherVacancy.WageObject.HoursPerWeek.HasValue || !furtherVacancy.Duration.HasValue)
+            if (!furtherVacancy.Wage.HoursPerWeek.HasValue || !furtherVacancy.Duration.HasValue)
                 return true;
 
             if (duration.HasValue && duration.Value % 1 != 0)

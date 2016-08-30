@@ -40,7 +40,7 @@
                     ClosingDate = new DateViewModel(today.AddDays(14)),
                     PossibleStartDate = new DateViewModel(today.AddDays(15))
                 },
-                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -68,7 +68,7 @@
                     ClosingDate = new DateViewModel(today.AddDays(13)),
                     PossibleStartDate = new DateViewModel(today.AddDays(12))
                 },
-                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -98,7 +98,7 @@
                     ClosingDate = new DateViewModel(yesterday),
                     PossibleStartDate = new DateViewModel(yesterday)
                 },
-                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -126,7 +126,7 @@
                     ClosingDate = new DateViewModel(today),
                     PossibleStartDate = new DateViewModel(today)
                 },
-                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

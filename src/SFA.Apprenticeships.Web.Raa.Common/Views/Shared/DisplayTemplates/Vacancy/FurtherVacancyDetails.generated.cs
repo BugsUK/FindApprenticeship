@@ -231,7 +231,7 @@ WriteLiteral("\r\n        </fieldset>\r\n");
             #line hidden
             
             #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-       Write(Html.HiddenFor(m => m.WageObject.HoursPerWeek));
+       Write(Html.HiddenFor(m => m.Wage.HoursPerWeek));
 
             
             #line default
@@ -256,7 +256,7 @@ WriteLiteral("                ");
 
             
             #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-           Write(Html.FormTextFor(m => m.WageObject.HoursPerWeek, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12}, containerHtmlAttributes: new {style = "margin-bottom: 15px"}));
+           Write(Html.FormTextFor(m => m.Wage.HoursPerWeek, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12}, containerHtmlAttributes: new {style = "margin-bottom: 15px"}));
 
             
             #line default
@@ -301,7 +301,7 @@ WriteLiteral("</div>\r\n\r\n");
             #line hidden
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-       Write(Html.HiddenFor(m => m.WageObject.Type));
+       Write(Html.HiddenFor(m => m.Wage.Type));
 
             
             #line default
@@ -315,7 +315,7 @@ WriteLiteral("</div>\r\n\r\n");
             #line hidden
             
             #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-       Write(Html.HiddenFor(m => m.WageObject.Amount));
+       Write(Html.HiddenFor(m => m.Wage.Amount));
 
             
             #line default
@@ -329,7 +329,7 @@ WriteLiteral("</div>\r\n\r\n");
             #line hidden
             
             #line 52 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-       Write(Html.HiddenFor(m => m.WageObject.Unit));
+       Write(Html.HiddenFor(m => m.Wage.Unit));
 
             
             #line default
@@ -371,7 +371,7 @@ WriteLiteral(">\r\n                    <a");
 WriteAttribute("name", Tuple.Create(" name=\"", 3571), Tuple.Create("\"", 3636)
             
             #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 3578), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.WageObject.Type).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 3578), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Wage.Type).ToString().ToLower()
             
             #line default
             #line hidden
@@ -390,7 +390,7 @@ WriteAttribute("class", Tuple.Create(" class=\"", 3746), Tuple.Create("\"", 3893
 , Tuple.Create(Tuple.Create("", 3754), Tuple.Create("form-group", 3754), true)
             
             #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 3764), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageObject.Type))
+, Tuple.Create(Tuple.Create(" ", 3764), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.Type))
             
             #line default
             #line hidden
@@ -415,7 +415,7 @@ WriteLiteral("                            ");
 
             
             #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.RadioButtonFor(model => model.WageObject.Type, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"}));
+                       Write(Html.RadioButtonFor(model => model.Wage.Type, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"}));
 
             
             #line default
@@ -435,7 +435,7 @@ WriteLiteral("                            ");
 
             
             #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.RadioButtonFor(model => model.WageObject.Type, WageType.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"}));
+                       Write(Html.RadioButtonFor(model => model.Wage.Type, WageType.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"}));
 
             
             #line default
@@ -455,7 +455,7 @@ WriteLiteral("                            ");
 
             
             #line 74 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.RadioButtonFor(model => model.WageObject.Type, WageType.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"}));
+                       Write(Html.RadioButtonFor(model => model.Wage.Type, WageType.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"}));
 
             
             #line default
@@ -467,7 +467,7 @@ WriteLiteral("                        ");
 
             
             #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                   Write(Html.ValidationMessageFor(m => m.WageObject.Type));
+                   Write(Html.ValidationMessageFor(m => m.Wage.Type));
 
             
             #line default
@@ -488,7 +488,7 @@ WriteLiteral("                            ");
 
             
             #line 82 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.FormTextFor(m => m.WageObject.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12}));
+                       Write(Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12}));
 
             
             #line default
@@ -499,7 +499,7 @@ WriteLiteral("                            ");
 
             
             #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.DropDownListFor(m => m.WageObject.Unit, Model.WageUnits));
+                       Write(Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits));
 
             
             #line default
