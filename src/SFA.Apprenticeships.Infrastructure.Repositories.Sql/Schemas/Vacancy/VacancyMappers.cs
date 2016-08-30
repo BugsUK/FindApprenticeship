@@ -112,7 +112,7 @@
                 .MapMemberFrom(v => v.Description, av => av.LongDescription)
                 .MapMemberFrom(v => v.WeeklyWage, av => av.Wage.Amount)
                 .MapMemberFrom(v => v.WageType, av => av.Wage.Type)
-                .ForMember(v => v.WageText, opt => opt.MapFrom(av => av.Wage.Text))
+                .ForMember(v => v.WageText, opt => opt.MapFrom(av => WagePresenter.GetDisplayAmount(av.Wage.Type, av.Wage.Amount, av.Wage.Text, av.Wage.Unit, av.Wage.HoursPerWeek)))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
