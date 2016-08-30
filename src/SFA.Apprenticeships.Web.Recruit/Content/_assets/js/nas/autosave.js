@@ -42,7 +42,9 @@
             });
 
             $(window).on('beforeunload', function (e) {
-                saveForm();
+                if (!$(e.target.activeElement).hasClass("no-autosave")) {
+                    saveForm();
+                }
                 return;
             });
         };

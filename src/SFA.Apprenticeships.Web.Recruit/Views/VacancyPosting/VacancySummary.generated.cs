@@ -124,25 +124,25 @@ WriteLiteral(" id=\"vacancySummaryButton\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button\"");
+WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 877), Tuple.Create("\"", 901)
+WriteAttribute("value", Tuple.Create(" value=\"", 889), Tuple.Create("\"", 913)
             
             #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                     , Tuple.Create(Tuple.Create("", 885), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                                 , Tuple.Create(Tuple.Create("", 897), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 885), false)
+, 897), false)
 );
 
 WriteLiteral(">");
 
             
             #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                                                                                                 Write(saveButtonText);
+                                                                                                                             Write(saveButtonText);
 
             
             #line default
@@ -153,7 +153,7 @@ WriteLiteral(" id=\"vacancySummaryAndExit\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button-link no-autosave\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
@@ -177,14 +177,14 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line hidden
             
             #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" }));
 
             
             #line default
             #line hidden
             
             #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                                                                                                                          
+                                                                                                                                                                         
         }
 
             
@@ -252,9 +252,9 @@ WriteLiteral(@"></script>
 
     <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2366), Tuple.Create("\"", 2421)
-, Tuple.Create(Tuple.Create("", 2372), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
-, 2372), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 2421), Tuple.Create("\"", 2476)
+, Tuple.Create(Tuple.Create("", 2427), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 2427), false)
 );
 
 WriteLiteral(@"></script>
