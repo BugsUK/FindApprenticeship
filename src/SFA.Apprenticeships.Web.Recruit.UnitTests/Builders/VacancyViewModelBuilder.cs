@@ -97,5 +97,11 @@
             _furtherVacancyDetailsViewModel.VacancyDatesViewModel = vacancyDatesViewModel;
             return this;
         }
+
+        public VacancyViewModelBuilder With(WageViewModel wageObject)
+        {
+            _furtherVacancyDetailsViewModel.WageObject = wageObject;
+            return this;
+        }
     }
 }

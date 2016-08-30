@@ -58,10 +58,10 @@
             _aggregateValidator.Validate(vacancyViewModel);
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject, vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel);
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
         }
@@ -87,10 +87,10 @@
             _aggregateValidator.Validate(vacancyViewModel);
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject, vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
         }
@@ -136,10 +136,10 @@
             _aggregateValidator.Validate(vacancyViewModel);
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject, vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel);
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
         }
@@ -186,10 +186,10 @@
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             //Assert. This rule will be a warning rather than being mandatory and so is not implemented by the VacancySummaryViewModelServerValidator
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject, vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel);
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
         }
@@ -238,8 +238,8 @@
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
         }

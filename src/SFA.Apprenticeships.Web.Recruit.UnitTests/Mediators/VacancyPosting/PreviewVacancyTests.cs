@@ -33,12 +33,10 @@
                 {
                     ClosingDate = new DateViewModel(yesterday),
                     PossibleStartDate = new DateViewModel(yesterday)
-                }
-            };
-            var furtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel() {
+                },
                 WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(furtherVacancyDetailsViewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 

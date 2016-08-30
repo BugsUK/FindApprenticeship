@@ -54,9 +54,9 @@
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject.Amount, viewModel, RuleSet);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.Amount, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.Amount, vacancyViewModel, RuleSet);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageObject, vm => vm.WageObject.Amount, viewModel, RuleSet);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.Amount, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.Amount, vacancyViewModel, RuleSet);
             }
             else
             {

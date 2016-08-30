@@ -514,13 +514,13 @@
 
             if (expectHoursPerWeekValid)
             {
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
             else
             {
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
 
             if (expectDurationValid)
