@@ -19,11 +19,11 @@
     }
 
     <div class="grid grid-1-2">
-        <button id="vacancySummaryButton" type="submit" class="button" name="VacancySummary" value="@saveButtonValue">@saveButtonText</button>
-        <button id="vacancySummaryAndExit" type="submit" class="button-link" name="VacancySummary" value="VacancySummaryAndExit">Save and exit</button>
+        <button id="vacancySummaryButton" type="submit" class="button no-autosave" name="VacancySummary" value="@saveButtonValue">@saveButtonText</button>
+        <button id="vacancySummaryAndExit" type="submit" class="button-link no-autosave" name="VacancySummary" value="VacancySummaryAndExit">Save and exit</button>
         @if (Model.ComeFromPreview)
         {
-            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" })
         }
     </div>
 }
