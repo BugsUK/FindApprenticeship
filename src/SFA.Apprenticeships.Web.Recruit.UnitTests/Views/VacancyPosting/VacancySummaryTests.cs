@@ -13,11 +13,13 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
     using Common.Validators.Extensions;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Ploeh.AutoFixture;
     using Raa.Common.Validators.Vacancy;
     using Recruit.Views.Shared;
     using Shared;
     using VacancySummary = Recruit.Views.VacancyPosting.VacancySummary;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     public class VacancySummaryTests : ViewUnitTest
@@ -61,7 +63,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
                         Month = 2,
                         Year = year
                     }
-                }
+                },
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
             var validator = new VacancySummaryViewModelServerValidator();
             var results = validator.Validate(viewModelToValidate, ruleSet: RuleSets.ErrorsAndWarnings);

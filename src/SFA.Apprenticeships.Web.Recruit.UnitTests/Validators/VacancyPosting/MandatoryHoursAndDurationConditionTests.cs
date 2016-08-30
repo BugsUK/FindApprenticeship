@@ -259,9 +259,9 @@
             _aggregateValidator.Validate(vacancyViewModel);
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
-            _validator.ShouldHaveValidationErrorFor(vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.WageObject, vm => vm.WageObject.HoursPerWeek, viewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.WageObject, vm => vm.FurtherVacancyDetailsViewModel.WageObject.HoursPerWeek, vacancyViewModel, RuleSet);
         }
 
         [TestCase(5, DurationType.Weeks, false)]
@@ -279,7 +279,8 @@
                 Duration = expectedDuration,
                 DurationType = durationType,
                 VacancyType = VacancyType.Traineeship,
-                VacancySource = VacancySource.Raa
+                VacancySource = VacancySource.Raa,
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

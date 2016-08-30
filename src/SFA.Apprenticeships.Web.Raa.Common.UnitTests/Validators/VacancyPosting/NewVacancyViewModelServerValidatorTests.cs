@@ -6,9 +6,12 @@
     using Builders;
     using Common.Validators.Vacancy;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.UnitTests.Validators;
     using Web.Common.Validators;
+    using Web.Common.ViewModels;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     [Parallelizable]
@@ -16,12 +19,17 @@
     {
         private NewVacancyViewModelServerValidator _validator;
         private VacancyViewModelValidator _aggregateValidator;
+        private FurtherVacancyDetailsViewModel _furtherDetailsViewModel;
 
         [SetUp]
         public void SetUp()
         {
             _validator = new NewVacancyViewModelServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
+            _furtherDetailsViewModel = new FurtherVacancyDetailsViewModel()
+            {
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+            };
         }
 
         [TestCase(VacancyType.Unknown, false)]
@@ -33,7 +41,7 @@
             {
                 VacancyType = vacancyType
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_furtherDetailsViewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -68,7 +76,7 @@
             {
                 OfflineVacancy = offlineVacancy
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_furtherDetailsViewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -121,7 +129,7 @@
                 OfflineApplicationUrl = url,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_furtherDetailsViewModel).Build();
 
             // Act.
             _validator.Validate(viewModel);

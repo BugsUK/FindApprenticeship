@@ -6,9 +6,12 @@
     using Builders;
     using Common.Validators.Vacancy;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.UnitTests.Validators;
     using Web.Common.Validators;
+    using Web.Common.ViewModels;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     [Parallelizable]
@@ -16,12 +19,17 @@
     {
         private VacancyRequirementsProspectsViewModelServerValidator _validator;
         private VacancyViewModelValidator _aggregateValidator;
+        private FurtherVacancyDetailsViewModel _furtherDetailsViewModel;
 
         [SetUp]
         public void SetUp()
         {
             _validator = new VacancyRequirementsProspectsViewModelServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
+            _furtherDetailsViewModel = new FurtherVacancyDetailsViewModel()
+            {
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+            };
         }
 
         [TestCase(null, false)]
@@ -38,7 +46,7 @@
                 DesiredSkills = desiredSkills,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -77,7 +85,7 @@
                 FutureProspects = futureProspects,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -116,7 +124,7 @@
                 PersonalQualities = personalQualities,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -155,7 +163,7 @@
             {
                 ThingsToConsider = thingsToConsider
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -197,7 +205,7 @@
                 VacancyType = VacancyType.Apprenticeship,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -238,7 +246,7 @@
                 VacancyType = VacancyType.Traineeship,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);

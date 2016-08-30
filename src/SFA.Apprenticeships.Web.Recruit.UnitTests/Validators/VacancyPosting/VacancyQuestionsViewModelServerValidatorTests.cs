@@ -3,6 +3,8 @@
     using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
+    using Common.ViewModels;
+    using Domain.Entities.Vacancies;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
@@ -15,12 +17,14 @@
     {
         private VacancyQuestionsViewModelServerValidator _validator;
         private VacancyViewModelValidator _aggregateValidator;
+        private FurtherVacancyDetailsViewModel _furtherVacancyDetailsViewModel;
 
         [SetUp]
         public void SetUp()
         {
             _validator = new VacancyQuestionsViewModelServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
+            _furtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel() {WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)};
         }
 
         [TestCase(null, true)]
@@ -37,7 +41,7 @@
             {
                 FirstQuestion = firstQuestion
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_furtherVacancyDetailsViewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -77,7 +81,7 @@
             {
                 SecondQuestion = secondQuestion
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_furtherVacancyDetailsViewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);

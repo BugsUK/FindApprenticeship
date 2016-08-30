@@ -6,9 +6,13 @@
     using Builders;
     using Common.Validators.Vacancy;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.UnitTests.Validators;
     using Web.Common.Validators;
+    using Web.Common.ViewModels;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     [Parallelizable]
@@ -16,12 +20,17 @@
     {
         private TrainingDetailsViewModelServerValidator _validator;
         private VacancyViewModelValidator _aggregateValidator;
+        private FurtherVacancyDetailsViewModel _furtherDetailsViewModel;
 
         [SetUp]
         public void SetUp()
         {
             _validator = new TrainingDetailsViewModelServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
+            _furtherDetailsViewModel = new FurtherVacancyDetailsViewModel()
+            {
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+            };
         }
 
         [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Unknown, true)]
@@ -68,7 +77,7 @@
                 TrainingType = trainingType,
                 ApprenticeshipLevel = apprenticeshipLevel
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_furtherDetailsViewModel).Build();
 
             // Act.
             _validator.Validate(viewModel);
@@ -108,7 +117,7 @@
             {
                 TrainingType = trainingType
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_furtherDetailsViewModel).Build();
 
             // Act.
             _validator.Validate(viewModel);
@@ -150,7 +159,7 @@
                 TrainingType = trainingType,
                 FrameworkCodeName = frameworkCodeName
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_furtherDetailsViewModel).Build();
 
             // Act.
             _validator.Validate(viewModel);
@@ -198,7 +207,7 @@
                 TrainingType = trainingType,
                 StandardId = standardId
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             // Act.
             _validator.Validate(viewModel);
@@ -240,7 +249,7 @@
                 VacancyType = vacancyType,
                 SectorCodeName = sectorCodeName
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             // Act.
             _validator.Validate(viewModel);
@@ -272,7 +281,7 @@
         public void EmptyContactDetailsShouldBeValid()
         {
             var viewModel = new TrainingDetailsViewModel();
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -300,7 +309,7 @@
                 ContactNumber = phoneNumber,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             // Act.
             _validator.Validate(viewModel);
@@ -330,7 +339,7 @@
                 ContactNumber = phoneNumber,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             // Act.
             _validator.Validate(viewModel);
@@ -364,7 +373,7 @@
                 TrainingProvided = trainingProvided,
                 VacancySource = VacancySource.Raa
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_furtherDetailsViewModel).With(viewModel).Build();
 
             _validator.Validate(viewModel);
             _aggregateValidator.Validate(vacancyViewModel);

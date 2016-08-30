@@ -10,6 +10,7 @@
     using Configuration;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -51,7 +52,8 @@
                     ClosingDate = new DateViewModel()
                 },
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                AutoSaveTimeoutInSeconds = autoSaveTimeoutInSeconds
+                AutoSaveTimeoutInSeconds = autoSaveTimeoutInSeconds,
+                WageObject = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
 
             var vacancy = new Fixture().Build<Vacancy>()
