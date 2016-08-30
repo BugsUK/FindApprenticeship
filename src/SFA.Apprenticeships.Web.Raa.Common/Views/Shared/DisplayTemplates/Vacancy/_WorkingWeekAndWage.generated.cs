@@ -338,7 +338,7 @@ WriteLiteral(">");
 
             
             #line 56 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                        Write(Model.FurtherVacancyDetailsViewModel.Wage.WageDisplayText);
+                        Write(Model.FurtherVacancyDetailsViewModel.Wage.DisplayAmount);
 
             
             #line default
