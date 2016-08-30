@@ -215,6 +215,8 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
                 sql += " AND ( ProviderToUseFAA = 2 OR EditedInRaa = 1)";
             }
 
+            sql += " AND ApplicationClosingDate >= @ClosingDate ";
+
             if (pageSize > 0)
             {
                 var offset = pageSize * page;
@@ -227,7 +229,8 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             var dbVacancies = _getOpenConnection.Query<Vacancy>(
             sql, new
             {
-                VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s)
+                VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s),
+                ClosingDate = _dateTimeService.UtcNow.Date
             }, 600);
 
 
