@@ -71,8 +71,6 @@
             }
         }
 
-        public string WageDisplayText => WagePresenter.GetDisplayAmount(WageObject.Type, WageObject.Amount, null, WageObject.Unit, WageObject.HoursPerWeek);
-
         public bool ComeFromPreview { get; set; }
 
         public VacancyDatesViewModel VacancyDatesViewModel { get; set; }

@@ -53,7 +53,7 @@
                 </span>
             }
         </h3>
-        <p id="vacancy-wage">@Model.FurtherVacancyDetailsViewModel.WageDisplayText</p>
+        <p id="vacancy-wage">@Model.FurtherVacancyDetailsViewModel.WageObject.WageDisplayText</p>
         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageObject.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
     </div>
 

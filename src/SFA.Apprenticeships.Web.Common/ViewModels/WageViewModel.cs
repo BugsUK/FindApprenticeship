@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies;
+    using Infrastructure.Presentation;
 
     public class WageViewModel
     {
@@ -14,6 +15,8 @@
         public string Text { get; private set; }
 
         public WageUnit Unit { get; private set; }
+
+        public string WageDisplayText => WagePresenter.GetDisplayAmount(Type, Amount, null, Unit, HoursPerWeek);
 
         [Display(Name = WageViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; private set; }
