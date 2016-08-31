@@ -1107,7 +1107,7 @@ WriteLiteral(">\r\n            <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(" id=\"savedSearchHeading\"");
+WriteLiteral(" id=\"deleteAccountHeading\"");
 
 WriteLiteral(">Delete your account</h2>\r\n            <div");
 
