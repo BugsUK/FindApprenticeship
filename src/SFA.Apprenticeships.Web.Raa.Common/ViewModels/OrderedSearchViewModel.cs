@@ -17,14 +17,13 @@
             Order = order;
         }
 
+        public OrderedSearchViewModel(OrderedSearchViewModel viewModel) : this(viewModel.OrderByField, viewModel.Order)
+        {
+            
+        }
+
         public string OrderByField { get; set; }
 
         public Order Order { get; set; }
-        
-        public virtual object RouteValues => new
-        {
-            OrderByField,
-            Order
-        };
     }
 }

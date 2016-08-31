@@ -1,4 +1,5 @@
 ﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model DashboardVacancySummariesViewModel
 
@@ -19,12 +20,57 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>Title</th>
+                                <th>
+                                    @{
+                                        var titleNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                                        var titleSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldTitle ?
+                                            Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                                    }
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldTitle, titleNewOrder))">
+                                        <span class="font-black">Title <i class="fa @titleSortClass" aria-hidden="true"></i></span>
+                                    </a>
+                                </th>
                                 <th>Type</th>
-                                <th>Provider</th>
-                                <th>Date submitted</th>
-                                <th>Closing date</th>
-                                <th>Submission count</th>
+                                <th>
+                                    @{
+                                        var providerNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                                        var providerSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldProvider ?
+                                            Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                                    }
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldProvider, providerNewOrder))">
+                                        <span class="font-black">Provider <i class="fa @providerSortClass" aria-hidden="true"></i></span>
+                                    </a>
+                                </th>
+                                <th>
+                                    @{
+                                        var dateSubmittedNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                                        var dateSubmittedSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldDateSubmitted ?
+                                            Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                                    }
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldDateSubmitted, dateSubmittedNewOrder))">
+                                        <span class="font-black">Date submitted <i class="fa @dateSubmittedSortClass" aria-hidden="true"></i></span>
+                                    </a>
+                                </th>
+                                <th>
+                                    @{
+                                        var closingDateNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                                        var closingDateSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldClosingDate ?
+                                            Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                                    }
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldClosingDate, closingDateNewOrder))">
+                                        <span class="font-black">Closing date <i class="fa @closingDateSortClass" aria-hidden="true"></i></span>
+                                    </a>
+                                </th>
+                                <th>
+                                    @{
+                                        var submissionCountNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                                        var submissionCountSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldSubmissionCount ?
+                                            Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                                    }
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldSubmissionCount, submissionCountNewOrder))">
+                                        <span class="font-black">Submission count <i class="fa @submissionCountSortClass" aria-hidden="true"></i></span>
+                                    </a>
+                                </th>
                                 <th></th>
                             </tr>
                         </thead>
