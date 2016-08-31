@@ -11,6 +11,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class GetNextAvailableVacancy
     {
         [Test]
@@ -29,7 +30,7 @@
                 vls => vls.GetNextAvailableVacancy(It.IsAny<string>(), It.IsAny<List<VacancySummary>>()))
                 .Returns(vacancySummary);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>(), It.IsAny<bool>())).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -61,7 +62,7 @@
                 vls => vls.GetNextAvailableVacancy(It.IsAny<string>(), It.IsAny<List<VacancySummary>>()))
                 .Returns(vacancySummary);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>(), It.IsAny<bool>())).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()

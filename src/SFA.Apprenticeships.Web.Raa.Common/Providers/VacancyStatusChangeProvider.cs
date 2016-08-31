@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Applications;
@@ -13,17 +14,14 @@
     public class VacancyStatusChangeProvider : IVacancyStatusChangeProvider
     {
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
-        private readonly ITraineeshipApplicationService _traineeshipApplicationService;
         private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IVacancyPostingService _vacancyPostingService;
 
         public VacancyStatusChangeProvider(IApprenticeshipApplicationService apprenticeshipApplicationService,
-            ITraineeshipApplicationService traineeshipApplicationService,
             IVacancyReadRepository vacancyReadRepository,
             IVacancyPostingService vacancyPostingService)
         {
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
-            _traineeshipApplicationService = traineeshipApplicationService;
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyPostingService = vacancyPostingService;
         }
@@ -44,25 +42,20 @@
                 ApplicationStatuses.Submitted
             };
 
-            if (vacancy.VacancyType == VacancyType.Traineeship)
-            {
-                var traineeshipApplicationSummaries =
-                    _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId);
-                return (!traineeshipApplicationSummaries.Any() ||
-                                             traineeshipApplicationSummaries.Any(
-                                                 a => statusesRequiringAction.Contains(a.Status)));
-            }
             var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
-            return (!apprenticeshipApplicationSummaries.Any() ||
-                                            apprenticeshipApplicationSummaries.Any(
-                                                a => statusesRequiringAction.Contains(a.Status)));
+
+            return (apprenticeshipApplicationSummaries.Any(a => statusesRequiringAction.Contains(a.Status)));
         }
 
         public ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel)
         {
             var vacancy = _vacancyReadRepository.GetByReferenceNumber(viewModel.VacancyReferenceNumber);
 
-            //Ensure this vacancy has no outstanding actions
+            if (vacancy.VacancyType == VacancyType.Traineeship)
+            {
+                throw new InvalidOperationException("Traineeships cannot be archived");
+            }
+
             var hasOustandingActions = HasOutstandingActions(vacancy);
 
             if (!hasOustandingActions)

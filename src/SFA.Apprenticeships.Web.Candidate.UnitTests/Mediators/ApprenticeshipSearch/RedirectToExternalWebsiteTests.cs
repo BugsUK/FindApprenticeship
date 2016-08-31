@@ -1,26 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
-    using System;
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.UnitTests.Mediators;
-    using Domain.Entities.Vacancies;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class RedirectToExternalWebsiteTests : TestsBase
     {
         private const string Id = "1";
-
-        [Test]
-        public void VacancyNotFound()
-        {
-            var response = Mediator.RedirectToExternalWebsite(Id);
-
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound, false);
-        }
 
         [TestCase(null)]
         [TestCase("")]
@@ -37,6 +28,22 @@
         }
 
         [Test]
+        public void Ok()
+        {
+            //Arrange
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel();
+
+            ApprenticeshipVacancyProvider.Setup(p => p.IncrementClickThroughFor(It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            //Act
+            var response = Mediator.RedirectToExternalWebsite(Id);
+
+            //Assert
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok, true);
+        }
+
+        [Test]
         public void VacancyHasError()
         {
             //Arrange
@@ -44,31 +51,26 @@
 
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
-                ViewModelMessage = message,
+                ViewModelMessage = message
             };
 
-            ApprenticeshipVacancyProvider.Setup(p => p.IncrementClickThroughFor(It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            ApprenticeshipVacancyProvider.Setup(p => p.IncrementClickThroughFor(It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
 
             //Act
             var response = Mediator.RedirectToExternalWebsite(Id);
 
             //Assert
-            response.AssertMessage(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError, message, UserMessageLevel.Warning, true);
+            response.AssertMessage(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError, message,
+                UserMessageLevel.Warning, true);
         }
 
         [Test]
-        public void Ok()
+        public void VacancyNotFound()
         {
-            //Arrange
-            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel();
-
-            ApprenticeshipVacancyProvider.Setup(p => p.IncrementClickThroughFor(It.IsAny<int>())).Returns(vacancyDetailViewModel);
-
-            //Act
             var response = Mediator.RedirectToExternalWebsite(Id);
 
-            //Assert
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound, false);
         }
     }
 }

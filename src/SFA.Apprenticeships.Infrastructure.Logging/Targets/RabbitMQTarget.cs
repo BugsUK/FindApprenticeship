@@ -14,6 +14,9 @@
     using NLog;
     using NLog.Common;
     using NLog.Targets;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
 
     /// <summary>

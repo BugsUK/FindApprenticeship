@@ -14,6 +14,7 @@
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
+    [Parallelizable]
     public class LocalAuthorityTests : TestBase
     {
         private const string Ukprn = "12345";
@@ -78,7 +79,7 @@
                 
             MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId, true))
                 .Returns(_vacancyParty);
-            MockEmployerService.Setup(s => s.GetEmployer(EmployerId)).Returns(new Fixture().Build<Employer>().Create());
+            MockEmployerService.Setup(s => s.GetEmployer(EmployerId, true)).Returns(new Fixture().Build<Employer>().Create());
         }
 
         [Test]
@@ -89,7 +90,7 @@
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             var employerWithGeocode = new Fixture().Create<Employer>();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
+            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>())).Returns(employerWithGeocode);
             MockLocalAuthorityLookupService.Setup(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode)).Returns(localAuthorityCode);
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
             MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
@@ -217,7 +218,7 @@
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             var employerWithGeocode = new Fixture().Create<Employer>();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
+            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>())).Returns(employerWithGeocode);
             MockLocalAuthorityLookupService.Setup(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode)).Returns(localAuthorityCode);
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
             var provider = GetVacancyPostingProvider();

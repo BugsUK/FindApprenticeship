@@ -5,6 +5,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class FullNameFormatterTests
     {
         [TestCase(null, null)]

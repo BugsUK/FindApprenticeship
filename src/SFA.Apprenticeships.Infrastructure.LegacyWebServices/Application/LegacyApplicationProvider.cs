@@ -12,7 +12,11 @@
     using Domain.Interfaces.Repositories;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Wcf;
+    using ErrorCodes = Apprenticeships.Application.Interfaces.Applications.ErrorCodes;
 
     public class LegacyApplicationProvider : ILegacyApplicationProvider
     {

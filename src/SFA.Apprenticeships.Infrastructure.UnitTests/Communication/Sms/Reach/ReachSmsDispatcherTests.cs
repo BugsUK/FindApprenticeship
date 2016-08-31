@@ -13,9 +13,14 @@
     using Moq;
     using NUnit.Framework;
     using RestSharp;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using SmsMessageFormatters;
+    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     [TestFixture]
+    [Parallelizable]
     public class ReachSmsDispatcherTests
     {
         private static class RestResponses

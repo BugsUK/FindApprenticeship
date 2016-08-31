@@ -1,37 +1,49 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-
-    public class VacancyApplicationsSearchViewModel
+    public class VacancyApplicationsSearchViewModel : OrderedPageableSearchViewModel
     {
-        public VacancyApplicationsSearchViewModel()
+        public const string OrderByFieldLastName = "LastName";
+
+        public VacancyApplicationsSearchViewModel() : base(OrderByFieldLastName)
         {
-            PageSize = 25;
-            CurrentPage = 1;
+
         }
 
-        protected VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel) : this()
+        protected VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel) : base(viewModel)
         {
             VacancyReferenceNumber = viewModel.VacancyReferenceNumber;
             FilterType = viewModel.FilterType;
-            PageSize = viewModel.PageSize;
         }
 
-        public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, VacancyApplicationsFilterTypes filterType) : this(viewModel)
+        public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, VacancyApplicationsFilterTypes filterType) : base(viewModel, 1)
         {
+            VacancyReferenceNumber = viewModel.VacancyReferenceNumber;
             FilterType = filterType;
         }
 
-        public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, int currentPage) : this(viewModel)
+        public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, string orderByField, Order order) : base(viewModel, orderByField, order)
         {
-            CurrentPage = currentPage;
+            VacancyReferenceNumber = viewModel.VacancyReferenceNumber;
+            FilterType = viewModel.FilterType;
+        }
+
+        public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, int currentPage) : base(viewModel, currentPage)
+        {
+            VacancyReferenceNumber = viewModel.VacancyReferenceNumber;
+            FilterType = viewModel.FilterType;
         }
 
         public int VacancyReferenceNumber { get; set; }
         public VacancyApplicationsFilterTypes FilterType { get; set; }
-        public int PageSize { get; set; }
-        public List<SelectListItem> PageSizes { get; set; }
-        public int CurrentPage { get; set; }
+
+        public override object RouteValues => new
+        {
+            VacancyReferenceNumber,
+            FilterType,
+            OrderByField,
+            Order,
+            PageSize,
+            CurrentPage
+        };
     }
 }

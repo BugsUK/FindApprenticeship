@@ -6,6 +6,8 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Sql.Common;
     using Sql.Schemas.Reference;
@@ -16,7 +18,7 @@
         private readonly IMapper _mapper = new ReferenceMappers();
         private IGetOpenConnection _connection;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void SetUpFixture()
         {
             _connection =

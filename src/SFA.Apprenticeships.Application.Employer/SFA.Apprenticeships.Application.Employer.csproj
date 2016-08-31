@@ -99,12 +99,10 @@
     </Compile>
     <Compile Include="EmployerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\GetByIdWithoutStatusCheckStrategy.cs" />
     <Compile Include="Strategies\GetByEdsUrnStrategy.cs" />
     <Compile Include="Strategies\GetByIdsStrategy.cs" />
     <Compile Include="Strategies\GetByIdStrategy.cs" />
     <Compile Include="Strategies\GetPagedEmployerSearchResultsStrategy.cs" />
-    <Compile Include="Strategies\IGetByIdWithoutStatusCheckStrategy.cs" />
     <Compile Include="Strategies\IGetByEdsUrnStrategy.cs" />
     <Compile Include="Strategies\IGetByIdsStrategy.cs" />
     <Compile Include="Strategies\IGetByIdStrategy.cs" />
@@ -134,14 +132,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
-      <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
-      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
-      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -10,15 +10,18 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
     using Entities;
     using Rest;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class RetrieveAddressService : RestService, IRetrieveAddressService
     {
         private readonly ILogService _logger;
         private AddressConfiguration Config { get; }
 
-        private Dictionary<string, string> _specialCities = new Dictionary<string, string>
+        private readonly Dictionary<string, string> _specialCities = new Dictionary<string, string>
         {
             { "London", "London"},
-            { "York", "North Yorkshire"}
+            { "York", "North Yorkshire"},
+            { "Leicester", "Leicestershire"}
         };
 
         public RetrieveAddressService(IConfigurationService configurationService, ILogService logger)

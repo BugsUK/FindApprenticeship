@@ -2,9 +2,8 @@
 {
     using Application.ReferenceData;
     using Application.Candidate.Configuration;
-
     using StructureMap.Configuration.DSL;
-
+    
     public class RaaRegistry : Registry
     {
         public RaaRegistry(ServicesConfiguration servicesConfiguration)

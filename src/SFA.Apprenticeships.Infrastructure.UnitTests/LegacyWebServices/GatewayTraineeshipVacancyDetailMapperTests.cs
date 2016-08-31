@@ -9,7 +9,6 @@
     using Infrastructure.LegacyWebServices.Mappers.Traineeship;
     using NUnit.Framework;
 
-    [TestFixture]
     public class GatewayTraineeshipVacancyDetailMapperTests
     {
         [Test]

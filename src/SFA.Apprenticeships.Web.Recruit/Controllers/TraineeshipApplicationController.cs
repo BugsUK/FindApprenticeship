@@ -10,6 +10,8 @@
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -66,7 +68,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewTraineeshipApplication, viewModel);
 
                 case TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

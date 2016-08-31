@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common.Messaging
 {
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public abstract class AzureControlQueueConsumer
     {

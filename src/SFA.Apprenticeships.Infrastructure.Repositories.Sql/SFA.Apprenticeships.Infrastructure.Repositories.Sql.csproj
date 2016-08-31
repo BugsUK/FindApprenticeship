@@ -94,6 +94,10 @@
       <HintPath>..\packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -116,6 +120,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Common\ExcludeLiveClosingDateResolver.cs" />
     <Compile Include="Common\IGetOpenConnection.cs" />
     <Compile Include="Common\SqlMapperExtensionsCustom.cs" />
     <Compile Include="Common\TypeExtensions.cs" />
@@ -125,8 +130,11 @@
     <Compile Include="Reporting\ReportingRepository.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
+    <Compile Include="Schemas\dbo\CandidateMappers.cs" />
+    <Compile Include="Schemas\dbo\CandidateRepository.cs" />
     <Compile Include="Schemas\dbo\Constants.cs" />
     <Compile Include="Schemas\dbo\DbHelpers.cs" />
+    <Compile Include="Schemas\dbo\Entities\CandidateSummary.cs" />
     <Compile Include="Schemas\dbo\Entities\Employer.cs" />
     <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
     <Compile Include="Schemas\dbo\ReferenceNumberRepository.cs" />
@@ -136,6 +144,7 @@
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderSite.cs" />
+    <Compile Include="Schemas\Provider\Entities\ProviderSiteRelationship.cs" />
     <Compile Include="Schemas\Provider\ProviderSiteMappers.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />
@@ -169,6 +178,10 @@
     <Compile Include="Schemas\Vacancy\Entities\VacancyLocation.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>

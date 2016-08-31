@@ -4,6 +4,8 @@
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CommunicationHousekeepingRequestSubscriber : IServiceBusSubscriber<CommunicationHousekeepingRequest>
     {
         private readonly ILogService _logService;

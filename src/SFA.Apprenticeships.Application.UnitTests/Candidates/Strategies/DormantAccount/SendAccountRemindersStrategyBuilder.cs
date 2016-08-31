@@ -9,6 +9,8 @@
     using Interfaces.Communications;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SendAccountRemindersStrategyBuilder
     {
         private readonly Mock<IConfigurationService> _configurationService;

@@ -2,6 +2,7 @@
 {
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Providers;
     using Interfaces.VacancyPosting;
     using Moq;

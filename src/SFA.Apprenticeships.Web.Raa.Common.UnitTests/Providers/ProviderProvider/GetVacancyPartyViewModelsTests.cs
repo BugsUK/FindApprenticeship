@@ -16,6 +16,7 @@
     using Web.Common.ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class GetVacancyPartyViewModelsTests : TestBase
     {
         private const int PageSize = 10;
@@ -60,7 +61,7 @@
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
 
             MockEmployerService.Setup(mock => mock
-                .GetEmployers(It.Is(matchingEmployerIds)))
+                .GetEmployers(It.Is(matchingEmployerIds), It.IsAny<bool>()))
                 .Returns(employers);
 
             var provider = GetProviderProvider();
@@ -113,7 +114,7 @@
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
 
             MockEmployerService.Setup(mock => mock
-                .GetEmployers(It.Is(matchingEmployerIds)))
+                .GetEmployers(It.Is(matchingEmployerIds), It.IsAny<bool>()))
                 .Returns(employers);
 
             var provider = GetProviderProvider();

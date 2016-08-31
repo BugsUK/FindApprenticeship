@@ -5,12 +5,15 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Common;
-    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
+    using Entities;
+    using SFA.Apprenticeships.Application.Interfaces;
+    using ProviderSite = Domain.Entities.Raa.Parties.ProviderSite;
 
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
         private const int ActivatedEmployerTrainingProviderStatusId = 1;
+        private const int OwnerRelationship = 1;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -41,7 +44,12 @@
                 : "Got provider site with ProviderSiteId={0}",
                 providerSiteId);
 
-            return MapProviderSite(dbProviderSite);
+            if (dbProviderSite == null)
+                return null;
+
+            var providerSiteRelationships = GetProviderIdByProviderSiteId(new List<int> { dbProviderSite.ProviderSiteId });
+
+            return MapProviderSite(dbProviderSite, providerSiteRelationships);
         }
 
         public ProviderSite GetByEdsUrn(string edsUrn)
@@ -62,7 +70,12 @@
                 : "Got provider site with EDSURN={0}",
                 edsUrn);
 
-            return MapProviderSite(dbProviderSite);
+            if (dbProviderSite == null)
+                return null;
+
+            var providerSiteRelationships = GetProviderIdByProviderSiteId(new List<int> { dbProviderSite.ProviderSiteId });
+
+            return MapProviderSite(dbProviderSite, providerSiteRelationships);
         }
         
         public IReadOnlyDictionary<int, ProviderSite> GetByIds(IEnumerable<int> providerSiteIds)
@@ -79,8 +92,9 @@
             };
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
+            var providerSiteRelationships = GetProviderIdByProviderSiteId(providerSites.Select(ps => ps.ProviderSiteId).Distinct());
 
-            return providerSites.Select(MapProviderSite).ToDictionary(ps => ps.ProviderSiteId);
+            return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships)).ToDictionary(ps => ps.ProviderSiteId);
         }
 
         public IEnumerable<ProviderSite> GetByProviderId(int providerId)
@@ -91,17 +105,21 @@
                 SELECT ps.* FROM dbo.ProviderSite ps
                 INNER JOIN dbo.ProviderSiteRelationship psr
                 ON psr.ProviderSiteID = ps.ProviderSiteID
-                WHERE psr.ProviderID = @providerId AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+                WHERE psr.ProviderID = @providerId 
+                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId
+                and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
 
             var sqlParams = new
             {
                 providerId,
-                ActivatedEmployerTrainingProviderStatusId
+                ActivatedEmployerTrainingProviderStatusId,
+                OwnerRelationship
             };
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
+            var providerSiteRelationships = GetProviderIdByProviderSiteId(providerSites.Select(ps => ps.ProviderSiteId).Distinct());
 
-            return providerSites.Select(MapProviderSite);
+            return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships));
         }
 
         public ProviderSite Update(ProviderSite providerSite)
@@ -123,7 +141,7 @@
             return _mapper.Map<ProviderSite, Entities.ProviderSite>(providerSite);
         }
 
-        private ProviderSite MapProviderSite(Entities.ProviderSite dbProviderSite)
+        private ProviderSite MapProviderSite(Entities.ProviderSite dbProviderSite, IReadOnlyDictionary<int, ProviderSiteRelationship> providerSiteRelationships)
         {
             if (dbProviderSite == null)
             {
@@ -132,31 +150,43 @@
 
             var providerSite = _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
 
-            providerSite.ProviderId = GetProviderIdByProviderSiteId(providerSite.ProviderSiteId);
+            providerSite.ProviderId = providerSiteRelationships[providerSite.ProviderSiteId].ProviderID;
 
             return providerSite;
         }
 
         // Contracted
-        private int GetProviderIdByProviderSiteId(int providerSiteId)
+        private IReadOnlyDictionary<int, ProviderSiteRelationship> GetProviderIdByProviderSiteId(IEnumerable<int> providerSiteIds)
         {
             //TODO: Deal with Subcontractors and recruitment consultants. Should be done with ContractOwnerId rather than like this
 
             const string sql = @"
-                SELECT psr.ProviderID
+                SELECT *
                 FROM dbo.ProviderSiteRelationship AS psr 
                 JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
-                WHERE ps.ProviderSiteId = @providerSiteId
+                WHERE ps.ProviderSiteId IN @providerSiteIds
                 ORDER BY psr.ProviderSiteRelationshipTypeID"; //Forces non Subcontractors and Recruitment Consultants to the end of the list to prioritize owners
+
+            // TODO: change to ProviderSiteRelationshipTypeID = 1?
 
             var sqlParams = new
             {
-                providerSiteId,
-                ActivatedEmployerTrainingProviderStatusId
+                providerSiteIds
             };
 
+            var map = new Dictionary<int, ProviderSiteRelationship>();
+
             //TODO: workaround to be able to create the index. Should be done properly.
-            return _getOpenConnection.Query<int>(sql, sqlParams).First();
+            var providerSiteRelationships = _getOpenConnection.Query<ProviderSiteRelationship>(sql, sqlParams);
+            foreach (var providerSiteRelationship in providerSiteRelationships)
+            {
+                if (!map.ContainsKey(providerSiteRelationship.ProviderSiteID))
+                {
+                    map[providerSiteRelationship.ProviderSiteID] = providerSiteRelationship;
+                }
+            }
+
+            return map;
         }
     }
 }

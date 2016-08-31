@@ -6,6 +6,8 @@
     using Mongo.Candidates.Mappers;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
@@ -13,7 +15,7 @@
     {
         private IMapper _mapper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _mapper = new CandidateMappers();

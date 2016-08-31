@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Web.Mvc;
+    using Apprenticeships.Application.Interfaces;
     using Common.Constants;
     using Common.Mediators;
     using Common.Models.Azure.AccessControlService;
@@ -13,14 +14,13 @@
     using Domain.Entities.Raa;
     using Raa.Common.Validators.ProviderUser;
     using Apprenticeships.Application.Interfaces.Users;
+    using Common.Extensions;
     using Domain.Entities.Communication;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.ProviderUser;
     using ViewModels.Home;
-    using SFA.Infrastructure.Interfaces;
     using ViewModels;
-    using ClaimTypes = Common.Constants.ClaimTypes;
 
     public class ProviderUserMediator : MediatorBase, IProviderUserMediator
     {
@@ -76,7 +76,7 @@
                 viewModel.EmailAddressVerified = userProfile.EmailAddressVerified;
             }
 
-            var ukprn = principal.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Ukprn)?.Value;
+            var ukprn = principal.GetUkprn();
 
             if (string.IsNullOrWhiteSpace(ukprn))
             {
@@ -287,13 +287,14 @@
         {
             try
             {
-                ProviderContactMessage contactMessage = _mapper.Map<ContactMessageViewModel, ProviderContactMessage>(contactMessageViewModel);                
+                var contactMessage = _mapper.Map<ContactMessageViewModel, ProviderContactMessage>(contactMessageViewModel);                
                 _providerService.SubmitContactMessage(contactMessage);
+
                 return true;
             }
             catch(Exception exception)
             {
-                _logService.Error($"Exception occured while sending contact us email:{exception.Message}");
+                _logService.Error($"Exception occured while sending contact us email:{exception.Message}", exception);
                 return false;
             }
         }

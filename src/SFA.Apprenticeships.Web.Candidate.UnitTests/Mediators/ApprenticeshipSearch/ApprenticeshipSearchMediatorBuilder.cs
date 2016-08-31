@@ -9,6 +9,8 @@
     using SFA.Infrastructure.Interfaces;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApprenticeshipSearchMediatorBuilder
     {
         private readonly Mock<IConfigurationService> _configurationService;

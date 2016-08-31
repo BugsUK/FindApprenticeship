@@ -8,6 +8,8 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApprenticeshipVacancyProviderBuilder
     {
         private readonly IMapper _mapper;

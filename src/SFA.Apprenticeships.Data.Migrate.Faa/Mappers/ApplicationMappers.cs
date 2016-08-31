@@ -6,7 +6,7 @@
     using Entities.Mongo;
     using Entities.Sql;
     using Repository.Sql;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
 
     public class ApplicationMappers : IApplicationMappers
     {
@@ -94,7 +94,15 @@
                         }
                         else
                         {
-                            _logService.Warn($"Found application id {candidateApplicationId.ApplicationId} for application guid {vacancyApplication.Id} via candidate id {candidateId} and vacancy id {vacancyId} rather than via application guid {candidateApplicationId.ApplicationGuid}. This suggests the id has changed post submission");
+                            var message = $"Found application id {candidateApplicationId.ApplicationId} for application guid {vacancyApplication.Id} via candidate id {candidateId} and vacancy id {vacancyId} rather than via application guid {candidateApplicationId.ApplicationGuid}.";
+                            if (vacancyApplication.Status <= ApplicationStatuses.Submitting)
+                            {
+                                _logService.Info(message + " This suggests the old id was for a deleted saved vacancy that was recreated");
+                            }
+                            else
+                            {
+                                _logService.Warn(message + " This suggests the id has changed post submission");
+                            }
                         }
 
                         applicationIds[vacancyApplication.Id] = candidateApplicationId.ApplicationId;
@@ -109,8 +117,29 @@
         {
             var applicationId = GetApplicationId(apprenticeshipApplication, applicationIds);
             var sourceApplicationId = GetSourceApplicationId(applicationId, apprenticeshipApplication.LegacyApplicationId);
-            var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             var sourceApplicationSummary = sourceApplicationSummaries.ContainsKey(sourceApplicationId) ? sourceApplicationSummaries[sourceApplicationId] : null;
+            var applicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status);
+            ApplicationStatuses? updateStatusTo = null;
+            if (sourceApplicationSummary != null && (int)applicationStatusTypeId != sourceApplicationSummary.ApplicationStatusTypeId)
+            {
+                if (sourceApplicationSummary.ApplicationStatusTypeId < (int)applicationStatusTypeId)
+                {
+                    _logService.Info($"Application with guid {apprenticeshipApplication.Id} mapped to application id {applicationId} has a different state {applicationStatusTypeId} than the master copy on AVMS {(ApplicationStatusTypeIds)sourceApplicationSummary.ApplicationStatusTypeId}. However the state on FAA is more advanced so this is not a problem.");
+                }
+                else
+                {
+                    _logService.Warn($"Application with guid {apprenticeshipApplication.Id} mapped to application id {applicationId} has a different state {applicationStatusTypeId} than the master copy on AVMS {(ApplicationStatusTypeIds)sourceApplicationSummary.ApplicationStatusTypeId}.");
+                }
+                //We never copied over the InProgress status when getting application status via the NAS gateway so do it now
+                if (applicationStatusTypeId == ApplicationStatusTypeIds.ApplicationStatusTypeIdSent && sourceApplicationSummary.ApplicationStatusTypeId == (int)ApplicationStatusTypeIds.ApplicationStatusTypeIdInProgress)
+                {
+                    applicationStatusTypeId = ApplicationStatusTypeIds.ApplicationStatusTypeIdInProgress;
+                    updateStatusTo = ApplicationStatuses.InProgress;
+                }
+            }
+            var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
+            var allocatedTo = GetAllocatedTo(unsuccessfulReasonId, apprenticeshipApplication.Notes, sourceApplicationSummary);
+            var updateNotes = !string.IsNullOrEmpty(allocatedTo) && apprenticeshipApplication.Notes != allocatedTo;
             return new ApplicationWithSubVacancy
             {
                 Application = new Application
@@ -118,13 +147,13 @@
                     ApplicationId = applicationId,
                     CandidateId = candidateId,
                     VacancyId = apprenticeshipApplication.Vacancy.Id,
-                    ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
+                    ApplicationStatusTypeId = (int)applicationStatusTypeId,
                     WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
                     UnsuccessfulReasonId = unsuccessfulReasonId,
                     OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId, sourceApplicationSummary),
                     NextActionId = 0,
                     NextActionOther = null,
-                    AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
+                    AllocatedTo = allocatedTo,
                     CVAttachmentId = null,
                     BeingSupportedBy = null,
                     LockedForSupportUntil = null,
@@ -132,7 +161,9 @@
                     ApplicationGuid = apprenticeshipApplication.Id,
                 },
                 SchoolAttended = MapSchoolAttended(apprenticeshipApplication, schoolAttendedIds, applicationId, candidateId),
-                SubVacancy = GetSubVacancy(subVacancies, applicationId, sourceApplicationId)
+                SubVacancy = GetSubVacancy(subVacancies, applicationId, sourceApplicationId),
+                UpdateNotes = updateNotes,
+                UpdateStatusTo = updateStatusTo
             };
         }
 
@@ -201,25 +232,25 @@
             return applicationId;
         }
 
-        private static int GetApplicationStatusTypeId(int status)
+        private static ApplicationStatusTypeIds GetApplicationStatusTypeId(ApplicationStatuses status)
         {
             switch (status)
             {
-                case 5:
-                    return 0;
-                case 10:
-                case 20:
-                    return 1;
-                case 15:
-                    return 4;
-                case 30:
-                    return 2;
-                case 40:
-                    return 3;
-                case 80:
-                    return 6;
-                case 90:
-                    return 5;
+                case ApplicationStatuses.Saved:
+                    return ApplicationStatusTypeIds.ApplicationStatusTypeIdSaved;
+                case ApplicationStatuses.Draft:
+                case ApplicationStatuses.Submitting:
+                    return ApplicationStatusTypeIds.ApplicationStatusTypeIdUnsent;
+                case ApplicationStatuses.ExpiredOrWithdrawn:
+                    return ApplicationStatusTypeIds.ApplicationStatusTypeIdWithdrawn;
+                case ApplicationStatuses.Submitted:
+                    return ApplicationStatusTypeIds.ApplicationStatusTypeIdSent;
+                case ApplicationStatuses.InProgress:
+                    return ApplicationStatusTypeIds.ApplicationStatusTypeIdInProgress;
+                case ApplicationStatuses.Successful:
+                    return ApplicationStatusTypeIds.ApplicationStatusTypeIdSuccessful;
+                case ApplicationStatuses.Unsuccessful:
+                    return ApplicationStatusTypeIds.ApplicationStatusTypeIdUnsuccessful;
                 default: throw new ArgumentException($"Status value {status} was not recognised.");
             }
         }
@@ -261,8 +292,17 @@
             return unsuccessfulReasonId == 0 ? null : "";
         }
 
-        private static string GetAllocatedTo(int unsuccessfulReasonId)
+        private static string GetAllocatedTo(int unsuccessfulReasonId, string notes, ApplicationSummary sourceApplicationSummary)
         {
+            if (!string.IsNullOrEmpty(notes))
+            {
+                return notes;
+            }
+            if (!string.IsNullOrEmpty(sourceApplicationSummary?.AllocatedTo))
+            {
+                return sourceApplicationSummary.AllocatedTo;
+            }
+
             return unsuccessfulReasonId == 0 || unsuccessfulReasonId == 13 ? null : "";
         }
 

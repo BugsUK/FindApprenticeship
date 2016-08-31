@@ -8,7 +8,8 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SendDailyDigestsStrategy : ISendDailyDigestsStrategy
     {

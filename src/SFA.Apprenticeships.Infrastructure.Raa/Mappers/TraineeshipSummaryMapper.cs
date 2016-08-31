@@ -11,6 +11,8 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class TraineeshipSummaryMapper
     {
         public static TraineeshipSummary GetTraineeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
@@ -40,7 +42,7 @@
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
                     EmployerName = string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
-                    ProviderName = provider.Name,
+                    ProviderName = provider.TradingName,
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
                     CategoryCode = category.CodeName,
@@ -60,6 +62,11 @@
 
         private static GeoPoint GetGeoPoint(VacancySummary vacancy)
         {
+            if (vacancy.Address?.GeoPoint == null)
+            {
+                return new GeoPoint();
+            }
+
             return new GeoPoint
             {
                 Latitude = vacancy.Address.GeoPoint.Latitude,

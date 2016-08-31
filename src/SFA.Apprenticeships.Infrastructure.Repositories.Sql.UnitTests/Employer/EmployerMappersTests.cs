@@ -5,11 +5,14 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Schemas.dbo;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Domain = Domain.Entities.Raa.Parties;
     using Database = Schemas.dbo.Entities;
 
     [TestFixture]
+    [Parallelizable]
     public class EmployerMappersTests
     {
         private readonly IMapper _mapper = new EmployerMappers();

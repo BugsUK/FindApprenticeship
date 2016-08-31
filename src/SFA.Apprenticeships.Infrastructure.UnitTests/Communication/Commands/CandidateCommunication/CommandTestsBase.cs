@@ -12,6 +12,8 @@
     using Builders;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public abstract class CommandTestsBase
     {
         protected Mock<ILogService> LogService;

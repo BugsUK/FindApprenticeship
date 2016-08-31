@@ -3,195 +3,126 @@
     //TODO: rename project to SFA.Management.Application.VacancyPosting?
     using System;
     using System.Collections.Generic;
-    using CuttingEdge.Conditions;
-    using Domain.Entities;
-    using Domain.Entities.Exceptions;
-    using Domain.Entities.Raa;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
-    using Interfaces.Providers;
     using Interfaces.VacancyPosting;
+    using Strategies;
 
     public class VacancyPostingService : IVacancyPostingService
     {
-        private readonly IVacancyReadRepository _vacancyReadRepository;
-        private readonly IVacancyWriteRepository _vacancyWriteRepository;
-        private readonly IReferenceNumberRepository _referenceNumberRepository;
-        private readonly IProviderUserReadRepository _providerUserReadRepository;
-        private readonly IVacancyLocationReadRepository _vacancyLocationReadRepository;
-        private readonly IVacancyLocationWriteRepository _vacancyLocationWriteRepository;
-        private readonly ICurrentUserService _currentUserService;
-        private readonly IProviderVacancyAuthorisationService _providerVacancyAuthorisationService;
+        private readonly ICreateVacancyStrategy _createVacancyStrategy;
+        private readonly IUpdateVacancyStrategy _updateVacancyStrategy;
+        private readonly IArchiveVacancyStrategy _archiveVacancyStrategy;
+        private readonly IGetNextVacancyReferenceNumberStrategy _getNextVacancyReferenceNumberStrategy;
+        private readonly IGetVacancyStrategies _getVacancyStrategies;
+        private readonly IGetVacancySummaryStrategies _getVacancySummaryStrategies;
+        private readonly IQaVacancyStrategies _qaVacancyStrategies;
+        private readonly IVacancyLocationsStrategies _vacancyLocationsStrategies;
 
         public VacancyPostingService(
-            IVacancyReadRepository vacancyReadRepository,
-            IVacancyWriteRepository vacancyWriteRepository,
-            IReferenceNumberRepository referenceNumberRepository,
-            IProviderUserReadRepository providerUserReadRepository,
-            IVacancyLocationReadRepository vacancyLocationReadRepository,
-            IVacancyLocationWriteRepository vacancyLocationWriteRepository,
-            ICurrentUserService currentUserService,
-            IProviderVacancyAuthorisationService providerVacancyAuthorisationService)
+            ICreateVacancyStrategy createVacancyStrategy,
+            IUpdateVacancyStrategy updateVacancyStrategy,
+            IArchiveVacancyStrategy archiveVacancyStrategy,
+            IGetNextVacancyReferenceNumberStrategy getNextVacancyReferenceNumberStrategy,
+            IGetVacancyStrategies getVacancyStrategies,
+            IGetVacancySummaryStrategies getVacancySummaryStrategies,
+            IQaVacancyStrategies qaVacancyStrategies,
+            IVacancyLocationsStrategies vacancyLocationsStrategies)
         {
-            _vacancyReadRepository = vacancyReadRepository;
-            _vacancyWriteRepository = vacancyWriteRepository;
-            _referenceNumberRepository = referenceNumberRepository;
-            _providerUserReadRepository = providerUserReadRepository;
-            _vacancyLocationReadRepository = vacancyLocationReadRepository;
-            _vacancyLocationWriteRepository = vacancyLocationWriteRepository;
-            _currentUserService = currentUserService;
-            _providerVacancyAuthorisationService = providerVacancyAuthorisationService;
+            _createVacancyStrategy = createVacancyStrategy;
+            _updateVacancyStrategy = updateVacancyStrategy;
+            _archiveVacancyStrategy = archiveVacancyStrategy;
+            _getNextVacancyReferenceNumberStrategy = getNextVacancyReferenceNumberStrategy;
+            _getVacancyStrategies = getVacancyStrategies;
+            _getVacancySummaryStrategies = getVacancySummaryStrategies;
+            _qaVacancyStrategies = qaVacancyStrategies;
+            _vacancyLocationsStrategies = vacancyLocationsStrategies;
         }
 
         public Vacancy CreateVacancy(Vacancy vacancy)
         {
-            Condition.Requires(vacancy);
-
-            if (vacancy.Status == VacancyStatus.Completed)
-            {
-                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
-                throw new CustomException(message, ErrorCodes.EntityStateError);
-            }
-
-            if (_currentUserService.IsInRole(Roles.Faa))
-            {
-                var username = _currentUserService.CurrentUserName;
-                var vacancyManager = _providerUserReadRepository.GetByUsername(username);
-
-                if (vacancyManager?.PreferredProviderSiteId != null)
-                {
-                    vacancy.VacancyManagerId = vacancy.DeliveryOrganisationId = vacancyManager.PreferredProviderSiteId.Value;
-                }
-            }
-
-            // Always set VacancySource as Raa when creating a vacancy from Raa
-            vacancy.VacancySource = VacancySource.Raa;
-
-            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Create(v));
+            return _createVacancyStrategy.CreateVacancy(vacancy);
         }
 
         public Vacancy UpdateVacancy(Vacancy vacancy)
         {
-            if (vacancy.Status == VacancyStatus.Completed)
-            {
-                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
-                throw new CustomException(message, ErrorCodes.EntityStateError);
-            }
-
-            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
+            return _updateVacancyStrategy.UpdateVacancy(vacancy);
         }
 
         public Vacancy ArchiveVacancy(Vacancy vacancy)
         {
-            Condition.Requires(vacancy);
-
-            vacancy.Status = VacancyStatus.Completed;
-
-            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
+            return _archiveVacancyStrategy.ArchiveVacancy(vacancy);
         }
 
         public int GetNextVacancyReferenceNumber()
         {
-            return _referenceNumberRepository.GetNextVacancyReferenceNumber();
+            return _getNextVacancyReferenceNumberStrategy.GetNextVacancyReferenceNumber();
         }
 
         public Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber)
         {
-            return AuthoriseCurrentUser(_vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber));
+            return _getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber);
         }
 
         public Vacancy GetVacancy(Guid vacancyGuid)
         {
-            return AuthoriseCurrentUser(_vacancyReadRepository.GetByVacancyGuid(vacancyGuid));
+            return _getVacancyStrategies.GetVacancyByGuid(vacancyGuid);
         }
 
         public Vacancy GetVacancy(int vacancyId)
         {
-            return AuthoriseCurrentUser(_vacancyReadRepository.Get(vacancyId));
+            return _getVacancyStrategies.GetVacancyById(vacancyId);
         }
 
         public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
         {
-            return _vacancyReadRepository.GetWithStatus(0, 0, true, desiredStatuses);
+            return _getVacancySummaryStrategies.GetWithStatus(desiredStatuses);
         }
 
         public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)
         {
-            return _vacancyReadRepository.GetByIds(vacancyIds);
+            return _getVacancySummaryStrategies.GetVacancySummariesByIds(vacancyIds);
         }
 
         public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
         {
-            return _vacancyReadRepository.GetByOwnerPartyIds(ownerPartyIds);
+            return _getVacancySummaryStrategies.GetByOwnerPartyIds(ownerPartyIds);
         }
 
         public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
-            return _vacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+            return _qaVacancyStrategies.ReserveVacancyForQa(vacancyReferenceNumber);
         }
 
         public void UnReserveVacancyForQa(int vacancyReferenceNumber)
         {
-            _vacancyWriteRepository.UnReserveVacancyForQa(vacancyReferenceNumber);
+            _qaVacancyStrategies.UnReserveVacancyForQa(vacancyReferenceNumber);
         }
 
         public List<VacancyLocation> GetVacancyLocations(int vacancyId)
         {
-            return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);
+            return _vacancyLocationsStrategies.GetVacancyLocations(vacancyId);
         }
 
         public List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations)
         {
-            return _vacancyLocationWriteRepository.Save(vacancyLocations);
+            return _vacancyLocationsStrategies.SaveVacancyLocations(vacancyLocations);
         }
 
         public void DeleteVacancyLocationsFor(int vacancyId)
         {
-            _vacancyLocationWriteRepository.DeleteFor(vacancyId);
+            _vacancyLocationsStrategies.DeleteVacancyLocationsFor(vacancyId);
         }
 
         public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
         {
-            return _vacancyReadRepository.GetMinimalVacancyDetails(vacancyPartyIds);
+            return _getVacancySummaryStrategies.GetMinimalVacancyDetails(vacancyPartyIds);
         }
 
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
         {
-            return _vacancyReadRepository.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
-        }
-
-        private Vacancy UpsertVacancy(Vacancy vacancy, Func<Vacancy, Vacancy> operation)
-        {
-            Condition.Requires(vacancy);
-
-            AuthoriseCurrentUser(vacancy);
-
-            if (_currentUserService.IsInRole(Roles.Faa))
-            {
-                var username = _currentUserService.CurrentUserName;
-                var lastEditedBy = _providerUserReadRepository.GetByUsername(username);
-                if (lastEditedBy != null)
-                {
-                    vacancy.LastEditedById = lastEditedBy.ProviderUserId;
-                }
-            }
-
-            vacancy = operation(vacancy);
-
-            return _vacancyReadRepository.Get(vacancy.VacancyId);
-        }
-
-        private Vacancy AuthoriseCurrentUser(Vacancy vacancy)
-        {
-            if (vacancy != null)
-            {
-                _providerVacancyAuthorisationService.Authorise(vacancy);
-            }
-
-            return vacancy;
+            return _vacancyLocationsStrategies.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
         }
     }
 }

@@ -9,6 +9,8 @@
     using Common.Constants;
     using Common.Providers;
     using Domain.Entities.Applications;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels.Applications;
     using ViewModels.MyApplications;

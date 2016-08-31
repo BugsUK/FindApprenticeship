@@ -9,6 +9,7 @@
     using Interfaces.Users;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class RegisterCandidateStrategyBuilder
     {

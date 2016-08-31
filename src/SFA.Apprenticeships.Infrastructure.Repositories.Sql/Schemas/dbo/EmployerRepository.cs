@@ -6,7 +6,8 @@
     using Common;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+
+    using Application.Interfaces;
     using DomainEmployer = Domain.Entities.Raa.Parties.Employer;
     using Employer = Entities.Employer;
 
@@ -22,54 +23,44 @@
             _mapper = mapper;
         }
 
-        public DomainEmployer GetById(int employerId)
+        public DomainEmployer GetById(int employerId, bool currentOnly = true)
         {
             var employer =
-                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId AND EmployerStatusTypeId != 2",
+                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EmployerId = employerId }).SingleOrDefault();
 
             return MapEmployer(employer);
         }
 
-        //TODO: temporary method. Remove after moving status checks to a higher tier
-        public DomainEmployer GetByIdWithoutStatusCheck(int employerId)
+        public DomainEmployer GetByEdsUrn(string edsUrn, bool currentOnly = true)
         {
             var employer =
-                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId",
-                    new { EmployerId = employerId }).SingleOrDefault();
-
-            return MapEmployer(employer);
-        }
-
-        public DomainEmployer GetByEdsUrn(string edsUrn)
-        {
-            var employer =
-                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EdsUrn = @EdsUrn AND EmployerStatusTypeId != 2",
+                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EdsUrn = @EdsUrn" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EdsUrn = Convert.ToInt32(edsUrn) }).SingleOrDefault();
 
             return employer == null ? null : MapEmployer(employer);
         }
 
-        public List<DomainEmployer> GetByIds(IEnumerable<int> employerIds)
+        public List<DomainEmployer> GetByIds(IEnumerable<int> employerIds, bool currentOnly = true)
         {
             List<Employer> employers = new List<Employer>();
             var splitEmployerIds = DbHelpers.SplitIds(employerIds);           
             foreach (int[] employersIds in splitEmployerIds)
             {
-                var splitEmployer= _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",
+                var splitEmployer= _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EmployerIds = employersIds }).ToList();
                 employers.AddRange(splitEmployer);
             }                                 
             return employers.Select(MapEmployer).ToList();
         }
 
-        public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds)
+        public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds, bool currentOnly = true)
         {
             var employers = new List<MinimalEmployerDetails>();
             var splitEmployerIds = DbHelpers.SplitIds(employerIds);
             foreach (var employersIds in splitEmployerIds)
             {
-                var splitEmployer = _getOpenConnection.Query<MinimalEmployerDetails>("SELECT EmployerId, FullName FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",
+                var splitEmployer = _getOpenConnection.Query<MinimalEmployerDetails>("SELECT EmployerId, FullName FROM dbo.Employer WHERE EmployerId IN @EmployerIds" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EmployerIds = employersIds }).ToList();
                 employers.AddRange(splitEmployer);
             }

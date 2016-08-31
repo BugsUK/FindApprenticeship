@@ -233,6 +233,17 @@
                         </div>
                     }
                 </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.AdditionalLocationInformation))
+                {
+                    <div class="grid text">
+                        <p></p>
+                        <h3 class="bold-small">
+                            Additional location information
+                        </h3>
+                        <p>@Html.Raw(Model.AdditionalLocationInformation)</p>
+                    </div>
+                }
             </div>
         </section>
     <section class="section-border grid-wrapper" id="provider-info">

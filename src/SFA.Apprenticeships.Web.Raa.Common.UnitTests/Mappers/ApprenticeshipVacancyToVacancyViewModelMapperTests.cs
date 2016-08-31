@@ -6,9 +6,13 @@
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipVacancyToVacancyViewModelMapperTests
     {
         private IMapper _mapper;

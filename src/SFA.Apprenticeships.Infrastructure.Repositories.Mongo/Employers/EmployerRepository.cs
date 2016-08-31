@@ -11,6 +11,8 @@
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class EmployerRepository : GenericMongoClient2<MongoEmployer>, IEmployerReadRepository, IEmployerWriteRepository
@@ -26,7 +28,7 @@
             _logger = logger;
         }
 
-        public Employer GetById(int employerId)
+        public Employer GetById(int employerId, bool currentOnly = true)
         {
             _logger.Debug("Called Mongodb to get employer with Id={0}", employerId);
 
@@ -35,17 +37,7 @@
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        //TODO: temporary method. Remove after moving status checks to a higher tier
-        public Employer GetByIdWithoutStatusCheck(int employerId)
-        {
-            _logger.Debug("Called Mongodb to get employer with Id={0}", employerId);
-
-            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EmployerId == employerId);
-
-            return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
-        }
-
-        public Employer GetByEdsUrn(string edsUrn)
+        public Employer GetByEdsUrn(string edsUrn, bool currentOnly = true)
         {
             _logger.Debug("Called Mongodb to get employer with edsUrn={0}", edsUrn);
 
@@ -54,14 +46,14 @@
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        public List<Employer> GetByIds(IEnumerable<int> employerIds)
+        public List<Employer> GetByIds(IEnumerable<int> employerIds, bool currentOnly = true)
         {
             var mongoEntities = Collection.Find(Query.In("EmployerId", new BsonArray(employerIds)));
 
             return mongoEntities.Select(e => _mapper.Map<MongoEmployer, Employer>(e)).ToList();
         }
 
-        public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds)
+        public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds, bool currentOnly = true)
         {
             throw new NotImplementedException();
         }

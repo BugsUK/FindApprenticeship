@@ -4,8 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common;
+    using dbo;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyLocationRepository : IVacancyLocationReadRepository, IVacancyLocationWriteRepository
@@ -38,6 +42,26 @@
 
                 return vacancyLocation;
             }).ToList();
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
+        {
+            var vacancyLocations = new Dictionary<int, IEnumerable<VacancyLocation>>();
+
+            var splitVacancyIds = DbHelpers.SplitIds(vacancyIds);
+            foreach (var vacanciesIds in splitVacancyIds)
+            {
+                var splitVacancyLocations =
+                    _getOpenConnection.Query<VacancyLocation>(
+                        @"SELECT * FROM dbo.VacancyLocation WHERE  VacancyId IN @Ids", new {Ids = vacanciesIds})
+                        .GroupBy(x => x.VacancyId);
+                foreach (var splitVacancyLocation in splitVacancyLocations)
+                {
+                    vacancyLocations[splitVacancyLocation.Key] = splitVacancyLocation;
+                }
+            }
+
+            return vacancyLocations;
         }
 
         public List<VacancyLocation> Save(List<VacancyLocation> locationAddresses)
@@ -115,7 +139,7 @@ WHERE  FullName = @CountyFullName",
                     new
                     {
                         CountyFullName = entity.Address.County
-                    }).Single();
+                    }).SingleOrDefault();
             }
         }
 

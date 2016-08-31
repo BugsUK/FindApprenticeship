@@ -7,9 +7,12 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class ApprenticeshipSummaryMapperTests
     {
         private Mock<ILogService> _mockLogService;

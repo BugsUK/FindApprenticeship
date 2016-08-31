@@ -6,6 +6,8 @@
     using Domain.Interfaces.Repositories;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class RegisterUserStrategyBuilder
     {
         private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();

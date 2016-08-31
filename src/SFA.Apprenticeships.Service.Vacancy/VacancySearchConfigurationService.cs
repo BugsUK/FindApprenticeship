@@ -3,6 +3,7 @@
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.VacancySearch.Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class VacancySearchConfigurationService : IConfigurationService
     {

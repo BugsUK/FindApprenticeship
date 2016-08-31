@@ -7,18 +7,20 @@
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Providers;
     using Raa.Common.Validators.VacancyPosting;
-    using Application.Interfaces.Applications;
-    using Application.Interfaces.Employers;
-    using Application.Interfaces.Locations;
-    using Application.Interfaces.Providers;
-    using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Users;
-    using Application.Interfaces.Vacancies;
-    using Application.Interfaces.VacancyPosting;
+    using Apprenticeships.Application.Interfaces.Applications;
+    using Apprenticeships.Application.Interfaces.Employers;
+    using Apprenticeships.Application.Interfaces.Locations;
+    using Apprenticeships.Application.Interfaces.Providers;
+    using Apprenticeships.Application.Interfaces.ReferenceData;
+    using Apprenticeships.Application.Interfaces.Users;
+    using Apprenticeships.Application.Interfaces.Vacancies;
+    using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Domain.Entities.Raa.Parties;
     using Common.Configuration;
     using Raa.Common.Configuration;
     using Recruit.Mediators.VacancyPosting;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class TestsBase
@@ -64,7 +66,7 @@
 
             MockProviderService.Setup(s => s.GetProviderSite(It.IsAny<int>()))
                 .Returns(new Fixture().Build<ProviderSite>().Create());
-            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
+            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>(), It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().Create());
             _mockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
             _mockConfigurationService.Setup(mcs => mcs.Get<RecruitWebConfiguration>())

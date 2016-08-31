@@ -13,10 +13,10 @@
     using Domain.Entities.Raa.Parties;
     using FluentAssertions;
     using Ploeh.AutoFixture;
-    using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.VacancyPosting;
 
     [TestFixture]
+    [Parallelizable]
     public class CreateVacancyTests : TestsBase
     {
         private const string Ukprn = "12345";
@@ -283,7 +283,7 @@
                         .With(v => v.VacancyPartyId, vacancyPartyId)
                         .With(v => v.EmployerId, employerId)
                         .Create());
-            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+            MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(
                     new Fixture().Build<Employer>()
                         .With(e => e.EmployerId, employerId)
@@ -310,7 +310,7 @@
             // Assert.
             MockVacancyPostingService.Verify(s => s.GetNextVacancyReferenceNumber());
             MockProviderService.Verify(s => s.GetVacancyParty(vacancyPartyId, true));
-            MockEmployerService.Verify(s => s.GetEmployer(employerId));
+            MockEmployerService.Verify(s => s.GetEmployer(employerId, It.IsAny<bool>()));
             MockProviderService.Verify(s => s.GetProvider(ukprn));
             MockLocalAuthorityService.Verify(s => s.GetLocalAuthorityCode(employersPostcode));
             MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => 
@@ -357,7 +357,7 @@
                         .With(v => v.VacancyPartyId, vacancyPartyId)
                         .With(v => v.EmployerId, employerId)
                         .Create());
-            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+            MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(
                     new Fixture().Build<Employer>()
                         .With(e => e.EmployerId, employerId)
@@ -412,7 +412,7 @@
                         .With(v => v.VacancyPartyId, vacancyPartyId)
                         .With(v => v.EmployerId, employerId)
                         .Create());
-            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+            MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(
                     new Fixture().Build<Employer>()
                         .With(e => e.EmployerId, employerId)

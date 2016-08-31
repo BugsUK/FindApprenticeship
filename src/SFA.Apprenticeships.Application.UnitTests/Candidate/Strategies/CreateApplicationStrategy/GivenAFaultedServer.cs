@@ -2,6 +2,7 @@
 {
     using System;
     using Apprenticeships.Application.Candidate.Strategies.Apprenticeships;
+    using Apprenticeships.Application.Vacancy;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using Moq;
@@ -11,7 +12,7 @@
     [TestFixture]
     public class GivenAFaultedServer
     {
-        [TestCase, ExpectedException(typeof(Exception))]
+        [Test]
         public void WhenCreatingANewApplication_ShouldThrowACustomException()
         {
             var vacancyDataProvider = new Mock<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();
@@ -26,7 +27,7 @@
                 applicationReadRepository.Object, applicationWriteRepository.Object,
                 candidateReadRepository.Object);
 
-            createApplicationStrategy.CreateApplication(Guid.NewGuid(), 1);
+            Assert.Throws<Exception>(() => createApplicationStrategy.CreateApplication(Guid.NewGuid(), 1));
         }
     }
 }

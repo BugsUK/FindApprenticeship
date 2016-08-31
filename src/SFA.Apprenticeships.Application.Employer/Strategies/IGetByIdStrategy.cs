@@ -4,6 +4,6 @@
 
     public interface IGetByIdStrategy
     {
-        Employer Get(int employerId);
+        Employer Get(int employerId, bool currentOnly);
     }
 }

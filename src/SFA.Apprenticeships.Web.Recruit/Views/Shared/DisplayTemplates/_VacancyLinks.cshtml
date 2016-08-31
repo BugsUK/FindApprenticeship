@@ -15,7 +15,7 @@
     </p>
 }
 
-@if (Model.Status.CanArchiveVacancy())
+@if (Model.Status.CanArchiveVacancy() && Model.VacancyType.CanArchiveVacancy())
 {
     <p class="small-btm-margin">
         @Html.RouteLink("Archive vacancy", RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.SiteMap
 {
     using System;
-    using Vacancy.SiteMap;
+    using Apprenticeships.Application.Vacancy.SiteMap;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;

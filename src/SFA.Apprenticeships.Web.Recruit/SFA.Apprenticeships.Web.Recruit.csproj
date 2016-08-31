@@ -353,6 +353,7 @@
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyStatusController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
@@ -388,7 +389,10 @@
     <Compile Include="Mediators\Report\ReportMediatorCodes.cs" />
     <Compile Include="Mediators\Report\IReportMediator.cs" />
     <Compile Include="Mediators\Report\ReportMediator.cs" />
+    <Compile Include="Mediators\VacancyManagement\IVacancyManagementMediator.cs" />
+    <Compile Include="Mediators\VacancyManagement\VacancyManagementMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\IVacancyPostingMediator.cs" />
+    <Compile Include="Mediators\VacancyPosting\VacancyManagementMediatorCodes.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
@@ -422,6 +426,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VacancyManagement\Delete.generated.cs">
+      <DependentUpon>Delete.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\VacancyPosting\ConfirmEmployer.generated.cs">
       <AutoGen>True</AutoGen>
@@ -859,6 +868,10 @@
     <Content Include="Views\EmployerApplication\ViewAnonymisedTraineeship.cshtml" />
     <Content Include="Views\Shared\_AnonymousLayout.cshtml" />
     <Content Include="Views\VacancyStatus\Archive.cshtml" />
+    <Content Include="Views\VacancyManagement\Delete.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Delete.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -943,6 +956,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
       <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
       <Name>SFA.Apprenticeships.Application.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
+      <Project>{984f8cd2-61b3-48a4-b0cc-5d05e235983d}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidate</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">
       <Project>{C91E4093-3348-43ED-B386-CF70000FFCB3}</Project>

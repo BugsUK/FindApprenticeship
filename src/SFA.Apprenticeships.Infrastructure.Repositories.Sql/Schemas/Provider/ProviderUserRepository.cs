@@ -7,6 +7,8 @@
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Users;
     using Domain.Raa.Interfaces.Repositories;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     // TODO: SQL: AG: double check logging.

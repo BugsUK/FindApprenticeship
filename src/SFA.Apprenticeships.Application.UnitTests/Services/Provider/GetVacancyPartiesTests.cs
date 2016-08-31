@@ -39,7 +39,7 @@
         private Mock<IEmployerService> _employerService;
         private Mock<IVacancyPartyReadRepository> _vacancyPartyReadRepository;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
             _employer1 = new Fixture().Build<Employer>().With(e => e.EdsUrn, EdsUrn1).With(e => e.EmployerId, EmployerId1).Create();
@@ -80,7 +80,7 @@
             };
 
             _employerService = new Mock<IEmployerService>();
-            _employerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>())).Returns(_employersFromService);
+            _employerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(_employersFromService);
             _vacancyPartyReadRepository = new Mock<IVacancyPartyReadRepository>();
             _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(_fromRepository);
         }

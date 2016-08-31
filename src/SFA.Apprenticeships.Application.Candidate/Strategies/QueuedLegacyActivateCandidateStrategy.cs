@@ -4,8 +4,9 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class QueuedLegacyActivateCandidateStrategy : IActivateCandidateStrategy
     {

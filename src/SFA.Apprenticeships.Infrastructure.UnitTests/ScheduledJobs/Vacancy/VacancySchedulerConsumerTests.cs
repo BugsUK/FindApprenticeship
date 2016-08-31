@@ -11,9 +11,13 @@
     using Infrastructure.ScheduledJobs.Consumers;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using VacancyIndexer;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancySchedulerConsumerTests
     {
         private Mock<ILogService> _logService;

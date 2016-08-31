@@ -6,7 +6,9 @@
     using Apprenticeships.Application.ReferenceData;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using SFA.Infrastructure.Interfaces.Caching;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
 
     public class CachedReferenceDataProvider : IReferenceDataProvider
     {

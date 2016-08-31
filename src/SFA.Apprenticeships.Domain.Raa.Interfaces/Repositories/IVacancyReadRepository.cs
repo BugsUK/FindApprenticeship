@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Entities.Raa.Vacancies;
     using Queries;
-    using Entities.Raa.Locations;
 
     public interface IVacancyReadRepository
     {
@@ -13,7 +12,9 @@
         Vacancy GetByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
-        
+
+        VacancySummary GetById(int vacancyId);
+
         List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
@@ -25,7 +26,5 @@
         List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
 
         IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds);
-
-        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds);
     }
 }

@@ -9,6 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class FeedbackCommandTests
     {
         private const string TestEmailAddress = "jane.doe@example.com";

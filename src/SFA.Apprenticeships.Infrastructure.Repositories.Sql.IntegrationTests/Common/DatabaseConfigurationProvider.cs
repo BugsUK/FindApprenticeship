@@ -5,6 +5,8 @@
     using System.Linq;
     using Configuration;
     using Moq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
     using SFA.Infrastructure.Interfaces;

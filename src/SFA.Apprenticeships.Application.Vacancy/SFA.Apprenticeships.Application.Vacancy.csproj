@@ -87,16 +87,22 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CandidateVacancyService.cs" />
+    <Compile Include="DeleteVacancyStrategy.cs" />
     <Compile Include="IAllTraineeshipVacanciesProvider.cs" />
     <Compile Include="IAllApprenticeshipVacanciesProvider.cs" />
+    <Compile Include="IDeleteVacancyStrategy.cs" />
+    <Compile Include="IServiceStrategy{T}.cs" />
     <Compile Include="IVacancyDataProvider.cs" />
     <Compile Include="IAllVacanciesProvider.cs" />
+    <Compile Include="IVacancyManagementService.cs" />
     <Compile Include="IVacancySearchProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteMap\ISiteMapVacancyProvider.cs" />
     <Compile Include="SiteMap\SiteMapVacancy.cs" />
     <Compile Include="SiteMap\SiteMapVacancyHelper.cs" />
     <Compile Include="SiteMap\SiteMapVacancyProvider.cs" />
+    <Compile Include="VacancyManagementService.cs" />
+    <Compile Include="VacancyManagementServiceCodes.cs" />
     <Compile Include="VacancySearchService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -122,10 +128,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
       <Project>{CF497DD1-550D-4203-8FBF-C0A3B0109D2B}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
-      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
-      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

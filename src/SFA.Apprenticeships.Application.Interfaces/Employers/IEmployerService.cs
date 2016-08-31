@@ -10,12 +10,10 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
 
     public interface IEmployerService
     {
-        Employer GetEmployer(int employerId);
-        //TODO: temporary method. Remove after moving status checks to a higher tier
-        Employer GetEmployerWithoutStatusCheck(int employerId);
+        Employer GetEmployer(int employerId, bool currentOnly);
         Employer GetEmployer(string edsUrn);
-        IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds);
-        IEnumerable<MinimalEmployerDetails> GetMinimalEmployerDetails(IEnumerable<int> employerIds);
+        IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds, bool currentOnly = true);
+        IEnumerable<MinimalEmployerDetails> GetMinimalEmployerDetails(IEnumerable<int> employerIds, bool currentOnly = true);
         Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
         Employer SaveEmployer(Employer employer);
         void SendApplicationLinks(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);

@@ -3,24 +3,21 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces;
     using Application.Interfaces.Providers;
-    using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
-    using Configuration;
-    using Domain.Entities.Raa.Parties; 
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using Moq.Language.Flow;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using SFA.Infrastructure.Interfaces;
-    using ViewModels.Vacancy;
     using Web.Common.Configuration;
-    using Web.Common.ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyProviderTests
     {
         private const int QAVacancyTimeout = 10;
@@ -71,17 +68,19 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
 
             vacancyLockingService.Setup(
                 vls =>
                     vls.IsVacancyAvailableToQABy(username,
-                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyAvailableToQAReferenceNumber))).Returns(true);
+                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyAvailableToQAReferenceNumber)))
+                .Returns(true);
 
             vacancyLockingService.Setup(
                 vls =>
                     vls.IsVacancyAvailableToQABy(username,
-                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyNotAvailableToQAReferenceNumber))).Returns(false);
+                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyNotAvailableToQAReferenceNumber)))
+                .Returns(false);
 
             var currentUserService = new Mock<ICurrentUserService>();
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(username);
@@ -98,7 +97,6 @@
             var vacancies = vacancyProvider.GetPendingQAVacancies();
             vacancies.Should().HaveCount(1);
             vacancies.Single().VacancyReferenceNumber.Should().Be(vacancyAvailableToQAReferenceNumber);
-
         }
 
         [Test]
@@ -125,7 +123,7 @@
                     }
                 });
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(ownerPartyId)).Returns(new Provider());
+            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 42, new Fixture().Create<Provider>() } });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -139,7 +137,7 @@
 
             //Assert
             vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
-            providerService.Verify(ps => ps.GetProviderViaCurrentOwnerParty(ownerPartyId), Times.Once);
+            providerService.Verify(ps => ps.GetProvidersViaCurrentOwnerParty(new List<int> {ownerPartyId}, It.IsAny<bool>()), Times.Once);
         }
     }
 

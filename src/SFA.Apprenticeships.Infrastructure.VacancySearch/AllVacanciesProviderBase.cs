@@ -9,6 +9,8 @@
     using Elasticsearch.Net;
     using Nest;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public abstract class AllVacanciesProviderBase<TVacancySummary> : IAllVacanciesProvider
         where TVacancySummary : class, IVacancySummary
     {

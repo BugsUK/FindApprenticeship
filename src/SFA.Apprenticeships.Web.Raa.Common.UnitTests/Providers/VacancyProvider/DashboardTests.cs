@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
@@ -69,7 +70,7 @@
                 }
             });
 
-            employerService.Setup(s => s.GetMinimalEmployerDetails(It.IsAny<IEnumerable<int>>())).Returns(new List<MinimalEmployerDetails>
+            employerService.Setup(s => s.GetMinimalEmployerDetails(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new List<MinimalEmployerDetails>
             {
                 new MinimalEmployerDetails
                 {
@@ -114,7 +115,7 @@
 
             provider.GetVacanciesSummaryForProvider(providerId, providerSiteId, search);
 
-            employerService.Verify(s => s.GetMinimalEmployerDetails(It.IsAny<IEnumerable<int>>()), Times.Once);
+            employerService.Verify(s => s.GetMinimalEmployerDetails(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>()), Times.Once);
         }
         
     }

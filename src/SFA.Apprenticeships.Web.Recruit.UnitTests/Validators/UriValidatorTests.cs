@@ -5,15 +5,14 @@
     using FluentAssertions;
 
     [TestFixture]
+    [Parallelizable]
     public class UriValidatorTests
     {
 
-        [TestCase("https://www.google.com/spaces here.html")]
         [TestCase("https://www.google. com/spaces.html")]
         [TestCase("https://www .google.com/spaces.html")]
-        [TestCase("https://www.google.com/spaces.ht ml")]
         [TestCase("ht tps://www.google.com/spaces.html")]
-        public void ShouldNotContainWhiteSpace(string uriStringWithSpaces)
+        public void DomainShouldNotContainWhiteSpace(string uriStringWithSpaces)
         {
             //Act
             bool isValid = Common.IsValidUrl(uriStringWithSpaces);

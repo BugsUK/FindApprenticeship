@@ -5,6 +5,7 @@
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Candidate.Strategies.Traineeships;
+    using Application.Candidate.Strategies.Candidates;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Employer.Strategies;
@@ -13,11 +14,9 @@
     using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Users;
-    using Application.Interfaces.VacancyPosting;
     using Application.Organisation;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
-    using Application.VacancyPosting;
     using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
@@ -29,14 +28,20 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Vacancies;
     using Application.Location;
     using Application.ReferenceData;
-    using Mappers;
+    using Application.Vacancy;
+    using Application.VacancyPosting.Strategies;
+    using Domain.Interfaces.Repositories;
+    using Infrastructure.Raa.Mappers;
+    using Infrastructure.Raa.Strategies;
+    using Infrastructure.Repositories.Sql.Schemas.dbo;
     using Mediators.Candidate;
     using Mediators.InformationRadiator;
     using Mediators.Reporting;
     using Raa.Common.Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ManagementWebRegistry : Registry
     {
@@ -44,7 +49,7 @@
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
-            For<IMapper>().Singleton().Use<CandidateMappers>().Name = "CandidateMappers";
+            For<IMapper>().Singleton().Use<Mappers.CandidateMappers>().Name = "CandidateMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
@@ -76,8 +81,6 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
-            For<IVacancyPostingService>().Use<VacancyPostingService>();
-            For<IVacancyLockingService>().Use<VacancyLockingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
@@ -102,14 +105,18 @@
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
             For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
-            
+            For<IGetCandidateSummariesStrategy>().Use<GetCandidateSummariesStrategy>();
+
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
-            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
+
+            For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
+
+            For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
         }
 
         private void RegisterMediators()

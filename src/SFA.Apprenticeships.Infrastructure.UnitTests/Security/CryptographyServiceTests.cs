@@ -1,16 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Security
 {
     using System;
+    using Application.Interfaces;
     using FluentAssertions;
     using Infrastructure.Security;
     using Infrastructure.Security.Configuration;
     using Moq;
-    using Newtonsoft.Json;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class CryptographyServiceTests
     {
         private Mock<IConfigurationService> mockConfig = new Mock<IConfigurationService>();

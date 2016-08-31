@@ -17,10 +17,13 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
     [TestFixture]
+    [Parallelizable]
     public class CandidateProviderTests
     {
         private ICandidateProvider _provider;

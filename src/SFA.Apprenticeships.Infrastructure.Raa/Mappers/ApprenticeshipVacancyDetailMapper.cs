@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using Domain.Entities.Extensions;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
@@ -14,6 +13,9 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
@@ -75,7 +77,7 @@
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
                 RecruitmentAgency = providerSite.TradingName,
-                ProviderName = provider.Name,
+                ProviderName = provider.TradingName,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = vacancy.GetContactInformation(providerSite),
@@ -91,7 +93,8 @@
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
-                EditedInRaa = vacancy.EditedInRaa
+                EditedInRaa = vacancy.EditedInRaa,
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
             };
 
             return detail;

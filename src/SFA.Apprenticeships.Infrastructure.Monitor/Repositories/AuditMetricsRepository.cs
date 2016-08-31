@@ -7,6 +7,8 @@
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AuditMetricsRepository : IAuditMetricsRepository
     {
         private const string CollectionName = "auditItems";

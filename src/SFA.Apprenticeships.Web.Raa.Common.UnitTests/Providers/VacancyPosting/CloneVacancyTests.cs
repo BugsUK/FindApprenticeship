@@ -9,6 +9,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class CloneVacancyTests : TestBase
     {
         [Test]
@@ -24,7 +25,7 @@
             MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
             MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), true))
                 .Returns(new Fixture().Build<VacancyParty>().Create());
-            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
+            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>(), It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().Create());
 
             MockTimeService.Setup(s => s.UtcNow).Returns(dateTimeNow);

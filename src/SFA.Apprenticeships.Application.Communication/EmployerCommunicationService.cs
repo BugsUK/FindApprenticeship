@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Infrastructure.Interfaces;
+    using Interfaces;
     using Interfaces.Communications;
     using Strategies;
 

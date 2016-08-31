@@ -7,6 +7,8 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AddressLookupProvider : IAddressLookupProvider
     {
         private readonly ILogService _logger;

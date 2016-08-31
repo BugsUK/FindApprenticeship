@@ -2,8 +2,10 @@
 {
     using System;
     using Domain.Entities.Exceptions;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class AuthenticationService : IAuthenticationService

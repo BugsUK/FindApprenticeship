@@ -8,6 +8,8 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CandidateAccountHousekeepingSubscriber : IServiceBusSubscriber<CandidateHousekeeping>
     {
         private readonly ILogService _logService;

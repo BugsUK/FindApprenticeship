@@ -7,9 +7,12 @@
     using Infrastructure.ScheduledJobs.Consumers;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyStatusControlQueueConsumerTests
     {
         private Mock<ILogService> _logService;

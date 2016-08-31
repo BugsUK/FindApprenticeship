@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Framework
 {
     using System;
-    using Common.Framework;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class DateDisplayExtensionsTests
     {
         [TestCase(0, "today")]
@@ -20,36 +20,13 @@
         public void FriendlyClosingWeekWithinTheWeek(int daysToClosing, string expectedOutput)
         {
             //Test GMT and UTC dates
-            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(daysToClosing), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
+            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(daysToClosing),
+                TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
             var friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
             Assert.AreEqual(friendlyClosingDate, expectedOutput);
             closingDate = DateTime.UtcNow.Date.AddDays(daysToClosing);
             friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
             Assert.AreEqual(friendlyClosingDate, expectedOutput);
-        }
-
-        [Test]
-        public void FriendlyClosingWeekGreaterThanAWeekInTheFuture()
-        {
-            //Test GMT and UTC dates
-            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(10), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
-            var friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
-            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
-            closingDate = DateTime.UtcNow.Date.AddDays(10);
-            friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
-            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
-        }
-
-        [Test]
-        public void FriendlyClosingWeekInThePast()
-        {
-            //Test GMT and UTC dates
-            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(-10), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
-            var friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
-            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
-            closingDate = DateTime.UtcNow.Date.AddDays(-10);
-            friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
-            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
         }
 
         [TestCase(-20, false)]
@@ -60,7 +37,8 @@
         public void FriendlyClosingToday(int daysToClosing, bool showToday)
         {
             //Test GMT and UTC dates
-            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(daysToClosing), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
+            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(daysToClosing),
+                TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
             var friendlyClosingDate = closingDate.ToFriendlyClosingToday();
             Assert.AreEqual(friendlyClosingDate, showToday ? "today" : closingDate.ToString("dd MMM yyyy"));
             closingDate = DateTime.UtcNow.Date.AddDays(daysToClosing);
@@ -77,7 +55,8 @@
         public void ToFriendlyDaysAgo(int daysAgo)
         {
             //Test GMT and UTC dates
-            var dateDaysAgo = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(-daysAgo), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
+            var dateDaysAgo = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(-daysAgo),
+                TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
             var friendlyDaysAgo = dateDaysAgo.ToFriendlyDaysAgo();
             AssertToFriendlyDaysAgo(daysAgo, friendlyDaysAgo, dateDaysAgo);
             dateDaysAgo = DateTime.UtcNow.AddDays(-daysAgo);
@@ -103,6 +82,32 @@
             {
                 friendlyDaysAgo.Should().Be(daysAgo + " days ago");
             }
+        }
+
+        [Test]
+        public void FriendlyClosingWeekGreaterThanAWeekInTheFuture()
+        {
+            //Test GMT and UTC dates
+            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(10),
+                TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
+            var friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
+            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
+            closingDate = DateTime.UtcNow.Date.AddDays(10);
+            friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
+            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
+        }
+
+        [Test]
+        public void FriendlyClosingWeekInThePast()
+        {
+            //Test GMT and UTC dates
+            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(-10),
+                TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
+            var friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
+            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
+            closingDate = DateTime.UtcNow.Date.AddDays(-10);
+            friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
+            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
         }
     }
 }

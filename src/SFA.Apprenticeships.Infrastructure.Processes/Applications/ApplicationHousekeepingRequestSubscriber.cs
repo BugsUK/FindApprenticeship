@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
     using Application.Applications.Housekeeping;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ApplicationHousekeepingRequestSubscriber : IServiceBusSubscriber<ApplicationHousekeepingRequest>
     {

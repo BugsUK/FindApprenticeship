@@ -10,6 +10,8 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
@@ -37,7 +39,7 @@
             var repositoryEmployer = new Fixture().Create<Employer>();
             repositoryEmployer.EdsUrn = edsUrn;
             _employerReadRepository.Reset();
-            _employerReadRepository.Setup(e => e.GetByEdsUrn(edsUrn)).Returns(repositoryEmployer);
+            _employerReadRepository.Setup(e => e.GetByEdsUrn(edsUrn, It.IsAny<bool>())).Returns(repositoryEmployer);
             _employerWriteRepository.Reset();
             _organisationService.Reset();
 

@@ -99,6 +99,10 @@
     <Compile Include="CandidateService.cs" />
     <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="Configuration\ServicesConfiguration.cs" />
+    <Compile Include="Strategies\Candidates\GetCandidateSummariesStrategy.cs" />
+    <Compile Include="Strategies\Candidates\IGetCandidateSummariesStrategy.cs" />
+    <Compile Include="Strategies\Candidates\ISearchCandidatesStrategy.cs" />
+    <Compile Include="Strategies\Candidates\SearchCandidatesStrategy.cs" />
     <Compile Include="Strategies\GetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="SaveCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\GetCandidateApprenticeshipApplicationsStrategy.cs" />
@@ -204,10 +208,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
-      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
-      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -110,7 +110,7 @@ WriteLiteral(">\r\n        <button");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button\"");
+WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"VacancyQuestions\"");
 
@@ -120,7 +120,7 @@ WriteLiteral(">");
 
             
             #line 14 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
-                                                                                         Write(saveButtonText);
+                                                                                                     Write(saveButtonText);
 
             
             #line default
@@ -131,7 +131,7 @@ WriteLiteral(" id=\"VacancyQuestionsAndExit\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button-link no-autosave\"");
 
 WriteLiteral(" name=\"VacancyQuestions\"");
 
@@ -155,14 +155,14 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line hidden
             
             #line 18 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" }));
 
             
             #line default
             #line hidden
             
             #line 18 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
-                                                                                                                                          
+                                                                                                                                                                         
         }
 
             

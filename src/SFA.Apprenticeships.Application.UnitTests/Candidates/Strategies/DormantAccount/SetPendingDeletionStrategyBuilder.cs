@@ -8,6 +8,8 @@
     using Domain.Interfaces.Repositories;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SetPendingDeletionStrategyBuilder
     {
         private readonly Mock<IConfigurationService> _configurationService;

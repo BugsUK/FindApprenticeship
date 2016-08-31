@@ -1,12 +1,12 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Validators.Provider;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.Providers
+﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.Providers
 {
-    using NUnit.Framework;
     using FluentValidation.TestHelper;
+    using NUnit.Framework;
+    using Raa.Common.Validators.Provider;
+    using Raa.Common.ViewModels.Provider;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderSiteSearchViewModelValidatorTests
     {
         [TestCase(null, false)]

@@ -11,7 +11,10 @@
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
+    [Parallelizable]
     public class AcceptTermsAndConditionsTests
     {
         [TestCase("1")]

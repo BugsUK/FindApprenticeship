@@ -7,6 +7,8 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Sql.Common;
     using Sql.Schemas.Provider;
@@ -58,7 +60,8 @@
             // Arrange.
             var provider = _providerReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
 
-            provider.Name = new string(provider.Name.Reverse().ToArray());
+            provider.FullName = new string(provider.FullName.Reverse().ToArray());
+            provider.TradingName = new string(provider.TradingName.Reverse().ToArray());
 
             // Act.
             var newProvider = _providerWriteRepository.Update(provider);

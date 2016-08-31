@@ -284,6 +284,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.DeleteVacancy,
+               url: "vacancy/delete",
+               defaults: new { controller = "VacancyManagement", action = "Delete" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.AddLocations,
                url: "vacancy/locations",
                defaults: new { controller = "VacancyPosting", action = "Locations" }

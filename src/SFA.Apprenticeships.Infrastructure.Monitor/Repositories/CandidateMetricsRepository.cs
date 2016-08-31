@@ -13,6 +13,8 @@
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CandidateMetricsRepository : GenericMongoClient<MongoCandidate>, ICandidateMetricsRepository
     {
         public CandidateMetricsRepository(IConfigurationService configurationService)

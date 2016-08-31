@@ -14,6 +14,9 @@
     using MongoDB.Driver;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
     using StructureMap.Web.Pipeline;
 

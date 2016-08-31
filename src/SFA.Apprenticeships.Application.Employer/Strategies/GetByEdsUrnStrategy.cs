@@ -4,9 +4,9 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Organisations;
     using Location;
-    using SFA.Infrastructure.Interfaces;
 
     public class GetByEdsUrnStrategy : IGetByEdsUrnStrategy
     {

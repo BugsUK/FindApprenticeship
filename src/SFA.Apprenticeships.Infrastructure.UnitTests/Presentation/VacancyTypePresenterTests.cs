@@ -6,6 +6,7 @@
     using NUnit.Framework;
 
     [TestFixture]
+    [Parallelizable]
     public class VacancyTypePresenterTests
     {
         [Test]

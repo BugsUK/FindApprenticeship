@@ -3,6 +3,8 @@
     using Domain.Entities;
     using Mongo.Common;
     using Mongo.Common.Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public abstract class CommunicationRepository<TBaseEntity> : GenericMongoClient<TBaseEntity> where TBaseEntity : BaseEntity

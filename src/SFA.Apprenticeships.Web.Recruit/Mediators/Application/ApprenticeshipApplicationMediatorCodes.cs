@@ -4,6 +4,7 @@
     {
         public class Review
         {
+            public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId";
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.Review.Ok";
         }
 
@@ -36,6 +37,7 @@
 
         public class ConfirmSuccessfulDecision
         {
+            public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.NoApplicationId";
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok";
         }
 
@@ -46,6 +48,7 @@
 
         public class ConfirmUnsuccessfulDecision
         {
+            public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.NoApplicationId";
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok";
         }
 

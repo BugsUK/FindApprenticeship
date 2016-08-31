@@ -10,6 +10,7 @@
     using ErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     [TestFixture]
+    [Parallelizable]
     public class UpdateEmailAddressTests
     {
         private EmailViewModel viewModel = new EmailViewModel() { EmailAddress = "email@email.com" };

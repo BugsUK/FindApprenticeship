@@ -8,6 +8,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
+    [Parallelizable]
     public class GetNewVacancyTests : TestBase
     {
         private const int ProviderSiteId = 1;
@@ -27,7 +28,7 @@
             MockProviderService
                 .Setup(mock => mock.GetVacancyParty(VacancyPartyId, true))
                 .Returns(VacancyParty);
-            MockEmployerService.Setup(s => s.GetEmployer(VacancyParty.EmployerId))
+            MockEmployerService.Setup(s => s.GetEmployer(VacancyParty.EmployerId, true))
                 .Returns(new Fixture().Build<Employer>().Create());
         }
 
@@ -43,7 +44,7 @@
             // Assert.
             MockProviderService.Verify(mock =>
                 mock.GetVacancyParty(VacancyPartyId, true), Times.Once);
-            MockEmployerService.Verify(s => s.GetEmployer(EmployerId), Times.Once);
+            MockEmployerService.Verify(s => s.GetEmployer(EmployerId, true), Times.Once);
 
             viewModel.Should().NotBeNull();
             viewModel.OwnerParty.ProviderSiteId.Should().Be(ProviderSiteId);

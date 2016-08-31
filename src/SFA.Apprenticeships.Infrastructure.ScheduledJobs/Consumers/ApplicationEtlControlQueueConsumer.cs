@@ -7,6 +7,8 @@
     using Domain.Interfaces.Messaging;
     using Processes.Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ApplicationEtlControlQueueConsumer : AzureControlQueueConsumer
     {
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;

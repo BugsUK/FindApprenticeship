@@ -26,11 +26,9 @@
         public override void Initialise()
         {
             Mapper.CreateMap<DatabaseProvider, DomainProvider>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.FullName))
                 .ForMember(dest => dest.IsMigrated, opt => opt.ResolveUsing<ProviderToUseFaaToBool>().FromMember(source => source.ProviderToUseFAA) );
 
             Mapper.CreateMap<DomainProvider, DatabaseProvider>()
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(source => source.Name))
                 .ForMember(dest => dest.Ukprn,
                     opt => opt.ResolveUsing<StringToIntConverter>().FromMember(source => source.Ukprn))
                 .ForMember(dest => dest.ProviderToUseFAA, opt => opt.Ignore());

@@ -3,9 +3,10 @@
     using System;
     using Configuration;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class LockUserStrategy : ILockUserStrategy
     {

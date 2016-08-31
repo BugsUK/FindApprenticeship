@@ -11,9 +11,9 @@
     using Ploeh.AutoFixture;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
-    using ViewModels.VacancyPosting;
-
+    
     [TestFixture]
+    [Parallelizable]
     public class CreateVacancyTests : TestBase
     {
         private const string Ukprn = "12345";
@@ -75,7 +75,7 @@
                 .Returns(_vacancyParty);
             MockProviderService.Setup(s => s.GetProvider(Ukprn))
                 .Returns(new Provider());
-            MockEmployerService.Setup(s => s.GetEmployer(EmployerId)).Returns(new Fixture().Build<Employer>().Create());
+            MockEmployerService.Setup(s => s.GetEmployer(EmployerId, It.IsAny<bool>())).Returns(new Fixture().Build<Employer>().Create());
 
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>()))
                 .Returns(new NewVacancyViewModel());
@@ -88,7 +88,7 @@
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>(), true)).Returns(new VacancyParty());
-            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(new Fixture().Create<Employer>());
+            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>())).Returns(new Fixture().Create<Employer>());
             
             var provider = GetVacancyPostingProvider();
 
@@ -113,7 +113,7 @@
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>(), true)).Returns(new VacancyParty());
-            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>()))
+            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.Address, employerPostalAddress).Create());
             var provider = GetVacancyPostingProvider();
 
@@ -141,7 +141,7 @@
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
             MockProviderService.Verify(s => s.GetVacancyParty(VacancyPartyId, true), Times.Once);
-            MockEmployerService.Verify(s => s.GetEmployer(EmployerId), Times.Once);
+            MockEmployerService.Verify(s => s.GetEmployer(EmployerId, It.IsAny<bool>()), Times.Once);
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>

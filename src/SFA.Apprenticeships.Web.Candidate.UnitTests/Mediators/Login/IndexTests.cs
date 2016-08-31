@@ -1,5 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
-
+﻿
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
     using System;
@@ -12,29 +11,47 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
     using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
+    using Common.UnitTests.Mediators;
     using Constants;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class IndexTests
     {
-        [Test]
-        public void ValidationError()
-        {
-            var viewModel = new LoginViewModelBuilder().Build();
 
-            var mediator = new LoginMediatorBuilder().Build();
+        [TestCase(false)]
+        [TestCase(true)]
+        public void PendingUsernameVerificationRequired(bool expectedValue)
+        {
+            // Arrange.
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            var loginResultViewModel = new LoginResultViewModelBuilder().PendingUsernameVerificationRequired(expectedValue).Build();
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(loginResultViewModel);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
+
+            // Act.
             var response = mediator.Index(viewModel);
 
-            response.AssertValidationResult(LoginMediatorCodes.Index.ValidationError);
+            // Assert.
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
+            response.ViewModel.PendingUsernameVerificationRequired.Should().Be(expectedValue);
         }
 
         [Test]
@@ -52,18 +69,95 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
         }
 
         [Test]
-        public void PendingActivation()
+        public void ApprenticeshipApply()
         {
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
-            var loginResultViewModel = new LoginResultViewModelBuilder(UserStatuses.PendingActivation).Build();
+            const string vacancyId = "1";
+            var userDataProvider = new Mock<IUserDataProvider>();
+            userDataProvider.Setup(p => p.Pop(CandidateDataItemNames.LastViewedVacancy)).Returns(VacancyType.Apprenticeship + "_" + vacancyId);
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().WithEmailAddress(LoginViewModelBuilder.ValidEmailAddress).Build);
+            var entityId = Guid.NewGuid();
+            candidateServiceProvider.Setup(p => p.GetCandidate(LoginViewModelBuilder.ValidEmailAddress)).Returns(new Candidate { EntityId = entityId });
+            candidateServiceProvider.Setup(p => p.GetApplicationStatus(entityId, 1)).Returns(ApplicationStatuses.Draft);
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
+
+            var response = mediator.Index(viewModel);
+
+            response.AssertCode(LoginMediatorCodes.Index.ApprenticeshipApply, true, true);
+            response.Parameters.Should().Be(int.Parse(vacancyId));
+        }
+
+        [Test]
+        public void MobileVerificationRequired()
+        {
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            var loginResultViewModel = new LoginResultViewModelBuilder().MobileVerificationRequired().Build();
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(loginResultViewModel);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCodeAndMessage(LoginMediatorCodes.Index.PendingActivation);
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
+            response.ViewModel.MobileVerificationRequired.Should().BeTrue();
+        }
+
+        [Test]
+        public void ApprenticeshipDetails()
+        {
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            const string vacancyId = "1";
+            var userDataProvider = new Mock<IUserDataProvider>();
+            userDataProvider.Setup(p => p.Pop(CandidateDataItemNames.LastViewedVacancy)).Returns(VacancyType.Apprenticeship + "_" + vacancyId);
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().WithEmailAddress(LoginViewModelBuilder.ValidEmailAddress).Build);
+            var entityId = Guid.NewGuid();
+            candidateServiceProvider.Setup(p => p.GetCandidate(LoginViewModelBuilder.ValidEmailAddress)).Returns(new Candidate { EntityId = entityId });
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
+
+            var response = mediator.Index(viewModel);
+
+            response.AssertCode(LoginMediatorCodes.Index.ApprenticeshipDetails, true, true);
+            response.Parameters.Should().Be(int.Parse(vacancyId));
+        }
+
+        [Test]
+        public void LoginFailed()
+        {
+            var viewModel = new LoginViewModelBuilder().WithEmailAddress(LoginViewModelBuilder.ValidEmailAddress).WithPassword(LoginViewModelBuilder.InvalidPassword).Build();
+
+            const string viewModelMessage = "Invalid Email Address or Password";
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder(UserStatuses.Unknown, false).WithViewModelMessage(viewModelMessage).Build);
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
+
+            var response = mediator.Index(viewModel);
+
+            response.AssertCode(LoginMediatorCodes.Index.LoginFailed, true, true);
+            response.Parameters.Should().Be(viewModelMessage);
+        }
+
+        [Test]
+        public void Ok()
+        {
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
+
+            var response = mediator.Index(viewModel);
+
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
         }
 
         [Test]
@@ -88,24 +182,42 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
         }
 
         [Test]
-        public void SessionReturnUrlNotAllowed()
+        public void PendingActivation()
         {
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
-            const string returnUrl = "http://notallowedurl.com/";
-            var userDataProvider = new Mock<IUserDataProvider>();
-            userDataProvider.Setup(p => p.Pop(UserDataItemNames.SessionReturnUrl)).Returns(returnUrl);
+            var loginResultViewModel = new LoginResultViewModelBuilder(UserStatuses.PendingActivation).Build();
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(loginResultViewModel);
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
+
+            var response = mediator.Index(viewModel);
+
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.PendingActivation);
+        }
+
+        [Test]
+        public void SavedAndDraftCountIsSet()
+        {
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            
+            var applicationStatusSummaries = new Fixture().CreateMany<ApprenticeshipApplicationSummary>(25);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(applicationStatusSummaries);
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate {EntityId = Guid.Empty});
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
-            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
-            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
+            var userDataProvider = new Mock<IUserDataProvider>();
+            userDataProvider.Setup(x => x.Push(UserDataItemNames.SavedAndDraftCount, It.IsAny<string>()));
 
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCode(LoginMediatorCodes.Index.Ok, true);
-            response.Parameters.Should().BeNull();
+            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
+            var count = applicationStatusSummaries.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
+            userDataProvider.Verify(x => x.Push(UserDataItemNames.SavedAndDraftCount, count.ToString(CultureInfo.InvariantCulture)), Times.Once);
         }
 
         [Test]
@@ -150,44 +262,24 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
         }
 
         [Test]
-        public void ApprenticeshipApply()
+        public void SessionReturnUrlNotAllowed()
         {
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
-            const string vacancyId = "1";
+            const string returnUrl = "http://notallowedurl.com/";
             var userDataProvider = new Mock<IUserDataProvider>();
-            userDataProvider.Setup(p => p.Pop(CandidateDataItemNames.LastViewedVacancy)).Returns(VacancyType.Apprenticeship + "_" + vacancyId);
+            userDataProvider.Setup(p => p.Pop(UserDataItemNames.SessionReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().WithEmailAddress(LoginViewModelBuilder.ValidEmailAddress).Build);
-            var entityId = Guid.NewGuid();
-            candidateServiceProvider.Setup(p => p.GetCandidate(LoginViewModelBuilder.ValidEmailAddress)).Returns(new Candidate { EntityId = entityId });
-            candidateServiceProvider.Setup(p => p.GetApplicationStatus(entityId, 1)).Returns(ApplicationStatuses.Draft);
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCode(LoginMediatorCodes.Index.ApprenticeshipApply, true, true);
-            response.Parameters.Should().Be(int.Parse(vacancyId));
-        }
-
-        [Test]
-        public void ApprenticeshipDetails()
-        {
-            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
-
-            const string vacancyId = "1";
-            var userDataProvider = new Mock<IUserDataProvider>();
-            userDataProvider.Setup(p => p.Pop(CandidateDataItemNames.LastViewedVacancy)).Returns(VacancyType.Apprenticeship + "_" + vacancyId);
-            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().WithEmailAddress(LoginViewModelBuilder.ValidEmailAddress).Build);
-            var entityId = Guid.NewGuid();
-            candidateServiceProvider.Setup(p => p.GetCandidate(LoginViewModelBuilder.ValidEmailAddress)).Returns(new Candidate { EntityId = entityId });
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
-
-            var response = mediator.Index(viewModel);
-
-            response.AssertCode(LoginMediatorCodes.Index.ApprenticeshipDetails, true, true);
-            response.Parameters.Should().Be(int.Parse(vacancyId));
+            response.AssertCode(LoginMediatorCodes.Index.Ok, true);
+            response.Parameters.Should().BeNull();
         }
 
         [Test]
@@ -211,63 +303,6 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
         }
 
         [Test]
-        public void LoginFailed()
-        {
-            var viewModel = new LoginViewModelBuilder().WithEmailAddress(LoginViewModelBuilder.ValidEmailAddress).WithPassword(LoginViewModelBuilder.InvalidPassword).Build();
-
-            const string viewModelMessage = "Invalid Email Address or Password";
-            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder(UserStatuses.Unknown, false).WithViewModelMessage(viewModelMessage).Build);
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
-
-            var response = mediator.Index(viewModel);
-
-            response.AssertCode(LoginMediatorCodes.Index.LoginFailed, true, true);
-            response.Parameters.Should().Be(viewModelMessage);
-        }
-
-        [Test]
-        public void Ok()
-        {
-            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
-
-            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
-            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
-            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
-
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
-
-            var response = mediator.Index(viewModel);
-
-            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
-        }
-
-        [Test]
-        public void SavedAndDraftCountIsSet()
-        {
-            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
-
-            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            
-            var applicationStatusSummaries = new Fixture().CreateMany<ApprenticeshipApplicationSummary>(25);
-            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(applicationStatusSummaries);
-            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate {EntityId = Guid.Empty});
-            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
-
-            var userDataProvider = new Mock<IUserDataProvider>();
-            userDataProvider.Setup(x => x.Push(UserDataItemNames.SavedAndDraftCount, It.IsAny<string>()));
-
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
-
-            var response = mediator.Index(viewModel);
-
-            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
-            var count = applicationStatusSummaries.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
-            userDataProvider.Verify(x => x.Push(UserDataItemNames.SavedAndDraftCount, count.ToString(CultureInfo.InvariantCulture)), Times.Once);
-        }
-
-        [Test]
         public void TermsAndConditionsVersion()
         {
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
@@ -275,62 +310,37 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
             const string returnUrl = "/allowedasolutoepath";
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration() {TermsAndConditionsVersion = "2", VacancyResultsPerPage = 5});
+                .Returns(new CommonWebConfiguration {TermsAndConditionsVersion = "2", VacancyResultsPerPage = 5});
             var userDataProvider = new Mock<IUserDataProvider>();
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().WithAcceptedTermsAndConditionsVersion("1").Build);
-            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
-            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+            candidateServiceProvider.Setup(p => p.Login(viewModel))
+                .Returns(new LoginResultViewModelBuilder().WithAcceptedTermsAndConditionsVersion("1").Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>()))
+                .Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>()))
+                .Returns(new Candidate {EntityId = Guid.Empty});
 
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).With(configurationService).Build();
+            var mediator =
+                new LoginMediatorBuilder().With(candidateServiceProvider)
+                    .With(userDataProvider)
+                    .With(configurationService)
+                    .Build();
 
             var response = mediator.Index(viewModel);
 
             response.AssertCode(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, true, true);
             response.Parameters.Should().Be(returnUrl);
         }
-
         [Test]
-        public void MobileVerificationRequired()
+        public void ValidationError()
         {
-            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+            var viewModel = new LoginViewModelBuilder().Build();
 
-            var loginResultViewModel = new LoginResultViewModelBuilder().MobileVerificationRequired().Build();
-            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(loginResultViewModel);
-            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
-            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
-
+            var mediator = new LoginMediatorBuilder().Build();
             var response = mediator.Index(viewModel);
 
-            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
-            response.ViewModel.MobileVerificationRequired.Should().BeTrue();
-        }
-
-        [TestCase(false)]
-        [TestCase(true)]
-        public void PendingUsernameVerificationRequired(bool expectedValue)
-        {
-            // Arrange.
-            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
-
-            var loginResultViewModel = new LoginResultViewModelBuilder().PendingUsernameVerificationRequired(expectedValue).Build();
-            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-
-            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(loginResultViewModel);
-            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
-            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
-
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
-
-            // Act.
-            var response = mediator.Index(viewModel);
-
-            // Assert.
-            response.AssertCodeAndMessage(LoginMediatorCodes.Index.Ok);
-            response.ViewModel.PendingUsernameVerificationRequired.Should().Be(expectedValue);
+            response.AssertValidationResult(LoginMediatorCodes.Index.ValidationError);
         }
     }
 }

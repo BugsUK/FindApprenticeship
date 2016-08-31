@@ -143,6 +143,8 @@
                 .ForMember(v => v.ApplicationId, opt => opt.MapFrom(src => src.EntityId))
                 .ForMember(v => v.VacancyReferenceNumber, opt => opt.Ignore())
                 .ForMember(v => v.FilterType, opt => opt.Ignore())
+                .ForMember(v => v.OrderByField, opt => opt.Ignore())
+                .ForMember(v => v.Order, opt => opt.Ignore())
                 .ForMember(v => v.PageSize, opt => opt.Ignore())
                 .ForMember(v => v.PageSizes, opt => opt.Ignore())
                 .ForMember(v => v.CurrentPage, opt => opt.Ignore());
@@ -182,6 +184,8 @@
                 .ForMember(v => v.ApplicationId, opt => opt.MapFrom(src => src.EntityId))
                 .ForMember(v => v.VacancyReferenceNumber, opt => opt.Ignore())
                 .ForMember(v => v.FilterType, opt => opt.Ignore())
+                .ForMember(v => v.OrderByField, opt => opt.Ignore())
+                .ForMember(v => v.Order, opt => opt.Ignore())
                 .ForMember(v => v.PageSize, opt => opt.Ignore())
                 .ForMember(v => v.PageSizes, opt => opt.Ignore())
                 .ForMember(v => v.CurrentPage, opt => opt.Ignore());

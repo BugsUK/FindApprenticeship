@@ -4,7 +4,7 @@
     using Application.Applications;
     using Application.Applications.Entities;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces.Caching;
+
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
@@ -14,7 +14,11 @@
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
+
     [TestFixture]
+    [Parallelizable]
     public class VacancyStatusSummarySubscriberTests
     {
         private Mock<IConfigurationService> _configurationServiceMock;

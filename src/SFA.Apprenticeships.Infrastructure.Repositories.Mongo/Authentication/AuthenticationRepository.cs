@@ -8,6 +8,8 @@
     using Common;
     using Common.Configuration;
     using MongoDB.Driver.Builders;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 

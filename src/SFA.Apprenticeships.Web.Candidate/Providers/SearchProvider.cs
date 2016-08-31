@@ -7,7 +7,11 @@
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.VacancySearch;
+    using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;
 
     public class SearchProvider : ISearchProvider
     {

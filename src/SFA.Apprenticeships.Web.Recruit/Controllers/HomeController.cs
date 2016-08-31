@@ -3,6 +3,7 @@
     using System;
     using System.Web;
     using System.Web.Mvc;
+    using Application.Interfaces;
     using Common.Constants;
     using Common.Framework;
     using FluentValidation.Mvc;

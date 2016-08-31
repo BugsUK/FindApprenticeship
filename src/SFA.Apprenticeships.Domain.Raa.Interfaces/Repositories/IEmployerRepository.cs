@@ -5,15 +5,13 @@
 
     public interface IEmployerReadRepository
     {
-        Employer GetById(int employerId);
+        Employer GetById(int employerId, bool currentOnly = true);
 
-        Employer GetByIdWithoutStatusCheck(int employerId);
+        Employer GetByEdsUrn(string edsUrn, bool currentOnly = true);
 
-        Employer GetByEdsUrn(string edsUrn);
+        List<Employer> GetByIds(IEnumerable<int> employerIds, bool currentOnly = true);
 
-        List<Employer> GetByIds(IEnumerable<int> employerIds);
-
-        IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds);
+        IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds, bool currentOnly = true);
     }
 
     public interface IEmployerWriteRepository

@@ -11,6 +11,8 @@
 
     using Application.Candidate.Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
         where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
         where TDestinationSummary : class, IVacancySummary
@@ -41,7 +43,7 @@
             try
             {
                 var indexAlias = GetIndexAlias();
-                var newIndexName = GetIndexNameAndDateExtension(indexAlias, vacancySummaryToIndex.ScheduledRefreshDateTime);
+                var newIndexName = GetIndexNameAndDateExtension(indexAlias, vacancySummaryToIndex.ScheduledRefreshDateTime, vacancySummaryToIndex.UseAlias);
                 var vacancySummaryElastic = _mapper.Map<TSourceSummary, TDestinationSummary>(vacancySummaryToIndex);
 
                 var client = _elasticsearchClientFactory.GetElasticClient();
@@ -66,7 +68,7 @@
             _logger.Info("Creating new vacancy search index for date: {0}", scheduledRefreshDateTime);
 
             var indexAlias = GetIndexAlias();
-            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
+            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime, false);
             var client = _elasticsearchClientFactory.GetElasticClient();
 
             var indexExistsResponse = client.IndexExists(i => i.Index(newIndexName));
@@ -140,7 +142,7 @@
             _logger.Debug("Swapping vacancy search index for date: {0}", scheduledRefreshDateTime);
 
             var indexAlias = GetIndexAlias();
-            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
+            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime, false);
             var client = _elasticsearchClientFactory.GetElasticClient();
 
             _logger.Debug("Swapping vacancy search index alias to new index: {0}", newIndexName);
@@ -169,7 +171,7 @@
             if (vacanciesSource == ServicesConfiguration.Legacy)
             {
                 var indexAlias = GetIndexAlias();
-                var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
+                var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime, false);
                 var client = _elasticsearchClientFactory.GetElasticClient();
                 var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (TDestinationSummary));
 
@@ -213,9 +215,9 @@
             return _elasticsearchClientFactory.GetIndexNameForType(typeof(TDestinationSummary));
         }
 
-        private static string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime)
+        private static string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime, bool useAlias)
         {
-            return $"{indexAlias}.{dateTime.ToUniversalTime().ToString("yyyy-MM-dd-HH-mm")}";
+            return useAlias ? indexAlias : $"{indexAlias}.{dateTime.ToUniversalTime().ToString("yyyy-MM-dd-HH-mm")}";
         }
     }
 }

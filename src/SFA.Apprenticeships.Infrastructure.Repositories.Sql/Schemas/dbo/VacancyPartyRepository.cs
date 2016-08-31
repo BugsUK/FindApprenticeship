@@ -6,12 +6,14 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class VacancyPartyRepository : IVacancyPartyReadRepository, IVacancyPartyWriteRepository
     {
         private enum VacancyOwnerRelationshipStatusTypes
         {
+            Deleted = 3,
             Live = 4
         };
 
@@ -87,7 +89,7 @@
 
             return _mapper.Map<IEnumerable<VacancyOwnerRelationship>, IEnumerable<VacancyParty>>(vacancyParties);
         }
-        
+
         public VacancyParty Save(VacancyParty vacancyParty)
         {
             var dbVacancyOwnerRelationship = _mapper.Map<VacancyParty, VacancyOwnerRelationship>(vacancyParty);
@@ -124,6 +126,40 @@
             }
 
             return GetByIds(new[] { dbVacancyOwnerRelationship.VacancyOwnerRelationshipId }).Single();
+        }
+
+        public bool IsADeletedVacancyParty(int providerSiteId, int employerId)
+        {
+            const string sql = @"
+                SELECT StatusTypeId FROM dbo.VacancyOwnerRelationship
+                WHERE ProviderSiteID = @ProviderSiteId
+                AND EmployerId = @EmployerId";
+
+            var sqlParams = new
+            {
+                ProviderSiteId = providerSiteId,
+                EmployerId = employerId
+            };
+
+            return _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault()?.StatusTypeId == (int)VacancyOwnerRelationshipStatusTypes.Deleted;
+        }
+
+        public void ResurrectVacancyParty(int providerSiteId, int employerId)
+        {
+            const string sql = @"
+                UPDATE dbo.VacancyOwnerRelationship SET StatusTypeId = @StatusTypeId
+                WHERE ProviderSiteID = @ProviderSiteId
+                AND EmployerId = @EmployerId";
+
+            var sqlParams = new
+            {
+                ProviderSiteId = providerSiteId,
+                EmployerId = employerId,
+                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
+            };
+
+            _getOpenConnection.MutatingQuery<object>(sql, sqlParams);
+
         }
     }
 }

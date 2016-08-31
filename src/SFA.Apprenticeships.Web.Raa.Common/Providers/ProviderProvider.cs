@@ -8,8 +8,9 @@
     using Application.Interfaces.VacancyPosting;
     using Configuration;
     using Converters;
-    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels.Provider;
     using ViewModels.VacancyPosting;
@@ -35,7 +36,7 @@
             var provider = _providerService.GetProvider(ukprn);
             var providerSites = _providerService.GetProviderSites(ukprn);
 
-            return Convert(provider, providerSites);
+            return provider.Convert(providerSites);
         }
 
         public ProviderViewModel GetProviderViewModel(int providerId)
@@ -43,7 +44,7 @@
             var provider = _providerService.GetProvider(providerId);
             var providerSites = _providerService.GetProviderSites(provider.Ukprn);
 
-            return Convert(provider, providerSites);
+            return provider.Convert(providerSites);
         }
 
         public ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn)
@@ -62,19 +63,24 @@
         public VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId)
         {
             var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId, true);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
             return vacancyParty.Convert(employer);
         }
 
         public VacancyPartyViewModel GetVacancyPartyViewModel(int providerSiteId, string edsUrn)
         {
             var vacancyParty = _providerService.GetVacancyParty(providerSiteId, edsUrn);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
             return vacancyParty.Convert(employer);
         }
 
         public VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel)
         {
+            if (_providerService.IsADeletedVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn))
+            {
+                _providerService.ResurrectVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
+            } 
+
             var vacancyParty = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
             vacancyParty.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             vacancyParty.EmployerDescription = viewModel.EmployerDescription;
@@ -94,7 +100,7 @@
                 _vacancyPostingService.UpdateVacancy(vacancy);
             }
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
             var result = vacancyParty.Convert(employer);
             
             return result;
@@ -172,19 +178,6 @@
                     .ConvertToResult()));
 
             viewModel.EmployerResultsPage = resultsPage;
-
-            return viewModel;
-        }
-
-        private static ProviderViewModel Convert(Provider provider, IEnumerable<ProviderSite> providerSites)
-        {
-            var viewModel = new ProviderViewModel
-            {
-                ProviderId = provider.ProviderId,
-                ProviderName = provider.Name,
-                IsMigrated = provider.IsMigrated,
-                ProviderSiteViewModels = providerSites.Select(ps => ps.Convert()).ToList()
-            };
 
             return viewModel;
         }

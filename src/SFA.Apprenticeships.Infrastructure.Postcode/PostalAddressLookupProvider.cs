@@ -9,6 +9,8 @@
     using Entities;
     using Rest;
     using RestSharp;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class PostalAddressLookupProvider : RestService, IPostalAddressLookupProvider

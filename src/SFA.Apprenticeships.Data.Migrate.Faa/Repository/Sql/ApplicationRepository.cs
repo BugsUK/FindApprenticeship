@@ -28,7 +28,7 @@
 
         public IDictionary<int, ApplicationSummary> GetApplicationSummariesByIds(IEnumerable<int> applicationIds)
         {
-            return _getOpenConnection.Query<ApplicationSummary>("SELECT ApplicationId, OutcomeReasonOther FROM Application WHERE ApplicationId in @applicationIds", new { applicationIds }).ToDictionary(a => a.ApplicationId, a => a);
+            return _getOpenConnection.Query<ApplicationSummary>("SELECT ApplicationId, ApplicationStatusTypeId, OutcomeReasonOther, AllocatedTo FROM Application WHERE ApplicationId in @applicationIds", new { applicationIds }).ToDictionary(a => a.ApplicationId, a => a);
         }
     }
 }

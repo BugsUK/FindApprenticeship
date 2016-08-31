@@ -8,6 +8,7 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
+    using Interfaces;
     using Interfaces.Providers;
     using Moq;
     using NUnit.Framework;

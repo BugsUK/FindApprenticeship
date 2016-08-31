@@ -6,10 +6,12 @@
     using System.Reflection;
     using System.Runtime.Caching; // TODO: Why needed rather than SFA.Infrastructure.Interfaces.Caching?
     using Interfaces;
-    using Interfaces.Caching;
     using Microsoft.WindowsAzure.Storage;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
 
     public class AzureBlobConfigurationService : IConfigurationService
     {

@@ -6,7 +6,6 @@
     using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
     using Common.Providers;
-    using Configuration;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
@@ -14,10 +13,12 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using SFA.Infrastructure.Interfaces;
+
+    using Application.Interfaces;
     using ViewModels.Vacancy;
 
     [TestFixture]
+    [Parallelizable]
     public class GetPendingQAVacanciesOverviewTests
     {
         private const int ExpectedSubmittedTodayCount = 5;
@@ -46,6 +47,7 @@
                 .With(v => v.DateSubmitted, submittedTodayDate)
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
+                .With(v => v.OwnerPartyId, 1)
                 .CreateMany(ExpectedSubmittedTodayCount).ToList();
 
             var vacanciesSubmittedYesterdayUpperBoundary = new Fixture().Build<Vacancy>()
@@ -53,12 +55,14 @@
                 .With(v => v.DateSubmitted, utcNow.Date.AddSeconds(-1))
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
+                .With(v => v.OwnerPartyId, 1)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
             var vacanciesSubmittedYesterdayLowerBoundary = new Fixture().Build<Vacancy>()
                 .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, utcNow.Date.AddDays(-1))
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
+                .With(v => v.OwnerPartyId, 1)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
 
             var submittedMoreThan48HoursDate = utcNow.AddHours(-48).AddSeconds(-1);
@@ -67,6 +71,7 @@
                 .With(v => v.DateSubmitted, submittedMoreThan48HoursDate)
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
+                .With(v => v.OwnerPartyId, 1)
                 .CreateMany(ExpectedSubmittedMoreThan48HoursCount).ToList();
 
             var resubmittedDate = utcNow.Date.AddDays(-1).AddSeconds(-1);
@@ -75,6 +80,7 @@
                 .With(v => v.DateSubmitted, resubmittedDate)
                 .With(v => v.SubmissionCount, 3)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
+                .With(v => v.OwnerPartyId, 1)
                 .CreateMany(ExpectedResubmittedCount).ToList();
 
             var vacancies = _vacanciesSubmittedToday;
@@ -88,7 +94,7 @@
 
             _providerService = new Mock<IProviderService>();
             _providerService.Setup(s => s.GetProvider(It.IsAny<string>())).Returns(new Fixture().Create<Provider>());
-            _providerService.Setup(s => s.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Fixture().Create<Provider>());
+            _providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { {1, new Fixture().Create<Provider>()}});
 
             _provider = new VacancyProviderBuilder().With(_vacancyPostingService).With(_providerService).With(_dateTimeService).Build();
         }
@@ -281,7 +287,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(new List<VacancySummary>());
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>(), It.IsAny<bool>())).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -326,7 +332,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -417,7 +423,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -508,7 +514,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -601,7 +607,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()

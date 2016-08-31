@@ -10,6 +10,8 @@
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -34,6 +36,10 @@
                 case ApprenticeshipApplicationMediatorCodes.Review.Ok:
                     return View(response.ViewModel);
 
+                case ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -50,7 +56,7 @@
 
             if (response.Message != null)
             {
-                SetUserMessage(response.Message.Text, response.Message.Level);
+                SetUserMessage(response.Message);
             }
 
             switch (response.Code)
@@ -63,7 +69,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewAppointCandidate.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, viewModel.ApplicationSelection.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -81,7 +87,7 @@
 
             if (response.Message != null)
             {
-                SetUserMessage(response.Message.Text, response.Message.Level);
+                SetUserMessage(response.Message);
             }
 
             switch (response.Code)
@@ -94,7 +100,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ConfirmUnsuccessfulApprenticeshipApplication, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmUnsuccessfulApprenticeshipApplication, viewModel.ApplicationSelection.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -112,7 +118,7 @@
 
             if (response.Message != null)
             {
-                SetUserMessage(response.Message.Text, response.Message.Level);
+                SetUserMessage(response.Message);
             }
 
             switch (response.Code)
@@ -125,7 +131,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -141,6 +147,10 @@
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok:
                     return View(response.ViewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.NoApplicationId:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -158,10 +168,10 @@
                 case ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok:
                     if (response.Message != null)
                     {
-                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        SetUserMessage(response.Message);
                     }
 
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel);
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -177,6 +187,10 @@
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
                     return View(response.ViewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.NoApplicationId:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -194,10 +208,10 @@
                 case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
                     if (response.Message != null)
                     {
-                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        SetUserMessage(response.Message.Text);
                     }
 
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel);
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

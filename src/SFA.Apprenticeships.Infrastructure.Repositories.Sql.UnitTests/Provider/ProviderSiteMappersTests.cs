@@ -9,6 +9,7 @@
     using DomainProviderSite = Domain.Entities.Raa.Parties.ProviderSite;
 
     [TestFixture]
+    [Parallelizable]
     public class ProviderSiteMappersTests
     {
         private ProviderSiteMappers _mapper;

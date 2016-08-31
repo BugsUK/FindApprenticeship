@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Application.Interfaces;
     using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;
@@ -16,7 +17,6 @@
     using Raa.Common.Validators.Report;
     using Raa.Common.ViewModels.Report;
     using SFA.Infrastructure.Interfaces;
-    using Validators;
     using ViewModels;
 
     public class ReportingMediator : MediatorBase, IReportingMediator
@@ -72,7 +72,11 @@
                 headerBuilder.AppendLine(",,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,");
 
-                var bytes = GetCsvBytes<ReportSuccessfulCandidatesResultItem, ReportSuccessfulCandidatesResultItemClassMap>(reportResult, headerBuilder.ToString());
+                var bytes = parameters.IncludeCandidateIds
+                    ? GetCsvBytes<ReportSuccessfulCandidatesResultItem, ReportSuccessfulCandidatesWithIdsResultItemClassMap>(
+                        reportResult, headerBuilder.ToString())
+                    : GetCsvBytes<ReportSuccessfulCandidatesResultItem, ReportSuccessfulCandidatesResultItemClassMap>(
+                        reportResult, headerBuilder.ToString());
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
             catch (Exception ex)
@@ -97,11 +101,18 @@
                 headerBuilder.AppendLine("Date,Total_Unsuccessful_Applications,Total_Candidates,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                 headerBuilder.Append(DateTime.Now.ToString("dd/MM/yyy")).Append(",");
                 headerBuilder.Append(reportResult.Count).Append(",");
-                headerBuilder.Append(reportResult.Select(i => i.candidateid).Distinct().Count());
+                headerBuilder.Append(reportResult.Select(i => i.CandidateId).Distinct().Count());
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
 
-                var bytes = GetCsvBytes<ReportUnsuccessfulCandidatesResultItem, ReportUnsuccessfulCandidatesResultItemClassMap>(reportResult, headerBuilder.ToString());
+                var bytes = parameters.IncludeCandidateIds
+                    ? GetCsvBytes
+                        <ReportUnsuccessfulCandidatesResultItem, ReportUnsuccessfulCandidatesWithIdsResultItemClassMap>(
+                            reportResult, headerBuilder.ToString())
+                    : GetCsvBytes
+                        <ReportUnsuccessfulCandidatesResultItem, ReportUnsuccessfulCandidatesResultItemClassMap>(
+                            reportResult, headerBuilder.ToString());
+
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
             catch (Exception ex)
@@ -173,18 +184,62 @@
             }
         }
 
+        public MediatorResponse<ReportRegisteredCandidatesParameters> GetRegisteredCandidatesReportParams()
+        {
+            var result = new ReportRegisteredCandidatesParameters();
+
+            try
+            {
+                var regions = _reportingRepo.GeoRegionsIncludingAll();
+                result.RegionList = regions.ToListItemList();
+                var localAuthorities = _reportingRepo.GetLocalAuthorities();
+                result.LocalAuthoritiesList = localAuthorities.ToListItemList();
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, result);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, result);
+            }
+        }
+
+        public MediatorResponse<ReportRegisteredCandidatesParameters> ValidateRegisteredCandidatesParameters(ReportRegisteredCandidatesParameters parameters)
+        {
+            var response = GetRegisteredCandidatesReportParams();
+            if(response.Code == ReportingMediatorCodes.ReportCodes.Error)
+                return response;
+
+            parameters.RegionList = response.ViewModel.RegionList;
+            parameters.LocalAuthoritiesList = response.ViewModel.LocalAuthoritiesList;
+
+            var validationResult = _reportDateRangeValidator.Validate(parameters);
+            parameters.IsValid = validationResult.IsValid;
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.ValidationError, parameters, validationResult);
+            }
+
+            return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, parameters, validationResult);
+        }
+
         public MediatorResponse<byte[]> GetRegisteredCandidatesReportBytes(ReportRegisteredCandidatesParameters parameters)
         {
             try
             {
-                var reportResult = _reportingRepo.ReportRegisteredCandidates(parameters.FromDate.Date, parameters.ToDate.Date);
+                var reportResult = _reportingRepo.ReportRegisteredCandidates(parameters.Type, parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange, parameters.Region, parameters.LocalAuthority, parameters.MarketMessagesOnly);
 
                 var headerBuilder = new StringBuilder();
                 headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,");
 
-                var bytes = GetCsvBytes<ReportRegisteredCandidatesResultItem, ReportRegisteredCandidatesResultItemClassMap>(reportResult, headerBuilder.ToString());
+                var bytes = parameters.IncludeCandidateIds
+                    ? GetCsvBytes
+                        <ReportRegisteredCandidatesResultItem, ReportRegisteredCandidatesWithIdsResultItemClassMap>(
+                            reportResult, headerBuilder.ToString())
+                    : GetCsvBytes
+                        <ReportRegisteredCandidatesResultItem, ReportRegisteredCandidatesResultItemClassMap>(
+                            reportResult, headerBuilder.ToString());
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
             catch (Exception ex)

@@ -13,7 +13,9 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     /// </summary>
     public interface IProviderService
     {
-        Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId);
+        Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId, bool currentOnly = true);
+
+        IReadOnlyDictionary<int, Provider> GetProvidersViaCurrentOwnerParty(IEnumerable<int> vacancyPartyIds, bool currentOnly = true);
 
         Provider GetProvider(int providerId);
 
@@ -50,6 +52,10 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);
 
         VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
+
+        bool IsADeletedVacancyParty(int providerSiteId, string edsUrn);
+
+        void ResurrectVacancyParty(int providerSiteId, string edsUrn);
 
         VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
 

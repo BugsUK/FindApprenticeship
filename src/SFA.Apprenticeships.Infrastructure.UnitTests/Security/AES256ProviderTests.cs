@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Security
 {
     using System;
+    using Application.Interfaces;
     using FluentAssertions;
     using Infrastructure.Security;
     using Infrastructure.Security.Configuration;
@@ -9,6 +10,7 @@
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
+    [Parallelizable]
     public class AES256ProviderTests
     {
         private Mock<IConfigurationService> mockConfig = new Mock<IConfigurationService>();

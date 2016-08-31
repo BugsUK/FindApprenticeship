@@ -4,27 +4,23 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Candidates;
-
+    using Strategies.Candidates;
+    
     public class CandidateSearchService : ICandidateSearchService
     {
-        private readonly ILogService _logger;
-        private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly ISearchCandidatesStrategy _searchCandidatesStrategy;
 
-        public CandidateSearchService(ICandidateReadRepository candidateReadRepository, ILogService logger)
+        public CandidateSearchService(ISearchCandidatesStrategy searchCandidatesStrategy)
         {
-            _candidateReadRepository = candidateReadRepository;
-            _logger = logger;
+            _searchCandidatesStrategy = searchCandidatesStrategy;
         }
 
         public List<CandidateSummary> SearchCandidates(CandidateSearchRequest request)
         {
             Condition.Requires(request);
 
-            _logger.Debug("Calling CandidateReadRepository to search for candidates that match {0}.", request);
-
-            return _candidateReadRepository.SearchCandidates(request);
+            return _searchCandidatesStrategy.SearchCandidates(request);
         }
     }
 }

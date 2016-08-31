@@ -3,12 +3,12 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
     using System;
     using System.Diagnostics;
     using System.Threading;
+    using Application.Interfaces;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using StructureMap;
     using Common.IoC;
     using Data.Migrate.Faa;
     using Logging.IoC;
-    using SFA.Infrastructure.Interfaces;
     using Logging;
 
     public class WorkerRole : RoleEntryPoint

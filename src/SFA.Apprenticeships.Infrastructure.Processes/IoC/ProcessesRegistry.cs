@@ -37,6 +37,9 @@
     using Domain.Interfaces.Repositories;
     using Logging.IoC;
     using Repositories.Mongo.Audit;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using SiteMap;
     using StructureMap;
     using StructureMap.Configuration.DSL;
@@ -143,6 +146,8 @@
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
             RegisterServiceBusMessageBroker<VacancyStatusProcessorSubscriber, VacancyEligibleForClosure>();
             RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
+            RegisterServiceBusMessageBroker<ApprenticeshipSummaryUpdateSubscriber, ApprenticeshipSummaryUpdate>();
+            RegisterServiceBusMessageBroker<TraineeshipsSummaryUpdateSubscriber, TraineeshipSummaryUpdate>();
         }
 
         private void RegisterCommunicationServiceBusMessageBrokers(Container container)
@@ -186,7 +191,6 @@
         private void RegisterStrategies()
         {
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
-            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");

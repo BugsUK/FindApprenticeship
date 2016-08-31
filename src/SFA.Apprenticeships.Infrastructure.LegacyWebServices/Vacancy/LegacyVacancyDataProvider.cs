@@ -8,6 +8,9 @@
     using Domain.Entities.Vacancies;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Wcf;
     using VacancyErrorCodes = Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes;
 

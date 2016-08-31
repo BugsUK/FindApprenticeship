@@ -2,7 +2,8 @@
 {
     using AutoMapper;
     using AutoMapper.Mappers;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public abstract class MapperEngine : IMapper
     {
