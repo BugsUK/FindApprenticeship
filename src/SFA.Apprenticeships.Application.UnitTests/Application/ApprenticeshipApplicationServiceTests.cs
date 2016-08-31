@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Application
 {
-    using System;
     using Apprenticeships.Application.Application;
+    using Apprenticeships.Application.Application.Entities;
+    using Apprenticeships.Application.Application.Strategies;
     using Apprenticeships.Application.Application.Strategies.Apprenticeships;
-    using Apprenticeships.Application.Applications.Entities;
-    using Apprenticeships.Application.Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -12,7 +11,9 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using System;
     using System.Collections.Generic;
+
     [TestFixture]
     public class ApprenticeshipApplicationServiceTests
     {
@@ -68,7 +69,7 @@
                 mock.GetCountsForVacancyIds(vacancies)).Returns(expected);
 
             //Act            
-            var response = _apprenticeshipApplicationService.GetCountsForVacancyIds(vacancies);            
+            var response = _apprenticeshipApplicationService.GetCountsForVacancyIds(vacancies);
 
             //Assert            
             Assert.AreEqual(response, expected);
@@ -120,7 +121,7 @@
                 VacancyStatus = VacancyStatuses.Live,
                 Vacancy = new ApprenticeshipSummary
                 {
-                    ClosingDate = DateTime.Today.AddDays(90)                                   
+                    ClosingDate = DateTime.Today.AddDays(90)
                 }
             };
 

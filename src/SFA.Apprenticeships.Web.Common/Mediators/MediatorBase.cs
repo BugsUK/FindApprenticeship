@@ -3,9 +3,7 @@ using SFA.Apprenticeships.Web.Common.Constants;
 
 namespace SFA.Apprenticeships.Web.Common.Mediators
 {
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
 
     public abstract class MediatorBase
     {

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Applications
 {
+    using Application.Entities;
     using Entities;
 
     public interface IApplicationStatusProcessor

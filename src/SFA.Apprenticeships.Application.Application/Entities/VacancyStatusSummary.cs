@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Application.Applications.Entities
+﻿namespace SFA.Apprenticeships.Application.Application.Entities
 {
-    using System;
     using Domain.Entities.Vacancies;
+    using System;
 
     public class VacancyStatusSummary
     {

@@ -1,37 +1,32 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
+    using Application.Interfaces.Candidates;
+    using Application.Interfaces.Communications;
+    using Application.Interfaces.Users;
+    using Common.Configuration;
+    using Common.Constants;
+    using Common.Providers;
+    using Common.Services;
+    using Constants.Pages;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
+    using Domain.Entities.Communication;
+    using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
+    using Infrastructure.Presentation;
+    using Mappers;
+    using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Application.Interfaces.Communications;
-    using SFA.Infrastructure.Interfaces;
-    using Common.Configuration;
-    using Common.Providers;
-    using Common.Services;
-    using Application.Interfaces.Candidates;
-    using Application.Interfaces.Users;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
-    using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
-    using Constants.Pages;
     using ViewModels;
+    using ViewModels.Account;
     using ViewModels.Candidate;
     using ViewModels.Home;
     using ViewModels.Login;
     using ViewModels.Register;
-    using Common.Constants;
-    using Domain.Entities.Communication;
-    using Helpers;
-    using Infrastructure.Presentation;
-    using Mappers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
-    using ViewModels.Account;
     using ViewModels.VacancySearch;
-    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
     using UserErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
@@ -490,7 +485,7 @@
 
                 candidate.UserId = candidateId;
                 _candidateService.SubmitContactMessage(candidate);
-                
+
                 return true;
             }
             catch
@@ -504,7 +499,7 @@
             try
             {
                 var candidate = _mapper.Map<FeedbackViewModel, ContactMessage>(viewModel);
-                
+
                 candidate.UserId = candidateId;
                 _candidateService.SubmitContactMessage(candidate);
 

@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Application.Applications.Strategies
+﻿namespace SFA.Apprenticeships.Application.Application.Strategies
 {
+    using Application.Entities;
     using Domain.Entities.Applications;
-    using Entities;
 
     public interface IApplicationStatusUpdateStrategy
     {

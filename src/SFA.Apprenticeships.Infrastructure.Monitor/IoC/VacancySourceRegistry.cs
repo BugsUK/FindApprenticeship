@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
-    using Application.Applications;
+    using Application.Application;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Vacancies;
@@ -15,12 +15,9 @@
     using LegacyWebServices.Vacancy;
     using LegacyWebServices.Wcf;
     using Raa;
-
-    using SFA.Apprenticeships.Application.Candidate;
     using SFA.Apprenticeships.Application.Candidate.Configuration;
     using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Application.Interfaces.Caching;
-    using SFA.Infrastructure.Interfaces;
 
     using StructureMap.Configuration.DSL;
 

@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
-    using System;
+    using Application.Application.Entities;
     using Application.Applications;
     using Application.Applications.Entities;
+    using Application.Interfaces;
     using Configuration;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System;
 
     public class ApplicationStatusSummarySubscriber : IServiceBusSubscriber<ApplicationStatusSummary>
     {

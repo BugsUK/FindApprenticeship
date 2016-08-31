@@ -312,6 +312,10 @@
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
       <Name>SFA.Apprenticeships.Application.Applications</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7d29ed20-ff3d-4fbb-b253-a44de1e42bcc}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj">
       <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
       <Name>SFA.Apprenticeships.Application.Authentication</Name>

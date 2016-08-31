@@ -1,15 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Application.Applications
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using Application;
+    using Application.Entities;
+    using Application.Strategies;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using Strategies;
+    using Interfaces;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class ApplicationStatusProcessor : IApplicationStatusProcessor
     {
@@ -53,7 +54,7 @@
             }
 
             var pages = Enumerable.Range(1, pageCount)
-                .Select(i => new ApplicationUpdatePage {PageNumber = i, TotalPages = pageCount});
+                .Select(i => new ApplicationUpdatePage { PageNumber = i, TotalPages = pageCount });
 
             _logger.Info("Queuing {0} application summary status update pages", pageCount);
 
@@ -164,7 +165,7 @@
                 }
 
                 apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, applicationStatusSummary.LegacyVacancyId);
-            } 
+            }
 
             if (apprenticeshipApplicationDetail == null)
             {

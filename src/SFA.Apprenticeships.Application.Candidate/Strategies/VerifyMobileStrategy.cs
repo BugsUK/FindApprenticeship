@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
-    using System;
-    using Application.Candidates;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
+    using System;
 
     public class VerifyMobileStrategy : IVerifyMobileStrategy
     {

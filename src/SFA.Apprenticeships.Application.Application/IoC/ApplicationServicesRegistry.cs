@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Application.IoC
 {
-    using Applications.Strategies;
     using Interfaces.Applications;
+    using Strategies;
     using StructureMap.Configuration.DSL;
 
     public class ApplicationServicesRegistry : Registry

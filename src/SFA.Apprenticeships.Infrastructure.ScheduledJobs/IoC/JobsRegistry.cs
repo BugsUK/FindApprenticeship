@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.IoC
 {
-    using SFA.Infrastructure.Interfaces;
+    using Application.Application.Strategies;
     using Application.Applications;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
@@ -12,6 +12,7 @@
     using Application.Communications.Strategies;
     using Application.Employer;
     using Application.Employer.Strategies;
+    using Application.Interfaces;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -27,9 +28,6 @@
     using Domain.Interfaces.Repositories;
     using Processes.Vacancies;
     using Repositories.Mongo.Audit;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using StructureMap.Configuration.DSL;
     using VacancyEtlMapper = Mappers.VacancyEtlMapper;
 
@@ -73,7 +71,7 @@
 
             //Candidate Housekeeping
             For<ICandidateProcessor>().Use<CandidateProcessor>();
-            
+
             // Application Housekeeping
             For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();
             For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();

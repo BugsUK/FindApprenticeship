@@ -2,12 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
-    using System.Globalization;
-    using System.Net;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
-    using System.Web.Security;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -15,13 +10,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Common.Providers;
     using Constants;
     using Constants.Pages;
-    using SFA.Infrastructure.Interfaces;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Account;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Globalization;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using System.Web.Security;
     using ViewModels.Account;
     using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 
@@ -31,7 +27,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly IDismissPlannedOutageMessageCookieProvider _dismissPlannedOutageMessageCookieProvider;
         private readonly IUserDataProvider _userDataProvider;
 
-        public AccountController(IAccountMediator accountMediator, 
+        public AccountController(IAccountMediator accountMediator,
             IDismissPlannedOutageMessageCookieProvider dismissPlannedOutageMessageCookieProvider,
             IConfigurationService configurationService,
             IUserDataProvider userDataProvider,
@@ -92,6 +88,39 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             });
         }
 
+        [HttpGet]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
+        public async Task<ActionResult> DeleteAccountSettings()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.DeleteAccount);
+                return View("Settings", response.ViewModel);
+            });
+        }
+
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
+        public async Task<ActionResult> SetDeletionPendingForAccount()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.SetAccountStatusToDelete(UserContext.CandidateId);
+                UserData.Push(CandidateDataItemNames.SetDeletetionPendingForCandidate, "true");
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.Settings.SaveError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("Settings", response.ViewModel);
+                    case AccountMediatorCodes.Settings.Success:
+                        return RedirectToAction("SignOut", "Login");
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -99,7 +128,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
+                if (model.Mode == SettingsViewModel.SettingsMode.DeleteAccount)
+                {
+                    return ConfirmValidityOfAccount(model);
+                }
+
                 var response = _accountMediator.SaveSettings(UserContext.CandidateId, model);
+
                 ModelState.Clear();
 
                 switch (response.Code)
@@ -124,6 +159,31 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         throw new InvalidMediatorCodeException(response.Code);
                 }
             });
+        }
+
+        private ViewResult ConfirmValidityOfAccount(SettingsViewModel model)
+        {
+            DeleteAccountSettingsViewModel deleteAccountSettingsViewModel = new DeleteAccountSettingsViewModel()
+            {
+                EmailAddress = model.EmailAddress,
+                Password = model.Password
+            };
+            var verifyResponse = _accountMediator.VerifyAccountSettings(UserContext.CandidateId, deleteAccountSettingsViewModel);
+            ModelState.Clear();
+
+            switch (verifyResponse.Code)
+            {
+                case AccountMediatorCodes.ValidateUserAccountBeforeDelete.ValidationError:
+                    verifyResponse.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("Settings", model);
+                case AccountMediatorCodes.ValidateUserAccountBeforeDelete.HasError:
+                    SetUserMessage(verifyResponse.Message.Text, verifyResponse.Message.Level);
+                    return View("Settings", model);
+                case AccountMediatorCodes.ValidateUserAccountBeforeDelete.Ok:
+                    return View("ConfirmAccountDeletion", model);
+                default:
+                    throw new InvalidMediatorCodeException(verifyResponse.Code);
+            }
         }
 
         [HttpGet]
@@ -181,9 +241,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                 }
             });
 
-            
+
         }
-        
+
         [HttpPost]
         [SmsEnabledToggle]
         [ValidateAntiForgeryToken]
@@ -216,7 +276,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         SetUserMessage(VerifyMobilePageMessages.MobileVerificationSuccessText);
                         if (model.ReturnUrl.IsValidReturnUrl())
                         {
-                            return Redirect(model.ReturnUrl);                            
+                            return Redirect(model.ReturnUrl);
                         }
                         return RedirectToRoute(CandidateRouteNames.Settings);
                     default:

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Applications.Strategies
 {
-    using System;
-    using Apprenticeships.Application.Applications.Entities;
+    using Apprenticeships.Application.Application.Entities;
+    using Apprenticeships.Application.Application.Strategies;
     using Apprenticeships.Application.Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -10,7 +10,7 @@
     using Interfaces;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
+    using System;
 
     [TestFixture]
     public class ApplicationStatusUpdateStrategyTests
@@ -49,7 +49,7 @@
             var tomorrow = DateTime.Today.AddDays(1);
 
             var apprenticeshipApplicationDetail = new ApprenticeshipApplicationDetail
-            {   
+            {
                 EntityId = Guid.NewGuid(),
                 Vacancy = new ApprenticeshipSummary
                 {
