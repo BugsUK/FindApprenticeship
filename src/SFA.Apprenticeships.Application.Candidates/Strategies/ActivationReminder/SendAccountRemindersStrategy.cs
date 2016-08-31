@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.ActivationReminder
 {
-    using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Interfaces;
     using Interfaces.Communications;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System;
 
     public class SendAccountRemindersStrategy : HousekeepingStrategy
     {

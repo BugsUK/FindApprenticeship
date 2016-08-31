@@ -1,10 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
     using Application.Interfaces.Candidates;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Users;
     using Common.Configuration;
     using Common.ViewModels.Locations;
@@ -13,9 +10,9 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Mappers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using ViewModels.Account;
     using ErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
@@ -88,7 +85,7 @@
 
                 settings.MonitoringInformation.AnythingWeCanDoToSupportYourInterview = candidate.ApplicationTemplate.AboutYou.Support;
                 settings.MonitoringInformation.RequiresSupportForInterview = !string.IsNullOrWhiteSpace(candidate.ApplicationTemplate.AboutYou.Support);
-                
+
                 // Saved searches.
                 var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel(_configurationService.Get<CommonWebConfiguration>().SubCategoriesFullNamesLimit)).ToList();
 
@@ -188,6 +185,27 @@
             {
                 _logger.Error("Save settings failed for candidate " + candidateId, e);
                 candidate = null;
+                return false;
+            }
+        }
+
+        public bool SetUserAccountDeletionPending(Guid candidateId)
+        {
+            try
+            {
+                _logger.Debug("Calling AccountProvider to delete the account settings for candidate with Id={0}", candidateId);
+
+                var candidate = _candidateService.GetCandidate(candidateId);
+
+                if (candidate != null) return _candidateService.SetCandidateDeletionPending(candidate);
+
+                _logger.Debug("Account Settings set for Pending deletetion for candidate with Id={0}", candidateId);
+
+                return false;
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Pending Deletion of Account settings failed for candidate " + candidateId, e);
                 return false;
             }
         }

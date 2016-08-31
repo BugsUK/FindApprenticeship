@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Vacancy
 {
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -61,11 +62,15 @@
         public void DatabaseToDomainWageTypeTests(int databaseWageType, WageType expectedWageType)
         {
             var mapper = new VacancyMappers();
-            var databaseVacancy = new Fixture().Build<Vacancy>().With(v => v.WageType, databaseWageType).Create();
+            var databaseVacancy = new Fixture()
+                .Build<Vacancy>()
+                .With(v => v.WageType, databaseWageType)
+                .With(v => v.WageUnitId, 1)
+                .Create();
 
             var domainVacancy = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
 
-            domainVacancy.WageType.Should().Be(expectedWageType);
+            domainVacancy.Wage.Type.Should().Be(expectedWageType);
         }
 
         
@@ -99,13 +104,14 @@
             var databaseVacancy = new Fixture()
                 .Build<Vacancy>()
                 .With(each => each.WeeklyWage, weeklyWage)
+                .With(each => each.WageUnitId, 1)
                 .Create();
 
             // Act
             var domainVacancy = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
 
             // Assert
-            domainVacancy.Wage.Should().Be(expectedWeeklyWage);
+            domainVacancy.Wage.Amount.Should().Be(expectedWeeklyWage);
         }
     }
 }

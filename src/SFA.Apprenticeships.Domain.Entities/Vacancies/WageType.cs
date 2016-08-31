@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     public enum WageType
     {

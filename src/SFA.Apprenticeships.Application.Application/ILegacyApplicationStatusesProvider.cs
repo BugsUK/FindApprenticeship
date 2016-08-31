@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Application.Applications
+﻿namespace SFA.Apprenticeships.Application.Application
 {
-    using System.Collections.Generic;
+    using Application.Entities;
     using Domain.Entities.Candidates;
-    using Entities;
+    using System.Collections.Generic;
 
     public interface ILegacyApplicationStatusesProvider
     {

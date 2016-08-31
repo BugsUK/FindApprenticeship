@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.IoC
 {
-    using Application.Applications;
+    using Application.Application;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Candidate.Strategies.Traineeships;
     using Application.ReferenceData;

@@ -6,8 +6,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public static class VacancyMediatorTestHelper
     {
@@ -62,8 +65,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
                     Duration = 3,
                     DurationType = DurationType.Years,
                     LongDescription = "A description",
-                    WageType = WageType.ApprenticeshipMinimum,
-                    HoursPerWeek = 30,
+                    Wage = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, 30),
                     WorkingWeek = "A working week"
                 },
                 NewVacancyViewModel = new NewVacancyViewModel

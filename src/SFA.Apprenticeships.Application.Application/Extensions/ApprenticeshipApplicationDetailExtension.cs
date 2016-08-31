@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Applications.Extensions
+﻿namespace SFA.Apprenticeships.Application.Application.Extensions
 {
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;

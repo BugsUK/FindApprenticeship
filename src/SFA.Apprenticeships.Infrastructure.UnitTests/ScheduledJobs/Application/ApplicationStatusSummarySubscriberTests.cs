@@ -1,19 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.ScheduledJobs.Application
 {
-    using System;
+    using Apprenticeships.Application.Application.Entities;
     using Apprenticeships.Application.Applications;
-    using Apprenticeships.Application.Applications.Entities;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Infrastructure.Processes.Applications;
     using Infrastructure.Processes.Configuration;
     using Moq;
     using NUnit.Framework;
-
     using SFA.Apprenticeships.Application.Interfaces;
+    using System;
 
     [TestFixture]
     [Parallelizable]
@@ -60,7 +58,7 @@
 
             // Act.
             var state = _applicationStatusSummarySubscriber.Consume(appStatusSummary);
-            
+
             // Assert.
             state.Should().NotBeNull();
             state.Should().Be(ServiceBusMessageStates.Complete);

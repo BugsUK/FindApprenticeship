@@ -45,7 +45,7 @@
                 .Returns(new ProviderSite { Address = new PostalAddress() });
 
             var employerService = new Mock<IEmployerService>();
-            employerService.Setup(es => es.GetEmployer(It.IsAny<int>()))
+            employerService.Setup(es => es.GetEmployer(It.IsAny<int>(), It.IsAny<bool>()))
                 .Returns(new Employer { Address = new PostalAddress() });
 
             var mapper = new Mock<IMapper>();

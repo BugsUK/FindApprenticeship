@@ -5,8 +5,10 @@
     using System.Linq;
     using System.Web.Mvc;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public static class ApprenticeshipVacancyConverter
     {
@@ -16,11 +18,7 @@
             {
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                 WorkingWeek = vacancy.WorkingWeek,
-                HoursPerWeek = vacancy.HoursPerWeek,
-                WageType = vacancy.WageType,
-                Wage = vacancy.Wage,
-                WageText = vacancy.WageText,
-                WageUnit = vacancy.WageUnit,
+                Wage = new WageViewModel(vacancy.Wage),
                 WageUnits = GetWageUnits(),
                 DurationType = vacancy.DurationType,
                 DurationTypes = GetDurationTypes(vacancy.VacancyType),

@@ -13,7 +13,7 @@
     <div class="grid grid-1-2">
         @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link small-btm-margin" })
 
-        @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
+        @if (Model!=null && Model.TraineeshipFeature!=null && Model.TraineeshipFeature.ShowTraineeshipsLink)
         {
             @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link small-btm-margin" })
         }
@@ -30,11 +30,13 @@
         @{
             var yourAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.YourAccount ? " active" : "";
             var savedSearchesTabClass = Model.Mode == SettingsViewModel.SettingsMode.SavedSearches ? " active" : "";
+            var deleteAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.DeleteAccount ? " active" : "";
         }
 
         <nav class="tabbed-nav">
             @Html.RouteLink("Your account", CandidateRouteNames.Settings, null, new { @id = "your-account-tab-control", @class = "tabbed-tab" + yourAccountTabClass, tab = "#tab1" })
             @Html.RouteLink("Saved searches", CandidateRouteNames.SavedSearchesSettings, null, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabClass, tab = "#tab2" })
+            @Html.RouteLink("Delete your account", CandidateRouteNames.DeleteAccountSettings, null, new { @id = "delete-account-tab-control", @class = "tabbed-tab" + deleteAccountTabClass, tab = "#tab3" })
         </nav>
 
         @Html.HiddenFor(m => m.Mode)
@@ -68,7 +70,7 @@
                     <a id="settings-confirm-username" class="inl-block" href="@Url.RouteUrl(RouteNames.VerifyUpdatedEmail)">Verify email address</a>
                 </div>
             }
-            
+
             <details>
                 <summary id="equality-diversity-summary-link">Your equality and diversity information</summary>
                 <div class="detail-content">
@@ -166,7 +168,7 @@
 
                 @if (Model.SavedSearches != null)
                 {
-                        <div id="savedSearches" class="toggle-content text" style="display: block;">
+                    <div id="savedSearches" class="toggle-content text" style="display: block;">
                         @for (var i = 0; i < Model.SavedSearches.Count; i++)
                         {
                             var index = i;
@@ -193,7 +195,7 @@
                                         @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new { @class = "no-left-margin" })
                                     </li>
                                     <li>
-                                        <a href="@Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new { id = savedSearch.Id, isJavascript = false })" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
+                                        <a href="@Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new {id = savedSearch.Id, isJavascript = false})" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
                                             <i class="fa fa-times-circle"></i>Delete saved search
                                         </a>
                                     </li>
@@ -207,6 +209,28 @@
                     <button id="update-details-button" class="button">Save settings</button>
                 </div>
             </div>
+        </div>
+
+        <div class="tabbed-content @deleteAccountTabClass">
+            <h2 class="heading-large" id="deleteAccountHeading">Delete your account</h2>
+            <div class="panel-indent">
+                <p class="text">If you are no longer interested in applying for apprenticeships or traineeship, you can delete your account here.</p>
+            </div>
+            @Html.FormTextFor(
+                m => m.EmailAddress,
+                containerHtmlAttributes: new { @class = "form-group-compound" },
+                controlHtmlAttributes: new { @class = "form-control", type = "email", autofocus = "autofocus", spellcheck = "false" })
+
+            <div class="form-group">
+                <a id="password"></a>
+                @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, null)
+            </div>
+
+            <div class="form-group">
+                <button class="button" id="delete-account-button">Delete account</button>
+            </div>                        
         </div>
     </fieldset>
 }

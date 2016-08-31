@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Extensions
 {
-    using Application.Applications.Entities;
+    using Application.Application.Entities;
 
     using SFA.Apprenticeships.Application.Interfaces.Caching;
 

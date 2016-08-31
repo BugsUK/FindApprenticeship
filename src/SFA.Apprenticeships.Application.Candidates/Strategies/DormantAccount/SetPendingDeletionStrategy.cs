@@ -4,24 +4,19 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
 
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class SetPendingDeletionStrategy : HousekeepingStrategy
     {
+        private readonly ISetUserStatusPendingDeletionStrategy _setUserStatusPendingDeletionStrategy;
         private readonly IUserReadRepository _userReadRepository;
-        private readonly IUserWriteRepository _userWriteRepository;
-        private readonly IAuditRepository _auditRepository;
-        private readonly ILogService _logService;
 
         public SetPendingDeletionStrategy(IConfigurationService configurationService,
-            IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository,
-            IAuditRepository auditRepository, ILogService logService)
+            IUserReadRepository userReadRepository, ISetUserStatusPendingDeletionStrategy setUserStatusPendingDeletionStrategy)
             : base(configurationService)
         {
             _userReadRepository = userReadRepository;
-            _userWriteRepository = userWriteRepository;
-            _auditRepository = auditRepository;
-            _logService = logService;
+            _setUserStatusPendingDeletionStrategy = setUserStatusPendingDeletionStrategy;
         }
 
         protected override bool DoHandle(User user, Candidate candidate)
@@ -38,25 +33,11 @@
 
                 if (existingUser == null || !existingUser.IsInState(UserStatuses.PendingDeletion))
                 {
-                    return SetUserStatusPendingDeletion(user);
+                    return _setUserStatusPendingDeletionStrategy.SetUserStatusPendingDeletion(user);
                 }
             }
 
             return false;
-        }
-
-        private bool SetUserStatusPendingDeletion(User user)
-        {
-            _logService.Info("Setting User: {0} Status to PendingDeletion", user.EntityId);
-
-            _auditRepository.Audit(user, AuditEventTypes.UserSoftDelete, user.EntityId);
-
-            user.Status = UserStatuses.PendingDeletion;
-            _userWriteRepository.Save(user);
-
-            _logService.Info("Set User: {0} Status to PendingDeletion", user.EntityId);
-
-            return true;
         }
     }
 }

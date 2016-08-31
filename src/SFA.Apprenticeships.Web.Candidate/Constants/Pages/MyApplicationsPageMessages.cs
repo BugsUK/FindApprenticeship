@@ -11,5 +11,7 @@
         public const string ApplicationNotFound = "The application has not been found";
         public const string DismissTraineeshipPromptsFailed = "There's been a problem updating your settings. Please try again.";
         public const string UnhandledError = "Unhandled error";
+        public const string InvalidUserAccount = "Please enter a valid email address and password";
+        public const string EmptyUserAccount = "Please enter a email address and password";
     }
 }

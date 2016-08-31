@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
-    using System;
-    using System.Collections.Generic;
-    using Applications;
+    using Application;
+    using Application.Strategies;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
+    using System;
+    using System.Collections.Generic;
 
     public class LegacyGetCandidateApprenticeshipApplicationsStrategy : IGetCandidateApprenticeshipApplicationsStrategy
     {

@@ -29,7 +29,7 @@
             var provider = GetVacancyPostingProvider();
             MockProviderService.Setup(s => s.GetProviderSite(providerSiteId))
                 .Returns(new Fixture().Build<ProviderSite>().With(ps => ps.ProviderSiteId, providerSiteId).Create());
-            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+            MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
 
             var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);

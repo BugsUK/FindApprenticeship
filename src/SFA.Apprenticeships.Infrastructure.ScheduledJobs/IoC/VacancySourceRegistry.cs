@@ -1,13 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.IoC
 {
-    using Application.Applications;
+    using Application.Application;
+    using Application.Candidate.Configuration;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Vacancies;
     using Application.Vacancy;
+    using Common.Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Common.Configuration;
     using LegacyWebServices.Candidate;
     using LegacyWebServices.GatewayServiceProxy;
     using LegacyWebServices.Mappers.Apprenticeships;
@@ -15,13 +16,8 @@
     using LegacyWebServices.Vacancy;
     using LegacyWebServices.Wcf;
     using Raa;
-
-    using Application.Candidate.Configuration;
-
     using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Application.Interfaces.Caching;
-    using SFA.Infrastructure.Interfaces;
-
     using StructureMap.Configuration.DSL;
 
     public class VacancySourceRegistry : Registry
@@ -122,6 +118,6 @@
             }
 
             //--
-        }     
+        }
     }
 }

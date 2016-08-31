@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Application.Applications.Strategies
+﻿namespace SFA.Apprenticeships.Application.Application.Strategies
 {
-    using System;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
     using Entities;
     using Extensions;
     using Interfaces;
+    using System;
 
     public class ApplicationStatusAlertStrategy : IApplicationStatusAlertStrategy
     {

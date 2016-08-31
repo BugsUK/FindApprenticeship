@@ -209,6 +209,7 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\WageViewModelMessages.cs" />
     <Compile Include="Controllers\VersionController.cs" />
     <Compile Include="ViewModels\VersionViewModel.cs" />
     <Compile Include="Converters\PageableConverters.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\PageableViewModel.cs" />
+    <Compile Include="ViewModels\WageViewModel.cs" />
     <Compile Include="Views\Shared\_AboutDisguised.generated.cs">
       <DependentUpon>_AboutDisguised.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Candidates
+﻿namespace SFA.Apprenticeships.Application.Interfaces
 {
     public class AuditEventTypes
     {

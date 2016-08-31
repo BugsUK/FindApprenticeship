@@ -1,20 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Candidates
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
+    using Common;
+    using Common.Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using Entities;
-    using Common;
-    using Common.Configuration;
-    using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using MongoDB.Bson;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
     public class CandidateRepository : GenericMongoClient<MongoCandidate>, ICandidateReadRepository,
@@ -106,7 +104,7 @@
         {
             _logger.Debug("Calling repository to get candidates with PhoneNumber={0}", phoneNumber);
 
-            var candidates = 
+            var candidates =
                 Collection.Find(Query<MongoCandidate>.EQ(o => o.RegistrationDetails.PhoneNumber, phoneNumber))
                 .Select(e => _mapper.Map<MongoCandidate, Candidate>(e))
                 .ToList();
@@ -219,7 +217,7 @@
 
             Collection.Remove(Query<MongoCandidate>.EQ(o => o.Id, id));
 
-            _logger.Debug("Deleted candidate with Id={0}",id);
+            _logger.Debug("Deleted candidate with Id={0}", id);
         }
 
         public Candidate Save(Candidate entity)

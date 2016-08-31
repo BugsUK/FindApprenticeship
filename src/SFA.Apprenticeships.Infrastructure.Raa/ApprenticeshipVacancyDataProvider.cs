@@ -50,8 +50,7 @@
             }
 
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false); // Some current vacancies have non-current vacancy parties
-            //TODO: temporary method. Remove after moving status checks to a higher tier and go back to GetEmployer
-            var employer = _employerService.GetEmployerWithoutStatusCheck(vacancyParty.EmployerId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
 
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             if (providerSite == null)

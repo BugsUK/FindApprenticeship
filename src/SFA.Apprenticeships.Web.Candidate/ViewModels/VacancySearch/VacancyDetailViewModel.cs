@@ -2,14 +2,12 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
-    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Infrastructure.Presentation;
     using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
-    using WageUnit = Domain.Entities.Vacancies.WageUnit;
     using TrainingType = Domain.Entities.Vacancies.TrainingType;
 
     //TODO move type specific properties into sub classes, remove unused properties
@@ -58,11 +56,7 @@
         [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
 
-        public LegacyWageType WageType { get; set; }
-
-        public string Wage { get; set; }
-
-        public WageUnit WageUnit { get; set; }
+        public WageViewModel Wage { get; set; }
 
         public string WorkingWeek { get; set; }
 

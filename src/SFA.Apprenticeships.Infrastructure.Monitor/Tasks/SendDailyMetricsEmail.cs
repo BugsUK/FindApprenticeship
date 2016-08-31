@@ -1,19 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
+    using Application.Candidate;
+    using Communication.Configuration;
+    using Configuration;
+    using Domain.Entities.Applications;
+    using Provider;
+    using Repositories;
+    using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using System.Diagnostics;
     using System.Globalization;
     using System.Net.Mail;
     using System.Text;
-    using Application.Candidates;
-    using Communication.Configuration;
-    using SFA.Infrastructure.Interfaces;
-    using Configuration;
-    using Domain.Entities.Applications;
-    using Provider;
-    using Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SendDailyMetricsEmail : IDailyMetricsTask
     {

@@ -1,16 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.IoC
 {
+    using Application.Application.Entities;
+    using Application.Application.Strategies;
     using Application.Applications;
     using Application.Applications.Entities;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
     using Application.Candidate;
+    using Application.Candidate.Strategies.Candidates;
     using Application.Candidates.Entities;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Communications.Housekeeping;
     using Application.Employer;
     using Application.Employer.Strategies;
+    using Application.Interfaces;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -32,14 +36,10 @@
     using Communication.Configuration;
     using Communications;
     using Communications.Commands;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Logging.IoC;
     using Repositories.Mongo.Audit;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using SiteMap;
     using StructureMap;
     using StructureMap.Configuration.DSL;
@@ -191,12 +191,12 @@
         private void RegisterStrategies()
         {
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
-            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
+            For<ISetUserStatusPendingDeletionStrategy>().Use<SetUserStatusPendingDeletionStrategy>();
         }
 
         #endregion

@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
-    using System.Web;
+    using Application.Application.Strategies;
     using Application.Applications;
-    using Application.Applications.Strategies;
     using Application.Authentication;
     using Application.Candidate;
     using Application.Candidate.Configuration;
@@ -16,6 +15,7 @@
     using Application.Communication.Strategies;
     using Application.Employer;
     using Application.Employer.Strategies;
+    using Application.Interfaces;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
@@ -36,7 +36,6 @@
     using Common.Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mappers;
@@ -48,11 +47,9 @@
     using Mediators.Search;
     using Mediators.Unsubscribe;
     using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using StructureMap;
     using StructureMap.Configuration.DSL;
+    using System.Web;
 
     public class CandidateWebRegistry : Registry
     {
@@ -141,7 +138,7 @@
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();
             For<IActivateUserStrategy>().Use<ActivateUserStrategy>();
-            
+
             For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ISendPendingUsernameCodeStrategy>().Use<SendPendingUsernameCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
 
@@ -156,7 +153,7 @@
                 For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
                 For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
             }
-            else if(servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
             {
                 For<IActivateCandidateStrategy>().Use<ActivateCandidateStrategy>();
                 For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>();
@@ -205,13 +202,13 @@
             For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
 
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
-            For<IGetByIdWithoutStatusCheckStrategy>().Use<GetByIdWithoutStatusCheckStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
             For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
+            For<ISetUserStatusPendingDeletionStrategy>().Use<SetUserStatusPendingDeletionStrategy>();
         }
 
         private void RegisterMediators()

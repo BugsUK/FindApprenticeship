@@ -1,8 +1,7 @@
 namespace SFA.Apprenticeships.Application.UnitTests.Applications.Processes
 {
-    using Apprenticeships.Application.Applications.Strategies;
+    using Apprenticeships.Application.Application.Strategies;
     using Domain.Interfaces.Messaging;
-    using SFA.Infrastructure.Interfaces;
     using Moq;
 
     using SFA.Apprenticeships.Application.Interfaces;

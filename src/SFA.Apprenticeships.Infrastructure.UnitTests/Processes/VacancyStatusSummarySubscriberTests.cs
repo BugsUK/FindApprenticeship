@@ -1,11 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Processes
 {
-    using System;
+    using Application.Application.Entities;
     using Application.Applications;
-    using Application.Applications.Entities;
     using Domain.Entities.Vacancies;
-
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Infrastructure.Processes.Configuration;
@@ -13,9 +10,9 @@
     using Infrastructure.Processes.Vacancies;
     using Moq;
     using NUnit.Framework;
-
     using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Application.Interfaces.Caching;
+    using System;
 
     [TestFixture]
     [Parallelizable]
@@ -33,7 +30,7 @@
             _configurationServiceMock = new Mock<IConfigurationService>();
 
             _configurationServiceMock.Setup(x => x.Get<ProcessConfiguration>())
-                .Returns(new ProcessConfiguration {EnableVacancyStatusPropagation = true});
+                .Returns(new ProcessConfiguration { EnableVacancyStatusPropagation = true });
 
             _cacheServiceMock = new Mock<ICacheService>();
             _applicationStatusProcessor = new Mock<IApplicationStatusProcessor>();
