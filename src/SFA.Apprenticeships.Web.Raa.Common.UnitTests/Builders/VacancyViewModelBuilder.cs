@@ -2,9 +2,12 @@
 {
     using System;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Ploeh.AutoFixture;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyViewModelBuilder
     {
@@ -45,10 +48,9 @@
             viewModel.TrainingDetailsViewModel.ContactEmail = null;
             viewModel.FurtherVacancyDetailsViewModel.Status = status;
             viewModel.FurtherVacancyDetailsViewModel.VacancyType = vacancyType;
-            viewModel.FurtherVacancyDetailsViewModel.HoursPerWeek = 30;
             viewModel.FurtherVacancyDetailsViewModel.Duration = 12;
             viewModel.FurtherVacancyDetailsViewModel.DurationType = DurationType.Months;
-            viewModel.FurtherVacancyDetailsViewModel.WageType = WageType.NationalMinimum;
+            viewModel.FurtherVacancyDetailsViewModel.Wage = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, 30);
             viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
             {
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),

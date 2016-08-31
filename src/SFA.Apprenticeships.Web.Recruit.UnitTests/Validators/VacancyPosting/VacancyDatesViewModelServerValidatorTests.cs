@@ -4,6 +4,7 @@
     using Common.UnitTests.Validators;
     using Common.Validators;
     using Common.ViewModels;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using FluentValidation;
     using FluentValidation.TestHelper;
@@ -21,6 +22,7 @@
         private VacancyDatesViewModelServerValidator _serverValidator;
         private VacancyDatesViewModelCommonValidator _commonValidator;
         private VacancyViewModelValidator _vacancyValidator;
+        private WageViewModel _wageViewModel;
 
         [SetUp]
         public void SetUp()
@@ -29,13 +31,14 @@
             _serverValidator = new VacancyDatesViewModelServerValidator();
             _commonValidator = new VacancyDatesViewModelCommonValidator();
             _vacancyValidator = new VacancyViewModelValidator();
+            _wageViewModel = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null);
         }
 
         [Test]
         public void VacancyViewModelValidatorDefaultShouldHaveMultipleValidationErrors()
         {
             var datesViewModel = new VacancyDatesViewModel();
-            var vacancyViewModel = new VacancyViewModelBuilder().With(datesViewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(datesViewModel).With(_wageViewModel).Build();
 
             var result = _vacancyValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
@@ -84,7 +87,7 @@
                 ClosingDate = new DateViewModel()
             };
 
-            var vacancyViewModel = new VacancyViewModelBuilder().With(datesViewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_wageViewModel).With(datesViewModel).Build();
 
             _serverCommonValidator.Validate(datesViewModel, ruleSet: RuleSet);
 
@@ -119,7 +122,7 @@
                 PossibleStartDate = new DateViewModel()
             };
 
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_wageViewModel).With(viewModel).Build();
 
             _serverCommonValidator.Validate(viewModel, ruleSet: RuleSet);
 
@@ -160,7 +163,7 @@
                 }
             };
 
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_wageViewModel).With(viewModel).Build();
 
             _serverCommonValidator.Validate(viewModel, ruleSet: RuleSet);
 
@@ -200,7 +203,7 @@
                 }
             };
 
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_wageViewModel).With(viewModel).Build();
 
             _serverCommonValidator.Validate(viewModel, ruleSet: RuleSet);
 
@@ -238,7 +241,7 @@
                     Year = year
                 }
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_wageViewModel).With(viewModel).Build();
 
             _serverCommonValidator.Validate(viewModel, ruleSet: RuleSet);
 
@@ -293,7 +296,7 @@
                 ClosingDateComment = "<script>"
             };
 
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(_wageViewModel).With(viewModel).Build();
 
             _commonValidator.Validate(viewModel, ruleSet: RuleSet);
             _vacancyValidator.Validate(vacancyViewModel);
@@ -317,7 +320,7 @@
                 PossibleStartDateComment = "<script>"
             };
 
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _commonValidator.Validate(viewModel, ruleSet: RuleSet);
 

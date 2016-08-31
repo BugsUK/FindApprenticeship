@@ -22,7 +22,6 @@
         public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, Employer employer, Provider provider, ProviderSite providerSite, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
-            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
             var detail = new TraineeshipVacancyDetail
             {
@@ -37,10 +36,7 @@
                 PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
                 //TODO: Where should this come from?
                 InterviewFromDate = DateTime.MinValue,
-                Wage = vacancy.Wage ?? 0,
-                WageUnit = wage.GetWageUnit(),
-                WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
-                WageType = (LegacyWageType)vacancy.WageType,
+                Wage = vacancy.Wage,
                 WorkingWeek = vacancy.WorkingWeek,
                 OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,

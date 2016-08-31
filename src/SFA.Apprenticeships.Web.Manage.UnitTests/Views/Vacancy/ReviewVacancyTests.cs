@@ -7,6 +7,7 @@
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Manage.Views.Vacancy;
     using Moq;
@@ -16,6 +17,7 @@
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Views.Shared.DisplayTemplates.Vacancy;
     using RazorGenerator.Testing;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     public class ReviewVacancyTests : ViewUnitTest
@@ -178,8 +180,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    WageType = wagetype,
-                    HoursPerWeek = hoursPerWeek
+                    Wage = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, hoursPerWeek)
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -225,9 +226,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    WageType = WageType.Custom,
-                    WageUnit = wageUnit,
-                    Wage = wage
+                    Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, null)
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -322,7 +321,7 @@
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
                     VacancyType = VacancyType.Apprenticeship,
-                    HoursPerWeek = (decimal?)hoursPerWeek
+                    Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, (decimal?)hoursPerWeek)
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
