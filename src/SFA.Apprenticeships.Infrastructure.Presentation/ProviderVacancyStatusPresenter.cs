@@ -29,6 +29,11 @@
             return status == VacancyStatus.Submitted || status == VacancyStatus.ReservedForQA;
         }
 
+        public static bool IsStateDeletable(this VacancyStatus status)
+        {
+            return status == VacancyStatus.Draft || status == VacancyStatus.Referred;
+        }
+
         public static bool CanHaveApplicationsOrClickThroughs(this VacancyStatus status)
         {
             return status == VacancyStatus.Live || status == VacancyStatus.Closed ||

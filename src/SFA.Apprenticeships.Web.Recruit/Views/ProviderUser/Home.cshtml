@@ -449,7 +449,7 @@
                                         {
                                             <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Edit and resubmit @title for @vacancy.EmployerName">Edit and resubmit</a>
                                         }
-                                        @if (vacancy.Status == VacancyStatus.Draft)
+                                        @if (vacancy.Status.IsStateDeletable())
                                         {
                                             <a href="@Url.RouteUrl(RecruitmentRouteNames.DeleteVacancy, new DeleteVacancyViewModel(Model.VacanciesSummary.VacanciesSummarySearch) {VacancyId = vacancy.VacancyId})" title="Delete @title for @vacancy.EmployerName" class="delete-vacancy-link">Delete</a>
                                         }

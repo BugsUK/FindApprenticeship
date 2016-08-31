@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using Common;
     using dbo;
     using Domain.Entities.Raa.Reference;
@@ -72,13 +71,11 @@
             _logger.Debug("Calling database to get apprenticeship vacancy with VacancyId={0}",
                 vacancyId);
 
-            var result = _getOpenConnection.Query<VacancyPlus>(GenerateVacancyQuery(false, VacancyId: vacancyId),
-                new
-                {
-                    VacancyId = vacancyId
-                });
+            var dbVacancy = _getOpenConnection.Query<Vacancy>(
+                "SELECT * FROM dbo.Vacancy WHERE VacancyId = @VacancyId",
+                new { VacancyId = vacancyId}).SingleOrDefault();
 
-            return MapVacancyDetails(result.FirstOrDefault());
+            return MapVacancy(dbVacancy);
         }
 
         public DomainVacancy GetByReferenceNumber(int vacancyReferenceNumber)
@@ -86,17 +83,30 @@
             _logger.Debug("Calling database to get apprenticeship vacancy with Vacancy Reference Number={0}",
                 vacancyReferenceNumber);
 
-            var result = _getOpenConnection.Query<VacancyPlus>(
-                GenerateVacancyQuery(true, VacancyReferenceNumber: vacancyReferenceNumber),
-                new
-                {
-                    VacancyReference = vacancyReferenceNumber,
-                    SubmittedTypeId = VacancyStatus.Submitted
-                });
+            var dbVacancy = _getOpenConnection.Query<Vacancy>(
+                "SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
+                new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
 
-            return MapVacancyDetails(result.FirstOrDefault());
+            return MapVacancy(dbVacancy);
         }
 
+        public DomainVacancy GetByVacancyGuid(Guid vacancyGuid)
+        {
+            _logger.Debug("Calling database to get apprenticeship vacancy with VacancyGuid={0}",
+                vacancyGuid);
+
+            var dbVacancy = GetVacancyByVacancyGuid(vacancyGuid);
+
+            return MapVacancy(dbVacancy);
+        }
+
+        private Vacancy GetVacancyByVacancyGuid(Guid vacancyGuid)
+        {
+            var dbVacancy = _getOpenConnection.Query<Vacancy>(
+                "SELECT * FROM dbo.Vacancy WHERE VacancyGuid = @VacancyGuid",
+                new {VacancyGuid = vacancyGuid}).SingleOrDefault();
+            return dbVacancy;
+        }
 
         private Vacancy GetVacancyByVacancyId(int vacancyId)
         {
@@ -282,7 +292,7 @@ FETCH NEXT @PageSize ROWS ONLY
             return MapVacancySummaries(dbVacancies.ToList());
         }
 
-        private DomainVacancy MapVacancyDetails(VacancyPlus dbVacancy)
+        private DomainVacancy MapVacancy(Vacancy dbVacancy)
         {
             if (dbVacancy == null)
                 return null;
@@ -291,26 +301,24 @@ FETCH NEXT @PageSize ROWS ONLY
 
             GetAdditionalQuestions(dbVacancy, result);
             GetAndMapTextFields(dbVacancy, result);
+            GetApprenticeshipType(dbVacancy, result);
+            GetFrameworkId(dbVacancy, result);
+            GetSectorId(dbVacancy, result);
+            GetDateFirstSubmitted(dbVacancy, result);
+            GetCreatedDateTime(dbVacancy, result);
+            GetCreatedByProviderUsername(dbVacancy, result);
+            GetDateSubmitted(dbVacancy, result);
+
+            GetDateQAApproved(dbVacancy, result);
+
             GetAndMapComments(dbVacancy, result);
-
-            result.DateFirstSubmitted = dbVacancy.DateFirstSubmitted;
-            result.DateSubmitted = dbVacancy.DateSubmitted;
-            result.DateQAApproved = dbVacancy.DateQAApproved;
-            if (dbVacancy.CreatedDateTime.HasValue)
-            {
-                result.CreatedDateTime = dbVacancy.CreatedDateTime.Value;
-            }
-
-            result.ApprenticeshipLevel = (ApprenticeshipLevel) dbVacancy.ApprenticeshipLevel;
-            result.FrameworkCodeName = dbVacancy.FrameworkCodeName;
-            result.SectorCodeName = dbVacancy.SectorCodeName;
-            result.CreatedByProviderUsername = dbVacancy.CreatedByProviderUsername;
-            result.RegionalTeam = dbVacancy.RegionalTeam;
-            result.LocalAuthorityCode = dbVacancy.LocalAuthorityCode;
-
+            GetRegionalTeam(result);
+            GetLocalAuthorityCode(dbVacancy, result);
             MapDuration(dbVacancy, result);
+            GetCountyId(dbVacancy, result);
+
             PatchTrainingType(result);
-            MapStandards(dbVacancy, result);
+            GetAndTryToMapStandards(new List<Vacancy> {dbVacancy}, new List<VacancySummary> {result});
 
             return result;
         }
@@ -338,6 +346,22 @@ FETCH NEXT @PageSize ROWS ONLY
             return results;
         }
 
+        private void GetFrameworkId(Vacancy dbVacancy, VacancySummary result)
+        {
+            if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
+            {
+                result.FrameworkCodeName =
+                    _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT CodeName
+FROM   dbo.ApprenticeshipFramework
+WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
+                        new
+                        {
+                            ApprenticeshipFrameworkId = dbVacancy.ApprenticeshipFrameworkId.Value
+                        }).Single();
+            }
+        }
+
         private void GetFrameworkIds(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
             var ids = dbVacancies.Select(v => v.ApprenticeshipFrameworkId).Distinct().Where(id => id.HasValue);
@@ -357,6 +381,29 @@ WHERE  ApprenticeshipFrameworkId IN @Ids",
             }
         }
 
+        private void GetApprenticeshipType(Vacancy dbVacancy, VacancySummary result)
+        {
+            if (dbVacancy.ApprenticeshipType.HasValue)
+            {   
+                var educationLevelCodeName =
+                    _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT el.CodeName
+FROM   Reference.EducationLevel as el JOIN dbo.ApprenticeshipType as at ON el.EducationLevelId = at.EducationLevelId
+WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
+                        new
+                        {
+                            ApprenticeshipTypeId = dbVacancy.ApprenticeshipType.Value
+                        }).Single();
+
+                //Changed to try parse as traineeship apprenticeship type is not a recognised apprenticeship level but should be preserved
+                ApprenticeshipLevel apprenticeshipLevel;
+                if (Enum.TryParse(educationLevelCodeName, out apprenticeshipLevel) && Enum.IsDefined(typeof(ApprenticeshipLevel), apprenticeshipLevel))
+                {
+                    result.ApprenticeshipLevel = apprenticeshipLevel;
+                }
+            }
+        }
+
         private void GetApprenticeshipTypes(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
             var ids = dbVacancies.Select(v => v.ApprenticeshipType).Distinct().Where(id => id.HasValue);
@@ -373,6 +420,62 @@ WHERE  at.ApprenticeshipTypeId IN @Ids",
             {
                 var apprenticeshipLevel = map[(int)vacancySummary.ApprenticeshipLevel];
                 vacancySummary.ApprenticeshipLevel = apprenticeshipLevel;
+            }
+        }
+
+        private void GetSectorId(Vacancy dbVacancy, VacancySummary result)
+        {
+            if (dbVacancy.SectorId.HasValue)
+            {
+                result.SectorCodeName = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT CodeName
+FROM   dbo.ApprenticeshipOccupation
+WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
+                    new
+                    {
+                        ApprenticeshipOccupationId = dbVacancy.SectorId
+                    }).Single();
+            }
+            else
+            {
+                result.SectorCodeName = null;
+            }
+        }
+
+        private void GetCountyId(Vacancy dbVacancy, VacancySummary result)
+        {
+            // Not all the vacancies have CountyId (before being accepted by QA).
+            // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
+            
+            if (result.Address != null && dbVacancy.CountyId > 0)
+            {
+                result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT FullName
+FROM   dbo.County
+WHERE  CountyId = @CountyId",
+                    new
+                    {
+                        CountyId = dbVacancy.CountyId
+                    }).Single();
+            }
+        }
+
+        private void GetLocalAuthorityCode(Vacancy dbVacancy, DomainVacancy result)
+        {
+            if (dbVacancy.LocalAuthorityId.HasValue)
+            {
+                result.LocalAuthorityCode = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT CodeName
+FROM   dbo.LocalAuthority
+WHERE  LocalAuthorityId = @LocalAuthorityId",
+                    new
+                    {
+                        dbVacancy.LocalAuthorityId
+                    }).Single();
+            }
+            else
+            {
+                result.LocalAuthorityCode = null;
             }
         }
 
@@ -445,23 +548,6 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             else if (!string.IsNullOrWhiteSpace(result.FrameworkCodeName))
             {
                 result.TrainingType = TrainingType.Frameworks;
-            }
-        }
-
-       
-        private void MapStandards(Vacancy dbVacancy, VacancySummary result)
-        {
-            if (dbVacancy.StandardId.HasValue)
-            {
-                    // This is a vacancy created in AVMS with an standard codified as framework
-                    result.TrainingType = TrainingType.Standards;
-                    result.FrameworkCodeName = null;
-
-                    // Try to get the standard id
-                    _logger.Info(
-                        result.StandardId.HasValue
-                            ? $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({dbVacancy.FrameworkCodeName}) and the new StandardId is {result.StandardId.Value}"
-                            : $"Mapping a vacancy with standard codified as framework (AVMS Vacancy). FrameworkId was {dbVacancy.ApprenticeshipFrameworkId.Value} ({dbVacancy.FrameworkCodeName}) but we haven't found any matching standard.");
             }
         }
 
@@ -669,6 +755,86 @@ GROUP BY VacancyId", new
             }
         }
 
+        private void GetDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
+        {
+            var vacancyPlus = dbVacancy as VacancyPlus;
+            if (vacancyPlus != null)
+            {
+                result.DateFirstSubmitted = vacancyPlus.DateFirstSubmitted;
+            }
+            else
+            {
+                result.DateFirstSubmitted = _getOpenConnection.Query<DateTime>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Submitted
+                }
+                ).SingleOrDefault();
+            }
+        }
+
+        private void GetDateSubmitted(Vacancy dbVacancy, VacancySummary result)
+        {
+            var vacancyPlus = dbVacancy as VacancyPlus;
+            if (vacancyPlus != null)
+            {
+                result.DateSubmitted = vacancyPlus.DateSubmitted;
+            }
+            else
+            {
+                result.DateSubmitted = _getOpenConnection.Query<DateTime?>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate desc
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Submitted
+                }
+                ).SingleOrDefault();
+            }
+        }
+
+        private void GetCreatedDateTime(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.CreatedDateTime = _getOpenConnection.Query<DateTime>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Draft
+                }
+                ).SingleOrDefault();
+        }
+
+        private void GetCreatedByProviderUsername(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.CreatedByProviderUsername = _getOpenConnection.Query<string>(@"
+select top 1 UserName
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Draft
+                }
+                ).SingleOrDefault();
+        }
+
         private void GetAllDateQAApproved(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
         {
 
@@ -698,6 +864,31 @@ GROUP BY VacancyId", new
                     var value = map[vacancySummary.VacancyId.ToString()];
                     vacancySummary.DateQAApproved = value.DateQAApproved;
                 }
+            }
+        }
+
+        private void GetDateQAApproved(Vacancy dbVacancy, VacancySummary result)
+        {
+            var vacancyPlus = dbVacancy as VacancyPlus;
+
+            if (vacancyPlus != null)
+            {
+                result.DateQAApproved = vacancyPlus.DateQAApproved;
+            }
+            else
+            {
+            result.DateQAApproved = _getOpenConnection.Query<DateTime?>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate desc
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Live
+                }
+                ).SingleOrDefault();
             }
         }
 
@@ -732,6 +923,29 @@ WHERE VacancyId IN @Ids", new
                     vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(value);
                 }
             }
+        }
+
+        private void GetRegionalTeam(VacancySummary vacancySummary)
+        {
+            const string sql = @"
+                SELECT ps.PostCode
+                FROM dbo.Vacancy v
+                INNER JOIN dbo.VacancyOwnerRelationship vor
+                ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                INNER JOIN dbo.ProviderSite ps
+                ON ps.ProviderSiteId = vor.ProviderSiteId
+                WHERE v.VacancyId = @vacancyId
+                ";
+
+            var sqlParams = new
+            {
+                vacancySummary.VacancyId,
+                vacancySummary.OwnerPartyId
+            };
+
+            var postcode = _getOpenConnection.Query<string>(sql, sqlParams).FirstOrDefault();
+
+            vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(postcode);
         }
 
         private static void MapDuration(Vacancy dbVacancy, VacancySummary result)
@@ -797,7 +1011,7 @@ WHERE VacancyId IN @Ids", new
 
             _logger.Debug("Updated apprenticeship vacancy with to database with id={0}", entity.VacancyId);
 
-            return GetByReferenceNumber(dbVacancy.VacancyReferenceNumber);
+            return MapVacancy(dbVacancy);
         }
 
         private void UpdateVacancyHistory(Vacancy previousVacancyState, Vacancy actualVacancyState)
@@ -1044,6 +1258,40 @@ when not matched then
             });
         }
 
+        private void DeleteAdditionalQuestion(int vacancyId, int additionalQuestionId)
+        {
+            var sql = @"
+    DELETE from dbo.AdditionalQuestion
+    WHERE VacancyId = @VacancyId and QuestionId = @QuestionId";
+
+            _getOpenConnection.MutatingQuery<object>(sql, new
+            {
+                VacancyId = vacancyId,
+                QuestionId = additionalQuestionId
+            });
+        }
+
+        private void DeleteTextField(int vacancyId, string vacancyTextFieldCodeName)
+        {
+            var vacancyTextFieldValueId =
+                _getOpenConnection.Query<int>(
+                    $@"
+	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
+	WHERE CodeName = '{
+                        vacancyTextFieldCodeName}'
+").Single(); // TODO: Hardcode the ID?
+
+            var sql = @"
+    DELETE from dbo.VacancyTextField
+    WHERE VacancyId = @VacancyId and Field = @FieldId";
+
+            _getOpenConnection.MutatingQuery<object>(sql, new
+            {
+                VacancyId = vacancyId,
+                FieldId = vacancyTextFieldValueId
+            });
+        }
+
         private void UpsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
         {
             var vacancyTextFieldValueId =
@@ -1185,6 +1433,8 @@ SET    QAUserName             = @UserName,
 WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
 -- AND    (QAUserName IS NULL OR (QAUserName = @UserName))
 -- AND    (TimeStartedToQA IS NULL OR (TimeStartedToQA > @lockExpiryTime))
+
+SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
 ",
                 new
                 {
@@ -1194,9 +1444,6 @@ WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
                     VacancyReferenceNumber = vacancyReferenceNumber
                 })
                 .SingleOrDefault();
-            
-            // TODO add entry to VacancyHistory table
-
             // What should happen if QAUserName != UserName. Should we throw an exception?
             if (dbVacancy == null)
             {
@@ -1208,7 +1455,7 @@ WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
             _logger.Info(
                 $"Called database to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
 
-            return GetByReferenceNumber(vacancyReferenceNumber);
+            return MapVacancy(dbVacancy);
         }
 
         public void UnReserveVacancyForQa(int vacancyReferenceNumber)
@@ -1230,9 +1477,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                     VacancyReferenceNumber = vacancyReferenceNumber
                 })
                 .SingleOrDefault();
-
-            // TODO add entry to VacancyHistory table
-
             if (dbVacancy == null)
             {
                 _logger.Warn(
@@ -1276,116 +1520,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 .GroupBy(x => (int) x.VacancyOwnerRelationshipId)
                 .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));               
         }
-
-        private string GenerateVacancyQuery(bool withSubmittedTypeId, int? VacancyId = null, int? VacancyReferenceNumber = null, Guid? VacancyGuid = null)
-        {
-            var query = new StringBuilder();
-            if (!VacancyId.HasValue)
-            {
-                query.AppendLine("DECLARE @VacancyId as int");
-            }
-            query.Append(@"
-DECLARE @pos as int
-DECLARE @ApprenticeshipFrameworkName as NVARCHAR(200)
-DECLARE @ApprenticeshipFrameworkSanitisedName as NVARCHAR(200)
-
-SELECT ");
-            if (!VacancyId.HasValue)
-            {
-                query.AppendLine("  @VacancyId = VacancyId,");
-            }
-            query.Append(@"
-    @ApprenticeshipFrameworkName = af.FullName
-FROM dbo.Vacancy AS v
-    LEFT JOIN dbo.ApprenticeshipFramework as af ON v.ApprenticeshipFrameworkId = af.ApprenticeshipFrameworkId
-");
-            if (VacancyId.HasValue)
-            {
-                query.AppendLine("  WHERE VacancyId = @VacancyId");
-            }
-            else if (VacancyReferenceNumber.HasValue)
-            {
-                query.AppendLine("  WHERE VacancyReferenceNumber = @VacancyReference");
-            }
-            else if (VacancyGuid.HasValue)
-            {
-                query.AppendLine("  WHERE VacancyGuid = @VacancyGuid");
-            }
-
-            query.Append(@"
-            SET @pos = CHARINDEX('(', @ApprenticeshipFrameworkName)
-IF(@pos > 0)
-    SET @ApprenticeshipFrameworkSanitisedName = LOWER(RTRIM(SUBSTRING(@ApprenticeshipFrameworkName, 1, @pos - 1)))
-ELSE
-    SET @ApprenticeshipFrameworkSanitisedName = LOWER(@ApprenticeshipFrameworkName)
-
-SELECT 
-    v.*, 
-    el.CodeName as ApprenticeshipLevel, 
-    af.FullName AS ApprenticeshipFrameworkName, 
-    af.CodeName as FrameworkCodeName,
-    ao.CodeName as SectorCodeName, 
-    ps.PostCode, 
-    la.CodeName as LocalAuthority, 
-    c.FullName as County, 
-    ds.DateFirstSubmitted, ds.DateSubmitted, 
-    draft.HistoryDate as CreatedDateTime, 
-    draft.UserName as CreatedByProviderUsername, 
-    s.StandardId
-FROM dbo.Vacancy AS v
-    LEFT JOIN dbo.ApprenticeshipOccupation AS ao ON v.SectorId = ao.ApprenticeshipOccupationId
-    LEFT JOIN dbo.ApprenticeshipType AS at ON at.ApprenticeshipTypeId = v.ApprenticeshipType
-    LEFT JOIN Reference.EducationLevel AS el ON el.EducationLevelId = at.EducationLevelId
-    LEFT JOIN dbo.ApprenticeshipFramework AS af ON v.ApprenticeshipFrameworkId = af.ApprenticeshipFrameworkId
-    LEFT JOIN dbo.VacancyOwnerRelationship AS vor ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
-    LEFT JOIN dbo.ProviderSite AS ps ON ps.ProviderSiteId = vor.ProviderSiteId
-    LEFT JOIN dbo.LocalAuthority AS la ON v.LocalAuthorityId = la.LocalAuthorityId
-    LEFT JOIN dbo.County AS c ON c.CountyId = v.CountyId
-    LEFT JOIN(
-        select VacancyId, MIN(HistoryDate) AS DateFirstSubmitted, MAX(HistoryDate) AS DateSubmitted
-        from dbo.VacancyHistory
-        where VacancyId = @VacancyId");
-            if (withSubmittedTypeId)
-            {
-                query.Append(" and VacancyHistoryEventSubTypeId = @SubmittedTypeId");
-            }
-
-            query.AppendLine(@"
-        GROUP BY VacancyId) AS ds ON v.VacancyId = ds.VacancyId
-    LEFT JOIN(
-        select top 1 VacancyId, HistoryDate, UserName
-        from dbo.VacancyHistory
-        where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = 1
-        order by HistoryDate
-    ) AS draft ON v.VacancyId = draft.VacancyId
-    LEFT JOIN(
-        select top 1 VacancyId, HistoryDate as DateQAApproved
-        from dbo.VacancyHistory
-        where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = 2
-        order by HistoryDate desc
-    ) AS live ON v.VacancyId = live.VacancyId
-    LEFT JOIN Reference.Standard AS s ON s.FullName = @ApprenticeshipFrameworkSanitisedName
-WHERE v.VacancyId = @VacancyId
-");
-            return query.ToString();
-        }
-
-        public DomainVacancy GetByVacancyGuid(Guid vacancyGuid)
-        {
-            _logger.Debug("Calling database to get apprenticeship vacancy with VacancyGuid={0}",
-                vacancyGuid);
-
-            var dbVacancy = _getOpenConnection.Query<VacancyPlus>(
-                GenerateVacancyQuery(false, VacancyGuid: vacancyGuid),
-                new
-                {
-                    VacancyGuid = vacancyGuid
-                }
-                ).SingleOrDefault();
-
-            return MapVacancyDetails(dbVacancy);
-        }
-
 
         private class MinimalVacancyDetails : IMinimalVacancyDetails
         {

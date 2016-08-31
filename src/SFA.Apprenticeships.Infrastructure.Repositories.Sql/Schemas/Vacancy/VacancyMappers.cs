@@ -134,7 +134,6 @@
                 .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
                 .ForMember(v => v.VacancyManagerAnonymous, opt => opt.UseValue(false))
                 .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Change domain entity to use an id
-                .MapMemberFrom(v => v.County, av => av.Address.County)
                 .MapMemberFrom(v => v.SubmissionCount, av => av.SubmissionCount)
                 .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)//changed to locked field
                 .MapMemberFrom(v => v.StandardId, av => av.StandardId)
@@ -312,7 +311,6 @@
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => v.ApprenticeshipType ?? 0)
                 .MapMemberFrom(av => av.FrameworkCodeName, v => v.ApprenticeshipFrameworkId.HasValue ? v.ApprenticeshipFrameworkId.ToString() : null)
                 .MapMemberFrom(av => av.StandardId, v => v.StandardId)
-
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)

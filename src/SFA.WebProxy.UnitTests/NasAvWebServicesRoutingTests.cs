@@ -89,7 +89,7 @@
             //Assert
             routing.Routes.Count.Should().Be(2);
             routing.Routes[0].Uri.AbsoluteUri.Should().Be(NasAvWebServiceRootUriString + "/Services/ReferenceData/ReferenceData51.svc");
-            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/Services/ReferenceData/ReferenceData51.svc");
+            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/ReferenceData51.svc");
         }
 
         [Test]
@@ -104,7 +104,7 @@
             //Assert
             routing.Routes.Count.Should().Be(2);
             routing.Routes[0].Uri.AbsoluteUri.Should().Be(NasAvWebServiceRootUriString + "/Services/VacancyDetails/VacancyDetails51.svc");
-            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/Services/VacancyDetails/VacancyDetails51.svc");
+            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/VacancyDetails51.svc");
         }
 
         [Test]
@@ -120,7 +120,7 @@
             //Assert
             routing.Routes.Count.Should().Be(2);
             routing.Routes[0].Uri.AbsoluteUri.Should().Be(NasAvWebServiceRootUriString + "/Services/ReferenceData/ReferenceData51.svc");
-            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/ReferenceData/ReferenceData51.svc");
+            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/ReferenceData51.svc");
         }
 
         [TestCase("https://apprenticeshipvacancymatchingservice.lsc.gov.uk/Sandbox/ApplicationTracking/ApplicationTracking51.svc", false)]
@@ -181,28 +181,6 @@
 
             //Act
             var routing = _proxyRouting.GetRouting(uri, HttpMethod.Get, null, GetRequestContent(RoutedExternalSystemId), new RouteIdentifier());
-
-            //Assert
-            routing.Routes.Count.Should().Be(2);
-            routing.Routes[0].Uri.AbsoluteUri.Should().StartWith(NasAvWebServiceRootUriString);
-            routing.Routes[0].IsPrimary.Should().Be(!compatabilityWebServiceShouldBePrimary);
-            routing.Routes[1].Uri.AbsoluteUri.Should().StartWith(CompatabilityWebServiceRootUriString);
-            routing.Routes[1].IsPrimary.Should().Be(compatabilityWebServiceShouldBePrimary);
-        }
-
-        [TestCase("ns:", true)]
-        [TestCase("ns1:", true)]
-        [TestCase("", true)]
-        public void RouteToCompatabilityWebServiceUri_Namespace(string @namespace, bool compatabilityWebServiceShouldBePrimary)
-        {
-            //Arrange
-            _configuration.Setup(c => c.AutomaticRouteToCompatabilityWebServiceRegex).Returns(new Regex(""));
-            _proxyRouting = new NasAvWebServicesRouting(_configuration.Object, _webProxyUserRepository.Object);
-            var uri = new Uri("https://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/VacancyManagement/VacancyManagement51.svc");
-
-            //Act
-            var requestContent = GetRequestContent(RoutedExternalSystemId).Replace("ns:", @namespace);
-            var routing = _proxyRouting.GetRouting(uri, HttpMethod.Get, null, requestContent, new RouteIdentifier());
 
             //Assert
             routing.Routes.Count.Should().Be(2);
