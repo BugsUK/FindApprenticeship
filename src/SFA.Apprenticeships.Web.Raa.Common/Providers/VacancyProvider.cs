@@ -27,6 +27,7 @@
     using System.Web.Mvc;
     using Application.Interfaces;
     using Domain.Entities.Raa.Parties;
+    using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -931,6 +932,8 @@
 
             var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
+            vacancies = SearchVacancySummaries(searchViewModel, vacancies);
+
             var utcNow = _dateTimeService.UtcNow;
 
             var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
@@ -952,20 +955,23 @@
                 searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
             }
 
-            switch (searchViewModel.FilterType)
+            if (string.IsNullOrEmpty(searchViewModel.OrderByField))
             {
-                case DashboardVacancySummaryFilterTypes.SubmittedToday:
-                    vacancies = submittedToday.OrderBy(v => v.DateFirstSubmitted).ToList();
-                    break;
-                case DashboardVacancySummaryFilterTypes.SubmittedYesterday:
-                    vacancies = submittedYesterday.OrderBy(v => v.DateFirstSubmitted).ToList();
-                    break;
-                case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
-                    vacancies = submittedMoreThan48Hours;
-                    break;
-                case DashboardVacancySummaryFilterTypes.Resubmitted:
-                    vacancies = resubmitted.OrderBy(v => v.DateFirstSubmitted).ToList();
-                    break;
+                switch (searchViewModel.FilterType)
+                {
+                    case DashboardVacancySummaryFilterTypes.SubmittedToday:
+                        vacancies = submittedToday.OrderBy(v => v.DateFirstSubmitted).ToList();
+                        break;
+                    case DashboardVacancySummaryFilterTypes.SubmittedYesterday:
+                        vacancies = submittedYesterday.OrderBy(v => v.DateFirstSubmitted).ToList();
+                        break;
+                    case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
+                        vacancies = submittedMoreThan48Hours;
+                        break;
+                    case DashboardVacancySummaryFilterTypes.Resubmitted:
+                        vacancies = resubmitted.OrderBy(v => v.DateFirstSubmitted).ToList();
+                        break;
+                }
             }
 
             var providerMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId), false);
@@ -977,11 +983,70 @@
                 SubmittedYesterdayCount = submittedYesterday.Count,
                 SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
                 ResubmittedCount = resubmitted.Count,
-                Vacancies = vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.OwnerPartyId])).ToList(),
+                Vacancies = GetOrderedVacancySummaries(searchViewModel, vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.OwnerPartyId]))).ToList(),
                 RegionalTeamsMetrics = regionalTeamsMetrics
             };
 
             return viewModel;
+        }
+
+        private List<VacancySummary> SearchVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, List<VacancySummary> vacancies)
+        {
+            if (IsSearch(searchViewModel))
+            {
+                if (!string.IsNullOrEmpty(searchViewModel.Provider) && searchViewModel.Provider.Length >= 3)
+                {
+                    var providerSearchMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId), false);
+                    var vacancyOwnerRelationshipIds = new List<int>();
+                    foreach (var keyValuePair in providerSearchMap)
+                    {
+                        if (keyValuePair.Value.TradingName.IndexOf(searchViewModel.Provider, StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            vacancyOwnerRelationshipIds.Add(keyValuePair.Key);
+                        }
+                    }
+                    vacancies = vacancies.Where(v => vacancyOwnerRelationshipIds.Contains(v.OwnerPartyId)).ToList();
+                }
+            }
+            return vacancies;
+        }
+
+        private bool IsSearch(DashboardVacancySummariesSearchViewModel searchViewModel)
+        {
+            return !string.IsNullOrEmpty(searchViewModel.Provider);
+        }
+
+        private IEnumerable<DashboardVacancySummaryViewModel> GetOrderedVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, IEnumerable<DashboardVacancySummaryViewModel> vacancySummaries)
+        {
+            switch (searchViewModel.OrderByField)
+            {
+                case DashboardVacancySummariesSearchViewModel.OrderByFieldTitle:
+                    vacancySummaries = searchViewModel.Order == Order.Descending
+                        ? vacancySummaries.OrderByDescending(a => a.Title).ToList()
+                        : vacancySummaries.OrderBy(a => a.Title).ToList();
+                    break;
+                case DashboardVacancySummariesSearchViewModel.OrderByFieldProvider:
+                    vacancySummaries = searchViewModel.Order == Order.Descending
+                        ? vacancySummaries.OrderByDescending(a => a.ProviderName).ToList()
+                        : vacancySummaries.OrderBy(a => a.ProviderName).ToList();
+                    break;
+                case DashboardVacancySummariesSearchViewModel.OrderByFieldDateSubmitted:
+                    vacancySummaries = searchViewModel.Order == Order.Descending
+                        ? vacancySummaries.OrderByDescending(a => a.DateSubmitted).ToList()
+                        : vacancySummaries.OrderBy(a => a.DateSubmitted).ToList();
+                    break;
+                case DashboardVacancySummariesSearchViewModel.OrderByFieldClosingDate:
+                    vacancySummaries = searchViewModel.Order == Order.Descending
+                        ? vacancySummaries.OrderByDescending(a => a.ClosingDate).ToList()
+                        : vacancySummaries.OrderBy(a => a.ClosingDate).ToList();
+                    break;
+                case DashboardVacancySummariesSearchViewModel.OrderByFieldSubmissionCount:
+                    vacancySummaries = searchViewModel.Order == Order.Descending
+                        ? vacancySummaries.OrderByDescending(a => a.SubmissionCount).ToList()
+                        : vacancySummaries.OrderBy(a => a.SubmissionCount).ToList();
+                    break;
+            }
+            return vacancySummaries;
         }
 
         public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
