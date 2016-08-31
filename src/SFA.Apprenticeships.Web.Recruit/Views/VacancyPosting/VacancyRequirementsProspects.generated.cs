@@ -117,7 +117,7 @@ WriteLiteral(" id=\"VacancyRequirementsProspectsButton\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button\"");
+WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"VacancyRequirementsProspects\"");
 
@@ -127,7 +127,7 @@ WriteLiteral(">");
 
             
             #line 15 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-                                                                                                                                                         Write(saveButtonText);
+                                                                                                                                                                     Write(saveButtonText);
 
             
             #line default
@@ -138,7 +138,7 @@ WriteLiteral(" id=\"VacancyRequirementsProspectsAndExit\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button-link no-autosave\"");
 
 WriteLiteral(" name=\"VacancyRequirementsProspects\"");
 
@@ -162,14 +162,14 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line hidden
             
             #line 19 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" }));
 
             
             #line default
             #line hidden
             
             #line 19 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-                                                                                                                                          
+                                                                                                                                                                         
         }
 
             
@@ -237,9 +237,9 @@ WriteLiteral(@"></script>
 
     <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2307), Tuple.Create("\"", 2362)
-, Tuple.Create(Tuple.Create("", 2313), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
-, 2313), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 2362), Tuple.Create("\"", 2417)
+, Tuple.Create(Tuple.Create("", 2368), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 2368), false)
 );
 
 WriteLiteral("></script>\r\n    <script>\r\n\r\n        var isApprenticeship;\r\n        isApprenticesh" +
