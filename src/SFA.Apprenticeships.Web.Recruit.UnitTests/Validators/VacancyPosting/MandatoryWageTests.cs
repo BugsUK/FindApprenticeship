@@ -5,10 +5,8 @@
     using Common.UnitTests.Validators;
     using Common.Validators;
     using Common.ViewModels;
-    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using FluentValidation;
-    using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
@@ -45,7 +43,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek)
+                Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     PossibleStartDate = new DateViewModel(new DateTime(2016, 9, 30))
@@ -85,7 +83,7 @@
             //After 1st of october 2016 the National Minimum Wage for Apprentices increases to £3.40/hour
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-				Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek)
+				Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     PossibleStartDate = new DateViewModel(new DateTime(2016, 10, 1))
