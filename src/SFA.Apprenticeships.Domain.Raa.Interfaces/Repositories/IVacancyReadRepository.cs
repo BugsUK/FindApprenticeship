@@ -25,6 +25,6 @@
 
         List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
 
-        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds);
+        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId);
     }
 }

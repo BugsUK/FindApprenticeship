@@ -17,6 +17,7 @@
     {
         private readonly IMapper _mapper = new ProviderSiteMappers();
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
+        private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private IGetOpenConnection _connection;
         private IProviderSiteReadRepository _providerSiteReadRepository;
         private IProviderSiteWriteRepository _providerSiteWriteRepository;
@@ -27,8 +28,8 @@
             _connection = new GetOpenConnectionFromConnectionString(
                 DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
-            _providerSiteReadRepository = new ProviderSiteRepository(_connection, _mapper, _logger.Object);
-            _providerSiteWriteRepository = new ProviderSiteRepository(_connection, _mapper, _logger.Object);
+            _providerSiteReadRepository = new ProviderSiteRepository(_connection, _mapper, _logger.Object, _configurationService.Object);
+            _providerSiteWriteRepository = new ProviderSiteRepository(_connection, _mapper, _logger.Object, _configurationService.Object);
         }
 
         [Test]

@@ -102,11 +102,6 @@
             return _providerSiteReadRepository.GetByEdsUrn(edsUrn);
         }
 
-        public IEnumerable<ProviderSite> GetOwnerAndRecruitmentAgentProviderSites(int providerId)
-        {
-            return _providerSiteReadRepository.GetByProviderId(providerId, true);
-        }
-
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Parties
 {
+    using System.Collections.Generic;
     using Locations;
 
     public class ProviderSite
@@ -23,5 +24,7 @@
         public string ContactDetailsForCandidate { get; set; }
 
         public PostalAddress Address { get; set; }
+
+        public IList<ProviderSiteRelationship> ProviderSiteRelationships { get; set; }
     }
 }

@@ -5,6 +5,7 @@
     using System.Linq;
     using Common;
     using dbo;
+    using Domain.Entities.Feature;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
@@ -29,6 +30,7 @@
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IConfigurationService _configurationService;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
@@ -57,13 +59,14 @@
         };
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
-            ILogService logger, ICurrentUserService currentUserService)
+            ILogService logger, ICurrentUserService currentUserService, IConfigurationService configurationService)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
             _dateTimeService = dateTimeService;
             _logger = logger;
             _currentUserService = currentUserService;
+            _configurationService = configurationService;
         }
 
         public DomainVacancy Get(int vacancyId)
@@ -1502,18 +1505,28 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
-        {            
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId)
+        {
+            var sql = @"SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
+                        FROM   dbo.Vacancy
+                        WHERE  VacancyOwnerRelationshipId IN @Ids";
+
+            if (_configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled())
+            {
+                sql += " AND ContractOwnerId = @providerId";
+            }
+
             var vacancyCollections = new List<dynamic>();                               
             var partyIds = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
             var splitVacancyPartyIds = DbHelpers.SplitIds(partyIds);            
             foreach (var splitVacancyPartyId in splitVacancyPartyIds)
             {
-                IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(@"
-                                SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
-                                FROM   dbo.Vacancy
-                                WHERE  VacancyOwnerRelationshipId IN @Ids",
-                    new {Ids = splitVacancyPartyId});                                                                                                      
+                IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(sql,
+                    new
+                    {
+                        Ids = splitVacancyPartyId,
+                        providerId
+                    });                                                                                                      
                 vacancyCollections.AddRange(singleCollection);                
             }
             return vacancyCollections

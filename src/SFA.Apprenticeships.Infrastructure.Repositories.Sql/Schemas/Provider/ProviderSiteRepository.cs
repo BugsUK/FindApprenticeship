@@ -5,9 +5,10 @@
     using System.Linq;
     using Common;
     using Domain.Raa.Interfaces.Repositories;
-    using Entities;
     using Application.Interfaces;
+    using Domain.Entities.Feature;
     using ProviderSite = Domain.Entities.Raa.Parties.ProviderSite;
+    using ProviderSiteRelationship = Domain.Entities.Raa.Parties.ProviderSiteRelationship;
 
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
@@ -17,12 +18,14 @@
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
+        private readonly IConfigurationService _configurationService;
 
-        public ProviderSiteRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
+        public ProviderSiteRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger, IConfigurationService configurationService)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
             _logger = logger;
+            _configurationService = configurationService;
         }
 
         public ProviderSite GetById(int providerSiteId)
@@ -96,7 +99,7 @@
             return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships)).ToDictionary(ps => ps.ProviderSiteId);
         }
 
-        public IEnumerable<ProviderSite> GetByProviderId(int providerId, bool returnAll = false)
+        public IEnumerable<ProviderSite> GetByProviderId(int providerId)
         {
             _logger.Debug("Getting provider sites for provider={0}", providerId);
 
@@ -107,10 +110,12 @@
                 WHERE psr.ProviderID = @providerId 
                 AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
 
-            if (!returnAll)
+            if(!_configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled())
             {
-                sql += $" and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
+                sql += " and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
             }
+
+            sql += " ORDER BY psr.ProviderSiteRelationShipTypeID, ps.TradingName, ps.Town";
 
             var sqlParams = new
             {
@@ -144,7 +149,7 @@
             return _mapper.Map<ProviderSite, Entities.ProviderSite>(providerSite);
         }
 
-        private ProviderSite MapProviderSite(Entities.ProviderSite dbProviderSite, IReadOnlyDictionary<int, ProviderSiteRelationship> providerSiteRelationships)
+        private ProviderSite MapProviderSite(Entities.ProviderSite dbProviderSite, IReadOnlyDictionary<int, List<Entities.ProviderSiteRelationship>> providerSiteRelationships)
         {
             if (dbProviderSite == null)
             {
@@ -152,14 +157,15 @@
             }
 
             var providerSite = _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
+            providerSite.ProviderSiteRelationships = _mapper.Map<List<Entities.ProviderSiteRelationship>, List<ProviderSiteRelationship>>(providerSiteRelationships[providerSite.ProviderSiteId]);
 
-            providerSite.ProviderId = providerSiteRelationships[providerSite.ProviderSiteId].ProviderID;
+            providerSite.ProviderId = providerSiteRelationships[providerSite.ProviderSiteId].First().ProviderID;
 
             return providerSite;
         }
 
         // Contracted
-        private IReadOnlyDictionary<int, ProviderSiteRelationship> GetProviderIdByProviderSiteId(IEnumerable<int> providerSiteIds)
+        private IReadOnlyDictionary<int, List<Entities.ProviderSiteRelationship>> GetProviderIdByProviderSiteId(IEnumerable<int> providerSiteIds)
         {
             //TODO: Deal with Subcontractors and recruitment consultants. Should be done with ContractOwnerId rather than like this
 
@@ -170,22 +176,24 @@
                 WHERE ps.ProviderSiteId IN @providerSiteIds
                 ORDER BY psr.ProviderSiteRelationshipTypeID"; //Forces non Subcontractors and Recruitment Consultants to the end of the list to prioritize owners
 
-            // TODO: change to ProviderSiteRelationshipTypeID = 1?
-
             var sqlParams = new
             {
                 providerSiteIds
             };
 
-            var map = new Dictionary<int, ProviderSiteRelationship>();
+            var map = new Dictionary<int, List<Entities.ProviderSiteRelationship>>();
 
             //TODO: workaround to be able to create the index. Should be done properly.
-            var providerSiteRelationships = _getOpenConnection.Query<ProviderSiteRelationship>(sql, sqlParams);
+            var providerSiteRelationships = _getOpenConnection.Query<Entities.ProviderSiteRelationship>(sql, sqlParams);
             foreach (var providerSiteRelationship in providerSiteRelationships)
             {
-                if (!map.ContainsKey(providerSiteRelationship.ProviderSiteID))
+                if (map.ContainsKey(providerSiteRelationship.ProviderSiteID))
                 {
-                    map[providerSiteRelationship.ProviderSiteID] = providerSiteRelationship;
+                    map[providerSiteRelationship.ProviderSiteID].Add(providerSiteRelationship);
+                }
+                else
+                {
+                    map[providerSiteRelationship.ProviderSiteID] = new List<Entities.ProviderSiteRelationship> { providerSiteRelationship };
                 }
             }
 

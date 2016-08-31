@@ -5,6 +5,8 @@
     using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
     using DatabaseProviderSite = Entities.ProviderSite;
     using DomainProviderSite = Domain.Entities.Raa.Parties.ProviderSite;
+    using DatabaseProviderSiteRelationship = Entities.ProviderSiteRelationship;
+    using DomainProviderSiteRelationship = Domain.Entities.Raa.Parties.ProviderSiteRelationship;
 
     public class ProviderSiteMappers : MapperEngine
     {
@@ -14,6 +16,7 @@
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.FullName))
                 .IgnoreMember(dest => dest.Address)
                 .IgnoreMember(dest => dest.ProviderId)
+                .IgnoreMember(dest => dest.ProviderSiteRelationships)
                 .AfterMap((source, dest) =>
                 {
                     dest.Address = new DomainPostalAddress
@@ -51,6 +54,10 @@
                 .MapMemberFrom(dest => dest.Town, source => source.Address.Town)
                 .MapMemberFrom(dest => dest.Latitude, source => (decimal)source.Address.GeoPoint.Latitude) // use a converter?
                 .MapMemberFrom(dest => dest.Longitude, source => (decimal)source.Address.GeoPoint.Longitude); // use a converter?
+
+
+            Mapper.CreateMap<DatabaseProviderSiteRelationship, DomainProviderSiteRelationship>();
+            Mapper.CreateMap<DomainProviderSiteRelationship, DatabaseProviderSiteRelationship>();
         }
     }
 }

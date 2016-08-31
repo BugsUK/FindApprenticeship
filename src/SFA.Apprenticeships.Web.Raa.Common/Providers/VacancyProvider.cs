@@ -707,7 +707,7 @@
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
 
             var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(
-                vacancyParties.Select(vp => vp.VacancyPartyId))
+                vacancyParties.Select(vp => vp.VacancyPartyId), providerId)
                 .Values
                 .SelectMany(a => a)
                 .Where(
