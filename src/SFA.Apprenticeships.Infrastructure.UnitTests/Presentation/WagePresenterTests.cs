@@ -75,7 +75,7 @@
             }
 
             // Act.
-            var actual = WagePresenter.GetDisplayAmount(wageType, wageAmount, wageText, WageUnit.NotApplicable, Convert.ToDecimal(hoursPerWeek));
+            var actual = WagePresenter.GetDisplayAmount(wageType, wageAmount, wageText, Convert.ToDecimal(hoursPerWeek));
 
             // Assert.
             actual.Should().Be(expected);

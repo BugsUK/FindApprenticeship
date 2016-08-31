@@ -40,7 +40,7 @@
         {
             var postfix = unit.GetWagePostfix();
 
-            var displayAmount = GetDisplayAmount(type, amount, text, unit, hoursPerWeek);
+            var displayAmount = GetDisplayAmount(type, amount, text, hoursPerWeek);
             if (string.IsNullOrWhiteSpace(displayAmount))
             {
                 return postfix;
@@ -49,7 +49,7 @@
             return $"{displayAmount} {postfix}";
         }
 
-        public static string GetDisplayAmount(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
+        public static string GetDisplayAmount(WageType type, decimal? amount, string text, decimal? hoursPerWeek)
         {
             switch (type)
             {

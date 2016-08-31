@@ -38,7 +38,7 @@
 
         public WageUnit Unit { get; set; }
 
-        public string DisplayAmount => WagePresenter.GetDisplayAmount(Type, Amount, Text, Unit, HoursPerWeek);
+        public string DisplayAmount => WagePresenter.GetDisplayAmount(Type, Amount, Text, HoursPerWeek);
 
         public string DisplayAmountWithFrequencyPostfix
             => WagePresenter.GetDisplayAmountWithFrequencyPostfix(Type, Amount, Text, Unit, HoursPerWeek);
