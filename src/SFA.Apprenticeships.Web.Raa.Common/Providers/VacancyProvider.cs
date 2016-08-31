@@ -779,10 +779,12 @@
 
             var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
 
+            var applicationCountsByVacancyIdForPage = applicationCountsByVacancyId;
+
             if (isVacancySearch || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.All || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.Completed)
             {
                 //Get counts again but just for the page of vacancies
-                applicationCountsByVacancyId =
+                applicationCountsByVacancyIdForPage =
                     _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(
                         vacancySummaries.Where(v => v.Status.CanHaveApplicationsOrClickThroughs())
                             .Select(a => a.VacancyId));
@@ -791,8 +793,8 @@
             foreach (var vacancySummary in vacancySummaries)
             {
                 vacancySummary.EmployerName = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId).FullName;
-                vacancySummary.ApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].AllApplications;
-                vacancySummary.NewApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].NewApplications;
+                vacancySummary.ApplicationCount = applicationCountsByVacancyIdForPage[vacancySummary.VacancyId].AllApplications;
+                vacancySummary.NewApplicationCount = applicationCountsByVacancyIdForPage[vacancySummary.VacancyId].NewApplications;
                 vacancySummary.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancySummary.VacancyId)).ToList();
             }
 
