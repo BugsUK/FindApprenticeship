@@ -1,12 +1,13 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.FurtherVacancyDetailsViewModel
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Web.Common.Extensions
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
 @{
-    var heading = Model.VacancyType == VacancyType.Traineeship ? "Enter opportunity details" : "Enter further details";
+    var heading = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? "Enter opportunity details" : "Enter further details";
     ViewBag.Title = "Recruit an Apprentice - " + heading;
 }
 
@@ -26,60 +27,60 @@
     <div class="form-group">
         <fieldset class="form-group inline-fixed">
             @{
-                var workingWeeklabelText = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipLabelText : null;
-                var workingWeekDataValLength = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipTooLongErrorText : VacancyViewModelMessages.WorkingWeek.TooLongErrorText;
-                var workingWeekDataValRegex = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipWhiteListErrorText : VacancyViewModelMessages.WorkingWeek.WhiteListErrorText;
+                var workingWeeklabelText = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipLabelText : null;
+                var workingWeekDataValLength = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipTooLongErrorText : VacancyViewModelMessages.WorkingWeek.TooLongErrorText;
+                var workingWeekDataValRegex = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipWhiteListErrorText : VacancyViewModelMessages.WorkingWeek.WhiteListErrorText;
             }
             @Html.FormTextAreaFor(m => m.WorkingWeek, workingWeeklabelText, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, data_val_length = workingWeekDataValLength, data_val_regex = workingWeekDataValRegex})
         </fieldset>
-        @if (Model.VacancyType == VacancyType.Traineeship)
+        @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
         {
-            @Html.HiddenFor(m => m.HoursPerWeek)
+            @Html.HiddenFor(m => m.Wage.HoursPerWeek)
         }
         else
         {
             <fieldset class="form-group inline-fixed">
-                @Html.FormTextFor(m => m.HoursPerWeek, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12}, containerHtmlAttributes: new {style = "margin-bottom: 15px"})
+                @Html.FormTextFor(m => m.Wage.HoursPerWeek, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12}, containerHtmlAttributes: new {style = "margin-bottom: 15px"})
             </fieldset>
         }
-        <div class="form-group">@Html.EditorFor(m => m.WorkingWeekComment, "Comment", Html.GetLabelFor(m => m.WorkingWeekComment, Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeekComment.TraineeshipLabelText : null))</div>
+        <div class="form-group">@Html.EditorFor(m => m.WorkingWeekComment, "Comment", Html.GetLabelFor(m => m.WorkingWeekComment, Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeekComment.TraineeshipLabelText : null))</div>
 
-        @if (Model.VacancyType == VacancyType.Traineeship)
+        @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
         {
-            @Html.HiddenFor(m => m.WageType)
-            @Html.HiddenFor(m => m.Wage)
-            @Html.HiddenFor(m => m.WageUnit)
+            @Html.HiddenFor(m => m.Wage.Type)
+            @Html.HiddenFor(m => m.Wage.Amount)
+            @Html.HiddenFor(m => m.Wage.Unit)
             @Html.HiddenFor(m => m.WageComment)
         }
         else
         {
             <div class="blocklabel-single-container">
                 <div class="form-group">
-                    <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
+                    <a name="@Html.NameFor(m => m.Wage.Type).ToString().ToLower()"></a>
                     <label class="form-label" for="weekly-wage">Wage</label>
-                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType)))" data-editable-x="">
+                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.Type)))" data-editable-x="">
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.Wage.Type, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
                             Custom wage
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="national-minimum-wage" class="block-label">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.Wage.Type, WageType.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
                             National Minimum Wage
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="apprenticeship-minimum-wage" class="block-label">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.Wage.Type, WageType.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
                             National Minimum Wage for apprentices
                         </label>
-                        @Html.ValidationMessageFor(m => m.WageType)
+                        @Html.ValidationMessageFor(m => m.Wage.Type)
                     </div>
                     <div id="custom-wage-panel" class="toggle-content blocklabel-content">
                         <fieldset class="form-group inline-fixed">
                             £
-                            @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
-                            @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
+                            @Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
+                            @Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits)
                         </fieldset>
                     </div>
                 </div>
@@ -121,12 +122,12 @@
         </fieldset>
         <div class="form-group">@Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDateComment, "Comment", Html.GetLabelFor(m => m.VacancyDatesViewModel.PossibleStartDateComment))</div>
         @{
-            var longDescriptionlabelText = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipLabelText : null;
-            var longDescriptionDataValLength = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipTooLongErrorText : VacancyViewModelMessages.LongDescription.TooLongErrorText;
-            var longDescriptionDataValRegex = Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipWhiteListInvalidCharacterErrorText : VacancyViewModelMessages.LongDescription.WhiteListInvalidCharacterErrorText;
+            var longDescriptionlabelText = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipLabelText : null;
+            var longDescriptionDataValLength = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipTooLongErrorText : VacancyViewModelMessages.LongDescription.TooLongErrorText;
+            var longDescriptionDataValRegex = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipWhiteListInvalidCharacterErrorText : VacancyViewModelMessages.LongDescription.WhiteListInvalidCharacterErrorText;
         }
         @Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new {id = "LongDescription", @class = "ckeditor", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex})
-        @Html.EditorFor(m => m.LongDescriptionComment, "Comment", Html.GetLabelFor(m => m.LongDescriptionComment, Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescriptionComment.TraineeshipLabelText : null))
+        @Html.EditorFor(m => m.LongDescriptionComment, "Comment", Html.GetLabelFor(m => m.LongDescriptionComment, Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescriptionComment.TraineeshipLabelText : null))
     </div>
 </section>
 

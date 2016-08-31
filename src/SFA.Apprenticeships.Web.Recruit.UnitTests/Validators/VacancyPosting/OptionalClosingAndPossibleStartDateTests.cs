@@ -5,6 +5,7 @@
     using Common.UnitTests.Validators;
     using Common.Validators;
     using Common.ViewModels;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using FluentValidation;
     using FluentValidation.TestHelper;
@@ -22,6 +23,7 @@
         private VacancyDatesViewModelServerCommonValidator _serverCommonValidator;
         private VacancyDatesViewModelServerWarningValidator _serverWarningValidator;
         private VacancyViewModelValidator _aggregateValidator;
+        private WageViewModel _wageViewModel;
 
         [SetUp]
         public void SetUp()
@@ -30,6 +32,7 @@
             _serverCommonValidator = new VacancyDatesViewModelServerCommonValidator();
             _serverWarningValidator = new VacancyDatesViewModelServerWarningValidator(null);
             _aggregateValidator = new VacancyViewModelValidator();
+            _wageViewModel = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null);
         }
 
         [Test]
@@ -39,7 +42,7 @@
             {
                 ClosingDate = new DateViewModel(DateTime.Today.AddDays(-7))
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -56,7 +59,7 @@
             {
                 PossibleStartDate = new DateViewModel(DateTime.Today.AddDays(-7))
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -73,7 +76,7 @@
             {
                 ClosingDate = new DateViewModel(DateTime.Today.AddDays(13))
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -91,7 +94,7 @@
                 ClosingDate = new DateViewModel(DateTime.Today.AddDays(28)),
                 PossibleStartDate = new DateViewModel(DateTime.Today.AddDays(21))
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -109,7 +112,7 @@
                 ClosingDate = new DateViewModel(DateTime.Today.AddDays(28)),
                 PossibleStartDate = new DateViewModel(DateTime.Today.AddDays(28))
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -132,7 +135,7 @@
                     Year = 2015
                 }
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -154,7 +157,7 @@
                     Year = 2015
                 }
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -182,7 +185,7 @@
                     Year = 2015
                 }
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -203,7 +206,7 @@
             {
                 ClosingDate = new DateViewModel(today)
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             var result = _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
@@ -226,7 +229,7 @@
             {
                 PossibleStartDate = new DateViewModel(today)
             };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).With(_wageViewModel).Build();
 
             var result = _serverWarningValidator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);

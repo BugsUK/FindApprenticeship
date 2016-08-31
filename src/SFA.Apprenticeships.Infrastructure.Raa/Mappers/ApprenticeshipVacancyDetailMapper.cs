@@ -24,7 +24,6 @@
         public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, Employer employer, Provider provider, ProviderSite providerSite, IList<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
-            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
             var subcategory = vacancy.GetSubCategory(categories);
             LogSubCategory(vacancy, logService, subcategory);
@@ -42,12 +41,8 @@
                 PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
                 //TODO: Where should this come from?
                 InterviewFromDate = DateTime.MinValue,
-                Wage = vacancy.Wage ?? 0,
-                WageUnit = wage.GetWageUnit(),
-                WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
-                WageType = (LegacyWageType)vacancy.WageType,
+                Wage = vacancy.Wage,
                 WorkingWeek = vacancy.WorkingWeek,
-                HoursPerWeek = vacancy.HoursPerWeek,
                 OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?

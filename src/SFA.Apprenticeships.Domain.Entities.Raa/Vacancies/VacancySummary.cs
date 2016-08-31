@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
     using System;
+    using Entities.Vacancies;
     using Locations;
     using Reference;
 
@@ -12,11 +13,7 @@
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string WorkingWeek { get; set; }
-        public decimal? HoursPerWeek { get; set; }
-        public WageType WageType { get; set; }
-        public decimal? Wage { get; set; }
-        public string WageText { get; set; }
-        public WageUnit WageUnit { get; set; }
+        public Wage Wage { get; set; }
         public string ExpectedDuration { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }

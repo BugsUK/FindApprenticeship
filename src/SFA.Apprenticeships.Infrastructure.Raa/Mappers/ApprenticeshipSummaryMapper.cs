@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Domain.Entities.Extensions;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -11,6 +10,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     using SFA.Apprenticeships.Application.Interfaces;
 
@@ -23,8 +23,6 @@
                 //Manually mapping rather than using automapper as the two enties are significantly different
 
                 var location = GetGeoPoint(vacancy);
-
-                var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
                 var category = vacancy.GetCategory(categories);
                 var subcategory = vacancy.GetSubCategory(categories);
@@ -49,8 +47,7 @@
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
-                    Wage = wage.GetDisplayText(vacancy.HoursPerWeek),
-                    WageUnit = wage.GetWageUnit(),
+                    Wage = vacancy.Wage,
                     WorkingWeek = vacancy.WorkingWeek,
                     CategoryCode = category.CodeName,
                     Category = category.FullName,

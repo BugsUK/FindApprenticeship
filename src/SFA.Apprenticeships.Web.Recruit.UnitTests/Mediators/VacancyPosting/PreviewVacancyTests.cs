@@ -7,12 +7,14 @@
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Vacancy;
     using Recruit.Mediators.VacancyPosting;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     [Parallelizable]
@@ -31,7 +33,8 @@
                 {
                     ClosingDate = new DateViewModel(yesterday),
                     PossibleStartDate = new DateViewModel(yesterday)
-                }
+                },
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);

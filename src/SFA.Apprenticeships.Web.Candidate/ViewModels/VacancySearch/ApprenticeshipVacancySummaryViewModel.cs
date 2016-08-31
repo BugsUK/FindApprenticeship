@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
+    using Common.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.Apprenticeships;
 
@@ -11,7 +12,7 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
-        public string Wage { get; set; }
+        public WageViewModel Wage { get; set; }
 
         public string WorkingWeek { get; set; }
     }

@@ -26,6 +26,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Raa.Parties;
     using ViewModels;
     using ViewModels.Provider;
@@ -35,6 +36,9 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
@@ -400,10 +404,7 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.HoursPerWeek = viewModel.HoursPerWeek;
-            vacancy.WageType = viewModel.WageType;
-            vacancy.Wage = viewModel.Wage;
-            vacancy.WageUnit = viewModel.WageUnit;
+            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -1280,10 +1281,7 @@
             }
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.HoursPerWeek = viewModel.HoursPerWeek;
-            vacancy.WageType = viewModel.WageType;
-            vacancy.Wage = viewModel.Wage;
-            vacancy.WageUnit = viewModel.WageUnit;
+            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 

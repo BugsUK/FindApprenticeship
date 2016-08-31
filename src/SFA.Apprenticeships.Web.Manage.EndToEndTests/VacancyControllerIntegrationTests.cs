@@ -7,16 +7,20 @@
     using Common.ViewModels;
     using Controllers;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Vacancy;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
 
     [TestFixture]
     public class VacancyControllerIntegrationTests : ManageWebIntegrationTestsBase
     {
+        //TODO: Alter these acceptance tests to use SQL repo
+
         [Test, Category("Acceptance")]
         public void GetBasicDetailsWithACorrectVacancyShouldReturnTheVacancyWithAnEmptyModelState()
         {
@@ -622,7 +626,6 @@
                 DurationType = DurationType.Years,
                 VacancyId = 42,
                 FutureProspects = "future prospects",
-                HoursPerWeek = 40,
                 LongDescription = "long description",
                 OfflineVacancy = false,
                 PersonalQualities = "personal qualities",
@@ -662,7 +665,7 @@
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
-                WageType = WageType.ApprenticeshipMinimum,
+                Wage = new Wage(WageType.Custom, 0, null, WageUnit.NotApplicable, 40)
                 // Ukprn = "10003816"
             };
         }
@@ -722,9 +725,8 @@
                 },
                 Duration = 3,
                 DurationType = DurationType.Years,
-                HoursPerWeek = 40,
                 LongDescription = "Long description",
-                WageType = WageType.ApprenticeshipMinimum,
+                Wage = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, 40),
                 WorkingWeek = "working week"
             };
 
