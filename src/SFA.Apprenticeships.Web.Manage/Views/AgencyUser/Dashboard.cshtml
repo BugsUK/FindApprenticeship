@@ -55,6 +55,7 @@
             <div class="grid grid-1-2">
                 <label class="form-label" style="margin-top: 10px">Provider</label>
                 @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.Provider, new { @class = "grid grid-1-1" })
+                @Html.HiddenFor(m => m.VacancySummaries.SearchViewModel.Mode)
                 <div>
                     @Html.RouteLink("Clear", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(), new {@class = "button-link", style = "padding-top: 17px; margin-bottom: 0" })
                     <button class="button" style="margin: 10px 0 0 0" name="DashboardAction" value="SearchVacancies">Search vacancies</button>
