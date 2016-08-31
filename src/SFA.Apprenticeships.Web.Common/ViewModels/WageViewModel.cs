@@ -8,6 +8,9 @@
 
     public class WageViewModel
     {
+        public WageViewModel()
+        : this(WageType.Custom, null, null, WageUnit.NotApplicable, null){ }
+
         public WageViewModel(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
         {
             Type = type;
@@ -26,14 +29,14 @@
             Unit = wage.Unit;
         }
 
-        public WageType Type { get; private set; }
+        public WageType Type { get; set; }
 
         [Display(Name = WageViewModelMessages.LabelText)]
-        public decimal? Amount { get; private set; }
+        public decimal? Amount { get; set; }
 
-        public string Text { get; private set; }
+        public string Text { get; set; }
 
-        public WageUnit Unit { get; private set; }
+        public WageUnit Unit { get; set; }
 
         public string DisplayAmount => WagePresenter.GetDisplayAmount(Type, Amount, Text, Unit, HoursPerWeek);
 
@@ -41,6 +44,6 @@
             => WagePresenter.GetDisplayAmountWithFrequencyPostfix(Type, Amount, Text, Unit, HoursPerWeek);
 
         [Display(Name = WageViewModelMessages.HoursPerWeek.LabelText)]
-        public decimal? HoursPerWeek { get; private set; }
+        public decimal? HoursPerWeek { get; set; }
     }
 }
