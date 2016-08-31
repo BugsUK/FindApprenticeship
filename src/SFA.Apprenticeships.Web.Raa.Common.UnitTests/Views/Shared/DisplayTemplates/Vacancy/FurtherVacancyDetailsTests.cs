@@ -101,7 +101,7 @@
             var view = details.RenderAsHtml(viewModel);
 
             //Assert
-            var hoursPerWeek = view.GetElementbyId("WageObject_HoursPerWeek");
+            var hoursPerWeek = view.GetElementbyId("Wage_HoursPerWeek");
             hoursPerWeek.Should().NotBeNull();
             hoursPerWeek.Attributes["type"].Value.Should().Be("tel");
         }
@@ -120,7 +120,7 @@
             var view = details.RenderAsHtml(viewModel);
 
             //Assert
-            var hoursPerWeek = view.GetElementbyId("WageObject_HoursPerWeek");
+            var hoursPerWeek = view.GetElementbyId("Wage_HoursPerWeek");
             hoursPerWeek.Should().NotBeNull();
             hoursPerWeek.Attributes["type"].Value.Should().Be("hidden");
         }
@@ -142,10 +142,10 @@
             view.GetElementbyId("custom-wage").Should().NotBeNull();
             view.GetElementbyId("national-minimum-wage").Should().NotBeNull();
             view.GetElementbyId("apprenticeship-minimum-wage").Should().NotBeNull();
-            var wage = view.GetElementbyId("WageObject_Amount");
+            var wage = view.GetElementbyId("Wage_Amount");
             wage.Should().NotBeNull();
             wage.Attributes["type"].Value.Should().Be("tel");
-            var wageUnit = view.GetElementbyId("WageObject_Unit");
+            var wageUnit = view.GetElementbyId("Wage_Unit");
             wageUnit.Should().NotBeNull();
             wageUnit.Name.Should().Be("select");
         }
@@ -167,10 +167,10 @@
             view.GetElementbyId("custom-wage").Should().NotBeNull();
             view.GetElementbyId("national-minimum-wage").Should().NotBeNull();
             view.GetElementbyId("apprenticeship-minimum-wage").Should().NotBeNull();
-            var wage = view.GetElementbyId("WageObject_Amount");
+            var wage = view.GetElementbyId("Wage_Amount");
             wage.Should().NotBeNull();
             wage.Attributes["type"].Value.Should().Be("tel");
-            var wageUnit = view.GetElementbyId("WageObject_Unit");
+            var wageUnit = view.GetElementbyId("Wage_Unit");
             wageUnit.Should().NotBeNull();
             wageUnit.Name.Should().Be("select");
         }
@@ -192,13 +192,13 @@
             view.GetElementbyId("custom-wage").Should().BeNull();
             view.GetElementbyId("national-minimum-wage").Should().BeNull();
             view.GetElementbyId("apprenticeship-minimum-wage").Should().BeNull();
-            var wageType= view.GetElementbyId("WageObject_Type");
+            var wageType= view.GetElementbyId("Wage_Type");
             wageType.Should().NotBeNull();
             wageType.Attributes["type"].Value.Should().Be("hidden");
-            var wage = view.GetElementbyId("WageObject_Amount");
+            var wage = view.GetElementbyId("Wage_Amount");
             wage.Should().NotBeNull();
             wage.Attributes["type"].Value.Should().Be("hidden");
-            var wageUnit = view.GetElementbyId("WageObject_Unit");
+            var wageUnit = view.GetElementbyId("Wage_Unit");
             wageUnit.Should().NotBeNull();
             wageUnit.Attributes["type"].Value.Should().Be("hidden");
         }
