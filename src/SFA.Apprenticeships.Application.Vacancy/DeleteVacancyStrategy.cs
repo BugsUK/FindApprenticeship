@@ -2,6 +2,7 @@
 {
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
+    using Infrastructure.Presentation;
     using Interfaces.Service;
 
     public class DeleteVacancyStrategy : IDeleteVacancyStrategy
@@ -20,7 +21,7 @@
                 return new StrategyResult(VacancyManagementServiceCodes.Delete.VacancyNotFound);
             }
 
-            if (input.Status != VacancyStatus.Draft)
+            if (!input.Status.IsStateDeletable())
             {
                 return new StrategyResult(VacancyManagementServiceCodes.Delete.VacancyInIncorrectState);
             }

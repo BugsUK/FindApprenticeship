@@ -18,11 +18,8 @@
     using Domain.Entities.ReferenceData;
     using Factories;
     using Infrastructure.Presentation;
-    using SFA.Infrastructure.Interfaces;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
@@ -732,7 +729,6 @@
 
             var hasVacancies = minimalVacancyDetails.Any();
 
-            // Unfortunately (from a performance / load / scalability perspective), the view includes application counts for every vacancy, including those completed months/years ago
             var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs() && v.Status != VacancyStatus.Completed).Select(a => a.VacancyId);
 
             var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
@@ -781,6 +777,15 @@
             }), vacanciesSummarySearch.FilterType);
 
             var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
+
+            if (isVacancySearch || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.All || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.Completed)
+            {
+                //Get counts again but just for the page of vacancies
+                applicationCountsByVacancyId =
+                    _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(
+                        vacancySummaries.Where(v => v.Status.CanHaveApplicationsOrClickThroughs())
+                            .Select(a => a.VacancyId));
+            }
 
             foreach (var vacancySummary in vacancySummaries)
             {
