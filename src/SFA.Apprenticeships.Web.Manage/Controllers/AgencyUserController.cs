@@ -124,7 +124,9 @@
             var claimsPrincipal = (ClaimsPrincipal)User;
             _agencyUserMediator.SaveAgencyUser(claimsPrincipal, viewModel.AgencyUser);
 
-            return RedirectToRoute(ManagementRouteNames.Dashboard);
+            viewModel.VacancySummaries.SearchViewModel.Mode = DashboardVacancySummariesMode.Review;
+
+            return RedirectToRoute(ManagementRouteNames.Dashboard, viewModel.VacancySummaries.SearchViewModel);
         }
 
         [HttpPost]
@@ -137,12 +139,12 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult ChangeTeam(RegionalTeam regionalTeam, DashboardVacancySummaryFilterTypes filterType)
+        public ActionResult ChangeTeam(RegionalTeam regionalTeam, DashboardVacancySummaryFilterTypes filterType, string provider)
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
             _agencyUserMediator.SaveAgencyUser(claimsPrincipal, new AgencyUserViewModel {RegionalTeam = regionalTeam});
 
-            return RedirectToRoute(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel {FilterType = filterType, Mode = DashboardVacancySummariesMode.Review});
+            return RedirectToRoute(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel {FilterType = filterType, Mode = DashboardVacancySummariesMode.Review, Provider = provider });
         }
     }
 }

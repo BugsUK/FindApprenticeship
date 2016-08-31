@@ -943,11 +943,15 @@
 
             var regionalTeamsMetrics = GetRegionalTeamsMetrics(vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted);
 
-            vacancies = vacancies.Where(v => v.RegionalTeam == regionalTeam).ToList();
-            submittedToday = submittedToday.Where(v => v.RegionalTeam == regionalTeam).ToList();
-            submittedYesterday = submittedYesterday.Where(v => v.RegionalTeam == regionalTeam).ToList();
-            submittedMoreThan48Hours = submittedMoreThan48Hours.Where(v => v.RegionalTeam == regionalTeam).ToList();
-            resubmitted = resubmitted.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            if (!IsSearch(searchViewModel))
+            {
+                //Only filter by regional team if not a search
+                vacancies = vacancies.Where(v => v.RegionalTeam == regionalTeam).ToList();
+                submittedToday = submittedToday.Where(v => v.RegionalTeam == regionalTeam).ToList();
+                submittedYesterday = submittedYesterday.Where(v => v.RegionalTeam == regionalTeam).ToList();
+                submittedMoreThan48Hours = submittedMoreThan48Hours.Where(v => v.RegionalTeam == regionalTeam).ToList();
+                resubmitted = resubmitted.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            }
 
             if (vacancies.Count == 0)
             {
