@@ -127,6 +127,14 @@
             return RedirectToRoute(ManagementRouteNames.Dashboard);
         }
 
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        [MultipleFormActionsButton(SubmitButtonActionName = "DashboardAction")]
+        public ActionResult SearchVacancies(HomeViewModel viewModel)
+        {
+            return RedirectToRoute(ManagementRouteNames.Dashboard, viewModel.VacancySummaries.SearchViewModel);
+        }
+
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult ChangeTeam(RegionalTeam regionalTeam, DashboardVacancySummaryFilterTypes filterType)
