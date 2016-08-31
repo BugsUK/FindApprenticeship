@@ -10,6 +10,7 @@
 
         public DashboardVacancySummaryFilterTypes FilterType { get; set; }
         public DashboardVacancySummariesMode Mode { get; set; }
+        public string Provider { get; set; }
 
         public DashboardVacancySummariesSearchViewModel()
         {
@@ -18,8 +19,7 @@
 
         public DashboardVacancySummariesSearchViewModel(DashboardVacancySummariesSearchViewModel viewModel) : base(viewModel)
         {
-            FilterType = viewModel.FilterType;
-            Mode = viewModel.Mode;
+            SetValues(viewModel);
         }
 
         public DashboardVacancySummariesSearchViewModel(DashboardVacancySummariesSearchViewModel viewModel, DashboardVacancySummaryFilterTypes filterType) : this(viewModel)
@@ -35,8 +35,14 @@
 
         public DashboardVacancySummariesSearchViewModel(DashboardVacancySummariesSearchViewModel viewModel, string orderByField, Order order) : base(orderByField, order)
         {
+            SetValues(viewModel);
+        }
+
+        private void SetValues(DashboardVacancySummariesSearchViewModel viewModel)
+        {
             FilterType = viewModel.FilterType;
             Mode = viewModel.Mode;
+            Provider = viewModel.Provider;
         }
     }
 }

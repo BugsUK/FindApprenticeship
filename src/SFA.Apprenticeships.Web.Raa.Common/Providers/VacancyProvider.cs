@@ -932,6 +932,8 @@
 
             var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
+            vacancies = SearchVacancySummaries(searchViewModel, vacancies);
+
             var utcNow = _dateTimeService.UtcNow;
 
             var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
@@ -986,6 +988,32 @@
             };
 
             return viewModel;
+        }
+
+        private List<VacancySummary> SearchVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, List<VacancySummary> vacancies)
+        {
+            if (IsSearch(searchViewModel))
+            {
+                if (!string.IsNullOrEmpty(searchViewModel.Provider) && searchViewModel.Provider.Length >= 3)
+                {
+                    var providerSearchMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId), false);
+                    var vacancyOwnerRelationshipIds = new List<int>();
+                    foreach (var keyValuePair in providerSearchMap)
+                    {
+                        if (keyValuePair.Value.TradingName.IndexOf(searchViewModel.Provider, StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            vacancyOwnerRelationshipIds.Add(keyValuePair.Key);
+                        }
+                    }
+                    vacancies = vacancies.Where(v => vacancyOwnerRelationshipIds.Contains(v.OwnerPartyId)).ToList();
+                }
+            }
+            return vacancies;
+        }
+
+        private bool IsSearch(DashboardVacancySummariesSearchViewModel searchViewModel)
+        {
+            return !string.IsNullOrEmpty(searchViewModel.Provider);
         }
 
         private IEnumerable<DashboardVacancySummaryViewModel> GetOrderedVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, IEnumerable<DashboardVacancySummaryViewModel> vacancySummaries)
