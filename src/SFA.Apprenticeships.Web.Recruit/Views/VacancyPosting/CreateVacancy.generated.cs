@@ -124,25 +124,25 @@ WriteLiteral(" id=\"createVacancyButton\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button\"");
+WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 847), Tuple.Create("\"", 871)
+WriteAttribute("value", Tuple.Create(" value=\"", 859), Tuple.Create("\"", 883)
             
             #line 22 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                   , Tuple.Create(Tuple.Create("", 855), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                               , Tuple.Create(Tuple.Create("", 867), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 855), false)
+, 867), false)
 );
 
 WriteLiteral(">");
 
             
             #line 22 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                                                                                                               Write(saveButtonText);
+                                                                                                                           Write(saveButtonText);
 
             
             #line default
@@ -153,7 +153,7 @@ WriteLiteral(" id=\"createVacancyAndExit\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button-link no-autosave\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 
@@ -177,14 +177,14 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line hidden
             
             #line 26 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" }));
 
             
             #line default
             #line hidden
             
             #line 26 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                                                                                                                                          
+                                                                                                                                                                         
         }
 
             

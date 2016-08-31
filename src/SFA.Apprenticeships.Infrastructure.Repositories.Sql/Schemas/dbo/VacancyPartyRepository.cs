@@ -50,8 +50,7 @@
 
         public IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds, bool currentOnly = true)
         {
-            // Guard against an enumerable that can only be enumerated once.
-            var vacancyPartyIdsArray = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
+            var vacancyPartyIdsArray = vacancyPartyIds.Distinct().ToArray();
 
             _logger.Debug("Calling database to get vacancy parties with Ids={0}", string.Join(", ", vacancyPartyIdsArray));
 
@@ -61,15 +60,20 @@
                 WHERE  VacancyOwnerRelationshipId IN @VacancyPartyIds
 " + (currentOnly ? "AND StatusTypeId = @StatusTypeId" : "");
 
-            var sqlParams = new
+            List<VacancyOwnerRelationship> vacancyOwnerRelationships = new List<VacancyOwnerRelationship>();
+            var splitVacancyPartyIdsArray = DbHelpers.SplitIds(vacancyPartyIdsArray);
+            foreach (int[] ids in splitVacancyPartyIdsArray)
             {
-                VacancyPartyIds = vacancyPartyIdsArray,
-                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
-            };
+                var sqlParams = new
+                {
+                    VacancyPartyIds = ids,
+                    StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
+                };
+                var vacancyParties = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams);
+                vacancyOwnerRelationships.AddRange(vacancyParties);
+            }
 
-            var vacancyParties = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams);
-
-            return _mapper.Map<IEnumerable<VacancyOwnerRelationship>, IEnumerable<VacancyParty>>(vacancyParties);
+            return _mapper.Map<IEnumerable<VacancyOwnerRelationship>, IEnumerable<VacancyParty>>(vacancyOwnerRelationships);
         }
 
         public IEnumerable<VacancyParty> GetByProviderSiteId(int providerSiteId)
