@@ -38,11 +38,6 @@
 
         public WageUnit Unit { get; set; }
 
-        public string DisplayAmount => WagePresenter.GetDisplayAmount(Type, Amount, Text, HoursPerWeek);
-
-        public string DisplayAmountWithFrequencyPostfix
-            => WagePresenter.GetDisplayAmountWithFrequencyPostfix(Type, Amount, Text, Unit, HoursPerWeek);
-
         [Display(Name = WageViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; set; }
     }

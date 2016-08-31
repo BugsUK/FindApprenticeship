@@ -89,8 +89,6 @@
             }
         }
 
-        #region private convenience methods
-
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
         {
             var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
@@ -131,7 +129,5 @@
             }
         }
         
-        #endregion
-
     }
 }
