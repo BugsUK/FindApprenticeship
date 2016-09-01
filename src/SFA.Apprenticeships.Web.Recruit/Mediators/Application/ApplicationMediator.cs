@@ -1,8 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Security;
     using Common.Mediators;
@@ -11,7 +8,9 @@
     using Raa.Common.Providers;
     using Raa.Common.Validators.ProviderUser;
     using Raa.Common.ViewModels.Application;
-    using SFA.Infrastructure.Interfaces;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
 
     public class ApplicationMediator : MediatorBase, IApplicationMediator
     {
@@ -65,7 +64,7 @@
                 applicationLinks[application.ApplicantID] = link;
             }
 
-            _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.EmployerName, applicationLinks, _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress);
+            _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks, _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress);
 
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
         }

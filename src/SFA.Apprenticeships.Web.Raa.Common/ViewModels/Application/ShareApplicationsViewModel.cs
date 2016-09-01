@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
+    using Constants.ViewModels;
+    using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Constants.ViewModels;
-    using Domain.Entities.Raa.Vacancies;
 
     public class ShareApplicationsViewModel
     {
@@ -17,6 +17,8 @@
         public int VacancyReferenceNumber { get; set; }
 
         public string EmployerName { get; set; }
+
+        public string ProviderName { get; set; }
 
         public VacancyType VacancyType { get; set; }
 
