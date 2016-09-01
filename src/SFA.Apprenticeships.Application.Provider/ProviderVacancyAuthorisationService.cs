@@ -43,7 +43,7 @@
                 var message = $"Provider user '{_currentUserService.CurrentUserName}' signed in with invalid UKPRN '{ukprn}' attempted to view Vacancy Id '{vacancyId}' for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
 
                 throw new Domain.Entities.Exceptions.CustomException(
-                    message, Interfaces.ErrorCodes.ProviderVacancyAuthorisation.InvalidUkprn);
+                    message, ErrorCodes.ProviderVacancyAuthorisation.InvalidUkprn);
             }
 
             if (provider.ProviderId == providerId)
@@ -62,12 +62,16 @@
                 }
             }
 
+            var allProviderSites = _providerService.GetOwnerAndRecruitmentAgentProviderSites(provider.ProviderId);
+            if (allProviderSites.Any(each => each.ProviderSiteId == providerSiteId))
             {
-                var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view Vacancy Id '{vacancyId}' for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
-
-                throw new Domain.Entities.Exceptions.CustomException(
-                    message, Interfaces.ErrorCodes.ProviderVacancyAuthorisation.Failed);
+                return;
             }
+
+            var errorMessage = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view Vacancy Id '{vacancyId}' for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
+
+            throw new Domain.Entities.Exceptions.CustomException(
+                errorMessage, ErrorCodes.ProviderVacancyAuthorisation.Failed);
         }
     }
 }

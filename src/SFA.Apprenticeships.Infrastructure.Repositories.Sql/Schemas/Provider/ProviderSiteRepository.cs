@@ -3,11 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Infrastructure.Interfaces;
     using Common;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
     using ProviderSite = Domain.Entities.Raa.Parties.ProviderSite;
 
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
@@ -97,17 +96,21 @@
             return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships)).ToDictionary(ps => ps.ProviderSiteId);
         }
 
-        public IEnumerable<ProviderSite> GetByProviderId(int providerId)
+        public IEnumerable<ProviderSite> GetByProviderId(int providerId, bool returnAll = false)
         {
             _logger.Debug("Getting provider sites for provider={0}", providerId);
 
-            const string sql = @"
+            var sql = @"
                 SELECT ps.* FROM dbo.ProviderSite ps
                 INNER JOIN dbo.ProviderSiteRelationship psr
                 ON psr.ProviderSiteID = ps.ProviderSiteID
                 WHERE psr.ProviderID = @providerId 
-                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId
-                and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
+                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+
+            if (!returnAll)
+            {
+                sql += $" and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
+            }
 
             var sqlParams = new
             {
