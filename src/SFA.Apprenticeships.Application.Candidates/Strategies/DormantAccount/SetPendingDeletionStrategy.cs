@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.DormantAccount
 {
+    using Candidate.Strategies.Candidates;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;

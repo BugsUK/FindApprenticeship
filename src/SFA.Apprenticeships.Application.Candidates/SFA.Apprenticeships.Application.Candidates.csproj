@@ -98,11 +98,9 @@
     <Compile Include="Strategies\HousekeepingStrategy.cs" />
     <Compile Include="Strategies\IHousekeepingStrategy.cs" />
     <Compile Include="Strategies\ActivationReminder\SendAccountRemindersStrategy.cs" />
-    <Compile Include="Strategies\ISetUserStatusPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\MobileVerificationCodeReminderHousekeeping.cs" />
     <Compile Include="Strategies\SendMobileVerificationCodeReminderStrategy.cs" />
     <Compile Include="Strategies\ActivationReminder\SetPendingDeletionStrategy.cs" />
-    <Compile Include="Strategies\SetUserStatusPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\TerminatingHousekeepingStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
