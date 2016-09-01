@@ -1,20 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Domain.Entities.Raa.Vacancies;
 
-    public class VacanciesSummarySearchViewModel : IPagedSearchCriteria
+    public class VacanciesSummarySearchViewModel : OrderedPageableSearchViewModel
     {
+        public const string OrderByFieldTitle = "Title";
+        public const string OrderByEmployer = "Employer";
+        public const string OrderByLocation = "Location";
+        public const string OrderByApplications = "Applications";
+
         public VacanciesSummarySearchViewModel()
         {
             VacancyType = VacancyType.Apprenticeship;
             ShowAllLotteryNumbers = true;
-            PageSize = 25;
-            CurrentPage = 1;
         }
 
-        internal VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel) : this()
+        internal VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel) : base(viewModel)
         {
             VacancyType = viewModel.VacancyType;
             FilterType = viewModel.FilterType;
@@ -40,6 +41,12 @@
             SearchString = null;
         }
 
+        public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, string orderByField, Order order) : this(viewModel)
+        {
+            OrderByField = orderByField;
+            Order = order;
+        }
+
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, int currentPage) : this(viewModel)
         {
             CurrentPage = currentPage;
@@ -49,25 +56,17 @@
         public VacanciesSummaryFilterTypes FilterType { get; set; }
         public bool ShowAllLotteryNumbers { get; set; }
         public string SearchString { get; set; }
-        public int PageSize { get; set; }
-        public List<SelectListItem> PageSizes { get; set; }
-        public int CurrentPage { get; set; }
 
-        public object RouteValues => new
+        public override object RouteValues => new
         {
             VacancyType,
             FilterType,
             ShowAllLotteryNumbers,
             SearchString,
+            OrderByField,
+            Order,
             PageSize,
             CurrentPage
         };
-    }
-
-    public interface IPagedSearchCriteria
-    {
-        int PageSize { get; }
-        int CurrentPage { get; }
-
     }
 }

@@ -1679,12 +1679,12 @@
             return false;
         }
 
-        public static IEnumerable<T> GetCurrentPage<T>(this IEnumerable<T> enumerable, IPagedSearchCriteria pagedSearchCriteria)
+        public static IEnumerable<T> GetCurrentPage<T>(this IEnumerable<T> enumerable, PageableSearchViewModel pagedSearchCriteria)
         {
             return enumerable.Skip((pagedSearchCriteria.CurrentPage - 1) * pagedSearchCriteria.PageSize).Take(pagedSearchCriteria.PageSize);
         }
 
-        public static int TotalPages<T>(this IEnumerable<T> enumerable, IPagedSearchCriteria pagedSearchCriteria)
+        public static int TotalPages<T>(this IEnumerable<T> enumerable, PageableSearchViewModel pagedSearchCriteria)
         {
             // TODO: This looks overly complicated
             return enumerable.Any() ? (int)Math.Ceiling((double)enumerable.Count() / pagedSearchCriteria.PageSize) : 1;
