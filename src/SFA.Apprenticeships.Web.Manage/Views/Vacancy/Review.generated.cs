@@ -178,8 +178,9 @@ WriteLiteral("</div>\r\n\r\n");
 
 DefineSection("scripts", () => {
 
-WriteLiteral("\r\n    <script>        \r\n        $(\"#vacancy-full-descrpition\").focus();        \r\n" +
-"    </script>\r\n");
+WriteLiteral("\r\n    <script> \r\n        $(\"#vacancy-full-descrpition\").removeClass(\"preserve-for" +
+"matting\");\r\n        $(\"#vacancy-full-descrpition\").focus();        \r\n    </scrip" +
+"t>\r\n");
 
 });
 
