@@ -174,7 +174,14 @@ WriteLiteral(">Agency home</button>\r\n            </div>\r\n        </section>\
             
             #line default
             #line hidden
-WriteLiteral("</div>");
+WriteLiteral("</div>\r\n\r\n");
+
+DefineSection("scripts", () => {
+
+WriteLiteral("\r\n    <script>        \r\n        $(\"#vacancy-full-descrpition\").focus();        \r\n" +
+"    </script>\r\n");
+
+});
 
         }
     }
