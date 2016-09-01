@@ -8,6 +8,11 @@
     /// </summary>
     public class OrderedPageableSearchViewModel : PageableSearchViewModel
     {
+        public OrderedPageableSearchViewModel() : this(null, Order.Ascending)
+        {
+            
+        }
+
         public OrderedPageableSearchViewModel(string orderByField) : this(orderByField, Order.Ascending)
         {
 
@@ -15,29 +20,35 @@
 
         public OrderedPageableSearchViewModel(string orderByField, Order order)
         {
-            OrderByField = orderByField;
-            Order = order;
+            SetValues(orderByField, order);
         }
 
         public OrderedPageableSearchViewModel(OrderedPageableSearchViewModel viewModel) : base(viewModel)
         {
-            OrderByField = viewModel.OrderByField;
-            Order = viewModel.Order;
+            SetValues(viewModel);
         }
 
         public OrderedPageableSearchViewModel(PageableSearchViewModel viewModel, string orderByField, Order order) : base(viewModel)
         {
-            OrderByField = orderByField;
-            Order = order;
+            SetValues(orderByField, order);
         }
 
         public OrderedPageableSearchViewModel(OrderedPageableSearchViewModel viewModel, int currentPage) : base(viewModel, currentPage)
         {
-            OrderByField = viewModel.OrderByField;
-            Order = viewModel.Order;
+            SetValues(viewModel);
         }
 
         public OrderedPageableSearchViewModel(PageableSearchViewModel viewModel, string orderByField, Order order, int currentPage) : base(viewModel, currentPage)
+        {
+            SetValues(orderByField, order);
+        }
+
+        protected void SetValues(OrderedPageableSearchViewModel viewModel)
+        {
+            SetValues(viewModel.OrderByField, viewModel.Order);
+        }
+
+        protected void SetValues(string orderByField, Order order)
         {
             OrderByField = orderByField;
             Order = order;
