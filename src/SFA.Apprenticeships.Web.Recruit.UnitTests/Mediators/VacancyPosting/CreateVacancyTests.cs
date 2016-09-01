@@ -1,9 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
     using System;
+    using Apprenticeships.Application.Interfaces.Locations;
     using Common.Constants;
     using Common.Mediators;
+    using Common.UnitTests.Mediators;
     using Common.ViewModels.Locations;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Vacancies;
     using Moq;
     using NUnit.Framework;
@@ -14,6 +17,7 @@
     using FluentAssertions;
     using Ploeh.AutoFixture;
     using Raa.Common.ViewModels.VacancyPosting;
+    using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
     [Parallelizable]
@@ -256,6 +260,47 @@
                 EmployerWebsiteUrl = employerWebsiteUrl,
                 EmployerDescription = employerDescription
             }));
+        }
+
+        [Test]
+        public void ShouldReturnErrorIfFailsGeocodingTheVacancy()
+        {
+            // Arrange
+            const string ukprn = "1234";
+            var vacancyGuid = Guid.NewGuid();
+            const int vacanyPartyId = 1;
+            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            int? numberOfPositions = 2;
+            const string employerWebsiteUrl = "www.google.com";
+            const string employerDescription = "description";
+
+            var viewModel = new VacancyPartyViewModel
+            {
+                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                NumberOfPositions = numberOfPositions,
+                ProviderSiteId = 42,
+                Employer = new EmployerViewModel
+                {
+                    EmployerId = 7
+                },
+                EmployerDescription = employerDescription,
+                EmployerWebsiteUrl = employerWebsiteUrl,
+                VacancyPartyId = vacanyPartyId,
+                VacancyGuid = vacancyGuid
+            };
+
+            ProviderProvider.Setup(p => p.ConfirmVacancyParty(viewModel)).Returns(viewModel);
+
+            VacancyPostingProvider
+                .Setup(p => p.CreateVacancy(It.IsAny<VacancyMinimumData>()))
+                .Throws(new CustomException(ErrorCodes.GeoCodeLookupProviderFailed));
+
+            // Act.
+            var mediator = GetMediator();
+            var result = mediator.ConfirmEmployer(viewModel, ukprn);
+
+            // Assert.
+            result.AssertCode(VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, false);
         }
 
         [Test]

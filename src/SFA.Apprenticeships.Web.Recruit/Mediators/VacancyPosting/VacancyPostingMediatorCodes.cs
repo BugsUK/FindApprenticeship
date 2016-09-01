@@ -27,6 +27,7 @@
 
         public static class ConfirmEmployer
         {
+            public const string FailedGeoCodeLookup = "VacancyPosting.ConfirmEmployer.FailedGeoCodeLookup";
             public const string Ok = "VacancyPosting.ConfirmEmployer.Ok";
             public const string FailedValidation = "VacancyPosting.ConfirmEmployer.FailedValidation";
         }
