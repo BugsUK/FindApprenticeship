@@ -156,17 +156,18 @@
                 .ForMember(dest => dest.VacancyUrl,
                     opt => opt.MapFrom(src => src.ApplyViaEmployerWebsite && string.IsNullOrEmpty(src.VacancyUrl) ? src.EmployerRecruitmentWebsite : src.VacancyUrl))
 
-                .ForMember(dest => dest.WageType,
-                    opt => opt.ResolveUsing<WageTypeResolver>().FromMember(src => src.WageType))
+                //.ForMember(dest => dest.WageType,
+                //    opt => opt.ResolveUsing<WageTypeResolver>().FromMember(src => src.WageType))
 
-                .ForMember(dest => dest.Wage,
-                    opt => opt.MapFrom(src => src.WeeklyWage))
+                //TODO: This should be deleted soon, as we no longer use the legacy services
+                //.ForMember(dest => dest.Wage,
+                //    opt => opt.MapFrom(src => src.WeeklyWage))
 
-                .ForMember(dest => dest.WageUnit,
-                    opt => opt.ResolveUsing<LegacyVacancySummaryWageUnitResolver>().FromMember(src => src.WageType))
+                //.ForMember(dest => dest.WageUnit,
+                //    opt => opt.ResolveUsing<LegacyVacancySummaryWageUnitResolver>().FromMember(src => src.WageType))
 
-                .ForMember(dest => dest.WageDescription,
-                    opt => opt.MapFrom(src => src.WageText))
+                //.ForMember(dest => dest.WageDescription,
+                //    opt => opt.MapFrom(src => src.WageText))
 
                 .ForMember(dest => dest.WorkingWeek,
                     opt => opt.MapFrom(src => src.WorkingWeek))

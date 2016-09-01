@@ -5,9 +5,12 @@
     using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentValidation.Attributes;
     using Infrastructure.Presentation;
     using Validators.Vacancy;
+    using Web.Common.ViewModels;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [Validator(typeof(VacancySummaryViewModelClientValidator))]
     public class FurtherVacancyDetailsViewModel : IPartialVacancyViewModel
@@ -22,18 +25,7 @@
         [Display(Name = VacancyViewModelMessages.WorkingWeekComment.LabelText)]
         public string WorkingWeekComment { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
-        public decimal? HoursPerWeek { get; set; }
-        
-        //TODO: Probably create dedicated WageViewModel
-        public WageType WageType { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.Wage.LabelText)]
-        public decimal? Wage { get; set; }
-
-        public string WageText { get; set; }
-
-        public WageUnit WageUnit { get; set; }
+        public WageViewModel Wage { get; set; }
 
         public List<SelectListItem> WageUnits { get; set; }
 
@@ -66,8 +58,6 @@
 
         public VacancyStatus Status { get; set; }
 
-        public string WageUnitDisplayText => new Wage(WageType, Wage, WageText, WageUnit).GetHeaderDisplayText();
-
         public string DurationTypeDisplayText 
         {
             get
@@ -80,8 +70,6 @@
                 return new Duration(DurationType, (int?) Duration).GetDisplayText();
             }
         }
-
-        public string WageDisplayText => new Wage(WageType, Wage, WageText, WageUnit).GetDisplayText(HoursPerWeek);
 
         public bool ComeFromPreview { get; set; }
 

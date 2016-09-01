@@ -99,5 +99,12 @@
             public const string HasError = "AccountMediator.ResendUpdateEmailAddressCode.HasError";
             public const string ValidationError = "AccountMediator.ResendUpdateEmailAddressCode.ValidationError";
         }
+
+        public class ValidateUserAccountBeforeDelete
+        {
+            public const string Ok = "AccountMediator.ValidateUserAccountBeforeDelete.Ok";
+            public const string HasError = "AccountMediator.ValidateUserAccountBeforeDelete.HasError";
+            public const string ValidationError = "AccountMediator.ValidateUserAccountBeforeDelete.ValidationError";
+        }
     }
 }

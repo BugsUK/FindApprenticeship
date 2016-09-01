@@ -4,6 +4,7 @@
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using Manage.Mediators.Vacancy;
     using Moq;
     using NUnit.Framework;
@@ -25,7 +26,8 @@
                 {
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
-                }
+                },
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             });
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
@@ -46,7 +48,8 @@
                 {
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
-                }
+                },
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             });
 
             var mediator = new VacancyMediatorBuilder().With(vacancyPostingProvider).Build();
@@ -83,7 +86,8 @@
                 {
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
-                }
+                },
+                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
             };
 
             var result = mediator.UpdateVacancy(viewModel);
@@ -156,8 +160,7 @@
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "A description",
-                WageType = WageType.ApprenticeshipMinimum,
-                HoursPerWeek = 30,
+                Wage = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, 30),
                 WorkingWeek = "A working week"
             };
         }

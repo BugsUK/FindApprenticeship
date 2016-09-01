@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Applications.Extensions
 {
-    using System;
-    using Apprenticeships.Application.Applications.Entities;
-    using Apprenticeships.Application.Applications.Extensions;
+    using Apprenticeships.Application.Application.Entities;
+    using Apprenticeships.Application.Application.Extensions;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -10,6 +9,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using System;
 
     [TestFixture]
     public class ApprenticeshipApplicationDetailExtensionTests
@@ -104,7 +104,7 @@
 
                 var ignoreOwnershipCheck = summary.UpdateSource == ApplicationStatusSummary.Source.Raa;
 
-                _mockReadRepository.Setup(mock => mock.Get(detail.EntityId)).Returns(new ApprenticeshipApplicationDetail {Status = newStatus});
+                _mockReadRepository.Setup(mock => mock.Get(detail.EntityId)).Returns(new ApprenticeshipApplicationDetail { Status = newStatus });
 
                 _mockWriteRepository.Setup(mock => mock
                     .UpdateApplicationStatus(detail, newStatus, ignoreOwnershipCheck))

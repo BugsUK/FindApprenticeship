@@ -1,9 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Processes
 {
-    using System;
-    using System.Collections.Generic;
-    using Application.Applications.Entities;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Application.Entities;
     using Builders;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
@@ -14,8 +11,9 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
     using SFA.Apprenticeships.Application.Interfaces;
+    using System;
+    using System.Collections.Generic;
 
     [TestFixture]
     [Parallelizable]

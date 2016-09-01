@@ -1,17 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Candidate
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Apprenticeships.Application.Applications;
-    using Apprenticeships.Application.Applications.Entities;
-    using SFA.Infrastructure.Interfaces;
+    using Apprenticeships.Application.Application;
+    using Apprenticeships.Application.Application.Entities;
     using Domain.Entities.Exceptions;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
 

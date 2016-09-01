@@ -3,11 +3,9 @@
     using Apprenticeships.Application.UserAccount;
     using Apprenticeships.Application.UserAccount.Strategies;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Interfaces;
     using Interfaces.Users;
     using Moq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class UserAccountServiceBuilder
     {

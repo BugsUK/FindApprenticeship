@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using System.Web.WebPages;
     
     #line 2 "..\..\Views\Account\Index.cshtml"
-    using SFA.Apprenticeships.Application.Applications.Extensions;
+    using SFA.Apprenticeships.Application.Application.Extensions;
     
     #line default
     #line hidden
@@ -167,14 +167,14 @@ WriteLiteral(">\r\n            <p>\r\n                Have you considered a trai
 
 WriteLiteral(" id=\"traineeship-overview-link\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1489), Tuple.Create("\"", 1571)
+WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1488), Tuple.Create("\"", 1570)
             
             #line 33 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1517), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)
+, Tuple.Create(Tuple.Create("", 1516), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)
             
             #line default
             #line hidden
-, 1517), false)
+, 1516), false)
 );
 
 WriteLiteral("\r\n                   onlick=\"Webtrends.multiTrack({ element: this, argsa: [\'DCS.d" +
@@ -188,14 +188,14 @@ WriteLiteral(" id=\"dismiss-traineeship-prompts-link\"");
 
 WriteLiteral(" \r\n                   class=\"notInterested link-unimp icon-black\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1935), Tuple.Create("\"", 2023)
+WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1934), Tuple.Create("\"", 2022)
             
             #line 39 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1963), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)
+, Tuple.Create(Tuple.Create("", 1962), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)
             
             #line default
             #line hidden
-, 1963), false)
+, 1962), false)
 );
 
 WriteLiteral("\r\n                   onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'DCS." +
@@ -293,14 +293,14 @@ WriteLiteral(".\r\n                </p>\r\n");
             #line hidden
 WriteLiteral("            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3022), Tuple.Create("\"", 3179)
+WriteAttribute("href", Tuple.Create(" href=\"", 3021), Tuple.Create("\"", 3178)
             
             #line 59 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 3029), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
+, Tuple.Create(Tuple.Create("", 3028), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
-, 3029), false)
+, 3028), false)
 );
 
 WriteLiteral(" class=\"notInterested link-unimp icon-black\"");

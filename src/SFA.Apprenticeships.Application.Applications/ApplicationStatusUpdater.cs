@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.Applications
 {
-    using System.Collections.Generic;
+    using Application.Entities;
+    using Application.Extensions;
+    using Application.Strategies;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using Entities;
-    using Extensions;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using Strategies;
+    using Interfaces;
+    using System.Collections.Generic;
 
     public class ApplicationStatusUpdater : IApplicationStatusUpdater
     {

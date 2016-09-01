@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
+    using Application.Application.Entities;
     using Application.Applications;
-    using Application.Applications.Entities;
     using Configuration;
-
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Extensions;
 

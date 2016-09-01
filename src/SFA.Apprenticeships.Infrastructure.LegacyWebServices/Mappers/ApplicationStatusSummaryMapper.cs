@@ -3,7 +3,7 @@
     using Apprenticeships;
     using Common.Mappers;
     using GatewayServiceProxy;
-    using SFA.Apprenticeships.Application.Applications.Entities;
+    using SFA.Apprenticeships.Application.Application.Entities;
 
     public class ApplicationStatusSummaryMapper : MapperEngine
     {

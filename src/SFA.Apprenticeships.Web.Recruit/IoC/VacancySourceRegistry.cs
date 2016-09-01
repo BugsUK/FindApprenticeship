@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
-    using Application.Applications;
+    using Application.Application;
     using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancy;

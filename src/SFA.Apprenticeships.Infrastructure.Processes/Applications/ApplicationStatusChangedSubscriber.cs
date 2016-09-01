@@ -1,16 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
-    using System;
-    using System.Linq;
-    using Application.Applications.Entities;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Application.Entities;
+    using Application.Interfaces;
     using Configuration;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Extensions;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System;
+    using System.Linq;
 
     public class ApplicationStatusChangedSubscriber : IServiceBusSubscriber<ApplicationStatusChanged>
     {

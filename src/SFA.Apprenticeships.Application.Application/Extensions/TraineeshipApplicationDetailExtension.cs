@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Application.Applications.Extensions
+﻿namespace SFA.Apprenticeships.Application.Application.Extensions
 {
     using Domain.Entities.Applications;
     using Entities;
 
-    internal static class TraineeshipApplicationDetailExtension
+    public static class TraineeshipApplicationDetailExtension
     {
-        internal static bool UpdateTraineeshipApplicationDetail(this TraineeshipApplicationDetail traineeshipApplication, ApplicationStatusSummary applicationStatusSummary)
+        public static bool UpdateTraineeshipApplicationDetail(this TraineeshipApplicationDetail traineeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
             var updated = false;
 

@@ -2,12 +2,6 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
-    using System.Web.Security;
-    using SFA.Infrastructure.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -18,12 +12,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Domain.Entities.Vacancies;
     using Extensions;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Login;
     using Providers;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using System.Web.Security;
     using ViewModels.Login;
     using ViewModels.Register;
 
@@ -225,10 +221,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             var resultPerPageValue = UserData.Get(UserDataItemNames.ResultsPerPage);
             var loggingSessionIdValue = UserData.Get(UserDataItemNames.LoggingSessionId);
             var lastSearchedLocationValue = UserData.Get(UserDataItemNames.LastSearchedLocation);
+            var candidateDeletionPendingStatus = UserData.Get(CandidateDataItemNames.SetDeletetionPendingForCandidate);
 
             FormsAuthentication.SignOut();
 
-            if (UserData.Get(UserMessageConstants.WarningMessage) == SignOutPageMessages.MustAcceptUpdatedTermsAndConditions)
+            if (candidateDeletionPendingStatus == "true")
+            {
+                UserData.Clear();
+                SetUserMessage(SignOutPageMessages.AccountDeleted);
+            }
+
+            else if (UserData.Get(UserMessageConstants.WarningMessage) == SignOutPageMessages.MustAcceptUpdatedTermsAndConditions)
             {
                 UserData.Clear();
                 SetUserMessage(SignOutPageMessages.MustAcceptUpdatedTermsAndConditions, UserMessageLevel.Warning);

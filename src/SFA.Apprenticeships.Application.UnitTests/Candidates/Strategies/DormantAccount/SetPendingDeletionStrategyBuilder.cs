@@ -4,11 +4,9 @@
     using Apprenticeships.Application.Candidates.Strategies;
     using Apprenticeships.Application.Candidates.Strategies.DormantAccount;
     using Configuration;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Moq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class SetPendingDeletionStrategyBuilder
     {
@@ -31,7 +29,7 @@
 
         public SetPendingDeletionStrategy Build()
         {
-            var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userReadRepository.Object, _userWriteRepository.Object, _auditRepository.Object, _logService.Object);
+            var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userReadRepository.Object, new SetUserStatusPendingDeletionStrategy(_userWriteRepository.Object, _auditRepository.Object, _logService.Object));
             strategy.SetSuccessor(_successor);
             return strategy;
         }

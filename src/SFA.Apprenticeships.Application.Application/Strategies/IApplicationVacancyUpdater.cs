@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Application.Applications
+﻿namespace SFA.Apprenticeships.Application.Application.Strategies
 {
-    using System;
     using Domain.Entities.Vacancies;
+    using System;
 
     public interface IApplicationVacancyUpdater
     {

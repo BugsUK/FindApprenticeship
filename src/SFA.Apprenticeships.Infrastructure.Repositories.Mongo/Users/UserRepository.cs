@@ -1,19 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Users
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
+    using Common;
+    using Common.Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
-    using Common;
-    using Common.Configuration;
     using Entities;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
     {
@@ -73,7 +71,7 @@
         {
             _logger.Debug("Calling repository to get all the users which could be dormant");
 
-            var userStatuses = new[] {UserStatuses.Active, UserStatuses.Locked};
+            var userStatuses = new[] { UserStatuses.Active, UserStatuses.Locked };
 
             var userIds = Collection.AsQueryable().Where(u => userStatuses.Contains(u.Status) && (u.LastLogin == null || u.LastLogin <= lastValidLogin)).Select(u => u.Id);
 

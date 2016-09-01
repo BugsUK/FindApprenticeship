@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Application.Applications.Extensions
+﻿namespace SFA.Apprenticeships.Application.Application.Extensions
 {
-    using System;
     using Entities;
+    using System;
 
     public static class ApplicationStatusSummaryExtensions
     {

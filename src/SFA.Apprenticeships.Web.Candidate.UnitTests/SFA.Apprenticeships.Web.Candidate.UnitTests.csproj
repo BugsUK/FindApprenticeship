@@ -209,8 +209,8 @@
     <Compile Include="Builders\VerifyMobileViewModelBuilder.cs" />
     <Compile Include="Builders\TrainingCourseViewModelBuilder.cs" />
     <Compile Include="Builders\WorkExperienceViewModelBuilder.cs" />
-    <Compile Include="Helpers\BaseExtensionTests.cs" />
-    <Compile Include="Helpers\FormTextForTests.cs" />
+    <Compile Include="Mappers\Helpers\BaseExtensionTests.cs" />
+    <Compile Include="Mappers\Helpers\FormTextForTests.cs" />
     <Compile Include="Mappers\ApprenticeshipCandidateWebMappersTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyDetailViewModelMapperTests.cs" />
     <Compile Include="Mappers\TraineeshipApplicationViewModelMapperTests.cs" />
@@ -226,10 +226,12 @@
     <Compile Include="Mediators\Account\ResendTests.cs" />
     <Compile Include="Mediators\Account\ResendUpdateEmailAddressCodeTests.cs" />
     <Compile Include="Mediators\Account\SaveSettingsTests.cs" />
+    <Compile Include="Mediators\Account\SetAccountSettingsToDeleteTests.cs" />
     <Compile Include="Mediators\Account\SettingsTests.cs" />
     <Compile Include="Mediators\Account\TrackTests.cs" />
     <Compile Include="Mediators\Account\TraineeshipVacancyDetailsTests.cs" />
     <Compile Include="Mediators\Account\UpdateEmailAddressTests.cs" />
+    <Compile Include="Mediators\Account\VerifyAccountSettingsTests.cs" />
     <Compile Include="Mediators\Account\VerifyMobileTests.cs" />
     <Compile Include="Mediators\Account\VerifyUpdatedEmailAddressTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyQualificationRowsTests.cs" />
@@ -365,6 +367,7 @@
     <Compile Include="Views\Register\MarketingOptInConsent.cs" />
     <Compile Include="Views\Settings\CommunicationsPreferencesTests.cs" />
     <Compile Include="Views\Settings\MarketingOptInTests.cs" />
+    <Compile Include="Views\Settings\DeleteAccountTests.cs" />
     <Compile Include="Views\Settings\SavedSearchTests.cs" />
     <Compile Include="Views\Settings\SettingsTests.cs" />
     <Compile Include="Views\Settings\SettingsViewBuilder.cs" />

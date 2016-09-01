@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Applications.Processes
 {
-    using Apprenticeships.Application.Applications.Entities;
+    using Apprenticeships.Application.Application.Entities;
     using Builders;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
@@ -61,7 +61,7 @@
                 .Build();
 
             // Act.
-            strategy.Send(ApplicationStatuses.Unknown,  summary);
+            strategy.Send(ApplicationStatuses.Unknown, summary);
 
             // Assert.
             var times = isLegacySystemUpdate ? Times.Once() : Times.Never();

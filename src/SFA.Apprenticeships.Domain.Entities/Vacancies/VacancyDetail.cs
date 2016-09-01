@@ -28,13 +28,7 @@
 
         public DateTime InterviewFromDate { get; set; }
 
-        public decimal Wage { get; set; }
-
-        public WageUnit WageUnit { get; set; }
-
-        public string WageDescription { get; set; }
-
-        public LegacyWageType WageType { get; set; }
+        public Wage Wage { get; set; }
 
         public string WorkingWeek { get; set; }
 
