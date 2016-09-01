@@ -154,7 +154,7 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "SearchVacanciesAction")]
         public ActionResult SearchVacancies(HomeViewModel viewModel)
         {
-            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, viewModel.VacanciesSummary.VacanciesSummarySearch);
+            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, viewModel.VacanciesSummary.VacanciesSummarySearch.RouteValues);
         }
 
         [HttpPost]
