@@ -21,5 +21,9 @@
         string EmployerName { get; set; }
 
         string Title { get; set; }
+
+        int? ApplicationOrClickThroughCount { get; set; }
+
+        bool? OfflineVacancy { get; set; }
     }
 }

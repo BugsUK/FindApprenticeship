@@ -746,6 +746,7 @@
             filteredVacancies = filteredVacancies.Select(v =>
             {
                 v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName; // vacancyPartyToEmployerMap[v.OwnerPartyId].Name;
+                v.ApplicationOrClickThroughCount = v.OfflineVacancy.HasValue && v.OfflineVacancy.Value ? v.ApplicationOrClickThroughCount : applicationCountsByVacancyId[v.VacancyId].AllApplications;
                 return v;
             });
 
@@ -764,9 +765,7 @@
                     .ToList();
             }
 
-            var vacanciesToFetch = Sort(filteredVacancies, vacanciesSummarySearch.FilterType).GetCurrentPage(vacanciesSummarySearch).ToList();
-
-            var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+            var vacanciesToFetch = Sort(filteredVacancies, vacanciesSummarySearch).GetCurrentPage(vacanciesSummarySearch).ToList();
 
             var vacanciesWithoutEmployerName =
                 _vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId));
@@ -774,8 +773,9 @@
             var vacancies = Sort(vacanciesWithoutEmployerName.Select(v =>
             {
                 v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName;
+                v.ApplicationOrClickThroughCount = v.OfflineVacancy.HasValue && v.OfflineVacancy.Value ? v.OfflineApplicationClickThroughCount : applicationCountsByVacancyId[v.VacancyId].AllApplications;
                 return v;
-            }), vacanciesSummarySearch.FilterType);
+            }), vacanciesSummarySearch);
 
             var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
 
@@ -789,6 +789,8 @@
                         vacancySummaries.Where(v => v.Status.CanHaveApplicationsOrClickThroughs())
                             .Select(a => a.VacancyId));
             }
+
+            var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
 
             foreach (var vacancySummary in vacancySummaries)
             {
@@ -847,26 +849,41 @@
             }
         }
 
-        private IEnumerable<T> Sort<T>(IEnumerable<T> data, VacanciesSummaryFilterTypes vacanciesSummaryFilterType) where T : IMinimalVacancyDetails
+        private IEnumerable<T> Sort<T>(IEnumerable<T> data, VacanciesSummarySearchViewModel vacanciesSummarySearch) where T : IMinimalVacancyDetails
         {
-            switch (vacanciesSummaryFilterType)
+            if(string.IsNullOrEmpty(vacanciesSummarySearch.OrderByField))
             {
-                case VacanciesSummaryFilterTypes.ClosingSoon:
-                case VacanciesSummaryFilterTypes.NewApplications:
-                    return data.OrderBy(v => v.LiveClosingDate).ThenByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
-                case VacanciesSummaryFilterTypes.Closed:
-                case VacanciesSummaryFilterTypes.Live:
-                case VacanciesSummaryFilterTypes.Completed:
-                    return data.OrderBy(v => v.EmployerName).ThenBy(v => v.Title);
-                case VacanciesSummaryFilterTypes.All:
-                case VacanciesSummaryFilterTypes.Submitted:
-                case VacanciesSummaryFilterTypes.Rejected:
-                case VacanciesSummaryFilterTypes.Draft:
-                    // Requirement is "most recently created first" (Faizal 30/6/2016).
-                    // Previously there was no ordering in the code and it was coming out in natural database order
-                    return data.OrderByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
+                switch (vacanciesSummarySearch.FilterType)
+                {
+                    case VacanciesSummaryFilterTypes.ClosingSoon:
+                    case VacanciesSummaryFilterTypes.NewApplications:
+                        return data.OrderBy(v => v.LiveClosingDate).ThenByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
+                    case VacanciesSummaryFilterTypes.Closed:
+                    case VacanciesSummaryFilterTypes.Live:
+                    case VacanciesSummaryFilterTypes.Completed:
+                        return data.OrderBy(v => v.EmployerName).ThenBy(v => v.Title);
+                    case VacanciesSummaryFilterTypes.All:
+                    case VacanciesSummaryFilterTypes.Submitted:
+                    case VacanciesSummaryFilterTypes.Rejected:
+                    case VacanciesSummaryFilterTypes.Draft:
+                        // Requirement is "most recently created first" (Faizal 30/6/2016).
+                        // Previously there was no ordering in the code and it was coming out in natural database order
+                        return data.OrderByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
+                    default:
+                        throw new ArgumentException($"{vacanciesSummarySearch.FilterType}");
+                }
+            }
+
+            switch (vacanciesSummarySearch.OrderByField)
+            {
+                case VacanciesSummarySearchViewModel.OrderByFieldTitle:
+                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.Title) : data.OrderBy(v => v.Title);
+                case VacanciesSummarySearchViewModel.OrderByEmployer:
+                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.EmployerName) : data.OrderBy(v => v.EmployerName);
+                case VacanciesSummarySearchViewModel.OrderByApplications:
+                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.ApplicationOrClickThroughCount) : data.OrderBy(v => v.ApplicationOrClickThroughCount);
                 default:
-                    throw new ArgumentException($"{vacanciesSummaryFilterType}");
+                    throw new ArgumentException($"{vacanciesSummarySearch.OrderByField}");
             }
         }
 

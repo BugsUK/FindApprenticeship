@@ -6,7 +6,6 @@
     {
         public const string OrderByFieldTitle = "Title";
         public const string OrderByEmployer = "Employer";
-        public const string OrderByLocation = "Location";
         public const string OrderByApplications = "Applications";
 
         public VacanciesSummarySearchViewModel()
@@ -28,6 +27,7 @@
         {
             FilterType = filterType;
             SearchString = null;
+            CurrentPage = 1;
         }
 
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, bool showAllLotteryNumbers) : this(viewModel)
@@ -39,6 +39,7 @@
         {
             VacancyType = vacancyType;
             SearchString = null;
+            CurrentPage = 1;
         }
 
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, string orderByField, Order order) : this(viewModel)
