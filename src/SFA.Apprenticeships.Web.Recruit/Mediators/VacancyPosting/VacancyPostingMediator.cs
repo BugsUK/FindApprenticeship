@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using Raa.Common.Validators.Vacancy;
     using System.Linq;
+    using Apprenticeships.Application.Interfaces.Locations;
+    using Apprenticeships.Application.Location;
     using FluentValidation;
     using Common.Constants;
     using Common.Mediators;
@@ -210,7 +212,17 @@
             else
             {
                 viewModel.VacancyPartyId = newViewModel.VacancyPartyId;
-                CreateNewVacancy(viewModel, ukprn);
+
+                try
+                {
+                    CreateNewVacancy(viewModel, ukprn);
+                }
+                catch (CustomException ce) when (ce.Code == ErrorCodes.GeoCodeLookupProviderFailed)
+                {
+                    return
+                        GetMediatorResponse<VacancyPartyViewModel>(
+                            VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup);
+                }
             }
 
             PatchVacancyPartyViewModelWithoutErrors(viewModel, newViewModel);

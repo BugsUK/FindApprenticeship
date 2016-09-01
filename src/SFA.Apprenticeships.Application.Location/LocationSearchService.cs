@@ -5,10 +5,10 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Interfaces;
     using Interfaces.Locations;
-
-    using SFA.Apprenticeships.Application.Interfaces;
     using ErrorCodes = Interfaces.Locations.ErrorCodes;
+
 
     public class LocationSearchService : ILocationSearchService
     {
