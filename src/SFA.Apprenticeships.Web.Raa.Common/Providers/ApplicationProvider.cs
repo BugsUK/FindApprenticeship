@@ -65,7 +65,7 @@
             var provider = _providerService.GetProvider(ukprn);
             var viewModel = new ShareApplicationsViewModel();
             viewModel.EmployerName = employer.Name;
-            viewModel.ProviderName = provider.FullName;
+            viewModel.ProviderName = provider.TradingName;
             viewModel.VacancyType = vacancy.VacancyType;
             viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
 
