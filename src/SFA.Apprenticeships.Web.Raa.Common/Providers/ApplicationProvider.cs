@@ -1,8 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Candidates;
@@ -13,6 +10,9 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -33,8 +33,14 @@
         private readonly ILogService _logService;
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly ICurrentUserService _currentUserService;
 
-        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, ICandidateApplicationService candidateApplicationService, IProviderService providerService, IEmployerService employerService, IMapper mapper, ILogService logService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
+        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService,
+            IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService,
+            ICandidateApplicationService candidateApplicationService, IProviderService providerService,
+            IEmployerService employerService, IMapper mapper, ILogService logService,
+            IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService,
+            ICurrentUserService currentUserService)
         {
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
@@ -47,6 +53,7 @@
             _logService = logService;
             _encryptionService = encryptionService;
             _dateTimeService = dateTimeService;
+            _currentUserService = currentUserService;
         }
 
         public ShareApplicationsViewModel GetShareApplicationsViewModel(int vacancyReferenceNumber)
@@ -54,8 +61,11 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var ukprn = _currentUserService.GetClaimValue("ukprn");
+            var provider = _providerService.GetProvider(ukprn);
             var viewModel = new ShareApplicationsViewModel();
             viewModel.EmployerName = employer.Name;
+            viewModel.ProviderName = provider.FullName;
             viewModel.VacancyType = vacancy.VacancyType;
             viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
 
