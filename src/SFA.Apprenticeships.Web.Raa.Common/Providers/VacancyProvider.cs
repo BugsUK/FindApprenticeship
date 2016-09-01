@@ -18,11 +18,8 @@
     using Domain.Entities.ReferenceData;
     using Factories;
     using Infrastructure.Presentation;
-    using SFA.Infrastructure.Interfaces;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
@@ -733,7 +730,6 @@
 
             var hasVacancies = minimalVacancyDetails.Any();
 
-            // Unfortunately (from a performance / load / scalability perspective), the view includes application counts for every vacancy, including those completed months/years ago
             var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs() && v.Status != VacancyStatus.Completed).Select(a => a.VacancyId);
 
             var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
@@ -783,11 +779,22 @@
 
             var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
 
+            var applicationCountsByVacancyIdForPage = applicationCountsByVacancyId;
+
+            if (isVacancySearch || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.All || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.Completed)
+            {
+                //Get counts again but just for the page of vacancies
+                applicationCountsByVacancyIdForPage =
+                    _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(
+                        vacancySummaries.Where(v => v.Status.CanHaveApplicationsOrClickThroughs())
+                            .Select(a => a.VacancyId));
+            }
+
             foreach (var vacancySummary in vacancySummaries)
             {
                 vacancySummary.EmployerName = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId).FullName;
-                vacancySummary.ApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].AllApplications;
-                vacancySummary.NewApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].NewApplications;
+                vacancySummary.ApplicationCount = applicationCountsByVacancyIdForPage[vacancySummary.VacancyId].AllApplications;
+                vacancySummary.NewApplicationCount = applicationCountsByVacancyIdForPage[vacancySummary.VacancyId].NewApplications;
                 vacancySummary.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancySummary.VacancyId)).ToList();
             }
 

@@ -1444,9 +1444,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                     VacancyReferenceNumber = vacancyReferenceNumber
                 })
                 .SingleOrDefault();
-            
-            // TODO add entry to VacancyHistory table
-
             // What should happen if QAUserName != UserName. Should we throw an exception?
             if (dbVacancy == null)
             {
@@ -1480,9 +1477,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                     VacancyReferenceNumber = vacancyReferenceNumber
                 })
                 .SingleOrDefault();
-
-            // TODO add entry to VacancyHistory table
-
             if (dbVacancy == null)
             {
                 _logger.Warn(
