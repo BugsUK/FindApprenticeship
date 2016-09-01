@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.Vacancies;
     using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Interfaces.Messaging;
@@ -11,10 +10,8 @@
     using Infrastructure.ScheduledJobs.Consumers;
     using Moq;
     using NUnit.Framework;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
-    using VacancyIndexer;
+    using Apprenticeships.Application.Interfaces;
+    using Infrastructure.VacancyIndexer;
 
     [TestFixture]
     [Parallelizable]
