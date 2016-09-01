@@ -220,6 +220,7 @@
                 }
                 catch (CustomException ce) when (ce.Code == ErrorCodes.GeoCodeLookupProviderFailed)
                 {
+                    PatchVacancyPartyViewModelWithoutErrors(viewModel, newViewModel);
                     return
                         GetMediatorResponse(
                             VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, newViewModel, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);

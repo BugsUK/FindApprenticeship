@@ -7,6 +7,7 @@
     using Domain.Entities.Raa.Locations;
 
     using Application.Interfaces;
+    using Domain.Entities.Exceptions;
 
     public class GeoCodeLookupProvider : IGeoCodeLookupProvider
     {
@@ -63,7 +64,7 @@
             if (IsThereAnError(dataSet))
             {
                 LogError(addressOrPostCode, dataSet);
-                return GeoPoint.NotSet;
+                throw new CustomException(Application.Interfaces.Locations.ErrorCodes.GeoCodeLookupProviderFailed);
             }
 
             return NoDataPresent(dataSet) ? GeoPoint.NotSet : CreateGeoPointFrom(dataSet);
