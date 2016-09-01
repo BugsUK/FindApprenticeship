@@ -6,6 +6,7 @@
     using Common.Mediators;
     using Common.UnitTests.Mediators;
     using Common.ViewModels.Locations;
+    using Constants.Messages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Vacancies;
     using Moq;
@@ -300,7 +301,7 @@
             var result = mediator.ConfirmEmployer(viewModel, ukprn);
 
             // Assert.
-            result.AssertCode(VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, false);
+            result.AssertMessage(VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
         }
 
         [Test]

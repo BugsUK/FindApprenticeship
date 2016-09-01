@@ -12,6 +12,7 @@
     using Common.Validators;
     using Common.Validators.Extensions;
     using Common.ViewModels;
+    using Constants.Messages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Constants.ViewModels;
@@ -220,8 +221,8 @@
                 catch (CustomException ce) when (ce.Code == ErrorCodes.GeoCodeLookupProviderFailed)
                 {
                     return
-                        GetMediatorResponse<VacancyPartyViewModel>(
-                            VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup);
+                        GetMediatorResponse(
+                            VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, newViewModel, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
                 }
             }
 

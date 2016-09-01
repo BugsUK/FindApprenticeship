@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
+    using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;
     using Common.Validators.Extensions;
@@ -169,6 +170,10 @@
                 case VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation:
                     ModelState.Clear();
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
                     if (viewModel.ComeFromPreview &&
