@@ -13,7 +13,6 @@
     {
         private const int ActivatedEmployerTrainingProviderStatusId = 1;
         private const int OwnerRelationship = 1;
-        private const int RecruitmentAgentRelationship = 3;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -97,7 +96,7 @@
             return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships)).ToDictionary(ps => ps.ProviderSiteId);
         }
 
-        public IEnumerable<ProviderSite> GetByProviderId(int providerId, bool includeRecruitmentAgents = false)
+        public IEnumerable<ProviderSite> GetByProviderId(int providerId, bool returnAll = false)
         {
             _logger.Debug("Getting provider sites for provider={0}", providerId);
 
@@ -108,20 +107,16 @@
                 WHERE psr.ProviderID = @providerId 
                 AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
 
-            var relationshipTypeIds = new List<int>
+            if (!returnAll)
             {
-                OwnerRelationship
-            };
-
-            if ( includeRecruitmentAgents ) relationshipTypeIds.Add(RecruitmentAgentRelationship);
-
-            sql += $" and psr.ProviderSiteRelationShipTypeID IN @relationshipTypeIds";
+                sql += $" and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
+            }
 
             var sqlParams = new
             {
                 providerId,
                 ActivatedEmployerTrainingProviderStatusId,
-                relationshipTypeIds
+                OwnerRelationship
             };
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);

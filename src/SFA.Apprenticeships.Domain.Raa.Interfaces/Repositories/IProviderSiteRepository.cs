@@ -11,7 +11,7 @@
 
         IReadOnlyDictionary<int, ProviderSite> GetByIds(IEnumerable<int> providerSiteIds);
 
-        IEnumerable<ProviderSite> GetByProviderId(int providerId, bool includeRecruitmentAgents = false);
+        IEnumerable<ProviderSite> GetByProviderId(int providerId, bool returnAll = false);
     }
 
     public interface IProviderSiteWriteRepository
