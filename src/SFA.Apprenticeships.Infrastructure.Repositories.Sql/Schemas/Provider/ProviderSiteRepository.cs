@@ -3,17 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Infrastructure.Interfaces;
     using Common;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
     using ProviderSite = Domain.Entities.Raa.Parties.ProviderSite;
 
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
         private const int ActivatedEmployerTrainingProviderStatusId = 1;
         private const int OwnerRelationship = 1;
+        private const int RecruitmentAgentRelationship = 3;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -97,23 +97,31 @@
             return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships)).ToDictionary(ps => ps.ProviderSiteId);
         }
 
-        public IEnumerable<ProviderSite> GetByProviderId(int providerId)
+        public IEnumerable<ProviderSite> GetByProviderId(int providerId, bool includeRecruitmentAgents = false)
         {
             _logger.Debug("Getting provider sites for provider={0}", providerId);
 
-            const string sql = @"
+            var sql = @"
                 SELECT ps.* FROM dbo.ProviderSite ps
                 INNER JOIN dbo.ProviderSiteRelationship psr
                 ON psr.ProviderSiteID = ps.ProviderSiteID
                 WHERE psr.ProviderID = @providerId 
-                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId
-                and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
+                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+
+            var relationshipTypeIds = new List<int>
+            {
+                OwnerRelationship
+            };
+
+            if ( includeRecruitmentAgents ) relationshipTypeIds.Add(RecruitmentAgentRelationship);
+
+            sql += $" and psr.ProviderSiteRelationShipTypeID IN @relationshipTypeIds";
 
             var sqlParams = new
             {
                 providerId,
                 ActivatedEmployerTrainingProviderStatusId,
-                OwnerRelationship
+                relationshipTypeIds
             };
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
