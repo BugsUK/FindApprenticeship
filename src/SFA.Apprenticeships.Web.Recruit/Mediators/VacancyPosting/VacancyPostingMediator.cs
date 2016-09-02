@@ -179,15 +179,24 @@
                 viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
             }
 
-            if (_geoCodingProvider.EmployerHasAValidAddress(viewModel.Employer.EmployerId) == GeoCodeAddressResult.InvalidAddress)
+            try
             {
-                viewModel.IsEmployerAddressValid = false;
-                viewModel.IsEmployerLocationMainApprenticeshipLocation = false;
+                if (_geoCodingProvider.EmployerHasAValidAddress(viewModel.Employer.EmployerId) ==
+                    GeoCodeAddressResult.InvalidAddress)
+                {
+                    viewModel.IsEmployerAddressValid = false;
+                    viewModel.IsEmployerLocationMainApprenticeshipLocation = false;
 
-                return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress,
-                    viewModel, VacancyPartyViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress,
+                        viewModel, VacancyPartyViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
+                }
             }
-            
+            catch (CustomException ex) when (ex.Code == ErrorCodes.GeoCodeLookupProviderFailed)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.FailedGeoCodeLookup, viewModel,
+                    ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
+            }
+
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 

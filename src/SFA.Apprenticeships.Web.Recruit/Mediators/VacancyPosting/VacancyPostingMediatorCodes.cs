@@ -21,6 +21,7 @@
 
         public static class GetEmployer
         {
+            public const string FailedGeoCodeLookup = "VacancyPosting.GetEmployer.FailedGeoCodeLookup";
             public const string Ok = "VacancyPosting.GetEmployer.Ok";
             public const string InvalidEmployerAddress = "VacancyPosting.GetEmployer.InvalidEmployerAddress";
         }
