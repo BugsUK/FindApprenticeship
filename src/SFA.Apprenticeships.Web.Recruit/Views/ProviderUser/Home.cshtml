@@ -313,6 +313,7 @@
                     @{ var open = string.IsNullOrEmpty(Model.VacanciesSummary.VacanciesSummarySearch.SearchString) ? "" : "open"; }
                     <details class="@open" @open>
                         <summary>Search your @vacanciesLabel</summary>
+                        <p>You can search by vacancy reference number, vacancy title or employer name</p>
                         <div class="detail-content">
                             @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {aria_label = "Search your " + vacanciesLabel})
                             <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>

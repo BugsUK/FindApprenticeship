@@ -156,6 +156,13 @@
                 _logger.Error(errorMessage, e, logMessage);
                 throw new CustomException(errorMessage, e, ErrorCodes.EmailApiError);
             }
+            catch (ArgumentNullException e)
+            {
+                var errorMessage = string.Format("Failed to dispatch email due to formatting errors: {0}", logMessage);
+
+                _logger.Error(errorMessage, e, logMessage);
+                throw new CustomException(errorMessage, e, ErrorCodes.EmailFormatError);
+            }
             catch (Exception e)
             {
                 var errorMessage = string.Format("Failed to dispatch email: {0}", logMessage);
