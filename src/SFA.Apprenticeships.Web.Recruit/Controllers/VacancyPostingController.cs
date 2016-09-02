@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
+    using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;
     using Common.Validators.Extensions;
@@ -115,6 +116,9 @@
                 case VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress:
                     SetUserMessage(response.Message);
                     return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.GetEmployer.FailedGeoCodeLookup:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = providerSiteId, vacancyGuid = vacancyGuid, comeFromPreview = comeFromPreview});
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -169,6 +173,10 @@
                 case VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation:
                     ModelState.Clear();
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
                     if (viewModel.ComeFromPreview &&
@@ -985,6 +993,10 @@
                 case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedGeoCodeLookup:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message);
+                    return View(response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -1002,6 +1014,7 @@
             {
                 case VacancyPostingMediatorCodes.CreateVacancy.Ok:
                 case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedGeoCodeLookup:
                     return new JsonResult();
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

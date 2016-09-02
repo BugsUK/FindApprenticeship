@@ -21,12 +21,14 @@
 
         public static class GetEmployer
         {
+            public const string FailedGeoCodeLookup = "VacancyPosting.GetEmployer.FailedGeoCodeLookup";
             public const string Ok = "VacancyPosting.GetEmployer.Ok";
             public const string InvalidEmployerAddress = "VacancyPosting.GetEmployer.InvalidEmployerAddress";
         }
 
         public static class ConfirmEmployer
         {
+            public const string FailedGeoCodeLookup = "VacancyPosting.ConfirmEmployer.FailedGeoCodeLookup";
             public const string Ok = "VacancyPosting.ConfirmEmployer.Ok";
             public const string FailedValidation = "VacancyPosting.ConfirmEmployer.FailedValidation";
         }
@@ -76,6 +78,7 @@
 
         public static class CreateVacancy
         {
+            public const string FailedGeoCodeLookup = "VacancyPosting.CreateVacancy.FailedGeoCodeLookup";
             public const string Ok = "VacancyPosting.CreateVacancy.Ok";
             public const string OkWithWarning = "VacancyPosting.CreateVacancy.OkWithWarning";
             public const string FailedValidation = "VacancyPosting.CreateVacancy.FailedValidation";

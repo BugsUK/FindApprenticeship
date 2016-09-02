@@ -6,5 +6,6 @@
         public const string PostcodeLookupFailed = "Location.PostcodeLookupFailed";
         public const string AddressSearchFailed = "Location.AddressSearchFailed";
         public const string AddressLookupFailed = "Location.AddressLookupFailed";
+        public const string GeoCodeLookupProviderFailed = "Location.GeoCodeLookupProviderFailed";
     }
 }
