@@ -311,6 +311,7 @@
 
             if (!employer.Address.GeoPoint.IsValid())
             {
+                // TODO: (GC) control that
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
 

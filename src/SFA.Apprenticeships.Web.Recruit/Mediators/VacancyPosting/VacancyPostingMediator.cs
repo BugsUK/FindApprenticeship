@@ -702,9 +702,16 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var locationSearchViewModel = _vacancyPostingProvider.AddLocations(viewModel);
-
-            return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);
+            try
+            {
+                var locationSearchViewModel = _vacancyPostingProvider.AddLocations(viewModel);
+                return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);
+            }
+            catch (CustomException ex) when (ex.Code == ErrorCodes.GeoCodeLookupProviderFailed)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedGeoCodeLookup, viewModel,
+                    ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
+            }
         }
 
         public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int providerSiteId,
