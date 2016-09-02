@@ -1457,6 +1457,11 @@
                 vacancy.NumberOfPositions = viewModel.NumberOfPositions;
                 vacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
 
+                if (!employer.Address.GeoPoint.IsValid())
+                {
+                    employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
+                }
+
                 vacancy.Address = employer.Address;
 
                 vacancy.LocationAddressesComment = null;
