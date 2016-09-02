@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
+    using System;
     using System.Data;
     using System.Linq;
     using Application.Location;
@@ -13,6 +14,7 @@
     {
         private readonly ILogService _logService;
         private GeoCodingServiceConfiguration Config { get; }
+        private const string ErrorDataSetName = "ErrorDataSet";
 
         public GeoCodeLookupProvider(IConfigurationService configurationService, ILogService logService)
         {
@@ -86,12 +88,19 @@
             return dataSet.Tables.Count == 0;
         }
 
-        private static DataSet GetDataFromService(string url)
+        private DataSet GetDataFromService(string url)
         {
-//Create the dataset
-            var dataSet = new System.Data.DataSet();
-            dataSet.ReadXml(url);
-            return dataSet;
+            try
+            {
+                var dataSet = new DataSet();
+                dataSet.ReadXml(url);
+                return dataSet;
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"An error has occcurred accessing GeoCode service on the address: {url}", ex);
+                return new DataSet(ErrorDataSetName);
+            }
         }
 
         private void LogError(string addressOrPostCode, DataSet dataSet)
@@ -111,8 +120,9 @@
 
         private static bool IsThereAnError(DataSet dataSet)
         {
-            return dataSet.Tables.Count == 1 && dataSet.Tables[0].Columns.Count == 4 &&
-                   dataSet.Tables[0].Columns[0].ColumnName == "Error";
+            return dataSet.DataSetName == ErrorDataSetName || (
+                    dataSet.Tables.Count == 1 && dataSet.Tables[0].Columns.Count == 4 &&
+                   dataSet.Tables[0].Columns[0].ColumnName == "Error");
         }
     }
 }
