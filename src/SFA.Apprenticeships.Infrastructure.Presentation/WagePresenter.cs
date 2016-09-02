@@ -91,15 +91,15 @@
 
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
         {
-            var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
-            var higherRange = (Wages.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var lowerRange = (Wages.Ranges[0].Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var higherRange = (Wages.Ranges[0].Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
 
             return $"£{lowerRange} - £{higherRange}";
         }
 
         private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek)
         {
-            return $"£{(Wages.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
+            return $"£{(Wages.Ranges[0].ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
         }
 
         private static string GetWagePostfix(this WageUnit wageUnit)

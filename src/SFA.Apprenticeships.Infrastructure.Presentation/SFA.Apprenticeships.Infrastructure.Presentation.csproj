@@ -98,6 +98,7 @@
     <Compile Include="DatePresenter.cs" />
     <Compile Include="DistancePresenter.cs" />
     <Compile Include="DurationPresenter.cs" />
+    <Compile Include="Entities\WageRange.cs" />
     <Compile Include="FullNameFormatter.cs" />
     <Compile Include="NamePresenter.cs" />
     <Compile Include="ProviderVacancyStatusPresenter.cs" />

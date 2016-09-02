@@ -112,7 +112,7 @@ WriteLiteral(">\r\n            The current National Minimum Wage (NMW) for appre
 
             
             #line 18 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-                                                                   Write(Wages.ApprenticeMinimumWage);
+                                                                   Write(Wages.Ranges[0].ApprenticeMinimumWage);
 
             
             #line default
@@ -149,7 +149,7 @@ WriteLiteral(">\r\n            The current National Minimum Wage rates are £");
 
             
             #line 30 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-                                                    Write(Wages.Between18And20NationalMinimumWage);
+                                                    Write(Wages.Ranges[0].Between18And20NationalMinimumWage);
 
             
             #line default
@@ -158,7 +158,7 @@ WriteLiteral(" for 18 to 20 year-olds and £");
 
             
             #line 30 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-                                                                                                                         Write(Wages.Over21NationalMinimumWage);
+                                                                                                                                   Write(Wages.Ranges[0].Over21NationalMinimumWage);
 
             
             #line default

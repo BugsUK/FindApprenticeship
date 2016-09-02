@@ -1,15 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System;
-    using System.Security.Cryptography.X509Certificates;
+    using System.Linq;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
+    using Extensions;
     using FluentValidation;
     using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
-    using Common = Validators.Common;
+    using Common = Common;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancySummaryViewModelClientValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
@@ -191,17 +192,8 @@
 
             var hourRate = GetHourRate(furtherVacancy.Wage.Amount.Value, furtherVacancy.Wage.Unit, furtherVacancy.Wage.HoursPerWeek.Value);
 
-            var minimumWageChangeDate = new DateTime(2016, 10, 1);
-            var possibleStartDate = minimumWageChangeDate;
-            if (furtherVacancy.VacancyDatesViewModel != null && furtherVacancy.VacancyDatesViewModel.PossibleStartDate.HasValue)
-            {
-                possibleStartDate = furtherVacancy.VacancyDatesViewModel.PossibleStartDate.Date;
-            }
-            var expectedHourlyRate = possibleStartDate >= minimumWageChangeDate
-                ? WagesAfter01102016.ApprenticeMinimumWage
-                : Wages.ApprenticeMinimumWage;
-
-            return !(hourRate < expectedHourlyRate);
+            var wageRange = furtherVacancy.VacancyDatesViewModel.GetWageRangeForPossibleStartDate();
+            return !(hourRate < wageRange.ApprenticeMinimumWage);
         }
 
         private static bool HaveAValidApprenticeshipDuration(FurtherVacancyDetailsViewModel furtherVacancy, decimal? duration)
