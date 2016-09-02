@@ -36,11 +36,11 @@
             }
         }
 
-        public static string GetDisplayAmountWithFrequencyPostfix(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
+        public static string GetDisplayAmountWithFrequencyPostfix(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek, DateTime? possibleDateTime)
         {
             var postfix = unit.GetWagePostfix();
 
-            var displayAmount = GetDisplayAmount(type, amount, text, hoursPerWeek);
+            var displayAmount = GetDisplayAmount(type, amount, text, hoursPerWeek, possibleDateTime);
             if (string.IsNullOrWhiteSpace(displayAmount))
             {
                 return postfix;
@@ -49,7 +49,7 @@
             return $"{displayAmount} {postfix}";
         }
 
-        public static string GetDisplayAmount(WageType type, decimal? amount, string text, decimal? hoursPerWeek)
+        public static string GetDisplayAmount(WageType type, decimal? amount, string text, decimal? hoursPerWeek, DateTime? possibleDateTime)
         {
             switch (type)
             {
@@ -59,12 +59,12 @@
 
                 case WageType.ApprenticeshipMinimum:
                     return hoursPerWeek.HasValue
-                        ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value)
+                        ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value, possibleDateTime)
                         : UnknownText;
 
                 case WageType.NationalMinimum:
                     return hoursPerWeek.HasValue
-                        ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value)
+                        ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value, possibleDateTime)
                         : UnknownText;
 
                 case WageType.LegacyText:
@@ -89,17 +89,21 @@
             }
         }
 
-        private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
+        private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek, DateTime? possibleStartDate)
         {
-            var lowerRange = (Wages.Ranges[0].Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
-            var higherRange = (Wages.Ranges[0].Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var wageRange = possibleStartDate.GetWageRangeFor();
+
+            var lowerRange = (wageRange.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var higherRange = (wageRange.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
 
             return $"£{lowerRange} - £{higherRange}";
         }
 
-        private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek)
+        private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek, DateTime? possibleStartDate)
         {
-            return $"£{(Wages.Ranges[0].ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
+            var wageRange = possibleStartDate.GetWageRangeFor();
+
+            return $"£{(wageRange.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
         }
 
         private static string GetWagePostfix(this WageUnit wageUnit)

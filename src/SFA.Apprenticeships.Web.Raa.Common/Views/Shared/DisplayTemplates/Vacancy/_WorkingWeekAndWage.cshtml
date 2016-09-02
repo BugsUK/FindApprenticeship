@@ -53,16 +53,18 @@
                 </span>
             }
         </h3>
-        <p id="vacancy-wage">@WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek)</p>
+        <p id="vacancy-wage">@WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date)</p>
         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
     </div>
+
+    var closingDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date;
 
     if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
     {
         <details>
             <summary>Wages explained</summary>
             <div class="detail-content">
-                The current National Minimum Wage (NMW) for apprentices is £@Wages.Ranges[0].ApprenticeMinimumWage per hour.<br />
+                The current National Minimum Wage (NMW) for apprentices is £@(Wages.GetWageRangeFor(closingDate).ApprenticeMinimumWage) per hour.<br />
                 This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
                 Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
             </div>
@@ -74,7 +76,7 @@
         <details>
             <summary>Wages explained</summary>
             <div class="detail-content">
-                The current National Minimum Wage rates are £@Wages.Ranges[0].Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Ranges[0].Over21NationalMinimumWage for anyone aged 21 and over.<br />
+                The current National Minimum Wage rates are £@(Wages.GetWageRangeFor(closingDate).Between18And20NationalMinimumWage) for 18 to 20 year-olds and £@(Wages.GetWageRangeFor(closingDate).Over21NationalMinimumWage) for anyone aged 21 and over.<br />
                 Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
             </div>
         </details>

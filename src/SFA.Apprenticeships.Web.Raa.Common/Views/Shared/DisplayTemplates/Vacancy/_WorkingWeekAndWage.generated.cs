@@ -338,7 +338,7 @@ WriteLiteral(">");
 
             
             #line 56 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                        Write(WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek));
+                        Write(WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date));
 
             
             #line default
@@ -359,6 +359,8 @@ WriteLiteral("\r\n    </div>\r\n");
             
             #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
 
+    var closingDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date;
+
     if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
     {
 
@@ -373,8 +375,8 @@ WriteLiteral(" class=\"detail-content\"");
 WriteLiteral(">\r\n                The current National Minimum Wage (NMW) for apprentices is £");
 
             
-            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                       Write(Wages.Ranges[0].ApprenticeMinimumWage);
+            #line 67 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                                        Write(Wages.GetWageRangeFor(closingDate).ApprenticeMinimumWage);
 
             
             #line default
@@ -387,7 +389,7 @@ WriteLiteral(@" per hour.<br />
 ");
 
             
-            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
     }
 
     if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.NationalMinimum)
@@ -404,8 +406,8 @@ WriteLiteral(" class=\"detail-content\"");
 WriteLiteral(">\r\n                The current National Minimum Wage rates are £");
 
             
-            #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                        Write(Wages.Ranges[0].Between18And20NationalMinimumWage);
+            #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                         Write(Wages.GetWageRangeFor(closingDate).Between18And20NationalMinimumWage);
 
             
             #line default
@@ -413,8 +415,8 @@ WriteLiteral(">\r\n                The current National Minimum Wage rates are �
 WriteLiteral(" for 18 to 20 year-olds and £");
 
             
-            #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                                                                                       Write(Wages.Ranges[0].Over21NationalMinimumWage);
+            #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                                                                                                                             Write(Wages.GetWageRangeFor(closingDate).Over21NationalMinimumWage);
 
             
             #line default
@@ -424,7 +426,7 @@ WriteLiteral(" for anyone aged 21 and over.<br />\r\n                Apprentices
 "y one day per week).\r\n            </div>\r\n        </details>\r\n");
 
             
-            #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
     }
 }
             

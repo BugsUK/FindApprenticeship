@@ -48,7 +48,29 @@
         public void ShouldGetDisplayAmountWithFrequencyPostfix(WageUnit wageUnit, decimal displayAmount, string expected)
         {
             // Act.
-            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(WageType.Custom, displayAmount, null, wageUnit, null);
+            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(WageType.Custom, displayAmount, null, wageUnit, null, null);
+
+            // Assert.
+            actual.Should().Be(expected);
+        }
+
+        [TestCase(WageType.ApprenticeshipMinimum, "£127.50" + Space + WagePresenter.PerWeekText)]
+        [TestCase(WageType.NationalMinimum, "£150.00 - £260.63" + Space + WagePresenter.PerWeekText)]
+        public void ShouldGetDisplayAmountWithFrequencyPostfixNationalMinimums(WageType wageType, string expected)
+        {
+            // Act.
+            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(wageType, null, null, WageUnit.Weekly, 37.5m, null);
+
+            // Assert.
+            actual.Should().Be(expected);
+        }
+
+        [TestCase(WageType.ApprenticeshipMinimum, "£127.50" + Space + WagePresenter.PerWeekText)]
+        [TestCase(WageType.NationalMinimum, "£150.00 - £260.63" + Space + WagePresenter.PerWeekText)]
+        public void ShouldGetDisplayAmountWithFrequencyPostfixNationalMinimums_After1stOct2016(WageType wageType, string expected)
+        {
+            // Act.
+            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(wageType, null, null, WageUnit.Weekly, 37.5m, new DateTime(2016, 10, 1));
 
             // Assert.
             actual.Should().Be(expected);
@@ -75,7 +97,7 @@
             }
 
             // Act.
-            var actual = WagePresenter.GetDisplayAmount(wageType, wageAmount, wageText, Convert.ToDecimal(hoursPerWeek));
+            var actual = WagePresenter.GetDisplayAmount(wageType, wageAmount, wageText, Convert.ToDecimal(hoursPerWeek), null);
 
             // Assert.
             actual.Should().Be(expected);
