@@ -16,7 +16,6 @@
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Factories;
     using Infrastructure.Presentation;
     using System;
     using System.Collections.Generic;
@@ -25,7 +24,6 @@
     using Application.Interfaces;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Raa.Parties;
-    using Domain.Entities.Vacancies;
     using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
