@@ -105,26 +105,7 @@
             viewModel.VacancyReferenceNumber.Should().HaveValue();
         }
 
-        [Test]
-        public void ShouldUpdateVacancyWithTheEmployerAddress()
-        {
-            // Arrange.
-            var employerPostalAddress = new Fixture().Create<PostalAddress>();
-            var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
-            MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>(), true)).Returns(new VacancyParty());
-            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>()))
-                .Returns(new Fixture().Build<Employer>().With(e => e.Address, employerPostalAddress).Create());
-            var provider = GetVacancyPostingProvider();
-
-            // Act.
-            provider.UpdateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
-
-            // Assert.
-            MockVacancyPostingService.Verify(mock =>
-                mock.UpdateVacancy(It.Is<Vacancy>(v => v.Address == employerPostalAddress)));
-        }
-        
+       
         [Test]
         public void ShouldReturnANewVacancyIfVacancyGuidDoesNotExists()
         {
