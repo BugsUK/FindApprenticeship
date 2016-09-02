@@ -309,11 +309,6 @@
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
 
-            if (!employer.Address.GeoPoint.IsValid())
-            {
-                employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
-            }
-
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
@@ -323,13 +318,7 @@
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
             vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
-            vacancy.Address = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue
-                              && newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false
-                              && newVacancyViewModel.LocationAddresses != null
-                              && newVacancyViewModel.LocationAddresses.Count == 1
-                                  ? _mapper.Map<AddressViewModel, PostalAddress>(newVacancyViewModel.LocationAddresses.First().Address)
-                                  : employer.Address;
-
+            
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
@@ -1545,6 +1534,8 @@
             viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
 
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+
+            employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 

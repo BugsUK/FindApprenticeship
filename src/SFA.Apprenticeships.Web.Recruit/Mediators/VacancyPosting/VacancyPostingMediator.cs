@@ -4,12 +4,15 @@
     using System.Collections.Generic;
     using Raa.Common.Validators.Vacancy;
     using System.Linq;
+    using Apprenticeships.Application.Interfaces.Locations;
+    using Apprenticeships.Application.Location;
     using FluentValidation;
     using Common.Constants;
     using Common.Mediators;
     using Common.Validators;
     using Common.Validators.Extensions;
     using Common.ViewModels;
+    using Constants.Messages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Constants.ViewModels;
@@ -176,15 +179,24 @@
                 viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
             }
 
-            if (_geoCodingProvider.EmployerHasAValidAddress(viewModel.Employer.EmployerId) == GeoCodeAddressResult.InvalidAddress)
+            try
             {
-                viewModel.IsEmployerAddressValid = false;
-                viewModel.IsEmployerLocationMainApprenticeshipLocation = false;
+                if (_geoCodingProvider.EmployerHasAValidAddress(viewModel.Employer.EmployerId) ==
+                    GeoCodeAddressResult.InvalidAddress)
+                {
+                    viewModel.IsEmployerAddressValid = false;
+                    viewModel.IsEmployerLocationMainApprenticeshipLocation = false;
 
-                return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress,
-                    viewModel, VacancyPartyViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress,
+                        viewModel, VacancyPartyViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
+                }
             }
-            
+            catch (CustomException ex) when (ex.Code == ErrorCodes.GeoCodeLookupProviderFailed)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.FailedGeoCodeLookup, viewModel,
+                    ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
+            }
+
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
@@ -210,7 +222,18 @@
             else
             {
                 viewModel.VacancyPartyId = newViewModel.VacancyPartyId;
-                CreateNewVacancy(viewModel, ukprn);
+
+                try
+                {
+                    CreateNewVacancy(viewModel, ukprn);
+                }
+                catch (CustomException ce) when (ce.Code == ErrorCodes.GeoCodeLookupProviderFailed)
+                {
+                    PatchVacancyPartyViewModelWithoutErrors(viewModel, newViewModel);
+                    return
+                        GetMediatorResponse(
+                            VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, newViewModel, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
+                }
             }
 
             PatchVacancyPartyViewModelWithoutErrors(viewModel, newViewModel);
@@ -679,9 +702,16 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var locationSearchViewModel = _vacancyPostingProvider.AddLocations(viewModel);
-
-            return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);
+            try
+            {
+                var locationSearchViewModel = _vacancyPostingProvider.AddLocations(viewModel);
+                return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);
+            }
+            catch (CustomException ex) when (ex.Code == ErrorCodes.GeoCodeLookupProviderFailed)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedGeoCodeLookup, viewModel,
+                    ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
+            }
         }
 
         public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int providerSiteId,
