@@ -118,6 +118,7 @@
     <Compile Include="Applications\CommonApplicationRepository.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationRepository.cs" />
     <Compile Include="Applications\Entities\MongoApprenticeshipApplicationDetail.cs" />
+    <Compile Include="Applications\Entities\MongoApprenticeshipSummary.cs" />
     <Compile Include="Applications\Entities\MongoTraineeshipApplicationDetail.cs" />
     <Compile Include="Applications\IoC\ApplicationRepositoryRegistry.cs" />
     <Compile Include="Applications\Mappers\ApprenticeshipApplicationMappers.cs" />

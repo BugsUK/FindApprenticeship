@@ -1,19 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Processes
 {
     using System;
-    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies.Entities;
     using Application.Vacancies.Entities.SiteMap;
     using Domain.Interfaces.Messaging;
     using Elastic.Common.Entities;
     using FluentAssertions;
     using Infrastructure.Processes.Vacancies;
+    using Infrastructure.VacancyIndexer;
     using Moq;
     using NUnit.Framework;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
-    using VacancyIndexer;
+    using Application.Interfaces;
 
     [TestFixture]
     [Parallelizable]

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.ScheduledJobs.Vacancy
 {
     using System;
-    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.Interfaces.ReferenceData;
     using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Entities.ReferenceData;
@@ -9,12 +8,10 @@
     using Elastic.Common.Entities;
     using Infrastructure.Processes.Configuration;
     using Infrastructure.Processes.Vacancies;
+    using Infrastructure.VacancyIndexer;
     using Moq;
     using NUnit.Framework;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
-    using VacancyIndexer;
+    using Apprenticeships.Application.Interfaces;
 
     [TestFixture]
     [Parallelizable]

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.DormantAccount
 {
+    using Apprenticeships.Application.Candidate.Strategies.Candidates;
     using Apprenticeships.Application.Candidates.Configuration;
     using Apprenticeships.Application.Candidates.Strategies;
     using Apprenticeships.Application.Candidates.Strategies.DormantAccount;

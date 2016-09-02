@@ -23,7 +23,7 @@
             if (!LocationHelper.IsPostcode(fullPostcode))
             {
                 var message = $"{fullPostcode} is not a full postcode.";
-                throw new CustomException(message, ErrorCodes.AddressLookupFailed);
+                throw new CustomException(message, Interfaces.Locations.ErrorCodes.AddressLookupFailed);
             }
 
             var addresses = _addressLookupProvider.GetPossibleAddresses(fullPostcode);

@@ -1,8 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Applications.Mappers
 {
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Entities;
     using Infrastructure.Common.Mappers;
+    using Sql.Schemas.Vacancy;
 
     public class ApprenticeshipApplicationMappers : MapperEngine
     {
@@ -14,6 +17,8 @@
 
         private void InitialiseApplicationDetailMappers()
         {
+            Mapper.CreateMap<MongoApprenticeshipSummary, ApprenticeshipSummary>();
+            Mapper.CreateMap<ApprenticeshipSummary, MongoApprenticeshipSummary>();
             Mapper.CreateMap<ApprenticeshipApplicationDetail, MongoApprenticeshipApplicationDetail>();
             Mapper.CreateMap<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>();
         }

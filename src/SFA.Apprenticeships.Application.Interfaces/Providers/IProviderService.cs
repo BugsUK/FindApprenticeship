@@ -27,7 +27,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         ProviderSite GetProviderSite(string edsUrn);
 
-        IEnumerable<ProviderSite> GetProviderSites(int providerId);
+        IEnumerable<ProviderSite> GetOwnerAndRecruitmentAgentProviderSites(int providerId);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 

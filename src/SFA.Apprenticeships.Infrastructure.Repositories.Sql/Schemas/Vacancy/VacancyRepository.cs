@@ -1444,9 +1444,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                     VacancyReferenceNumber = vacancyReferenceNumber
                 })
                 .SingleOrDefault();
-            
-            // TODO add entry to VacancyHistory table
-
             // What should happen if QAUserName != UserName. Should we throw an exception?
             if (dbVacancy == null)
             {
@@ -1480,9 +1477,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                     VacancyReferenceNumber = vacancyReferenceNumber
                 })
                 .SingleOrDefault();
-
-            // TODO add entry to VacancyHistory table
-
             if (dbVacancy == null)
             {
                 _logger.Warn(
@@ -1516,7 +1510,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             foreach (var splitVacancyPartyId in splitVacancyPartyIds)
             {
                 IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(@"
-                                SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title
+                                SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
                                 FROM   dbo.Vacancy
                                 WHERE  VacancyOwnerRelationshipId IN @Ids",
                     new {Ids = splitVacancyPartyId});                                                                                                      
@@ -1532,6 +1526,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             public MinimalVacancyDetails(dynamic record)
             {
                 VacancyId = record.VacancyId;
+                VacancyReferenceNumber = record.VacancyReferenceNumber;
                 OwnerPartyId = record.VacancyOwnerRelationshipId;
                 Status = (VacancyStatus)record.VacancyStatusId;
                 _closingDate = record.ApplicationClosingDate;
@@ -1543,9 +1538,12 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 VacancyType = (VacancyType)record.VacancyTypeId;
                 EmployerName = record.EmployerName;
                 Title = record.Title;
+                ApplicationOrClickThroughCount = record.NoOfOfflineApplicants;
+                OfflineVacancy = record.ApplyOutsideNAVMS;
             }
 
             public int VacancyId { get; private set; }
+            public int VacancyReferenceNumber { get; }
 
             public int OwnerPartyId { get; private set; }
 
@@ -1570,7 +1568,11 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
 
             public string EmployerName { get; set; }
 
-            public string Title { get; set; }
+            public string Title { get; private set; }
+
+            public int? ApplicationOrClickThroughCount { get; set; }
+
+            public bool? OfflineVacancy { get; private set; }
         }
 
         private class VacancyPlus : Vacancy

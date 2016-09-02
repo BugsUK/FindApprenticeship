@@ -65,7 +65,7 @@ WriteLiteral("\r\n");
             
             #line 6 "..\..\Views\VacancyManagement\Delete.cshtml"
   
-    ViewBag.Title = "Recruit an Apprentice - Delete a draft vacancy";
+    ViewBag.Title = "Recruit an Apprentice - Delete a vacancy";
     var vacancyTitle = string.IsNullOrEmpty(Model.VacancyTitle) ? "(No Title)" : Model.VacancyTitle;
 
             
