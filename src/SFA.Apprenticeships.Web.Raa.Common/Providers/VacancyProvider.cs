@@ -24,6 +24,7 @@
     using System.Web.Mvc;
     using Application.Interfaces;
     using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Vacancies;
     using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
@@ -32,6 +33,9 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
@@ -713,8 +717,6 @@
                 vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
             }
 
-            vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
-
             // Although the most straightforward thing to do would be to get by Vacancy.VacancyManagerId, this is sometimes null.
             // TODO: It may be that we should (and AVMS did) try Vacancy.VacancyManagerId first and then fall back to VacancyParty (aka VacancyOwnerRelationship)
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
@@ -754,11 +756,20 @@
             {
                 // If doing a search then all the vacancies have been fetched and after filtering need to be cut down to the current page
 
-                filteredVacancies = filteredVacancies.Where(v =>
-                    (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
-                );
-
+                string vacancyReference;
+                if (VacancyHelper.TryGetVacancyReference(vacanciesSummarySearch.SearchString, out vacancyReference))
+                {
+                    var vacancyReferenceNumber = int.Parse(vacancyReference);
+                    filteredVacancies = filteredVacancies.Where(v => v.VacancyReferenceNumber == vacancyReferenceNumber);
+                }
+                else
+                {
+                    filteredVacancies = filteredVacancies.Where(v =>
+                        (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
+                    );
+                }
+                
                 filteredVacancies = filteredVacancies
                     .GetCurrentPage(vacanciesSummarySearch)
                     .ToList();
