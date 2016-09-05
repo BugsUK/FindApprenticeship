@@ -2,22 +2,18 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Constants;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Extensions;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Search;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
     using ViewModels.VacancySearch;
 
     [UserJourneyContext(UserJourney.Traineeship, Order = 2)]
@@ -78,7 +74,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         ModelState.Remove("Location");
                         ModelState.Remove("Latitude");
                         ModelState.Remove("Longitude");
-                        return View(response.ViewModel);                        
+                        return View(response.ViewModel);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

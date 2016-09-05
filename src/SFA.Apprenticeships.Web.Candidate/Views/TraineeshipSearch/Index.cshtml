@@ -18,6 +18,8 @@
 
                 @Html.FormTextFor(m => m.Location, hintHtmlAttributes: new { id = "geoLocateContainer" })
 
+               @Html.FormTextFor(m=>m.ReferenceNumber, controlHtmlAttributes: new { type = "number" })
+
                 <div class="form-group">
                     <button class="button" id="search-button">Search</button>
                 </div>
