@@ -2,21 +2,18 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
-    using System;
-    using System.Globalization;
-    using System.Linq;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Framework;
     using Common.Providers;
     using Constants;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Extensions;
     using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Globalization;
+    using System.Linq;
     using Validators;
     using ViewModels.VacancySearch;
 
@@ -69,6 +66,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Index.Ok, traineeshipSearchViewModel);
         }
 
+        public MediatorResponse<TraineeshipSearchViewModel> SearchValidation(TraineeshipSearchViewModel model)
+        {
+            var clientResult = _searchRequestValidator.Validate(model);
+
+            if (!clientResult.IsValid)
+            {
+                return GetMediatorResponse(TraineeshipSearchMediatorCodes.SearchValidation.ValidationError, model, clientResult);
+            }
+            return GetMediatorResponse(TraineeshipSearchMediatorCodes.SearchValidation.Ok, model);
+        }
+
         public MediatorResponse<TraineeshipSearchResponseViewModel> Results(TraineeshipSearchViewModel model)
         {
             UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
@@ -93,38 +101,41 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (!HasGeoPoint(model))
             {
                 // User did not select a location from the dropdown list, provide suggested locations.
-                var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
-
-                if (suggestedLocations.HasError())
+                if (model.Location != null)
                 {
-                    return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.HasError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
-                }
+                    var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
 
-                if (suggestedLocations.Locations.Any())
-                {
-                    var location = suggestedLocations.Locations.First();
-
-                    model.Location = location.Name;
-                    model.Latitude = location.Latitude;
-                    model.Longitude = location.Longitude;
-
-                    model.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
+                    if (suggestedLocations.HasError())
                     {
-                        var vsvm = new TraineeshipSearchViewModel
+                        return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.HasError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+                    }
+
+                    if (suggestedLocations.Locations.Any())
+                    {
+                        var location = suggestedLocations.Locations.First();
+
+                        model.Location = location.Name;
+                        model.Latitude = location.Latitude;
+                        model.Longitude = location.Longitude;
+
+                        model.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
                         {
-                            Location = each.Name,
-                            Latitude = each.Latitude,
-                            Longitude = each.Longitude,
-                            PageNumber = model.PageNumber,
-                            SortType = model.SortType,
-                            WithinDistance = model.WithinDistance,
-                            ResultsPerPage = model.ResultsPerPage
-                        };
+                            var vsvm = new TraineeshipSearchViewModel
+                            {
+                                Location = each.Name,
+                                Latitude = each.Latitude,
+                                Longitude = each.Longitude,
+                                PageNumber = model.PageNumber,
+                                SortType = model.SortType,
+                                WithinDistance = model.WithinDistance,
+                                ResultsPerPage = model.ResultsPerPage
+                            };
 
-                        vsvm.Hash = vsvm.LatLonLocHash();
+                            vsvm.Hash = vsvm.LatLonLocHash();
 
-                        return vsvm;
-                    }).ToArray();
+                            return vsvm;
+                        }).ToArray();
+                    }
                 }
             }
 

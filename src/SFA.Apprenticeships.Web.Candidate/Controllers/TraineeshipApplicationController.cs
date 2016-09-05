@@ -2,20 +2,16 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Constants;
-    using SFA.Infrastructure.Interfaces;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Application;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
     using ViewModels.Applications;
 
     [UserJourneyContext(UserJourney.Traineeship, Order = 2)]

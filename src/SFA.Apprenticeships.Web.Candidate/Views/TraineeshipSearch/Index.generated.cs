@@ -95,7 +95,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 15 "..\..\Views\TraineeshipSearch\Index.cshtml"
-             using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get, new { @id = "#searchForm" }))
+             using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
             {
                 
             

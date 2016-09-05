@@ -47,6 +47,29 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             });
         }
 
+        [HttpPost]
+        [ClearSearchReturnUrl(false)]
+        public async Task<ActionResult> Index(TraineeshipSearchViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                ViewBag.SearchReturnUrl = Request?.Url?.PathAndQuery;
+                var response = _traineeshipSearchMediator.SearchValidation(model);
+
+                switch (response.Code)
+                {
+                    case TraineeshipSearchMediatorCodes.SearchValidation.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("Index", response.ViewModel);
+                    case TraineeshipSearchMediatorCodes.SearchValidation.Ok:
+                        //return RedirectToRoute(CandidateRouteNames.ApprenticeshipResults, model.RouteValues);
+                        return RedirectToRoute(CandidateRouteNames.TraineeshipResults, model);
+                }
+                throw new InvalidMediatorCodeException(response.Code);
+            });
+        }
+
         [HttpGet]
         [ClearSearchReturnUrl(false)]
         [SessionTimeout]
