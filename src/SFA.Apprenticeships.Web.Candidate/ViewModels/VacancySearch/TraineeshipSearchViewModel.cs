@@ -44,7 +44,8 @@
                     ResultsPerPage,
                     SearchAction,
                     SortType,
-                    WithinDistance
+                    WithinDistance,
+                    ReferenceNumber
                 };
             }
         }

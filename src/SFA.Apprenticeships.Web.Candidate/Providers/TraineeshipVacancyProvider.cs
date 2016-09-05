@@ -6,6 +6,7 @@
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using SFA.Apprenticeships.Application.Interfaces;
     using System;
@@ -33,8 +34,9 @@
         public TraineeshipSearchResponseViewModel FindVacancies(TraineeshipSearchViewModel search)
         {
             _logger.Debug("Calling SearchProvider to find traineeship vacancies.");
-
+            string vacancyReference;
             var searchLocation = _traineeshipSearchMapper.Map<TraineeshipSearchViewModel, Location>(search);
+            var isVacancyReference = VacancyHelper.TryGetVacancyReference(search.ReferenceNumber, out vacancyReference);
 
             try
             {
@@ -44,9 +46,12 @@
                     PageNumber = search.PageNumber,
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
-                    SortType = search.SortType,
-                    VacancyReference = search.ReferenceNumber
+                    SortType = search.SortType
                 };
+                if (isVacancyReference)
+                {
+                    searchRequest.VacancyReference = vacancyReference;
+                }
 
                 var searchResults = _traineeshipSearchService.Search(searchRequest);
 
