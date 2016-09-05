@@ -312,6 +312,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Shared\_ApprenticeMinimumWageExplained.generated.cs">
+      <DependentUpon>_ApprenticeMinimumWageExplained.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\_NationalMinimumWageExplained.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_NationalMinimumWageExplained.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -405,6 +415,14 @@
     <Content Include="Views\Shared\_AboutDisguised.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_AboutDisguised.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_NationalMinimumWageExplained.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_NationalMinimumWageExplained.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_ApprenticeMinimumWageExplained.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ApprenticeMinimumWageExplained.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

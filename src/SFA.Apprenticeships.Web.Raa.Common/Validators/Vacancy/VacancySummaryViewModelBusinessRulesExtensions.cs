@@ -1,13 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Constants.ViewModels;
     using Domain.Entities.Extensions;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
+    using Extensions;
     using FluentValidation.Results;
+    using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public static class VacancySummaryViewModelBusinessRulesExtensions
     {
@@ -116,6 +121,48 @@
             }
 
             return null;
+        }
+
+        public static ValidationFailure HaveAValidHourRate(this FurtherVacancyDetailsViewModel viewModel, decimal? amount, string parentPropertyName)
+        {
+            if (amount.HasValue && viewModel.Wage.Type == WageType.Custom && viewModel.Wage.Unit != WageUnit.NotApplicable && viewModel.Wage.HoursPerWeek.HasValue && viewModel.Wage.HoursPerWeek > 0)
+            {
+                var hourRate = GetHourRate(amount.Value, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek.Value);
+
+                DateTime possibleStartDate;
+                var wageRange = viewModel.VacancyDatesViewModel.GetWageRangeForPossibleStartDate(out possibleStartDate);
+
+                if (hourRate < wageRange.ApprenticeMinimumWage)
+                {
+                    var propertyName = "Wage.Amount";
+                    if (!string.IsNullOrEmpty(parentPropertyName))
+                    {
+                        propertyName = parentPropertyName + "." + propertyName;
+                    }
+
+                    var validationFailure = new ValidationFailure(propertyName, possibleStartDate < Wages.Ranges[0].ValidTo ? VacancyViewModelMessages.Wage.WageLessThanMinimum : VacancyViewModelMessages.Wage.WageLessThanMinimum1StOct2016, amount);
+                    return validationFailure;
+                }
+            }
+
+            return null;
+        }
+
+        private static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)
+        {
+            switch (wageUnit)
+            {
+                case WageUnit.Weekly:
+                    return wage / hoursPerWeek;
+                case WageUnit.Annually:
+                    return wage / 52m / hoursPerWeek;
+                case WageUnit.Monthly:
+                    return wage / 52m * 12 / hoursPerWeek;
+                case WageUnit.NotApplicable:
+                    return 0;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(wageUnit), wageUnit, null);
+            }
         }
     }
 

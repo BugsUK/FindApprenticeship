@@ -61,7 +61,7 @@
             const string expectedWage = "£101.19";
 
             model.Should().NotBeNull();
-            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek).Should().Be(expectedWage);
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should().Be(expectedWage);
         }
 
         [Test]
@@ -75,7 +75,7 @@
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek).Should()
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should()
                 .Be("Competitive");
         }
 
@@ -90,7 +90,7 @@
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek).Should().Be("£123.46");
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should().Be("£123.46");
         }
 
         [Test]

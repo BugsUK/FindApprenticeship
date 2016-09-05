@@ -40,7 +40,7 @@
         <h3 class="bold-small">
             @if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.Custom)
             {
-                <span>
+                <span id="furthervacancydetailsviewmodel_wage_amount">
                     @Model.FurtherVacancyDetailsViewModel.Wage.Unit.GetHeaderDisplayText()
                     @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
                 </span>
@@ -53,30 +53,19 @@
                 </span>
             }
         </h3>
-        <p id="vacancy-wage">@WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek)</p>
+        <p id="vacancy-wage">@WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date)</p>
         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
     </div>
 
+    var possibleStartDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date;
+
     if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
     {
-        <details>
-            <summary>Wages explained</summary>
-            <div class="detail-content">
-                The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
-                This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
-                Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
-            </div>
-        </details>
+        @Html.Partial("_ApprenticeMinimumWageExplained", possibleStartDate)
     }
 
     if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.NationalMinimum)
     {
-        <details>
-            <summary>Wages explained</summary>
-            <div class="detail-content">
-                The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
-                Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
-            </div>
-        </details>
+        @Html.Partial("_NationalMinimumWageExplained", possibleStartDate)
     }
 }

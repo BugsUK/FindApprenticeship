@@ -277,7 +277,11 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                <span>\r\n");
+WriteLiteral("                <span");
+
+WriteLiteral(" id=\"furthervacancydetailsviewmodel_wage_amount\"");
+
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -338,7 +342,7 @@ WriteLiteral(">");
 
             
             #line 56 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                        Write(WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek));
+                        Write(WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date));
 
             
             #line default
@@ -359,72 +363,42 @@ WriteLiteral("\r\n    </div>\r\n");
             
             #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
 
+    var possibleStartDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date;
+
     if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
     {
+        
+            
+            #line default
+            #line hidden
+            
+            #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+   Write(Html.Partial("_ApprenticeMinimumWageExplained", possibleStartDate));
 
             
             #line default
             #line hidden
-WriteLiteral("        <details>\r\n            <summary>Wages explained</summary>\r\n            <d" +
-"iv");
-
-WriteLiteral(" class=\"detail-content\"");
-
-WriteLiteral(">\r\n                The current National Minimum Wage (NMW) for apprentices is £");
-
             
-            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                       Write(Wages.ApprenticeMinimumWage);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@" per hour.<br />
-                This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
-                Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
-            </div>
-        </details>
-");
-
-            
-            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                                           
     }
 
     if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.NationalMinimum)
     {
+        
+            
+            #line default
+            #line hidden
+            
+            #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+   Write(Html.Partial("_NationalMinimumWageExplained", possibleStartDate));
 
             
             #line default
             #line hidden
-WriteLiteral("        <details>\r\n            <summary>Wages explained</summary>\r\n            <d" +
-"iv");
-
-WriteLiteral(" class=\"detail-content\"");
-
-WriteLiteral(">\r\n                The current National Minimum Wage rates are £");
-
             
-            #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                        Write(Wages.Between18And20NationalMinimumWage);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" for 18 to 20 year-olds and £");
-
-            
-            #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                                                                             Write(Wages.Over21NationalMinimumWage);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" for anyone aged 21 and over.<br />\r\n                Apprentices are paid for the" +
-"ir normal working hours and training that’s part of their apprenticeship (usuall" +
-"y one day per week).\r\n            </div>\r\n        </details>\r\n");
-
-            
-            #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                                         
     }
 }
             
