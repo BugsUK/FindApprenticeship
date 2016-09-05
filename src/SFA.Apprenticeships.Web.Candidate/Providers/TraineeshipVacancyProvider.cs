@@ -1,17 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
     using Application.Interfaces.Candidates;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Traineeships;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
     using ViewModels.VacancySearch;
 
     public class TraineeshipVacancyProvider : ITraineeshipVacancyProvider
@@ -48,6 +45,7 @@
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
                     SortType = search.SortType,
+                    VacancyReference = search.ReferenceNumber
                 };
 
                 var searchResults = _traineeshipSearchService.Search(searchRequest);

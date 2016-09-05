@@ -1,18 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
 
     public class TraineeshipsSearchProvider : IVacancySearchProvider<TraineeshipSearchResponse, TraineeshipSearchParameters>
     {
@@ -30,7 +27,7 @@
         public SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters> FindVacancies(TraineeshipSearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (TraineeshipSummary));
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(TraineeshipSummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(TraineeshipSummary));
 
             _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName, indexName);
@@ -64,7 +61,23 @@
 
         public SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters> FindVacancy(string vacancyReference)
         {
-            throw new NotSupportedException("Vacancy number search is not supported for traineeships");
+            var client = _elasticsearchClientFactory.GetElasticClient();
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(TraineeshipSummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(TraineeshipSummary));
+
+            _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
+                indexName);
+
+            var searchResults = client.Search<TraineeshipSummary>(s => s
+                .Index(indexName)
+                .Type(documentTypeName)
+                .Query(
+                    q =>
+                        q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, vacancyReference)))));
+
+            var responses = _vacancySearchMapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSearchResponse>>(searchResults.Documents).ToList();
+            var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>(searchResults.Total, responses, null, new TraineeshipSearchParameters { PageNumber = 1 });
+            return results;
         }
 
         private ISearchResponse<TraineeshipSummary> PerformSearch(TraineeshipSearchParameters parameters, ElasticClient client, string indexName,
@@ -74,7 +87,7 @@
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
-                s.Skip((parameters.PageNumber - 1)*parameters.PageSize);
+                s.Skip((parameters.PageNumber - 1) * parameters.PageSize);
                 s.Take(parameters.PageSize);
 
                 s.TrackScores();
@@ -106,7 +119,7 @@
                         break;
                     case VacancySearchSortType.ClosingDate:
                         s.Sort(v => v.OnField(f => f.ClosingDate).Ascending());
-                        if (parameters.Location == null) 
+                        if (parameters.Location == null)
                         {
                             break;
                         }

@@ -58,17 +58,13 @@
         {
             // NOTE: no message here, 'no results' help text provides suggestions to user.
             validator.RuleFor(x => x.Location)
-                .Must(HaveLatAndLongPopulated);
+                .Must(HaveLatAndLongPopulated)
+                .When(x => !VacancyHelper.IsVacancyReference(x.ReferenceNumber));
         }
 
         private static bool HaveLatAndLongPopulated(TraineeshipSearchViewModel instance, string location)
         {
             return instance.Latitude.HasValue && instance.Longitude.HasValue;
-        }
-
-        private static bool HasValidReferenceNumber(TraineeshipSearchViewModel viewModel)
-        {
-            return !VacancyHelper.IsVacancyReference(viewModel.ReferenceNumber);
         }
     }
 }

@@ -29,5 +29,24 @@
         public string ReferenceNumber { get; set; }
 
         public IEnumerable<TraineeshipSearchViewModel> LocationSearches { get; set; }
+
+        public object RouteValues
+        {
+            get
+            {
+                return new
+                {
+                    Hash,
+                    Latitude,
+                    Longitude,
+                    Location,
+                    PageNumber,
+                    ResultsPerPage,
+                    SearchAction,
+                    SortType,
+                    WithinDistance
+                };
+            }
+        }
     }
 }

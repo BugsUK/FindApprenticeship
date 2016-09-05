@@ -63,8 +63,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View("Index", response.ViewModel);
                     case TraineeshipSearchMediatorCodes.SearchValidation.Ok:
-                        //return RedirectToRoute(CandidateRouteNames.ApprenticeshipResults, model.RouteValues);
-                        return RedirectToRoute(CandidateRouteNames.TraineeshipResults, model);
+                        return RedirectToRoute(CandidateRouteNames.TraineeshipResults, model.RouteValues);
                 }
                 throw new InvalidMediatorCodeException(response.Code);
             });
@@ -77,7 +76,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
-                ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
+                ViewBag.SearchReturnUrl = Request?.Url?.PathAndQuery;
 
                 var response = _traineeshipSearchMediator.Results(model);
 
