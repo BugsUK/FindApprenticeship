@@ -124,5 +124,26 @@
                 aggregateError?.ErrorMessage.Should().Be("The wage should not be less then the new National Minimum Wage for apprentices effective from 1 Oct 2016");
             }
         }
+
+        [Test]
+        public void ApprenticeMinimumWage_AfterOctFirst_DivideByZero()
+        {
+            //After 1st of october 2016 the National Minimum Wage for Apprentices increases to £3.40/hour
+            var viewModel = new FurtherVacancyDetailsViewModel
+            {
+                Wage = new WageViewModel(WageType.Custom, 123.45m, null, WageUnit.Weekly, 0),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    PossibleStartDate = new DateViewModel(new DateTime(2016, 10, 1))
+                }
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            Action validate = () => _validator.Validate(viewModel, ruleSet: RuleSet);
+            Action aggregateValidate = () => _aggregateValidator.Validate(vacancyViewModel);
+
+            validate.ShouldNotThrow();
+            aggregateValidate.ShouldNotThrow();
+        }
     }
 }

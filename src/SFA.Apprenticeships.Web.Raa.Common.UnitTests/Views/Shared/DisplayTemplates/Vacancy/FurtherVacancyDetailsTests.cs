@@ -219,5 +219,43 @@
             var expectedDuration = view.GetElementbyId("ExpectedDuration");
             expectedDuration.Should().BeNull();
         }
+
+        [Test]
+        public void ShouldDisplayHoursPerWeek()
+        {
+            //Arrange
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
+                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, 37.5m))
+                .Create();
+            var details = new FurtherVacancyDetails();
+
+            //Act
+            var view = details.RenderAsHtml(viewModel);
+
+            //Assert
+            var hoursPerWeek = view.GetElementbyId("Wage_HoursPerWeek");
+            hoursPerWeek.Should().NotBeNull();
+            hoursPerWeek.GetAttributeValue("value", "").Should().Be("37.5");
+        }
+
+        [Test]
+        public void ShouldDisplayWageAmount()
+        {
+            //Arrange
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
+                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, 123.45m, null, WageUnit.NotApplicable, null))
+                .Create();
+            var details = new FurtherVacancyDetails();
+
+            //Act
+            var view = details.RenderAsHtml(viewModel);
+
+            //Assert
+            var wage = view.GetElementbyId("Wage_Amount");
+            wage.Should().NotBeNull();
+            wage.GetAttributeValue("value", "").Should().Be("123.45");
+        }
     }
 }

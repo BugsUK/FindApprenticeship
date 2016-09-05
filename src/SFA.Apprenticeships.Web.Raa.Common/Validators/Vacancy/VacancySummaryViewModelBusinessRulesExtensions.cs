@@ -125,7 +125,7 @@
 
         public static ValidationFailure HaveAValidHourRate(this FurtherVacancyDetailsViewModel viewModel, decimal? amount, string parentPropertyName)
         {
-            if (amount.HasValue && viewModel.Wage.Type == WageType.Custom && viewModel.Wage.Unit != WageUnit.NotApplicable && viewModel.Wage.HoursPerWeek.HasValue)
+            if (amount.HasValue && viewModel.Wage.Type == WageType.Custom && viewModel.Wage.Unit != WageUnit.NotApplicable && viewModel.Wage.HoursPerWeek.HasValue && viewModel.Wage.HoursPerWeek > 0)
             {
                 var hourRate = GetHourRate(amount.Value, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek.Value);
 
@@ -140,7 +140,7 @@
                         propertyName = parentPropertyName + "." + propertyName;
                     }
 
-                    var validationFailure = new ValidationFailure(propertyName, possibleStartDate < Wages.Ranges[0].ValidTo ? VacancyViewModelMessages.Wage.WageLessThanMinimum : VacancyViewModelMessages.Wage.WageLessThanMinimum1StOct2016);
+                    var validationFailure = new ValidationFailure(propertyName, possibleStartDate < Wages.Ranges[0].ValidTo ? VacancyViewModelMessages.Wage.WageLessThanMinimum : VacancyViewModelMessages.Wage.WageLessThanMinimum1StOct2016, amount);
                     return validationFailure;
                 }
             }
