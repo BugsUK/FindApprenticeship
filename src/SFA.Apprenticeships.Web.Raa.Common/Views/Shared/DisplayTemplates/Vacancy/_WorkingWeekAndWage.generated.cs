@@ -277,7 +277,11 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                <span>\r\n");
+WriteLiteral("                <span");
+
+WriteLiteral(" id=\"furthervacancydetailsviewmodel_wage_amount\"");
+
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
