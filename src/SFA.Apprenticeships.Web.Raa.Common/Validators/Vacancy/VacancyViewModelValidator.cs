@@ -20,7 +20,7 @@
         {
             RuleFor(x => x.NewVacancyViewModel).SetValidator(new NewVacancyViewModelServerValidator());
             RuleFor(x => x.TrainingDetailsViewModel).SetValidator(new TrainingDetailsViewModelServerValidator());
-            RuleFor(x => x.FurtherVacancyDetailsViewModel).SetValidator(new VacancySummaryViewModelServerErrorValidator());
+            RuleFor(x => x.FurtherVacancyDetailsViewModel).SetValidator(new VacancySummaryViewModelServerErrorValidator("FurtherVacancyDetailsViewModel"));
             RuleFor(x => x.VacancyRequirementsProspectsViewModel).SetValidator(new VacancyRequirementsProspectsViewModelServerValidator());
             RuleFor(x => x.VacancyQuestionsViewModel).SetValidator(new VacancyQuestionsViewModelServerValidator());
         }

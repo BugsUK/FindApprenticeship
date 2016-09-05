@@ -54,12 +54,12 @@
             actual.Should().Be(expected);
         }
 
-        [TestCase(WageType.ApprenticeshipMinimum, "£127.50" + Space + WagePresenter.PerWeekText)]
-        [TestCase(WageType.NationalMinimum, "£150.00 - £260.63" + Space + WagePresenter.PerWeekText)]
+        [TestCase(WageType.ApprenticeshipMinimum, "£123.75" + Space + WagePresenter.PerWeekText)]
+        [TestCase(WageType.NationalMinimum, "£145.13 - £251.25" + Space + WagePresenter.PerWeekText)]
         public void ShouldGetDisplayAmountWithFrequencyPostfixNationalMinimums(WageType wageType, string expected)
         {
             // Act.
-            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(wageType, null, null, WageUnit.Weekly, 37.5m, null);
+            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(wageType, null, null, WageUnit.Weekly, 37.5m, new DateTime(2016, 9, 30));
 
             // Assert.
             actual.Should().Be(expected);

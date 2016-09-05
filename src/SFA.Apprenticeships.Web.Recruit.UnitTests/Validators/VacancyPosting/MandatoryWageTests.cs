@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
     using System;
+    using System.Linq;
     using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
     using Common.ViewModels;
     using Domain.Entities.Vacancies;
+    using FluentAssertions;
     using FluentValidation;
     using NUnit.Framework;
     using Raa.Common.Validators.Vacancy;
@@ -51,9 +53,9 @@
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
-            _validator.Validate(viewModel, ruleSet: RuleSet);
+            var response = _validator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+            var aggregateResponse = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -66,6 +68,13 @@
                 _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.Amount, viewModel, RuleSet);
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.Amount, vacancyViewModel);
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.Amount, vacancyViewModel, RuleSet);
+
+                var error = response.Errors.SingleOrDefault(e => e.PropertyName == "Wage.Amount");
+                error.Should().NotBeNull();
+                error?.ErrorMessage.Should().Be("The wage should not be less than the National Minimum Wage for apprentices");
+                var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.Wage.Amount");
+                aggregateError.Should().NotBeNull();
+                aggregateError?.ErrorMessage.Should().Be("The wage should not be less than the National Minimum Wage for apprentices");
             }
         }
 
@@ -91,9 +100,9 @@
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
-            _validator.Validate(viewModel, ruleSet: RuleSet);
+            var response = _validator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+            var aggregateResponse = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -106,6 +115,13 @@
                 _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.Amount, viewModel, RuleSet);
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.Amount, vacancyViewModel);
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.Amount, vacancyViewModel, RuleSet);
+
+                var error = response.Errors.SingleOrDefault(e => e.PropertyName == "Wage.Amount");
+                error.Should().NotBeNull();
+                error?.ErrorMessage.Should().Be("The wage should not be less then the new National Minimum Wage for apprentices effective from 1 Oct 2016");
+                var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.Wage.Amount");
+                aggregateError.Should().NotBeNull();
+                aggregateError?.ErrorMessage.Should().Be("The wage should not be less then the new National Minimum Wage for apprentices effective from 1 Oct 2016");
             }
         }
     }

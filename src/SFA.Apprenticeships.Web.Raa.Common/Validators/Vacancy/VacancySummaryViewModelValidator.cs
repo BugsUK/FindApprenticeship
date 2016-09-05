@@ -27,9 +27,9 @@
         public VacancySummaryViewModelServerValidator()
         {
             this.AddVacancySummaryViewModelCommonRules();
-            this.AddVacancySummaryViewModelServerCommonRules();
+            this.AddVacancySummaryViewModelServerCommonRules(null);
             RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
-            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelServerCommonRules);
+            RuleSet(RuleSets.Errors, () => this.AddVacancySummaryViewModelServerCommonRules(null));
             RuleSet(RuleSets.Warnings, () => this.AddVacancySummaryViewModelServerWarningRules(null));
         }
     }
@@ -39,9 +39,17 @@
         public VacancySummaryViewModelServerErrorValidator()
         {
             this.AddVacancySummaryViewModelCommonRules();
-            this.AddVacancySummaryViewModelServerCommonRules();
+            this.AddVacancySummaryViewModelServerCommonRules(null);
             RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
-            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelServerCommonRules);
+            RuleSet(RuleSets.Errors, () => this.AddVacancySummaryViewModelServerCommonRules(null));
+        }
+
+        public VacancySummaryViewModelServerErrorValidator(string parentPropertyName)
+        {
+            this.AddVacancySummaryViewModelCommonRules();
+            this.AddVacancySummaryViewModelServerCommonRules(parentPropertyName);
+            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
+            RuleSet(RuleSets.Errors, () => this.AddVacancySummaryViewModelServerCommonRules(parentPropertyName));
         }
     }
 
@@ -96,7 +104,7 @@
                 .When(x => Common.IsNotEmpty(x.ExpectedDuration));
         }
 
-        internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)
+        internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator, string parentPropertyName)
         {
             validator.RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
@@ -133,12 +141,7 @@
                 .When(x => x.Wage.Type == WageType.Custom)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
-            validator.RuleFor(x => x.Wage.Amount)
-                .Must(HaveAValidHourRate)
-                .When(v => v.Wage.Type == WageType.Custom)
-                .When(v => v.Wage.Unit != WageUnit.NotApplicable)
-                .When(v => v.Wage.HoursPerWeek.HasValue)
-                .WithMessage(VacancyViewModelMessages.Wage.WageLessThanMinimum);
+            validator.Custom(x => x.HaveAValidHourRate(x.Wage.Amount, parentPropertyName));
 
             validator.RuleFor(x => x.Duration)
                 .NotEmpty()
@@ -182,20 +185,6 @@
                 .SetValidator(new VacancyDatesViewModelServerWarningValidator(parentPropertyNameToUse));
         }
 
-        private static bool HaveAValidHourRate(FurtherVacancyDetailsViewModel furtherVacancy, decimal? wage)
-        {
-            if (furtherVacancy.VacancyType == VacancyType.Traineeship && !furtherVacancy.Wage.Amount.HasValue)
-                return true;
-
-            if (!furtherVacancy.Wage.Amount.HasValue || !furtherVacancy.Wage.HoursPerWeek.HasValue)
-                return false;
-
-            var hourRate = GetHourRate(furtherVacancy.Wage.Amount.Value, furtherVacancy.Wage.Unit, furtherVacancy.Wage.HoursPerWeek.Value);
-
-            var wageRange = furtherVacancy.VacancyDatesViewModel.GetWageRangeForPossibleStartDate();
-            return !(hourRate < wageRange.ApprenticeMinimumWage);
-        }
-
         private static bool HaveAValidApprenticeshipDuration(FurtherVacancyDetailsViewModel furtherVacancy, decimal? duration)
         {
             if (!furtherVacancy.Wage.HoursPerWeek.HasValue || !furtherVacancy.Duration.HasValue)
@@ -227,23 +216,6 @@
         private static bool HaveAValidHoursPerWeek(decimal? hours)
         {
             return hours.HasValue && hours.Value >= 16;
-        }
-
-        private static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)
-        {
-            switch (wageUnit)
-            {
-                case WageUnit.Weekly:
-                    return wage / hoursPerWeek;
-                case WageUnit.Annually:
-                    return wage / 52m / hoursPerWeek;
-                case WageUnit.Monthly:
-                    return wage / 52m * 12 / hoursPerWeek;
-                case WageUnit.NotApplicable:
-                    return 0;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wageUnit), wageUnit, null);
-            }
         }
     }
 }
