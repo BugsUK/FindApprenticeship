@@ -142,7 +142,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public DateTime CreatedDateTime { get; set; }
         public string CreatedByProviderUsername { get; set; }
         public string LocalAuthorityCode { get; set; }
-        public int ProviderId { get; set; }
         public bool EditedInRaa { get; set; }
         public VacancySource VacancySource { get; set; }
     }

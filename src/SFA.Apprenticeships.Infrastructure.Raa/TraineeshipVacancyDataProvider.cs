@@ -51,7 +51,7 @@
             if (providerSite == null)
                 throw new System.Exception($"Could not find VacancyParty for ProviderSiteId={vacancyParty.ProviderSiteId}");
 
-            var provider = _providerService.GetProvider(providerSite.ProviderId);
+            var provider = _providerService.GetProvider(vacancy.ProviderId);
             var categories = _referenceDataProvider.GetCategories();
             return TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(vacancy, employer, provider, providerSite, categories, _logService);
         }

@@ -159,8 +159,6 @@
             var providerSite = _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
             providerSite.ProviderSiteRelationships = _mapper.Map<List<Entities.ProviderSiteRelationship>, List<ProviderSiteRelationship>>(providerSiteRelationships[providerSite.ProviderSiteId]);
 
-            providerSite.ProviderId = providerSiteRelationships[providerSite.ProviderSiteId].First().ProviderID;
-
             return providerSite;
         }
 

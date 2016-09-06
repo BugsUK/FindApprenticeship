@@ -552,7 +552,7 @@
         private VacancyViewModel GetVacancyViewModelFrom(Vacancy vacancy)
         {
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
-            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId);
+            var provider = _providerService.GetProvider(vacancy.ProviderId);
             viewModel.Provider = provider.Convert();
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Some current vacancies have non-current vacancy parties
             if (vacancyParty != null)
@@ -998,7 +998,7 @@
                 }
             }
 
-            var providerMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId), false);
+            var providerMap = _providerService.GetProviders(vacancies.Select(v => v.ProviderId)).ToDictionary(p => p.ProviderId, p => p);
 
             var viewModel = new DashboardVacancySummariesViewModel
             {
@@ -1007,7 +1007,7 @@
                 SubmittedYesterdayCount = submittedYesterday.Count,
                 SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
                 ResubmittedCount = resubmitted.Count,
-                Vacancies = GetOrderedVacancySummaries(searchViewModel, vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.OwnerPartyId]))).ToList(),
+                Vacancies = GetOrderedVacancySummaries(searchViewModel, vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.ProviderId]))).ToList(),
                 RegionalTeamsMetrics = regionalTeamsMetrics
             };
 
@@ -1020,16 +1020,16 @@
             {
                 if (!string.IsNullOrEmpty(searchViewModel.Provider) && searchViewModel.Provider.Length >= 3)
                 {
-                    var providerSearchMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId), false);
-                    var vacancyOwnerRelationshipIds = new List<int>();
-                    foreach (var keyValuePair in providerSearchMap)
+                    var providers = _providerService.GetProviders(vacancies.Select(v => v.ProviderId));
+                    var providerIds = new List<int>();
+                    foreach (var provider in providers)
                     {
-                        if (keyValuePair.Value.TradingName.IndexOf(searchViewModel.Provider, StringComparison.OrdinalIgnoreCase) >= 0)
+                        if (provider.TradingName.IndexOf(searchViewModel.Provider, StringComparison.OrdinalIgnoreCase) >= 0)
                         {
-                            vacancyOwnerRelationshipIds.Add(keyValuePair.Key);
+                            providerIds.Add(provider.ProviderId);
                         }
                     }
-                    vacancies = vacancies.Where(v => vacancyOwnerRelationshipIds.Contains(v.OwnerPartyId)).ToList();
+                    vacancies = vacancies.Where(v => providerIds.Contains(v.ProviderId)).ToList();
                 }
             }
             return vacancies;
@@ -1080,7 +1080,7 @@
             var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
                 vacancies); 
 
-            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProviderViaCurrentOwnerParty(nextVacancy.OwnerPartyId, false)) : null;
+            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ProviderId)) : null;
         }
 
         public void UnReserveVacancyForQA(int vacancyReferenceNumber)

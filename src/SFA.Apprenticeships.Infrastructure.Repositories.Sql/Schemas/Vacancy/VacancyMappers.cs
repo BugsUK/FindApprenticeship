@@ -330,6 +330,7 @@
                 .IgnoreMember(dvl => dvl.Address)
                 .IgnoreMember(av => av.DateFirstSubmitted)
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
+                .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .IgnoreMember(av => av.RegionalTeam)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
                 .IgnoreMember(av => av.EmployerName)

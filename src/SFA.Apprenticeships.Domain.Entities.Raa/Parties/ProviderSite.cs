@@ -9,8 +9,6 @@
 
         public string EdsUrn { get; set; }
 
-        public int ProviderId { get; set; }
-
         public string Name { get; set; }
 
         public string TradingName { get; set; }

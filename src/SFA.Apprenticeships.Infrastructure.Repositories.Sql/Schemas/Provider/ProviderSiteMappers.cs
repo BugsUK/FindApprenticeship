@@ -15,7 +15,6 @@
             Mapper.CreateMap<DatabaseProviderSite, DomainProviderSite>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.FullName))
                 .IgnoreMember(dest => dest.Address)
-                .IgnoreMember(dest => dest.ProviderId)
                 .IgnoreMember(dest => dest.ProviderSiteRelationships)
                 .AfterMap((source, dest) =>
                 {
