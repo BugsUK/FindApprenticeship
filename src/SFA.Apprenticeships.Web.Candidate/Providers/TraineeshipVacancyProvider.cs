@@ -37,7 +37,6 @@
             string vacancyReference;
             var searchLocation = _traineeshipSearchMapper.Map<TraineeshipSearchViewModel, Location>(search);
             var isVacancyReference = VacancyHelper.TryGetVacancyReference(search.ReferenceNumber, out vacancyReference);
-
             try
             {
                 var searchRequest = new TraineeshipSearchParameters

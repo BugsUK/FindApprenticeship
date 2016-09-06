@@ -76,7 +76,11 @@
                         q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, vacancyReference)))));
 
             var responses = _vacancySearchMapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSearchResponse>>(searchResults.Documents).ToList();
-            var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>(searchResults.Total, responses, null, new TraineeshipSearchParameters { PageNumber = 1 });
+            var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>
+                (searchResults.Total,
+                responses,
+                null,
+                new TraineeshipSearchParameters { PageNumber = 1 });
             return results;
         }
 

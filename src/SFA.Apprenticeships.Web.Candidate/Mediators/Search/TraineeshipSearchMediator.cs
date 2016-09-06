@@ -95,7 +95,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
             if (!clientResult.IsValid)
             {
-                return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.ValidationError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, clientResult);
+                return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.ValidationError,
+                    new TraineeshipSearchResponseViewModel { VacancySearch = model },
+                    clientResult);
             }
 
             if (!HasGeoPoint(model))

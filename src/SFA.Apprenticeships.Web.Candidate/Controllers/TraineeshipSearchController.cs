@@ -86,7 +86,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
-
                     case TraineeshipSearchMediatorCodes.Results.HasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
