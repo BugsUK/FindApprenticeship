@@ -54,7 +54,6 @@
 
                 var searchResults = _traineeshipSearchService.Search(searchRequest);
 
-                //Expect only a single result. Any other number should be interpreted as no results
                 if (searchResults.Total == 1)
                 {
                     var exactMatchResponse = _traineeshipSearchMapper.Map<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(searchResults);
