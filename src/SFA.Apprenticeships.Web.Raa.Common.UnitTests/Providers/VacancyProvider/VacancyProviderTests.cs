@@ -21,6 +21,7 @@
     public class VacancyProviderTests
     {
         private const int QAVacancyTimeout = 10;
+        private const int ProviderId = 2;
 
         [Test]
         public void GetPendingQAVacanciesShouldOnlyReturnVacanciesAvailableToQa()
@@ -44,7 +45,7 @@
                 {
                     ClosingDate = today,
                     DateSubmitted = today,
-                    OwnerPartyId = anInt,
+                    ProviderId = ProviderId,
                     VacancyReferenceNumber = vacancyAvailableToQAReferenceNumber,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = username,
@@ -55,7 +56,7 @@
                 {
                     ClosingDate = today,
                     DateSubmitted = today,
-                    OwnerPartyId = anInt,
+                    ProviderId = ProviderId,
                     VacancyReferenceNumber = vacancyNotAvailableToQAReferenceNumber,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = username,
@@ -68,7 +69,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
+            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
 
             vacancyLockingService.Setup(
                 vls =>
@@ -105,7 +106,6 @@
             //Arrange
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
-            const int ownerPartyId = 42;
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
@@ -118,12 +118,12 @@
                     {
                         ClosingDate = DateTime.Now,
                         DateSubmitted = DateTime.Now,
-                        OwnerPartyId = ownerPartyId,
+                        ProviderId = ProviderId,
                         Status = VacancyStatus.Submitted
                     }
                 });
 
-            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 42, new Fixture().Create<Provider>() } });
+            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -137,7 +137,7 @@
 
             //Assert
             vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
-            providerService.Verify(ps => ps.GetProvidersViaCurrentOwnerParty(new List<int> {ownerPartyId}, It.IsAny<bool>()), Times.Once);
+            providerService.Verify(ps => ps.GetProviders(new List<int> { ProviderId }), Times.Once);
         }
     }
 

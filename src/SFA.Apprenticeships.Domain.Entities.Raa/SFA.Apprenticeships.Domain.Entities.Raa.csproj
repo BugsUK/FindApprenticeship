@@ -91,6 +91,7 @@
     <Compile Include="Parties\MinimalEmployerDetails.cs" />
     <Compile Include="Parties\Provider.cs" />
     <Compile Include="Parties\ProviderSite.cs" />
+    <Compile Include="Parties\ProviderSiteRelationship.cs" />
     <Compile Include="Parties\VacancyParty.cs" />
     <Compile Include="Parties\EmployerEqualityComparer.cs" />
     <Compile Include="Parties\VacancyPartyEqualityComparer.cs" />

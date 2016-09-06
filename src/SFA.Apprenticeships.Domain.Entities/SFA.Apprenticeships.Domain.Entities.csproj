@@ -120,6 +120,9 @@
     <Compile Include="Extensions\CategoryExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
+    <Compile Include="Feature\Feature.cs" />
+    <Compile Include="Feature\FeatureConfiguration.cs" />
+    <Compile Include="Feature\FeatureConfigurationExtensions.cs" />
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="ReferenceData\CategoryPrefixes.cs" />
     <Compile Include="ReferenceData\CategoryType.cs" />

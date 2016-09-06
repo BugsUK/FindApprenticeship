@@ -11,6 +11,6 @@
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
-        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds);
+        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId);
     }
 }
