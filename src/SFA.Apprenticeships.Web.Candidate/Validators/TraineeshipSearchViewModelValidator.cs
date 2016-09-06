@@ -38,7 +38,7 @@
         {
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
-                .When(x => !VacancyHelper.IsVacancyReference(x.ReferenceNumber))
+                .When(x => string.IsNullOrEmpty(x.ReferenceNumber))
                 .WithMessage(TraineeshipSearchViewModelMessages.LocationMessages.RequiredErrorText)
                 .Length(2, 99)
                 .WithMessage(TraineeshipSearchViewModelMessages.LocationMessages.LengthErrorText)
