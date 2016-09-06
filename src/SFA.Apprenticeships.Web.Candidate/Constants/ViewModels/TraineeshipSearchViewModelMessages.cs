@@ -14,5 +14,15 @@
             public const string WhiteList = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Location " + Whitelists.NameWhitelist.ErrorText;
         }
+
+        public static class ReferenceNumberMessages
+        {
+            public const string LabelText = "Traineeship reference number (optional)";
+            //public const string HintText = "Enter job reference number";
+            //public const string RequiredErrorText = "Please enter location";
+            //public const string LengthErrorText = "Location must be 3 or more characters or a postcode";
+            //public const string WhiteList = Whitelists.FreetextWhitelist.RegularExpression;
+            //public const string WhiteListErrorText = "Location " + Whitelists.NameWhitelist.ErrorText;
+        }
     }
 }

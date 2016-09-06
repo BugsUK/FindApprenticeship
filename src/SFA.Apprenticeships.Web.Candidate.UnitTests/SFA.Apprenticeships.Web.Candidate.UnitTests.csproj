@@ -285,6 +285,7 @@
     <Compile Include="Mediators\TraineeshipApplication\SubmitTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\TestsBase.cs" />
     <Compile Include="Mediators\TraineeshipSearch\ResultsTests.cs" />
+    <Compile Include="Mediators\TraineeshipSearch\SearchValidationTests.cs" />
     <Compile Include="Mediators\TraineeshipSearch\TestsBase.cs" />
     <Compile Include="Mediators\Unsubscribe\UnsubscribeMediatorTests.cs" />
     <Compile Include="Providers\AccountProvider\AccountProviderBuilder.cs" />

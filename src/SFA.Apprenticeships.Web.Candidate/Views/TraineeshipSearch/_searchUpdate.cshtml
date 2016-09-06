@@ -8,7 +8,8 @@
             <div class="mob-collpanel toggle-content--mob" id="editSearchPanel">
 
                 <div class="para-btm-margin">
-                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "small-btm-margin" })
+                    @Html.FormTextFor(m=>m.ReferenceNumber, "Reference number")
+                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new {@class = "small-btm-margin"})
                     <a href="#" class="geolocater inl-block hide-nojs " id="getLocation">Use current location</a>
                 </div>
                 

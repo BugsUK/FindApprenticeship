@@ -47,7 +47,7 @@
             get
             {
                 var pages = 1;
-                if (PageSize <= 0) {return pages;}
+                if (PageSize <= 0) { return pages; }
                 pages = (int)TotalHits / PageSize;
                 if (TotalHits % PageSize > 0) { pages++; }
                 return pages;
@@ -73,5 +73,7 @@
         {
             get { return VacancySearch.LocationSearches; }
         }
+
+        public bool ExactMatchFound { get; set; }
     }
 }

@@ -2,22 +2,18 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Constants;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Extensions;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Search;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
     using ViewModels.VacancySearch;
 
     [UserJourneyContext(UserJourney.Traineeship, Order = 2)]
@@ -51,6 +47,28 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             });
         }
 
+        [HttpPost]
+        [ClearSearchReturnUrl(false)]
+        public async Task<ActionResult> Index(TraineeshipSearchViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                ViewBag.SearchReturnUrl = Request?.Url?.PathAndQuery;
+                var response = _traineeshipSearchMediator.SearchValidation(model);
+
+                switch (response.Code)
+                {
+                    case TraineeshipSearchMediatorCodes.SearchValidation.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("Index", response.ViewModel);
+                    case TraineeshipSearchMediatorCodes.SearchValidation.Ok:
+                        return RedirectToRoute(CandidateRouteNames.TraineeshipResults, model.RouteValues);
+                }
+                throw new InvalidMediatorCodeException(response.Code);
+            });
+        }
+
         [HttpGet]
         [ClearSearchReturnUrl(false)]
         [SessionTimeout]
@@ -58,7 +76,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
-                ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
+                ViewBag.SearchReturnUrl = Request?.Url?.PathAndQuery;
 
                 var response = _traineeshipSearchMediator.Results(model);
 
@@ -68,17 +86,18 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
-
                     case TraineeshipSearchMediatorCodes.Results.HasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-
+                    case TraineeshipSearchMediatorCodes.Results.ExactMatchFound:
+                        ViewBag.SearchReturnUrl = null;
+                        return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, response.Parameters);
                     case TraineeshipSearchMediatorCodes.Results.Ok:
                         ModelState.Remove("Location");
                         ModelState.Remove("Latitude");
                         ModelState.Remove("Longitude");
-                        return View(response.ViewModel);                        
+                        return View(response.ViewModel);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

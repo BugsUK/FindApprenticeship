@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearch
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators.Search;
     using Candidate.Providers;
@@ -15,9 +13,9 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     [Parallelizable]
@@ -68,11 +66,11 @@
             // This order is important. Moq will run though all matches and pick the last one.
             traineeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.IsAny<TraineeshipSearchViewModel>()))
                 .Returns<TraineeshipSearchViewModel>(
-                    svm => new TraineeshipSearchResponseViewModel {Vacancies = emptyVacancies, VacancySearch = svm});
+                    svm => new TraineeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
             traineeshipVacancyProvider.Setup(
                 sp => sp.FindVacancies(It.Is<TraineeshipSearchViewModel>(svm => svm.Location == "London")))
                 .Returns<TraineeshipSearchViewModel>(
-                    svm => new TraineeshipSearchResponseViewModel {Vacancies = londonVacancies, VacancySearch = svm});
+                    svm => new TraineeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
 
             return traineeshipVacancyProvider;
         }
@@ -107,7 +105,7 @@
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
 
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration {VacancyResultsPerPage = 5});
+                .Returns(new CommonWebConfiguration { VacancyResultsPerPage = 5 });
             var userDataProvider = GetUserDataProvider();
 
             var mediator = GetMediator(configurationService.Object, searchProvider, userDataProvider.Object,
@@ -286,6 +284,33 @@
 
             var response = mediator.Results(searchViewModel);
             _userData[UserDataItemNames.LastSearchedLocation].Should().Be(searchViewModel.Location + "|0|0");
+        }
+
+        [Test]
+        public void ExactMatchFoundUsingVacancyReference()
+        {
+            var searchViewModel = new TraineeshipSearchViewModel
+            {
+                ReferenceNumber = "VAC000123456"
+            };
+
+            TraineeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.IsAny<TraineeshipSearchViewModel>()))
+                .Returns(new TraineeshipSearchResponseViewModel
+                {
+                    ExactMatchFound = true,
+                    VacancySearch = searchViewModel,
+                    Vacancies = new List<TraineeshipVacancySummaryViewModel>
+                    {
+                        new TraineeshipVacancySummaryViewModel
+                        {
+                            Id = 123456
+                        }
+                    }
+                });
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(TraineeshipSearchMediatorCodes.Results.ExactMatchFound, false, true);
         }
     }
 }
