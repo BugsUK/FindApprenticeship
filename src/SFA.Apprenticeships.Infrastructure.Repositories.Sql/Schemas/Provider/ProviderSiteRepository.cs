@@ -14,6 +14,8 @@
     {
         private const int ActivatedEmployerTrainingProviderStatusId = 1;
         private const int OwnerRelationship = 1;
+        private const int SubcontractorRelationship = 2;
+        private const int RecruitmentConsultantRelationship = 3;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
@@ -110,7 +112,8 @@
                 WHERE psr.ProviderID = @providerId 
                 AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
 
-            if(!_configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled())
+            var isSubcontractorsFeatureEnabled = _configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled();
+            if(!isSubcontractorsFeatureEnabled)
             {
                 sql += " and psr.ProviderSiteRelationShipTypeID = @OwnerRelationship";
             }
@@ -122,6 +125,40 @@
                 providerId,
                 ActivatedEmployerTrainingProviderStatusId,
                 OwnerRelationship
+            };
+
+            var dbProviderSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
+            var providerSiteRelationships = GetProviderIdByProviderSiteId(dbProviderSites.Select(ps => ps.ProviderSiteId).Distinct());
+            var providerSites = dbProviderSites.Select(ps => MapProviderSite(ps, providerSiteRelationships));
+
+            if (isSubcontractorsFeatureEnabled)
+            {
+                //Subcontractors can also see the lead's provider sites
+                //Get all the ProviderSiteRelationships where the provider owns the provider site but that provider site is also subcontracted to another provider
+                var subContractorProviderSiteRelationships = providerSiteRelationships.Values.Where(psrl => psrl.Any(psr => psr.ProviderID == providerId && psr.ProviderSiteRelationShipTypeID == OwnerRelationship)).SelectMany(psrl => psrl.Where(psr => psr.ProviderSiteRelationShipTypeID == SubcontractorRelationship));
+                var subContractorOwnerProviderSites = GetByProviderIds(subContractorProviderSiteRelationships.Select(psr => psr.ProviderID).Distinct(), new []{ OwnerRelationship });
+                providerSites = providerSites.Union(subContractorOwnerProviderSites);
+            }
+
+            return providerSites;
+        }
+
+        private IEnumerable<ProviderSite> GetByProviderIds(IEnumerable<int> providerIds, IEnumerable<int> providerSiteRelationShipTypeIds)
+        {
+            var sql = @"
+                SELECT ps.* FROM dbo.ProviderSite ps
+                INNER JOIN dbo.ProviderSiteRelationship psr
+                ON psr.ProviderSiteID = ps.ProviderSiteID
+                WHERE psr.ProviderID IN @providerIds
+                AND psr.ProviderSiteRelationShipTypeID IN @providerSiteRelationShipTypeIds
+                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId
+                ORDER BY psr.ProviderSiteRelationShipTypeID, ps.TradingName, ps.Town";
+
+            var sqlParams = new
+            {
+                providerIds,
+                providerSiteRelationShipTypeIds,
+                ActivatedEmployerTrainingProviderStatusId
             };
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
@@ -162,17 +199,14 @@
             return providerSite;
         }
 
-        // Contracted
         private IReadOnlyDictionary<int, List<Entities.ProviderSiteRelationship>> GetProviderIdByProviderSiteId(IEnumerable<int> providerSiteIds)
         {
-            //TODO: Deal with Subcontractors and recruitment consultants. Should be done with ContractOwnerId rather than like this
-
             const string sql = @"
                 SELECT *
                 FROM dbo.ProviderSiteRelationship AS psr 
                 JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
                 WHERE ps.ProviderSiteId IN @providerSiteIds
-                ORDER BY psr.ProviderSiteRelationshipTypeID"; //Forces non Subcontractors and Recruitment Consultants to the end of the list to prioritize owners
+                ORDER BY psr.ProviderSiteRelationshipTypeID";
 
             var sqlParams = new
             {
@@ -181,7 +215,6 @@
 
             var map = new Dictionary<int, List<Entities.ProviderSiteRelationship>>();
 
-            //TODO: workaround to be able to create the index. Should be done properly.
             var providerSiteRelationships = _getOpenConnection.Query<Entities.ProviderSiteRelationship>(sql, sqlParams);
             foreach (var providerSiteRelationship in providerSiteRelationships)
             {
