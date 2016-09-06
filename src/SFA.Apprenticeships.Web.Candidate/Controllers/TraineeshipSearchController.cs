@@ -91,7 +91,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-
+                    case TraineeshipSearchMediatorCodes.Results.ExactMatchFound:
+                        ViewBag.SearchReturnUrl = null;
+                        return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, response.Parameters);
                     case TraineeshipSearchMediatorCodes.Results.Ok:
                         ModelState.Remove("Location");
                         ModelState.Remove("Latitude");

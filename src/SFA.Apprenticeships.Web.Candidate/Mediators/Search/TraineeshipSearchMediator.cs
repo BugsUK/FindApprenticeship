@@ -147,9 +147,24 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             }
 
             UserDataProvider.Push(UserDataItemNames.LastSearchedLocation, string.Join("|", model.Location, model.Latitude, model.Longitude));
-            var traineeshipSearchResponseViewModel = _traineeshipVacancyProvider.FindVacancies(model);
 
-            traineeshipSearchResponseViewModel.VacancySearch.SortTypes = GetSortTypes(model.SortType);
+            var traineeshipSearchResponseViewModel = _traineeshipVacancyProvider.FindVacancies(model);
+            traineeshipSearchResponseViewModel.VacancySearch = model;
+            if (traineeshipSearchResponseViewModel.ExactMatchFound)
+            {
+                var id = traineeshipSearchResponseViewModel.Vacancies.Single().Id;
+                return GetMediatorResponse<TraineeshipSearchResponseViewModel>(TraineeshipSearchMediatorCodes.Results.ExactMatchFound, parameters: new { id });
+            }
+
+            if (traineeshipSearchResponseViewModel.VacancySearch != null)
+            {
+                traineeshipSearchResponseViewModel.VacancySearch.SortTypes = GetSortTypes(model.SortType);
+            }
+
+            if (traineeshipSearchResponseViewModel.HasError())
+            {
+                return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.HasError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, traineeshipSearchResponseViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
 
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, traineeshipSearchResponseViewModel);
         }

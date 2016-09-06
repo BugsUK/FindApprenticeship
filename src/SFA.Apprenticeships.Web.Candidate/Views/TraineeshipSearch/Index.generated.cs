@@ -133,14 +133,14 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 21 "..\..\Views\TraineeshipSearch\Index.cshtml"
-          Write(Html.FormTextFor(m=>m.ReferenceNumber, controlHtmlAttributes: new { type = "number" }));
+          Write(Html.FormTextFor(m=>m.ReferenceNumber, controlHtmlAttributes: new { type = "text" }));
 
             
             #line default
             #line hidden
             
             #line 21 "..\..\Views\TraineeshipSearch\Index.cshtml"
-                                                                                                      
+                                                                                                    
 
 
             
@@ -236,14 +236,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1443), Tuple.Create("\"", 1473)
+WriteAttribute("value", Tuple.Create(" value=\"", 1441), Tuple.Create("\"", 1471)
             
             #line 32 "..\..\Views\TraineeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1451), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 1449), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 1451), false)
+, 1449), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -292,14 +292,14 @@ WriteLiteral(" class=\"list-text\"");
 WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
 "");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1870), Tuple.Create("\'", 1920)
+WriteAttribute("href", Tuple.Create(" href=\'", 1868), Tuple.Create("\'", 1918)
             
             #line 42 "..\..\Views\TraineeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1877), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 1875), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 1877), false)
+, 1875), false)
 );
 
 WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    <ul");

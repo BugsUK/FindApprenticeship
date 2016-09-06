@@ -55,6 +55,18 @@
 
                 var searchResults = _traineeshipSearchService.Search(searchRequest);
 
+                //Expect only a single result. Any other number should be interpreted as no results
+                if (searchResults.Total == 1)
+                {
+                    var exactMatchResponse = _traineeshipSearchMapper.Map<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(searchResults);
+                    exactMatchResponse.ExactMatchFound = true;
+                    return exactMatchResponse;
+                }
+
+                if (searchResults.Total > 1)
+                {
+                    _logger.Info($"{searchResults.Total} results found for Vacancy Reference Number {vacancyReference}");
+                }
                 var searchResponse =
                     _traineeshipSearchMapper.Map<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(
                         searchResults);

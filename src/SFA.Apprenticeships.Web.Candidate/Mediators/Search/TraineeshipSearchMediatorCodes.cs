@@ -12,6 +12,7 @@
             public const string Ok = "TraineeshipSearch.Results.Ok";
             public const string ValidationError = "TraineeshipSearch.Results.ValidationError";
             public const string HasError = "TraineeshipSearch.Results.HasError";
+            public const string ExactMatchFound = "TraineeshipSearch.Results.ExactMatchFound";
         }
 
         public class SearchValidation
