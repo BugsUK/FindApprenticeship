@@ -35,40 +35,6 @@
             _employerService = employerService;
         }
 
-        public Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId, bool currentOnly = true)
-        {
-            var providerSiteId = 0;
-            var vacancyParty =
-                _vacancyPartyReadRepository.GetByIds(new[] {vacancyPartyId}, currentOnly).FirstOrDefault();
-            if (vacancyParty != null)
-            {
-                providerSiteId = vacancyParty.ProviderSiteId;
-            }
-            var providerSite = providerSiteId != 0 ? _providerSiteReadRepository.GetById(providerSiteId) : null;
-            return providerSite != null ? _providerReadRepository.GetById(providerSite.ProviderId) : null;
-        }
-
-        public IReadOnlyDictionary<int, Provider> GetProvidersViaCurrentOwnerParty(IEnumerable<int> vacancyPartyIds,
-            bool currentOnly = true)
-        {
-            var vacancyParties =
-                _vacancyPartyReadRepository.GetByIds(vacancyPartyIds, currentOnly)
-                    .ToDictionary(vp => vp.VacancyPartyId, v => v);
-            var providerSites =
-                _providerSiteReadRepository.GetByIds(vacancyParties.Values.Select(vp => vp.ProviderSiteId).Distinct());
-            var providers =
-                _providerReadRepository.GetByIds(providerSites.Values.Select(ps => ps.ProviderId).Distinct())
-                    .ToDictionary(p => p.ProviderId, p => p);
-
-            var map = new Dictionary<int, Provider>(vacancyParties.Count);
-            foreach (var vacancyParty in vacancyParties)
-            {
-                map[vacancyParty.Key] = providers[providerSites[vacancyParty.Value.ProviderSiteId].ProviderId];
-            }
-
-            return map;
-        }
-
         public Provider GetProvider(int providerId)
         {
             return _providerReadRepository.GetById(providerId);
@@ -100,11 +66,6 @@
             _logService.Debug("Calling ProviderSiteReadRepository to get provider site with ERN='{0}'.", edsUrn);
 
             return _providerSiteReadRepository.GetByEdsUrn(edsUrn);
-        }
-
-        public IEnumerable<ProviderSite> GetOwnerAndRecruitmentAgentProviderSites(int providerId)
-        {
-            return _providerSiteReadRepository.GetByProviderId(providerId, true);
         }
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
