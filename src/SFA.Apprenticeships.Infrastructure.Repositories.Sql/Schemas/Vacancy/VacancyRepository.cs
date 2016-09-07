@@ -8,15 +8,13 @@
     using Domain.Entities.Feature;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
-    using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
     using Newtonsoft.Json;
     using Reference.Entities;
-    using SFA.Infrastructure.Interfaces;
+    using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
@@ -1532,6 +1530,18 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             return vacancyCollections
                 .GroupBy(x => (int) x.VacancyOwnerRelationshipId)
                 .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));               
+        }
+
+        public int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber)
+        {
+            _logger.Debug("Calling database to get vacancy id for Vacancy Reference Number={0}",
+                vacancyReferenceNumber);
+
+            var vacancyId = _getOpenConnection.Query<int>(
+                "SELECT VacancyId FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
+                new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
+
+            return vacancyId;
         }
 
         private class MinimalVacancyDetails : IMinimalVacancyDetails

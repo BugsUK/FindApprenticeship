@@ -77,6 +77,15 @@
             }
         }
 
+        public int GetVacancyId(int vacancyReferenceNumber)
+        {
+            Condition.Requires(vacancyReferenceNumber);
+
+            _logger.Debug("Calling VacancyDataProvider to get vacancy id for vacancy reference number {0}.", vacancyReferenceNumber);
+
+            return _vacancyDataProvider.GetVacancyId(vacancyReferenceNumber);
+        }
+
         private static string GetLoggerMessage(string message, SearchParametersBase parameters)
         {
             return string.Format(message, parameters);

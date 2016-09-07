@@ -18,6 +18,7 @@
         public const string ApprenticeshipSearchSaveSearch = "ApprenticeshipSearchSaveSearch";
         public const string ApprenticeshipResults = "ApprenticeshipResults";
         public const string ApprenticeshipDetails = "ApprenticeshipDetails";
+        public const string ApprenticeshipDetailsByReferenceNumber = "ApprenticeshipDetailsByReferenceNumber";
         public const string ApprenticeshipDetailsWithDistance = "ApprenticeshipDetailsWithDistance";
         public const string ApprenticeshipApply = "ApprenticeshipApply";
         public const string ApprenticeshipPreview = "ApprenticeshipPreview";
@@ -35,6 +36,7 @@
         public const string TraineeshipApply = "TraineeshipApply";
         public const string TraineeshipResults = "TraineeshipResults";
         public const string TraineeshipDetails = "TraineeshipDetails";
+        public const string TraineeshipDetailsByReferenceNumber = "TraineeshipDetailsByReferenceNumber";
         public const string TraineeshipWhatNext = "TraineeshipWhatNext";
         public const string TraineeshipView = "TraineeshipView";
         public const string Unsubscribe = "Unsubscribe";

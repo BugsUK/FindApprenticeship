@@ -32,5 +32,26 @@
 
             return match.Success;
         }
+
+        public static bool TryGetVacancyReferenceNumber(string value, out int vacancyReferenceNumber)
+        {
+            vacancyReferenceNumber = 0;
+
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+            
+            var match = VacancyReferenceNumberRegex.Match(value);
+            
+            if (match.Success)
+            {
+                var vacancyReference = match.Groups[2].Value;
+                if (!string.IsNullOrEmpty(vacancyReference) && int.TryParse(vacancyReference, out vacancyReferenceNumber))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

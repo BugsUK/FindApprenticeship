@@ -135,5 +135,11 @@
                 throw;
             }
         }
+
+        public TraineeshipVacancyDetailViewModel GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber)
+        {
+            var vacancyId = _traineeshipSearchService.GetVacancyId(vacancyReferenceNumber);
+            return GetVacancyDetailViewModel(candidateId, vacancyId);
+        }
     }
 }

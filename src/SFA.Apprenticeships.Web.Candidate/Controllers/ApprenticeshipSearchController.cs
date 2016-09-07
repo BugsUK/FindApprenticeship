@@ -189,26 +189,47 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [SessionTimeout]
         public async Task<ActionResult> Details(string id)
         {
-            return await Task.Run<ActionResult>(() =>
+            return await Task.Run(() =>
             {
                 var candidateId = GetCandidateId();
 
                 var response = _apprenticeshipSearchMediator.Details(id, candidateId);
 
-                switch (response.Code)
-                {
-                    case ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound:
-                        return new ApprenticeshipNotFoundResult();
-                    case ApprenticeshipSearchMediatorCodes.Details.VacancyHasError:
-                        ModelState.Clear();
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View(response.ViewModel);
-                    case ApprenticeshipSearchMediatorCodes.Details.Ok:
-                        return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
+                return GetDetailsResult(response);
             });
+        }
+
+        [HttpGet]
+        [ClearSearchReturnUrl(false)]
+        [RobotsIndexPage(true)]
+        [SessionTimeout]
+        public async Task<ActionResult> DetailsByReferenceNumber(string vacancyReferenceNumber)
+        {
+            return await Task.Run(() =>
+            {
+                var candidateId = GetCandidateId();
+
+                var response = _apprenticeshipSearchMediator.DetailsByReferenceNumber(vacancyReferenceNumber, candidateId);
+
+                return GetDetailsResult(response);
+            });
+        }
+
+        private ActionResult GetDetailsResult(MediatorResponse<ApprenticeshipVacancyDetailViewModel> response)
+        {
+            switch (response.Code)
+            {
+                case ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound:
+                    return new ApprenticeshipNotFoundResult();
+                case ApprenticeshipSearchMediatorCodes.Details.VacancyHasError:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View("Details", response.ViewModel);
+                case ApprenticeshipSearchMediatorCodes.Details.Ok:
+                    return View("Details", response.ViewModel);
+            }
+
+            throw new InvalidMediatorCodeException(response.Code);
         }
 
         [HttpGet]

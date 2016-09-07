@@ -19,13 +19,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Infrastructure.Interfaces;
     using Extensions;
     using Infrastructure.VacancySearch.Configuration;
     using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Apprenticeships.Application.Interfaces;
     using Validators;
     using ViewModels.Account;
     using ViewModels.VacancySearch;
@@ -391,6 +388,22 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
             var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
+            return GetDetails(vacancyDetailViewModel);
+        }
+
+        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId)
+        {
+            int vacancyReferenceNumber;
+            if (VacancyHelper.TryGetVacancyReferenceNumber(vacancyReferenceNumberString, out vacancyReferenceNumber))
+            {
+                var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModelByReferenceNumber(candidateId, vacancyReferenceNumber);
+                return GetDetails(vacancyDetailViewModel);
+            }
+            return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+        }
+
+        private MediatorResponse<ApprenticeshipVacancyDetailViewModel> GetDetails(ApprenticeshipVacancyDetailViewModel vacancyDetailViewModel)
+        {
             if (vacancyDetailViewModel == null)
             {
                 return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
@@ -412,13 +425,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
             var lastViewedVacancy = UserDataProvider.PopLastViewedVacancy();
 
-            if (HasToPopulateDistance(vacancyId, distance, lastViewedVacancy))
+            if (HasToPopulateDistance(vacancyDetailViewModel.Id, distance, lastViewedVacancy))
             {
                 vacancyDetailViewModel.Distance = distance;
                 UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
             }
 
-            UserDataProvider.PushLastViewedVacancyId(vacancyId, VacancyType.Apprenticeship);
+            UserDataProvider.PushLastViewedVacancyId(vacancyDetailViewModel.Id, VacancyType.Apprenticeship);
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }

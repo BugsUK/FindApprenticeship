@@ -5,5 +5,6 @@
     public interface IVacancyDataProvider<out TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
         TVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound = false);
+        int GetVacancyId(int vacancyReferenceNumber);
     }
 }

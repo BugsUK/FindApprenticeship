@@ -55,5 +55,10 @@
             var categories = _referenceDataProvider.GetCategories();
             return TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(vacancy, employer, provider, providerSite, categories, _logService);
         }
+
+        public int GetVacancyId(int vacancyReferenceNumber)
+        {
+            return _vacancyReadRepository.GetVacancyIdByReferenceNumber(vacancyReferenceNumber);
+        }
     }
 }

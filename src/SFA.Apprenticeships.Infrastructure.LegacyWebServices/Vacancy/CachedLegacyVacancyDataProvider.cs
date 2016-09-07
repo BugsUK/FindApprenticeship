@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Vacancy
 {
-    using SFA.Infrastructure.Interfaces;
+    using System;
     using Apprenticeships.Application.Vacancy;
     using Domain.Entities.Vacancies;
 
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Apprenticeships.Application.Interfaces.Caching;
+    using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.Caching;
 
     public class CachedLegacyVacancyDataProvider<TVacancyDetail> : IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
@@ -26,6 +26,12 @@
         {
             _logger.Debug("Calling GetVacancyDetails for VacancyId: {0}", vacancyId);
             return _cacheService.Get(VacancyDataCacheKey, vacancyId1 => _vacancyDataProvider.GetVacancyDetails(vacancyId1, errorIfNotFound), vacancyId);
+        }
+
+        public int GetVacancyId(int vacancyReferenceNumber)
+        {
+            _logger.Debug("Calling GetVacancyId for vacancyReferenceNumber: {0}", vacancyReferenceNumber);
+            return (int)_cacheService.Get(VacancyDataCacheKey, vacancyReferenceNumber1 => (object)_vacancyDataProvider.GetVacancyId(vacancyReferenceNumber1), vacancyReferenceNumber);
         }
     }
 }

@@ -182,6 +182,22 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
             var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
+            return GetDetails(vacancyDetailViewModel);
+        }
+
+        public MediatorResponse<TraineeshipVacancyDetailViewModel> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId)
+        {
+            int vacancyReferenceNumber;
+            if (VacancyHelper.TryGetVacancyReferenceNumber(vacancyReferenceNumberString, out vacancyReferenceNumber))
+            {
+                var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModelByReferenceNumber(candidateId, vacancyReferenceNumber);
+                return GetDetails(vacancyDetailViewModel);
+            }
+            return GetMediatorResponse<TraineeshipVacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
+        }
+
+        private MediatorResponse<TraineeshipVacancyDetailViewModel> GetDetails(TraineeshipVacancyDetailViewModel vacancyDetailViewModel)
+        {
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
                 return GetMediatorResponse<TraineeshipVacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
@@ -195,13 +211,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
             var lastViewedVacancy = UserDataProvider.PopLastViewedVacancy();
 
-            if (HasToPopulateDistance(vacancyId, distance, lastViewedVacancy))
+            if (HasToPopulateDistance(vacancyDetailViewModel.Id, distance, lastViewedVacancy))
             {
                 vacancyDetailViewModel.Distance = distance;
                 UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
             }
 
-            UserDataProvider.PushLastViewedVacancyId(vacancyId, VacancyType.Traineeship);
+            UserDataProvider.PushLastViewedVacancyId(vacancyDetailViewModel.Id, VacancyType.Traineeship);
 
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
