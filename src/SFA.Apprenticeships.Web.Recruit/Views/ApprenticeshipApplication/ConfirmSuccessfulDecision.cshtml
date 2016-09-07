@@ -13,19 +13,17 @@
     @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
-
     <div>
         <div class="hgroup">
-            <h1 class="heading-xlarge med-btm-margin">Send successful decision</h1>
+            <h1 class="heading-xlarge med-btm-margin">Confirm decision - successful</h1>
         </div>
-
-        <p>Confirm @Model.ApplicantDetails.Name's application has been successful. Your decision can't be reversed.</p>
+        <p>You are about to confirm @Model.ApplicantDetails.Name's application has been successful.</p>
+        <p>Your decision can't be reversed within the recruit an apprentice system once this message has been sent.</p>
         <p>An automated message will now be sent to the candidate to inform them they have been selected for this role.</p>
-
         <section>
             <div class="form-group">
                 <button type="submit" class="button" name="SendSuccessfulDecision" value="SendSuccessfulDecision">
-                    Confirm
+                    Send
                 </button>
                 <p class="med-btm-margin">
                     @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection.RouteValues)
