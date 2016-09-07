@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.DormantAccount
 {
-    using System;
     using Apprenticeships.Application.Candidates.Strategies;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
@@ -8,6 +7,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using System;
 
     [TestFixture]
     public class SetPendingDeletionStrategyTests
@@ -68,11 +68,10 @@
             var userWriteRepository = new Mock<IUserWriteRepository>();
             User savedUser = null;
             userWriteRepository.Setup(r => r.Save(It.IsAny<User>())).Callback<User>(u => savedUser = u);
+            userWriteRepository.Setup(r => r.SoftDelete(It.IsAny<User>())).Callback<User>(u => savedUser = u);
             var successor = new Mock<IHousekeepingStrategy>();
             var strategy = new SetPendingDeletionStrategyBuilder().With(userWriteRepository).With(successor.Object).Build();
-
             strategy.Handle(user, candidate);
-
             //Strategy handled the request
             successor.Verify(s => s.Handle(user, null), Times.Never);
             savedUser.Should().NotBeNull();

@@ -30,7 +30,8 @@
 
         public SetPendingDeletionStrategy Build()
         {
-            var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userReadRepository.Object, new SetUserStatusPendingDeletionStrategy(_userWriteRepository.Object, _auditRepository.Object, _logService.Object));
+            var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userReadRepository.Object,
+                new SetUserStatusPendingDeletionStrategy(_userWriteRepository.Object, _auditRepository.Object, _logService.Object));
             strategy.SetSuccessor(_successor);
             return strategy;
         }

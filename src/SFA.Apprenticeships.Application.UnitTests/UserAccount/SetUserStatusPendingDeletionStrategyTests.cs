@@ -23,17 +23,12 @@
                 EntityId = new Guid()
             };
 
-            var userWithNewStatus = new User
-            {
-                Status = UserStatuses.PendingDeletion,
-                EntityId = user.EntityId
-            };
-            _userWriteRepository.Setup(uw => uw.Save(user)).Returns(userWithNewStatus);
+            _userWriteRepository.Setup(uw => uw.SoftDelete(user));
             var setUserStatusPendingDeletionStrategy = new SetUserStatusDeletionPendingStrategyBuilder()
                 .With(_userWriteRepository).With(_auditRepository).With(_logService).Build();
             user.Status = UserStatuses.PendingDeletion;
             setUserStatusPendingDeletionStrategy.SetUserStatusPendingDeletion(user);
-            _userWriteRepository.Verify(uwr => uwr.Save(It.Is<User>(u =>
+            _userWriteRepository.Verify(uwr => uwr.SoftDelete(It.Is<User>(u =>
                u.Status == UserStatuses.PendingDeletion
            )));
 
