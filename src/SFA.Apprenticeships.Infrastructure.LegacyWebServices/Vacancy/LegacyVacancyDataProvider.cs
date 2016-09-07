@@ -64,6 +64,11 @@
             }
         }
 
+        public int GetVacancyId(int vacancyReferenceNumber)
+        {
+            throw new NotImplementedException();
+        }
+
         #region Helpers
 
         private TVacancyDetail InternalGetVacancyDetails(int vacancyId, bool errorIfNotFound)

@@ -6,6 +6,7 @@
     using FluentAssertions;
     using NUnit.Framework;
     using Candidate.Mappers;
+    using Infrastructure.Presentation;
 
     [TestFixture]
     [Parallelizable]
@@ -53,15 +54,14 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageType = LegacyWageType.LegacyWeekly,
-                Wage = 101.19m
+                Wage = new Wage(WageType.LegacyWeekly, 101.19m, null, WageUnit.NotApplicable, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
             const string expectedWage = "£101.19";
 
             model.Should().NotBeNull();
-            model.Wage.Should().Be(expectedWage);
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should().Be(expectedWage);
         }
 
         [Test]
@@ -69,14 +69,14 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageType = LegacyWageType.LegacyText,
-                WageDescription = "Competitive"
+                Wage = new Wage(WageType.LegacyText, null, "Competitive", WageUnit.NotApplicable, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            model.Wage.Should().Be(vacancyDetail.WageDescription);
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should()
+                .Be("Competitive");
         }
 
         [Test]
@@ -84,14 +84,13 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageType = LegacyWageType.LegacyText,
-                WageDescription = "123.45678"
+                Wage = new Wage(WageType.LegacyText, null, "123.45678", WageUnit.NotApplicable, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            model.Wage.Should().Be("£123.46");
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should().Be("£123.46");
         }
 
         [Test]

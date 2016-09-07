@@ -22,6 +22,20 @@
             public const string WhiteListErrorText = "Last name " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
+        public static class EmailAddressMessages
+        {
+            public const string LabelText = "Email address";
+            public const string RequiredErrorText = "Please enter email address";
+            public const string InvalidErrorText = "Please enter a valid email address and password";
+        }
+
+        public static class PasswordMessages
+        {
+            public const string LabelText = "Password";
+            public const string RequiredErrorText = "Please enter password";
+            public const string InvalidErrorText = "Please enter a valid email address and password";
+        }
+
         public static class PhoneNumberMessages
         {
             public const string LabelText = "Phone";

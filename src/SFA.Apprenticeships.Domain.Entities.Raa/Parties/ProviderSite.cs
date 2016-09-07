@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Parties
 {
+    using System.Collections.Generic;
     using Locations;
 
     public class ProviderSite
@@ -7,8 +8,6 @@
         public int ProviderSiteId { get; set; }
 
         public string EdsUrn { get; set; }
-
-        public int ProviderId { get; set; }
 
         public string Name { get; set; }
 
@@ -23,5 +22,7 @@
         public string ContactDetailsForCandidate { get; set; }
 
         public PostalAddress Address { get; set; }
+
+        public IList<ProviderSiteRelationship> ProviderSiteRelationships { get; set; }
     }
 }

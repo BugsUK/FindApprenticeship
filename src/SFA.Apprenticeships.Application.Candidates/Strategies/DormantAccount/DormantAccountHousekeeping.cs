@@ -1,20 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.DormantAccount
 {
+    using Candidate.Strategies.Candidates;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Communications;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class DormantAccountHousekeeping : IHousekeepingChainOfResponsibility
     {
         private readonly IHousekeepingStrategy _strategy;
 
-        public DormantAccountHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, ICandidateWriteRepository candidateWriteRepository, IAuditRepository auditRepository, ILogService logService)
+        public DormantAccountHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, ICandidateWriteRepository candidateWriteRepository, IAuditRepository auditRepository, ISetUserStatusPendingDeletionStrategy setUserStatusPendingDeletionStrategy, ILogService logService)
         {
             var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, userWriteRepository, candidateWriteRepository, auditRepository, communicationService, logService);
-            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userReadRepository, userWriteRepository, auditRepository, logService);
+            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userReadRepository, setUserStatusPendingDeletionStrategy);
             var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
 
             sendAccountRemindersStrategy.SetSuccessor(setPendingDeletionStrategy);

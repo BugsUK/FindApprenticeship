@@ -12,11 +12,13 @@
 
     <div class="grid-wrapper controls-3-4">
         <section class="grid grid-2-3">
-            @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get, new { @id = "#searchForm" }))
+            @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
                 @Html.FormTextFor(m => m.Location, hintHtmlAttributes: new { id = "geoLocateContainer" })
+
+               @Html.FormTextFor(m=>m.ReferenceNumber, controlHtmlAttributes: new { type = "text" })
 
                 <div class="form-group">
                     <button class="button" id="search-button">Search</button>

@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
+    using FluentValidation;
     using System;
     using System.Linq;
-    using Constants.ViewModels;
-    using FluentValidation;
     using ViewModels.VacancySearch;
 
     public class TraineeshipSearchViewModelClientValidator : AbstractValidator<TraineeshipSearchViewModel>
@@ -37,6 +38,7 @@
         {
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
+                .When(x => string.IsNullOrEmpty(x.ReferenceNumber))
                 .WithMessage(TraineeshipSearchViewModelMessages.LocationMessages.RequiredErrorText)
                 .Length(2, 99)
                 .WithMessage(TraineeshipSearchViewModelMessages.LocationMessages.LengthErrorText)
@@ -56,7 +58,8 @@
         {
             // NOTE: no message here, 'no results' help text provides suggestions to user.
             validator.RuleFor(x => x.Location)
-                .Must(HaveLatAndLongPopulated);
+                .Must(HaveLatAndLongPopulated)
+                .When(x => !VacancyHelper.IsVacancyReference(x.ReferenceNumber));
         }
 
         private static bool HaveLatAndLongPopulated(TraineeshipSearchViewModel instance, string location)

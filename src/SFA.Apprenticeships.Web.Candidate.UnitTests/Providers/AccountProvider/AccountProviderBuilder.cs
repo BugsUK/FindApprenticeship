@@ -1,16 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.AccountProvider
 {
-    using System;
     using Application.Interfaces.Candidates;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Users;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Common.Configuration;
     using Domain.Entities.Users;
     using Moq;
-
     using SFA.Apprenticeships.Application.Interfaces;
+    using System;
 
     public class AccountProviderBuilder
     {
@@ -18,7 +16,7 @@
         private readonly Mock<ILogService> _logger;
         private readonly Mock<IConfigurationService> _configurationService;
         private Mock<IUserAccountService> _userAccountService;
-        
+
         public AccountProviderBuilder()
         {
             _candidateService = new Mock<ICandidateService>();

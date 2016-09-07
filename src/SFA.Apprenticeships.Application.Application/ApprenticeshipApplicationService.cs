@@ -1,13 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.Application
 {
-    using System;
-    using System.Collections.Generic;
-    using Applications.Entities;
-    using Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
+    using Entities;
     using Interfaces.Applications;
+    using Strategies;
     using Strategies.Apprenticeships;
+    using System;
+    using System.Collections.Generic;
 
     public class ApprenticeshipApplicationService : IApprenticeshipApplicationService
     {

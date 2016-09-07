@@ -29,6 +29,7 @@ $machineKeyFile = "$configPath\machineKey.config"
 
 $cscfgPathFormat = "$PSScriptRoot\..\..\config\{0}\ServiceConfiguration.$buildConfiguration.cscfg"
 $workerRolesCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure"
+$migrateRolesCsfgFile = $csfgPathFormat -f "SFA.Apprenticeships.Infrastructure.MigrateRole.Azure"
 $candidateWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Candidate.Azure"
 $recruitWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Recruit.Azure"
 $manageWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Manage.Azure"
@@ -60,6 +61,10 @@ $configurationStorageConnectionStringSetting = ('<Setting name="Microsoft.Window
 Write-Output "Updating $workerRolesCscfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
 (gc $workerRolesCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $workerRolesCscfgFile
 Write-Output "$workerRolesCscfgFile updated"
+
+Write-Output "Updating $migrateRolesCsfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
+(gc $migrateRolesCsfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $migrateRolesCsfgFile
+Write-Output "$migrateRolesCsfgFile updated"
 
 Write-Output "Updating $candidateWebRoleCscfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
 (gc $candidateWebRoleCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $candidateWebRoleCscfgFile

@@ -1,10 +1,10 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
-    using System;
-    using Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
+    using System;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class ActivateUserStrategy : IActivateUserStrategy

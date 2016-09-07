@@ -26,6 +26,8 @@
         private const int ExpectedSubmittedMoreThan48HoursCount = 6;
         private const int ExpectedResubmittedCount = 3;
 
+        private const int ProviderId = 2;
+
         private Mock<IVacancyPostingService> _vacancyPostingService;
         private Mock<IProviderService> _providerService;
         //private Mock<IConfigurationService> _configurationService;
@@ -47,7 +49,7 @@
                 .With(v => v.DateSubmitted, submittedTodayDate)
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.OwnerPartyId, 1)
+                .With(v => v.ProviderId, ProviderId)
                 .CreateMany(ExpectedSubmittedTodayCount).ToList();
 
             var vacanciesSubmittedYesterdayUpperBoundary = new Fixture().Build<Vacancy>()
@@ -55,14 +57,14 @@
                 .With(v => v.DateSubmitted, utcNow.Date.AddSeconds(-1))
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.OwnerPartyId, 1)
+                .With(v => v.ProviderId, ProviderId)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
             var vacanciesSubmittedYesterdayLowerBoundary = new Fixture().Build<Vacancy>()
                 .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, utcNow.Date.AddDays(-1))
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.OwnerPartyId, 1)
+                .With(v => v.ProviderId, ProviderId)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
 
             var submittedMoreThan48HoursDate = utcNow.AddHours(-48).AddSeconds(-1);
@@ -71,7 +73,7 @@
                 .With(v => v.DateSubmitted, submittedMoreThan48HoursDate)
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.OwnerPartyId, 1)
+                .With(v => v.ProviderId, ProviderId)
                 .CreateMany(ExpectedSubmittedMoreThan48HoursCount).ToList();
 
             var resubmittedDate = utcNow.Date.AddDays(-1).AddSeconds(-1);
@@ -80,7 +82,7 @@
                 .With(v => v.DateSubmitted, resubmittedDate)
                 .With(v => v.SubmissionCount, 3)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.OwnerPartyId, 1)
+                .With(v => v.ProviderId, ProviderId)
                 .CreateMany(ExpectedResubmittedCount).ToList();
 
             var vacancies = _vacanciesSubmittedToday;
@@ -94,7 +96,7 @@
 
             _providerService = new Mock<IProviderService>();
             _providerService.Setup(s => s.GetProvider(It.IsAny<string>())).Returns(new Fixture().Create<Provider>());
-            _providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { {1, new Fixture().Create<Provider>()}});
+            _providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider>{new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create()});
 
             _provider = new VacancyProviderBuilder().With(_vacancyPostingService).With(_providerService).With(_dateTimeService).Build();
         }
@@ -287,7 +289,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(new List<VacancySummary>());
 
-            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>(), It.IsAny<bool>())).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProvider(It.IsAny<int>())).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -320,7 +322,7 @@
                 {
                     ClosingDate = today,
                     DateSubmitted = today,
-                    OwnerPartyId = anInt,
+                    ProviderId = ProviderId,
                     VacancyReferenceNumber = anInt,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = username,
@@ -332,7 +334,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
+            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -411,7 +413,7 @@
                 {
                     ClosingDate = yesterday,
                     DateSubmitted = yesterday,
-                    OwnerPartyId = anInt,
+                    ProviderId = ProviderId,
                     VacancyReferenceNumber = anInt,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = username,
@@ -423,7 +425,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
+            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -502,7 +504,7 @@
                 {
                     ClosingDate = fourtyEightHoursAndOneMinuteAgo,
                     DateSubmitted = fourtyEightHoursAndOneMinuteAgo,
-                    OwnerPartyId = anInt,
+                    ProviderId = ProviderId,
                     VacancyReferenceNumber = anInt,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = username,
@@ -514,7 +516,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
+            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -594,7 +596,7 @@
                 {
                     ClosingDate = today,
                     DateSubmitted = today,
-                    OwnerPartyId = anInt,
+                    ProviderId = ProviderId,
                     VacancyReferenceNumber = anInt,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = username,
@@ -607,7 +609,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(s => s.GetProvidersViaCurrentOwnerParty(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, Provider> { { 1, new Fixture().Create<Provider>() } });
+            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
 
             var vacancyProvider =
                 new VacancyProviderBuilder()

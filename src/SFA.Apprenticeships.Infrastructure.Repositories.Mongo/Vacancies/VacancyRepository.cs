@@ -15,7 +15,6 @@
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using Domain.Entities.Raa.Locations;
-    using SFA.Infrastructure.Interfaces;
 
     public class VacancyRepository : GenericMongoClient2<MongoVacancy>, IVacancyReadRepository, IVacancyWriteRepository
     {
@@ -270,7 +269,12 @@
             return null;
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber)
         {
             throw new NotImplementedException();
         }

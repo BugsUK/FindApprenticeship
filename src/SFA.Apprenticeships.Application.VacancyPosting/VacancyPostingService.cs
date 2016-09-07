@@ -115,9 +115,9 @@
             _vacancyLocationsStrategies.DeleteVacancyLocationsFor(vacancyId);
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId)
         {
-            return _getVacancySummaryStrategies.GetMinimalVacancyDetails(vacancyPartyIds);
+            return _getVacancySummaryStrategies.GetMinimalVacancyDetails(vacancyPartyIds, providerId);
         }
 
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)

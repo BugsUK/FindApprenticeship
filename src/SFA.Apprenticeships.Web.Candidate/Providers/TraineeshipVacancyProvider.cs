@@ -1,17 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
     using Application.Interfaces.Candidates;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
     using ViewModels.VacancySearch;
 
     public class TraineeshipVacancyProvider : ITraineeshipVacancyProvider
@@ -36,9 +34,9 @@
         public TraineeshipSearchResponseViewModel FindVacancies(TraineeshipSearchViewModel search)
         {
             _logger.Debug("Calling SearchProvider to find traineeship vacancies.");
-
+            string vacancyReference;
             var searchLocation = _traineeshipSearchMapper.Map<TraineeshipSearchViewModel, Location>(search);
-
+            var isVacancyReference = VacancyHelper.TryGetVacancyReference(search.ReferenceNumber, out vacancyReference);
             try
             {
                 var searchRequest = new TraineeshipSearchParameters
@@ -47,11 +45,26 @@
                     PageNumber = search.PageNumber,
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
-                    SortType = search.SortType,
+                    SortType = search.SortType
                 };
+                if (isVacancyReference)
+                {
+                    searchRequest.VacancyReference = vacancyReference;
+                }
 
                 var searchResults = _traineeshipSearchService.Search(searchRequest);
 
+                if (searchResults.Total == 1)
+                {
+                    var exactMatchResponse = _traineeshipSearchMapper.Map<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(searchResults);
+                    exactMatchResponse.ExactMatchFound = true;
+                    return exactMatchResponse;
+                }
+
+                if (searchResults.Total > 1)
+                {
+                    _logger.Info($"{searchResults.Total} results found for Vacancy Reference Number {vacancyReference}");
+                }
                 var searchResponse =
                     _traineeshipSearchMapper.Map<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(
                         searchResults);
@@ -121,6 +134,12 @@
                 _logger.Error(message, e);
                 throw;
             }
+        }
+
+        public TraineeshipVacancyDetailViewModel GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber)
+        {
+            var vacancyId = _traineeshipSearchService.GetVacancyId(vacancyReferenceNumber);
+            return GetVacancyDetailViewModel(candidateId, vacancyId);
         }
     }
 }

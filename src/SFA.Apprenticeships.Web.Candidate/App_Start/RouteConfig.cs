@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate
 {
-    using System.Web.Mvc;
-    using System.Web.Routing;
     using Common.Constants;
     using Constants;
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     public class RouteConfig
     {
@@ -135,6 +135,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.DeleteAccountSettings,
+                url: "deleteaccount",
+                defaults: new { controller = "Account", action = "DeleteAccountSettings" }
+                );            
+
+            routes.MapRoute(
                 name: CandidateRouteNames.VerifyMobile,
                 url: "verifymobile",
                 defaults: new { controller = "Account", action = "VerifyMobile" }
@@ -249,6 +255,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipDetailsByReferenceNumber,
+                url: "apprenticeship/reference/{vacancyReferenceNumber}",
+                defaults: new { controller = "ApprenticeshipSearch", action = "DetailsByReferenceNumber" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipApply,
                 url: "apprenticeship/apply/{id}",
                 defaults: new { controller = "ApprenticeshipApplication", action = "Apply" }
@@ -330,6 +342,12 @@
                 name: CandidateRouteNames.TraineeshipDetails,
                 url: "traineeship/{id}",
                 defaults: new { controller = "TraineeshipSearch", action = "Details" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.TraineeshipDetailsByReferenceNumber,
+                url: "traineeship/reference/{vacancyReferenceNumber}",
+                defaults: new { controller = "TraineeshipSearch", action = "DetailsByReferenceNumber" }
                 );
 
             routes.MapRoute(

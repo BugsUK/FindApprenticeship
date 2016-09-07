@@ -5,17 +5,16 @@
     using System.Linq;
     using Common;
     using dbo;
+    using Domain.Entities.Feature;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
-    using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
     using Newtonsoft.Json;
     using Reference.Entities;
-    using SFA.Infrastructure.Interfaces;
+    using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
@@ -29,6 +28,7 @@
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IConfigurationService _configurationService;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
@@ -38,7 +38,7 @@
             "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4", "AddressLine5", "Town", "CountyId", "PostCode", "LocalAuthorityId", "Longitude", "Latitude",
             "ApprenticeshipFrameworkId", "Title", "ApprenticeshipType", "ShortDescription", "WeeklyWage", "WageType", "WageText", "NumberofPositions",
             "ApplicationClosingDate", "InterviewsFromDate", "ExpectedStartDate", "ExpectedDuration", "WorkingWeek", "EmployerAnonymousName",
-            "ApplyOutsideNAVMS", "LockedForSupportUntil", "NoOfOfflineApplicants", "MasterVacancyId", "VacancyLocationTypeId", "VacancyManagerID",
+            "ApplyOutsideNAVMS", "LockedForSupportUntil", "NoOfOfflineApplicants", "MasterVacancyId", "VacancyLocationTypeId", "VacancyManagerID", "ContractOwnerID",
             "VacancyGuid", "SubmissionCount", "StartedToQADateTime", "StandardId", "HoursPerWeek", "WageUnitId", "DurationTypeId", "DurationValue", "QAUserName",
             "TrainingTypeId", "VacancyTypeId", "SectorId", "UpdatedDateTime"
         };
@@ -57,13 +57,14 @@
         };
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
-            ILogService logger, ICurrentUserService currentUserService)
+            ILogService logger, ICurrentUserService currentUserService, IConfigurationService configurationService)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
             _dateTimeService = dateTimeService;
             _logger = logger;
             _currentUserService = currentUserService;
+            _configurationService = configurationService;
         }
 
         public DomainVacancy Get(int vacancyId)
@@ -1502,23 +1503,45 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
-        {            
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId)
+        {
+            var sql = @"SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
+                        FROM   dbo.Vacancy
+                        WHERE  VacancyOwnerRelationshipId IN @Ids";
+
+            if (_configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled())
+            {
+                sql += " AND ContractOwnerId = @providerId";
+            }
+
             var vacancyCollections = new List<dynamic>();                               
             var partyIds = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
             var splitVacancyPartyIds = DbHelpers.SplitIds(partyIds);            
             foreach (var splitVacancyPartyId in splitVacancyPartyIds)
             {
-                IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(@"
-                                SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
-                                FROM   dbo.Vacancy
-                                WHERE  VacancyOwnerRelationshipId IN @Ids",
-                    new {Ids = splitVacancyPartyId});                                                                                                      
+                IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(sql,
+                    new
+                    {
+                        Ids = splitVacancyPartyId,
+                        providerId
+                    });                                                                                                      
                 vacancyCollections.AddRange(singleCollection);                
             }
             return vacancyCollections
                 .GroupBy(x => (int) x.VacancyOwnerRelationshipId)
                 .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));               
+        }
+
+        public int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber)
+        {
+            _logger.Debug("Calling database to get vacancy id for Vacancy Reference Number={0}",
+                vacancyReferenceNumber);
+
+            var vacancyId = _getOpenConnection.Query<int>(
+                "SELECT VacancyId FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
+                new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
+
+            return vacancyId;
         }
 
         private class MinimalVacancyDetails : IMinimalVacancyDetails

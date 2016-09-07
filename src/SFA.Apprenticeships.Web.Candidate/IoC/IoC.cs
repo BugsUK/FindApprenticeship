@@ -1,6 +1,5 @@
-namespace SFA.Apprenticeships.Web.Candidate.IoC {
-
-    using SFA.Infrastructure.Interfaces;
+namespace SFA.Apprenticeships.Web.Candidate.IoC
+{
     using Application.Candidate.Configuration;
     using Common.IoC;
     using Common.Providers;
@@ -35,7 +34,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
     using StructureMap;
     using StructureMap.Web;
 
-    public static class IoC {
+    public static class IoC
+    {
         public static IContainer Initialize()
         {
             var container = new Container(x =>

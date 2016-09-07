@@ -61,12 +61,25 @@
         public string SubCategoryCode { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string Wage { get; set; }
+        public string WorkingWeek { get; set; }
 
-        [ElasticProperty(Type = FieldType.String, Index = FieldIndexOption.NotAnalyzed)]
-        public WageUnit WageUnit { get; set; }
+        #region Flattened Wage objetc
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string WorkingWeek { get; set; }
+        public int WageType { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public decimal? WageAmount { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public string WageText { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public int WageUnit { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public decimal? HoursPerWeek { get; set; }
+
+        #endregion
     }
 }

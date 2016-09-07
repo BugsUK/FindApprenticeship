@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
-    using System;
     using Entities;
+    using System;
 
     public interface IWriteRepository<T> where T : BaseEntity
     {

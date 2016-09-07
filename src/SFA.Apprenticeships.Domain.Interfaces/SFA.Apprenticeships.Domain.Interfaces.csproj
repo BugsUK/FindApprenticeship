@@ -101,8 +101,9 @@
     <Compile Include="Repositories\IApprenticeshipApplicationRepository.cs" />
     <Compile Include="Repositories\IAuthenticationRepository.cs" />
     <Compile Include="Repositories\IExpiringApprenticeshipApplicationDraftRepository.cs" />
-    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\IUserReadRepository.cs" />
     <Compile Include="Repositories\ICandidateRepository.cs" />
+    <Compile Include="Repositories\IUserWriteRepository.cs" />
     <Compile Include="Repositories\IWriteRepository.cs" />
     <Compile Include="Repositories\IReadRepository.cs" />
   </ItemGroup>

@@ -16,15 +16,14 @@
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Factories;
     using Infrastructure.Presentation;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
-    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Parties;
     using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
@@ -390,10 +389,7 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.HoursPerWeek = viewModel.HoursPerWeek;
-            vacancy.WageType = viewModel.WageType;
-            vacancy.Wage = viewModel.Wage;
-            vacancy.WageUnit = viewModel.WageUnit;
+            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -556,7 +552,7 @@
         private VacancyViewModel GetVacancyViewModelFrom(Vacancy vacancy)
         {
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
-            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId);
+            var provider = _providerService.GetProvider(vacancy.ProviderId);
             viewModel.Provider = provider.Convert();
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Some current vacancies have non-current vacancy parties
             if (vacancyParty != null)
@@ -711,7 +707,7 @@
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
 
             var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(
-                vacancyParties.Select(vp => vp.VacancyPartyId))
+                vacancyParties.Select(vp => vp.VacancyPartyId), providerId)
                 .Values
                 .SelectMany(a => a)
                 .Where(
@@ -1002,7 +998,7 @@
                 }
             }
 
-            var providerMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId), false);
+            var providerMap = _providerService.GetProviders(vacancies.Select(v => v.ProviderId)).ToDictionary(p => p.ProviderId, p => p);
 
             var viewModel = new DashboardVacancySummariesViewModel
             {
@@ -1011,7 +1007,7 @@
                 SubmittedYesterdayCount = submittedYesterday.Count,
                 SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
                 ResubmittedCount = resubmitted.Count,
-                Vacancies = GetOrderedVacancySummaries(searchViewModel, vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.OwnerPartyId]))).ToList(),
+                Vacancies = GetOrderedVacancySummaries(searchViewModel, vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.ProviderId]))).ToList(),
                 RegionalTeamsMetrics = regionalTeamsMetrics
             };
 
@@ -1024,16 +1020,16 @@
             {
                 if (!string.IsNullOrEmpty(searchViewModel.Provider) && searchViewModel.Provider.Length >= 3)
                 {
-                    var providerSearchMap = _providerService.GetProvidersViaCurrentOwnerParty(vacancies.Select(v => v.OwnerPartyId), false);
-                    var vacancyOwnerRelationshipIds = new List<int>();
-                    foreach (var keyValuePair in providerSearchMap)
+                    var providers = _providerService.GetProviders(vacancies.Select(v => v.ProviderId));
+                    var providerIds = new List<int>();
+                    foreach (var provider in providers)
                     {
-                        if (keyValuePair.Value.TradingName.IndexOf(searchViewModel.Provider, StringComparison.OrdinalIgnoreCase) >= 0)
+                        if (provider.TradingName.IndexOf(searchViewModel.Provider, StringComparison.OrdinalIgnoreCase) >= 0)
                         {
-                            vacancyOwnerRelationshipIds.Add(keyValuePair.Key);
+                            providerIds.Add(provider.ProviderId);
                         }
                     }
-                    vacancies = vacancies.Where(v => vacancyOwnerRelationshipIds.Contains(v.OwnerPartyId)).ToList();
+                    vacancies = vacancies.Where(v => providerIds.Contains(v.ProviderId)).ToList();
                 }
             }
             return vacancies;
@@ -1084,7 +1080,7 @@
             var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
                 vacancies); 
 
-            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProviderViaCurrentOwnerParty(nextVacancy.OwnerPartyId, false)) : null;
+            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ProviderId)) : null;
         }
 
         public void UnReserveVacancyForQA(int vacancyReferenceNumber)
@@ -1308,10 +1304,7 @@
             }
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.HoursPerWeek = viewModel.HoursPerWeek;
-            vacancy.WageType = viewModel.WageType;
-            vacancy.Wage = viewModel.Wage;
-            vacancy.WageUnit = viewModel.WageUnit;
+            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 

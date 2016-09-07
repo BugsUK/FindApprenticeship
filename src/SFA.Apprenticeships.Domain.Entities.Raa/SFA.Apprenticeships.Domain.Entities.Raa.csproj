@@ -91,6 +91,7 @@
     <Compile Include="Parties\MinimalEmployerDetails.cs" />
     <Compile Include="Parties\Provider.cs" />
     <Compile Include="Parties\ProviderSite.cs" />
+    <Compile Include="Parties\ProviderSiteRelationship.cs" />
     <Compile Include="Parties\VacancyParty.cs" />
     <Compile Include="Parties\EmployerEqualityComparer.cs" />
     <Compile Include="Parties\VacancyPartyEqualityComparer.cs" />
@@ -124,9 +125,6 @@
     <Compile Include="Vacancies\Vacancy.cs" />
     <Compile Include="Vacancies\VacancySummary.cs" />
     <Compile Include="Vacancies\VacancyType.cs" />
-    <Compile Include="Vacancies\Wage.cs" />
-    <Compile Include="Vacancies\WageType.cs" />
-    <Compile Include="Vacancies\WageUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">

@@ -1,18 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Apprenticeships.Application.Candidates;
     using Apprenticeships.Application.Candidates.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     public class HardDeleteStrategyTests
@@ -136,7 +136,7 @@
             var user = new UserBuilder(candidateId).WithStatus(UserStatuses.PendingDeletion).WithDateUpdated(dateUpdated).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
 
-            var savedSearches = new List<SavedSearch>{ new SavedSearchBuilder().Build(), new SavedSearchBuilder().Build() };
+            var savedSearches = new List<SavedSearch> { new SavedSearchBuilder().Build(), new SavedSearchBuilder().Build() };
             var apprenticeships = new Fixture().Build<ApprenticeshipApplicationSummary>().With(s => s.CandidateId, candidateId).CreateMany(3).ToList();
             var traineeships = new Fixture().Build<TraineeshipApplicationSummary>().With(s => s.CandidateId, candidateId).CreateMany(2).ToList();
 

@@ -800,6 +800,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_wage.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Account\ConfirmAccountDeletion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ConfirmAccountDeletion.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -903,7 +907,6 @@
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Extensions\UserDataProviderExtensions.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
-    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancySummaryViewModelResolvers.cs" />
     <Compile Include="Mappers\SavedSearchViewModelMapper.cs" />
     <Compile Include="Mediators\Home\HomeMediator.cs" />
     <Compile Include="Mediators\Home\IHomeMediator.cs" />
@@ -923,10 +926,12 @@
     <Compile Include="Validators\EmailViewModelValidator.cs" />
     <Compile Include="Validators\ForgottenEmailViewModelValidator.cs" />
     <Compile Include="Validators\MonitoringInformationViewModelValidator.cs" />
+    <Compile Include="Validators\DeleteAccountSettingsViewModelValidator.cs" />
     <Compile Include="Validators\VerifyUpdatedEmailViewModelClientValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
     <Compile Include="Validators\TrainingCourseViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />
+    <Compile Include="ViewModels\Account\DeleteAccountSettingsViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileState.cs" />
     <Compile Include="ViewModels\Account\EmailViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyUpdatedEmailViewModel.cs" />
@@ -1097,6 +1102,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Settings.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\ConfirmAccountDeletion.generated.cs">
+      <DependentUpon>ConfirmAccountDeletion.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\ApprenticeshipSearch\_wage.generated.cs">
       <DependentUpon>_wage.cshtml</DependentUpon>
@@ -1562,8 +1572,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
-      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Project>{f5f29922-2fbc-4bf4-9cbb-424a71fd98c1}</Project>
       <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7d29ed20-ff3d-4fbb-b253-a44de1e42bcc}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj">
       <Project>{2752e3b6-358d-4c06-a31f-867304cac53d}</Project>

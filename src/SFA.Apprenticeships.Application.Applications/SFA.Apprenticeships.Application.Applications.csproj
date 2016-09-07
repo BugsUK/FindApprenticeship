@@ -97,35 +97,26 @@
     </Compile>
     <Compile Include="ApplicationStatusProcessor.cs" />
     <Compile Include="ApplicationStatusUpdater.cs" />
-    <Compile Include="Entities\ApplicationStatusChanged.cs" />
-    <Compile Include="Entities\ApplicationStatusSummary.cs" />
     <Compile Include="Entities\ApplicationUpdatePage.cs" />
-    <Compile Include="Entities\VacancyStatusSummary.cs" />
-    <Compile Include="Extensions\ApplicationStatusSummaryExtensions.cs" />
-    <Compile Include="Extensions\TraineeshipApplicationDetailExtension.cs" />
-    <Compile Include="Extensions\ApprenticeshipApplicationDetailExtension.cs" />
     <Compile Include="Housekeeping\IDraftApplicationForExpiredVacancyHousekeeper.cs" />
     <Compile Include="Housekeeping\ISubmittedApplicationHousekeeper.cs" />
     <Compile Include="Housekeeping\SubmittedApplicationHousekeeper.cs" />
     <Compile Include="IApplicationStatusProcessor.cs" />
-    <Compile Include="IApplicationStatusUpdater.cs" />
-    <Compile Include="ILegacyApplicationStatusesProvider.cs" />
-    <Compile Include="IApplicationVacancyUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\ApplicationStatusAlertStrategy.cs" />
-    <Compile Include="Strategies\ApplicationStatusUpdateStrategy.cs" />
     <Compile Include="Housekeeping\RootApplicationHousekeeper.cs" />
     <Compile Include="Housekeeping\ApplicationHousekeepingRequest.cs" />
     <Compile Include="Housekeeping\DraftApplicationForExpiredVacancyHousekeeper.cs" />
     <Compile Include="Housekeeping\IRootApplicationHousekeeper.cs" />
     <Compile Include="Housekeeping\IApplicationHousekeeper.cs" />
     <Compile Include="Strategies\HardDeleteApplicationStrategy.cs" />
-    <Compile Include="Strategies\IApplicationStatusAlertStrategy.cs" />
-    <Compile Include="Strategies\IApplicationStatusUpdateStrategy.cs" />
     <Compile Include="ApplicationVacancyUpdater.cs" />
     <Compile Include="Strategies\IHardDeleteApplicationStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7d29ed20-ff3d-4fbb-b253-a44de1e42bcc}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj">
       <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>
       <Name>SFA.Apprenticeships.Application.Candidates</Name>

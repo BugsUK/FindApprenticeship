@@ -26,6 +26,7 @@
 
         private readonly IMapper _mapper = new VacancyMappers();
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
+        private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private IGetOpenConnection _connection;
 
         private Mock<IDateTimeService> _dateTimeService;
@@ -53,9 +54,9 @@
         public void SimpleGetTest()
         {
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
              
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -110,8 +111,7 @@
                     .Excluding(x => x.OtherInformation)
                     .Excluding(x => x.LiveClosingDate)
                     .Excluding(x => x.SyntheticUpdatedDateTime)
-                    .Excluding(x => x.EmployerName)
-                    .Excluding(x => x.WageUnit)); // TODO: remove this after changes in DB
+                    .Excluding(x => x.EmployerName));
 
             entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");
         }
@@ -123,9 +123,9 @@
             _dateTimeService.Setup(ds => ds.UtcNow).Returns(now);
 
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -167,7 +167,7 @@
         public void SimpleSaveAndUpdateTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -201,9 +201,9 @@
         public void FindTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -292,9 +292,9 @@
         public void GetByIdsTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
 
             var vacancy1 = CreateValidDomainVacancy();
             vacancy1.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
@@ -328,9 +328,9 @@
         public void GetMultiLocationTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
 
             IVacancyLocationWriteRepository locationWriteRepository = new VacancyLocationRepository(_connection, _mapper,
                 _logger.Object);
@@ -383,9 +383,9 @@
         public void IncrementNumberOfClickThroughs()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
 
 
             var vacancy = CreateValidDomainVacancy();

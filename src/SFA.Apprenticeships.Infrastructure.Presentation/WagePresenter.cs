@@ -2,28 +2,18 @@
 {
     using System;
     using Constants;
-    using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
 
     public static class WagePresenter
     {
         public const string AnnualWageText = "Annual wage";
         public const string MonthlyWageText = "Monthly wage";
         public const string WeeklyWageText = "Weekly wage";
-
         public const string PerYearText = "per year";
         public const string PerMonthText = "per month";
         public const string PerWeekText = "per week";
-
         public const string UnknownText = "unknown";
-
         private const string WageAmountFormat = "N2";
-
-        public static string GetHeaderDisplayText(this Wage wage)
-        {
-            return wage.Type == WageType.Custom
-                ? wage.Unit.GetHeaderDisplayText()
-                : WeeklyWageText;
-        }
 
         public static string GetHeaderDisplayText(this WageUnit wageUnit)
         {
@@ -46,38 +36,87 @@
             }
         }
 
-        public static string GetHeaderDisplayText(this Domain.Entities.Vacancies.WageUnit wageUnit)
+        public static string GetDisplayAmountWithFrequencyPostfix(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek, DateTime? possibleDateTime)
         {
-            switch (wageUnit)
+            var postfix = unit.GetWagePostfix();
+
+            var displayAmount = GetDisplayAmount(type, amount, text, hoursPerWeek, possibleDateTime);
+            if (string.IsNullOrWhiteSpace(displayAmount))
             {
-                case Domain.Entities.Vacancies.WageUnit.Annually:
-                    return AnnualWageText;
+                return postfix;
+            }
 
-                case Domain.Entities.Vacancies.WageUnit.Monthly:
-                    return MonthlyWageText;
+            return $"{displayAmount} {postfix}";
+        }
 
-                case Domain.Entities.Vacancies.WageUnit.Weekly:
-                    return WeeklyWageText;
+        public static string GetDisplayAmount(WageType type, decimal? amount, string text, decimal? hoursPerWeek, DateTime? possibleDateTime)
+        {
+            switch (type)
+            {
+                case WageType.LegacyWeekly:
+                case WageType.Custom:
+                    return $"£{amount?.ToString(WageAmountFormat) ?? UnknownText}";
 
-                case Domain.Entities.Vacancies.WageUnit.NotApplicable:
-                    return string.Empty;
+                case WageType.ApprenticeshipMinimum:
+                    return hoursPerWeek.HasValue
+                        ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value, possibleDateTime)
+                        : UnknownText;
+
+                case WageType.NationalMinimum:
+                    return hoursPerWeek.HasValue
+                        ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value, possibleDateTime)
+                        : UnknownText;
+
+                case WageType.LegacyText:
+                    
+                    //if it's unknown, return standard unknown text
+                    var displayText = text ?? UnknownText;
+
+                    //if it's not unknown, then prepend a '£' sign to its decimal value.
+                    decimal wageDecimal;
+
+                    //if it's already got a '£' sign, or is text, fail to parse and all is good => return value.
+                    if (decimal.TryParse(displayText, out wageDecimal))
+                    {
+                        displayText = $"£{wageDecimal:N2}";
+                    }
+
+                    return displayText;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
+                    throw new ArgumentOutOfRangeException(nameof(type), type,
+                        $"Invalid Wage Type: {type}");
             }
         }
 
-        public static string GetWagePostfix(this Domain.Entities.Vacancies.WageUnit wageUnit)
+        private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek, DateTime? possibleStartDate)
+        {
+            var wageRange = possibleStartDate.GetWageRangeFor();
+
+            var lowerRange = (wageRange.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var higherRange = (wageRange.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+
+            return $"£{lowerRange} - £{higherRange}";
+        }
+
+        private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek, DateTime? possibleStartDate)
+        {
+            var wageRange = possibleStartDate.GetWageRangeFor();
+
+            return $"£{(wageRange.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
+        }
+
+        private static string GetWagePostfix(this WageUnit wageUnit)
         {
             switch (wageUnit)
             {
-                case Domain.Entities.Vacancies.WageUnit.Annually:
+                case WageUnit.Annually:
                     return PerYearText;
 
-                case Domain.Entities.Vacancies.WageUnit.Monthly:
+                case WageUnit.Monthly:
                     return PerMonthText;
 
-                case Domain.Entities.Vacancies.WageUnit.Weekly:
+                case WageUnit.Weekly:
                     return PerWeekText;
 
                 // TODO: HOTFIX: should revert this change.
@@ -85,7 +124,7 @@
                     return string.Empty;
 
                     /*
-                    case Domain.Entities.Vacancies.WageUnit.NotApplicable:
+                    case WageUnit.NotApplicable:
                         return string.Empty;
 
                     default:
@@ -93,79 +132,6 @@
                     */
             }
         }
-
-        public static string GetDisplayText(this Wage wage, decimal? hoursPerWeek)
-        {
-            switch (wage.Type)
-            {
-                case WageType.LegacyWeekly:
-                case WageType.Custom:
-                    return $"£{wage.Amount?.ToString(WageAmountFormat) ?? UnknownText}";
-
-                case WageType.ApprenticeshipMinimum:
-                    return hoursPerWeek.HasValue
-                        ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value)
-                        : UnknownText;
-
-                case WageType.NationalMinimum:
-                    return hoursPerWeek.HasValue
-                        ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value)
-                        : UnknownText;
-
-                case WageType.LegacyText:
-                    return wage.Text ?? UnknownText;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wage.Type), $"Invalid Wage Type: {wage.Type}");
-            }
-        }
-
-        public static Domain.Entities.Vacancies.WageUnit GetWageUnit(this Wage wage)
-        {
-            if (wage.Type == WageType.LegacyWeekly)
-            {
-                return Domain.Entities.Vacancies.WageUnit.Weekly;
-            }
-            if (wage.Type == WageType.LegacyText)
-            {
-                return Domain.Entities.Vacancies.WageUnit.NotApplicable;
-            }
-
-            if (wage.Type != WageType.Custom)
-            {
-                return Domain.Entities.Vacancies.WageUnit.Weekly;
-            }
-
-            switch (wage.Unit)
-            {
-                case WageUnit.Weekly:
-                    return Domain.Entities.Vacancies.WageUnit.Weekly;
-
-                case WageUnit.Monthly:
-                    return Domain.Entities.Vacancies.WageUnit.Monthly;
-
-                case WageUnit.Annually:
-                    return Domain.Entities.Vacancies.WageUnit.Annually;
-
-                case WageUnit.NotApplicable:
-                    return Domain.Entities.Vacancies.WageUnit.NotApplicable;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wage.Unit), $"Invalid Wage Unit: {wage.Unit}");
-            }
-        }
-
-        private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
-        {
-            var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
-            var higherRange = (Wages.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
-
-            return $"£{lowerRange} - £{higherRange}";
-        }
-
-        private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek)
-        {
-            return $"£{(Wages.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
-        }
+        
     }
 }

@@ -1,14 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System;
-    using System.Security.Cryptography.X509Certificates;
+    using System.Linq;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
+    using Extensions;
     using FluentValidation;
     using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
-    using Common = Validators.Common;
+    using Common = Common;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancySummaryViewModelClientValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
     {
@@ -24,9 +27,9 @@
         public VacancySummaryViewModelServerValidator()
         {
             this.AddVacancySummaryViewModelCommonRules();
-            this.AddVacancySummaryViewModelServerCommonRules();
+            this.AddVacancySummaryViewModelServerCommonRules(null);
             RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
-            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelServerCommonRules);
+            RuleSet(RuleSets.Errors, () => this.AddVacancySummaryViewModelServerCommonRules(null));
             RuleSet(RuleSets.Warnings, () => this.AddVacancySummaryViewModelServerWarningRules(null));
         }
     }
@@ -36,9 +39,17 @@
         public VacancySummaryViewModelServerErrorValidator()
         {
             this.AddVacancySummaryViewModelCommonRules();
-            this.AddVacancySummaryViewModelServerCommonRules();
+            this.AddVacancySummaryViewModelServerCommonRules(null);
             RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
-            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelServerCommonRules);
+            RuleSet(RuleSets.Errors, () => this.AddVacancySummaryViewModelServerCommonRules(null));
+        }
+
+        public VacancySummaryViewModelServerErrorValidator(string parentPropertyName)
+        {
+            this.AddVacancySummaryViewModelCommonRules();
+            this.AddVacancySummaryViewModelServerCommonRules(parentPropertyName);
+            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
+            RuleSet(RuleSets.Errors, () => this.AddVacancySummaryViewModelServerCommonRules(parentPropertyName));
         }
     }
 
@@ -93,7 +104,7 @@
                 .When(x => Common.IsNotEmpty(x.ExpectedDuration));
         }
 
-        internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)
+        internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator, string parentPropertyName)
         {
             validator.RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
@@ -105,37 +116,32 @@
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.TraineeshipRequiredErrorText)
                 .When(x => x.VacancyType == VacancyType.Traineeship);
 
-            validator.RuleFor(x => x.HoursPerWeek)
+            validator.RuleFor(x => x.Wage.HoursPerWeek)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship)
                 .When(
                     x =>
                         x.VacancySource == VacancySource.Raa || x.Duration.HasValue ||
-                        x.WageType == WageType.ApprenticeshipMinimum || x.WageType == WageType.NationalMinimum);
+                        x.Wage.Type == WageType.ApprenticeshipMinimum || x.Wage.Type == WageType.NationalMinimum);
 
-            validator.RuleFor(x => x.HoursPerWeek)
+            validator.RuleFor(x => x.Wage.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.HoursPerWeekShouldBeGreaterThan16)
-                .When(x => x.HoursPerWeek.HasValue);
+                .When(x => x.Wage.HoursPerWeek.HasValue);
 
-            validator.RuleFor(viewModel => (int)viewModel.WageType)
+            validator.RuleFor(viewModel => (int)viewModel.Wage.Type)
                 .InclusiveBetween((int)WageType.ApprenticeshipMinimum, (int)WageType.Custom)
                 .WithMessage(VacancyViewModelMessages.WageType.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
-            validator.RuleFor(x => x.Wage)
+            validator.RuleFor(x => x.Wage.Amount)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Wage.RequiredErrorText)
-                .When(x => x.WageType == WageType.Custom)
+                .When(x => x.Wage.Type == WageType.Custom)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
-            validator.RuleFor(x => x.Wage)
-                .Must(HaveAValidHourRate)
-                .When(v => v.WageType == WageType.Custom)
-                .When(v => v.WageUnit != WageUnit.NotApplicable)
-                .When(v => v.HoursPerWeek.HasValue)
-                .WithMessage(VacancyViewModelMessages.Wage.WageLessThanMinimum);
+            validator.Custom(x => x.HaveAValidHourRate(x.Wage.Amount, parentPropertyName));
 
             validator.RuleFor(x => x.Duration)
                 .NotEmpty()
@@ -146,7 +152,7 @@
                 .Must(HaveAValidApprenticeshipDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months)
                 .When(x => x.VacancyType != VacancyType.Traineeship)
-                .When(x => x.VacancySource == VacancySource.Raa || x.HoursPerWeek.HasValue);
+                .When(x => x.VacancySource == VacancySource.Raa || x.Wage.HoursPerWeek.HasValue);
 
             validator.RuleFor(x => x.Duration)
                 .Must(HaveAValidTraineeshipDuration)
@@ -179,22 +185,9 @@
                 .SetValidator(new VacancyDatesViewModelServerWarningValidator(parentPropertyNameToUse));
         }
 
-        private static bool HaveAValidHourRate(FurtherVacancyDetailsViewModel furtherVacancy, decimal? wage)
-        {
-            if (furtherVacancy.VacancyType == VacancyType.Traineeship && !furtherVacancy.Wage.HasValue)
-                return true;
-
-            if (!furtherVacancy.Wage.HasValue || !furtherVacancy.HoursPerWeek.HasValue)
-                return false;
-
-            var hourRate = GetHourRate(furtherVacancy.Wage.Value, furtherVacancy.WageUnit, furtherVacancy.HoursPerWeek.Value);
-
-            return !(hourRate < Wages.ApprenticeMinimumWage);
-        }
-
         private static bool HaveAValidApprenticeshipDuration(FurtherVacancyDetailsViewModel furtherVacancy, decimal? duration)
         {
-            if (!furtherVacancy.HoursPerWeek.HasValue || !furtherVacancy.Duration.HasValue)
+            if (!furtherVacancy.Wage.HoursPerWeek.HasValue || !furtherVacancy.Duration.HasValue)
                 return true;
 
             if (duration.HasValue && duration.Value % 1 != 0)
@@ -223,23 +216,6 @@
         private static bool HaveAValidHoursPerWeek(decimal? hours)
         {
             return hours.HasValue && hours.Value >= 16;
-        }
-
-        private static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)
-        {
-            switch (wageUnit)
-            {
-                case WageUnit.Weekly:
-                    return wage / hoursPerWeek;
-                case WageUnit.Annually:
-                    return wage / 52m / hoursPerWeek;
-                case WageUnit.Monthly:
-                    return wage / 52m * 12 / hoursPerWeek;
-                case WageUnit.NotApplicable:
-                    return 0;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wageUnit), wageUnit, null);
-            }
         }
     }
 }

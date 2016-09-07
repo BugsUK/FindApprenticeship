@@ -12,5 +12,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
         MediatorResponse<TraineeshipSearchResponseViewModel> Results(TraineeshipSearchViewModel model);
 
         MediatorResponse<TraineeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId);
+
+        MediatorResponse<TraineeshipVacancyDetailViewModel> DetailsByReferenceNumber(string vacancyReferenceNumberString, Guid? candidateId);
+
+        MediatorResponse<TraineeshipSearchViewModel> SearchValidation(TraineeshipSearchViewModel model);
     }
 }

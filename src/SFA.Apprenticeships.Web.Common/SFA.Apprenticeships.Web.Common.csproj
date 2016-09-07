@@ -209,6 +209,7 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\WageViewModelMessages.cs" />
     <Compile Include="Controllers\VersionController.cs" />
     <Compile Include="ViewModels\VersionViewModel.cs" />
     <Compile Include="Converters\PageableConverters.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\PageableViewModel.cs" />
+    <Compile Include="ViewModels\WageViewModel.cs" />
     <Compile Include="Views\Shared\_AboutDisguised.generated.cs">
       <DependentUpon>_AboutDisguised.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -309,6 +311,16 @@
       <DependentUpon>Date.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\_ApprenticeMinimumWageExplained.generated.cs">
+      <DependentUpon>_ApprenticeMinimumWageExplained.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\_NationalMinimumWageExplained.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_NationalMinimumWageExplained.cshtml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +415,14 @@
     <Content Include="Views\Shared\_AboutDisguised.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_AboutDisguised.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_NationalMinimumWageExplained.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_NationalMinimumWageExplained.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_ApprenticeMinimumWageExplained.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ApprenticeMinimumWageExplained.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

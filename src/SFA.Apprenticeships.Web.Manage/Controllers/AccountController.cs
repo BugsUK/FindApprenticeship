@@ -10,9 +10,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
 
     public class AccountController : ManagementControllerBase
     {
@@ -35,14 +33,19 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             HttpContext.GetOwinContext().Authentication.Challenge(properties, WsFederationAuthenticationDefaults.AuthenticationType);
         }
 
-        public void SignOut(string returnUrl)
+        public void SignOut()
         {
-            SignOut(false, returnUrl);
+            SignOut(false);
         }
 
         public void SessionTimeout(string returnUrl)
         {
-            SignOut(true, returnUrl);
+            if (returnUrl.IsValidReturnUrl())
+            {
+                UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
+            }
+
+            SignOut(true);
         }
 
         public ActionResult SignOutCallback(bool timeout, string returnUrl)
@@ -65,9 +68,9 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             return RedirectToRoute(ManagementRouteNames.LandingPage, new {returnUrl});
         }
 
-        private void SignOut(bool timeout, string returnUrl)
+        private void SignOut(bool timeout)
         {
-            var callbackUrl = Url.RouteUrl(ManagementRouteNames.SignOutCallback, new {timeout, returnUrl}, string.Copy(Request.Url?.Scheme ?? Constants.Url.DefaultScheme));
+            var callbackUrl = Url.RouteUrl(ManagementRouteNames.SignOutCallback, new {timeout}, string.Copy(Request.Url?.Scheme ?? Constants.Url.DefaultScheme));
 
             var properties = new AuthenticationProperties
             {

@@ -8,5 +8,7 @@
         TraineeshipSearchResponseViewModel FindVacancies(TraineeshipSearchViewModel search);
 
         TraineeshipVacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId);
+
+        TraineeshipVacancyDetailViewModel GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber);
     }
 }

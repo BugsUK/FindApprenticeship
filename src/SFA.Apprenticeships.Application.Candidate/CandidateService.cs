@@ -1,8 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -17,9 +14,13 @@
     using Interfaces.Vacancies;
     using Strategies;
     using Strategies.Apprenticeships;
+    using Strategies.Candidates;
     using Strategies.SavedSearches;
     using Strategies.SuggestedVacancies;
     using Strategies.Traineeships;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using UserAccount.Strategies;
     using IUpdateUsernameStrategy = Strategies.IUpdateUsernameStrategy;
 
@@ -63,6 +64,8 @@
         private readonly IUnsubscribeStrategy _unsubscribeStrategy;
         private readonly IApprenticeshipVacancySuggestionsStrategy _apprenticeshipVacancySuggestionsStrategy;
         private readonly IGetCandidateByUsernameStrategy _getCandidateByUsernameStrategy;
+        private readonly ISetUserStatusPendingDeletionStrategy _setCandidateDeletionPendingStrategy;
+        private readonly IUserReadRepository _userReadRepository;
 
         public CandidateService(
             IGetCandidateByIdStrategy getCandidateByIdStrategy,
@@ -101,7 +104,8 @@
             IRequestEmailReminderStrategy requestEmailReminderStrategy,
             IUnsubscribeStrategy unsubscribeStrategy,
             IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy,
-            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy)
+            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy,
+            ISetUserStatusPendingDeletionStrategy setCandidateDeletionPendingStrategy, IUserReadRepository userReadRepository)
         {
             _getCandidateByIdStrategy = getCandidateByIdStrategy;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -140,6 +144,8 @@
             _unsubscribeStrategy = unsubscribeStrategy;
             _apprenticeshipVacancySuggestionsStrategy = apprenticeshipVacancySuggestionsStrategy;
             _getCandidateByUsernameStrategy = getCandidateByUsernameStrategy;
+            _setCandidateDeletionPendingStrategy = setCandidateDeletionPendingStrategy;
+            _userReadRepository = userReadRepository;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -196,6 +202,15 @@
             _logger.Debug("Calling CandidateService to save a candidate.");
 
             return _saveCandidateStrategy.SaveCandidate(candidate);
+        }
+
+        public bool SetCandidateDeletionPending(Candidate candidate)
+        {
+            Condition.Requires(candidate);
+            _logger.Info(
+                $"Calling CandidateService to Set status to Deletion Pending for account of the user with Id={candidate.EntityId}");
+            var user = _userReadRepository.Get(candidate.EntityId);
+            return user != null && _setCandidateDeletionPendingStrategy.SetUserStatusPendingDeletion(user);
         }
 
         public void UnlockAccount(string username, string accountUnlockCode)
@@ -499,12 +514,12 @@
 
             return _unsubscribeStrategy.Unsubscribe(subscriberId, subscriptionType);
         }
-        
+
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId)
         {
             Condition.Requires(searchParameters).IsNotNull();
             Condition.Requires(vacancyId);
-            
+
             var candidateApplications = GetApprenticeshipApplications(candidateId);
             return _apprenticeshipVacancySuggestionsStrategy.GetSuggestedApprenticeshipVacancies(searchParameters, candidateApplications, vacancyId);
         }

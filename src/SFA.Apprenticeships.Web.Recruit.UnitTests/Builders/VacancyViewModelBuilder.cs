@@ -5,6 +5,9 @@
     using Raa.Common.ViewModels.Vacancy;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyViewModelBuilder
     {
@@ -45,10 +48,9 @@
             viewModel.TrainingDetailsViewModel.ContactEmail = null;
             viewModel.FurtherVacancyDetailsViewModel.Status = status;
             viewModel.FurtherVacancyDetailsViewModel.VacancyType = vacancyType;
-            viewModel.FurtherVacancyDetailsViewModel.HoursPerWeek = 30;
             viewModel.FurtherVacancyDetailsViewModel.Duration = 12;
             viewModel.FurtherVacancyDetailsViewModel.DurationType = DurationType.Months;
-            viewModel.FurtherVacancyDetailsViewModel.WageType = WageType.NationalMinimum;
+            viewModel.FurtherVacancyDetailsViewModel.Wage = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, 30);
             viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
             {
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),
@@ -93,6 +95,12 @@
         public VacancyViewModelBuilder With(VacancyDatesViewModel vacancyDatesViewModel)
         {
             _furtherVacancyDetailsViewModel.VacancyDatesViewModel = vacancyDatesViewModel;
+            return this;
+        }
+
+        public VacancyViewModelBuilder With(WageViewModel wageObject)
+        {
+            _furtherVacancyDetailsViewModel.Wage = wageObject;
             return this;
         }
     }

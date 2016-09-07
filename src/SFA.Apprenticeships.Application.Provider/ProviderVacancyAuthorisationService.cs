@@ -62,12 +62,6 @@
                 }
             }
 
-            var allProviderSites = _providerService.GetOwnerAndRecruitmentAgentProviderSites(provider.ProviderId);
-            if (allProviderSites.Any(each => each.ProviderSiteId == providerSiteId))
-            {
-                return;
-            }
-
             var errorMessage = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view Vacancy Id '{vacancyId}' for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
 
             throw new Domain.Entities.Exceptions.CustomException(

@@ -1,0 +1,22 @@
+﻿@using SFA.Apprenticeships.Infrastructure.Presentation.Constants
+@model DateTime
+
+<details>
+    <summary>Wages explained</summary>
+    <div class="detail-content">
+        @if (Model < Wages.Ranges[0].ValidTo) //Special case for the run up to the change
+        {
+            <text>
+                The current National Minimum Wage rates are £@Wages.Ranges[0].Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Ranges[0].Over21NationalMinimumWage for anyone aged 21 and over. This will increase to £@Wages.Ranges[1].Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Ranges[1].Over21NationalMinimumWage for anyone aged 21 and over on the 1 Oct 2016<br />
+                Apprentices are paid for their normal working hours and training that’s part of their apprenticeship(usually one day per week).
+            </text>
+        }
+        else
+        {
+            <text>
+                The current National Minimum Wage rates are £@Wages.GetWageRangeFor(Model).Under18NationalMinimumWage an hour for 16 - 17 year olds, £@Wages.GetWageRangeFor(Model).Between18And20NationalMinimumWage an hour for 18 - 20 year olds and £@Wages.GetWageRangeFor(Model).Over21NationalMinimumWage for anyone aged 21 and over.<br />
+                Apprentices are paid for their normal working hours and training that’s part of their apprenticeship(usually one day per week).
+            </text>
+        }
+    </div>
+</details>

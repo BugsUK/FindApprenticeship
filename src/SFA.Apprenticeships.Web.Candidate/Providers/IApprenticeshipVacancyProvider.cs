@@ -9,6 +9,8 @@
 
         ApprenticeshipVacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId);
 
+        ApprenticeshipVacancyDetailViewModel GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber);
+
         ApprenticeshipVacancyDetailViewModel IncrementClickThroughFor(int vacancyId);
     }
 }

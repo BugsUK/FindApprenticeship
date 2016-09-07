@@ -3,16 +3,13 @@
     using System.Linq;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
-    using SFA.Infrastructure.Interfaces;
-    using Application.Interfaces.Vacancies;
     using Application.ReferenceData;
     using Application.Vacancy;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
     using ErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
 
     public class ApprenticeshipVacancyDataProvider : IVacancyDataProvider<ApprenticeshipVacancyDetail>
@@ -56,10 +53,15 @@
             if (providerSite == null)
                 throw new System.Exception($"Could not find VacancyParty for ProviderSiteId={vacancyParty.ProviderSiteId}");
 
-            var provider = _providerService.GetProvider(providerSite.ProviderId);
+            var provider = _providerService.GetProvider(vacancy.ProviderId);
             var categories = _referenceDataProvider.GetCategories().ToList();
 
             return ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(vacancy, employer, provider, providerSite, categories, _logService);
+        }
+
+        public int GetVacancyId(int vacancyReferenceNumber)
+        {
+            return _vacancyReadRepository.GetVacancyIdByReferenceNumber(vacancyReferenceNumber);
         }
     }
 }
