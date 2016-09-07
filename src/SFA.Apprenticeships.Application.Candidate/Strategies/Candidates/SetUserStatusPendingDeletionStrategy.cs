@@ -26,7 +26,7 @@
             _auditRepository.Audit(user, AuditEventTypes.UserSoftDelete, user.EntityId);
 
             user.Status = UserStatuses.PendingDeletion;
-            _userWriteRepository.Save(user);
+            _userWriteRepository.SoftDelete(user);
 
             _logService.Info("Set User: {0} Status to PendingDeletion", user.EntityId);
 

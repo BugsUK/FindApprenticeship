@@ -100,6 +100,18 @@
             _logger.Debug("Deleted MongoUser with Id={0}", id);
         }
 
+        public void SoftDelete(User entity)
+        {
+            //Check if there is another, existing user with the same username that has already been soft deleted
+            var mongoEntity = Collection.Find(Query.And(Query.EQ("Username", entity.Username.ToLower()), Query.EQ("Status", UserStatuses.PendingDeletion))).SingleOrDefault();
+            if (mongoEntity != null)
+            {
+                //Fully delete existing user
+                Delete(mongoEntity.Id);
+            }
+            Save(entity);
+        }
+
         public User Save(User entity)
         {
             _logger.Debug("Called Mongodb to save user with username={0}", entity.Username);

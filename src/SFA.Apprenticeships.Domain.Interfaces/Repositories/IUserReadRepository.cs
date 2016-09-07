@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
+    using Entities.Users;
     using System;
     using System.Collections.Generic;
-    using Entities.Users;
 
     public interface IUserReadRepository : IReadRepository<User>
     {
@@ -14,6 +14,4 @@
 
         IEnumerable<Guid> GetDormantUsersPotentiallyEligibleForSoftDelete(DateTime dormantAfterDateTime);
     }
-
-    public interface IUserWriteRepository : IWriteRepository<User> {}
 }
