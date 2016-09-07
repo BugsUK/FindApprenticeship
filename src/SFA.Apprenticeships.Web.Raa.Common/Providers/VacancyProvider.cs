@@ -1200,6 +1200,11 @@
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
+            if (!newVacancy.Address.GeoPoint.IsValid())
+            {
+                newVacancy.Address.GeoPoint = _geoCodingService.GetGeoPointFor(newVacancy.Address);
+            }
+
             return _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
@@ -1212,8 +1217,6 @@
             {
                 return QAActionResultCode.InvalidVacancy;
             }
-
-            var approvedVacancies = new List<Vacancy>();
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
@@ -1228,8 +1231,7 @@
 
                     foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
                     {
-                        var childVacancy = CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
-                        approvedVacancies.Add(childVacancy);
+                        CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                     }
 
                     _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
@@ -1238,8 +1240,13 @@
 
             submittedVacancy.Status = VacancyStatus.Live;
             submittedVacancy.DateQAApproved = qaApprovalDate;
-            var approvedVacancy = _vacancyPostingService.UpdateVacancy(submittedVacancy);
-            approvedVacancies.Add(approvedVacancy);
+
+            if (!submittedVacancy.Address.GeoPoint.IsValid())
+            {
+                submittedVacancy.Address.GeoPoint = _geoCodingService.GetGeoPointFor(submittedVacancy.Address);
+            }
+
+            _vacancyPostingService.UpdateVacancy(submittedVacancy);
 
             return QAActionResultCode.Ok;
         }

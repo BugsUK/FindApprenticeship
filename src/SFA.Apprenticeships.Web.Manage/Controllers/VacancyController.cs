@@ -17,9 +17,8 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
+    using Application.Interfaces;
 
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
     public class VacancyController : ManagementControllerBase

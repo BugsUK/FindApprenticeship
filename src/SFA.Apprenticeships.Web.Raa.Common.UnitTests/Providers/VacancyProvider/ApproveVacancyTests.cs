@@ -11,9 +11,8 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
+    using Application.Interfaces.Locations;
     using Web.Common.Configuration;
 
     [TestFixture]
@@ -22,7 +21,6 @@
     {
         [TestCase(1)]
         [TestCase(10)]
-        [TestCase(100)]
         public void ApproveMultilocationVacancy(int locationAddressCount)
         {
             //Arrange
@@ -158,6 +156,104 @@
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
                                 av.Status == VacancyStatus.Live)));
+        }
+
+        [Test]
+        public void ApproveVacancyShouldCallGeocodeServiceIfAddressIsNotGeocoded()
+        {
+            //Arrange
+            const int vacancyReferenceNumber = 1;
+            var address = new PostalAddress
+            {
+                Postcode = "CV1 2WT"
+            };
+            var vacancy = new Fixture().Build<Vacancy>()
+                .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
+                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(x => x.Address, address)
+                .Create();
+
+            var vacanyLockingService = new Mock<IVacancyLockingService>();
+            var configurationService = new Mock<IConfigurationService>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var geocodingService = new Mock<IGeoCodeLookupService>();
+
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+
+            vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
+                .Returns(true);
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(configurationService)
+                    .With(vacancyPostingService)
+                    .With(vacanyLockingService)
+                    .With(geocodingService)
+                    .Build();
+
+            //Act
+            var result = vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+
+            //Assert
+            geocodingService.Verify(s => s.GetGeoPointFor(address));
+        }
+
+        [TestCase(1)]
+        [TestCase(10)]
+        public void ApproveMultilocationVacancyShouldCallGeoCodeVacancyIfLocationIsNotGeocoded(int locationAddressCount)
+        {
+            //Arrange
+            const int vacancyReferenceNumber = 1;
+            const int parentVacancyId = 2;
+            var locationAddresses = new Fixture().Build<VacancyLocation>()
+                .CreateMany(locationAddressCount).ToList();
+
+            foreach (var locationAddress in locationAddresses)
+            {
+                locationAddress.Address.GeoPoint.Easting = 0;
+                locationAddress.Address.GeoPoint.Northing = 0;
+                locationAddress.Address.GeoPoint.Latitude = 0;
+                locationAddress.Address.GeoPoint.Longitude = 0;
+            }
+
+            var vacancy = new Fixture().Build<Vacancy>()
+                .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
+                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(x => x.VacancyId, parentVacancyId)
+                .Create();
+
+            var vacanyLockingService = new Mock<IVacancyLockingService>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var geocodingService = new Mock<IGeoCodeLookupService>();
+
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
+                .Returns(vacancy);
+            vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
+
+            //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
+            var fixture = new Fixture { RepeatCount = locationAddressCount - 1 };
+            var vacancyNumbers = fixture.Create<List<int>>();
+            vacancyPostingService.Setup(r => r.GetNextVacancyReferenceNumber()).ReturnsInOrder(vacancyNumbers.ToArray());
+
+            vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
+                .Returns(true);
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(vacancyPostingService)
+                    .With(vacanyLockingService)
+                    .With(geocodingService)
+                    .Build();
+
+            //Act
+            vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+
+            //Assert
+            geocodingService.Verify(s => s.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Exactly(locationAddressCount));
+            
         }
 
         [Test]
