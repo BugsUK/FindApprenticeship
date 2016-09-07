@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Candidates;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
@@ -14,9 +13,7 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using ViewModels.VacancySearch;
 
     public class ApprenticeshipVacancyProvider : IApprenticeshipVacancyProvider
@@ -208,6 +205,12 @@
                 _logger.Error(message, e);
                 throw;
             }
+        }
+
+        public ApprenticeshipVacancyDetailViewModel GetVacancyDetailViewModelByReferenceNumber(Guid? candidateId, int vacancyReferenceNumber)
+        {
+            var vacancyId = _apprenticeshipSearchService.GetVacancyId(vacancyReferenceNumber);
+            return GetVacancyDetailViewModel(candidateId, vacancyId);
         }
 
         public ApprenticeshipVacancyDetailViewModel IncrementClickThroughFor(int vacancyId)

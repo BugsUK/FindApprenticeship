@@ -10,9 +10,7 @@
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using Attributes;
 
     public class AccountController : RecruitmentControllerBase
@@ -56,8 +54,13 @@
                 properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
         }
 
-        public void SessionTimeout()
+        public void SessionTimeout(string returnUrl)
         {
+            if (returnUrl.IsValidReturnUrl())
+            {
+                UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
+            }
+
             var callbackUrl = Url.RouteUrl(RecruitmentRouteNames.SignOutCallback, new {timeout = true}, Request.Url?.Scheme ?? DefaultScheme);
 
             var properties = new AuthenticationProperties

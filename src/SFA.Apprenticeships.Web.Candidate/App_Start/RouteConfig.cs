@@ -255,6 +255,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipDetailsByReferenceNumber,
+                url: "apprenticeship/reference/{vacancyReferenceNumber}",
+                defaults: new { controller = "ApprenticeshipSearch", action = "DetailsByReferenceNumber" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipApply,
                 url: "apprenticeship/apply/{id}",
                 defaults: new { controller = "ApprenticeshipApplication", action = "Apply" }
@@ -336,6 +342,12 @@
                 name: CandidateRouteNames.TraineeshipDetails,
                 url: "traineeship/{id}",
                 defaults: new { controller = "TraineeshipSearch", action = "Details" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.TraineeshipDetailsByReferenceNumber,
+                url: "traineeship/reference/{vacancyReferenceNumber}",
+                defaults: new { controller = "TraineeshipSearch", action = "DetailsByReferenceNumber" }
                 );
 
             routes.MapRoute(

@@ -40,14 +40,17 @@
 
         private static string GetReturnUrl(AuthorizationContext filterContext)
         {
-            var url = filterContext.RequestContext.HttpContext.Request.Url;
-
-            if (url == null)
+            if (filterContext.RequestContext.HttpContext.Request.HttpMethod == "GET")
             {
-                return string.Empty;
+                var url = filterContext.RequestContext.HttpContext.Request.Url;
+
+                if (url != null)
+                {
+                    return url.PathAndQuery;
+                }
             }
 
-            return url.PathAndQuery;
+            return string.Empty;
         }
     }
 }

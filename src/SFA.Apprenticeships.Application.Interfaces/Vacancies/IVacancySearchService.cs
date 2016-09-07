@@ -21,5 +21,7 @@
         /// <param name="vacancyId">id for the vacancy to retrieve</param>
         /// <returns>vacancy detail or null</returns>
         TVacancyDetail GetVacancyDetails(int vacancyId);
+
+        int GetVacancyId(int vacancyReferenceNumber);
     }
 }
