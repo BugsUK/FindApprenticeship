@@ -24,6 +24,7 @@
         private const int VacancyPartyId = 4;
 
         private NewVacancyViewModel _validNewVacancyViewModelSansReferenceNumber;
+        private VacancyMinimumData _validVacancyMinimumDataSansReferenceNumber;
         private NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber;
 
 
@@ -38,6 +39,11 @@
         [SetUp]
         public void SetUp()
         {
+            _validVacancyMinimumDataSansReferenceNumber = new VacancyMinimumData
+            {
+                VacancyPartyId = VacancyPartyId
+            };
+
             _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
             {
                 OwnerParty = new VacancyPartyViewModel()
@@ -98,7 +104,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.UpdateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
+            provider.UpdateVacancy(_validVacancyMinimumDataSansReferenceNumber);
 
             // Assert.
             MockLocalAuthorityLookupService.Verify(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode), Times.Once);
@@ -208,32 +214,6 @@
             MockLocalAuthorityLookupService.Verify(m => m.GetLocalAuthorityCode(It.IsAny<string>()), Times.Exactly(2));
             MockVacancyPostingService.Verify(m => m.DeleteVacancyLocationsFor(vacancy.VacancyId));
             MockVacancyPostingService.Verify(m => m.SaveVacancyLocations(vacancyLocations), Times.Once);
-        }
-
-        [Test]
-        public void ShouldAssignLocalAuthorityCodeOnUpdatingAVacancyWithSameAddressAsEmployer()
-        {
-            // Arrange.
-            const string localAuthorityCode = "ABCD";
-            var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
-            var employerWithGeocode = new Fixture().Create<Employer>();
-            MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>())).Returns(employerWithGeocode);
-            MockLocalAuthorityLookupService.Setup(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode)).Returns(localAuthorityCode);
-            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
-            var provider = GetVacancyPostingProvider();
-            MockVacancyPostingService.Setup(m => m.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyGuid))
-                .Returns(new Vacancy());
-            var vacancy = new Fixture().Create<Vacancy>();
-            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
-                .Returns(vacancy);
-
-            // Act.
-            provider.UpdateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
-
-            // Assert.
-            MockLocalAuthorityLookupService.Verify(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode), Times.Once);
-            MockVacancyPostingService.Verify(m => m.UpdateVacancy(It.Is<Vacancy>(v => v.LocalAuthorityCode == localAuthorityCode)), Times.Once);
         }
     }
 }
