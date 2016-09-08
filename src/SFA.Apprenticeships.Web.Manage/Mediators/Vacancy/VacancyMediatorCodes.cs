@@ -4,6 +4,7 @@
     {
         public class ApproveVacancy
         {
+            public const string PostcodeLookupFailed = "VacancyMediatorCodes.ApproveVacancy.FailedGeoCodeLookup";
             public const string NoAvailableVacancies = "VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies";
             public const string Ok = "VacancyMediatorCodes.ApproveVacancy.Ok";
             public const string InvalidVacancy = "VacancyMediatorCodes.ApproveVacancy.InvalidVacancy";

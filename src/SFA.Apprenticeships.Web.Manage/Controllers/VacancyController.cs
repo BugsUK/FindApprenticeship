@@ -417,6 +417,10 @@
                 case VacancyMediatorCodes.ApproveVacancy.Ok:
                     return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
                         new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+                case VacancyMediatorCodes.ApproveVacancy.PostcodeLookupFailed:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                        new { vacancyReferenceNumber });
                 default:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
             }

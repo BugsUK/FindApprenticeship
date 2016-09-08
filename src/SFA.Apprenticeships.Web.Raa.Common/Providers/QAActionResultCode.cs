@@ -3,6 +3,7 @@
     public enum QAActionResultCode
     {
         Ok,
-        InvalidVacancy
+        InvalidVacancy,
+        GeocodingFailure
     }
 }

@@ -162,6 +162,15 @@
             }
         }
 
+        private void GeoCodeVacancyLocations(List<VacancyLocation> vacancyLocations)
+        {
+            foreach (var vacancyLocation in vacancyLocations)
+            {
+                vacancyLocation.Address.GeoPoint =
+                    _geoCodingService.GetGeoPointFor(vacancyLocation.Address);
+            }
+        }
+
         public LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
@@ -1200,11 +1209,6 @@
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
-            if (!newVacancy.Address.GeoPoint.IsValid())
-            {
-                newVacancy.Address.GeoPoint = _geoCodingService.GetGeoPointFor(newVacancy.Address);
-            }
-
             return _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
@@ -1218,33 +1222,46 @@
                 return QAActionResultCode.InvalidVacancy;
             }
 
-            if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
+            try
             {
-                var vacancyLocationAddresses = _vacancyPostingService.GetVacancyLocations(submittedVacancy.VacancyId);
-                if (vacancyLocationAddresses != null && vacancyLocationAddresses.Any())
+                if (!submittedVacancy.Address.GeoPoint.IsValid())
                 {
-                    var vacancyLocation = vacancyLocationAddresses.First();
-                    submittedVacancy.Address = vacancyLocation.Address;
-                    submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
-                    submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
-                    submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
-
-                    foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
-                    {
-                        CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
-                    }
-
-                    _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
+                    submittedVacancy.Address.GeoPoint = _geoCodingService.GetGeoPointFor(submittedVacancy.Address);
                 }
+
+                if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                    !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
+                {
+                    var vacancyLocationAddresses = _vacancyPostingService.GetVacancyLocations(submittedVacancy.VacancyId);
+
+                    if (vacancyLocationAddresses != null && vacancyLocationAddresses.Any())
+                    {
+                        GeoCodeVacancyLocations(vacancyLocationAddresses);
+
+                        var vacancyLocation = vacancyLocationAddresses.First();
+                        submittedVacancy.Address = vacancyLocation.Address;
+                        submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
+                        submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
+                        submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+
+                        foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
+                        {
+                            CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                        }
+
+                        _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
+                    }
+                }
+            }
+            catch (CustomException ex)
+                when (ex.Code == Application.Interfaces.Locations.ErrorCodes.GeoCodeLookupProviderFailed)
+            {
+                // Catch and return before any new vacancy is created
+                return QAActionResultCode.GeocodingFailure;
             }
 
             submittedVacancy.Status = VacancyStatus.Live;
             submittedVacancy.DateQAApproved = qaApprovalDate;
-
-            if (!submittedVacancy.Address.GeoPoint.IsValid())
-            {
-                submittedVacancy.Address.GeoPoint = _geoCodingService.GetGeoPointFor(submittedVacancy.Address);
-            }
 
             _vacancyPostingService.UpdateVacancy(submittedVacancy);
 
