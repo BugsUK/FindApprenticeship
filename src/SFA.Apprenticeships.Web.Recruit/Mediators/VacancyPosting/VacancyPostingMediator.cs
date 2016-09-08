@@ -286,7 +286,6 @@
             {
                 _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
 
-                // _vacancyPostingProvider.UpdateVacancy(existingVacancy.NewVacancyViewModel, ukprn);
                 var vacancyData = new VacancyMinimumData
                 {
                     IsEmployerLocationMainApprenticeshipLocation =
@@ -294,7 +293,7 @@
                     NumberOfPositions = viewModel.NumberOfPositions,
                     Ukprn = ukprn,
                     VacancyGuid = viewModel.VacancyGuid,
-                    VacancyPartyId = viewModel.VacancyPartyId,
+                    VacancyPartyId = existingVacancy.NewVacancyViewModel.OwnerParty.VacancyPartyId,
                     EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl,
                     EmployerDescription = viewModel.EmployerDescription
                 };
