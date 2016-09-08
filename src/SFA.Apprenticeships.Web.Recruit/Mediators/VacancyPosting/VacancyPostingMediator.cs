@@ -286,12 +286,25 @@
             {
                 _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
 
-                _vacancyPostingProvider.UpdateVacancy(existingVacancy.NewVacancyViewModel, ukprn);
+                // _vacancyPostingProvider.UpdateVacancy(existingVacancy.NewVacancyViewModel, ukprn);
+                var vacancyData = new VacancyMinimumData
+                {
+                    IsEmployerLocationMainApprenticeshipLocation =
+                        viewModel.IsEmployerLocationMainApprenticeshipLocation.Value,
+                    NumberOfPositions = viewModel.NumberOfPositions,
+                    Ukprn = ukprn,
+                    VacancyGuid = viewModel.VacancyGuid,
+                    VacancyPartyId = viewModel.VacancyPartyId,
+                    EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl,
+                    EmployerDescription = viewModel.EmployerDescription
+                };
+                _vacancyPostingProvider.UpdateVacancy(vacancyData);
             }
 
+            /*
             var employerHasChanged = vacancyPreviousState != null &&
                                      existingVacancy.NewVacancyViewModel.OwnerParty.Employer.EmployerId !=
-                                     vacancyPreviousState.NewVacancyViewModel.OwnerParty.Employer.EmployerId;
+                                     vacancyPreviousState.NewVacancyViewModel.OwnerParty.Employer.EmployerId;*/
 
             var changedFromSameLocationAsEmployerToDifferentLocation =
                 vacancyPreviousState != null &&
@@ -299,7 +312,7 @@
                 viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
                 vacancyPreviousState.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true;
 
-            if (changedFromSameLocationAsEmployerToDifferentLocation || employerHasChanged)
+            if (changedFromSameLocationAsEmployerToDifferentLocation /*|| employerHasChanged*/)
             {
                 _vacancyPostingProvider.EmptyVacancyLocation(vacancyPreviousState.VacancyReferenceNumber);
             }
@@ -482,7 +495,7 @@
 
             newVacancyViewModel.LocationAddresses = storedVacancy?.LocationAddresses;
             
-            var createdVacancyViewModel = _vacancyPostingProvider.UpdateVacancy(newVacancyViewModel, ukprn);
+            var createdVacancyViewModel = _vacancyPostingProvider.UpdateVacancy(newVacancyViewModel);
 
             return SwitchingFromOnlineToOfflineVacancy(newVacancyViewModel, storedVacancy)
                 ? GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning, createdVacancyViewModel,
@@ -502,7 +515,7 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
 
-            var createdVacancyViewModel = _vacancyPostingProvider.UpdateVacancy(newVacancyViewModel, ukprn);
+            var createdVacancyViewModel = _vacancyPostingProvider.UpdateVacancy(newVacancyViewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
         }

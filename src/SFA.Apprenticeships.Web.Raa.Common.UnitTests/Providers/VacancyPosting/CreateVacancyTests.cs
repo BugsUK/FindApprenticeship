@@ -93,7 +93,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.UpdateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
+            var viewModel = provider.UpdateVacancy(_validNewVacancyViewModelWithReferenceNumber);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>

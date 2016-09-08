@@ -14,7 +14,9 @@
 
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions);
 
-        NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn);
+        NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel);
+
+        VacancyMinimumData UpdateVacancy(VacancyMinimumData vacancyMinimumData);
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
