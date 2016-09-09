@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
@@ -224,11 +225,11 @@
         {
             return
                 (e.Address.Postcode != null &&
-                 e.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
+                 Regex.Replace(e.Address.Postcode, @"\s+", "").ToLower().Contains(request.Location.ToLower())) ||
                 (e.Address.AddressLine4 != null &&
-                 e.Address.AddressLine4.ToLower().Contains(request.Location.ToLower())) ||
+                 Regex.Replace(e.Address.AddressLine4, @"\s+", "").ToLower().Contains(request.Location.ToLower())) ||
                 (e.Address.Town != null &&
-                 e.Address.Town.ToLower().Contains(request.Location.ToLower()));
+                 Regex.Replace(e.Address.Town, @"\s+", "").ToLower().Contains(request.Location.ToLower()));
         }
     }
 }

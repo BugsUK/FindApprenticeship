@@ -8,6 +8,7 @@
     using Domain.Raa.Interfaces.Repositories;
 
     using Application.Interfaces;
+    using Domain.Entities.Raa.Reference;
     using DomainEmployer = Domain.Entities.Raa.Parties.Employer;
     using Employer = Entities.Employer;
 
@@ -29,7 +30,7 @@
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EmployerId = employerId }).SingleOrDefault();
 
-            return MapEmployer(employer);
+            return MapEmployers(new []{employer}).Single();
         }
 
         public DomainEmployer GetByEdsUrn(string edsUrn, bool currentOnly = true)
@@ -38,7 +39,7 @@
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EdsUrn = @EdsUrn" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EdsUrn = Convert.ToInt32(edsUrn) }).SingleOrDefault();
 
-            return employer == null ? null : MapEmployer(employer);
+            return employer == null ? null : MapEmployers(new[] { employer }).Single();
         }
 
         public List<DomainEmployer> GetByIds(IEnumerable<int> employerIds, bool currentOnly = true)
@@ -51,7 +52,7 @@
                     new { EmployerIds = employersIds }).ToList();
                 employers.AddRange(splitEmployer);
             }                                 
-            return employers.Select(MapEmployer).ToList();
+            return MapEmployers(employers);
         }
 
         public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds, bool currentOnly = true)
@@ -112,10 +113,31 @@
             return GetById(dbEmployer.EmployerId);
         }
 
-        private DomainEmployer MapEmployer(Employer employer)
+        private List<DomainEmployer> MapEmployers(IReadOnlyCollection<Employer> employers)
         {
-            var result = _mapper.Map<Employer, DomainEmployer>(employer);
-            return MapCountyId(employer, result);
+            var results = new List<DomainEmployer>(employers.Count);
+
+            var countyIds = employers.Where(e => e.CountyId > 0).Select(e => e.CountyId).Distinct();
+            var countyIdsMap = _getOpenConnection.QueryCached<County>(_cacheDuration, @"
+SELECT *
+FROM   dbo.County
+WHERE  CountyId IN @countyIds",
+                    new
+                    {
+                        countyIds
+                    }).ToDictionary(c => c.CountyId, c => c.FullName);
+
+            foreach (var employer in employers)
+            {
+                var result = _mapper.Map<Employer, DomainEmployer>(employer);
+                if (countyIdsMap.ContainsKey(employer.CountyId))
+                {
+                    result.Address.County = countyIdsMap[employer.CountyId];
+                }
+                results.Add(result);
+            }
+
+            return results;
         }
 
         private void PopulateCountyId(DomainEmployer entity, Employer dbVacancyLocation)
@@ -131,23 +153,6 @@ WHERE  FullName = @CountyFullName",
                         CountyFullName = entity.Address.County
                     }).SingleOrDefault();
             }
-        }
-
-        private DomainEmployer MapCountyId(Employer dbEmployer, DomainEmployer result)
-        {
-            if (dbEmployer.CountyId > 0)
-            {
-                result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
-SELECT FullName
-FROM   dbo.County
-WHERE  CountyId = @CountyId",
-                    new
-                    {
-                        CountyId = dbEmployer.CountyId
-                    }).Single();
-            }
-
-            return result;
         }
     }
 }

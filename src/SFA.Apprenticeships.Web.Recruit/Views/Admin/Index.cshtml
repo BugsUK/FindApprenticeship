@@ -1,0 +1,11 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
+    ViewBag.Title = "Administrator functions";
+}
+
+<h1 id="heading" class="heading-xlarge">Administrator functions</h1>
+
+<ul>
+    <li><a href="@Url.RouteUrl(RecruitmentRouteNames.AdminChangeUkprn)">Change UKPRN</a></li>
+    <li><a href="@Url.RouteUrl(RecruitmentRouteNames.ResetUkprn)">Reset UKPRN</a></li>
+</ul>

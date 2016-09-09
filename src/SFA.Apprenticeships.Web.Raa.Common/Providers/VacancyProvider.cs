@@ -226,14 +226,44 @@
             }
         }
 
+        public VacancyMinimumData UpdateVacancy(VacancyMinimumData vacancyMinimumData)
+        {
+            var vacancyParty =
+                _providerService.GetVacancyParty(vacancyMinimumData.VacancyPartyId, true);
+            if (vacancyParty == null)
+                throw new Exception($"Vacancy Party {vacancyMinimumData.VacancyPartyId} not found / no longer current");
+
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+
+            if (!employer.Address.GeoPoint.IsValid())
+            {
+                employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
+            }
+
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyMinimumData.VacancyGuid);
+
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = vacancy.IsEmployerLocationMainApprenticeshipLocation;
+            vacancy.NumberOfPositions = vacancy.NumberOfPositions ?? 0;
+            vacancy.Address = (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                               vacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
+                                ? employer.Address
+                                : null;
+            vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
+            vacancy.EmployerDescription = vacancyMinimumData.EmployerDescription;
+            vacancy.EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl;
+
+            _vacancyPostingService.UpdateVacancy(vacancy);
+
+            return vacancyMinimumData;
+        }
+
         /// <summary>
         /// This method will create a new Vacancy record if the model provided does not have a vacancy reference number.
         /// Otherwise, it updates the existing one.
         /// </summary>
         /// <param name="newVacancyViewModel"></param>
-        /// <param name="ukprn"></param>
         /// <returns></returns>
-        public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
+        public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
             var resultViewModel = UpdateExistingVacancy(newVacancyViewModel);
 
@@ -306,7 +336,12 @@
             if (vacancyParty == null)
                 throw new Exception($"Vacancy Party {newVacancyViewModel.OwnerParty.VacancyPartyId} not found / no longer current");
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+            //var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+
+            //if (!employer.Address.GeoPoint.IsValid())
+            //{
+            //    employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
+            //}
 
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
@@ -317,10 +352,14 @@
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
-            vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
-            vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
+            //vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
+            //vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
-            vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
+            //vacancy.Address = (newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+            //                   newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+            //                    ? employer.Address
+            //                    : null;
+            //vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
             
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 

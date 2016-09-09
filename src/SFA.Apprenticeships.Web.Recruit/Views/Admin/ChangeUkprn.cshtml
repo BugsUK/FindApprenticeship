@@ -1,0 +1,21 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Recruit.ViewModels.Admin.ChangeUkprnViewModel
+
+@{
+    ViewBag.Title = "Change UKPRN";
+}
+
+<h1 id="heading" class="heading-xlarge">Change UKPRN</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminChangeUkprn))
+{
+    <div class="form-group">
+        <fieldset class="form-group inline-fixed">
+            @Html.FormTextFor(m => m.Ukprn, controlHtmlAttributes: new {@class = "form-control-medium", type = "tel", size = 8})
+        </fieldset>
+
+        <div class="form-group">
+            <button type="submit" class="button">Change</button>
+        </div>
+    </div>
+}
