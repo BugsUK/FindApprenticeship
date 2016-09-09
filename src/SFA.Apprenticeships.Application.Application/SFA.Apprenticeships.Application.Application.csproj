@@ -94,6 +94,8 @@
     <Compile Include="ILegacyApplicationStatusesProvider.cs" />
     <Compile Include="Strategies\ApplicationStatusAlertStrategy.cs" />
     <Compile Include="Strategies\ApplicationStatusUpdateStrategy.cs" />
+    <Compile Include="Strategies\ISetApplicationStatusStrategy.cs" />
+    <Compile Include="Strategies\SetApplicationStatusStrategy.cs" />
     <Compile Include="Strategies\IApplicationStatusAlertStrategy.cs" />
     <Compile Include="Strategies\IApplicationStatusUpdater.cs" />
     <Compile Include="Strategies\IApplicationStatusUpdateStrategy.cs" />

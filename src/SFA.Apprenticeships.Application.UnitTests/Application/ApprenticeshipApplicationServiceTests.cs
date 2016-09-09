@@ -18,6 +18,7 @@
     public class ApprenticeshipApplicationServiceTests
     {
         private Mock<IApprenticeshipApplicationReadRepository> _mockApprenticeshipApplicationReadRepository;
+        private Mock<IApprenticeshipApplicationWriteRepository> _mockApprenticeshipApplicationWriteRepository;
         private Mock<IReferenceNumberRepository> _mockReferenceNumberRepository;
         private Mock<IGetApplicationForReviewStrategy> _mockGetApplicationForReviewStrategy;
         private Mock<IUpdateApplicationNotesStrategy> _mockUpdateApplicationNotesStrategy;
@@ -29,17 +30,18 @@
         public void SetUp()
         {
             _mockApprenticeshipApplicationReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();
+            _mockApprenticeshipApplicationWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
             _mockReferenceNumberRepository = new Mock<IReferenceNumberRepository>();
             _mockGetApplicationForReviewStrategy = new Mock<IGetApplicationForReviewStrategy>();
             _mockUpdateApplicationNotesStrategy = new Mock<IUpdateApplicationNotesStrategy>();
             _mockApplicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
+            var setApplicationStatusStrategy = new SetApplicationStatusStrategy(_mockApprenticeshipApplicationReadRepository.Object, _mockApprenticeshipApplicationWriteRepository.Object, _mockReferenceNumberRepository.Object, _mockApplicationStatusUpdateStrategy.Object);
 
             _apprenticeshipApplicationService = new ApprenticeshipApplicationService(
                 _mockApprenticeshipApplicationReadRepository.Object,
-                _mockReferenceNumberRepository.Object,
                 _mockGetApplicationForReviewStrategy.Object,
                 _mockUpdateApplicationNotesStrategy.Object,
-                _mockApplicationStatusUpdateStrategy.Object);
+                setApplicationStatusStrategy);
         }
 
         [Test]

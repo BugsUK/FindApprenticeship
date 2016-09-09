@@ -22,6 +22,8 @@
 
         ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
 
+        ApplicationSelectionViewModel RevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel);
+
         TraineeshipApplicationViewModel GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         TraineeshipApplicationViewModel GetTraineeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel);

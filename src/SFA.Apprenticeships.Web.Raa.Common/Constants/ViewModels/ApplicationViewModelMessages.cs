@@ -7,6 +7,7 @@
         public const string UpdateNotesFailed = "An error occured when trying to save. Please try again later";
         public const string SuccessfulDecisionFormat = "{0}'s application has been successful";
         public const string UnsuccessfulDecisionFormat = "{0}'s application has been unsuccessful";
+        public const string RevertToViewedFormat = "{0}'s application has been reverted to the viewed state";
 
         public class Notes
         {

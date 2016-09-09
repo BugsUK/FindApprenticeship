@@ -109,6 +109,37 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
+        public ActionResult ReviewRevertToViewed(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ReviewRevertToViewed(apprenticeshipApplicationViewModel);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message);
+            }
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Error:
+                    return View("Review", response.ViewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmRevertToViewed, viewModel.ApplicationSelection.RouteValues);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
         public ActionResult ReviewSaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var response = _apprenticeshipApplicationMediator.ReviewSaveAndExit(apprenticeshipApplicationViewModel);
@@ -206,6 +237,46 @@
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
+                    if (response.Message != null)
+                    {
+                        SetUserMessage(response.Message.Text);
+                    }
+
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel.RouteValues);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmRevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ConfirmRevertToViewed(applicationSelectionViewModel);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.Ok:
+                    return View(response.ViewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.NoApplicationId:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "RevertToViewed")]
+        public ActionResult RevertToViewed(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.RevertToViewed(apprenticeshipApplicationViewModel.ApplicationSelection);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.RevertToViewed.Ok:
                     if (response.Message != null)
                     {
                         SetUserMessage(response.Message.Text);
