@@ -2,7 +2,6 @@
 {
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
-    using Entities;
     using Interfaces.Applications;
     using Strategies;
     using Strategies.Apprenticeships;
@@ -12,23 +11,20 @@
     public class ApprenticeshipApplicationService : IApprenticeshipApplicationService
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
-        private readonly IReferenceNumberRepository _referenceNumberRepository;
         private readonly IGetApplicationForReviewStrategy _getApplicationForReviewStrategy;
         private readonly IUpdateApplicationNotesStrategy _updateApplicationNotesStrategy;
-        private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
+        private readonly ISetApplicationStatusStrategy _setApplicationStatusStrategy;
 
         public ApprenticeshipApplicationService(
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
-            IReferenceNumberRepository referenceNumberRepository,
             IGetApplicationForReviewStrategy getApplicationForReviewStrategy,
             IUpdateApplicationNotesStrategy updateApplicationNotesStrategy,
-            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy)
+            ISetApplicationStatusStrategy setApplicationStatusStrategy)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
-            _referenceNumberRepository = referenceNumberRepository;
             _getApplicationForReviewStrategy = getApplicationForReviewStrategy;
             _updateApplicationNotesStrategy = updateApplicationNotesStrategy;
-            _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
+            _setApplicationStatusStrategy = setApplicationStatusStrategy;
         }
 
         public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
@@ -63,46 +59,22 @@
 
         public void SetSuccessfulDecision(Guid applicationId)
         {
-            SetDecision(applicationId, ApplicationStatuses.Successful);
+            _setApplicationStatusStrategy.SetSuccessfulDecision(applicationId);
         }
 
         public void SetUnsuccessfulDecision(Guid applicationId)
         {
-            SetDecision(applicationId, ApplicationStatuses.Unsuccessful);
+            _setApplicationStatusStrategy.SetUnsuccessfulDecision(applicationId);
+        }
+
+        public void RevertToViewed(Guid applicationId)
+        {
+            _setApplicationStatusStrategy.RevertToViewed(applicationId);
         }
 
         public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
             return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(vacancyIds);
         }
-
-        #region Helpers
-
-        private void SetDecision(Guid applicationId, ApplicationStatuses applicationStatus)
-        {
-            var apprenticeshipApplication = GetApplication(applicationId);
-            var legacyApplicationId = apprenticeshipApplication.LegacyApplicationId;
-            if (legacyApplicationId == 0)
-            {
-                legacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
-            }
-
-            var applicationStatusSummary = new ApplicationStatusSummary
-            {
-                // CRITICAL: make the update look like it came from legacy AVMS application
-                ApplicationId = Guid.Empty,
-                ApplicationStatus = applicationStatus,
-                LegacyApplicationId = legacyApplicationId,
-                LegacyCandidateId = 0, // not required
-                LegacyVacancyId = 0, // not required
-                VacancyStatus = apprenticeshipApplication.VacancyStatus,
-                ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate,
-                UpdateSource = ApplicationStatusSummary.Source.Raa //Ensure this update is from RAA so ownership of the application is verified
-            };
-
-            _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
-        }
-
-        #endregion
     }
 }

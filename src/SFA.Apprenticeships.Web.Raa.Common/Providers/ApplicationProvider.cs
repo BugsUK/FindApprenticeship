@@ -209,6 +209,15 @@
             return applicationSelectionViewModel;
         }
 
+        public ApplicationSelectionViewModel RevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationId = applicationSelectionViewModel.ApplicationId;
+
+            _apprenticeshipApplicationService.RevertToViewed(applicationId);
+
+            return applicationSelectionViewModel;
+        }
+
         public TraineeshipApplicationViewModel GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var application = _traineeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);

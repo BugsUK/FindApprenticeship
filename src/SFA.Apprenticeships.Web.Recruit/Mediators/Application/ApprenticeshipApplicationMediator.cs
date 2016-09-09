@@ -11,7 +11,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Raa.Common.Validators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
-    using SFA.Infrastructure.Interfaces;
 
     public class ApprenticeshipApplicationMediator : MediatorBase, IApprenticeshipApplicationMediator
     {
@@ -109,6 +108,28 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             }
         }
 
+        public MediatorResponse<ApprenticeshipApplicationViewModel> ReviewRevertToViewed(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var validationResult = _apprenticeshipApplicationViewModelServerValidator.Validate(apprenticeshipApplicationViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.FailedValidation, apprenticeshipApplicationViewModel, validationResult);
+            }
+
+            try
+            {
+                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Ok, apprenticeshipApplicationViewModel);
+            }
+            catch (Exception)
+            {
+                var viewModel = GetFailedUpdateApprenticeshipApplicationViewModel(apprenticeshipApplicationViewModel.ApplicationSelection);
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Error, viewModel, ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
+            }
+        }
+
         public MediatorResponse<ApprenticeshipApplicationViewModel> ReviewSaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var validationResult = _apprenticeshipApplicationViewModelServerValidator.Validate(apprenticeshipApplicationViewModel);
@@ -183,6 +204,30 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             var message = string.Format(ApplicationViewModelMessages.UnsuccessfulDecisionFormat, candidateName);
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, viewModel, message, UserMessageLevel.Info);
+        }
+
+        public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
+            {
+                _logService.Error("Confirm revert to viewed failed: VacancyGuid is empty.");
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
+            }
+
+            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApplicationSelectionViewModel> RevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.RevertToViewed(applicationSelectionViewModel);
+
+            var candidateName = applicationViewModel.ApplicantDetails.Name;
+            var message = string.Format(ApplicationViewModelMessages.RevertToViewedFormat, candidateName);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.RevertToViewed.Ok, viewModel, message, UserMessageLevel.Info);
         }
     }
 }
