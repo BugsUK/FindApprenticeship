@@ -37,6 +37,7 @@
         {
             var claim = new Claim(Common.Constants.ClaimTypes.UkprnOverride, viewModel.Ukprn);
 
+            RemoveUkprnOverride();
             _cookieAuthorizationDataProvider.AddClaim(claim, HttpContext, User.Identity.Name);
 
             SetUserMessage($"Your UKPRN has been changed to {viewModel.Ukprn}");
@@ -47,11 +48,17 @@
         [HttpGet]
         public ActionResult ResetUkprn()
         {
-            _cookieAuthorizationDataProvider.RemoveClaim(Common.Constants.ClaimTypes.UkprnOverride, User.GetUkprn(), HttpContext, User.Identity.Name);
+            RemoveUkprnOverride();
             
             SetUserMessage("Your UKPRN has been reset");
 
             return RedirectToRoute(RecruitmentRouteNames.AdminChangeUkprn);
+        }
+
+        private void RemoveUkprnOverride()
+        {
+            _cookieAuthorizationDataProvider.RemoveClaim(Common.Constants.ClaimTypes.UkprnOverride, User.GetUkprn(), HttpContext,
+                User.Identity.Name);
         }
     }
 }
