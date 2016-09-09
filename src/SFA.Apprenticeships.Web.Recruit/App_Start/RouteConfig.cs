@@ -415,6 +415,18 @@
                defaults: new { controller = "Report", action = "CandidatesWithApplications" }
                );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminList,
+               url: "admin",
+               defaults: new { controller = "Admin", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminChangeUkprn,
+               url: "admin/changeukprn",
+               defaults: new { controller = "Admin", action = "ChangeUkprn" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

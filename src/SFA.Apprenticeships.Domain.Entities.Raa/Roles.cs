@@ -5,5 +5,6 @@
         public const string Faa = "FAA";
         public const string VerifiedEmail = "VerifiedEmail";
         public const string Raa = "RAA";
+        public const string Admin = "Admin";
     }
 }

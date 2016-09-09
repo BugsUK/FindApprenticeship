@@ -95,5 +95,9 @@
         public const string ReportList = "ReportList";
         public const string ReportApplicationsReceived = "ReportApplicationsReceived";
         public const string ReportCandidatesWithApplications = "ReportCandidatesWithApplications";
+
+        //Admin
+        public const string AdminList = "AdminList";
+        public const string AdminChangeUkprn = "AdminChangeUkprn";
     }
 }
