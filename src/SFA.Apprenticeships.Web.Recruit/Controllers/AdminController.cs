@@ -11,6 +11,7 @@
     using ViewModels.Admin;
 
     [AuthorizeUser(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.Admin)]
     public class AdminController : RecruitmentControllerBase
     {
         private readonly ICookieAuthorizationDataProvider _cookieAuthorizationDataProvider;
