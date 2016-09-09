@@ -427,6 +427,13 @@
                defaults: new { controller = "Admin", action = "ChangeUkprn" }
                );
 
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ResetUkprn,
+               url: "admin/resetukprn",
+               defaults: new { controller = "Admin", action = "ResetUkprn" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

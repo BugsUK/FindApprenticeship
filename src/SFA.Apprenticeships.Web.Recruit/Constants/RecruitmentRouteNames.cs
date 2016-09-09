@@ -99,5 +99,6 @@
         //Admin
         public const string AdminList = "AdminList";
         public const string AdminChangeUkprn = "AdminChangeUkprn";
+        public const string ResetUkprn = "ResetUkprn";
     }
 }
