@@ -243,7 +243,12 @@
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
             var provider = _providerProvider.GetProviderViewModel(ukprn);
             var providerSites = GetProviderSites(ukprn);
-            var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerUserViewModel.DefaultProviderSiteId, vacanciesSummarySearch);
+            var providerSiteId = providerUserViewModel.DefaultProviderSiteId;
+            if (providerSites.All(ps => ps.Value != Convert.ToString(providerUserViewModel.DefaultProviderSiteId)))
+            {
+                providerSiteId = Convert.ToInt32(providerSites.First().Value);
+            }
+            var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerSiteId, vacanciesSummarySearch);
 
             var viewModel = new HomeViewModel
             {
