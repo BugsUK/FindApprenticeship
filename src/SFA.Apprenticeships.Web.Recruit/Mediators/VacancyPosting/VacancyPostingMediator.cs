@@ -658,6 +658,8 @@
 
         public MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
+            viewModel = MergeVacancyDates(viewModel);
+
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             var warningsAccepted = validationResult.HasWarningsOnly() && validationResult.IsWarningsHashMatch(viewModel.WarningsHash) && acceptWarnings;
@@ -682,6 +684,19 @@
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private FurtherVacancyDetailsViewModel MergeVacancyDates(FurtherVacancyDetailsViewModel viewModel)
+        {
+            var existingViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(viewModel.VacancyReferenceNumber);
+            if (existingViewModel != null)
+            {
+                existingViewModel.WarningsHash = viewModel.WarningsHash;
+                existingViewModel.VacancyDatesViewModel.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate;
+                existingViewModel.VacancyDatesViewModel.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate;
+                viewModel = existingViewModel;
+            }
+            return viewModel;
         }
 
         public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel, string ukprn)

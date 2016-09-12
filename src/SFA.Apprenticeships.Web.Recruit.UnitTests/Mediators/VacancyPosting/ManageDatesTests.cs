@@ -15,6 +15,34 @@
     public class ManageDatesTests : TestsBase
     {
         [Test]
+        public void ShouldMergeRequestAndExistingFurtherVacancyDetails()
+        {
+            const int vacancyReferenceNumber = 1;
+
+            var viewModel = new FurtherVacancyDetailsViewModel
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
+                    PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(7))
+                }
+            };
+
+            var existingViewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
+
+            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(existingViewModel);
+
+            var mediator = GetMediator();
+
+            var result = mediator.UpdateVacancyDates(viewModel, false);
+
+            VacancyPostingProvider.Verify(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber));
+
+            result.ViewModel.Wage.Should().Be(existingViewModel.Wage);
+        }
+
+        [Test]
         public void ShouldReturnAWarningHashIfTheModelHasOnlyWarnings()
         {
             const int vacancyReferenceNumber = 1;
