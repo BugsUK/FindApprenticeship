@@ -5,7 +5,6 @@
     using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies;
     using FluentValidation.Attributes;
     using Infrastructure.Presentation;
     using Validators.Vacancy;
