@@ -78,6 +78,17 @@
                     Vacancy manager notes
                 </h2>
                 <p>@notes</p>
+
+                @if (User.IsInRole(SFA.Apprenticeships.Domain.Entities.Raa.Roles.Admin))
+                {
+                    <div class="form-group">
+                        <p class="med-btm-margin">
+                            <button type="submit" class="button-link" name="Review" value="ReviewRevertToViewed">
+                                Revert this candidate's application back to viewed
+                            </button>
+                        </p>
+                    </div>
+                }
             </section>
         }
         else

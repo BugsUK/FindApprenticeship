@@ -17,6 +17,8 @@
         void SetSuccessfulDecision(Guid applicationId);
 
         void SetUnsuccessfulDecision(Guid applicationId);
+
+        void RevertToViewed(Guid applicationId);
     }
 }
  

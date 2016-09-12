@@ -28,6 +28,13 @@
             public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.Error";
         }
 
+        public class ReviewRevertToViewed
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Ok";
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.FailedValidation";
+            public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Error";
+        }
+
         public class ReviewSaveAndExit
         {
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok";
@@ -55,6 +62,17 @@
         public class SendUnsuccessfulDecision
         {
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok";
+        }
+
+        public class ConfirmRevertToViewed
+        {
+            public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.NoApplicationId";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.Ok";
+        }
+
+        public class RevertToViewed
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.RevertToViewed.Ok";
         }
     }
 }

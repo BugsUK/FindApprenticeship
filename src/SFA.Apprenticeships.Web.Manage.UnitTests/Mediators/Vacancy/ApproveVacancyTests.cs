@@ -111,5 +111,19 @@
             var result = mediator.ApproveVacancy(vacancyReferenceNumber);
             result.AssertMessage(VacancyMediatorCodes.ApproveVacancy.InvalidVacancy, VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
         }
+
+        [Test]
+        public void ShouldReturnPostcodeLookupFailedIfTheVacancyIsThereWasAnErrorGeocodingTheVacancy()
+        {
+            const int vacancyReferenceNumber = 1;
+            var provider = new Mock<IVacancyQAProvider>();
+
+            provider.Setup(p => p.ApproveVacancy(vacancyReferenceNumber)).Returns(QAActionResultCode.GeocodingFailure);
+
+            var mediator = new VacancyMediatorBuilder().With(provider).Build();
+
+            var result = mediator.ApproveVacancy(vacancyReferenceNumber);
+            result.AssertMessage(VacancyMediatorCodes.ApproveVacancy.PostcodeLookupFailed, VacancyViewModelMessages.PostcodeLookupFailed, UserMessageLevel.Error);
+        }
     }
 }

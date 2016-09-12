@@ -17,9 +17,8 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
+    using Application.Interfaces;
 
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
     public class VacancyController : ManagementControllerBase
@@ -418,6 +417,10 @@
                 case VacancyMediatorCodes.ApproveVacancy.Ok:
                     return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
                         new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+                case VacancyMediatorCodes.ApproveVacancy.PostcodeLookupFailed:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                        new { vacancyReferenceNumber });
                 default:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
             }

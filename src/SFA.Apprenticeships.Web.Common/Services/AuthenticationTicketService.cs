@@ -1,6 +1,4 @@
-﻿using SFA.Infrastructure.Interfaces;
-
-namespace SFA.Apprenticeships.Web.Common.Services
+﻿namespace SFA.Apprenticeships.Web.Common.Services
 {
     using System;
     using System.Globalization;
@@ -8,8 +6,7 @@ namespace SFA.Apprenticeships.Web.Common.Services
     using System.Security.Cryptography;
     using System.Web;
     using System.Web.Security;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
 
     public class AuthenticationTicketService : IAuthenticationTicketService
     {
@@ -29,6 +26,11 @@ namespace SFA.Apprenticeships.Web.Common.Services
             var cookies = _httpContext.Request.Cookies;
             try
             {
+                if (cookies == null || cookies.AllKeys.Length == 0)
+                {
+                    return null;
+                }
+
                 if (!cookies.AllKeys.Contains(CookieName))
                 {
                     return null;

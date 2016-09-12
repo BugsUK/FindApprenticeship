@@ -22,7 +22,7 @@
             var respone = mediator.Review(viewModel);
 
             respone.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId, false, false);
-            logService.Verify(l => l.Error("Review vacancy failed: VacancyGuid is empty."));
+            logService.Verify(l => l.Info("Review vacancy failed: VacancyGuid is empty."));
         }
 
         [Test]
