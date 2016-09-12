@@ -36,7 +36,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         {
             if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
             {
-                _logService.Error("Review vacancy failed: VacancyGuid is empty.");
+                _logService.Info("Review vacancy failed: VacancyGuid is empty.");
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
             }
 
