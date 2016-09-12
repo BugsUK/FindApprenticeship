@@ -3,7 +3,7 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
-@model VacancyDatesViewModel
+@model FurtherVacancyDetailsViewModel
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Change vacancy dates";
@@ -19,14 +19,15 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     @Html.HiddenFor(m => m.WarningsHash)
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    @Html.HiddenFor(m => m.VacancyStatus)
+    @Html.HiddenFor(m => m.VacancyDatesViewModel.VacancyStatus)
     @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
 
-    <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate))">
-        <a name="@Html.NameFor(m => m.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
-        <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
-        @Html.EditorFor(m => m.ClosingDate)
-        @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
+
+    <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">
+        <a name="@Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
+        <legend class="form-label">@Model.GetMetadata(m => m.VacancyDatesViewModel.ClosingDate).DisplayName</legend>
+        @Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDate)
+        @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.ClosingDate, Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
 
         <div>
             We advise using a date more than two weeks from now<br />
@@ -34,11 +35,11 @@
         </div>
     </fieldset>
 
-    <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate))">
-        <a name="@Html.NameFor(m => m.PossibleStartDate).ToString().Replace(".", "_").ToLower()"></a>
-        <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
-        @Html.EditorFor(m => m.PossibleStartDate)
-        @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
+    <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))">
+        <a name="@Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()"></a>
+        <legend class="form-label">@Model.GetMetadata(m => m.VacancyDatesViewModel.PossibleStartDate).DisplayName</legend>
+        @Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate)
+        @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
     </fieldset>
 
     <div class="grid grid-1-2">

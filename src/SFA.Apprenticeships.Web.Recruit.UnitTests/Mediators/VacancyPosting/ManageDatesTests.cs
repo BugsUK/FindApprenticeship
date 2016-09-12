@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
     using System;
+    using Builders;
     using Common.ViewModels;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -17,18 +19,22 @@
         {
             const int vacancyReferenceNumber = 1;
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
-                ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
-                PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(7))
+                Wage = new WageViewModel(),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
+                    PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(7))
+                }
             };
 
-            VacancyPostingProvider.Setup(p => p.GetVacancyDatesViewModel(vacancyReferenceNumber)).Returns(viewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(viewModel);
             var mediator = GetMediator();
 
-            var result = mediator.GetVacancyDatesViewModel(vacancyReferenceNumber);
+            var result = mediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
 
-            result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.FailedValidation);
+            result.Code.Should().Be(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation);
             result.ViewModel.WarningsHash.Should().NotBe(0);
             result.ViewModel.Should().Be(viewModel);
         }
@@ -38,18 +44,18 @@
         {
             var vacancyReferenceNumber = 1;
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new VacancyViewModelBuilder().With(new VacancyDatesViewModel
             {
                 ClosingDate = new DateViewModel(DateTime.Now.AddDays(20)),
                 PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(21))
-            };
+            }).BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
 
-            VacancyPostingProvider.Setup(p => p.GetVacancyDatesViewModel(vacancyReferenceNumber)).Returns(viewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(viewModel);
             var mediator = GetMediator();
 
-            var result = mediator.GetVacancyDatesViewModel(vacancyReferenceNumber);
+            var result = mediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
 
-            result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.Ok);
+            result.Code.Should().Be(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.Ok);
             result.ViewModel.Should().Be(viewModel);
         }
 
@@ -58,16 +64,20 @@
         {
             var vacancyReferenceNumber = 1;
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
-                ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
-                PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(7)),
+                Wage = new WageViewModel(),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
+                    PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(7)),
+                },
                 VacancyReferenceNumber = vacancyReferenceNumber
             };
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(viewModel, false);
+            var result = mediator.UpdateVacancyDates(viewModel, false);
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.FailedValidation);
         }
@@ -78,17 +88,21 @@
             const int vacancyReferenceNumber = 1;
             const int oldWarningHash = -1011218820;
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
-                ClosingDate = new DateViewModel(DateTime.Now.AddDays(20)),
-                PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(20)),
+                Wage = new WageViewModel(),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.Now.AddDays(20)),
+                    PossibleStartDate = new DateViewModel(DateTime.Now.AddDays(20))
+                },
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 WarningsHash = oldWarningHash
             };
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(viewModel, true);
+            var result = mediator.UpdateVacancyDates(viewModel, true);
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.FailedValidation);
         }
@@ -103,30 +117,31 @@
             var closingDate = new DateViewModel(DateTime.Now.AddDays(20));
             var possibleStartDate = new DateViewModel(DateTime.Now.AddDays(21));
 
-            var viewModel = new VacancyDatesViewModel
-            {
-                ClosingDate = closingDate,
-                PossibleStartDate = possibleStartDate,
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                WarningsHash = oldWarningHash,
-                VacancyApplicationsState = state
-            };
+            var viewModel = new VacancyViewModelBuilder().With(new VacancyDatesViewModel
+                {
+                    ClosingDate = closingDate,
+                    PossibleStartDate = possibleStartDate
+                }).BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
+
+            viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
+            viewModel.WarningsHash = oldWarningHash;
+            viewModel.VacancyApplicationsState = state;
 
             var mediator = GetMediator();
 
-            VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyDatesViewModel>())).Returns(viewModel);
+            VacancyPostingProvider.Setup(p => p.UpdateVacancyDates(It.IsAny<FurtherVacancyDetailsViewModel>())).Returns(viewModel);
 
-            var result = mediator.UpdateVacancy(viewModel, true);
+            var result = mediator.UpdateVacancyDates(viewModel, true);
 
             result.Code.Should().Be(expectedCode);
             VacancyPostingProvider.Verify(
                 p =>
-                    p.UpdateVacancy(
-                        It.Is<VacancyDatesViewModel>(
+                    p.UpdateVacancyDates(
+                        It.Is<FurtherVacancyDetailsViewModel>(
                             v =>
                                 v.VacancyReferenceNumber == vacancyReferenceNumber 
-                                && v.ClosingDate == closingDate 
-                                && v.PossibleStartDate == possibleStartDate)));
+                                && v.VacancyDatesViewModel.ClosingDate == closingDate 
+                                && v.VacancyDatesViewModel.PossibleStartDate == possibleStartDate)));
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -19,10 +20,14 @@
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
-                ClosingDate = new DateViewModel(closingDate),
-                PossibleStartDate = new DateViewModel(possibleStartDate),
+                Wage = new WageViewModel(),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(closingDate),
+                    PossibleStartDate = new DateViewModel(possibleStartDate)
+                },
                 VacancyReferenceNumber = vacancyReferenceNumber
             };
 
@@ -31,12 +36,12 @@
                 .Returns(apprenticeshipVacancy);
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
-            MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
+            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
 
             var provider = GetVacancyPostingProvider();
 
-            provider.UpdateVacancy(viewModel);
+            provider.UpdateVacancyDates(viewModel);
 
             MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(v => v.ClosingDate == closingDate)));
         }
@@ -48,10 +53,14 @@
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
-                ClosingDate = new DateViewModel(closingDate),
-                PossibleStartDate = new DateViewModel(possibleStartDate),
+                Wage = new WageViewModel(),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(closingDate),
+                    PossibleStartDate = new DateViewModel(possibleStartDate)
+                },
                 VacancyReferenceNumber = vacancyReferenceNumber
             };
 
@@ -60,12 +69,12 @@
                 .Returns(apprenticeshipVacancy);
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
-            MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
+            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
 
             var provider = GetVacancyPostingProvider();
 
-            provider.UpdateVacancy(viewModel);
+            provider.UpdateVacancyDates(viewModel);
 
             MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(v => v.PossibleStartDate == possibleStartDate)));
         }
@@ -77,10 +86,14 @@
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
-                ClosingDate = new DateViewModel(closingDate),
-                PossibleStartDate = new DateViewModel(possibleStartDate),
+                Wage = new WageViewModel(),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(closingDate),
+                    PossibleStartDate = new DateViewModel(possibleStartDate)
+                },
                 VacancyReferenceNumber = vacancyReferenceNumber
             };
 
@@ -89,12 +102,12 @@
                 .Returns(apprenticeshipVacancy);
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
-            MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
+            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
 
             var provider = GetVacancyPostingProvider();
 
-            provider.UpdateVacancy(viewModel);
+            provider.UpdateVacancyDates(viewModel);
 
             MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(v => v.Status == VacancyStatus.Live)));
         }
@@ -110,11 +123,15 @@
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                ClosingDate = new DateViewModel(closingDate),
-                PossibleStartDate = new DateViewModel(possibleStartDate)
+                Wage = new WageViewModel(),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(closingDate),
+                    PossibleStartDate = new DateViewModel(possibleStartDate)
+                },
+                VacancyReferenceNumber = vacancyReferenceNumber
             };
 
             var vacancy = new Vacancy
@@ -131,7 +148,7 @@
                 .UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(vacancy);
 
-            MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(vacancy))
+            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy))
                 .Returns(viewModel);
 
             MockApprenticeshipApplicationService.Setup(mock => mock.
@@ -141,7 +158,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var result = provider.UpdateVacancy(viewModel);
+            var result = provider.UpdateVacancyDates(viewModel);
 
             // Assert.
             result.VacancyApplicationsState.Should().Be(expectedState);
@@ -158,24 +175,29 @@
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
-            var viewModel = new VacancyDatesViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                ClosingDate = new DateViewModel(closingDate),
-                PossibleStartDate = new DateViewModel(possibleStartDate)
+                Wage = new WageViewModel(),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(closingDate),
+                    PossibleStartDate = new DateViewModel(possibleStartDate)
+                },
+                VacancyReferenceNumber = vacancyReferenceNumber
             };
 
             var vacancy = new Vacancy
             {
                 VacancyId = vacancyId,
-                VacancyReferenceNumber = vacancyReferenceNumber
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
             };
 
             MockVacancyPostingService.Setup(mock => mock
                 .GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(vacancy);
 
-            MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(vacancy))
+            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy))
                 .Returns(viewModel);
 
             MockApprenticeshipApplicationService.Setup(mock => mock.
@@ -185,7 +207,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var result = provider.GetVacancyDatesViewModel(vacancyReferenceNumber);
+            var result = provider.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
             // Assert.
             result.VacancyApplicationsState.Should().Be(expectedState);

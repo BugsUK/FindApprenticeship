@@ -426,6 +426,8 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
 
+            viewModel.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
+
             viewModel.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
@@ -516,15 +518,15 @@
             return viewModel;
         }
 
-        public VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel)
+        public FurtherVacancyDetailsViewModel UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
-            vacancy.ClosingDate = viewModel.ClosingDate.Date;
-            vacancy.PossibleStartDate = viewModel.PossibleStartDate.Date;
+            vacancy.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate.Date;
+            vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate.Date;
             vacancy.Status = VacancyStatus.Live;
 
-            VacancyDatesViewModel result;
+            FurtherVacancyDetailsViewModel result;
 
             try
             {
@@ -532,7 +534,7 @@
             }
             catch (CustomException)
             {
-                result = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
+                result = _mapper.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy);
                 result.VacancyApplicationsState = VacancyApplicationsState.Invalid;
                 result.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
@@ -540,7 +542,7 @@
                 return result;
             }
 
-            result = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
+            result = _mapper.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy);
 
             result.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
 
@@ -1683,37 +1685,10 @@
             }
         }
 
-        public VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber)
-        {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            var viewModel = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
-
-            viewModel.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
-
-            viewModel.AutoSaveTimeoutInSeconds =
-                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
-
-            return viewModel;
-        }
-
         private VacancyApplicationsState GetVacancyApplicationsState(Vacancy vacancy)
         {
             return _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId) > 0 ? VacancyApplicationsState.HasApplications : VacancyApplicationsState.NoApplications;
         }
-
-        private static class ExtensionMethods
-        {
-            public static V GetValueOrDefault<K,V>(IReadOnlyDictionary<K,V> dict, K key, Func<K,V> getDefault)
-            {
-                V result;
-                if (dict.TryGetValue(key, out result))
-                    return result;
-                else
-                    return getDefault(key);
-            }
-        }
-
-        
     }
 
     public static class Extensions

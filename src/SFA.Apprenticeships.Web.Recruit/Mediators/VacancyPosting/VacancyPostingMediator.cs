@@ -5,7 +5,6 @@
     using Raa.Common.Validators.Vacancy;
     using System.Linq;
     using Apprenticeships.Application.Interfaces.Locations;
-    using Apprenticeships.Application.Location;
     using FluentValidation;
     using Common.Constants;
     using Common.Mediators;
@@ -40,7 +39,6 @@
         private readonly VacancyRequirementsProspectsViewModelClientValidator _vacancyRequirementsProspectsViewModelClientValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelClientValidator _vacancyQuestionsViewModelClientValidator;
-        private readonly VacancyDatesViewModelServerValidator _vacancyDatesViewModelServerValidator;
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancyPartyViewModelValidator _vacancyPartyViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
@@ -61,7 +59,6 @@
             VacancyRequirementsProspectsViewModelClientValidator vacancyRequirementsProspectsViewModelClientValidator,
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyQuestionsViewModelClientValidator vacancyQuestionsViewModelClientValidator,
-            VacancyDatesViewModelServerValidator vacancyDatesViewModelServerValidator,
             VacancyViewModelValidator vacancyViewModelValidator,
             VacancyPartyViewModelValidator vacancyPartyViewModelValidator, 
             EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator, 
@@ -88,7 +85,6 @@
             _vacancyRequirementsProspectsViewModelClientValidator = vacancyRequirementsProspectsViewModelClientValidator;
             _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
             _vacancyQuestionsViewModelClientValidator = vacancyQuestionsViewModelClientValidator;
-            _vacancyDatesViewModelServerValidator = vacancyDatesViewModelServerValidator;
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
@@ -461,23 +457,6 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<VacancyDatesViewModel> GetVacancyDatesViewModel(int vacancyReferenceNumber)
-        {
-            var viewModel = _vacancyPostingProvider.GetVacancyDatesViewModel(vacancyReferenceNumber);
-
-            var validationResult = _vacancyDatesViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            if (!validationResult.IsValid)
-            {
-                viewModel.WarningsHash = validationResult.GetWarningsHash();
-
-                return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedValidation, viewModel,
-                    validationResult);
-            }
-
-            return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.Ok, viewModel);
-        }
-
         public MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
             var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel);
@@ -677,9 +656,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        public MediatorResponse<VacancyDatesViewModel> UpdateVacancy(VacancyDatesViewModel viewModel, bool acceptWarnings)
+        public MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
-            var validationResult = _vacancyDatesViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+            var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             var warningsAccepted = validationResult.HasWarningsOnly() && validationResult.IsWarningsHashMatch(viewModel.WarningsHash) && acceptWarnings;
 
@@ -691,7 +670,7 @@
                     validationResult);
             }
 
-            var result = _vacancyPostingProvider.UpdateVacancy(viewModel);
+            var result = _vacancyPostingProvider.UpdateVacancyDates(viewModel);
             switch (result.VacancyApplicationsState)
             {
                 case VacancyApplicationsState.HasApplications:

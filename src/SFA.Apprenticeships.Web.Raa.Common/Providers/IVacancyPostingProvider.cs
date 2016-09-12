@@ -32,6 +32,8 @@
 
         FurtherVacancyDetailsViewModel UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
 
+        FurtherVacancyDetailsViewModel UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel);
+
         VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
 
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
@@ -59,10 +61,6 @@
         void RemoveLocationAddresses(Guid vacancyGuid);
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
-
-        VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber);
-
-        VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel);
 
         void EmptyVacancyLocation(int vacancyReferenceNumber);
         void CreateVacancy(VacancyMinimumData vacancyMinimumData);

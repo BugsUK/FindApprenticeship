@@ -79,5 +79,7 @@
         public int AutoSaveTimeoutInSeconds { get; set; }
 
         public VacancySource VacancySource { get; set; }
+
+        public VacancyApplicationsState VacancyApplicationsState { get; set; }
     }
 }
