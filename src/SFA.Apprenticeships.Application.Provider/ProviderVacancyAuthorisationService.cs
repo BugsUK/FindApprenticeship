@@ -54,6 +54,13 @@
             // Fall back to Provider Site Id as the assigned provider for a vacancy could be a sub-contractor.
             if (providerSiteId.HasValue)
             {
+                var providerSite = _providerService.GetProviderSite(providerSiteId.Value);
+
+                if (providerSite != null && providerSite.ProviderSiteRelationships.Any(psr => psr.ProviderId == provider.ProviderId))
+                {
+                    return;
+                }
+
                 var providerSites = _providerService.GetProviderSites(ukprn);
 
                 if (providerSites.Any(each => each.ProviderSiteId == providerSiteId))
