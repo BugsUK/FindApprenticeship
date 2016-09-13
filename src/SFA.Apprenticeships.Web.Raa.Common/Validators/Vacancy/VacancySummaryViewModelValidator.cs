@@ -1,13 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
-    using System;
-    using System.Linq;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
-    using Extensions;
     using FluentValidation;
-    using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Common;

@@ -19,6 +19,8 @@
         {
             VacancyDatesViewModel = new VacancyDatesViewModel()
         };
+        private WageViewModel _wageViewModel;
+        private VacancyDatesViewModel _vacancyDatesViewModel;
 
         public VacancyViewModel Build()
         {
@@ -50,8 +52,8 @@
             viewModel.FurtherVacancyDetailsViewModel.VacancyType = vacancyType;
             viewModel.FurtherVacancyDetailsViewModel.Duration = 12;
             viewModel.FurtherVacancyDetailsViewModel.DurationType = DurationType.Months;
-            viewModel.FurtherVacancyDetailsViewModel.Wage = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, 30);
-            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
+            viewModel.FurtherVacancyDetailsViewModel.Wage = _wageViewModel ?? new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, 30);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = _vacancyDatesViewModel ?? new VacancyDatesViewModel
             {
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),
                 ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(14))
@@ -94,12 +96,14 @@
 
         public VacancyViewModelBuilder With(VacancyDatesViewModel vacancyDatesViewModel)
         {
+            _vacancyDatesViewModel = vacancyDatesViewModel;
             _furtherVacancyDetailsViewModel.VacancyDatesViewModel = vacancyDatesViewModel;
             return this;
         }
 
         public VacancyViewModelBuilder With(WageViewModel wageObject)
         {
+            _wageViewModel = wageObject;
             _furtherVacancyDetailsViewModel.Wage = wageObject;
             return this;
         }
