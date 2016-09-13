@@ -5,7 +5,6 @@
     using Raa.Common.Validators.Vacancy;
     using System.Linq;
     using Apprenticeships.Application.Interfaces.Locations;
-    using Apprenticeships.Application.Location;
     using FluentValidation;
     using Common.Constants;
     using Common.Mediators;
@@ -40,7 +39,6 @@
         private readonly VacancyRequirementsProspectsViewModelClientValidator _vacancyRequirementsProspectsViewModelClientValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelClientValidator _vacancyQuestionsViewModelClientValidator;
-        private readonly VacancyDatesViewModelServerValidator _vacancyDatesViewModelServerValidator;
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancyPartyViewModelValidator _vacancyPartyViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
@@ -61,7 +59,6 @@
             VacancyRequirementsProspectsViewModelClientValidator vacancyRequirementsProspectsViewModelClientValidator,
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyQuestionsViewModelClientValidator vacancyQuestionsViewModelClientValidator,
-            VacancyDatesViewModelServerValidator vacancyDatesViewModelServerValidator,
             VacancyViewModelValidator vacancyViewModelValidator,
             VacancyPartyViewModelValidator vacancyPartyViewModelValidator, 
             EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator, 
@@ -88,7 +85,6 @@
             _vacancyRequirementsProspectsViewModelClientValidator = vacancyRequirementsProspectsViewModelClientValidator;
             _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
             _vacancyQuestionsViewModelClientValidator = vacancyQuestionsViewModelClientValidator;
-            _vacancyDatesViewModelServerValidator = vacancyDatesViewModelServerValidator;
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
@@ -461,23 +457,6 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<VacancyDatesViewModel> GetVacancyDatesViewModel(int vacancyReferenceNumber)
-        {
-            var viewModel = _vacancyPostingProvider.GetVacancyDatesViewModel(vacancyReferenceNumber);
-
-            var validationResult = _vacancyDatesViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            if (!validationResult.IsValid)
-            {
-                viewModel.WarningsHash = validationResult.GetWarningsHash();
-
-                return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedValidation, viewModel,
-                    validationResult);
-            }
-
-            return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.Ok, viewModel);
-        }
-
         public MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
             var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel);
@@ -650,6 +629,17 @@
                 if (!validationResult.IsValid)
                 {
                     vacancyViewModel.WarningsHash = validationResult.GetWarningsHash();
+
+                    if (
+                    validationResult.Errors.Any(
+                        e =>
+                            e.PropertyName.EndsWith(
+                                VacancySummaryViewModelBusinessRulesExtensions.HaveAValidHourRatePropertyName)))
+                    {
+                        return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation,
+                            vacancyViewModel, validationResult, VacancyViewModelMessages.FailedCrossFieldValidation, UserMessageLevel.Warning);
+                    }
+
                     return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation, vacancyViewModel, validationResult);
                 }
             }
@@ -677,9 +667,11 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        public MediatorResponse<VacancyDatesViewModel> UpdateVacancy(VacancyDatesViewModel viewModel, bool acceptWarnings)
+        public MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
-            var validationResult = _vacancyDatesViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+            viewModel = MergeVacancyDates(viewModel);
+
+            var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             var warningsAccepted = validationResult.HasWarningsOnly() && validationResult.IsWarningsHashMatch(viewModel.WarningsHash) && acceptWarnings;
 
@@ -687,11 +679,21 @@
             {
                 viewModel.WarningsHash = validationResult.GetWarningsHash();
 
+                if (
+                    validationResult.Errors.Any(
+                        e =>
+                            e.PropertyName.EndsWith(
+                                VacancySummaryViewModelBusinessRulesExtensions.HaveAValidHourRatePropertyName)))
+                {
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation,
+                        viewModel, validationResult, VacancyViewModelMessages.FailedCrossFieldValidation, UserMessageLevel.Warning);
+                }
+
                 return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedValidation, viewModel,
                     validationResult);
             }
 
-            var result = _vacancyPostingProvider.UpdateVacancy(viewModel);
+            var result = _vacancyPostingProvider.UpdateVacancyDates(viewModel);
             switch (result.VacancyApplicationsState)
             {
                 case VacancyApplicationsState.HasApplications:
@@ -703,6 +705,27 @@
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private FurtherVacancyDetailsViewModel MergeVacancyDates(FurtherVacancyDetailsViewModel viewModel)
+        {
+            var existingViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(viewModel.VacancyReferenceNumber);
+            if (existingViewModel != null)
+            {
+                existingViewModel.WarningsHash = viewModel.WarningsHash;
+                existingViewModel.VacancyDatesViewModel.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate;
+                existingViewModel.VacancyDatesViewModel.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate;
+                if (existingViewModel.Wage != null && viewModel.Wage != null)
+                {
+                    existingViewModel.Wage.Type = viewModel.Wage.Type;
+                    existingViewModel.Wage.Amount = viewModel.Wage.Amount;
+                    existingViewModel.Wage.Unit = viewModel.Wage.Unit;
+                }
+
+                viewModel = existingViewModel;
+            }
+            viewModel.ComeFromPreview = true;
+            return viewModel;
         }
 
         public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel, string ukprn)

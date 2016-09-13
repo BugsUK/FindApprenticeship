@@ -24,24 +24,6 @@
         }
 
         [Test]
-        public void ShouldMapVacancyReferenceNumber()
-        {
-            const int vacancyReferenceNumber = 42;
-
-            //Arrange
-            var source = new Fixture()
-                .Build<Vacancy>()
-                .With(av => av.VacancyReferenceNumber, vacancyReferenceNumber)
-                .Create();
-
-            //Act
-            var viewModel = _mapper.Map<Vacancy, VacancyDatesViewModel>(source);
-
-            //Assert
-            viewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
-        }
-
-        [Test]
         public void ShouldMapVacancyStatus()
         {
             const VacancyStatus vacancyStatus = VacancyStatus.Live;
