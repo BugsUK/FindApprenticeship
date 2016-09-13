@@ -154,6 +154,7 @@
             public const string UpdatedHasApplications = "VacancyPosting.ManageDates.UpdatedHasApplications";
             public const string UpdatedNoApplications = "VacancyPosting.ManageDates.OkNoApplications";
             public const string FailedValidation = "VacancyPosting.ManageDates.FailedValidation";
+            public const string FailedCrossFieldValidation = "VacancyPosting.ManageDates.FailedCrossFieldValidation";
             public const string InvalidState = "VacancyPosting.ManageDates.InvalidState";
         }
     }

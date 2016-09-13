@@ -120,5 +120,20 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             view.GetElementbyId("vacancySummaryButton").Attributes["value"].Value.Should().Be("VacancySummary");
         }
 
+
+
+        [Test]
+        public void ShouldShowSaveAndCancelButtonWhenEditingDates()
+        {
+            var details = new VacancySummary();
+
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.Status, VacancyStatus.Live)
+                .Create();
+
+            var view = details.RenderAsHtml(viewModel);
+
+            view.GetElementbyId("vacancySummaryButton").Should().BeNull("Should exists a save button");
+        }
     }
 }

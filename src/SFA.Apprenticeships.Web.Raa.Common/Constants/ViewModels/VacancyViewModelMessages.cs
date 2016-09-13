@@ -7,6 +7,7 @@
         public const string NoApplications = "There have not been any applications for this vacancy";
         public const string VacancyHasBeenArchived = "This vacancy has been archived";
         public const string NoClickThroughs = "There have not been any click-throughs to your application page for this vacancy";
+        public const string FailedCrossFieldValidation = "Changing the dates has invalidated one or more other properties for this vacancy. Please correct these errors and try again";
 
         public static class Title
         {

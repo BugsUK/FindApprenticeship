@@ -19,6 +19,9 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     @Html.HiddenFor(m => m.WarningsHash)
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
+    @Html.HiddenFor(m => m.Wage.Type)
+    @Html.HiddenFor(m => m.Wage.Amount)
+    @Html.HiddenFor(m => m.Wage.Unit)
 
     <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">
         <a name="@Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>

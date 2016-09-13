@@ -2,13 +2,17 @@
 {
     using System;
     using Builders;
+    using Common.Constants;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Vacancy;
     using Recruit.Mediators.VacancyPosting;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     [Parallelizable]
@@ -22,6 +26,7 @@
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
+                Wage = new WageViewModel(WageType.Custom, 99, null, WageUnit.Weekly, 30),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
@@ -29,7 +34,7 @@
                 }
             };
 
-            var existingViewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
+            var existingViewModel = new VacancyViewModelBuilder().With(new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.Weekly, 37.5m)).BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
 
             VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(existingViewModel);
 
@@ -39,7 +44,13 @@
 
             VacancyPostingProvider.Verify(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber));
 
-            result.ViewModel.Wage.Should().Be(existingViewModel.Wage);
+            result.ViewModel.Wage.Type.Should().Be(viewModel.Wage.Type);
+            result.ViewModel.Wage.Amount.Should().Be(viewModel.Wage.Amount);
+            result.ViewModel.Wage.Text.Should().Be(existingViewModel.Wage.Text);
+            result.ViewModel.Wage.Unit.Should().Be(viewModel.Wage.Unit);
+            result.ViewModel.Wage.HoursPerWeek.Should().Be(existingViewModel.Wage.HoursPerWeek);
+            result.ViewModel.VacancyDatesViewModel.ClosingDate.Should().Be(viewModel.VacancyDatesViewModel.ClosingDate);
+            result.ViewModel.VacancyDatesViewModel.PossibleStartDate.Should().Be(viewModel.VacancyDatesViewModel.PossibleStartDate);
         }
 
         [Test]
@@ -49,7 +60,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(),
+                Wage = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
@@ -94,7 +105,10 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(),
+                Wage = new WageViewModel
+                {
+                    Type = WageType.NationalMinimum
+                },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
@@ -118,7 +132,10 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(),
+                Wage = new WageViewModel
+                {
+                    Type = WageType.NationalMinimum
+                },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(DateTime.Now.AddDays(20)),
@@ -170,6 +187,44 @@
                                 v.VacancyReferenceNumber == vacancyReferenceNumber 
                                 && v.VacancyDatesViewModel.ClosingDate == closingDate 
                                 && v.VacancyDatesViewModel.PossibleStartDate == possibleStartDate)));
+        }
+
+        [Test]
+        public void FailedMinimumWageValidation()
+        {
+            var closingDate = DateTime.Now.AddDays(7);
+            var minimumWageChangeDate = new DateTime(2016, 10, 1);
+            if (closingDate < minimumWageChangeDate)
+            {
+                closingDate = minimumWageChangeDate;
+            }
+
+            var viewModel = new FurtherVacancyDetailsViewModel
+            {
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(closingDate),
+                    PossibleStartDate = new DateViewModel(closingDate.AddDays(7))
+                }
+            };
+
+            var existingViewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
+            existingViewModel.ComeFromPreview = false;
+            //Invalid after Sept 30th
+            existingViewModel.Wage.Type = WageType.Custom;
+            existingViewModel.Wage.Amount = 99;
+            existingViewModel.Wage.Unit = WageUnit.Weekly;
+            existingViewModel.Wage.HoursPerWeek = 30;
+
+            VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(It.IsAny<int>())).Returns(existingViewModel);
+
+            var mediator = GetMediator();
+
+            var result = mediator.UpdateVacancyDates(viewModel, false);
+            result.ViewModel.ComeFromPreview.Should().BeTrue();
+            result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation);
+            result.Message.Level.Should().Be(UserMessageLevel.Warning);
+            result.Message.Text.Should().Be(VacancyViewModelMessages.FailedCrossFieldValidation);
         }
     }
 }

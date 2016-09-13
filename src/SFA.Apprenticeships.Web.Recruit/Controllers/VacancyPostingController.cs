@@ -1113,6 +1113,7 @@
         public ActionResult ManageDates(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
+            SetUserMessage(response.Message);
 
             switch (response.Code)
             {
@@ -1121,6 +1122,9 @@
                 case VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacancySummary", response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -1132,6 +1136,7 @@
             var response = _vacancyPostingMediator.UpdateVacancyDates(viewModel, acceptWarnings);
 
             ModelState.Clear();
+            SetUserMessage(response.Message);
 
             switch (response.Code)
             {
@@ -1144,6 +1149,9 @@
                 case VacancyPostingMediatorCodes.ManageDates.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacancySummary", response.ViewModel);
                 case VacancyPostingMediatorCodes.ManageDates.InvalidState:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications,
                         new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});

@@ -629,6 +629,17 @@
                 if (!validationResult.IsValid)
                 {
                     vacancyViewModel.WarningsHash = validationResult.GetWarningsHash();
+
+                    if (
+                    validationResult.Errors.Any(
+                        e =>
+                            e.PropertyName.EndsWith(
+                                VacancySummaryViewModelBusinessRulesExtensions.HaveAValidHourRatePropertyName)))
+                    {
+                        return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation,
+                            vacancyViewModel, validationResult, VacancyViewModelMessages.FailedCrossFieldValidation, UserMessageLevel.Warning);
+                    }
+
                     return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation, vacancyViewModel, validationResult);
                 }
             }
@@ -668,6 +679,16 @@
             {
                 viewModel.WarningsHash = validationResult.GetWarningsHash();
 
+                if (
+                    validationResult.Errors.Any(
+                        e =>
+                            e.PropertyName.EndsWith(
+                                VacancySummaryViewModelBusinessRulesExtensions.HaveAValidHourRatePropertyName)))
+                {
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation,
+                        viewModel, validationResult, VacancyViewModelMessages.FailedCrossFieldValidation, UserMessageLevel.Warning);
+                }
+
                 return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedValidation, viewModel,
                     validationResult);
             }
@@ -694,8 +715,16 @@
                 existingViewModel.WarningsHash = viewModel.WarningsHash;
                 existingViewModel.VacancyDatesViewModel.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate;
                 existingViewModel.VacancyDatesViewModel.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate;
+                if (existingViewModel.Wage != null && viewModel.Wage != null)
+                {
+                    existingViewModel.Wage.Type = viewModel.Wage.Type;
+                    existingViewModel.Wage.Amount = viewModel.Wage.Amount;
+                    existingViewModel.Wage.Unit = viewModel.Wage.Unit;
+                }
+
                 viewModel = existingViewModel;
             }
+            viewModel.ComeFromPreview = true;
             return viewModel;
         }
 
