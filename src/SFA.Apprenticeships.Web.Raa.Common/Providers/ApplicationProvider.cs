@@ -163,6 +163,26 @@
                         ? applications.OrderByDescending(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied)
                         : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied);
                     break;
+                case VacancyApplicationsSearchViewModel.OrderByFieldFirstName:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.CandidateDetails.FirstName).ThenBy(a => a.CandidateDetails.LastName).ThenByDescending(a => a.DateApplied)
+                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied);
+                    break;
+                case VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.Notes).ThenBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied)
+                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied);
+                    break;
+                case VacancyApplicationsSearchViewModel.OrderByFieldStatus:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.Status).ThenBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied)
+                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied);
+                    break;
+                case VacancyApplicationsSearchViewModel.OrderByFieldSubmitted:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.DateApplied).ThenBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied)
+                        : applications.OrderBy(a => a.CandidateDetails.LastName).ThenBy(a => a.CandidateDetails.FirstName).ThenByDescending(a => a.DateApplied);
+                    break;
                 default:
                     page = applications;
                     break;
