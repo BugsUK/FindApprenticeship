@@ -480,7 +480,7 @@ img {
 }
 
 .ogl-logo {
-  background: url(open-government-licence.png) no-repeat;
+  background: url(/content/open-government-licence.png) no-repeat;
   background-size: 41px 17px;
   display: inline-block;
   margin-right: 8px;
@@ -491,7 +491,7 @@ img {
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2),only screen and (min--moz-device-pixel-ratio: 2),only screen and (-o-min-device-pixel-ratio: 20/10),only screen and (min-device-pixel-ratio: 2),only screen and (min-resolution: 2dppx) {
   .ogl-logo {
-    background-image: url(open-government-licence_2x.png);
+    background-image: url(/content/open-government-licence_2x.png);
   }
 }
 
