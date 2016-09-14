@@ -45,5 +45,7 @@
 
         [Required]
         public string PhoneNumber { get; set; }
+
+        public int ReleaseNoteVersion { get; set; }
     }
 }

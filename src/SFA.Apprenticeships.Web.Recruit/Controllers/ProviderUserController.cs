@@ -288,6 +288,16 @@
         {
             return View();
         }
+        
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Faa)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+        public ActionResult DismissReleaseNotes(int version)
+        {
+            _providerUserMediator.DismissReleaseNotes(User.Identity.Name, version);
+
+            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+        }
 
         #region Helpers
 

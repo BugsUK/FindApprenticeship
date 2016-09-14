@@ -3,16 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.ReferenceData;
     using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using LegacyReferenceDataProxy;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Apprenticeships.Application.Interfaces;
     using Wcf;
 
     public class ReferenceDataProvider : IReferenceDataProvider
@@ -87,6 +84,11 @@
         {            
             _logger.Warn("Sectors are not exposed via the reference data service hence returning an empty list");
             return new List<Sector>();
+        }
+
+        public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
+        {
+            return new List<ReleaseNote>();
         }
 
         private IEnumerable<Category> GetCategories(GetApprenticeshipFrameworksResponse response)

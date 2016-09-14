@@ -115,6 +115,7 @@
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
 
             For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
+            For<IGetReleaseNotesStrategy>().Use<GetReleaseNotesStrategy>();
 
             For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
         }

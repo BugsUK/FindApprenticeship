@@ -2,13 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.ReferenceData;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Apprenticeships.Application.Interfaces.Caching;
+    using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.Caching;
 
     public class CachedReferenceDataProvider : IReferenceDataProvider
     {
@@ -67,6 +65,12 @@
         {
             _logger.Debug("Calling cached GetSectors");
             return _cacheService.Get(CacheKey, _legcayService.GetSectors);
+        }
+
+        public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
+        {
+            _logger.Debug("Calling cached GetReleaseNotes");
+            return _cacheService.Get(CacheKey, _legcayService.GetReleaseNotes, dasApplication);
         }
 
         /// <summary>
