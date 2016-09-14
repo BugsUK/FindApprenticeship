@@ -8,7 +8,7 @@
     [OutcomeReasonOther]          NVARCHAR (100) NULL,
     [NextActionId]                INT            CONSTRAINT [DF_Application_NextActionId] DEFAULT ((0)) NOT NULL,
     [NextActionOther]             NVARCHAR (100) NULL,
-    [AllocatedTo]                 NVARCHAR (200) NULL,
+    [AllocatedTo]                 NVARCHAR (4000) NULL,
     [CVAttachmentId]              INT            NULL,
     [BeingSupportedBy]            NVARCHAR (50)  NULL,
     [LockedForSupportUntil]       DATETIME       NULL,
