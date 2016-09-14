@@ -44,7 +44,20 @@ USING (VALUES
   (42, N'TV Production & Broadcasting', 13),
   (43, N'Rail Engineering', 17),
   (44, N'Retail', 13),
-  (45, N'Transport', 17)
+  (45, N'Transport', 17),
+  (46,N'Accounting',1),
+  (47,N'Adult care',20),
+  (48,N'Airworthiness',17),
+  (49,N'Construction',7),
+  (50,N'Customer service',13),
+  (51,N'Electronic Systems',17),
+  (52,N'Fire Emergency and Security Systems',17),
+  (53,N'HM Armed Forces',20),
+  (54,N'Logistics and Supply Chain',17),
+  (55,N'Papermaking',7),
+  (56,N'Project Management',1),
+  (57,N'Public Sector',20),
+  (58,N'Travel',13)
 ) 
 AS Source (StandardSectorId, FullName, ApprenticeshipOccupationId) 
 ON Target.StandardSectorId = Source.StandardSectorId 
