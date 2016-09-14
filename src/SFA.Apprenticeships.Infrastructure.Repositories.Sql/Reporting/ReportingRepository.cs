@@ -343,10 +343,12 @@
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
+                var candidateId = reader["CandidateId"].ToString();
+                var applicantid = candidateId.Replace("-", "").Substring(0, 7).ToUpperInvariant();
                 response.Add(new ApplicationsReceivedResultItem
                 {
                     CandidateName = reader["CandidateName"].ToString(),
-                    ApplicantId = reader["ApplicantId"].ToString(),
+                    ApplicantId = applicantid,
                     Email = reader["Email"].ToString(),
                     AddressLine1 = reader["AddressLine1"].ToString(),
                     AddressLine2 = reader["AddressLine2"].ToString(),
@@ -416,11 +418,13 @@
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
+                var candidateId = reader["CandidateId"].ToString();
+                var applicantid = candidateId.Replace("-", "").Substring(0, 7).ToUpperInvariant();
                 response.Add(new CandidatesWithApplicationsResultItem
                 {
                     CandidateId = reader["CandidateId"].ToString(),
                     Name = reader["Name"].ToString(),
-                    ApplicantId = reader["ApplicantId"].ToString(),
+                    ApplicantId = applicantid,
                     DateofBirth = Convert.ToDateTime(reader["DateofBirth"]).ToString("dd/MM/yyy"),
                     Gender = reader["Gender"].ToString(),
                     Email = reader["Email"].ToString(),

@@ -19,7 +19,7 @@ Date		 Version  Author			Comment
 									'Please Select...'  are displayed as Not Selected  
 03-Dec-2008  1.09  Femma Ashraf		Changed the logic for In/Out region so it comes off the Vacancy table.  
 18 Jan 2010  1.10  John Hope		To stop nulled 1st name nullifying whole candidate name  
-14 Sept 2016 1.11  Shoma Gujjar		Add ApplicationId to the report.
+14 Sept 2016 1.11  Shoma Gujjar		Add CandidateId to the report.
 ---------------------------------------------------------------------- */                   
  
   
@@ -150,7 +150,7 @@ as
  SET ROWCOUNT @rowcount;    
   
  SELECT   
-  CAN.CandidateId,  
+  CAN.CandidateId as CandidateId,  
    --app.applicationid,  
   isnull (p.FirstName + ' ', '') + p.Surname as Name,  
   can.DateofBirth,  
