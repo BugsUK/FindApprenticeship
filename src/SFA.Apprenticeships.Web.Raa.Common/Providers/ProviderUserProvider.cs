@@ -7,26 +7,28 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using Application.Interfaces.Providers;
-    using CuttingEdge.Conditions;
+    using Application.Interfaces.ReferenceData;
     using Domain.Entities.Raa.Users;
-    
-    using SFA.Apprenticeships.Domain.Entities.Communication;
+    using Domain.Entities.ReferenceData;
+    using Web.Common.ViewModels;
 
     public class ProviderUserProvider : IProviderUserProvider
     {
         private readonly IUserProfileService _userProfileService;
         private readonly IProviderService _providerService;
         private readonly IProviderUserAccountService _providerUserAccountService;
-        
+        private readonly IReferenceDataService _referenceDataService;
 
         public ProviderUserProvider(
             IUserProfileService userProfileService,
             IProviderService providerService,
-            IProviderUserAccountService providerUserAccountService)
+            IProviderUserAccountService providerUserAccountService, 
+            IReferenceDataService referenceDataService)
         {
             _userProfileService = userProfileService;
             _providerService = providerService;
             _providerUserAccountService = providerUserAccountService;
+            _referenceDataService = referenceDataService;
         }
 
         public ProviderUserViewModel GetUserProfileViewModel(string username)
@@ -122,15 +124,28 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _providerUserAccountService.ResendEmailVerificationCode(username);
         }
 
-        private static ProviderUserViewModel Convert(ProviderUser providerUser)
+        private ProviderUserViewModel Convert(ProviderUser providerUser)
         {
+            ReleaseNoteViewModel releaseNoteViewModel = null;
+            var releaseNotes = _referenceDataService.GetReleaseNotes(DasApplication.Recruit);
+            var releaseNote = releaseNotes?.LastOrDefault(rn => rn.Version > providerUser.ReleaseNoteVersion);
+            if (releaseNote != null)
+            {
+                releaseNoteViewModel = new ReleaseNoteViewModel
+                {
+                    Version = releaseNote.Version,
+                    Note = releaseNote.Note
+                };
+            }
+
             var viewModel = new ProviderUserViewModel
             {
                 DefaultProviderSiteId = providerUser.PreferredProviderSiteId ?? 0,
                 EmailAddress = providerUser.Email,
                 EmailAddressVerified = providerUser.Status == ProviderUserStatus.EmailVerified,
                 Fullname = providerUser.Fullname,
-                PhoneNumber = providerUser.PhoneNumber
+                PhoneNumber = providerUser.PhoneNumber,
+                ReleaseNoteViewModel = releaseNoteViewModel
             };
 
             return viewModel;
