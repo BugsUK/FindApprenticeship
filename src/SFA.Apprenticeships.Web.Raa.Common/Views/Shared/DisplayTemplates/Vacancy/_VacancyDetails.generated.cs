@@ -973,7 +973,7 @@ WriteLiteral(">");
 
             
             #line 166 "..\..\Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml"
-                                                                                                                                            Write(Model.TrainingDetailsViewModel.TrainingProvided);
+                                                                                                                                            Write(Html.Raw(Model.TrainingDetailsViewModel.TrainingProvided));
 
             
             #line default
@@ -993,14 +993,14 @@ WriteLiteral("\r\n            </div>\r\n");
 
 WriteLiteral("            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10563), Tuple.Create("\"", 10589)
+WriteAttribute("class", Tuple.Create(" class=\"", 10573), Tuple.Create("\"", 10599)
             
             #line 169 "..\..\Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 10571), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 10581), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 10571), false)
+, 10581), false)
 );
 
 WriteLiteral(">\r\n                <div");
@@ -1028,14 +1028,14 @@ WriteLiteral(" id=\"vacancy-future-prospects\"");
 
 WriteLiteral(" itemprop=\"incentives\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11089), Tuple.Create("\"", 11189)
+WriteAttribute("class", Tuple.Create(" class=\"", 11099), Tuple.Create("\"", 11199)
             
             #line 175 "..\..\Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml"
- , Tuple.Create(Tuple.Create("", 11097), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()
+ , Tuple.Create(Tuple.Create("", 11107), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 11097), false)
+, 11107), false)
 );
 
 WriteLiteral(">");
