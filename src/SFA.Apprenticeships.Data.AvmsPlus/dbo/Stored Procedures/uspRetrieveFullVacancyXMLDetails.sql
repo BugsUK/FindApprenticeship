@@ -1,5 +1,5 @@
 ﻿/* DROP Procedure [dbo].[uspRetrieveFullVacancyXMLDetails2] */
-CREATE Procedure [dbo].[uspRetrieveFullVacancyXMLDetails2]
+CREATE Procedure [dbo].[uspRetrieveFullVacancyXMLDetails]
     @vacancyReferenceNumber INT          = -1,
     @frameworkCode          VARCHAR(3)   = NULL,
     @occupationCode         VARCHAR(3)   = NULL,

@@ -956,6 +956,9 @@
     <Build Include="dbo\Stored Procedures\ReportGetEthnicOrigin.proc.sql" />
     <Build Include="WebProxy\WebProxy.WebProxyConsumer.sql" />
     <Build Include="Reference\Reference.ReleaseNote.sql" />
+    <Build Include="Security\faa_user.sql" />
+    <Build Include="Security\das_user.sql" />
+    <Build Include="Security\datascience_user.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

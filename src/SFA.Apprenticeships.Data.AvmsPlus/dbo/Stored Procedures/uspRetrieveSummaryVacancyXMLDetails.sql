@@ -1,5 +1,5 @@
 ﻿/* DROP PROCEDURE [dbo].[uspRetrieveSummaryVacancyXMLDetails2] */
-CREATE PROCEDURE [dbo].[uspRetrieveSummaryVacancyXMLDetails2]
+CREATE PROCEDURE [dbo].[uspRetrieveSummaryVacancyXMLDetails]
     @vacancyReferenceNumber INT          = -1,
     @frameworkCode          VARCHAR(3)   = NULL,
     @occupationCode         VARCHAR(3)   = NULL,
