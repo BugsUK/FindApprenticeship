@@ -4,6 +4,7 @@
     {
         public string CandidateId { get; set; }
         public string Name { get; set; }
+        public string ApplicantId { get; set; }
         public string DateofBirth { get; set; }
         public string Gender { get; set; }
         public string Email { get; set; }

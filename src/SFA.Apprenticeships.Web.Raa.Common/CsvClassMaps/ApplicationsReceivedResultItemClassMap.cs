@@ -8,6 +8,7 @@
         public ApplicationsReceivedResultItemClassMap()
         {
             Map(m => m.CandidateName).Name("Candidate_Name");
+            Map(m => m.ApplicantId).Name("APPLICANT ID");
             Map(m => m.AddressLine1).Name("Address_Line1");
             Map(m => m.AddressLine2).Name("Address_Line2");
             Map(m => m.AddressLine3).Name("Address_Line3");

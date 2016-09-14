@@ -5,20 +5,21 @@ Description :  returns summary data for report
                   
 History:                    
 --------                    
-Date   Version  Author   Comment  
-20-Aug-2008  1.0   Ian Emery  first version  
-08-Aug-2008  1.01  Ian Emery  corrected joins and where clauses  
-21-Oct-2008  1.02  Ian Emery  changed the filtering on ethnicity  
-11-Nov-2008  1.03  Ian Emery  fixed disabililty and corrected join to outline postcode removing view.  
-12-Nov-2008  1.04  Ian Emery  added town and postcode to school, training provider and employer  
-17-Nov-2008  1.05  Femma Ashraf Added @toDate parameter to fnReportGetAgeRangeDates  
-24-Nov-2008  1.06  Ian Emery  Corrected LP count this is now a count distinct not a count  
-25-Nov-2008  1.07  Femma Ashraf Added the fnDisplayEthnicity around the ethnicity column so that   
-           'Please Select' etc are displayed as unspecified  
-25-Nov-2008  1.08  Ian Emery  Added the fnDisplayDisability around the disability column so that   
-           'Please Select...'  are displayed as Not Selected  
-03-Dec-2008  1.09  Femma Ashraf Changed the logic for In/Out region so it comes off the Vacancy table.  
-18 Jan 2010  1.10  John Hope  To stop nulled 1st name nullifying whole candidate name  
+Date		 Version  Author			Comment  
+20-Aug-2008  1.0   Ian Emery		first version  
+08-Aug-2008  1.01  Ian Emery		corrected joins and where clauses  
+21-Oct-2008  1.02  Ian Emery		changed the filtering on ethnicity  
+11-Nov-2008  1.03  Ian Emery		fixed disabililty and corrected join to outline postcode removing view.  
+12-Nov-2008  1.04  Ian Emery		added town and postcode to school, training provider and employer  
+17-Nov-2008  1.05  Femma Ashraf		Added @toDate parameter to fnReportGetAgeRangeDates  
+24-Nov-2008  1.06  Ian Emery		Corrected LP count this is now a count distinct not a count  
+25-Nov-2008  1.07  Femma Ashraf		Added the fnDisplayEthnicity around the ethnicity column so that   
+							'		Please Select' etc are displayed as unspecified  
+25-Nov-2008  1.08  Ian Emery		Added the fnDisplayDisability around the disability column so that   
+									'Please Select...'  are displayed as Not Selected  
+03-Dec-2008  1.09  Femma Ashraf		Changed the logic for In/Out region so it comes off the Vacancy table.  
+18 Jan 2010  1.10  John Hope		To stop nulled 1st name nullifying whole candidate name  
+14 Sept 2016 1.11  Shoma Gujjar		Add ApplicationId to the report.
 ---------------------------------------------------------------------- */                   
  
   
