@@ -303,5 +303,10 @@
                 return false;
             }
         }
+
+        public void DismissReleaseNotes(string username, int version)
+        {
+            _providerUserProvider.DismissReleaseNotes(username, version);
+        }
     }
 }

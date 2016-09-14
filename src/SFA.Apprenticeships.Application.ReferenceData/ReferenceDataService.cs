@@ -48,5 +48,10 @@
         {
             return _referenceDataProvider.GetSectors();
         }
+
+        public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
+        {
+            return _referenceDataProvider.GetReleaseNotes(dasApplication);
+        }
     }
 }

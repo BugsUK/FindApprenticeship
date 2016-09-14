@@ -19,5 +19,7 @@
         IEnumerable<Category> GetFrameworks();
 
         IEnumerable<Sector> GetSectors();
+
+        IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
     }
 }

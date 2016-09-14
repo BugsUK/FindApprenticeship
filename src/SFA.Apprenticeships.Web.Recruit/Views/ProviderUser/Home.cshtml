@@ -23,7 +23,17 @@
     <meta name="DCS.dcsaut" content="@User.Identity.Name" />
     <meta name="DCSext.sfaukprn" content="@User.GetUkprn()" />
     <meta name="DCSext.sfaukprname" content="@Model.ProviderViewModel.ProviderName"/>
-    <meta name="WT.sp" content="@ViewBag.Title" />       
+    <meta name="WT.sp" content="@ViewBag.Title" />
+}
+
+@if (Model.ProviderUserViewModel.ReleaseNoteViewModel != null)
+{
+    <div role="alert" class="panel-info" style="padding-top: 60px">
+        @Html.Raw(Model.ProviderUserViewModel.ReleaseNoteViewModel.Note)
+        <p>
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.DismissReleaseNotes, new {Model.ProviderUserViewModel.ReleaseNoteViewModel.Version})" class="notInterested link-unimp icon-black" style="float: right"><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
+        </p>
+    </div>
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)

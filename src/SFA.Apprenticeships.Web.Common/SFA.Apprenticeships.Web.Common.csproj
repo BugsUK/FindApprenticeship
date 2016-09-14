@@ -211,6 +211,7 @@
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\WageViewModelMessages.cs" />
     <Compile Include="Controllers\VersionController.cs" />
+    <Compile Include="ViewModels\ReleaseNoteViewModel.cs" />
     <Compile Include="ViewModels\VersionViewModel.cs" />
     <Compile Include="Converters\PageableConverters.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />

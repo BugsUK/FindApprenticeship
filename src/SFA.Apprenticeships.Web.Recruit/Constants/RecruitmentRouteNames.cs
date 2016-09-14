@@ -14,6 +14,7 @@
         public const string Settings = "Settings";
         public const string VerifyEmail = "VerifyEmail";
         public const string ResendVerificationCode = "ResendVerificationCode";
+        public const string DismissReleaseNotes = "DismissReleaseNotes";
 
         // Authetication
         public const string SignIn = "SignIn";

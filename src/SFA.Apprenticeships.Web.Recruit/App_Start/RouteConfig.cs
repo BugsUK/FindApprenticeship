@@ -104,6 +104,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.DismissReleaseNotes,
+               url: "dismissreleasenotes",
+               defaults: new { controller = "ProviderUser", action = "DismissReleaseNotes" }
+               );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.ManageProviderSites,
                 url: "sites",
                 defaults: new { controller = "Provider", action = "Sites" }
