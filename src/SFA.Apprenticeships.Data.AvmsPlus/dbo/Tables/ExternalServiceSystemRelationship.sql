@@ -5,6 +5,7 @@
     [IsNasDisabled]     BIT NULL,
     [IsUserEnabled]     BIT NULL,
     CONSTRAINT [PK_ExternalServiceSystemRelationship] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_ExternalServiceSystemRelationship_ExternalServices] FOREIGN KEY ([ExternalServiceId]) REFERENCES [dbo].[ExternalService] ([ID]),
     CONSTRAINT [FK_ExternalServiceSystemRelationship_ExternalSystem] FOREIGN KEY ([ExternalSystemId]) REFERENCES [dbo].[ExternalSystem] ([ID])
 );
 

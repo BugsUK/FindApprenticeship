@@ -129,45 +129,18 @@ WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
-WriteLiteral("\r\n    <!---->\r\n    <script");
+WriteLiteral("\r\n");
 
-WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js\"");
+WriteLiteral("    ");
 
-WriteLiteral("></script>\r\n    <script");
+            
+            #line 19 "..\..\Views\Vacancy\Summary.cshtml"
+Write(Html.Partial("HtmlTextEditor"));
 
-WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/adapters/jquery.js\"");
-
-WriteLiteral(@"></script>
-    <script>
-            if (typeof CKEDITOR == 'undefined') {
-                document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E""));
-                document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/adapters/jquery.js' type='text/javascript'%3E%3C/script%3E""));
-            }
-    </script>
-
-    <script");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 1216), Tuple.Create("\"", 1271)
-, Tuple.Create(Tuple.Create("", 1222), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
-, 1222), false)
-);
-
-WriteLiteral(@"></script>
-    <script>
-            CKEDITOR.replace('LongDescription', {
-                customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
-                contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
-            });
-    </script>
-
-    <script>
-            nanospell.ckeditor('all',
-            {
-                dictionary: ""en_uk"", // 24 free international dictionaries
-                server: ""asp.net"" // can be php, asp, asp.net or java
-            });
-    </script>
-");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
 });
 
