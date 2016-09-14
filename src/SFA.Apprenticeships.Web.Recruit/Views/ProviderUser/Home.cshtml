@@ -29,8 +29,7 @@
 @if (Model.ProviderUserViewModel.ReleaseNoteViewModel != null)
 {
     <div role="alert" class="panel-info" style="padding-top: 60px">
-        <h2 class="heading-medium">Latest release notes</h2>
-        <p id="InfoMessageText">@Html.Raw(Model.ProviderUserViewModel.ReleaseNoteViewModel.Note)</p>
+        @Html.Raw(Model.ProviderUserViewModel.ReleaseNoteViewModel.Note)
         <p>
             <a href="@Url.RouteUrl(RecruitmentRouteNames.DismissReleaseNotes, new {Model.ProviderUserViewModel.ReleaseNoteViewModel.Version})" class="notInterested link-unimp icon-black" style="float: right"><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
         </p>
