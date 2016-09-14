@@ -26,7 +26,7 @@
             var cookies = _httpContext.Request.Cookies;
             try
             {
-                if (cookies == null || cookies.AllKeys.Length == 0)
+                if (cookies == null || cookies.Count == 0 || cookies.AllKeys.Length == 0)
                 {
                     return null;
                 }

@@ -2,6 +2,7 @@
 {
     using Application.ReferenceData;
     using Application.Candidate.Configuration;
+    using Strategies;
     using StructureMap.Configuration.DSL;
     
     public class RaaRegistry : Registry
@@ -13,6 +14,8 @@
                 For<IReferenceDataProvider>()
                     .Use<ReferenceDataProvider>();
             }
+
+            For<IGetReleaseNotesStrategy>().Use<GetReleaseNotesStrategy>();
         }
     }
 }

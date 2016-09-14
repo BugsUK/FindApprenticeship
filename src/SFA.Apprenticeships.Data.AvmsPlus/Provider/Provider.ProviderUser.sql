@@ -13,6 +13,7 @@
     [PhoneNumber] NVARCHAR(MAX) NOT NULL, 
     [CreatedDateTime] DATETIME2 NOT NULL, 
     [UpdatedDateTime] DATETIME2 NULL, 
+    [ReleaseNoteVersion] INT NULL DEFAULT 0, 
     CONSTRAINT [FK_ProviderUser_ProviderUserStatus] FOREIGN KEY ([ProviderUserStatusId]) REFERENCES [Provider].[ProviderUserStatus]([ProviderUserStatusId])
 )
 GO

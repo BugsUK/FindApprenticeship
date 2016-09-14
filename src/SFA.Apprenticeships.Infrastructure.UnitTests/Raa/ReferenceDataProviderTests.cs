@@ -10,6 +10,7 @@
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Infrastructure.Raa;
+    using Infrastructure.Raa.Strategies;
 
     [TestFixture]
     [Parallelizable]
@@ -52,7 +53,7 @@
             _occupationList = new List<Occupation> { _occupation };
 
             _mockReferenceRepo = new Mock<IReferenceRepository>();
-            _providerUnderTest = new ReferenceDataProvider(_mockReferenceRepo.Object);
+            _providerUnderTest = new ReferenceDataProvider(_mockReferenceRepo.Object, new GetReleaseNotesStrategy(_mockReferenceRepo.Object));
             _mockReferenceRepo.Setup(mrr => mrr.GetSectors()).Returns(_standardSectorList);
             _mockReferenceRepo.Setup(mrr => mrr.GetStandards()).Returns(_standardList);
             _mockReferenceRepo.Setup(mrr => mrr.GetFrameworks()).Returns(_frameworkList);

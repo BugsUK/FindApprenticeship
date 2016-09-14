@@ -1,10 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System.Collections.Generic;
-
-    using SFA.Apprenticeships.Domain.Entities.Communication;
-    using SFA.Apprenticeships.Domain.Entities.Raa.Users;
-
+    using Domain.Entities.Raa.Users;
     using ViewModels.ProviderUser;
 
     public interface IProviderUserProvider
@@ -19,6 +16,8 @@
 
         void ResendEmailVerificationCode(string username);
 
-        ProviderUser GetProviderUser(string username);        
+        ProviderUser GetProviderUser(string username);
+
+        void DismissReleaseNotes(string username, int version);
     }
 }

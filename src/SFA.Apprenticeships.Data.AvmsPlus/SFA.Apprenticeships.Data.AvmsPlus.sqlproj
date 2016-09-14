@@ -957,6 +957,7 @@
     <Build Include="dbo\Stored Procedures\ReportRegisteredCandidatesList.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportGetEthnicOrigin.proc.sql" />
     <Build Include="WebProxy\WebProxy.WebProxyConsumer.sql" />
+    <Build Include="Reference\Reference.ReleaseNote.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

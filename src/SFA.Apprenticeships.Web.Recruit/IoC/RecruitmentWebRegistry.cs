@@ -139,6 +139,7 @@
             For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
 
             For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
+            For<IGetReleaseNotesStrategy>().Use<GetReleaseNotesStrategy>();
             For<IDeleteVacancyStrategy>().Use<DeleteVacancyStrategy>();
 
             For<IMapper>().Use<CandidateMappers>().Name = "MongoCandidateMapper";
