@@ -16,6 +16,8 @@
 
         void ResendEmailVerificationCode(string username);
 
-        ProviderUser GetProviderUser(string username);        
+        ProviderUser GetProviderUser(string username);
+
+        void DismissReleaseNotes(string username, int version);
     }
 }

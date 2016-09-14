@@ -2,9 +2,9 @@
 {
     public class ReleaseNote
     {
-        public ReleaseNote(DasApplication application, int version, string note)
+        public ReleaseNote(DasApplication dasApplication, int version, string note)
         {
-            Application = application;
+            Application = dasApplication;
             Version = version;
             Note = note;
         }

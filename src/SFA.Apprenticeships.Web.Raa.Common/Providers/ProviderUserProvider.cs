@@ -48,7 +48,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return _userProfileService.GetProviderUser(username);
         }
 
-        
+        public void DismissReleaseNotes(string username, int version)
+        {
+            var providerUser = _userProfileService.GetProviderUser(username);
+            providerUser.ReleaseNoteVersion = version;
+            _userProfileService.UpdateProviderUser(providerUser);
+        }
 
         public IEnumerable<ProviderUserViewModel> GetUserProfileViewModels(string ukprn)
         {
