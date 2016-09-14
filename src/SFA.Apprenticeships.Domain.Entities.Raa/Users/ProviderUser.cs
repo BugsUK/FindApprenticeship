@@ -29,5 +29,7 @@
         public DateTime CreatedDateTime { get; set; }
 
         public DateTime? UpdatedDateTime { get; set; }
+
+        public int ReleaseNoteVersion { get; set; }
     }
 }

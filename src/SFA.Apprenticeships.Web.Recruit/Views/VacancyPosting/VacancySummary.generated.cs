@@ -70,7 +70,7 @@ WriteLiteral("\r\n");
 
             
             #line 7 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySummary, FormMethod.Post))
+ using (Html.BeginRouteForm(Model.Status.CanManageVacancyDates() ? RecruitmentRouteNames.ManageDates : RecruitmentRouteNames.VacancySummary, FormMethod.Post))
 {
     
             
@@ -118,7 +118,40 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"grid grid-1-2\"");
 
-WriteLiteral(">\r\n        <button");
+WriteLiteral(">\r\n");
+
+            
+            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+         if (Model.Status.CanManageVacancyDates())
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <button");
+
+WriteLiteral(" class=\"button\"");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(">Save and return</button>\r\n");
+
+            
+            #line 25 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+        }
+        else
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <button");
 
 WriteLiteral(" id=\"vacancySummaryButton\"");
 
@@ -128,26 +161,28 @@ WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 889), Tuple.Create("\"", 913)
+WriteAttribute("value", Tuple.Create(" value=\"", 1142), Tuple.Create("\"", 1166)
             
-            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 897), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+            #line 28 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                                    , Tuple.Create(Tuple.Create("", 1150), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 897), false)
+, 1150), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                                                                                                             Write(saveButtonText);
+            #line 28 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                                                                                                                                 Write(saveButtonText);
 
             
             #line default
             #line hidden
-WriteLiteral("</button>\r\n        <button");
+WriteLiteral("</button>\r\n");
+
+WriteLiteral("            <button");
 
 WriteLiteral(" id=\"vacancySummaryAndExit\"");
 
@@ -162,13 +197,16 @@ WriteLiteral(" value=\"VacancySummaryAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n");
 
             
-            #line 24 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-        
+            #line 30 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+        }
+
             
             #line default
             #line hidden
+WriteLiteral("        ");
+
             
-            #line 24 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 31 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
          if (Model.ComeFromPreview)
         {
             
@@ -176,15 +214,15 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" }));
+            #line 33 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "no-autosave"}));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                                                                                                                                                         
+            #line 33 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                                                                                                                                                                      
         }
 
             
@@ -193,7 +231,7 @@ WriteLiteral(">Save and exit</button>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 29 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 36 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 }
 
             
@@ -208,7 +246,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 33 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 40 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 Write(Scripts.Render("~/bundles/autosave"));
 
             
@@ -217,7 +255,7 @@ Write(Scripts.Render("~/bundles/autosave"));
 WriteLiteral("\r\n\r\n    <script>\r\n        var autoSaveTimeout = ");
 
             
-            #line 36 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 43 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                          Write(Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)));
 
             
@@ -228,7 +266,7 @@ WriteLiteral(" * 1000;\r\n\r\n        $(window).on(\'load\', function() {\r\n   
 "eTimeout,\r\n                postUrl: \'");
 
             
-            #line 42 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 49 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                      Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveVacancySummary));
 
             
@@ -252,9 +290,9 @@ WriteLiteral(@"></script>
 
     <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2421), Tuple.Create("\"", 2476)
-, Tuple.Create(Tuple.Create("", 2427), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
-, 2427), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 2686), Tuple.Create("\"", 2741)
+, Tuple.Create(Tuple.Create("", 2692), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
+, 2692), false)
 );
 
 WriteLiteral(@"></script>

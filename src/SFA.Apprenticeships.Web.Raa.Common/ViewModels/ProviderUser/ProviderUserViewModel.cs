@@ -5,6 +5,7 @@ using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
 namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 {
     using Validators.ProviderUser;
+    using Web.Common.ViewModels;
 
     [Validator(typeof(ProviderUserViewModelValidator))]
     public class ProviderUserViewModel
@@ -21,5 +22,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
         public int DefaultProviderSiteId { get; set; }
 
         public bool EmailAddressVerified { get; set; }
+
+        public ReleaseNoteViewModel ReleaseNoteViewModel { get; set; }
     }
 }

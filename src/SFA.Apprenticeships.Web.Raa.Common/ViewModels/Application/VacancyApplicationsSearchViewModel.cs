@@ -3,6 +3,10 @@
     public class VacancyApplicationsSearchViewModel : OrderedPageableSearchViewModel
     {
         public const string OrderByFieldLastName = "LastName";
+        public const string OrderByFieldFirstName = "FirstName";
+        public const string OrderByFieldSubmitted = "Submitted";
+        public const string OrderByFieldManagerNotes = "ManagerNotes";
+        public const string OrderByFieldStatus = "Status";
 
         public VacancyApplicationsSearchViewModel() : base(OrderByFieldLastName)
         {

@@ -21,6 +21,8 @@
         private const int SixMonthsInWeeks = 26;
         private const int AYearInMonths = 12;
 
+        public const string HaveAValidHourRatePropertyName = "Wage.Amount";
+
         private static readonly List<MinimumDurationForHoursPerWeek> HoursAndMinDurationLookup = new List
             <MinimumDurationForHoursPerWeek>
         {
@@ -134,7 +136,7 @@
 
                 if (hourRate < wageRange.ApprenticeMinimumWage)
                 {
-                    var propertyName = "Wage.Amount";
+                    var propertyName = HaveAValidHourRatePropertyName;
                     if (!string.IsNullOrEmpty(parentPropertyName))
                     {
                         propertyName = parentPropertyName + "." + propertyName;

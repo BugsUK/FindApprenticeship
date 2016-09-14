@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Threading;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies;
-    using Infrastructure.Presentation;
 
     public class WageViewModel
     {

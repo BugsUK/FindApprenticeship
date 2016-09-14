@@ -3,15 +3,10 @@
     using System.Collections.Generic;
     using Entities.Raa.Reference;
     using Entities.Raa.Vacancies;
+    using Entities.ReferenceData;
 
     public interface IReferenceRepository
     {
-        //IList<County> GetCounties();
-
-        //IList<Region> GetRegions();
-
-        //IList<LocalAuthority> GetLocalAuthorities();
-
         IList<Framework> GetFrameworks();
 
         IList<Occupation> GetOccupations();
@@ -19,5 +14,7 @@
         IList<Standard> GetStandards();
 
         IList<Sector> GetSectors();
+
+        IList<ReleaseNote> GetReleaseNotes();
     }
 }

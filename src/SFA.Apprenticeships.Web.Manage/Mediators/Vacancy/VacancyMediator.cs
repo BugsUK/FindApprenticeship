@@ -59,12 +59,22 @@
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(int vacancyReferenceNumber)
         {
-            if (_vacancyQaProvider.ApproveVacancy(vacancyReferenceNumber) == QAActionResultCode.InvalidVacancy)
+            var resultCode = _vacancyQaProvider.ApproveVacancy(vacancyReferenceNumber);
+
+            switch (resultCode)
             {
-                return
-                    GetMediatorResponse<DashboardVacancySummaryViewModel>(
-                        VacancyMediatorCodes.ApproveVacancy.InvalidVacancy, null,
-                        VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
+                case QAActionResultCode.InvalidVacancy:
+                    return
+                        GetMediatorResponse<DashboardVacancySummaryViewModel>(
+                            VacancyMediatorCodes.ApproveVacancy.InvalidVacancy, null,
+                            VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
+
+                case QAActionResultCode.GeocodingFailure:
+                    return
+                        GetMediatorResponse<DashboardVacancySummaryViewModel>(
+                            VacancyMediatorCodes.ApproveVacancy.PostcodeLookupFailed, null,
+                            VacancyViewModelMessages.PostcodeLookupFailed, UserMessageLevel.Error);
+
             }
 
             var nextVacancy = _vacancyQaProvider.GetNextAvailableVacancy();
