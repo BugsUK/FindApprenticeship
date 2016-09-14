@@ -8,6 +8,7 @@
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
     using Application.Interfaces;
+    using Domain.Entities.ReferenceData;
     using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceRepository : IReferenceRepository
@@ -122,7 +123,13 @@
 
         public IList<ReleaseNote> GetReleaseNotes()
         {
-            throw new System.NotImplementedException();
+            _logger.Debug("Getting all release notes");
+
+            var releaseNotes = _getOpenConnection.Query<ReleaseNote>("SELECT * FROM Reference.ReleaseNote ORDER BY Version");
+
+            _logger.Debug($"Got {releaseNotes.Count} release notes");
+
+            return releaseNotes;
         }
 
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()
