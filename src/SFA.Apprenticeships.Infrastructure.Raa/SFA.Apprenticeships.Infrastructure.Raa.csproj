@@ -108,6 +108,8 @@
     <Compile Include="NullApplicationStatusesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApprenticeshipVacancyDataProvider.cs" />
+    <Compile Include="Strategies\GetReleaseNotesStrategy.cs" />
+    <Compile Include="Strategies\IGetReleaseNotesStrategy.cs" />
     <Compile Include="Strategies\PublishVacancySummaryUpdateStrategy.cs" />
     <Compile Include="ReferenceDataProvider.cs" />
     <Compile Include="TraineeshipVacancyDataProvider.cs" />

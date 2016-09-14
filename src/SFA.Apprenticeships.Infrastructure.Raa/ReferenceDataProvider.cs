@@ -7,14 +7,17 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Presentation;
+    using Strategies;
 
     public class ReferenceDataProvider  : IReferenceDataProvider
     {
         private readonly IReferenceRepository _referenceRepository;
+        private readonly IGetReleaseNotesStrategy _getReleaseNotesStrategy;
 
-        public ReferenceDataProvider(IReferenceRepository referenceRepository)
+        public ReferenceDataProvider(IReferenceRepository referenceRepository, IGetReleaseNotesStrategy getReleaseNotesStrategy)
         {
             _referenceRepository = referenceRepository;
+            _getReleaseNotesStrategy = getReleaseNotesStrategy;
         }
 
         public IEnumerable<Category> GetCategories()
@@ -133,6 +136,11 @@
             }
 
             return sectors;
+        }
+
+        public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
+        {
+            return _getReleaseNotesStrategy.GetReleaseNotes(dasApplication);
         }
     }
 }

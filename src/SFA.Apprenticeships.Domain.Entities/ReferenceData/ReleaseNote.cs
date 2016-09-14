@@ -2,10 +2,17 @@
 {
     public class ReleaseNote
     {
-        public DasApplication Application { get; set; }
+        public ReleaseNote(DasApplication application, int version, string note)
+        {
+            Application = application;
+            Version = version;
+            Note = note;
+        }
 
-        public int Version { get; set; }
+        public DasApplication Application { get; private set; }
 
-        public string Note { get; set; }
+        public int Version { get; private set; }
+
+        public string Note { get; private set; }
     }
 }
