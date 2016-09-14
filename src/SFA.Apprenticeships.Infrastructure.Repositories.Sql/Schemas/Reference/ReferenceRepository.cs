@@ -7,9 +7,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceRepository : IReferenceRepository
@@ -27,7 +25,7 @@
         public IList<Framework> GetFrameworks()
         {
             var dbFrameworks = GetApprenticeshipFrameworks();
-            var frameworks = dbFrameworks.Select(_mapper.Map<Entities.ApprenticeshipFramework, Framework>).ToList();
+            var frameworks = dbFrameworks.Select(_mapper.Map<ApprenticeshipFramework, Framework>).ToList();
             return frameworks;
         }
 
@@ -105,14 +103,14 @@
             };
 
             var dbSectors = _getOpenConnection
-                .Query<Entities.StandardSector>(sectorSql, sqlParams);
+                .Query<StandardSector>(sectorSql, sqlParams);
 
             //set the standards.
             var standards = GetStandards();
 
             var sectors = dbSectors.Select(x =>
             {
-                var result = _mapper.Map<Entities.StandardSector, Sector>(x);
+                var result = _mapper.Map<StandardSector, Sector>(x);
                 result.Standards = standards.Where(std => std.ApprenticeshipSectorId == x.StandardSectorId);
                 return result;
             }).ToList();
@@ -120,6 +118,11 @@
             _logger.Debug("Got all sectors");
 
             return sectors ;
+        }
+
+        public IList<ReleaseNote> GetReleaseNotes()
+        {
+            throw new System.NotImplementedException();
         }
 
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()
@@ -132,8 +135,8 @@
             {
             };
 
-            var dbOccupations = this._getOpenConnection
-                .Query<Entities.ApprenticeshipOccupation>(sectorSql, sqlParams);
+            var dbOccupations = _getOpenConnection
+                .Query<ApprenticeshipOccupation>(sectorSql, sqlParams);
 
             _logger.Debug("Got all apprenticeship occupations");
 
@@ -151,7 +154,7 @@
             };
 
             var dbFrameworks = _getOpenConnection
-                .Query<Entities.ApprenticeshipFramework>(frameworkSql, sqlParams);
+                .Query<ApprenticeshipFramework>(frameworkSql, sqlParams);
 
             return dbFrameworks;
         } 
@@ -167,7 +170,7 @@
             };
 
             var levels = _getOpenConnection
-                .Query<Entities.EducationLevel>(sectorSql, sqlParams);
+                .Query<EducationLevel>(sectorSql, sqlParams);
             
             _logger.Debug("Got all education levels");
 

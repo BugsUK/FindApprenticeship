@@ -19,5 +19,7 @@
         IList<Standard> GetStandards();
 
         IList<Sector> GetSectors();
+
+        IList<ReleaseNote> GetReleaseNotes();
     }
 }
