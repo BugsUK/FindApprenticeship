@@ -49,10 +49,10 @@
             _vacancyRepository = new VacancyRepository(targetDatabase);
             _candidateRepository = new CandidateRepository(targetDatabase);
             _sourceApplicationRepository = new ApplicationRepository(sourceDatabase);
-            _sourceApplicationHistoryRepository = new ApplicationHistoryRepository(sourceDatabase);
+            _sourceApplicationHistoryRepository = new ApplicationHistoryRepository(sourceDatabase, _logService);
             _sourceSubVacancyRepository = new SubVacancyRepository(sourceDatabase);
             _destinationApplicationRepository = new ApplicationRepository(targetDatabase);
-            _destinationApplicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase);
+            _destinationApplicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase, _logService);
             _schoolAttendedRepository = new SchoolAttendedRepository(targetDatabase);
             _destinationSubVacancyRepository = new SubVacancyRepository(targetDatabase);
             _vacancyApplicationsRepository = new VacancyApplicationsRepository(_vacancyApplicationsUpdater.CollectionName, configurationService, logService);
