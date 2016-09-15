@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
     using System.Collections.Generic;
@@ -9,20 +9,19 @@
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
-    using Common.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Presentation;
-    using Raa.Common.ViewModels.Application;
-    using Raa.Common.ViewModels.Application.Apprenticeship;
-    using Raa.Common.ViewModels.Application.Traineeship;
-    using Common.Configuration;
-    using Raa.Common.ViewModels.Candidate;
+    using ViewModels.Application;
+    using ViewModels.Application.Apprenticeship;
+    using ViewModels.Application.Traineeship;
+    using ViewModels.Candidate;
     using Application.Interfaces;
-    using ViewModels;
+    using Web.Common.Configuration;
+    using Web.Common.ViewModels;
 
     public class CandidateProvider : ICandidateProvider
     {        

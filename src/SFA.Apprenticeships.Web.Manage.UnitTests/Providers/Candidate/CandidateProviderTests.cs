@@ -12,15 +12,13 @@
     using Domain.Entities.Locations;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Manage.Mappers;
-    using Manage.Providers;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using Raa.Common.Mappers;
+    using Raa.Common.Providers;
     using Raa.Common.ViewModels.Candidate;
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
-    using ViewModels;
+    using Application.Interfaces;
 
     [TestFixture]
     [Parallelizable]

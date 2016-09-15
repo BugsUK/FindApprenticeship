@@ -370,6 +370,9 @@
     <Compile Include="Mediators\Application\ApplicationMediatorCodes.cs" />
     <Compile Include="Mediators\Application\ApprenticeshipApplicationMediatorCodes.cs" />
     <Compile Include="Mediators\Application\IApplicationMediator.cs" />
+    <Compile Include="Mediators\Candidate\CandidateMediator.cs" />
+    <Compile Include="Mediators\Candidate\CandidateMediatorCodes.cs" />
+    <Compile Include="Mediators\Candidate\ICandidateMediator.cs" />
     <Compile Include="Mediators\Home\HomeMediator.cs" />
     <Compile Include="Mediators\Home\HomeMediatorCodes.cs" />
     <Compile Include="Mediators\Home\IHomeMediator.cs" />

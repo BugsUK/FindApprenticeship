@@ -1,10 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Mappers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mappers
 {
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Infrastructure.Presentation;
-    using Raa.Common.Mappers;
-    using Raa.Common.ViewModels.Candidate;
+    using ViewModels.Candidate;
 
     public class CandidateMappers : RaaCommonWebMappers
     {

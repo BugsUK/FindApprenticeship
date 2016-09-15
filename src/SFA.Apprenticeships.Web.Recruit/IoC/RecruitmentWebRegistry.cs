@@ -37,10 +37,10 @@
     using Infrastructure.Raa.Mappers;
     using Infrastructure.Raa.Strategies;
     using Infrastructure.Repositories.Mongo.Candidates;
-    using Infrastructure.Repositories.Mongo.Candidates.Mappers;
     using Infrastructure.Security;
     using Mappers;
     using Mediators.Application;
+    using Mediators.Candidate;
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.Report;
@@ -63,6 +63,7 @@
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
             For<IMapper>().Singleton().Use<RecruitMappers>().Name = "RecruitMappers";
+            For<IMapper>().Singleton().Use<Raa.Common.Mappers.CandidateMappers>().Name = "CandidateMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
@@ -91,6 +92,7 @@
             For<IReportingProvider>().Use<ReportingProvider>();
             For<IEncryptionProvider>().Use<AES256Provider>();
             For<IVacancyStatusChangeProvider>().Use<VacancyStatusChangeProvider>();
+            For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
         }
 
         private void RegisterServices()
@@ -111,6 +113,7 @@
             For<IDecryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
             For<IVacancyManagementService>().Use<VacancyManagementService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
+            For<ICandidateSearchService>().Use<CandidateSearchService>();
         }
 
         private void RegisterStrategies()
@@ -142,12 +145,14 @@
             For<IGetReleaseNotesStrategy>().Use<GetReleaseNotesStrategy>();
             For<IDeleteVacancyStrategy>().Use<DeleteVacancyStrategy>();
 
-            For<IMapper>().Use<CandidateMappers>().Name = "MongoCandidateMapper";
+            For<IMapper>().Use<Infrastructure.Repositories.Mongo.Candidates.Mappers.CandidateMappers>().Name = "MongoCandidateMapper";
             For<ICandidateReadRepository>().Use<CandidateRepository>().Ctor<IMapper>().Named("MongoCandidateMapper");
             For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
             For<IGetCandidateSummariesStrategy>().Use<GetCandidateSummariesStrategy>();
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
+
+            For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
         }
 
         private void RegisterMediators()
@@ -162,6 +167,7 @@
             For<IHomeMediator>().Use<HomeMediator>();            
             For<IReportMediator>().Use<ReportMediator>();
             For<IVacancyManagementMediator>().Use<VacancyManagementMediator>();
+            For<ICandidateMediator>().Use<CandidateMediator>();
         }
     }
 }

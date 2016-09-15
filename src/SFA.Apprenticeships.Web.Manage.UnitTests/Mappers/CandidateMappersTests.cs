@@ -2,13 +2,11 @@
 {
     using Domain.Entities.Candidates;
     using FluentAssertions;
-    using Manage.Mappers;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using Raa.Common.Mappers;
     using Raa.Common.ViewModels.Candidate;
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
-    using ViewModels;
+    using Application.Interfaces;
 
     [TestFixture]
     [Parallelizable]

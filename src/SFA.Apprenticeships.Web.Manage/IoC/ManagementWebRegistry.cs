@@ -30,7 +30,6 @@
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
-    using Application.Vacancy;
     using Application.VacancyPosting.Strategies;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Raa.Mappers;
@@ -40,8 +39,7 @@
     using Mediators.InformationRadiator;
     using Mediators.Reporting;
     using Raa.Common.Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
 
     public class ManagementWebRegistry : Registry
     {
@@ -49,7 +47,7 @@
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
-            For<IMapper>().Singleton().Use<Mappers.CandidateMappers>().Name = "CandidateMappers";
+            For<IMapper>().Singleton().Use<Raa.Common.Mappers.CandidateMappers>().Name = "CandidateMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
