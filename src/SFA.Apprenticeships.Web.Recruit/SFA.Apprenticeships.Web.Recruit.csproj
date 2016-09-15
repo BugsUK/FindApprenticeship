@@ -882,6 +882,7 @@
     <Content Include="Views\Admin\ChangeUkprn.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\ConfirmRevertToViewed.cshtml" />
     <Content Include="Views\Candidate\Search.cshtml" />
+    <Content Include="Views\Candidate\Candidate.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

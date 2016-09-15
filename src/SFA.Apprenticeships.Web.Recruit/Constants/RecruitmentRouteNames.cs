@@ -105,5 +105,6 @@
 
         //Candidates
         public const string SearchCandidates = "SearchCandidates";
+        public const string ViewCandidate = "ViewCandidate";
     }
 }

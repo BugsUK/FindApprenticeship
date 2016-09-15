@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
@@ -49,6 +50,14 @@
         public ActionResult SearchCandidates(CandidateSearchResultsViewModel viewModel)
         {
             return RedirectToRoute(RecruitmentRouteNames.SearchCandidates, viewModel.SearchViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Candidate(Guid id)
+        {
+            var response = _candidateMediator.GetCandidateApplications(id);
+
+            return View(response.ViewModel);
         }
     }
 }

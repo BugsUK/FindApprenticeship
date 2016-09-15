@@ -451,6 +451,12 @@
                defaults: new { controller = "Candidate", action = "Search" }
                );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ViewCandidate,
+               url: "candidate",
+               defaults: new { controller = "Candidate", action = "Candidate" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

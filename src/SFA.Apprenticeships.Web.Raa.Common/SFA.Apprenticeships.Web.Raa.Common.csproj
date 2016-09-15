@@ -238,6 +238,8 @@
     <Compile Include="Providers\VacancyStatusChangeProvider.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateApplicationSummariesViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateApplicationSummaryViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateSummaryViewModel.cs" />
@@ -286,6 +288,7 @@
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateSearchViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateTraineeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateApplicationsSearchViewModel.cs" />
     <Compile Include="ViewModels\Order.cs" />
     <Compile Include="ViewModels\OrderedPageableSearchViewModel.cs" />
     <Compile Include="ViewModels\OrderedSearchViewModel.cs" />

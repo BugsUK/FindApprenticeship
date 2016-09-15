@@ -1,9 +1,14 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Candidate
 {
+    using System;
+    using System.Collections.Generic;
     using Common.Mediators;
+    using Common.ViewModels;
+    using Common.ViewModels.Locations;
     using Raa.Common.Factories;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Candidate;
+    using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Candidate;
 
     public class CandidateMediator : MediatorBase, ICandidateMediator
@@ -32,6 +37,18 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Candidate
             var resultsViewModel = _candidateProvider.SearchCandidates(searchViewModel);
 
             return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, resultsViewModel);
+        }
+
+        public MediatorResponse<CandidateApplicationSummariesViewModel> GetCandidateApplications(Guid candidateGuid)
+        {
+            var viewModel = new CandidateApplicationSummariesViewModel
+            {
+                CandidateApplicationsSearch = new CandidateApplicationsSearchViewModel(candidateGuid),
+                ApplicantDetails = new ApplicantDetailsViewModel {Address = new AddressViewModel()},
+                ApplicationSummaries = new PageableViewModel<CandidateApplicationSummaryViewModel> { Page = new List<CandidateApplicationSummaryViewModel>()}
+            };
+
+            return GetMediatorResponse(CandidateMediatorCodes.GetCandidateApplications.Ok, viewModel);
         }
     }
 }
