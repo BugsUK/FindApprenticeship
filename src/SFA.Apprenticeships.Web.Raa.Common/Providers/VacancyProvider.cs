@@ -805,10 +805,6 @@
                         v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
                     );
                 }
-                
-                filteredVacancies = filteredVacancies
-                    .GetCurrentPage(vacanciesSummarySearch)
-                    .ToList();
             }
 
             var vacanciesToFetch = Sort(filteredVacancies, vacanciesSummarySearch).GetCurrentPage(vacanciesSummarySearch).ToList();
