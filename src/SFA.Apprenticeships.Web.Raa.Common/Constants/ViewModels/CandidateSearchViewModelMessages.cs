@@ -5,7 +5,14 @@
     public class CandidateSearchViewModelMessages
     {
         public const string NoSearchCriteriaErrorText =
-            "You must enter either a first name, last name, date of birth or postcode";
+            "You must enter at least one search criteria";
+
+        public class ApplicantId
+        {
+            public const string LabelText = "Applicant ID";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Applicant ID " + Whitelists.FreetextWhitelist.ErrorText;
+        }
 
         public class FirstName
         {

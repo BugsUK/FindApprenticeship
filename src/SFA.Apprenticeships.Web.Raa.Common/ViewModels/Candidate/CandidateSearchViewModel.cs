@@ -30,6 +30,8 @@
             CurrentPage = currentPage;
         }
 
+        [Display(Name = CandidateSearchViewModelMessages.ApplicantId.LabelText)]
+        public string ApplicantId { get; set; }
         [Display(Name = CandidateSearchViewModelMessages.FirstName.LabelText)]
         public string FirstName { get; set; }
         [Display(Name = CandidateSearchViewModelMessages.LastName.LabelText)]

@@ -349,6 +349,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\EmployerApplicationController.cs" />
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
@@ -877,6 +878,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ChangeUkprn.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\ConfirmRevertToViewed.cshtml" />
+    <Content Include="Views\Candidate\Search.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -908,7 +910,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Candidate\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

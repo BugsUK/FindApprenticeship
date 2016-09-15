@@ -102,5 +102,8 @@
         public const string AdminList = "AdminList";
         public const string AdminChangeUkprn = "AdminChangeUkprn";
         public const string ResetUkprn = "ResetUkprn";
+
+        //Candidates
+        public const string CandidateSearch = "CandidateSearch";
     }
 }

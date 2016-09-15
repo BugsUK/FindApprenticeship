@@ -439,11 +439,16 @@
                defaults: new { controller = "Admin", action = "ChangeUkprn" }
                );
 
-
             routes.MapRoute(
                name: RecruitmentRouteNames.ResetUkprn,
                url: "admin/resetukprn",
                defaults: new { controller = "Admin", action = "ResetUkprn" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.CandidateSearch,
+               url: "candidate/search",
+               defaults: new { controller = "Candidate", action = "Search" }
                );
 
             routes.LowercaseUrls = true;
