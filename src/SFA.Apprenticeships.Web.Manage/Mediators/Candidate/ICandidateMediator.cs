@@ -4,6 +4,7 @@
     using Common.Mediators;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.Application.Traineeship;
+    using Raa.Common.ViewModels.Candidate;
     using ViewModels;
 
     public interface ICandidateMediator

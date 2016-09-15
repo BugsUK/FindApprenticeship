@@ -4,7 +4,7 @@
     using Domain.Entities.Users;
     using Infrastructure.Presentation;
     using Raa.Common.Mappers;
-    using ViewModels;
+    using Raa.Common.ViewModels.Candidate;
 
     public class CandidateMappers : RaaCommonWebMappers
     {

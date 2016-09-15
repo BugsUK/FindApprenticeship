@@ -1,8 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Validators
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Candidate
 {
     using Constants.ViewModels;
     using FluentValidation;
-    using ViewModels;
+    using ViewModels.Candidate;
+
     public class CandidateSearchViewModelClientValidator : AbstractValidator<CandidateSearchViewModel>
     {
         public CandidateSearchViewModelClientValidator()

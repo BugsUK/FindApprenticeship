@@ -5,7 +5,7 @@
     using Manage.Mappers;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
+    using Raa.Common.ViewModels.Candidate;
     using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;

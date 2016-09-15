@@ -20,9 +20,8 @@
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.Application.Traineeship;
     using Common.Configuration;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Raa.Common.ViewModels.Candidate;
+    using Application.Interfaces;
     using ViewModels;
 
     public class CandidateProvider : ICandidateProvider

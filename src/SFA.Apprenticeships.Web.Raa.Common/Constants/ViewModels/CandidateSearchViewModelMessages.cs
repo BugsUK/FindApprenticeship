@@ -1,8 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Constants.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 {
-    using Common.Constants;
+    using Web.Common.Constants;
 
-    // TODO: can be deleted?
     public class CandidateSearchViewModelMessages
     {
         public const string NoSearchCriteriaErrorText =

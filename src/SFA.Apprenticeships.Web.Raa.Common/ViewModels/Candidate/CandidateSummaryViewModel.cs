@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Candidate
 {
     using System;
-    using Common.ViewModels.Locations;
+    using Web.Common.ViewModels.Locations;
 
     public class CandidateSummaryViewModel
     {

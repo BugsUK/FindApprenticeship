@@ -171,6 +171,7 @@
     <Compile Include="Configuration\RecruitWebConfiguration.cs" />
     <Compile Include="Constants\Pages\PrivacyPageMessages.cs" />
     <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
@@ -234,6 +235,10 @@
     <Compile Include="Providers\VacancyStatusChangeProvider.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateSummaryViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateSearchResultsViewModel.cs" />
+    <Compile Include="Validators\Candidate\CandidateSearchResultsViewModelValidator.cs" />
+    <Compile Include="Validators\Candidate\CandidateSearchViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\ShareApplicationsViewModelValidator.cs" />
@@ -274,6 +279,7 @@
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateSearchViewModel.cs" />
     <Compile Include="ViewModels\Order.cs" />
     <Compile Include="ViewModels\OrderedPageableSearchViewModel.cs" />
     <Compile Include="ViewModels\OrderedSearchViewModel.cs" />

@@ -353,7 +353,6 @@
     <Compile Include="Constants\Messages\ReportingMessages.cs" />
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
@@ -394,16 +393,11 @@
     <Compile Include="Providers\AgencyUserProvider.cs" />
     <Compile Include="Providers\CandidateProvider.cs" />
     <Compile Include="Providers\ICandidateProvider.cs" />
-    <Compile Include="Validators\CandidateSearchResultsViewModelValidator.cs" />
-    <Compile Include="Validators\CandidateSearchViewModelValidator.cs" />
     <Compile Include="ViewModels\AgencyUserViewModel.cs" />
     <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CandidateApplicationsViewModel.cs" />
-    <Compile Include="ViewModels\CandidateSearchResultsViewModel.cs" />
-    <Compile Include="ViewModels\CandidateSearchViewModel.cs" />
-    <Compile Include="ViewModels\CandidateSummaryViewModel.cs" />
     <Compile Include="ViewModels\CandidateVacancy.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\CandidateApprenticeshipApplicationViewModel.cs" />
@@ -888,7 +882,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Constants\Pages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
