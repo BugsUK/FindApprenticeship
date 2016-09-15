@@ -13,7 +13,8 @@
 
             Mapper.CreateMap<CandidateSummary, CandidateSummaryViewModel>()
                 .ForMember(m => m.Id, opt => opt.MapFrom(s => s.EntityId))
-                .ForMember(m => m.Name, opt => opt.MapFrom(s => new Name(s.FirstName, s.MiddleNames, s.LastName).GetDisplayText()));
+                .ForMember(m => m.Name, opt => opt.MapFrom(s => new Name(s.FirstName, s.MiddleNames, s.LastName).GetDisplayText()))
+                .ForMember(m => m.ApplicantId, opt => opt.MapFrom(s => s.EntityId.GetApplicantId(s.LegacyCandidateId)));
         }
     }
 }

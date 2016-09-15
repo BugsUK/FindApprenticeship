@@ -87,7 +87,7 @@
 
             var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
                 _getOpenConnection.Query<DbCandidateSummary>(
-@"SELECT c.CandidateGuid, p.FirstName, p.MiddleNames, p.Surname, c.DateofBirth, 
+@"SELECT c.CandidateId, c.CandidateGuid, p.FirstName, p.MiddleNames, p.Surname, c.DateofBirth, 
 c.AddressLine1, c.AddressLine2, c.AddressLine3, c.AddressLine4, c.Postcode, c.Town, ct.FullName As County, c.Latitude, c.Longitude
 FROM Person p
 JOIN Candidate c ON p.PersonId = c.PersonId

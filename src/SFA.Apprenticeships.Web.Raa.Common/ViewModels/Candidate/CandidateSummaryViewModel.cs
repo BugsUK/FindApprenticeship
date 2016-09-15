@@ -9,5 +9,6 @@
         public string Name { get; set; }
         public AddressViewModel Address { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string ApplicantId { get; set; }
     }
 }
