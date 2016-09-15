@@ -20,6 +20,7 @@
     using ViewModels.Application.Traineeship;
     using ViewModels.Candidate;
     using Application.Interfaces;
+    using ViewModels;
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
 
@@ -149,6 +150,60 @@
             var viewModel = ConvertToTraineeshipApplicationViewModel(application);
 
             return viewModel;
+        }
+
+        public CandidateApplicationSummariesViewModel GetCandidateApplicationSummaries(CandidateApplicationsSearchViewModel searchViewModel)
+        {
+            var candidateId = searchViewModel.CandidateGuid;
+            var candidate = _candidateApplicationService.GetCandidate(candidateId);
+
+            var apprenticeshipApplicationSummaries = _mapper.Map<IEnumerable<ApprenticeshipApplicationSummary>, IEnumerable<CandidateApplicationSummaryViewModel>>(_candidateApplicationService.GetApprenticeshipApplications(candidateId));
+            var traineeshipApplicationSummaries = _mapper.Map<IEnumerable<TraineeshipApplicationSummary>, IEnumerable<CandidateApplicationSummaryViewModel>>(_candidateApplicationService.GetTraineeshipApplications(candidateId));
+
+            var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries);
+
+            var page = GetOrderedApplicationSummaries(searchViewModel.OrderByField, searchViewModel.Order, candidateApplicationSummaries);
+
+            var viewModel = new CandidateApplicationSummariesViewModel
+            {
+                CandidateApplicationsSearch = searchViewModel,
+                ApplicantDetails = _mapper.Map<Candidate, ApplicantDetailsViewModel>(candidate),
+                ApplicationSummaries = new PageableViewModel<CandidateApplicationSummaryViewModel> { Page = page.ToList() }
+            };
+
+            return viewModel;
+        }
+
+        private static IEnumerable<CandidateApplicationSummaryViewModel> GetOrderedApplicationSummaries(string orderByField, Order order, IEnumerable<CandidateApplicationSummaryViewModel> applications)
+        {
+            IEnumerable<CandidateApplicationSummaryViewModel> page;
+            switch (orderByField)
+            {
+                case CandidateApplicationsSearchViewModel.OrderByFieldVacancyTitle:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.VacancyTitle)
+                        : applications.OrderBy(a => a.VacancyTitle);
+                    break;
+                case CandidateApplicationsSearchViewModel.OrderByFieldEmployer:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.EmployerName)
+                        : applications.OrderBy(a => a.EmployerName);
+                    break;
+                case CandidateApplicationsSearchViewModel.OrderByFieldSubmitted:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.DateApplied)
+                        : applications.OrderBy(a => a.DateApplied);
+                    break;
+                case CandidateApplicationsSearchViewModel.OrderByFieldStatus:
+                    page = order == Order.Descending
+                        ? applications.OrderByDescending(a => a.Status)
+                        : applications.OrderBy(a => a.Status);
+                    break;
+                default:
+                    page = applications;
+                    break;
+            }
+            return page;
         }
 
         #region Helpers

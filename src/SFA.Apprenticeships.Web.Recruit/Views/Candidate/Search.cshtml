@@ -102,7 +102,7 @@
                                     </ul>
                                 </td>
                                 <td>
-                                    @Html.RouteLink("Select candidate", RecruitmentRouteNames.ViewCandidate, new { id = candidate.Id })
+                                    @Html.RouteLink("Select candidate", RecruitmentRouteNames.ViewCandidate, new CandidateApplicationsSearchViewModel(candidate.Id).RouteValues)
                                 </td>
                             </tr>
                         }

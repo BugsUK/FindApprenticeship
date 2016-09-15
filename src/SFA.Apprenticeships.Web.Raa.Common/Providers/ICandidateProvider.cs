@@ -11,5 +11,6 @@
         CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId);
         ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId);
         TraineeshipApplicationViewModel GetCandidateTraineeshipApplication(Guid applicationId);
+        CandidateApplicationSummariesViewModel GetCandidateApplicationSummaries(CandidateApplicationsSearchViewModel searchViewModel);
     }
 }

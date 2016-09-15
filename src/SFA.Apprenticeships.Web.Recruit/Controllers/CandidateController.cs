@@ -53,9 +53,9 @@
         }
 
         [HttpGet]
-        public ActionResult Candidate(Guid id)
+        public ActionResult Candidate(CandidateApplicationsSearchViewModel searchViewModel)
         {
-            var response = _candidateMediator.GetCandidateApplications(id);
+            var response = _candidateMediator.GetCandidateApplications(searchViewModel);
 
             return View(response.ViewModel);
         }

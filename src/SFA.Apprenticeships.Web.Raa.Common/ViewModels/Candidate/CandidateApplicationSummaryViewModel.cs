@@ -8,6 +8,10 @@
     {
         public Guid ApplicationId { get; set; }
 
+        public int VacancyId { get; set; }
+
+        public int VacancyReferenceNumber { get; set; }
+
         public string VacancyTitle { get; set; }
 
         public string EmployerName { get; set; }

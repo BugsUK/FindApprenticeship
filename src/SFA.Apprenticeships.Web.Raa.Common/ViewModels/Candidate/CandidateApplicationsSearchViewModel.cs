@@ -9,7 +9,12 @@
         public const string OrderByFieldSubmitted = "Submitted";
         public const string OrderByFieldStatus = "Status";
 
-        public CandidateApplicationsSearchViewModel(Guid candidateGuid) : base(OrderByFieldSubmitted)
+        public CandidateApplicationsSearchViewModel() : base(OrderByFieldSubmitted, Order.Descending)
+        {
+            
+        }
+
+        public CandidateApplicationsSearchViewModel(Guid candidateGuid) : this()
         {
             CandidateGuid = candidateGuid;
         }

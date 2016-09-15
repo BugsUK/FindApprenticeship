@@ -117,7 +117,8 @@
                 .ForMember(v => v.DateOfBirth, opt => opt.MapFrom(src => src.CandidateDetails.DateOfBirth))
                 .ForMember(v => v.PhoneNumber, opt => opt.MapFrom(src => src.CandidateDetails.PhoneNumber))
                 .ForMember(v => v.EmailAddress, opt => opt.MapFrom(src => src.CandidateDetails.EmailAddress))
-                .ForMember(v => v.DisabilityStatus, opt => opt.MapFrom(src => src.CandidateInformation.DisabilityStatus));
+                .ForMember(v => v.DisabilityStatus, opt => opt.MapFrom(src => src.CandidateInformation.DisabilityStatus))
+                .ForMember(m => m.ApplicantId, opt => opt.MapFrom(s => s.EntityId.GetApplicantId(0)));
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, VacancyQuestionAnswersViewModel>()
                 .ForMember(v => v.FirstQuestionAnswer, opt => opt.MapFrom(src => src.AdditionalQuestion1Answer))
@@ -156,7 +157,8 @@
                 .ForMember(v => v.DateOfBirth, opt => opt.MapFrom(src => src.CandidateDetails.DateOfBirth))
                 .ForMember(v => v.PhoneNumber, opt => opt.MapFrom(src => src.CandidateDetails.PhoneNumber))
                 .ForMember(v => v.EmailAddress, opt => opt.MapFrom(src => src.CandidateDetails.EmailAddress))
-                .ForMember(v => v.DisabilityStatus, opt => opt.MapFrom(src => src.CandidateInformation.DisabilityStatus));
+                .ForMember(v => v.DisabilityStatus, opt => opt.MapFrom(src => src.CandidateInformation.DisabilityStatus))
+                .ForMember(m => m.ApplicantId, opt => opt.MapFrom(s => s.EntityId.GetApplicantId(0)));
 
             Mapper.CreateMap<TraineeshipApplicationDetail, VacancyQuestionAnswersViewModel>()
                 .ForMember(v => v.FirstQuestionAnswer, opt => opt.MapFrom(src => src.AdditionalQuestion1Answer))

@@ -847,7 +847,7 @@
     <Content Include="Views\VacancyPosting\_ValidationResultIcons.cshtml" />
     <Content Include="Views\VacancyPosting\_EditLink.cshtml" />
     <Content Include="Views\Application\VacancyApplications.cshtml" />
-    <Content Include="Views\Application\_applicationStatus.cshtml" />
+    <Content Include="Views\Shared\_applicationStatus.cshtml" />
     <Content Include="Views\VacancyPosting\_ApplicationsLink.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\Review.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
