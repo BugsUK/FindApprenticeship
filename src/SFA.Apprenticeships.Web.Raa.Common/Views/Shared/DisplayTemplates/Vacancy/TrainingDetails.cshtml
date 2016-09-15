@@ -177,7 +177,7 @@
     </div>
 
     <div class="form-group">
-        @Html.FormTextAreaFor(m => m.TrainingProvided, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.TrainingProvided, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium ckeditor", type = "text" })
         @Html.EditorFor(m => m.TrainingProvidedComment, "Comment", Html.GetLabelFor(m => m.TrainingProvidedComment))
         @Html.ValidationMessageFor(m => m.TrainingProvidedComment)
     </div>

@@ -68,8 +68,8 @@
 	[VacancyTypeId]					   INT				NULL,
 	[SectorId]						   INT				NULL,
 	[UpdatedDateTime]				   DATETIME			NULL,
-	[EditedInRaa]					   BIT				NOT NULL DEFAULT 0,
-	[VacancySourceId]			       INT				NOT NULL DEFAULT 1
+	[EditedInRaa]					   BIT				NOT NULL DEFAULT ((0)),
+	[VacancySourceId]			       INT				NOT NULL DEFAULT ((1))
 	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
@@ -149,6 +149,9 @@ BEGIN
 			vs.VacancyId = i.VacancyId
 	SET NOCOUNT OFF;
 END
+GO
+DISABLE TRIGGER [dbo].[uDeleteVacancySearch]
+    ON [dbo].[Vacancy];
 GO
 CREATE TRIGGER [dbo].[uInsertVacancySearch]
     ON [dbo].[Vacancy]
@@ -260,6 +263,9 @@ CREATE TRIGGER [dbo].[uInsertVacancySearch]
 
 	SET NOCOUNT ON;
 END
+GO
+DISABLE TRIGGER [dbo].[uInsertVacancySearch]
+    ON [dbo].[Vacancy];
 GO
 CREATE TRIGGER [dbo].[uUpdateVacancySearch]
     ON [dbo].[Vacancy]
@@ -455,4 +461,7 @@ SET NOCOUNT ON;
 	AND i.apprenticeshipframeworkid <> 0
 	AND vs.vacancyid is null
 END
+GO
+DISABLE TRIGGER [dbo].[uUpdateVacancySearch]
+    ON [dbo].[Vacancy];
 GO

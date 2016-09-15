@@ -467,6 +467,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_WorkingWeekAndWage.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\HtmlTextEditor.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HtmlTextEditor.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -589,6 +594,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_WorkingWeekAndWage.generated.cs</LastGenOutput>
     </None>
+    <Content Include="Views\Shared\HtmlTextEditor.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>HtmlTextEditor.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
