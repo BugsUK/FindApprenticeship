@@ -152,15 +152,22 @@
             return viewModel;
         }
 
-        public CandidateApplicationSummariesViewModel GetCandidateApplicationSummaries(CandidateApplicationsSearchViewModel searchViewModel)
+        public CandidateApplicationSummariesViewModel GetCandidateApplicationSummaries(CandidateApplicationsSearchViewModel searchViewModel, string ukprn)
         {
             var candidateId = searchViewModel.CandidateGuid;
+            var provider = _providerService.GetProvider(ukprn);
+
             var candidate = _candidateApplicationService.GetCandidate(candidateId);
 
             var apprenticeshipApplicationSummaries = _mapper.Map<IEnumerable<ApprenticeshipApplicationSummary>, IEnumerable<CandidateApplicationSummaryViewModel>>(_candidateApplicationService.GetApprenticeshipApplications(candidateId));
             var traineeshipApplicationSummaries = _mapper.Map<IEnumerable<TraineeshipApplicationSummary>, IEnumerable<CandidateApplicationSummaryViewModel>>(_candidateApplicationService.GetTraineeshipApplications(candidateId));
 
-            var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries);
+            var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
+
+            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct());
+            var ownedVacancySummaries = vacancySummaries.Where(v => v.ProviderId == provider.ProviderId).ToDictionary(v => v.VacancyId, v => v);
+            var vacancyOwnerRelationships = _providerService.GetVacancyParties(ownedVacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
+            var employers = _employerService.GetEmployers(vacancyOwnerRelationships.Values.Select(vor => vor.EmployerId));
 
             var page = GetOrderedApplicationSummaries(searchViewModel.OrderByField, searchViewModel.Order, candidateApplicationSummaries);
 

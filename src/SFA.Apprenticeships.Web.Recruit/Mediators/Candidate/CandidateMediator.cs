@@ -34,9 +34,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Candidate
             return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, resultsViewModel);
         }
 
-        public MediatorResponse<CandidateApplicationSummariesViewModel> GetCandidateApplications(CandidateApplicationsSearchViewModel searchViewModel)
+        public MediatorResponse<CandidateApplicationSummariesViewModel> GetCandidateApplications(CandidateApplicationsSearchViewModel searchViewModel, string ukprn)
         {
-            var viewModel = _candidateProvider.GetCandidateApplicationSummaries(searchViewModel);
+            var viewModel = _candidateProvider.GetCandidateApplicationSummaries(searchViewModel, ukprn);
 
             return GetMediatorResponse(CandidateMediatorCodes.GetCandidateApplications.Ok, viewModel);
         }

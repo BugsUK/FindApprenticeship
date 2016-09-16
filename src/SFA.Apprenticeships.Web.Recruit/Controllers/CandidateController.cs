@@ -5,6 +5,7 @@
     using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
+    using Common.Extensions;
     using Common.Mediators;
     using Constants;
     using Domain.Entities.Raa;
@@ -55,7 +56,7 @@
         [HttpGet]
         public ActionResult Candidate(CandidateApplicationsSearchViewModel searchViewModel)
         {
-            var response = _candidateMediator.GetCandidateApplications(searchViewModel);
+            var response = _candidateMediator.GetCandidateApplications(searchViewModel, User.GetUkprn());
 
             return View(response.ViewModel);
         }

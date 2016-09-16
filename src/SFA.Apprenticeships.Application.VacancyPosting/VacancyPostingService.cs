@@ -5,7 +5,6 @@
     using System.Collections.Generic;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.VacancyPosting;
     using Strategies;
 

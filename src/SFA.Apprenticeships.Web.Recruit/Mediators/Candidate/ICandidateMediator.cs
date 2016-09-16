@@ -6,6 +6,6 @@
     public interface ICandidateMediator
     {
         MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchViewModel searchViewModel);
-        MediatorResponse<CandidateApplicationSummariesViewModel> GetCandidateApplications(CandidateApplicationsSearchViewModel searchViewModel);
+        MediatorResponse<CandidateApplicationSummariesViewModel> GetCandidateApplications(CandidateApplicationsSearchViewModel searchViewModel, string ukprn);
     }
 }
