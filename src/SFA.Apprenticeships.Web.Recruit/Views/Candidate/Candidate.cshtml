@@ -90,7 +90,7 @@
         {
             <tr class="applicant">
                 <td>
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = applicationSummary.VacancyReferenceNumber})">@applicationSummary.VacancyTitle</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = applicationSummary.VacancyReferenceNumber})">@applicationSummary.VacancyTitle</a>
                 </td>
                 <td>
                     @applicationSummary.EmployerName

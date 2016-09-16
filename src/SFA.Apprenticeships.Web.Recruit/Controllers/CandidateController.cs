@@ -7,6 +7,7 @@
     using Common.Attributes;
     using Common.Extensions;
     using Common.Mediators;
+    using Common.ViewModels;
     using Constants;
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
@@ -23,6 +24,16 @@
         public CandidateController(IConfigurationService configurationService, ILogService loggingService, ICandidateMediator candidateMediator) : base(configurationService, loggingService)
         {
             _candidateMediator = candidateMediator;
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var viewModel = new CandidateSearchResultsViewModel
+            {
+                SearchViewModel = new CandidateSearchViewModel()
+            };
+            return View("Search", viewModel);
         }
 
         [HttpGet]

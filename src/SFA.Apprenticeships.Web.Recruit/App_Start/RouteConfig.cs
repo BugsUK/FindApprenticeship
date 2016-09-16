@@ -446,8 +446,14 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.CandidateSearch,
+               url: "candidates",
+               defaults: new { controller = "Candidate", action = "Index" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.SearchCandidates,
-               url: "candidate/search",
+               url: "candidates/search",
                defaults: new { controller = "Candidate", action = "Search" }
                );
 

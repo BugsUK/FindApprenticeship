@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Employers;
@@ -20,12 +21,16 @@
     using ViewModels.Application.Traineeship;
     using ViewModels.Candidate;
     using Application.Interfaces;
+    using Application.Interfaces.Security;
     using ViewModels;
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
 
     public class CandidateProvider : ICandidateProvider
-    {        
+    {
+        private static readonly Regex CandidateGuidPrefixRegex = new Regex(@"[0-9,a-f,A-F,\s]+");
+        private static readonly Regex CandidateIdRegex = new Regex(@"\d\d\d-\d\d\d-\d\d\d");
+
         private readonly CultureInfo _dateCultureInfo = new CultureInfo("en-GB");
         private readonly ICandidateSearchService _candidateSearchService;
         private readonly IMapper _mapper;
@@ -37,8 +42,10 @@
         private readonly IEmployerService _employerService;
         private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
+        private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
+        private readonly IDateTimeService _dateTimeService;
 
-        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService, IConfigurationService configurationService)
+        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService, IConfigurationService configurationService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
@@ -50,12 +57,15 @@
             _employerService = employerService;
             _logService = logService;
             _configurationService = configurationService;
+            _encryptionService = encryptionService;
+            _dateTimeService = dateTimeService;
         }
 
         public CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel)
         {
             var dateOfBirth = string.IsNullOrEmpty(searchViewModel.DateOfBirth) ? (DateTime?)null : DateTime.Parse(searchViewModel.DateOfBirth, _dateCultureInfo);
-            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode);
+
+            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, GetCandidateGuidPrefix(searchViewModel.ApplicantId), GetCandidateId(searchViewModel.ApplicantId));
             var candidates = _candidateSearchService.SearchCandidates(request) ?? new List<CandidateSummary>();
 
             var results = new CandidateSearchResultsViewModel
@@ -164,18 +174,37 @@
 
             var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
 
-            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct());
-            var ownedVacancySummaries = vacancySummaries.Where(v => v.ProviderId == provider.ProviderId).ToDictionary(v => v.VacancyId, v => v);
-            var vacancyOwnerRelationships = _providerService.GetVacancyParties(ownedVacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
-            var employers = _employerService.GetEmployers(vacancyOwnerRelationships.Values.Select(vor => vor.EmployerId));
+            //var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).ToDictionary(v => v.VacancyId, v => v);
+            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).Where(v => v.ProviderId == provider.ProviderId).ToDictionary(v => v.VacancyId, v => v);
+            var vacancyOwnerRelationships = _providerService.GetVacancyParties(vacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
+            var employers = _employerService.GetEmployers(vacancyOwnerRelationships.Values.Select(vor => vor.EmployerId)).ToDictionary(e => e.EmployerId, e => e);
 
-            var page = GetOrderedApplicationSummaries(searchViewModel.OrderByField, searchViewModel.Order, candidateApplicationSummaries);
+            //Restrict to only the applications for vacancies owned by the logged in user
+            candidateApplicationSummaries = candidateApplicationSummaries.Where(a => vacancySummaries.ContainsKey(a.VacancyId)).ToList();
+
+            var page = GetOrderedApplicationSummaries(searchViewModel.OrderByField, searchViewModel.Order, candidateApplicationSummaries).GetCurrentPage(searchViewModel).ToList();
+            foreach (var application in page)
+            {
+                var vacancy = vacancySummaries[application.VacancyId];
+                var employer = employers[vacancyOwnerRelationships[vacancy.VacancyOwnerRelationshipId].EmployerId];
+                application.VacancyReferenceNumber = vacancy.VacancyReferenceNumber;
+                application.EmployerLocation = employer.Address.Town;
+                application.AnonymousLinkData = _encryptionService.Encrypt(new AnonymisedApplicationLink(application.ApplicationId, _dateTimeService.TwoWeeksFromUtcNow));
+            }
+
+            var applicationSummaries = new PageableViewModel<CandidateApplicationSummaryViewModel>
+            {
+                Page = page,
+                ResultsCount = vacancySummaries.Count,
+                CurrentPage = searchViewModel.CurrentPage,
+                TotalNumberOfPages = vacancySummaries.TotalPages(searchViewModel)
+            };
 
             var viewModel = new CandidateApplicationSummariesViewModel
             {
                 CandidateApplicationsSearch = searchViewModel,
                 ApplicantDetails = _mapper.Map<Candidate, ApplicantDetailsViewModel>(candidate),
-                ApplicationSummaries = new PageableViewModel<CandidateApplicationSummaryViewModel> { Page = page.ToList() }
+                ApplicationSummaries = applicationSummaries
             };
 
             return viewModel;
@@ -237,6 +266,41 @@
             viewModel.Vacancy.EmployerName = employer.Name;
 
             return viewModel;
+        }
+
+        private static string GetCandidateGuidPrefix(string applicantId)
+        {
+            if (string.IsNullOrEmpty(applicantId)) return null;
+
+            var match = CandidateGuidPrefixRegex.Match(applicantId);
+            if (match.Success)
+            {
+                var candidateGuidPrefix = match.Value.Replace(" ", "");
+                if (candidateGuidPrefix.Length == 7)
+                {
+                    return candidateGuidPrefix;
+                }
+            }
+
+            return null;
+        }
+
+        private static int? GetCandidateId(string applicantId)
+        {
+            if (string.IsNullOrEmpty(applicantId)) return null;
+
+            var match = CandidateIdRegex.Match(applicantId);
+            if (match.Success)
+            {
+                var candidateIdString = match.Value.Replace("-", "");
+                int candidateId;
+                if (int.TryParse(candidateIdString, out candidateId))
+                {
+                    return candidateId;
+                }
+            }
+
+            return null;
         }
 
         #endregion

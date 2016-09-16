@@ -320,6 +320,9 @@
                     <p>
                          <a href="@Url.RouteUrl(RecruitmentRouteNames.ReportList)">Your reports</a>
                     </p>
+                    <p>
+                         <a href="@Url.RouteUrl(RecruitmentRouteNames.CandidateSearch)">Search candidates</a>
+                    </p>
                     @{ var open = string.IsNullOrEmpty(Model.VacanciesSummary.VacanciesSummarySearch.SearchString) ? "" : "open"; }
                     <details class="@open" @open>
                         <summary>Search your @vacanciesLabel</summary>
@@ -327,18 +330,6 @@
                         <div class="detail-content">
                             @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {aria_label = "Search your " + vacanciesLabel})
                             <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>
-                        </div>
-                    </details>
-                    <details>
-                        <summary>Search candidates</summary>
-                        <div class="detail-content">
-                            <div class="form-group">
-                                @Html.FormTextFor(m => m.CandidateSearch.ApplicantId, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
-                                @Html.FormTextFor(m => m.CandidateSearch.FirstName, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
-                                @Html.FormTextFor(m => m.CandidateSearch.LastName, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
-                                @Html.FormTextFor(m => m.CandidateSearch.Postcode, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
-                            </div>
-                            <button id="search-candidates-button" class="button" name="SearchCandidatesAction" value="SearchCandidates">Search</button>
                         </div>
                     </details>
                     <nav class="tabbed-nav">

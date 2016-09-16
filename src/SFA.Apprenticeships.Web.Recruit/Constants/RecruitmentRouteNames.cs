@@ -104,6 +104,7 @@
         public const string ResetUkprn = "ResetUkprn";
 
         //Candidates
+        public const string CandidateSearch = "CandidateSearch";
         public const string SearchCandidates = "SearchCandidates";
         public const string ViewCandidate = "ViewCandidate";
     }

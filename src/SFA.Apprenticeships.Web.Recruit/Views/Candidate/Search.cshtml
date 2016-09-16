@@ -26,9 +26,9 @@
             <p>
                 Try editing your search:
                 <ul>
-                    <li>check the applicant id has been fully entered</li>
                     <li>check the spelling of first and last names</li>
                     <li>check any postcode used is correct</li>
+                    <li>check the applicant id has been fully entered</li>
                 </ul>
             </p>
         </div>
@@ -44,11 +44,11 @@
             controlHtmlAttributes: new { type = "text", spellcheck = "false" })
 
         @Html.FormTextFor(
-            m => m.SearchViewModel.DateOfBirth,
+            m => m.SearchViewModel.Postcode,
             controlHtmlAttributes: new { type = "text", spellcheck = "false" })
 
         @Html.FormTextFor(
-            m => m.SearchViewModel.Postcode,
+            m => m.SearchViewModel.ApplicantId,
             controlHtmlAttributes: new { type = "text", spellcheck = "false" })
     </div>
 
