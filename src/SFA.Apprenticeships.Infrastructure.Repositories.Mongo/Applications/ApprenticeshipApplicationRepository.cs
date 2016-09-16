@@ -11,13 +11,11 @@
     using Common.Configuration;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
-    using MongoDB.Bson;
+
     public class ApprenticeshipApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipApplicationReadRepository,
-        IApprenticeshipApplicationWriteRepository
+        IApprenticeshipApplicationWriteRepository, IApprenticeshipApplicationStatsRepository
     {
         private readonly ILogService _logger;
         private readonly IDateTimeService _dataTimeService;
