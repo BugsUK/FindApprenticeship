@@ -11,17 +11,20 @@
     public class ApprenticeshipApplicationService : IApprenticeshipApplicationService
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly IApprenticeshipApplicationStatsRepository _apprenticeshipApplicationStatsRepository;
         private readonly IGetApplicationForReviewStrategy _getApplicationForReviewStrategy;
         private readonly IUpdateApplicationNotesStrategy _updateApplicationNotesStrategy;
         private readonly ISetApplicationStatusStrategy _setApplicationStatusStrategy;
 
         public ApprenticeshipApplicationService(
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IApprenticeshipApplicationStatsRepository apprenticeshipApplicationStatsRepository,
             IGetApplicationForReviewStrategy getApplicationForReviewStrategy,
             IUpdateApplicationNotesStrategy updateApplicationNotesStrategy,
             ISetApplicationStatusStrategy setApplicationStatusStrategy)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _apprenticeshipApplicationStatsRepository = apprenticeshipApplicationStatsRepository;
             _getApplicationForReviewStrategy = getApplicationForReviewStrategy;
             _updateApplicationNotesStrategy = updateApplicationNotesStrategy;
             _setApplicationStatusStrategy = setApplicationStatusStrategy;
@@ -39,7 +42,7 @@
 
         public int GetApplicationCount(int vacancyId)
         {
-            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new[] { vacancyId })[vacancyId].AllApplications;
+            return _apprenticeshipApplicationStatsRepository.GetCountsForVacancyIds(new[] { vacancyId })[vacancyId].AllApplications;
         }
 
         public ApprenticeshipApplicationDetail GetApplication(Guid applicationId)
@@ -74,7 +77,7 @@
 
         public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
-            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(vacancyIds);
+            return _apprenticeshipApplicationStatsRepository.GetCountsForVacancyIds(vacancyIds);
         }
     }
 }
