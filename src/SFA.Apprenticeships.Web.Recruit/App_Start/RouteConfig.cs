@@ -463,6 +463,12 @@
                defaults: new { controller = "Candidate", action = "Candidate" }
                );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.SortCandidate,
+               url: "candidate/sort",
+               defaults: new { controller = "Candidate", action = "SortCandidate" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

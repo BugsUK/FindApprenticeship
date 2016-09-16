@@ -488,6 +488,7 @@
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
     <Content Include="Content\_assets\js\nas\autosave.js" />
+    <Content Include="Content\_assets\js\nas\candidates.js" />
     <Content Include="Content\_assets\js\nas\reports.js" />
     <Content Include="Content\_assets\js\nas\vacancyApplications.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />

@@ -71,5 +71,11 @@
 
             return View(response.ViewModel);
         }
+
+        [HttpPost]
+        public ActionResult SortCandidate(CandidateApplicationSummariesViewModel viewModel)
+        {
+            return RedirectToRoute(RecruitmentRouteNames.ViewCandidate, viewModel.CandidateApplicationsSearch.RouteValues);
+        }
     }
 }
