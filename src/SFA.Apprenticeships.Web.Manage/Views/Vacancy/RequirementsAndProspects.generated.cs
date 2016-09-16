@@ -120,68 +120,18 @@ WriteLiteral("\r\n\r\n");
 
 DefineSection("scripts", () => {
 
-WriteLiteral("\r\n    <script");
+WriteLiteral("\r\n");
 
-WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js\"");
-
-WriteLiteral("></script>\r\n    <script");
-
-WriteLiteral(" src=\"https://cdn.ckeditor.com/4.5.10/standard/adapters/jquery.js\"");
-
-WriteLiteral(@"></script>
-    <script>
-        if (typeof CKEDITOR == 'undefined') {
-            document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/ckeditor.js' type='text/javascript'%3E%3C/script%3E""));
-            document.write(unescape(""%3Cscript src='/Content/_assets/js/vendor/ckeditor/adapters/jquery.js' type='text/javascript'%3E%3C/script%3E""));
-        }
-    </script>
-
-    <script");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 1233), Tuple.Create("\"", 1288)
-, Tuple.Create(Tuple.Create("", 1239), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/js/vendor/nanospell/autoload.js")
-, 1239), false)
-);
-
-WriteLiteral("></script>\r\n    <script>\r\n\r\n        var isApprenticeship;\r\n        isApprenticesh" +
-"ip = \"");
+WriteLiteral("    ");
 
             
-            #line 32 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
-                        Write(Model.VacancyType == VacancyType.Apprenticeship);
+            #line 19 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+Write(Html.Partial("HtmlTextEditor"));
 
             
             #line default
             #line hidden
-WriteLiteral(@""";
-
-        CKEDITOR.replace('DesiredSkills',
-        {
-            customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
-            contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
-        });
-
-        if (isApprenticeship === ""True"") {
-            CKEDITOR.replace('DesiredQualifications',
-            {
-                customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
-                contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
-            });
-        }
-
-        CKEDITOR.replace('PersonalQualities',
-        {
-            customConfig: '/Content/_assets/js/vendor/ckeditor/config.js',
-            contentsCss: '/Content/_assets/js/vendor/ckeditor/contents.css'
-        });
-
-        nanospell.ckeditor('all',
-        {
-            dictionary: ""en_uk"", // 24 free international dictionaries
-            server: ""asp.net"" // can be php, asp, asp.net or java
-        });
-    </script>
-");
+WriteLiteral("\r\n");
 
 });
 

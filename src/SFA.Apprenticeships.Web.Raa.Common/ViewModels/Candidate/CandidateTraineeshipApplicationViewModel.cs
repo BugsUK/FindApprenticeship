@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Candidate
 {
     using System;
     using Domain.Entities.Vacancies;

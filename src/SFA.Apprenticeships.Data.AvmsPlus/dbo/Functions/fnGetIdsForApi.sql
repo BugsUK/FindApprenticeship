@@ -59,6 +59,11 @@ BEGIN
 		FROM 
 			Vacancy vac
 		WHERE   vac.VacancyStatusId = @liveVacancyStatusID
+			AND     (
+						(@locationType = 1 AND vac.VacancyLocationTypeId = 3) 
+						OR
+						(@locationType = 0 AND vac.VacancyLocationTypeId IN (1,2))
+					)
 		ORDER BY VacancyReferenceNumber;
 	ELSE IF @vacancyReferenceNumber = -1 AND @frameworkId = -1 AND @occupationId = -1 AND @vacancyPublishedDate IS NOT NULL AND @countyId = -1 AND (@town IS NULL OR @town = '') AND (@regionCode IS NULL OR @regionCode = '')
 		INSERT @Result
@@ -76,6 +81,12 @@ BEGIN
 												 )
 		WHERE   vac.VacancyStatusId = @liveVacancyStatusID
 			AND     (vh.HistoryDate                 > @vacancyPublishedDate   OR @vacancyPublishedDate   IS NULL)
+			
+			AND     (
+						(@locationType = 1 AND vac.VacancyLocationTypeId = 3) 
+						OR
+						(@locationType = 0 AND vac.VacancyLocationTypeId IN (1,2))
+					)
 		ORDER BY VacancyReferenceNumber;
 	ELSE
 		INSERT @Result

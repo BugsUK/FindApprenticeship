@@ -942,9 +942,7 @@
     <None Include="Scripts\Data\dbo.InitialData.InterfaceErrorGroupType.sql" />
     <None Include="Scripts\Data\dbo.InitialData.InterfaceErrorType.sql" />
     <None Include="Scripts\Data\dbo.InitialData.MessageStatus.sql" />
-    <Build Include="dbo\Stored Procedures\uspRetrieveFullVacancyXMLDetails2.sql" />
     <Build Include="dbo\Functions\fnGetIdsForApi.sql" />
-    <Build Include="dbo\Stored Procedures\uspRetrieveSummaryVacancyXMLDetails2.sql" />
     <Build Include="dbo\Tables\VacancySource.sql" />
     <None Include="Scripts\Data\dbo.VacancySource.Upsert.sql" />
     <Build Include="dbo\Functions\fnDisplayEthnicity.function.sql" />
@@ -958,6 +956,9 @@
     <Build Include="dbo\Stored Procedures\ReportGetEthnicOrigin.proc.sql" />
     <Build Include="WebProxy\WebProxy.WebProxyConsumer.sql" />
     <Build Include="Reference\Reference.ReleaseNote.sql" />
+    <Build Include="Security\faa_user.sql" />
+    <Build Include="Security\das_user.sql" />
+    <Build Include="Security\datascience_user.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
