@@ -8,7 +8,6 @@
     using Common.Validators.Extensions;
     using Domain.Entities.Raa;
     using Mediators.Report;
-    using SFA.Infrastructure.Interfaces;
     using ViewModels.Report;
 
     [AuthorizeUser(Roles = Roles.Faa)]

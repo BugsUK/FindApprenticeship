@@ -12,15 +12,15 @@
     using Domain.Entities.Locations;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Manage.Mappers;
-    using Manage.Providers;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
-    using ViewModels;
+    using Raa.Common.Mappers;
+    using Raa.Common.Providers;
+    using Raa.Common.ViewModels.Candidate;
+    using Application.Interfaces;
+    using Application.Interfaces.Security;
+    using Raa.Common.ViewModels.Application;
 
     [TestFixture]
     [Parallelizable]
@@ -33,7 +33,7 @@
         public void SetUp()
         {
             _candidateSearchService = new Mock<ICandidateSearchService>();            
-            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationService>().Object, new Mock<IApprenticeshipApplicationService>().Object, new Mock<ITraineeshipApplicationService>().Object, new Mock<IVacancyPostingService>().Object, new Mock<IProviderService>().Object, new Mock<IEmployerService>().Object, new Mock<ILogService>().Object, new Mock<IConfigurationService>().Object);
+            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationService>().Object, new Mock<IApprenticeshipApplicationService>().Object, new Mock<ITraineeshipApplicationService>().Object, new Mock<IVacancyPostingService>().Object, new Mock<IProviderService>().Object, new Mock<IEmployerService>().Object, new Mock<ILogService>().Object, new Mock<IConfigurationService>().Object, new Mock<IEncryptionService<AnonymisedApplicationLink>>().Object, new Mock<IDateTimeService>().Object);
         }
 
         [Test]
@@ -81,6 +81,27 @@
                 && r.LastName == viewModel.LastName 
                 && r.DateOfBirth == null 
                 && r.Postcode == viewModel.Postcode)));
+        }
+
+        [TestCase("80A219E (003-682-944)", "80A219E", 3682944)]
+        [TestCase("80A 219E (003-682-944)", "80A219E", 3682944)]
+        [TestCase("80A219E", "80A219E", 0)]
+        [TestCase("003-682-944", null, 3682944)]
+        public void TestApplicantIdConversion(string applicantId, string expectedCandidateGuidPrefix, int expectedCandidateId)
+        {
+            //Arrange
+            var viewModel = new CandidateSearchViewModel
+            {
+                ApplicantId = applicantId
+            };
+
+            //Act
+            _provider.SearchCandidates(viewModel);
+
+            //Assert
+            _candidateSearchService.Verify(s => s.SearchCandidates(It.Is<CandidateSearchRequest>(r => 
+                r.CandidateGuidPrefix == expectedCandidateGuidPrefix
+                && r.CandidateId == (expectedCandidateId == 0 ? (int?)null : expectedCandidateId))));
         }
 
         [Test]

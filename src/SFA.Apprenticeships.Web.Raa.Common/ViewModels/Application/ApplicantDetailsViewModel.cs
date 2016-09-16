@@ -15,5 +15,6 @@
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
         public DisabilityStatus? DisabilityStatus { get; set; }
+        public string ApplicantId { get; set; }
     }
 }

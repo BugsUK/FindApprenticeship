@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Validators
 {
-    using Constants.ViewModels;
     using FluentAssertions;
-    using Manage.Validators;
     using NUnit.Framework;
-    using ViewModels;
+    using Raa.Common.Constants.ViewModels;
+    using Raa.Common.Validators.Candidate;
+    using Raa.Common.ViewModels.Candidate;
 
     [TestFixture]
     [Parallelizable]

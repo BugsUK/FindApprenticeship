@@ -9,6 +9,11 @@
             
         }
 
+        public ApplicationSelectionViewModel(Guid applicationId)
+        {
+            ApplicationId = applicationId;
+        }
+
         public ApplicationSelectionViewModel(VacancyApplicationsSearchViewModel viewModel, Guid applicationId) : base(viewModel)
         {
             ApplicationId = applicationId;

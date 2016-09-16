@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Candidate
 {
     using System;
-    using Common.ViewModels.Locations;
+    using Web.Common.ViewModels.Locations;
 
     public class CandidateSummaryViewModel
     {
@@ -9,5 +9,6 @@
         public string Name { get; set; }
         public AddressViewModel Address { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string ApplicantId { get; set; }
     }
 }
