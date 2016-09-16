@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Candidate
 {
-    using Common.ViewModels;
+    using Web.Common.ViewModels;
 
     public class CandidateSearchResultsViewModel
     {

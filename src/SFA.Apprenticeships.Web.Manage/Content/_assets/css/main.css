@@ -6324,7 +6324,8 @@ h2 a i.raa-icon-comment {
   font-weight: bold; }
 
 .candidate-address {
-  list-style-type: none; }
+  list-style-type: none;
+  padding: 0; }
 
 table.reactive .reactive-sub-title {
   font-weight: 700;
