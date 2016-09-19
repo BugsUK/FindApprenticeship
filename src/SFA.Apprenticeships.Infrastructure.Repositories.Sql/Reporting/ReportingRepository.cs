@@ -5,6 +5,7 @@
     using Domain.Entities.Raa.Reporting;
     using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
+    using Presentation;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -346,8 +347,7 @@
                 response.Add(new ApplicationsReceivedResultItem
                 {
                     CandidateName = reader["CandidateName"].ToString(),
-                    CandidateId = reader["CandidateId"].ToString(),
-                    CandidateGuid = reader["CandidateGuid"].ToString(),
+                    ApplicantId = GetApplicantId(new Guid(reader["CandidateGuid"].ToString()), Convert.ToInt32(reader["CandidateId"])),
                     Email = reader["Email"].ToString(),
                     AddressLine1 = reader["AddressLine1"].ToString(),
                     AddressLine2 = reader["AddressLine2"].ToString(),
@@ -420,7 +420,7 @@
                 response.Add(new CandidatesWithApplicationsResultItem
                 {
                     CandidateId = reader["CandidateId"].ToString(),
-                    CandidateGuid = reader["CandidateGuid"].ToString(),
+                    ApplicantId = GetApplicantId(new Guid(reader["CandidateGuid"].ToString()), Convert.ToInt32(reader["CandidateId"])),
                     Name = reader["Name"].ToString(),
                     DateofBirth = Convert.ToDateTime(reader["DateofBirth"]).ToString("dd/MM/yyy"),
                     Gender = reader["Gender"].ToString(),
@@ -479,6 +479,11 @@
             _logger.Info($"Done executing report with dateFrom {dateFrom} and dateTo {dateTo} for providerSiteId {providerSiteId}.");
 
             return response;
+        }
+
+        private string GetApplicantId(Guid candidateGuid, int candidateId)
+        {
+            return candidateGuid.GetApplicantId(candidateId);
         }
 
         public InformationRadiatorData GetInformationRadiatorData()

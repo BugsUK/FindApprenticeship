@@ -8,7 +8,7 @@
         public CandidatesWithApplicationsResultItemClassMap()
         {
             Map(m => m.Name).Name("Candidate_Name");
-            Map(m => m.Applicantid).Name("APPLICANT ID");
+            Map(m => m.ApplicantId).Name("APPLICANT ID");
             Map(m => m.addressLine1).Name("Candidate_Address_Line1");
             Map(m => m.addressLine2).Name("Candidate_Address_Line2");
             Map(m => m.addressLine3).Name("Candidate_Address__Line3");

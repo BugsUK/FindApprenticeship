@@ -3,9 +3,7 @@
     public class ApplicationsReceivedResultItem
     {
         public string CandidateName { get; set; }
-        public string CandidateId { get; set; }
-        public string CandidateGuid { get; set; }
-        public string Applicantid { get; set; }
+        public string ApplicantId { get; set; }
         public string Email { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
