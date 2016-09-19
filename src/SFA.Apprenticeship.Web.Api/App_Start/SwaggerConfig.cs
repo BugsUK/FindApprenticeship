@@ -1,11 +1,11 @@
 using System.Web.Http;
 using WebActivatorEx;
-using SFA.Apprenticeships.Web.Api;
+using SFA.Apprenticeship.Web.Api;
 using Swashbuckle.Application;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace SFA.Apprenticeships.Web.Api
+namespace SFA.Apprenticeship.Web.Api
 {
     public class SwaggerConfig
     {
@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Api
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "SFA.Apprenticeships.Web.Api");
+                        c.SingleApiVersion("v1", "SFA.Apprenticeship.Web.Api");
 
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
@@ -97,7 +97,7 @@ namespace SFA.Apprenticeships.Web.Api
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+                        c.IncludeXmlComments(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/SFA.Apprenticeship.Web.Api.XML"));
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.

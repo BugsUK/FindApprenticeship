@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace SFA.Apprenticeships.Web.Api
+namespace SFA.Apprenticeship.Web.Api
 {
     public class FilterConfig
     {
