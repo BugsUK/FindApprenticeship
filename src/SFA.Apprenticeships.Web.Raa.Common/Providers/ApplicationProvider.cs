@@ -14,6 +14,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Extensions;
+    using Domain.Entities.Candidates;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -139,7 +140,7 @@
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
             };
 
-            var candidateSummaries = _candidateApplicationService.GetCandidateSummaries(viewModel.ApplicationSummaries.Page.Select(@as => @as.CandidateId));
+            IList<CandidateSummary> candidateSummaries = _candidateApplicationService.GetCandidateSummaries(viewModel.ApplicationSummaries.Page.Select(@as => @as.CandidateId));
             foreach (var application in viewModel.ApplicationSummaries.Page)
             {
                 application.AnonymousLinkData =

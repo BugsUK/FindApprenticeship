@@ -1,16 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Reporting
 {
-    using System;
-
     public class ApplicationsReceivedResultItem
     {
         public string CandidateName { get; set; }
-		public string Email { get; set; }
+        public string CandidateId { get; set; }
+        public string CandidateGuid { get; set; }
+        public string Applicantid { get; set; }
+        public string Email { get; set; }
         public string AddressLine1 { get; set; }
-		public string AddressLine2 { get; set; }
-		public string AddressLine3 { get; set; }
-		public string AddressLine4 { get; set; }
-		public string AddressLine5 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string AddressLine3 { get; set; }
+        public string AddressLine4 { get; set; }
+        public string AddressLine5 { get; set; }
         public string Town { get; set; }
         public string County { get; set; }
         public string Postcode { get; set; }
@@ -28,7 +29,7 @@
         public string TrainingProvider { get; set; }
         public string ApplicationClosingDate { get; set; }
         public string ApplicationDate { get; set; }
-		public string ApplicationStatus { get; set; }
+        public string ApplicationStatus { get; set; }
         public string AllocatedTo { get; set; }
         public string VacancyID { get; set; }
     }

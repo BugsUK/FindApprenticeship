@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.Application
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Interfaces.Applications;
     using Strategies.Traineeships;
+    using System;
+    using System.Collections.Generic;
 
     public class TraineeshipApplicationService : ITraineeshipApplicationService
     {
@@ -51,6 +51,6 @@
         public void UpdateApplicationNotes(Guid applicationId, string notes)
         {
             _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
-        }        
+        }
     }
 }

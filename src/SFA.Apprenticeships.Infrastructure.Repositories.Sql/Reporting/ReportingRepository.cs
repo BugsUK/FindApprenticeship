@@ -1,16 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Reporting
 {
+    using Application.Interfaces;
+    using Common;
+    using Domain.Entities.Raa.Reporting;
+    using Domain.Raa.Interfaces.Reporting;
+    using Domain.Raa.Interfaces.Reporting.Models;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
-    using Common;
-    using Domain.Entities.Raa.Reporting;
-    using Domain.Raa.Interfaces.Reporting;
-    using Domain.Raa.Interfaces.Reporting.Models;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ReportingRepository : IReportingRepository
     {
@@ -174,7 +173,7 @@
             command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = toDate;
             command.Parameters.Add("RecAgentID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("Rowcount", SqlDbType.Int).Value = 0;
-            
+
             command.CommandTimeout = 180;
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -254,7 +253,7 @@
                 { "n/a", "-1" }
             };
 
-            var command = new SqlCommand("dbo.ReportGetLocalAuthority", (SqlConnection) _getOpenConnection.GetOpenConnection())
+            var command = new SqlCommand("dbo.ReportGetLocalAuthority", (SqlConnection)_getOpenConnection.GetOpenConnection())
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -281,7 +280,8 @@
             var response = new List<ReportVacancyExtensionsResultItem>();
 
             var command = new SqlCommand("dbo.ReportGetVacancyExtensions",
-                (SqlConnection) _getOpenConnection.GetOpenConnection()) {CommandType = CommandType.StoredProcedure};
+                (SqlConnection)_getOpenConnection.GetOpenConnection())
+            { CommandType = CommandType.StoredProcedure };
 
             command.Parameters.Add("startReportDateTime", SqlDbType.DateTime).Value = fromDate;
             command.Parameters.Add("endReportDateTime", SqlDbType.DateTime).Value = toDate;
@@ -317,7 +317,7 @@
 
             var response = new List<ApplicationsReceivedResultItem>();
 
-            var command = new SqlCommand("dbo.ReportApplicationsReceivedList", (SqlConnection) _getOpenConnection.GetOpenConnection())
+            var command = new SqlCommand("dbo.ReportApplicationsReceivedList", (SqlConnection)_getOpenConnection.GetOpenConnection())
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -346,6 +346,8 @@
                 response.Add(new ApplicationsReceivedResultItem
                 {
                     CandidateName = reader["CandidateName"].ToString(),
+                    CandidateId = reader["CandidateId"].ToString(),
+                    CandidateGuid = reader["CandidateGuid"].ToString(),
                     Email = reader["Email"].ToString(),
                     AddressLine1 = reader["AddressLine1"].ToString(),
                     AddressLine2 = reader["AddressLine2"].ToString(),
@@ -418,6 +420,7 @@
                 response.Add(new CandidatesWithApplicationsResultItem
                 {
                     CandidateId = reader["CandidateId"].ToString(),
+                    CandidateGuid = reader["CandidateGuid"].ToString(),
                     Name = reader["Name"].ToString(),
                     DateofBirth = Convert.ToDateTime(reader["DateofBirth"]).ToString("dd/MM/yyy"),
                     Gender = reader["Gender"].ToString(),
@@ -511,7 +514,7 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 5 and ah.ApplicationHisto
 FROM [dbo].[Application] a
 JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
 WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHistoryEventSubTypeId = 6) as TotalSuccessfulApplicationsViaRaa"
-                , (SqlConnection) _getOpenConnection.GetOpenConnection());
+                , (SqlConnection)_getOpenConnection.GetOpenConnection());
 
             var reader = command.ExecuteReader();
             while (reader.Read())

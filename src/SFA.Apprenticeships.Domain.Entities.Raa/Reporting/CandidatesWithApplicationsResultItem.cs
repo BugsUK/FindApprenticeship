@@ -3,6 +3,8 @@
     public class CandidatesWithApplicationsResultItem
     {
         public string CandidateId { get; set; }
+        public string CandidateGuid { get; set; }
+        public string Applicantid { get; set; }
         public string Name { get; set; }
         public string DateofBirth { get; set; }
         public string Gender { get; set; }
