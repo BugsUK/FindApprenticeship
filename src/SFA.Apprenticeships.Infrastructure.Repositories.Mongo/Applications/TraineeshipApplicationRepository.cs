@@ -11,12 +11,10 @@
     using Common.Configuration;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
-    public class TraineeshipApplicationRepository : GenericMongoClient<MongoTraineeshipApplicationDetail>, ITraineeshipApplicationReadRepository, ITraineeshipApplicationWriteRepository
+    public class TraineeshipApplicationRepository : GenericMongoClient<MongoTraineeshipApplicationDetail>, ITraineeshipApplicationReadRepository, ITraineeshipApplicationWriteRepository, ITraineeshipApplicationStatsRepository
     {
         private readonly ILogService _logger;
 
