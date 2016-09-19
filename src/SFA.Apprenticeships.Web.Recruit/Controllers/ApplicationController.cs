@@ -9,9 +9,7 @@
     using Domain.Entities.Raa;
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
