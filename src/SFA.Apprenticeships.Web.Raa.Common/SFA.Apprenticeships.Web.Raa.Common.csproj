@@ -237,6 +237,8 @@
     <Compile Include="Providers\VacancyManagementProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Providers\VacancyStatusChangeProvider.cs" />
+    <Compile Include="Strategies\IVacancySummaryStrategy.cs" />
+    <Compile Include="Strategies\VacancySummaryStrategy.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="ViewModels\Candidate\CandidateApplicationSummariesViewModel.cs" />

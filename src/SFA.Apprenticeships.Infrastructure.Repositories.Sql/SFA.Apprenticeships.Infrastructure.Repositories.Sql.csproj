@@ -138,6 +138,7 @@
     <Compile Include="Schemas\dbo\Entities\Employer.cs" />
     <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
     <Compile Include="Schemas\dbo\ReferenceNumberRepository.cs" />
+    <Compile Include="Schemas\dbo\ApplicationStatsRepository.cs" />
     <Compile Include="Schemas\dbo\VacancyPartyMappers.cs" />
     <Compile Include="Schemas\dbo\VacancyPartyRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />

@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
-    using System;
-
     public interface IApplicationCounts
     {
         int NewApplications { get; }

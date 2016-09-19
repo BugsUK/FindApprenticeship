@@ -1,20 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Applications
 {
-    using Application.Interfaces;
-    using Common;
-    using Common.Configuration;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using Entities;
+    using Common;
+    using Common.Configuration;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
+
     public class ApprenticeshipApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipApplicationReadRepository,
-        IApprenticeshipApplicationWriteRepository
+        IApprenticeshipApplicationWriteRepository, IApprenticeshipApplicationStatsRepository
     {
         private readonly ILogService _logger;
         private readonly IDateTimeService _dataTimeService;
@@ -67,7 +68,7 @@
 
             if (mongoEntity == null && errorIfNotFound)
             {
-                message = string.Format("Unknown ApprenticeshipApplicationDetail with Id={0}", id);
+                 message = string.Format("Unknown ApprenticeshipApplicationDetail with Id={0}", id);
 
                 throw new CustomException(message, ApplicationErrorCodes.ApplicationNotFoundError);
             }
@@ -95,7 +96,7 @@
         public IList<ApprenticeshipApplicationSummary> GetForCandidate(Guid candidateId)
         {
             _logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
-
+            
             // Get apprenticeship application summaries for the specified candidate, excluding any that are archived.
             var mongoApplicationDetailsList = Collection
                 .AsQueryable()

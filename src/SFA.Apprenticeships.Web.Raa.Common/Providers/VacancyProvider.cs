@@ -767,7 +767,7 @@
 
             var hasVacancies = minimalVacancyDetails.Any();
 
-            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs() && v.Status != VacancyStatus.Completed).Select(a => a.VacancyId);
+            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.OfflineVacancy == false).Select(a => a.VacancyId);
 
             var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
 

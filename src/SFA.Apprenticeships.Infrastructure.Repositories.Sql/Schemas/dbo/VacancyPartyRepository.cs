@@ -6,8 +6,7 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
 
     public class VacancyPartyRepository : IVacancyPartyReadRepository, IVacancyPartyWriteRepository
     {
