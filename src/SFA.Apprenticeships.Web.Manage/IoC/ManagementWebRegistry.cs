@@ -3,8 +3,6 @@
     using System.Web;
     using Application.Candidate;
     using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
-    using Application.Candidate.Strategies.Traineeships;
     using Application.Candidate.Strategies.Candidates;
     using Application.Communication;
     using Application.Communication.Strategies;
@@ -18,7 +16,6 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Common.Configuration;
-    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mediators.AgencyUser;
@@ -54,6 +51,7 @@
             RegisterStrategies();
             RegisterProviders();
             RegisterMediators();
+            RegisterRepositories();
         }
 
         private void RegisterCodeGenerators()
@@ -125,6 +123,12 @@
             For<IVacancyMediator>().Use<VacancyMediator>();
             For<IReportingMediator>().Use<ReportingMediator>();
             For<IInformationRadiatorMediator>().Use<InformationRadiatorMediator>();
+        }
+
+        private void RegisterRepositories()
+        {
+            For<IApprenticeshipApplicationStatsRepository>().Use<ApplicationStatsRepository>();
+            For<ITraineeshipApplicationStatsRepository>().Use<ApplicationStatsRepository>();
         }
     }
 }

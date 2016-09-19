@@ -10,9 +10,7 @@
     using Schemas.Provider;
     using Schemas.Reference;
     using Schemas.UserProfile;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using StructureMap.Configuration.DSL;
 
     public class RepositoriesRegistry : Registry
