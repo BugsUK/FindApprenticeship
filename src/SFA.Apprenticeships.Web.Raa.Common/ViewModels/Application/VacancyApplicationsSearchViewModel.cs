@@ -16,6 +16,11 @@
 
         }
 
+        public VacancyApplicationsSearchViewModel(int vacancyReferenceNumber) : this()
+        {
+            VacancyReferenceNumber = vacancyReferenceNumber;
+        }
+
         protected VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel) : base(viewModel)
         {
             SetProperties(viewModel);

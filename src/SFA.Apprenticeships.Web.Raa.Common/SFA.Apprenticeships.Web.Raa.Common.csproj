@@ -196,6 +196,7 @@
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
+    <Compile Include="Extensions\CandidateSearchExtensions.cs" />
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\CandidateMappers.cs" />

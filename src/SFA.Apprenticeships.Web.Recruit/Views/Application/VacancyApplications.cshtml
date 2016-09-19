@@ -215,8 +215,8 @@
                     @Html.FormTextFor(m => m.VacancyApplicationsSearch.Postcode, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
                     @Html.FormTextFor(m => m.VacancyApplicationsSearch.ApplicantId, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
                     <div class="form-group">
-                        <button id="search-candidates-button" type="submit" class="button" name="SearchCandidatesAction" value="SearchCandidates">Search</button>
-                        @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel())
+                        <button id="search-candidates-button" type="submit" class="button">Search</button>
+                        @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber).RouteValues, new { @class = "vacancy-filter" })
                     </div>
                 </div>
             </details>
@@ -359,6 +359,10 @@
 
     </div>
 }
+
+<div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+    Loading
+</div>
 
 @section scripts
 {
