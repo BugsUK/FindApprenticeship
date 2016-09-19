@@ -62,6 +62,10 @@
         {
             VacancyReferenceNumber,
             FilterType,
+            ApplicantId,
+            FirstName,
+            LastName,
+            Postcode,
             OrderByField,
             Order,
             PageSize,
