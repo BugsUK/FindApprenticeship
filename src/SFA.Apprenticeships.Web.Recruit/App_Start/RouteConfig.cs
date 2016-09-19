@@ -439,11 +439,34 @@
                defaults: new { controller = "Admin", action = "ChangeUkprn" }
                );
 
-
             routes.MapRoute(
                name: RecruitmentRouteNames.ResetUkprn,
                url: "admin/resetukprn",
                defaults: new { controller = "Admin", action = "ResetUkprn" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.CandidateSearch,
+               url: "candidates",
+               defaults: new { controller = "Candidate", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.SearchCandidates,
+               url: "candidates/search",
+               defaults: new { controller = "Candidate", action = "Search" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ViewCandidate,
+               url: "candidate",
+               defaults: new { controller = "Candidate", action = "Candidate" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.SortCandidate,
+               url: "candidate/sort",
+               defaults: new { controller = "Candidate", action = "SortCandidate" }
                );
 
             routes.LowercaseUrls = true;

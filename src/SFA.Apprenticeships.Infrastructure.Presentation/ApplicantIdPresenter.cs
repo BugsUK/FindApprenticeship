@@ -4,9 +4,17 @@
 
     public static class ApplicantIdPresenter
     {
-        public static string GetApplicantId(this Guid candidateId)
+        public static string GetApplicantId(this Guid candidateGuid, int legacyCandidateId)
         {
-            return candidateId.ToString().Replace("-", "").Substring(0, 7).ToUpperInvariant();
+            var applicantId = candidateGuid.ToString().Replace("-", "").Substring(0, 7).ToUpperInvariant();
+
+            if (legacyCandidateId != 0)
+            {
+                var legacyCandidateReference = legacyCandidateId.ToString("0###-###-###").Substring(1, 11);
+                applicantId = $"{applicantId} ({legacyCandidateReference})";
+            }
+
+            return applicantId;
         }
     }
 }

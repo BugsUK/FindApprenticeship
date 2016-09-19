@@ -5,6 +5,7 @@
 
     public interface IGetCandidateByIdStrategy
     {
+        Candidate GetCandidate(int legacyCandidateId);
         Candidate GetCandidate(Guid candidateId);
     }
 }

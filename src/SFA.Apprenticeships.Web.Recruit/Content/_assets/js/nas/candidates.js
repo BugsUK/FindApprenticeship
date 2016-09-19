@@ -6,25 +6,23 @@
 
     $(document).on('change', '#page-size', function () {
         var form = $('form');
-        loadResults(searchUrl, false, false, 'POST', form.serialize());
+        var input = $("<input>").attr("type", "hidden").attr("name", "SearchCandidatesAction").val("SearchCandidates");
+        form.append(input);
+        loadResults(searchUrl, true, false, 'POST', form.serialize());
     });
+
+    /*$(document).on('click', '#search-candidates-button', function (e) {
+        e.preventDefault();
+        var form = $('form');
+        var input = $("<input>").attr("type", "hidden").attr("name", "SearchCandidatesAction").val("SearchCandidates");
+        form.append(input);
+        loadResults(searchUrl, true, false, 'POST', form.serialize());
+    });*/
 
     $(document).on('click', '.page-navigation__btn:not(#page-size-container)', function (e) {
         e.preventDefault();
         var searchQueryUrl = $(this).attr('href');
         loadResults(searchQueryUrl, true, false, 'GET');
-    });
-
-    $(document).on('click', '.vacancy-filter', function (e) {
-        e.preventDefault();
-        var searchQueryUrl = $(this).attr('href');
-        loadResults(searchQueryUrl, true, false, 'GET');
-    });
-
-    $(document).on('click', '#search-candidates-button', function (e) {
-        e.preventDefault();
-        var form = $('form');
-        loadResults(searchUrl, false, false, 'POST', form.serialize());
     });
 
     function loadResults(searchQueryUrl, addHistory, scrollTop, method, data) {

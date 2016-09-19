@@ -13,6 +13,11 @@
             _candidateReadRepository = candidateReadRepository;
         }
 
+        public Candidate GetCandidate(int legacyCandidateId)
+        {
+            return _candidateReadRepository.Get(legacyCandidateId);
+        }
+
         public Candidate GetCandidate(Guid candidateId)
         {
             return _candidateReadRepository.Get(candidateId);

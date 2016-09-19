@@ -320,6 +320,9 @@
                     <p>
                          <a href="@Url.RouteUrl(RecruitmentRouteNames.ReportList)">Your reports</a>
                     </p>
+                    <p>
+                         <a href="@Url.RouteUrl(RecruitmentRouteNames.CandidateSearch)">Search candidates</a>
+                    </p>
                     @{ var open = string.IsNullOrEmpty(Model.VacanciesSummary.VacanciesSummarySearch.SearchString) ? "" : "open"; }
                     <details class="@open" @open>
                         <summary>Search your @vacanciesLabel</summary>

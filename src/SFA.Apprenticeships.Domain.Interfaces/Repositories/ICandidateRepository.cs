@@ -29,18 +29,22 @@
 
     public class CandidateSearchRequest
     {
-        public CandidateSearchRequest(string firstName, string lastName, DateTime? dateOfBirth, string postcode)
+        public CandidateSearchRequest(string firstName, string lastName, DateTime? dateOfBirth, string postcode, string candidateGuidPrefix, int? candidateId)
         {
             FirstName = firstName;
             LastName = lastName;
             DateOfBirth = dateOfBirth;
             Postcode = postcode;
+            CandidateGuidPrefix = candidateGuidPrefix;
+            CandidateId = candidateId;
         }
 
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public DateTime? DateOfBirth { get; private set; }
         public string Postcode { get; private set; }
+        public string CandidateGuidPrefix { get; private set; }
+        public int? CandidateId { get; private set; }
 
         public override string ToString()
         {

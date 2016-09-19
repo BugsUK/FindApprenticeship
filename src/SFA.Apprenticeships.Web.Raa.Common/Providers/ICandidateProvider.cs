@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
-    using Raa.Common.ViewModels.Application.Apprenticeship;
-    using Raa.Common.ViewModels.Application.Traineeship;
-    using ViewModels;
+    using ViewModels.Application.Apprenticeship;
+    using ViewModels.Application.Traineeship;
+    using ViewModels.Candidate;
 
     public interface ICandidateProvider
     {
@@ -11,5 +11,6 @@
         CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId);
         ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId);
         TraineeshipApplicationViewModel GetCandidateTraineeshipApplication(Guid applicationId);
+        CandidateApplicationSummariesViewModel GetCandidateApplicationSummaries(CandidateApplicationsSearchViewModel searchViewModel, string ukprn);
     }
 }

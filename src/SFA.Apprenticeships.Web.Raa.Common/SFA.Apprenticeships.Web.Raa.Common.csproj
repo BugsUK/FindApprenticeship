@@ -171,6 +171,7 @@
     <Compile Include="Configuration\RecruitWebConfiguration.cs" />
     <Compile Include="Constants\Pages\PrivacyPageMessages.cs" />
     <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
@@ -195,8 +196,10 @@
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
+    <Compile Include="Extensions\CandidateSearchExtensions.cs" />
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToVacancyDatesViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToFurtherVacancyDetailsViewModelConverter.cs" />
@@ -206,8 +209,10 @@
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
+    <Compile Include="Providers\CandidateProvider.cs" />
     <Compile Include="Providers\GeoCodeAddressResult.cs" />
     <Compile Include="Providers\GeoCodingProvider.cs" />
+    <Compile Include="Providers\ICandidateProvider.cs" />
     <Compile Include="Providers\IGeoCodingProvider.cs" />
     <Compile Include="Providers\IReportingProvider.cs" />
     <Compile Include="Providers\IVacancyManagementProvider.cs" />
@@ -236,6 +241,14 @@
     <Compile Include="Strategies\VacancySummaryStrategy.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateApplicationSummariesViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateApplicationSummaryViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateApplicationsViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateApprenticeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateSummaryViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateSearchResultsViewModel.cs" />
+    <Compile Include="Validators\Candidate\CandidateSearchResultsViewModelValidator.cs" />
+    <Compile Include="Validators\Candidate\CandidateSearchViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\ShareApplicationsViewModelValidator.cs" />
@@ -276,6 +289,9 @@
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateSearchViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateTraineeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateApplicationsSearchViewModel.cs" />
     <Compile Include="ViewModels\Order.cs" />
     <Compile Include="ViewModels\OrderedPageableSearchViewModel.cs" />
     <Compile Include="ViewModels\OrderedSearchViewModel.cs" />

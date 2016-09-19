@@ -18,6 +18,7 @@
     using Domain.Entities.Communication;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
+    using Raa.Common.ViewModels.Candidate;
     using Raa.Common.ViewModels.ProviderUser;
     using ViewModels.Home;
     using ViewModels;
@@ -255,6 +256,7 @@
                 ProviderUserViewModel = providerUserViewModel,
                 ProviderViewModel = provider,
                 ProviderSites = providerSites,
+                CandidateSearch = new CandidateSearchViewModel(),
                 VacanciesSummary = vacanciesSummary
             };
 

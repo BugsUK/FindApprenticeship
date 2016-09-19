@@ -32,6 +32,15 @@ namespace SFA.Apprenticeships.Application.Candidate
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
         }
 
+        public Candidate GetCandidate(int legacyCandidateId)
+        {
+            Condition.Requires(legacyCandidateId);
+
+            _logService.Debug("Calling CandidateApplicationService to get the user with legacy Id={0}.", legacyCandidateId);
+
+            return _getCandidateByIdStrategy.GetCandidate(legacyCandidateId);
+        }
+
         public Candidate GetCandidate(Guid candidateId)
         {
             Condition.Requires(candidateId);
