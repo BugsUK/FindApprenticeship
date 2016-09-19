@@ -1034,10 +1034,72 @@
 
             var utcNow = _dateTimeService.UtcNow;
 
+            //ra-217: The ~Yesterday and ~MoreThan48hours handle special cases. See work item and unit tests for verbose description.
             var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
-            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
-            var submittedMoreThan48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
             var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
+
+            var submittedYesterday =
+                vacancies.Where(v =>
+                {
+                    if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
+                    {
+                        return false;
+                    }
+
+                    if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
+                    {
+                        if (utcNow.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            return false;
+                        }
+
+                        if (utcNow.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
+                        }
+                    }
+
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-1);
+                }).ToList();
+
+
+            //sub fri, not seen: sun mon, seen: tues <==== special (should be sun)
+            //sub sat, not seen: mon tues, seen: weds <=== special (should be mon)
+            //sub sun, not seen: tues, seen: weds <=== special (should be tues)
+            var submittedMoreThan48Hours =
+                vacancies.Where(v =>
+                {
+                    if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
+                    {
+                        return false;
+                    }
+
+                    if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
+                    {
+                        if (utcNow.DayOfWeek == DayOfWeek.Sunday || utcNow.DayOfWeek == DayOfWeek.Monday)
+                        {
+                            return v.DateSubmitted < utcNow.Date.AddDays(-3);
+                        }
+                    }
+
+                    if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        if (utcNow.DayOfWeek == DayOfWeek.Monday || utcNow.DayOfWeek == DayOfWeek.Tuesday)
+                        { 
+                            return v.DateSubmitted < utcNow.Date.AddDays(-3);
+                        }
+                    }
+
+                    if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
+                        {
+                            return v.DateSubmitted < utcNow.Date.AddDays(-2);
+                        }
+                    }
+
+                    return v.DateSubmitted < utcNow.Date.AddDays(-1);
+                }).ToList();
 
             var regionalTeamsMetrics = GetRegionalTeamsMetrics(vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted);
 
