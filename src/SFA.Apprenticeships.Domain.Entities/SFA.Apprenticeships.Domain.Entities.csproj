@@ -106,6 +106,7 @@
     <Compile Include="Candidates\SavedSearch.cs" />
     <Compile Include="Candidates\SavedSearchHelper.cs" />
     <Compile Include="Candidates\TrainingCourse.cs" />
+    <Compile Include="Collections\Generic\SparseDictionary.cs" />
     <Compile Include="Communication\ProviderContactMessage.cs" />
     <Compile Include="Communication\ContactMessageTypes.cs" />
     <Compile Include="Communication\SavedSearchAlert.cs" />
