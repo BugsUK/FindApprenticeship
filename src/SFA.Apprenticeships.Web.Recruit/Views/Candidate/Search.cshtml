@@ -54,7 +54,7 @@
 
     <div class="form-group">
         <button id="search-candidates-button" type="submit" class="button" name="SearchCandidatesAction" value="SearchCandidates">Search</button>
-        @Html.RouteLink("Reset search", RecruitmentRouteNames.SearchCandidates, new CandidateSearchViewModel())
+        @Html.RouteLink("Reset search", RecruitmentRouteNames.CandidateSearch)
     </div>
 
     if (Model.Candidates != null && Model.Candidates.ResultsCount > 0)

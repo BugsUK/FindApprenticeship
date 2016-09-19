@@ -21,6 +21,12 @@
         loadResults(searchQueryUrl, true, false, 'GET');
     });
 
+    $(document).on('click', '#search-candidates-button', function (e) {
+        e.preventDefault();
+        var form = $('form');
+        loadResults(searchUrl, false, false, 'POST', form.serialize());
+    });
+
     function loadResults(searchQueryUrl, addHistory, scrollTop, method, data) {
 
         $('.search-results').addClass('disabled');
