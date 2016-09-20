@@ -6,8 +6,6 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     using System.Collections.Generic;
     using Domain.Entities.Raa.Parties;
 
-    using SFA.Apprenticeships.Domain.Entities.Communication;
-
     /// <summary>
     /// For maintaining provider profiles, sites, etc.
     /// </summary>
@@ -23,9 +21,13 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         ProviderSite GetProviderSite(string edsUrn);
 
+        IEnumerable<ProviderSite> GetProviderSites(int providerId);
+
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
         IReadOnlyDictionary<int, ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds);
+
+        IEnumerable<ProviderSite> GetOwnedProviderSites(int providerId);
 
         VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly);
 

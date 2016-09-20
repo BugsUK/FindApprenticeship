@@ -63,13 +63,15 @@
         {
             var dateOfBirth = string.IsNullOrEmpty(searchViewModel.DateOfBirth) ? (DateTime?)null : DateTime.Parse(searchViewModel.DateOfBirth, _dateCultureInfo);
 
-            int? providerId = null;
+            IEnumerable<int> providerSiteIds = null;
             if (!string.IsNullOrEmpty(ukprn))
             {
-                providerId = _providerService.GetProvider(ukprn).ProviderId;
+                var providerId = _providerService.GetProvider(ukprn).ProviderId;
+                var ownedProviderSites = _providerService.GetOwnedProviderSites(providerId);
+                providerSiteIds = ownedProviderSites.Select(ps => ps.ProviderSiteId).ToList();
             }
 
-            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, CandidateSearchExtensions.GetCandidateGuidPrefix(searchViewModel.ApplicantId), CandidateSearchExtensions.GetCandidateId(searchViewModel.ApplicantId), providerId);
+            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, GetCandidateGuidPrefix(searchViewModel.ApplicantId), GetCandidateId(searchViewModel.ApplicantId), providerSiteIds);
             var candidates = _candidateSearchService.SearchCandidates(request) ?? new List<CandidateSummary>();
 
             var results = new CandidateSearchResultsViewModel
@@ -170,6 +172,7 @@
         {
             var candidateId = searchViewModel.CandidateGuid;
             var provider = _providerService.GetProvider(ukprn);
+            var ownedProviderSites = _providerService.GetOwnedProviderSites(provider.ProviderId).Select(ps => ps.ProviderSiteId).ToList();
 
             var candidate = _candidateApplicationService.GetCandidate(candidateId);
 
@@ -178,8 +181,7 @@
 
             var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
 
-            //var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).ToDictionary(v => v.VacancyId, v => v);
-            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).Where(v => v.ProviderId == provider.ProviderId).ToDictionary(v => v.VacancyId, v => v);
+            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).Where(v => v.VacancyManagerId == null || ownedProviderSites.Contains(v.VacancyManagerId.Value)).ToDictionary(v => v.VacancyId, v => v);
             var vacancyOwnerRelationships = _providerService.GetVacancyParties(vacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyOwnerRelationships.Values.Select(vor => vor.EmployerId)).ToDictionary(e => e.EmployerId, e => e);
 
