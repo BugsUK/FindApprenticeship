@@ -11,6 +11,7 @@
         {
             Mapper.CreateMap<DbCandidateSummary, CandidateSummary>()
                 .ForMember(v => v.EntityId, opt => opt.MapFrom(src => src.CandidateGuid))
+                .ForMember(v => v.LegacyCandidateId, opt => opt.MapFrom(src => src.CandidateId))
                 .ForMember(v => v.LastName, opt => opt.MapFrom(src => src.Surname))
                 .ForMember(v => v.Address, opt => opt.Ignore())
                 .AfterMap((v, av) =>

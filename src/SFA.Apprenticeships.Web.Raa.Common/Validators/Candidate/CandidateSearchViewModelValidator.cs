@@ -1,8 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Validators
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Candidate
 {
     using Constants.ViewModels;
     using FluentValidation;
-    using ViewModels;
+    using ViewModels.Candidate;
+
     public class CandidateSearchViewModelClientValidator : AbstractValidator<CandidateSearchViewModel>
     {
         public CandidateSearchViewModelClientValidator()
@@ -25,6 +26,10 @@
     {
         internal static void AddCommonRules(this AbstractValidator<CandidateSearchViewModel> validator)
         {
+            validator.RuleFor(x => x.ApplicantId)
+                .Matches(CandidateSearchViewModelMessages.ApplicantId.WhiteListRegularExpression)
+                .WithMessage(CandidateSearchViewModelMessages.ApplicantId.WhiteListErrorText);
+
             validator.RuleFor(x => x.FirstName)
                 .Matches(CandidateSearchViewModelMessages.FirstName.WhiteListRegularExpression)
                 .WithMessage(CandidateSearchViewModelMessages.FirstName.WhiteListErrorText);
@@ -50,7 +55,7 @@
         internal static void AddServerRules(this AbstractValidator<CandidateSearchViewModel> validator)
         {
             validator.RuleFor(x => x)
-                .Must(x => !string.IsNullOrEmpty(x.FirstName) || !string.IsNullOrEmpty(x.LastName) || !string.IsNullOrEmpty(x.DateOfBirth) || !string.IsNullOrEmpty(x.Postcode))
+                .Must(x => !string.IsNullOrEmpty(x.ApplicantId) || !string.IsNullOrEmpty(x.FirstName) || !string.IsNullOrEmpty(x.LastName) || !string.IsNullOrEmpty(x.DateOfBirth) || !string.IsNullOrEmpty(x.Postcode))
                 .WithMessage(CandidateSearchViewModelMessages.NoSearchCriteriaErrorText);
         }
     }

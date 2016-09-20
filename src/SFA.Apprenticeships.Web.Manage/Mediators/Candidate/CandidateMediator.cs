@@ -5,10 +5,11 @@
     using Providers;
     using Raa.Common.Factories;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.Candidate;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.Application.Traineeship;
-    using Validators;
+    using Raa.Common.ViewModels.Candidate;
     using ViewModels;
 
     public class CandidateMediator : MediatorBase, ICandidateMediator
@@ -45,7 +46,7 @@
                 return GetMediatorResponse(CandidateMediatorCodes.Search.FailedValidation, new CandidateSearchResultsViewModel { SearchViewModel = viewModel }, validatonResult);
             }
 
-            var resultsViewModel = _candidateProvider.SearchCandidates(viewModel);
+            var resultsViewModel = _candidateProvider.SearchCandidates(viewModel, null);
 
             return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, resultsViewModel);
         }

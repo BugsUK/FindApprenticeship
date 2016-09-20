@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Candidate
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
-    using Validators;
+    using Validators.Candidate;
 
     [Validator(typeof(CandidateSearchViewModelClientValidator))]
     public class CandidateSearchViewModel
@@ -30,6 +30,8 @@
             CurrentPage = currentPage;
         }
 
+        [Display(Name = CandidateSearchViewModelMessages.ApplicantId.LabelText)]
+        public string ApplicantId { get; set; }
         [Display(Name = CandidateSearchViewModelMessages.FirstName.LabelText)]
         public string FirstName { get; set; }
         [Display(Name = CandidateSearchViewModelMessages.LastName.LabelText)]

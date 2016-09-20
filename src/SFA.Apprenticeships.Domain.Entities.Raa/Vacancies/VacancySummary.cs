@@ -8,6 +8,7 @@
     public class VacancySummary : IMinimalVacancyDetails
     {
         public int VacancyId { get; set; }
+        public int VacancyOwnerRelationshipId { get; set; }
         public int VacancyReferenceNumber { get; set; }
         public Guid VacancyGuid { get; set; }
         public string Title { get; set; }

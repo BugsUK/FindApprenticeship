@@ -3,11 +3,11 @@
     using Common.UnitTests.Mediators;
     using Manage.Mediators.Candidate;
     using Manage.Providers;
-    using Manage.Validators;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Providers;
-    using ViewModels;
+    using Raa.Common.Validators.Candidate;
+    using Raa.Common.ViewModels.Candidate;
 
     [TestFixture]
     [Parallelizable]
@@ -51,7 +51,7 @@
 
             //Assert
             result.AssertCodeAndMessage(CandidateMediatorCodes.Search.Ok);
-            _candidateProvider.Verify(p => p.SearchCandidates(viewModel));
+            _candidateProvider.Verify(p => p.SearchCandidates(viewModel, null));
         }
     }
 }

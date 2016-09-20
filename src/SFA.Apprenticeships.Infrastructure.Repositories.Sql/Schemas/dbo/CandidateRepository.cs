@@ -62,7 +62,7 @@
         {
             _logService.Debug("Calling repository to find candidates matching search request {0}", request);
 
-            if (string.IsNullOrEmpty(request.FirstName) && string.IsNullOrEmpty(request.LastName) && request.DateOfBirth == null && string.IsNullOrEmpty(request.Postcode))
+            if (string.IsNullOrEmpty(request.FirstName) && string.IsNullOrEmpty(request.LastName) && request.DateOfBirth == null && string.IsNullOrEmpty(request.Postcode) && string.IsNullOrEmpty(request.CandidateGuidPrefix) && !request.CandidateId.HasValue)
             {
                 throw new ArgumentException("You must specify at least one search parameter");
             }
@@ -84,16 +84,42 @@
             {
                 query.Add("Postcode LIKE @Postcode + '%'");
             }
+            if (!string.IsNullOrEmpty(request.CandidateGuidPrefix))
+            {
+                query.Add("CandidateGuid LIKE @CandidateGuidPrefix + '%'");
+            }
+            if (request.CandidateId.HasValue)
+            {
+                query.Add("CandidateId = @CandidateId");
+            }
 
-            var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
-                _getOpenConnection.Query<DbCandidateSummary>(
-@"SELECT c.CandidateGuid, p.FirstName, p.MiddleNames, p.Surname, c.DateofBirth, 
+            var sql = 
+@"SELECT DISTINCT c.CandidateId, c.CandidateGuid, p.FirstName, p.MiddleNames, p.Surname, c.DateofBirth, 
 c.AddressLine1, c.AddressLine2, c.AddressLine3, c.AddressLine4, c.Postcode, c.Town, ct.FullName As County, c.Latitude, c.Longitude
 FROM Person p
 JOIN Candidate c ON p.PersonId = c.PersonId
 JOIN County ct on c.CountyId = ct.CountyId 
-WHERE " + string.Join(" AND ", query),
-                    new { request.FirstName, request.LastName, request.DateOfBirth, request.Postcode })).ToList();
+JOIN [Application] a ON c.CandidateId = a.CandidateId
+JOIN Vacancy v ON a.VacancyId = v.VacancyId 
+WHERE " + string.Join(" AND ", query);
+
+            if (request.ProviderId.HasValue)
+            {
+                sql += @" AND v.ContractOwnerId = @ProviderId";
+            }
+
+            var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
+                _getOpenConnection.Query<DbCandidateSummary>(sql,
+                    new
+                    {
+                        request.FirstName,
+                        request.LastName,
+                        request.DateOfBirth,
+                        request.Postcode,
+                        request.CandidateGuidPrefix,
+                        request.CandidateId,
+                        request.ProviderId
+                    })).ToList();
 
             _logService.Debug("Found {1} candidates matching search request {0}", request, candidates.Count);
 

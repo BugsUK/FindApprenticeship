@@ -6425,6 +6425,16 @@ h2 a i.raa-icon-comment {
 .delete-vacancy-link {
   margin-left: 10px; }
 
+.candidate-results-count {
+  font-weight: bold; }
+
+.candidate-name {
+  font-weight: bold; }
+
+.candidate-address {
+  list-style-type: none;
+  padding: 0; }
+
 .applicant-location,
 .applicant-distance {
   display: block; }

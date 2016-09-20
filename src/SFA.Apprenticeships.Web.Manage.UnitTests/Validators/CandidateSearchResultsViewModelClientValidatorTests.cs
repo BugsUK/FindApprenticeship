@@ -2,9 +2,9 @@
 {
     using Common.UnitTests.Validators;
     using FluentAssertions;
-    using Manage.Validators;
     using NUnit.Framework;
-    using ViewModels;
+    using Raa.Common.Validators.Candidate;
+    using Raa.Common.ViewModels.Candidate;
 
     [TestFixture]
     [Parallelizable]

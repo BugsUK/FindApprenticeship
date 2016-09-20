@@ -3,8 +3,6 @@
     using System.Web;
     using Application.Candidate;
     using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
-    using Application.Candidate.Strategies.Traineeships;
     using Application.Candidate.Strategies.Candidates;
     using Application.Communication;
     using Application.Communication.Strategies;
@@ -18,7 +16,6 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Common.Configuration;
-    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mediators.AgencyUser;
@@ -30,7 +27,6 @@
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
-    using Application.Vacancy;
     using Application.VacancyPosting.Strategies;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Raa.Mappers;
@@ -40,8 +36,7 @@
     using Mediators.InformationRadiator;
     using Mediators.Reporting;
     using Raa.Common.Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
 
     public class ManagementWebRegistry : Registry
     {
@@ -49,13 +44,14 @@
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
-            For<IMapper>().Singleton().Use<Mappers.CandidateMappers>().Name = "CandidateMappers";
+            For<IMapper>().Singleton().Use<Raa.Common.Mappers.CandidateMappers>().Name = "CandidateMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
             RegisterStrategies();
             RegisterProviders();
             RegisterMediators();
+            RegisterRepositories();
         }
 
         private void RegisterCodeGenerators()
@@ -127,6 +123,12 @@
             For<IVacancyMediator>().Use<VacancyMediator>();
             For<IReportingMediator>().Use<ReportingMediator>();
             For<IInformationRadiatorMediator>().Use<InformationRadiatorMediator>();
+        }
+
+        private void RegisterRepositories()
+        {
+            For<IApprenticeshipApplicationStatsRepository>().Use<ApplicationStatsRepository>();
+            For<ITraineeshipApplicationStatsRepository>().Use<ApplicationStatsRepository>();
         }
     }
 }

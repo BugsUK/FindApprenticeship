@@ -19,6 +19,7 @@
     {
         private Mock<IApprenticeshipApplicationReadRepository> _mockApprenticeshipApplicationReadRepository;
         private Mock<IApprenticeshipApplicationWriteRepository> _mockApprenticeshipApplicationWriteRepository;
+        private Mock<IApprenticeshipApplicationStatsRepository> _mockApprenticeshipApplicationStatsRepository;
         private Mock<IReferenceNumberRepository> _mockReferenceNumberRepository;
         private Mock<IGetApplicationForReviewStrategy> _mockGetApplicationForReviewStrategy;
         private Mock<IUpdateApplicationNotesStrategy> _mockUpdateApplicationNotesStrategy;
@@ -31,6 +32,7 @@
         {
             _mockApprenticeshipApplicationReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();
             _mockApprenticeshipApplicationWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
+            _mockApprenticeshipApplicationStatsRepository = new Mock<IApprenticeshipApplicationStatsRepository>();
             _mockReferenceNumberRepository = new Mock<IReferenceNumberRepository>();
             _mockGetApplicationForReviewStrategy = new Mock<IGetApplicationForReviewStrategy>();
             _mockUpdateApplicationNotesStrategy = new Mock<IUpdateApplicationNotesStrategy>();
@@ -39,6 +41,7 @@
 
             _apprenticeshipApplicationService = new ApprenticeshipApplicationService(
                 _mockApprenticeshipApplicationReadRepository.Object,
+                _mockApprenticeshipApplicationStatsRepository.Object,
                 _mockGetApplicationForReviewStrategy.Object,
                 _mockUpdateApplicationNotesStrategy.Object,
                 setApplicationStatusStrategy);
@@ -67,7 +70,7 @@
 
             var vacancies = new int[] { vacancy.Id };
 
-            _mockApprenticeshipApplicationReadRepository.Setup(mock =>
+            _mockApprenticeshipApplicationStatsRepository.Setup(mock =>
                 mock.GetCountsForVacancyIds(vacancies)).Returns(expected);
 
             //Act            
@@ -100,7 +103,7 @@
 
             var vacancies = new int[] { vacancy.Id };
 
-            _mockApprenticeshipApplicationReadRepository.Setup(mock =>
+            _mockApprenticeshipApplicationStatsRepository.Setup(mock =>
                 mock.GetCountsForVacancyIds(vacancies)).Returns(expected);
 
             //Act            

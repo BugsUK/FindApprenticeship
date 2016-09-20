@@ -30,7 +30,7 @@
                 .ForMember(v => v.FirstName, opt => opt.MapFrom(src => src.CandidateDetails.FirstName))
                 .ForMember(v => v.LastName, opt => opt.MapFrom(src => src.CandidateDetails.LastName))
                 .ForMember(v => v.ApplicantName, opt => opt.MapFrom(src => new Name(src.CandidateDetails.FirstName, src.CandidateDetails.MiddleNames, src.CandidateDetails.LastName).GetDisplayText()))
-                .ForMember(v => v.ApplicantID, opt => opt.MapFrom(src => src.CandidateId.GetApplicantId()))
+                .ForMember(v => v.ApplicantID, opt => opt.MapFrom(src => src.CandidateId.GetApplicantId(0)))
                 .ForMember(v => v.AnonymousLinkData, opt => opt.Ignore());
 
             Mapper.CreateMap<ContactMessageViewModel, ProviderContactMessage>()

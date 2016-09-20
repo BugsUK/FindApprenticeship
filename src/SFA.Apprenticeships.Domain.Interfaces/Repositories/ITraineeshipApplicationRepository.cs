@@ -17,12 +17,15 @@
         IEnumerable<TraineeshipApplicationSummary> GetApplicationSummaries(int vacancyId);
 
         IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
-
-        IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds);
     }
 
     public interface ITraineeshipApplicationWriteRepository : IWriteRepository<TraineeshipApplicationDetail>
     {
         void UpdateApplicationNotes(Guid applicationId, string notes);
+    }
+
+    public interface ITraineeshipApplicationStatsRepository
+    {
+        IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds);
     }
 }

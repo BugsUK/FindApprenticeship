@@ -118,5 +118,169 @@
             employerService.Verify(s => s.GetMinimalEmployerDetails(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>()), Times.Once);
         }
         
+
+        [Test]
+        public void SearchVacanciesSummaryForProviderShouldReturnMultiplePages()
+        {
+            const int providerId = 1;
+            const int providerSiteId = 2;
+            const int employerId = 3;
+            const VacancyType vacancyType = VacancyType.Apprenticeship;
+
+            var search = new VacanciesSummarySearchViewModel
+            {
+                PageSize = 5,
+                VacancyType = vacancyType,
+                SearchString = "test"
+            };
+
+            var employerService = new Mock<IEmployerService>();
+            var providerService = new Mock<IProviderService>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
+            var mapper = new Mock<IMapper>();
+
+            providerService.Setup(s => s.GetVacancyParties(providerSiteId)).Returns(new List<VacancyParty>
+            {
+                new VacancyParty
+                {
+                    VacancyPartyId = employerId,
+                    EmployerId = employerId,
+                    ProviderSiteId = providerSiteId
+                }
+            });
+            vacancyPostingService.Setup(s => s.GetMinimalVacancyDetails(It.IsAny<IEnumerable<int>>(), providerId))
+                .Returns(new ReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>>(
+                    new Dictionary<int, IEnumerable<IMinimalVacancyDetails>> {
+                        {1,
+                        new List<IMinimalVacancyDetails>
+                        {
+                            new VacancySummary
+                            {
+                                OwnerPartyId = employerId,
+                                Title = "test"
+                            },
+                            new VacancySummary
+                            {
+                                OwnerPartyId = employerId,
+                                Title = "test"
+                            },
+                            new VacancySummary
+                            {
+                                OwnerPartyId = employerId,
+                                Title = "test"
+                            },
+                            new VacancySummary
+                            {
+                                OwnerPartyId = employerId,
+                                Title = "test"
+                            },
+                            new VacancySummary
+                            {
+                                OwnerPartyId = employerId,
+                                Title = "test"
+                            },
+                            new VacancySummary
+                            {
+                                OwnerPartyId = employerId,
+                                Title = "test"
+                            },
+                            new VacancySummary
+                            {
+                                OwnerPartyId = employerId,
+                                Title = "test"
+                            }
+                        }
+                    }}));
+
+            vacancyPostingService.Setup(s => s.GetVacancySummariesByIds(It.IsAny<IEnumerable<int>>())).Returns(new List<VacancySummary>
+            {
+                new VacancySummary
+                {
+                    OwnerPartyId = employerId,
+                    Title = "test"
+                },
+                new VacancySummary
+                {
+                    OwnerPartyId = employerId,
+                    Title = "test"
+                },
+                new VacancySummary
+                {
+                    OwnerPartyId = employerId,
+                    Title = "test"
+                },
+                new VacancySummary
+                {
+                    OwnerPartyId = employerId,
+                    Title = "test"
+                },
+                new VacancySummary
+                {
+                    OwnerPartyId = employerId,
+                    Title = "test"
+                },
+                new VacancySummary
+                {
+                    OwnerPartyId = employerId,
+                    Title = "test"
+                },
+                new VacancySummary
+                {
+                    OwnerPartyId = employerId,
+                    Title = "test"
+                }
+            });
+
+            employerService.Setup(s => s.GetMinimalEmployerDetails(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new List<MinimalEmployerDetails>
+            {
+                new MinimalEmployerDetails
+                {
+                    EmployerId = employerId
+                }
+            });
+
+            apprenticeshipApplicationService.Setup(s => s.GetCountsForVacancyIds(It.IsAny<IEnumerable<int>>())).Returns(
+                new ReadOnlyDictionary<int, IApplicationCounts>(
+                    new Dictionary<int, IApplicationCounts>
+                    {
+                        {0, new ZeroApplicationCounts()}
+                    }
+                    ));
+
+
+            mapper.Setup(m => m.Map<VacancySummary, VacancySummaryViewModel>(It.IsAny<VacancySummary>()))
+                .Returns(new VacancySummaryViewModel
+                {
+                    OwnerPartyId = employerId,
+                    VacancyId = 0
+                });
+
+            vacancyPostingService.Setup(s => s.GetVacancyLocationsByVacancyIds(It.IsAny<IEnumerable<int>>())).Returns(
+                new ReadOnlyDictionary<int, IEnumerable<VacancyLocation>>(
+                    new Dictionary<int, IEnumerable<VacancyLocation>> {
+                        {1,
+                        new List<VacancyLocation>
+                        {
+                            new VacancyLocation()
+                        }
+                    }})
+                );
+
+            var provider = new VacancyProviderBuilder()
+                .With(employerService)
+                .With(providerService)
+                .With(vacancyPostingService)
+                .With(mapper)
+                .With(apprenticeshipApplicationService)
+                .BuildVacancyPostingProvider();
+
+            var summaries = provider.GetVacanciesSummaryForProvider(providerId, providerSiteId, search);
+
+            Assert.AreEqual(2, summaries.Vacancies.TotalNumberOfPages);
+
+            employerService.Verify(s => s.GetMinimalEmployerDetails(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>()), Times.Once);
+        }
+
     }
 }

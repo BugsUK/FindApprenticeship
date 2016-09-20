@@ -14,13 +14,9 @@
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using ViewModels;
-    using SFA.Infrastructure.Interfaces;
     using SystemClaimTypes = System.Security.Claims.ClaimTypes;
-    //using ClaimTypes = Common.Constants.ClaimTypes;
 
     [OwinSessionTimeout]
     public class ProviderUserController : RecruitmentControllerBase
@@ -155,6 +151,15 @@
         public ActionResult SearchVacancies(HomeViewModel viewModel)
         {
             return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, viewModel.VacanciesSummary.VacanciesSummarySearch.RouteValues);
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Faa)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchCandidatesAction")]
+        public ActionResult SearchCandidates(HomeViewModel viewModel)
+        {
+            return RedirectToRoute(RecruitmentRouteNames.SearchCandidates, viewModel.CandidateSearch);
         }
 
         [HttpPost]

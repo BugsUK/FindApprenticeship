@@ -124,7 +124,8 @@
                         {
                             <figure class="data">
                                 <p class="count">@Model.NewApplicationsCount</p>
-                                <figcaption><h2>New</h2></figcaption>
+                                <figcaption>
+                                    <h2>New</h2></figcaption>
                             </figure>
                         }
                         else
@@ -132,7 +133,8 @@
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New).RouteValues)" class="vacancy-filter">
                                 <figure class="data">
                                     <p class="count">@Model.NewApplicationsCount</p>
-                                    <figcaption><h2>New</h2></figcaption>
+                                    <figcaption>
+                                        <h2>New</h2></figcaption>
                                 </figure>
                             </a>
                         }
@@ -142,7 +144,8 @@
                         {
                             <figure class="data">
                                 <p class="count">@Model.ViewedApplicationsCount</p>
-                                <figcaption><h2>Viewed</h2></figcaption>
+                                <figcaption>
+                                    <h2>Viewed</h2></figcaption>
                             </figure>
                         }
                         else
@@ -150,7 +153,8 @@
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Viewed).RouteValues)" class="vacancy-filter">
                                 <figure class="data">
                                     <p class="count">@Model.ViewedApplicationsCount</p>
-                                    <figcaption><h2>Viewed</h2></figcaption>
+                                    <figcaption>
+                                        <h2>Viewed</h2></figcaption>
                                 </figure>
                             </a>
                         }
@@ -163,7 +167,8 @@
                             {
                                 <figure class="data">
                                     <p class="count">@Model.SuccessfulApplicationsCount</p>
-                                    <figcaption><h2>Successful</h2></figcaption>
+                                    <figcaption>
+                                        <h2>Successful</h2></figcaption>
                                 </figure>
                             }
                             else
@@ -171,7 +176,8 @@
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Successful).RouteValues)" class="vacancy-filter">
                                     <figure class="data">
                                         <p class="count">@Model.SuccessfulApplicationsCount</p>
-                                        <figcaption><h2>Successful</h2></figcaption>
+                                        <figcaption>
+                                            <h2>Successful</h2></figcaption>
                                     </figure>
                                 </a>
                             }
@@ -181,7 +187,8 @@
                             {
                                 <figure class="data">
                                     <p class="count">@Model.UnsuccessfulApplicationsCount</p>
-                                    <figcaption><h2>Unsuccessful</h2></figcaption>
+                                    <figcaption>
+                                        <h2>Unsuccessful</h2></figcaption>
                                 </figure>
                             }
                             else
@@ -189,7 +196,8 @@
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Unsuccessful).RouteValues)" class="vacancy-filter">
                                     <figure class="data">
                                         <p class="count">@Model.UnsuccessfulApplicationsCount</p>
-                                        <figcaption><h2>Unsuccessful</h2></figcaption>
+                                        <figcaption>
+                                            <h2>Unsuccessful</h2></figcaption>
                                     </figure>
                                 </a>
                             }
@@ -198,6 +206,21 @@
                 </ul>
             </section>
 
+            @{ var open = Model.VacancyApplicationsSearch.IsCandidateSearch() ? "open" : ""; }
+            <details class="@open" @open>
+                <summary>Search candidates</summary>
+                <div class="detail-content">
+                    @Html.FormTextFor(m => m.VacancyApplicationsSearch.FirstName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })
+                    @Html.FormTextFor(m => m.VacancyApplicationsSearch.LastName, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+                    @Html.FormTextFor(m => m.VacancyApplicationsSearch.Postcode, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+                    @Html.FormTextFor(m => m.VacancyApplicationsSearch.ApplicantId, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+                    <div class="form-group">
+                        <button id="search-candidates-button" type="submit" class="button">Search</button>
+                        @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber).RouteValues, new { @class = "vacancy-filter" })
+                    </div>
+                </div>
+            </details>
+        
             <table class="vert-top" id="applicationTable">
                 <colgroup>
                     <col>
@@ -336,6 +359,10 @@
 
     </div>
 }
+
+<div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+    Loading
+</div>
 
 @section scripts
 {
