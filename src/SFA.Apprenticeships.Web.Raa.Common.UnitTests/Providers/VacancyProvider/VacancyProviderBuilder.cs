@@ -47,7 +47,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
             _dateTimeService.Setup(s => s.UtcNow).Returns(DateTime.UtcNow);
         }
 
-        public IVacancyQAProvider Build()
+        public VacancyProvider Build()
         {
             return new VacancyProvider(_logService.Object,
                 _configurationService.Object,
