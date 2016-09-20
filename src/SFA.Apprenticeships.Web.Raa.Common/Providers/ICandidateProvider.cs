@@ -7,7 +7,7 @@
 
     public interface ICandidateProvider
     {
-        CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel);
+        CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel, string ukprn);
         CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId);
         ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId);
         TraineeshipApplicationViewModel GetCandidateTraineeshipApplication(Guid applicationId);
