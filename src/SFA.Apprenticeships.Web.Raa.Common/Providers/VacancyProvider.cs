@@ -565,8 +565,6 @@
             _vacancyPostingService.UpdateVacancy(vacancy);
         }
 
-        
-
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -1008,37 +1006,6 @@
             return result;
         }
 
-        /// <summary>
-        /// Returns first preceding date with specified day.
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <param name="dayToReturn">If this is the same as the supplied date's DayOfWeek, then dt is returned</param>
-        /// <returns></returns>
-        public DateTime GetFirstPrecedingDayOfType(DateTime dt, DayOfWeek dayToReturn)
-        {
-            //DayOfWeek.Sunday = 0
-            //DayOfWeek.Saturday = 6
-
-            var daysToRemove = 0;
-
-            var currentDay = dt.DayOfWeek;
-
-            while (currentDay != dayToReturn)
-            {
-                daysToRemove += 1;
-                if (currentDay == DayOfWeek.Sunday)
-                {
-                    currentDay = DayOfWeek.Saturday;
-                }
-                else
-                {
-                    currentDay -= 1;
-                }
-            }
-
-            return dt.AddDays(-1 * daysToRemove);
-        }
-
         public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
             var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
@@ -1273,7 +1240,6 @@
 
             return GetVacancyViewModelFrom(nextAvailableVacancy);
         }
-
 
         private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
         {

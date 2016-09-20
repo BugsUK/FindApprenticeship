@@ -13,7 +13,6 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
     using Application.Interfaces;
     using ViewModels.Vacancy;
 
@@ -25,46 +24,12 @@
         private const int ExpectedSubmittedYesterdayCount = 4;
         private const int ExpectedSubmittedMoreThan48HoursCount = 6;
         private const int ExpectedResubmittedCount = 3;
-
         private const int ProviderId = 2;
-
         private Mock<IVacancyPostingService> _vacancyPostingService;
         private Mock<IProviderService> _providerService;
-        //private Mock<IConfigurationService> _configurationService;
         private Mock<IDateTimeService> _dateTimeService;
-        private IVacancyQAProvider _provider;
-
         private List<VacancySummary> _vacanciesSubmittedToday;
-        
-        private static DateTime _lastSundayIn2015 = new DateTime(2015, 12, 27);
-        private static DateTime _firstDayOf2016 = new DateTime(2016, 1, 1); //a Friday
-        private static DateTime _firstSundayIn2016 = new DateTime(2016, 1, 3);
-        private static DateTime _firstSaturdayIn2016 = new DateTime(2016, 1, 2);
-
-        [Test]
-        public void GetFirstPrecedingDayOfType()
-        {
-            var dataSet = new List<Tuple<DateTime,DayOfWeek, DateTime>>();
-
-            dataSet.Add(new Tuple<DateTime, DayOfWeek, DateTime>(_firstDayOf2016, DayOfWeek.Sunday, _lastSundayIn2015));
-            dataSet.Add(new Tuple<DateTime, DayOfWeek, DateTime>(_firstSaturdayIn2016, DayOfWeek.Sunday, _lastSundayIn2015));
-            dataSet.Add(new Tuple<DateTime, DayOfWeek, DateTime>(_firstSundayIn2016, DayOfWeek.Sunday, _firstSundayIn2016));
-            dataSet.Add(new Tuple<DateTime, DayOfWeek, DateTime>(_firstSundayIn2016, DayOfWeek.Saturday, _firstSaturdayIn2016));
-            dataSet.Add(new Tuple<DateTime, DayOfWeek, DateTime>(_firstSundayIn2016, DayOfWeek.Friday, _firstDayOf2016));
-
-            //Arrange
-            var vacancyProvider =
-                    new VacancyProviderBuilder().Build();
-
-            //Act
-            foreach (var paramSet in dataSet)
-            {
-                var result = vacancyProvider.GetFirstPrecedingDayOfType(paramSet.Item1, paramSet.Item2);
-
-                //Assert
-                result.ShouldBeEquivalentTo(paramSet.Item3);
-            }
-        }
+        private IVacancyQAProvider _provider;
 
         [SetUp]
         public void Setup()
