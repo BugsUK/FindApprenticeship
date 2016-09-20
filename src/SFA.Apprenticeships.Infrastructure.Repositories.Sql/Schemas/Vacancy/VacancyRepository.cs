@@ -1503,7 +1503,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds)
         {
             var sql = @"SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
                         FROM   dbo.Vacancy
@@ -1511,7 +1511,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
 
             if (_configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled())
             {
-                sql += " AND ContractOwnerId = @providerId";
+                sql += " AND VacancyManagerId IN @providerSiteIds";
             }
 
             var vacancyCollections = new List<dynamic>();                               
@@ -1523,7 +1523,8 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                     new
                     {
                         Ids = splitVacancyPartyId,
-                        providerId
+                        providerId,
+                        providerSiteIds
                     });                                                                                                      
                 vacancyCollections.AddRange(singleCollection);                
             }

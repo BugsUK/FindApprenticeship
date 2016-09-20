@@ -21,7 +21,6 @@
         private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
 
-
         public ProviderService(IProviderReadRepository providerReadRepository,
             IProviderSiteReadRepository providerSiteReadRepository,
             IVacancyPartyReadRepository vacancyPartyReadRepository,
@@ -69,6 +68,11 @@
             return _providerSiteReadRepository.GetByEdsUrn(edsUrn);
         }
 
+        public IEnumerable<ProviderSite> GetProviderSites(int providerId)
+        {
+            return _providerSiteReadRepository.GetByProviderId(providerId);
+        }
+
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
@@ -88,6 +92,12 @@
         public IReadOnlyDictionary<int, ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds)
         {
             return _providerSiteReadRepository.GetByIds(providerSiteIds);
+        }
+
+        public IEnumerable<ProviderSite> GetOwnedProviderSites(int providerId)
+        {
+            var providerSites = _providerSiteReadRepository.GetByProviderId(providerId);
+            return providerSites.Where(ps => ps.ProviderSiteRelationships.Any(psr => psr.ProviderId == providerId && psr.ProviderSiteRelationShipTypeId == 1));
         }
 
         public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
