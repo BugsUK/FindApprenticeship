@@ -50,7 +50,7 @@
             }
             if (databaseSyncParams.LastAuditEventDate.HasValue)
             {
-                syncParams.CandidateLastUpdatedDate = new DateTime(databaseSyncParams.LastAuditEventDate.Value.Ticks, DateTimeKind.Utc);
+                syncParams.LastAuditEventDate = new DateTime(databaseSyncParams.LastAuditEventDate.Value.Ticks, DateTimeKind.Utc);
             }
 
             return syncParams;
