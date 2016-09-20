@@ -103,9 +103,9 @@ JOIN [Application] a ON c.CandidateId = a.CandidateId
 JOIN Vacancy v ON a.VacancyId = v.VacancyId 
 WHERE " + string.Join(" AND ", query);
 
-            if (request.ProviderId.HasValue)
+            if (request.ProviderSiteIds != null)
             {
-                sql += @" AND v.ContractOwnerId = @ProviderId";
+                sql += @" AND v.VacancyManagerId IN @ProviderSiteIds";
             }
 
             var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
@@ -118,7 +118,7 @@ WHERE " + string.Join(" AND ", query);
                         request.Postcode,
                         request.CandidateGuidPrefix,
                         request.CandidateId,
-                        request.ProviderId
+                        request.ProviderSiteIds
                     })).ToList();
 
             _logService.Debug("Found {1} candidates matching search request {0}", request, candidates.Count);

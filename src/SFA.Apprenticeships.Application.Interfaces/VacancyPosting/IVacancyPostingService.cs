@@ -43,7 +43,7 @@
         /// <param name="vacancyPartyIds"></param>
         /// <param name="providerId"></param>
         /// <returns>VacancyPartyId => IVacancyIdStatusAndClosingDate</returns>
-        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId);
+        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds);
 
         /// <summary>
         /// 
