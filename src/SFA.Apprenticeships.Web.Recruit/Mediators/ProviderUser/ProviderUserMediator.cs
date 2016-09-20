@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Security.Claims;
     using System.Web.Mvc;
@@ -241,15 +242,22 @@
 
         public MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn, VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
+            _logService.Info($"Retrieved provider user {stopwatch.ElapsedMilliseconds}ms elapsed");
             var provider = _providerProvider.GetProviderViewModel(ukprn);
+            _logService.Info($"Retrieved provider {stopwatch.ElapsedMilliseconds}ms elapsed");
             var providerSites = GetProviderSites(ukprn);
+            _logService.Info($"Retrieved provider sites {stopwatch.ElapsedMilliseconds}ms elapsed");
             var providerSiteId = providerUserViewModel.DefaultProviderSiteId;
             if (providerSites.All(ps => ps.Value != Convert.ToString(providerUserViewModel.DefaultProviderSiteId)))
             {
                 providerSiteId = Convert.ToInt32(providerSites.First().Value);
             }
             var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerSiteId, vacanciesSummarySearch);
+            _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var viewModel = new HomeViewModel
             {
