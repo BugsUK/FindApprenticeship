@@ -18,7 +18,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Candidate
             _candidateSearchViewModelServerValidator = candidateSearchViewModelServerValidator;
         }
 
-        public MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchViewModel searchViewModel)
+        public MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchViewModel searchViewModel, string ukprn)
         {
             searchViewModel.PageSizes = SelectListItemsFactory.GetPageSizes(searchViewModel.PageSize);
 
@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Candidate
                 return GetMediatorResponse(CandidateMediatorCodes.Search.FailedValidation, new CandidateSearchResultsViewModel { SearchViewModel = searchViewModel }, validatonResult);
             }
 
-            var resultsViewModel = _candidateProvider.SearchCandidates(searchViewModel);
+            var resultsViewModel = _candidateProvider.SearchCandidates(searchViewModel, ukprn);
 
             return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, resultsViewModel);
         }
