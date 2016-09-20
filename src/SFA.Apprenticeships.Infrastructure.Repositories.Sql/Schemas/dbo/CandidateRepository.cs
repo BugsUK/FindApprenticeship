@@ -93,15 +93,33 @@
                 query.Add("CandidateId = @CandidateId");
             }
 
-            var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
-                _getOpenConnection.Query<DbCandidateSummary>(
-@"SELECT c.CandidateId, c.CandidateGuid, p.FirstName, p.MiddleNames, p.Surname, c.DateofBirth, 
+            var sql = 
+@"SELECT DISTINCT c.CandidateId, c.CandidateGuid, p.FirstName, p.MiddleNames, p.Surname, c.DateofBirth, 
 c.AddressLine1, c.AddressLine2, c.AddressLine3, c.AddressLine4, c.Postcode, c.Town, ct.FullName As County, c.Latitude, c.Longitude
 FROM Person p
 JOIN Candidate c ON p.PersonId = c.PersonId
 JOIN County ct on c.CountyId = ct.CountyId 
-WHERE " + string.Join(" AND ", query),
-                    new { request.FirstName, request.LastName, request.DateOfBirth, request.Postcode, request.CandidateGuidPrefix, request.CandidateId })).ToList();
+JOIN [Application] a ON c.CandidateId = a.CandidateId
+JOIN Vacancy v ON a.VacancyId = v.VacancyId 
+WHERE " + string.Join(" AND ", query);
+
+            if (request.ProviderId.HasValue)
+            {
+                sql += @" AND v.ContractOwnerId = @ProviderId";
+            }
+
+            var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
+                _getOpenConnection.Query<DbCandidateSummary>(sql,
+                    new
+                    {
+                        request.FirstName,
+                        request.LastName,
+                        request.DateOfBirth,
+                        request.Postcode,
+                        request.CandidateGuidPrefix,
+                        request.CandidateId,
+                        request.ProviderId
+                    })).ToList();
 
             _logService.Debug("Found {1} candidates matching search request {0}", request, candidates.Count);
 
