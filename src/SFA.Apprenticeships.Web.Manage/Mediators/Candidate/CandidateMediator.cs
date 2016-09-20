@@ -46,7 +46,7 @@
                 return GetMediatorResponse(CandidateMediatorCodes.Search.FailedValidation, new CandidateSearchResultsViewModel { SearchViewModel = viewModel }, validatonResult);
             }
 
-            var resultsViewModel = _candidateProvider.SearchCandidates(viewModel);
+            var resultsViewModel = _candidateProvider.SearchCandidates(viewModel, null);
 
             return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, resultsViewModel);
         }

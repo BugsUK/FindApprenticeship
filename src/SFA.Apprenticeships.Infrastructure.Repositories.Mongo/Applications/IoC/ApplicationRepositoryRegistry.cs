@@ -3,9 +3,7 @@
     using Domain.Interfaces.Repositories;
     using Applications;
     using Mappers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using StructureMap.Configuration.DSL;
 
     public class ApplicationRepositoryRegistry : Registry
@@ -25,6 +23,11 @@
                 .Ctor<IMapper>()
                 .Named("ApplicationDetailMapper");
 
+            For<IApprenticeshipApplicationStatsRepository>()
+                .Use<ApprenticeshipApplicationRepository>()
+                .Ctor<IMapper>()
+                .Named("ApplicationDetailMapper");
+
             // Traineeships.
             For<IMapper>().Use<TraineeshipApplicationMappers>().Name = "TraineeshipApplicationDetailMapper";
 
@@ -34,6 +37,11 @@
                 .Named("TraineeshipApplicationDetailMapper");
 
             For<ITraineeshipApplicationReadRepository>()
+                .Use<TraineeshipApplicationRepository>()
+                .Ctor<IMapper>()
+                .Named("TraineeshipApplicationDetailMapper");
+
+            For<ITraineeshipApplicationStatsRepository>()
                 .Use<TraineeshipApplicationRepository>()
                 .Ctor<IMapper>()
                 .Named("TraineeshipApplicationDetailMapper");

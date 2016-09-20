@@ -49,7 +49,7 @@
             };
 
             //Act
-            _provider.SearchCandidates(viewModel);
+            _provider.SearchCandidates(viewModel, null);
 
             //Assert
             var expectedDate = new DateTime(1990, 2, 10);
@@ -73,7 +73,7 @@
             };
 
             //Act
-            _provider.SearchCandidates(viewModel);
+            _provider.SearchCandidates(viewModel, null);
 
             //Assert
             _candidateSearchService.Verify(s => s.SearchCandidates(It.Is<CandidateSearchRequest>(r => 
@@ -96,7 +96,7 @@
             };
 
             //Act
-            _provider.SearchCandidates(viewModel);
+            _provider.SearchCandidates(viewModel, null);
 
             //Assert
             _candidateSearchService.Verify(s => s.SearchCandidates(It.Is<CandidateSearchRequest>(r => 
@@ -113,7 +113,7 @@
             _candidateSearchService.Setup(s => s.SearchCandidates(It.IsAny<CandidateSearchRequest>())).Returns(candidateSummaries);
 
             //Act
-            var response = _provider.SearchCandidates(viewModel);
+            var response = _provider.SearchCandidates(viewModel, null);
 
             //Assert
             response.Should().NotBeNull();
@@ -141,7 +141,7 @@
             _candidateSearchService.Setup(s => s.SearchCandidates(It.IsAny<CandidateSearchRequest>())).Returns(candidateSummaries);
 
             //Act
-            var response = _provider.SearchCandidates(viewModel);
+            var response = _provider.SearchCandidates(viewModel, null);
 
             //Assert
             var candidateSummaryViewModels = response.Candidates.Page.ToList();
@@ -163,7 +163,7 @@
             _candidateSearchService.Setup(s => s.SearchCandidates(It.IsAny<CandidateSearchRequest>())).Returns(candidateSummaries);
 
             //Act
-            var response = _provider.SearchCandidates(viewModel);
+            var response = _provider.SearchCandidates(viewModel, null);
 
             //Assert
             var candidateSummaryViewModels = response.Candidates.Page.ToList();
@@ -190,7 +190,7 @@
             _candidateSearchService.Setup(s => s.SearchCandidates(It.IsAny<CandidateSearchRequest>())).Returns(candidateSummaries);
 
             //Act
-            var response = _provider.SearchCandidates(viewModel);
+            var response = _provider.SearchCandidates(viewModel, null);
 
             //Assert
             var index = 0;

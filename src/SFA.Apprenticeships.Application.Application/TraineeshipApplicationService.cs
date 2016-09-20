@@ -10,15 +10,18 @@
     public class TraineeshipApplicationService : ITraineeshipApplicationService
     {
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
+        private readonly ITraineeshipApplicationStatsRepository _traineeshipApplicationStatsRepository;
         private readonly IGetApplicationForReviewStrategy _getApplicationForReviewStrategy;
         private readonly IUpdateApplicationNotesStrategy _updateApplicationNotesStrategy;
 
         public TraineeshipApplicationService(
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
+            ITraineeshipApplicationStatsRepository traineeshipApplicationStatsRepository,
             IGetApplicationForReviewStrategy getApplicationForReviewStrategy,
             IUpdateApplicationNotesStrategy updateApplicationNotesStrategy)
         {
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
+            _traineeshipApplicationStatsRepository = traineeshipApplicationStatsRepository;
             _getApplicationForReviewStrategy = getApplicationForReviewStrategy;
             _updateApplicationNotesStrategy = updateApplicationNotesStrategy;
         }
@@ -30,12 +33,12 @@
 
         public int GetApplicationCount(int vacancyId)
         {
-            return _traineeshipApplicationReadRepository.GetCountsForVacancyIds(new int[] { vacancyId })[vacancyId].AllApplications;
+            return _traineeshipApplicationStatsRepository.GetCountsForVacancyIds(new int[] { vacancyId })[vacancyId].AllApplications;
         }
 
         public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
-            return _traineeshipApplicationReadRepository.GetCountsForVacancyIds(vacancyIds);
+            return _traineeshipApplicationStatsRepository.GetCountsForVacancyIds(vacancyIds);
         }
 
         public TraineeshipApplicationDetail GetApplication(Guid applicationId)

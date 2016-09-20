@@ -39,7 +39,7 @@
         [HttpGet]
         public ActionResult Search(CandidateSearchViewModel viewModel)
         {
-            var response = _candidateMediator.Search(viewModel);
+            var response = _candidateMediator.Search(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 

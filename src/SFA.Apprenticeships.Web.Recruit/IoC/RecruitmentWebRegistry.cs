@@ -36,7 +36,7 @@
     using Infrastructure.Logging.IoC;
     using Infrastructure.Raa.Mappers;
     using Infrastructure.Raa.Strategies;
-    using Infrastructure.Repositories.Mongo.Candidates;
+    using Infrastructure.Repositories.Sql.Schemas.dbo;
     using Infrastructure.Security;
     using Mappers;
     using Mediators.Application;
@@ -53,6 +53,7 @@
     using Mediators.Home;
     using StructureMap;
     using StructureMap.Configuration.DSL;
+    using CandidateRepository = Infrastructure.Repositories.Mongo.Candidates.CandidateRepository;
     using ISubmitContactMessageStrategy = Application.UserAccount.Strategies.ProviderUserAccount.ISubmitContactMessageStrategy;
     using SubmitContactMessageStrategy = Application.UserAccount.Strategies.ProviderUserAccount.SubmitContactMessageStrategy;
 
@@ -70,6 +71,7 @@
             RegisterStrategies();
             RegisterProviders();
             RegisterMediators();
+            RegisterRepositories();
         }
 
         private void RegisterCodeGenerators()
@@ -168,6 +170,12 @@
             For<IReportMediator>().Use<ReportMediator>();
             For<IVacancyManagementMediator>().Use<VacancyManagementMediator>();
             For<ICandidateMediator>().Use<CandidateMediator>();
+        }
+
+        private void RegisterRepositories()
+        {
+            For<IApprenticeshipApplicationStatsRepository>().Use<ApplicationStatsRepository>();
+            For<ITraineeshipApplicationStatsRepository>().Use<ApplicationStatsRepository>();
         }
     }
 }
