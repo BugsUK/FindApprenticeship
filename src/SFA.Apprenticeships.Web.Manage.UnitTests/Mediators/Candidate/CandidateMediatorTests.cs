@@ -51,7 +51,7 @@
 
             //Assert
             result.AssertCodeAndMessage(CandidateMediatorCodes.Search.Ok);
-            _candidateProvider.Verify(p => p.SearchCandidates(viewModel));
+            _candidateProvider.Verify(p => p.SearchCandidates(viewModel, null));
         }
     }
 }

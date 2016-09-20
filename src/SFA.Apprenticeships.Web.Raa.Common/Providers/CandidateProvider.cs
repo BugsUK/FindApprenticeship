@@ -61,11 +61,17 @@
             _dateTimeService = dateTimeService;
         }
 
-        public CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel)
+        public CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel, string ukprn)
         {
             var dateOfBirth = string.IsNullOrEmpty(searchViewModel.DateOfBirth) ? (DateTime?)null : DateTime.Parse(searchViewModel.DateOfBirth, _dateCultureInfo);
 
-            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, GetCandidateGuidPrefix(searchViewModel.ApplicantId), GetCandidateId(searchViewModel.ApplicantId));
+            int? providerId = null;
+            if (!string.IsNullOrEmpty(ukprn))
+            {
+                providerId = _providerService.GetProvider(ukprn).ProviderId;
+            }
+
+            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, GetCandidateGuidPrefix(searchViewModel.ApplicantId), GetCandidateId(searchViewModel.ApplicantId), providerId);
             var candidates = _candidateSearchService.SearchCandidates(request) ?? new List<CandidateSummary>();
 
             var results = new CandidateSearchResultsViewModel
