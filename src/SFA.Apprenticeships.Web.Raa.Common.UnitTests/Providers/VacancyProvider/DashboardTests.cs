@@ -48,6 +48,10 @@
                     ProviderSiteId = providerSiteId
                 }
             });
+
+            providerService.Setup(ps => ps.GetOwnedProviderSites(It.IsAny<int>()))
+                .Returns(new List<ProviderSite> {new ProviderSite {ProviderSiteId = providerSiteId}});
+
             vacancyPostingService.Setup(s => s.GetMinimalVacancyDetails(It.IsAny<IEnumerable<int>>(), providerId, new List<int>{ providerSiteId }))
                 .Returns(new ReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>>(
                     new Dictionary<int, IEnumerable<IMinimalVacancyDetails>> {
@@ -148,6 +152,10 @@
                     ProviderSiteId = providerSiteId
                 }
             });
+
+            providerService.Setup(ps => ps.GetOwnedProviderSites(It.IsAny<int>()))
+                .Returns(new List<ProviderSite> { new ProviderSite { ProviderSiteId = providerSiteId } });
+
             vacancyPostingService.Setup(s => s.GetMinimalVacancyDetails(It.IsAny<IEnumerable<int>>(), providerId, new List<int> { providerSiteId }))
                 .Returns(new ReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>>(
                     new Dictionary<int, IEnumerable<IMinimalVacancyDetails>> {
