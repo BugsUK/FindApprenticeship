@@ -29,7 +29,7 @@
 
     public class CandidateSearchRequest
     {
-        public CandidateSearchRequest(string firstName, string lastName, DateTime? dateOfBirth, string postcode, string candidateGuidPrefix, int? candidateId, int? providerId)
+        public CandidateSearchRequest(string firstName, string lastName, DateTime? dateOfBirth, string postcode, string candidateGuidPrefix, int? candidateId, IEnumerable<int> providerSiteIds)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -37,7 +37,7 @@
             Postcode = postcode;
             CandidateGuidPrefix = candidateGuidPrefix;
             CandidateId = candidateId;
-            ProviderId = providerId;
+            ProviderSiteIds = providerSiteIds;
         }
 
         public string FirstName { get; private set; }
@@ -46,7 +46,7 @@
         public string Postcode { get; private set; }
         public string CandidateGuidPrefix { get; private set; }
         public int? CandidateId { get; private set; }
-        public int? ProviderId { get; private set; }
+        public IEnumerable<int> ProviderSiteIds { get; private set; }
 
         public override string ToString()
         {

@@ -13,7 +13,6 @@
     using Domain.Entities.Raa.Vacancies;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
 
@@ -49,7 +48,7 @@
                     ProviderSiteId = providerSiteId
                 }
             });
-            vacancyPostingService.Setup(s => s.GetMinimalVacancyDetails(It.IsAny<IEnumerable<int>>(), providerId, providerSiteId))
+            vacancyPostingService.Setup(s => s.GetMinimalVacancyDetails(It.IsAny<IEnumerable<int>>(), providerId, new List<int>{ providerSiteId }))
                 .Returns(new ReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>>(
                     new Dictionary<int, IEnumerable<IMinimalVacancyDetails>> {
                         {1,
@@ -149,7 +148,7 @@
                     ProviderSiteId = providerSiteId
                 }
             });
-            vacancyPostingService.Setup(s => s.GetMinimalVacancyDetails(It.IsAny<IEnumerable<int>>(), providerId, providerSiteId))
+            vacancyPostingService.Setup(s => s.GetMinimalVacancyDetails(It.IsAny<IEnumerable<int>>(), providerId, new List<int> { providerSiteId }))
                 .Returns(new ReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>>(
                     new Dictionary<int, IEnumerable<IMinimalVacancyDetails>> {
                         {1,
