@@ -21,7 +21,7 @@
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
-    [Obsolete("This is a refactoring of the VacancyProvider and has not been fully implemented. It's existance is purely for the POC Web Api project (do not delete!)")]
+    //[Obsolete("This is a refactoring of the VacancyProvider and has not been fully implemented. It's existance is purely for the POC Web Api project (do not delete!)")]
     public class VacancySummaryStrategy : IVacancySummaryStrategy
     {
         private IProviderService _providerService;
