@@ -62,8 +62,10 @@
 
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
 
+            var ownedProviderSites = _providerService.GetOwnedProviderSites(providerId);
+
             var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(
-                    vacancyParties.Select(vp => vp.VacancyPartyId), providerId)
+                    vacancyParties.Select(vp => vp.VacancyPartyId), providerId, ownedProviderSites.Select(ps => ps.ProviderSiteId))
                 .Values
                 .SelectMany(a => a)
                 .Where(
