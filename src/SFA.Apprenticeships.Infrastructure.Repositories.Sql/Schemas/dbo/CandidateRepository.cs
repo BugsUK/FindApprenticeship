@@ -82,7 +82,7 @@
             }
             if (!string.IsNullOrEmpty(request.Postcode))
             {
-                query.Add("Postcode LIKE @Postcode + '%'");
+                query.Add("c.Postcode LIKE @Postcode + '%'");
             }
             if (!string.IsNullOrEmpty(request.CandidateGuidPrefix))
             {
