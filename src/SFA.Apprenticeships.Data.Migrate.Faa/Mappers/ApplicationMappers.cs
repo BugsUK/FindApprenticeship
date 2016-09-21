@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
@@ -120,6 +121,7 @@
             var sourceApplicationSummary = sourceApplicationSummaries.ContainsKey(sourceApplicationId) ? sourceApplicationSummaries[sourceApplicationId] : null;
             var applicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status);
             ApplicationStatuses? updateStatusTo = null;
+            //string updateUnsuccessfulReasonTo = null;
             if (sourceApplicationSummary != null && (int)applicationStatusTypeId != sourceApplicationSummary.ApplicationStatusTypeId)
             {
                 if (sourceApplicationSummary.ApplicationStatusTypeId < (int)applicationStatusTypeId)
@@ -129,6 +131,31 @@
                 else
                 {
                     _logService.Warn($"Application with guid {apprenticeshipApplication.Id} mapped to application id {applicationId} has a different state {applicationStatusTypeId} than the master copy on AVMS {(ApplicationStatusTypeIds)sourceApplicationSummary.ApplicationStatusTypeId}.");
+                    //In some cases we seem to have missed updating unsuccessful and successful statuses via the NAS gateway. Update those too
+                    if (applicationStatusTypeId != ApplicationStatusTypeIds.ApplicationStatusTypeIdSuccessful && applicationStatusTypeId != ApplicationStatusTypeIds.ApplicationStatusTypeIdUnsuccessful)
+                    {
+                        if (sourceApplicationSummary.ApplicationStatusTypeId == (int) ApplicationStatusTypeIds.ApplicationStatusTypeIdSuccessful)
+                        {
+                            //We're going to set old applications with an incorrect outcome to in progress so as not to alert the candidates about older outcomes
+                            applicationStatusTypeId = ApplicationStatusTypeIds.ApplicationStatusTypeIdInProgress;
+                            updateStatusTo = ApplicationStatuses.InProgress;
+                            //applicationStatusTypeId = ApplicationStatusTypeIds.ApplicationStatusTypeIdSuccessful;
+                            //updateStatusTo = ApplicationStatuses.Successful;
+                        }
+                        if (sourceApplicationSummary.ApplicationStatusTypeId == (int)ApplicationStatusTypeIds.ApplicationStatusTypeIdUnsuccessful)
+                        {
+                            //We're going to set old applications with an incorrect outcome to in progress so as not to alert the candidates about older outcomes
+                            applicationStatusTypeId = ApplicationStatusTypeIds.ApplicationStatusTypeIdInProgress;
+                            updateStatusTo = ApplicationStatuses.InProgress;
+                            //applicationStatusTypeId = ApplicationStatusTypeIds.ApplicationStatusTypeIdUnsuccessful;
+                            //updateStatusTo = ApplicationStatuses.Unsuccessful;
+                            //var unsuccessfulReason = UnsuccessfulReasonIdMap.SingleOrDefault(kvp => kvp.Value == sourceApplicationSummary.UnsuccessfulReasonId);
+                            //if (!unsuccessfulReason.Equals(default(KeyValuePair<string, int>)))
+                            //{
+                            //    updateUnsuccessfulReasonTo = unsuccessfulReason.Key;
+                            //}
+                        }
+                    }
                 }
                 //We never copied over the InProgress status when getting application status via the NAS gateway so do it now
                 if (applicationStatusTypeId == ApplicationStatusTypeIds.ApplicationStatusTypeIdSent && sourceApplicationSummary.ApplicationStatusTypeId == (int)ApplicationStatusTypeIds.ApplicationStatusTypeIdInProgress)
@@ -163,7 +190,8 @@
                 SchoolAttended = MapSchoolAttended(apprenticeshipApplication, schoolAttendedIds, applicationId, candidateId),
                 SubVacancy = GetSubVacancy(subVacancies, applicationId, sourceApplicationId),
                 UpdateNotes = updateNotes,
-                UpdateStatusTo = updateStatusTo
+                UpdateStatusTo = updateStatusTo,
+                //UpdateUnsuccessfulReasonTo = updateUnsuccessfulReasonTo
             };
         }
 

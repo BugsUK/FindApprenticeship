@@ -11,7 +11,6 @@
     using MongoDB.Driver;
     using Repository.Mongo;
     using Repository.Sql;
-    using Candidate = Entities.Mongo.Candidate;
 
     public class AuditMigrationProcessor : IMigrationProcessor
     {
@@ -20,6 +19,8 @@
         private readonly SyncRepository _syncRepository;
         private readonly AuditRepository _auditRepository;
         private readonly CandidateRepository _candidateRepository;
+        private readonly ApplicationRepository _applicationRepository;
+        private readonly ApplicationHistoryRepository _applicationHistoryRepository;
 
         public AuditMigrationProcessor(SyncRepository syncRepository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
@@ -28,6 +29,8 @@
             _syncRepository = syncRepository;
             _auditRepository = new AuditRepository(configurationService, logService);
             _candidateRepository = new CandidateRepository(targetDatabase);
+            _applicationRepository = new ApplicationRepository(targetDatabase);
+            _applicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase, _logService);
         }
 
         public void Process(CancellationToken cancellationToken)
@@ -93,7 +96,12 @@
 
         private void BulkDelete(IDictionary<Guid, int> candidateGuids)
         {
-            //throw new NotImplementedException();
+            if (candidateGuids.Count == 0) return;
+
+            _logService.Warn($"Deleting candidate and related application records for candidates with ids: {string.Join(",", candidateGuids.Values)}");
+
+            _applicationRepository.DeleteByCandidateId(candidateGuids.Values);
+            _candidateRepository.DeleteByCandidateGuid(candidateGuids.Keys);
         }
     }
 }

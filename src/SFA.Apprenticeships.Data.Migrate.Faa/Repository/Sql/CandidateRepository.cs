@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Dapper;
     using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
 
@@ -28,6 +29,35 @@
         public IDictionary<Guid, CandidateSummary> GetCandidateSummariesByGuid(IEnumerable<Guid> candidateGuids)
         {
             return _getOpenConnection.Query<CandidateSummary>("SELECT CandidateId, PersonId, CandidateGuid FROM Candidate WHERE CandidateGuid in @candidateGuids", new { candidateGuids }).ToDictionary(cs => cs.CandidateGuid, cs => cs);
+        }
+
+        public void DeleteByCandidateGuid(ICollection<Guid> candidateGuids)
+        {
+            var connection = _getOpenConnection.GetOpenConnection();
+
+            var personIds = _getOpenConnection.Query<int>("SELECT PersonId FROM Candidate WHERE CandidateGuid IN @CandidateGuids", new { candidateGuids });
+
+            const string schoolAttendedSql =
+@"DELETE FROM SchoolAttended 
+WHERE CandidateId IN 
+(SELECT CandidateId FROM Candidate WHERE CandidateGuid IN @CandidateGuids)";
+            connection.Execute(schoolAttendedSql, new { candidateGuids });
+
+            const string candidateHistorySql =
+@"DELETE FROM CandidateHistory 
+WHERE CandidateId IN 
+(SELECT CandidateId FROM Candidate WHERE CandidateGuid IN @CandidateGuids)";
+            connection.Execute(candidateHistorySql, new { candidateGuids });
+
+            const string candidateSql =
+@"DELETE FROM Candidate 
+WHERE CandidateGuid IN @CandidateGuids";
+            connection.Execute(candidateSql, new { candidateGuids });
+
+            const string personSql =
+@"DELETE FROM Person 
+WHERE PersonId IN @PersonIds";
+            connection.Execute(personSql, new { personIds });
         }
     }
 }
