@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Reporting
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Reporting;
     using Interfaces.Reporting;
     using Strategies;
+    using System;
+    using System.Collections.Generic;
 
     public class ReportingService : IReportingService
     {

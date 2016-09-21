@@ -1,15 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System;
-    using System.Collections.Generic;
     using Application.Interfaces.Reporting;
     using Application.Interfaces.Users;
     using Domain.Entities.Raa.Reporting;
+    using System;
+    using System.Collections.Generic;
 
     public class ReportingProvider : IReportingProvider
     {
         private readonly IReportingService _reportingService;
         private readonly IUserProfileService _userProfileService;
+
 
         public ReportingProvider(IReportingService reportingService, IUserProfileService userProfileService)
         {

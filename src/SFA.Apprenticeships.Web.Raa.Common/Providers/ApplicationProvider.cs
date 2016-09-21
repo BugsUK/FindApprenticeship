@@ -13,6 +13,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Common.Extensions;
+    using Domain.Entities.Candidates;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -100,6 +102,8 @@
                 ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
                 : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList();
 
+            applications = SearchCandidateApplications(vacancyApplicationsSearch, applications);
+
             var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
             var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
             var successful = applications.Where(v => v.Status == ApplicationStatuses.Successful).ToList();
@@ -136,7 +140,7 @@
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
             };
 
-            var candidateSummaries = _candidateApplicationService.GetCandidateSummaries(viewModel.ApplicationSummaries.Page.Select(@as => @as.CandidateId));
+            IList<CandidateSummary> candidateSummaries = _candidateApplicationService.GetCandidateSummaries(viewModel.ApplicationSummaries.Page.Select(@as => @as.CandidateId));
             foreach (var application in viewModel.ApplicationSummaries.Page)
             {
                 application.AnonymousLinkData =
@@ -151,6 +155,36 @@
             }
 
             return viewModel;
+        }
+
+        private List<ApplicationSummary> SearchCandidateApplications(VacancyApplicationsSearchViewModel vacancyApplicationsSearch, List<ApplicationSummary> applications)
+        {
+            if (!vacancyApplicationsSearch.IsCandidateSearch())
+            {
+                return applications;
+            }
+
+            var applicantId = CandidateSearchExtensions.GetCandidateId(vacancyApplicationsSearch.ApplicantId);
+            if (applicantId.HasValue)
+            {
+                var candidate = _candidateApplicationService.GetCandidate(applicantId.Value);
+                if(candidate != null)
+                return applications.Where(a => a.CandidateId == candidate.EntityId).ToList();
+            }
+
+            var candidateGuidPrefix = CandidateSearchExtensions.GetCandidateGuidPrefix(vacancyApplicationsSearch.ApplicantId);
+            if (!string.IsNullOrEmpty(candidateGuidPrefix))
+            {
+                return applications.Where(a => a.CandidateId.ToString().StartsWith(candidateGuidPrefix, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
+
+            return
+                applications.Where(
+                    a =>
+                        (string.IsNullOrEmpty(vacancyApplicationsSearch.FirstName) || a.CandidateDetails.FirstName.StartsWith(vacancyApplicationsSearch.FirstName, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (string.IsNullOrEmpty(vacancyApplicationsSearch.LastName) || a.CandidateDetails.LastName.StartsWith(vacancyApplicationsSearch.LastName, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (string.IsNullOrEmpty(vacancyApplicationsSearch.Postcode) || a.CandidateDetails.Address.Postcode.Replace(" ", "").StartsWith(vacancyApplicationsSearch.Postcode.Replace(" ", ""), StringComparison.InvariantCultureIgnoreCase))
+                        ).ToList();
         }
 
         private static IEnumerable<ApplicationSummary> GetOrderedApplicationSummaries(string orderByField, Order order, IEnumerable<ApplicationSummary> applications)

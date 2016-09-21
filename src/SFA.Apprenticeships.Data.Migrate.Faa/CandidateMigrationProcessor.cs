@@ -13,9 +13,7 @@
     using MongoDB.Driver;
     using Repository.Mongo;
     using Repository.Sql;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using Candidate = Entities.Mongo.Candidate;
     using CandidateSummary = Entities.Sql.CandidateSummary;
 

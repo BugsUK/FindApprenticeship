@@ -196,6 +196,7 @@
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
+    <Compile Include="Extensions\CandidateSearchExtensions.cs" />
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\CandidateMappers.cs" />
@@ -236,6 +237,8 @@
     <Compile Include="Providers\VacancyManagementProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Providers\VacancyStatusChangeProvider.cs" />
+    <Compile Include="Strategies\IVacancySummaryStrategy.cs" />
+    <Compile Include="Strategies\VacancySummaryStrategy.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="ViewModels\Candidate\CandidateApplicationSummariesViewModel.cs" />

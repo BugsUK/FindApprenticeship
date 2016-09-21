@@ -19,6 +19,7 @@
     using Infrastructure.Presentation;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
@@ -564,8 +565,6 @@
             _vacancyPostingService.UpdateVacancy(vacancy);
         }
 
-        
-
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -746,6 +745,9 @@
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
             if (isVacancySearch)
             {
@@ -756,6 +758,7 @@
             // Although the most straightforward thing to do would be to get by Vacancy.VacancyManagerId, this is sometimes null.
             // TODO: It may be that we should (and AVMS did) try Vacancy.VacancyManagerId first and then fall back to VacancyParty (aka VacancyOwnerRelationship)
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
+            _logService.Info($"Retrieved vacancy parties {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var ownedProviderSites = _providerService.GetOwnedProviderSites(providerId);
 
@@ -766,21 +769,25 @@
                 .Where(
                     v => (v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown)
                          && v.Status != VacancyStatus.Withdrawn && v.Status != VacancyStatus.Deleted);
+            _logService.Info($"Retrieved minimal vacancy details {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var hasVacancies = minimalVacancyDetails.Any();
 
             var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.OfflineVacancy == false).Select(a => a.VacancyId);
 
             var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
+            _logService.Info($"Retrieved application counts {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             // Apply each of the filters to the vacancies
 
             // Get vacancies for selected filter
             var filteredVacancies = (IEnumerable<IMinimalVacancyDetails>)Filter(minimalVacancyDetails, vacanciesSummarySearch.FilterType, applicationCountsByVacancyId).ToList();
+            _logService.Info($"Filtered vacancies {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var vacancyPartyIds = new HashSet<int>(filteredVacancies.Select(v => v.OwnerPartyId));
             var employers = _employerService.GetMinimalEmployerDetails(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct(), false);
             var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
+            _logService.Info($"Retrieved employers {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             filteredVacancies = filteredVacancies.Select(v =>
             {
@@ -792,6 +799,7 @@
             // try to filter as soon as we can to not get too many vacancies from DB
             if (isVacancySearch)
             {
+                _logService.Info($"Running vacancy search {stopwatch.ElapsedMilliseconds}ms elapsed");
                 // If doing a search then all the vacancies have been fetched and after filtering need to be cut down to the current page
 
                 string vacancyReference;
@@ -807,12 +815,15 @@
                         v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
                     );
                 }
+                _logService.Info($"Vacancy search completed {stopwatch.ElapsedMilliseconds}ms elapsed");
             }
 
             var vacanciesToFetch = Sort(filteredVacancies, vacanciesSummarySearch).GetCurrentPage(vacanciesSummarySearch).ToList();
+            _logService.Info($"Sorted vacancies {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var vacanciesWithoutEmployerName =
                 _vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId));
+            _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var vacancies = Sort(vacanciesWithoutEmployerName.Select(v =>
             {
@@ -822,6 +833,7 @@
             }), vacanciesSummarySearch);
 
             var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
+            _logService.Info($"Mapped vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var applicationCountsByVacancyIdForPage = applicationCountsByVacancyId;
 
@@ -835,6 +847,7 @@
             }
 
             var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+            _logService.Info($"Retrieved vacancy locations {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             foreach (var vacancySummary in vacancySummaries)
             {
@@ -867,6 +880,7 @@
                 HasVacancies = hasVacancies,
                 Vacancies = vacancyPage
             };
+            _logService.Info($"Complete {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             return vacanciesSummary;
         }
@@ -1005,10 +1019,15 @@
 
             var utcNow = _dateTimeService.UtcNow;
 
+            //ra-217: The ~Yesterday and ~MoreThan48hours handle special cases. See work item and unit tests for verbose description.
             var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
-            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
-            var submittedMoreThan48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
             var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
+
+            var submittedYesterday =
+                vacancies.Where(v => IsVacancySubmittedYesterday(v, utcNow)).ToList();
+
+            var submittedMoreThan48Hours =
+                vacancies.Where(v => IsVacancySubmittedMoreThan48HrsAgo(v, utcNow)).ToList();
 
             var regionalTeamsMetrics = GetRegionalTeamsMetrics(vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted);
 
@@ -1061,6 +1080,63 @@
             };
 
             return viewModel;
+        }
+
+        private static bool IsVacancySubmittedMoreThan48HrsAgo(VacancySummary v, DateTime utcNow)
+        {
+            if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
+            {
+                return false;
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Sunday || utcNow.DayOfWeek == DayOfWeek.Monday)
+                {
+                    return v.DateSubmitted < utcNow.Date.AddDays(-3);
+                }
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Saturday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Monday || utcNow.DayOfWeek == DayOfWeek.Tuesday)
+                {
+                    return v.DateSubmitted < utcNow.Date.AddDays(-3);
+                }
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Sunday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
+                {
+                    return v.DateSubmitted < utcNow.Date.AddDays(-2);
+                }
+            }
+
+            return v.DateSubmitted < utcNow.Date.AddDays(-1);
+        }
+
+        private static bool IsVacancySubmittedYesterday(VacancySummary v, DateTime utcNow)
+        {
+            if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
+            {
+                return false;
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    return false;
+                }
+
+                if (utcNow.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
+                }
+            }
+
+            return v.DateSubmitted >= utcNow.Date.AddDays(-1);
         }
 
         private List<VacancySummary> SearchVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, List<VacancySummary> vacancies)
@@ -1166,7 +1242,6 @@
 
             return GetVacancyViewModelFrom(nextAvailableVacancy);
         }
-
 
         private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
         {
