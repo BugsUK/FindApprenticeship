@@ -11,5 +11,6 @@
         public SubVacancy SubVacancy { get; set; }
         public bool UpdateNotes { get; set; }
         public ApplicationStatuses? UpdateStatusTo { get; set; }
+        //public string UpdateUnsuccessfulReasonTo { get; set; }
     }
 }

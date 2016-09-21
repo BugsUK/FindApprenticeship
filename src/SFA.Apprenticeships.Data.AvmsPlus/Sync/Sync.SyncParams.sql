@@ -6,5 +6,6 @@
     [TraineeshipLastCreatedDate] DATETIME2 NULL, 
     [TraineeshipLastUpdatedDate] DATETIME2 NULL, 
     [CandidateLastCreatedDate] DATETIME2 NULL, 
-    [CandidateLastUpdatedDate] DATETIME2 NULL 
+    [CandidateLastUpdatedDate] DATETIME2 NULL, 
+    [LastAuditEventDate] DATETIME2 NULL 
 )

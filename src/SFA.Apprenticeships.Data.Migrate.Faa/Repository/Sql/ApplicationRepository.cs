@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Dapper;
     using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
 
@@ -28,7 +29,29 @@
 
         public IDictionary<int, ApplicationSummary> GetApplicationSummariesByIds(IEnumerable<int> applicationIds)
         {
-            return _getOpenConnection.Query<ApplicationSummary>("SELECT ApplicationId, ApplicationStatusTypeId, OutcomeReasonOther, AllocatedTo FROM Application WHERE ApplicationId in @applicationIds", new { applicationIds }).ToDictionary(a => a.ApplicationId, a => a);
+            return _getOpenConnection.Query<ApplicationSummary>("SELECT ApplicationId, ApplicationStatusTypeId, UnsuccessfulReasonId, OutcomeReasonOther, AllocatedTo FROM Application WHERE ApplicationId in @applicationIds", new { applicationIds }).ToDictionary(a => a.ApplicationId, a => a);
+        }
+
+        public void DeleteByCandidateId(IEnumerable<int> candidateIds)
+        {
+            var connection = _getOpenConnection.GetOpenConnection();
+
+            const string subVacancySql =
+@"DELETE FROM SubVacancy 
+WHERE AllocatedApplicationId IN 
+(SELECT ApplicationId FROM Application WHERE CandidateId IN @CandidateIds)";
+            connection.Execute(subVacancySql, new {candidateIds});
+
+            const string applicationHistorySql = 
+@"DELETE FROM ApplicationHistory 
+WHERE ApplicationId IN 
+(SELECT ApplicationId FROM Application WHERE CandidateId IN @CandidateIds)";
+            connection.Execute(applicationHistorySql, new {candidateIds});
+
+            const string applicationSql =
+@"DELETE FROM Application 
+WHERE CandidateId IN @CandidateIds";
+            connection.Execute(applicationSql, new {candidateIds});
         }
     }
 }

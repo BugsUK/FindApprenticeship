@@ -7,9 +7,7 @@
     using Configuration;
     using Entities.Mongo;
     using MongoDB.Driver;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
 
     public class CandidateUserRepository
     {

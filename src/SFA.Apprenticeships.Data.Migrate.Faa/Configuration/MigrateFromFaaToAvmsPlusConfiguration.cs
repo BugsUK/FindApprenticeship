@@ -12,6 +12,8 @@
 
         public string SourceUsersDb { get; set; }
 
+        public string SourceAuditDb { get; set; }
+
         public string TargetCandidatesDb { get; set; }
 
         public string TargetApplicationsDb { get; set; }

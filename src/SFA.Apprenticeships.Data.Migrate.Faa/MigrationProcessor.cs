@@ -7,9 +7,7 @@
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
     using Repository.Sql;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
 
     public class MigrationProcessor
     {
@@ -50,7 +48,8 @@
             {
                 new CandidateMigrationProcessor(new CandidateMappers(_logService), syncRepository, genericSyncRespository, targetDatabase, _configurationService, _logService),
                 new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService),
-                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService)
+                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService),
+                new AuditMigrationProcessor(syncRepository, targetDatabase, _configurationService, _logService)
             };
 
             _logService.Info("Execute Started");
