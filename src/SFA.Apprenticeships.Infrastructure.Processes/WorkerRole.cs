@@ -4,7 +4,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using System.Net;
     using System.Threading;
     using Application.Candidates;
-    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus;
     using Azure.ServiceBus.Configuration;
@@ -15,7 +14,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Elastic.Common.IoC;
     using EmployerDataService.IoC;
     using IoC;
-    using LegacyWebServices.IoC;
     using LocationLookup.IoC;
     using Logging;
     using Logging.IoC;
@@ -33,11 +31,8 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
-
-    using SFA.Apprenticeships.Application.Candidate;
-    using SFA.Apprenticeships.Application.Candidate.Configuration;
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Candidate.Configuration;
+    using Application.Interfaces;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -121,9 +116,8 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<AuditRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(servicesConfiguration, cacheConfig));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
-                x.AddRegistry(new VacancySourceRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

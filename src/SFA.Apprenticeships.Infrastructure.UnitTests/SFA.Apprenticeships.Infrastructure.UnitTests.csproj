@@ -185,14 +185,6 @@
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
     <Compile Include="EmployerDataService\EmployerAddressValidationTests.cs" />
     <Compile Include="EmployerDataService\Mappers\BsAddressMapperTests.cs" />
-    <Compile Include="LegacyWebServices\Candidate\LegacyCandidateProviderBuilder.cs" />
-    <Compile Include="LegacyWebServices\Candidate\MockGatewayService.cs" />
-    <Compile Include="LegacyWebServices\Candidate\UpdateCandidateTests.cs" />
-    <Compile Include="LegacyWebServices\GatewayApprenticeshipVacancyDetailMapperTests.cs" />
-    <Compile Include="LegacyWebServices\GatewayTraineeshipVacancyDetailMapperTests.cs" />
-    <Compile Include="LegacyWebServices\GatewayTraineeshipVacancySummaryMapperTests.cs" />
-    <Compile Include="LegacyWebServices\GatewayApprenticeshipVacancySummaryMapperTests.cs" />
-    <Compile Include="LegacyWebServices\Candidate\CreateCandidateTests.cs" />
     <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
     <Compile Include="Postcode\PostalAddressLookupProviderTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
@@ -319,10 +311,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
       <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
-      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>

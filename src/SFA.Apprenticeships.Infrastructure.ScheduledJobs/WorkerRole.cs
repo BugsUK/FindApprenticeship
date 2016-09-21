@@ -6,7 +6,6 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
@@ -17,7 +16,6 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Elastic.Common.IoC;
     using EmployerDataService.IoC;
     using IoC;
-    using LegacyWebServices.IoC;
     using LocationLookup.IoC;
     using Logging;
     using Logging.IoC;
@@ -33,11 +31,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
-
     using Application.Candidate.Configuration;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -159,9 +154,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(servicesConfiguration, cacheConfig));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
-                x.AddRegistry(new VacancySourceRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();

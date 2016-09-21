@@ -10,7 +10,6 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
-    using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.LocationLookup.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
@@ -28,9 +27,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using StructureMap;
     using StructureMap.Web;
 
@@ -60,9 +57,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(servicesConfiguration, cacheConfig));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
-                x.AddRegistry(new VacancySourceRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<LocationLookupRegistry>();
