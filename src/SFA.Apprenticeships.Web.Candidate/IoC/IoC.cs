@@ -1,6 +1,5 @@
 namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
-    using Application.Candidate.Configuration;
     using Common.IoC;
     using Common.Providers;
     using Common.Services;
@@ -42,7 +41,6 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
-            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
             var sqlConfiguration = configurationService.Get<SqlConfiguration>();
 
@@ -57,7 +55,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new RaaRegistry(servicesConfiguration));
+                x.AddRegistry<RaaRegistry>();
                 x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));

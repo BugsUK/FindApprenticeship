@@ -174,15 +174,12 @@
     </Compile>
     <Compile Include="Applications\ApplicationHousekeepingRequestSubscriber.cs" />
     <Compile Include="Applications\ApplicationStatusChangedSubscriber.cs" />
-    <Compile Include="Applications\ApplicationStatusSummaryPageSubscriber.cs" />
     <Compile Include="Applications\ApplicationStatusSummarySubscriber.cs" />
     <Compile Include="Applications\CommunicationHousekeepingRequestSubscriber.cs" />
     <Compile Include="Applications\SubmitApprenticeshipApplicationRequestSubscriber.cs" />
     <Compile Include="Applications\SubmitTraineeshipApplicationRequestSubscriber.cs" />
     <Compile Include="Candidates\CandidateAccountHousekeepingSubscriber.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesSubscriber.cs" />
-    <Compile Include="Candidates\CreateCandidateRequestSubscriber.cs" />
-    <Compile Include="Candidates\SaveCandidateRequestSubscriber.cs" />
     <Compile Include="Communications\CandidateCommunicationHelper.cs" />
     <Compile Include="Communications\Commands\CandidateDailyDigestCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CandidateCommunicationCommand.cs" />

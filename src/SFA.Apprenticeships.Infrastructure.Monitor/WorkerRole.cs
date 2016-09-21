@@ -8,7 +8,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Azure.Common.IoC;
     using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
-    using Common.Configuration;
     using Common.IoC;
     using Consumers;
     using Elastic.Common.IoC;
@@ -23,7 +22,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using Application.Candidate.Configuration;
     using Application.Interfaces;
     using StructureMap;
     using UserDirectory.IoC;

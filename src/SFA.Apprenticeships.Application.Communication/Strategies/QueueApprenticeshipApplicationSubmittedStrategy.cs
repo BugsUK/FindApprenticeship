@@ -4,24 +4,23 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies.Traineeships;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Vacancy;
-    using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 
-    public class LegacyQueueTraineeshipApplicationSubmittedStrategy : ISendTraineeshipApplicationSubmittedStrategy
+    public class QueueApprenticeshipApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
     {
-        private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _vacancyDataProvider;
-        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
+        private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ISendCandidateCommunicationStrategy _sendCandidateCommunicationStrategy;
 
-        public LegacyQueueTraineeshipApplicationSubmittedStrategy(IVacancyDataProvider<TraineeshipVacancyDetail> vacancyDataProvider, ICandidateReadRepository candidateReadRepository, ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository, ISendCandidateCommunicationStrategy queueCommunicationRequestStrategy)
+        public QueueApprenticeshipApplicationSubmittedStrategy(IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider, IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, ICandidateReadRepository candidateReadRepository, ISendCandidateCommunicationStrategy queueCommunicationRequestStrategy)
         {
             _vacancyDataProvider = vacancyDataProvider;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _candidateReadRepository = candidateReadRepository;
-            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _sendCandidateCommunicationStrategy = queueCommunicationRequestStrategy;
         }
 
@@ -37,18 +36,17 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle, vacancy.Title),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyReference, vacancy.VacancyReference),
-                new CommunicationToken(CommunicationTokens.ApplicationVacancyEmployerName, vacancy.EmployerName),
-                new CommunicationToken(CommunicationTokens.ProviderContact, vacancy.Contact)
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyEmployerName, vacancy.EmployerName)
             };
-            
-            _sendCandidateCommunicationStrategy.Send(candidateId, MessageTypes.TraineeshipApplicationSubmitted, applicationTokens);
+
+            _sendCandidateCommunicationStrategy.Send(candidateId, MessageTypes.ApprenticeshipApplicationSubmitted, applicationTokens);
         }
 
-        private TraineeshipApplicationDetail GetApplication(IEnumerable<CommunicationToken> tokens)
+        private ApprenticeshipApplicationDetail GetApplication(IEnumerable<CommunicationToken> tokens)
         {
             var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
 
-            return _traineeshipApplicationReadRepository.Get(applicationId, true);
+            return _apprenticeshipApplicationReadRepository.Get(applicationId, true);
         }
     }
 }

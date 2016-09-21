@@ -12,11 +12,7 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Raa
     using NUnit.Framework;
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
-
-    using Application.Candidate.Configuration;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using StructureMap;
 
     [TestFixture]
@@ -41,7 +37,7 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Raa
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<SourceRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
-                x.AddRegistry(new RaaRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Raa }));
+                x.AddRegistry<RaaRegistry>();
             });
             
             _referenceDataProvider = container.GetInstance<IReferenceDataProvider>();

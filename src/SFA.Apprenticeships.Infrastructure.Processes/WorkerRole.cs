@@ -31,7 +31,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
-    using Application.Candidate.Configuration;
     using Application.Interfaces;
     using StructureMap;
     using VacancyIndexer.IoC;
@@ -97,7 +96,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
-            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
             var sqlConfiguration = configurationService.Get<SqlConfiguration>();
 
@@ -116,7 +114,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<AuditRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new RaaRegistry(servicesConfiguration));
+                x.AddRegistry<RaaRegistry>();
                 x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();

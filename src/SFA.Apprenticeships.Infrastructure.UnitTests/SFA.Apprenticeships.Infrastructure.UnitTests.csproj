@@ -197,9 +197,6 @@
     <Compile Include="Processes\Builders\ApplicationStatusChangedSubscriberBuilder.cs" />
     <Compile Include="Processes\Builders\EmailRequestSubscriberBuilder.cs" />
     <Compile Include="Processes\EmailRequestSubscriberTests.cs" />
-    <Compile Include="Processes\SaveCandidateRequestSubscriberTests.cs" />
-    <Compile Include="Processes\SubmitApprenticeshipApplicationRequestSubscriberTests.cs" />
-    <Compile Include="Processes\SubmitTraineeshipApplicationRequestSubscriberTests.cs" />
     <Compile Include="Processes\VacancyStatusSummarySubscriberTests.cs" />
     <Compile Include="Processes\VacancySummaryCompleteSubscriberTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

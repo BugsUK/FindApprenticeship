@@ -1,19 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.IoC
 {
     using Application.ReferenceData;
-    using Application.Candidate.Configuration;
     using Strategies;
     using StructureMap.Configuration.DSL;
     
     public class RaaRegistry : Registry
     {
-        public RaaRegistry(ServicesConfiguration servicesConfiguration)
+        public RaaRegistry()
         {
-            if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Raa)
-            {
-                For<IReferenceDataProvider>()
-                    .Use<ReferenceDataProvider>();
-            }
+            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
 
             For<IGetReleaseNotesStrategy>().Use<GetReleaseNotesStrategy>();
         }

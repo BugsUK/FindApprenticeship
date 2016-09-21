@@ -172,7 +172,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Consumers\ApplicationEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\DailyDigestControlQueueConsumer.cs" />
     <Compile Include="Consumers\HousekeepingControlQueueConsumer.cs" />
     <Compile Include="Consumers\SavedSearchControlQueueConsumer.cs" />

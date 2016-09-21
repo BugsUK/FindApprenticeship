@@ -1,17 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Applications
 {
-    using Apprenticeships.Application.Application;
     using Apprenticeships.Application.Application.Entities;
     using Apprenticeships.Application.Application.Strategies;
     using Apprenticeships.Application.Applications;
-    using Apprenticeships.Application.Applications.Entities;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
     using System;
     using System.Linq;
 
@@ -20,7 +18,6 @@
     {
         private ApplicationStatusProcessor _applicationStatusProcessor;
         private Mock<IApplicationStatusUpdateStrategy> _applicationStatusUpdateStrategy;
-        private Mock<ILegacyApplicationStatusesProvider> _legacyApplicationStatusProvider;
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadMock;
         private Mock<ICandidateReadRepository> _candidateReadMock;
         private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
@@ -30,7 +27,6 @@
         [SetUp]
         public void SetUp()
         {
-            _legacyApplicationStatusProvider = new Mock<ILegacyApplicationStatusesProvider>();
             _apprenticeshipApplicationReadMock = new Mock<IApprenticeshipApplicationReadRepository>();
             _traineeshipApplicationReadMock = new Mock<ITraineeshipApplicationReadRepository>();
             _candidateReadMock = new Mock<ICandidateReadRepository>();
@@ -44,7 +40,6 @@
                 _apprenticeshipApplicationReadMock.Object,
                 _traineeshipApplicationReadMock.Object,
                 _candidateReadMock.Object,
-                _legacyApplicationStatusProvider.Object,
                 _applicationStatusUpdateStrategy.Object);
         }
 

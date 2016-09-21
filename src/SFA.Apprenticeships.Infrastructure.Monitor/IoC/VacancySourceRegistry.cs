@@ -15,17 +15,14 @@
         public VacancySourceRegistry()
         {
             // Strategies
-            For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>()
+            For<IGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>()
                     .Use<GetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
-            For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>()
+            For<IGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>()
                 .Use<GetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
 
             // Application status provider -> it's not exactly related with vacancy sources...
             For<IGetCandidateApprenticeshipApplicationsStrategy>()
                     .Use<GetCandidateApprenticeshipApplicationsStrategy>();
-
-            For<ILegacyApplicationStatusesProvider>()
-                .Use<NullApplicationStatusesProvider>();
 
             // Services --
             For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();

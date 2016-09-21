@@ -3,7 +3,6 @@
     using Application.Application.Entities;
     using Application.Application.Strategies;
     using Application.Applications;
-    using Application.Applications.Entities;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
     using Application.Candidate;
@@ -62,8 +61,8 @@
             For<CommunicationCommand>().Use<ProviderCommunicationCommand>();
             For<CommunicationCommand>().Use<EmailCommunicationCommand>();
 
-            For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
-            For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
+            For<ISendApplicationSubmittedStrategy>().Use<QueueApprenticeshipApplicationSubmittedStrategy>();
+            For<ISendTraineeshipApplicationSubmittedStrategy>().Use<QueueTraineeshipApplicationSubmittedStrategy>();
             For<ISendCandidateCommunicationStrategy>().Use<QueueCandidateCommunicationStrategy>();
             For<ISendContactMessageStrategy>().Use<QueueContactMessageStrategy>();
             For<ISendUsernameUpdateCommunicationStrategy>().Use<QueueUsernameUpdateCommunicationStrategy>();
@@ -133,14 +132,11 @@
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
             RegisterServiceBusMessageBroker<ApplicationHousekeepingRequestSubscriber, ApplicationHousekeepingRequest>();
             RegisterServiceBusMessageBroker<ApplicationStatusChangedSubscriber, ApplicationStatusChanged>();
-            RegisterServiceBusMessageBroker<ApplicationStatusSummaryPageSubscriber, ApplicationUpdatePage>();
             RegisterServiceBusMessageBroker<CommunicationHousekeepingRequestSubscriber, CommunicationHousekeepingRequest>();
             RegisterServiceBusMessageBroker<SubmitApprenticeshipApplicationRequestSubscriber, SubmitApprenticeshipApplicationRequest>();
             RegisterServiceBusMessageBroker<SubmitTraineeshipApplicationRequestSubscriber, SubmitTraineeshipApplicationRequest>();
             RegisterServiceBusMessageBroker<CandidateAccountHousekeepingSubscriber, CandidateHousekeeping>();
             RegisterServiceBusMessageBroker<CandidateSavedSearchesSubscriber, CandidateSavedSearches>();
-            RegisterServiceBusMessageBroker<CreateCandidateRequestSubscriber, CreateCandidateRequest>();
-            RegisterServiceBusMessageBroker<SaveCandidateRequestSubscriber, SaveCandidateRequest>();
             RegisterServiceBusMessageBroker<CommunicationRequestSubscriber, CommunicationRequest>();
             RegisterServiceBusMessageBroker<CreateVacancySiteMapRequestSubscriber, CreateVacancySiteMapRequest>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();

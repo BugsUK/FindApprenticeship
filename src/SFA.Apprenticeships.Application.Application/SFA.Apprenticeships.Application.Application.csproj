@@ -91,7 +91,6 @@
     <Compile Include="Extensions\ApplicationStatusSummaryExtensions.cs" />
     <Compile Include="Extensions\ApprenticeshipApplicationDetailExtension.cs" />
     <Compile Include="Extensions\TraineeshipApplicationDetailExtension.cs" />
-    <Compile Include="ILegacyApplicationStatusesProvider.cs" />
     <Compile Include="Strategies\ApplicationStatusAlertStrategy.cs" />
     <Compile Include="Strategies\ApplicationStatusUpdateStrategy.cs" />
     <Compile Include="Strategies\ISetApplicationStatusStrategy.cs" />
