@@ -377,7 +377,7 @@
 
         public static class ContactNameMessages
         {
-            public const string LabelText = "Contact name (optional)";
+            public const string LabelText = "Contact name";
             public const string TooLongErrorText = "Contact name must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
             public const string FreeTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
@@ -386,7 +386,7 @@
 
         public static class ContactNumberMessages
         {
-            public const string LabelText = "Contact number (optional)";
+            public const string LabelText = "Contact number";
             public const string LengthErrorText = "Contact number must be between 8 and 16 digits or not specified";
             public const string WhiteListRegularExpression = Whitelists.PhoneNumberWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Contact number " + Whitelists.PhoneNumberWhitelist.ErrorText;
@@ -394,7 +394,7 @@
 
         public static class ContactEmailMessages
         {
-            public const string LabelText = "Email (optional)";
+            public const string LabelText = "Email";
             public const string TooLongErrorText = "Email address must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Email address " + Whitelists.EmailAddressWhitelist.ErrorText;

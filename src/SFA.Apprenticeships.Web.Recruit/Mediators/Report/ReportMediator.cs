@@ -1,8 +1,5 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Report
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using Apprenticeships.Application.Interfaces;
     using Common.Mediators;
     using CsvHelper.Configuration;
@@ -11,7 +8,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Report
     using Raa.Common.CsvClassMaps;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Report;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     using ViewModels.Report;
 
     public class ReportMediator : MediatorBase, IReportMediator
@@ -81,7 +80,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Report
         {
             try
             {
-                var reportResult = _reportingProvider.GetCandidatesWithApplicationsResultItem(parameters.FromDate.Date, parameters.ToDate.Date, username);
+                IList<CandidatesWithApplicationsResultItem> reportResult = _reportingProvider.GetCandidatesWithApplicationsResultItem(parameters.FromDate.Date, parameters.ToDate.Date, username);
 
                 var headerBuilder = new StringBuilder();
                 headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");

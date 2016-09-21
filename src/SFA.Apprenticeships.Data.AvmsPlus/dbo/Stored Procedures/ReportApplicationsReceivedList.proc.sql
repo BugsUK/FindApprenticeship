@@ -13,6 +13,7 @@ Date			Version		Author			Comment
 											'Please Select' etc are displayed as unspecified
 03-Dec-2008		1.05		Femma Ashraf	Changed the Filters for LSC Region, Local Authority and Postcode
 											so that they come off the Vacancy table. Removed the ManagerIsEmployer logic check
+19-Sep-2016		1.06		Shoma Gujjar	Capture CandidateId and CandidateGuid
 ---------------------------------------------------------------------- */                 
 
 CREATE PROCEDURE [dbo].[ReportApplicationsReceivedList](
@@ -133,6 +134,8 @@ BEGIN TRY
 	BEGIN
 	SET ROWCOUNT @rowcount;  
 	select	isnull(P.FirstName + ' ','') + P.Surname as CandidateName,
+			C.CandidateId as CandidateId,
+			C.CandidateGuid as CandidateGuid,
 			P.Email,
 			C.AddressLine1 AS AddressLine1,
 			C.AddressLine2 AS AddressLine2,

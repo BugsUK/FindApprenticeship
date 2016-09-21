@@ -1,13 +1,14 @@
 namespace SFA.Apprenticeships.Application.Reporting.Strategies
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Reporting;
     using Domain.Raa.Interfaces.Reporting;
+    using System;
+    using System.Collections.Generic;
 
     public class GetApplicationsReceivedResultItemsStrategy : IGetApplicationsReceivedResultItemsStrategy
     {
         private readonly IReportingRepository _reportingRepository;
+
 
         public GetApplicationsReceivedResultItemsStrategy(IReportingRepository reportingRepository)
         {

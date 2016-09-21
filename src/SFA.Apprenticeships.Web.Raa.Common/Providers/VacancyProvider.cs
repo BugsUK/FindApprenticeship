@@ -565,8 +565,6 @@
             _vacancyPostingService.UpdateVacancy(vacancy);
         }
 
-        
-
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -762,8 +760,10 @@
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
             _logService.Info($"Retrieved vacancy parties {stopwatch.ElapsedMilliseconds}ms elapsed");
 
+            var ownedProviderSites = _providerService.GetOwnedProviderSites(providerId);
+
             var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(
-                vacancyParties.Select(vp => vp.VacancyPartyId), providerId)
+                vacancyParties.Select(vp => vp.VacancyPartyId), providerId, ownedProviderSites.Select(ps => ps.ProviderSiteId))
                 .Values
                 .SelectMany(a => a)
                 .Where(
@@ -1019,10 +1019,15 @@
 
             var utcNow = _dateTimeService.UtcNow;
 
+            //ra-217: The ~Yesterday and ~MoreThan48hours handle special cases. See work item and unit tests for verbose description.
             var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
-            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
-            var submittedMoreThan48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
             var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
+
+            var submittedYesterday =
+                vacancies.Where(v => IsVacancySubmittedYesterday(v, utcNow)).ToList();
+
+            var submittedMoreThan48Hours =
+                vacancies.Where(v => IsVacancySubmittedMoreThan48HrsAgo(v, utcNow)).ToList();
 
             var regionalTeamsMetrics = GetRegionalTeamsMetrics(vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted);
 
@@ -1075,6 +1080,63 @@
             };
 
             return viewModel;
+        }
+
+        private static bool IsVacancySubmittedMoreThan48HrsAgo(VacancySummary v, DateTime utcNow)
+        {
+            if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
+            {
+                return false;
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Sunday || utcNow.DayOfWeek == DayOfWeek.Monday)
+                {
+                    return v.DateSubmitted < utcNow.Date.AddDays(-3);
+                }
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Saturday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Monday || utcNow.DayOfWeek == DayOfWeek.Tuesday)
+                {
+                    return v.DateSubmitted < utcNow.Date.AddDays(-3);
+                }
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Sunday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
+                {
+                    return v.DateSubmitted < utcNow.Date.AddDays(-2);
+                }
+            }
+
+            return v.DateSubmitted < utcNow.Date.AddDays(-1);
+        }
+
+        private static bool IsVacancySubmittedYesterday(VacancySummary v, DateTime utcNow)
+        {
+            if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
+            {
+                return false;
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    return false;
+                }
+
+                if (utcNow.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
+                }
+            }
+
+            return v.DateSubmitted >= utcNow.Date.AddDays(-1);
         }
 
         private List<VacancySummary> SearchVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, List<VacancySummary> vacancies)
@@ -1180,7 +1242,6 @@
 
             return GetVacancyViewModelFrom(nextAvailableVacancy);
         }
-
 
         private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
         {
