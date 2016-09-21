@@ -73,10 +73,8 @@
   <ItemGroup>
     <Folder Include="Profiles" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.Migrate.FaaContent\" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.MigrateContent\" />
   </ItemGroup>
   <ItemGroup>
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MigrateContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.Migrate.FaaContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
@@ -100,7 +98,4 @@ SET COPY_PATH=$(ProjectDir)..\..\config\$(ProjectName)\
 robocopy /E /IS %COPY_PATH% $(ProjectDir) /XF *.csdef
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
-  <Target Name="CopyWorkerRoleConfigurations" BeforeTargets="AfterPackageComputeService">
-    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Migrate\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Migrate.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Migrate" OverwriteReadOnlyFiles="true" />
-  </Target>
 </Project>
