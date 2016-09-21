@@ -50,8 +50,8 @@
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
-        private readonly ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> _candidateApprenticeshipVacancyDetailStrategy;
-        private readonly ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> _candidateTraineeshipVacancyDetailStrategy;
+        private readonly IGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> _candidateApprenticeshipVacancyDetailStrategy;
+        private readonly IGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> _candidateTraineeshipVacancyDetailStrategy;
         private readonly ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy;
         private readonly IVerifyMobileStrategy _verifyMobileStrategy;
         private readonly ISubmitContactMessageStrategy _submitContactMessageStrategy;
@@ -90,8 +90,8 @@
             ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy,
-            ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> candidateApprenticeshipVacancyDetailStrategy,
-            ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy,
+            IGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> candidateApprenticeshipVacancyDetailStrategy,
+            IGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy,
             ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
             ILogService logService,
             IVerifyMobileStrategy verifyMobileStrategy,

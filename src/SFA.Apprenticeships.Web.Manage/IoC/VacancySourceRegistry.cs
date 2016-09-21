@@ -30,9 +30,6 @@
             For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
                 .Use<TraineeshipVacancyDataProvider>();
 
-            For<ILegacyApplicationStatusesProvider>()
-                .Use<NullApplicationStatusesProvider>();
-
             For<IReferenceDataProvider>()
                 .Use<ReferenceDataProvider>();
         }

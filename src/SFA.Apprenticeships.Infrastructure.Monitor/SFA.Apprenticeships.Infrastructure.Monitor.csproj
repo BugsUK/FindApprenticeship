@@ -228,7 +228,6 @@
     <Compile Include="Tasks\CheckElasticsearchCluster.cs" />
     <Compile Include="Tasks\CheckLogstashLogs.cs" />
     <Compile Include="Tasks\CheckMongoReplicaSets.cs" />
-    <Compile Include="Tasks\CheckNasGateway.cs" />
     <Compile Include="Tasks\CheckPostcodeService.cs" />
     <Compile Include="Tasks\CheckApprenticeshipApplicationRepository.cs" />
     <Compile Include="Tasks\CheckCandidateRepository.cs" />
@@ -369,10 +368,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
       <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
-      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LocationLookup\SFA.Apprenticeships.Infrastructure.LocationLookup.csproj">
       <Project>{1C6F7710-0AE6-4D9F-BC73-0FAA9C9C60CA}</Project>

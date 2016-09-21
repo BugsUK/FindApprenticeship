@@ -1053,10 +1053,6 @@
       <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
-      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
