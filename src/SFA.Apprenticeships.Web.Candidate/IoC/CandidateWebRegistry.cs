@@ -182,7 +182,7 @@
             For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
             For<IGetCandidateSummariesStrategy>().Use<GetCandidateSummariesStrategy>();
 
-            For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>().Ctor<ISaveCandidateStrategy>().Named("QueuedLegacySaveCandidateStrategy").Ctor<ICodeGenerator>().Named(codeGenerator);
+            For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
 
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
