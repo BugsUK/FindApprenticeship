@@ -228,7 +228,6 @@
     <Compile Include="Tasks\CheckElasticsearchCluster.cs" />
     <Compile Include="Tasks\CheckLogstashLogs.cs" />
     <Compile Include="Tasks\CheckMongoReplicaSets.cs" />
-    <Compile Include="Tasks\CheckNasGateway.cs" />
     <Compile Include="Tasks\CheckPostcodeService.cs" />
     <Compile Include="Tasks\CheckApprenticeshipApplicationRepository.cs" />
     <Compile Include="Tasks\CheckCandidateRepository.cs" />
