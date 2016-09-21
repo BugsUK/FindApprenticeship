@@ -61,16 +61,6 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Migrate\SFA.Apprenticeships.Infrastructure.Migrate.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.Migrate</Name>
-      <Project>{F1446ECB-60F3-401E-A8EF-5F8227519842}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.Migrate</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Migrate.Faa\SFA.Apprenticeships.Infrastructure.Migrate.Faa.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.Migrate.Faa</Name>
       <Project>{29EB5CF7-0CE8-423D-BC2C-EEADF535BB15}</Project>
