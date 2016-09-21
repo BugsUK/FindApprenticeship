@@ -3,7 +3,7 @@
     using System;
     using Domain.Entities.Vacancies;
 
-    public interface ILegacyGetCandidateVacancyDetailStrategy<out TVacancyDetail>
+    public interface IGetCandidateVacancyDetailStrategy<out TVacancyDetail>
         where TVacancyDetail : VacancyDetail
     {
         TVacancyDetail GetVacancyDetails(Guid candidateId, int vacancyId);

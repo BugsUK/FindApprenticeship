@@ -5,11 +5,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
-    using Common.Configuration;
     using Common.IoC;
     using Consumers;
     using Elastic.Common.IoC;
@@ -19,17 +17,12 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Infrastructure.Repositories.Mongo.Candidates.IoC;
     using Infrastructure.Repositories.Mongo.Users.IoC;
     using IoC;
-    using LegacyWebServices.IoC;
     using LocationLookup.IoC;
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-
-    using Application.Candidate.Configuration;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
@@ -126,9 +119,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             var configurationService = container.GetInstance<IConfigurationService>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
-            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
-            var cacheConfig = configurationService.Get<CacheConfiguration>();
-
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -144,15 +134,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
-                //CheckNasGateway monitor task always uses legacy services
-                x.AddRegistry(new LegacyWebServicesRegistry(servicesConfiguration, cacheConfig));
-                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),
-                    new ServicesConfiguration
-                    {
-                        ServiceImplementation = ServicesConfiguration.Legacy,
-                        VacanciesSource = ServicesConfiguration.Legacy
-                    }));
-                
+                x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<MonitorRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
             });

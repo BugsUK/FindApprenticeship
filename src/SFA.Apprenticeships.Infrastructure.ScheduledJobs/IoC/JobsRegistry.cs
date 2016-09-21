@@ -36,7 +36,6 @@
         public JobsRegistry()
         {
             //Application Etl
-            For<ApplicationEtlControlQueueConsumer>().Use<ApplicationEtlControlQueueConsumer>();
             For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
             For<IApplicationStatusAlertStrategy>().Use<ApplicationStatusAlertStrategy>();

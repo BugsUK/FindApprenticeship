@@ -98,8 +98,8 @@
     <Compile Include="Strategies\ISendTraineeshipApplicationSubmittedStrategy.cs" />
     <Compile Include="Strategies\ISendApplicationSubmittedStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\LegacyQueueTraineeshipApplicationSubmittedStrategy.cs" />
-    <Compile Include="Strategies\LegacyQueueApprenticeshipApplicationSubmittedStrategy.cs" />
+    <Compile Include="Strategies\QueueTraineeshipApplicationSubmittedStrategy.cs" />
+    <Compile Include="Strategies\QueueApprenticeshipApplicationSubmittedStrategy.cs" />
     <Compile Include="Strategies\QueueEmployerCommunicationStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
