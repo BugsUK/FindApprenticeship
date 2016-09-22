@@ -101,7 +101,7 @@ JOIN Candidate c ON p.PersonId = c.PersonId
 JOIN County ct on c.CountyId = ct.CountyId 
 JOIN [Application] a ON c.CandidateId = a.CandidateId
 JOIN Vacancy v ON a.VacancyId = v.VacancyId 
-WHERE " + string.Join(" AND ", query);
+WHERE a.ApplicationStatusTypeId >= 2 AND " + string.Join(" AND ", query);
 
             if (request.ProviderSiteIds != null)
             {
