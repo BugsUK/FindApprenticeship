@@ -193,7 +193,7 @@
 
                 LoadCandidates(candidateIds, batch);
                 var destinationCandidateIds = batch.Where(a => candidateIds.ContainsKey(a.CandidateId)).Select(a => candidateIds[a.CandidateId]).ToArray();
-                batch = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidateIds.ContainsKey(a.CandidateId)).ToList();
+                batch = batch.Where(a => a.Vacancy != null && vacancyIds.Contains(a.Vacancy.Id) && candidateIds.ContainsKey(a.CandidateId)).ToList();
 
                 var destinationApplicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(batch.Select(a => a.Id));
                 var candidateApplicationIds = _destinationApplicationRepository.GetApplicationIdsByCandidateIds(destinationCandidateIds);
