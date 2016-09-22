@@ -38,7 +38,7 @@
             "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4", "AddressLine5", "Town", "CountyId", "PostCode", "LocalAuthorityId", "Longitude", "Latitude",
             "ApprenticeshipFrameworkId", "Title", "ApprenticeshipType", "ShortDescription", "WeeklyWage", "WageType", "WageText", "NumberofPositions",
             "ApplicationClosingDate", "InterviewsFromDate", "ExpectedStartDate", "ExpectedDuration", "WorkingWeek", "EmployerAnonymousName",
-            "ApplyOutsideNAVMS", "LockedForSupportUntil", "NoOfOfflineApplicants", "MasterVacancyId", "VacancyLocationTypeId", "VacancyManagerID", "ContractOwnerID",
+            "ApplyOutsideNAVMS", "LockedForSupportUntil", "NoOfOfflineApplicants", "MasterVacancyId", "VacancyLocationTypeId", "VacancyManagerID", "DeliveryOrganisationID", "ContractOwnerID",
             "VacancyGuid", "SubmissionCount", "StartedToQADateTime", "StandardId", "HoursPerWeek", "WageUnitId", "DurationTypeId", "DurationValue", "QAUserName",
             "TrainingTypeId", "VacancyTypeId", "SectorId", "UpdatedDateTime"
         };
@@ -1511,7 +1511,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
 
             if (_configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled())
             {
-                sql += " AND VacancyManagerId IN @providerSiteIds";
+                sql += " AND (VacancyManagerId IN @providerSiteIds OR DeliveryOrganisationId IN @providerSiteIds)";
             }
 
             var vacancyCollections = new List<dynamic>();                               
