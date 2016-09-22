@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using Application.Interfaces;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Queries;
@@ -15,10 +16,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     public class InformationRadiatorController : Controller
     {
         private IVacancyReadRepository _vacancyRepository;
+        private ILogService _logService;
 
-        public InformationRadiatorController(IVacancyReadRepository vacancyRepository)
+        public InformationRadiatorController(IVacancyReadRepository vacancyRepository,
+            ILogService logService)
         {
             _vacancyRepository = vacancyRepository;
+            _logService = logService;
         }
 
         // GET: InformationRadiator
@@ -39,14 +43,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
                 if (result != null && result.Count >= 1)
                 {
-                    viewModel.DatabaseError = false;
-                    viewModel.DatabaseSuccess = true;
+                    viewModel.DatabaseStatus = InformationRadiatorStatus.Success;
+                }
+                else
+                {
+                    viewModel.DatabaseStatus = InformationRadiatorStatus.Warning;
                 }
             }
             catch (Exception ex)
             {
-                viewModel.DatabaseError = true;
-                viewModel.DatabaseException = ex;
+                _logService.Error("Information radiator failure", ex);
+                viewModel.DatabaseStatus = InformationRadiatorStatus.Exception;
             }
 
             return View(viewModel);

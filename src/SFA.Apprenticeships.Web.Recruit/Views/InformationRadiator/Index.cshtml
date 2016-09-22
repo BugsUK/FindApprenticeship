@@ -8,5 +8,5 @@
 
 <dl>
     <dt>Database Status</dt>
-    <dd>@(Model.DatabaseError ? "Exception" : Model.DatabaseSuccess ? "Success" : "Warning")</dd>
+    <dd>@(Model.DatabaseStatus.ToString())</dd>
 </dl>

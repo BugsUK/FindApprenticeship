@@ -5,10 +5,18 @@ using System.Web;
 
 namespace SFA.Apprenticeships.Web.Recruit.ViewModels
 {
+    using Controllers;
+
     public class InformationRadiatorViewModel
     {
-        public bool DatabaseError { get; set; }
-        public bool DatabaseSuccess { get; set; }
-        public Exception DatabaseException { get; set; }
+        public InformationRadiatorStatus DatabaseStatus { get; set; }
+    }
+
+    public enum InformationRadiatorStatus
+    {
+        Unknown,
+        Exception,
+        Warning,
+        Success
     }
 }
