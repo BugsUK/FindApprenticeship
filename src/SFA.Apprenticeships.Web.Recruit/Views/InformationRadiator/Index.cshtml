@@ -1,12 +1,11 @@
 ﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.InformationRadiatorViewModel
 
 @{
-    
+
 }
 
-<h1>Service Status</h1>
+<h1 class="heading-xlarge">Service Status</h1>
 
-<dl>
-    <dt>Database Status</dt>
-    <dd>@(Model.DatabaseStatus.ToString())</dd>
-</dl>
+<ul>
+    <li>Database: @(Model.DatabaseStatus.ToString())</li>
+</ul>
