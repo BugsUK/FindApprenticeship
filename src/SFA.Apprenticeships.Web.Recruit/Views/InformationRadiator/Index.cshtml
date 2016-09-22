@@ -1,0 +1,12 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.InformationRadiatorViewModel
+
+@{
+    
+}
+
+<h1>Service Status</h1>
+
+<dl>
+    <dt>Database Status</dt>
+    <dd>@(Model.DatabaseError ? "Exception" : Model.DatabaseSuccess ? "Success" : "Warning")</dd>
+</dl>
