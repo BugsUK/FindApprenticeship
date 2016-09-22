@@ -70,15 +70,15 @@
             var query = new List<string>(4);
             if (!string.IsNullOrEmpty(request.FirstName))
             {
-                query.Add("FirstName LIKE @FirstName + '%'");
+                query.Add("p.FirstName LIKE @FirstName + '%'");
             }
             if (!string.IsNullOrEmpty(request.LastName))
             {
-                query.Add("Surname LIKE @LastName + '%'");
+                query.Add("p.Surname LIKE @LastName + '%'");
             }
             if (request.DateOfBirth.HasValue)
             {
-                query.Add("DateofBirth = @DateOfBirth");
+                query.Add("c.DateofBirth = @DateOfBirth");
             }
             if (!string.IsNullOrEmpty(request.Postcode))
             {
@@ -86,11 +86,11 @@
             }
             if (!string.IsNullOrEmpty(request.CandidateGuidPrefix))
             {
-                query.Add("CandidateGuid LIKE @CandidateGuidPrefix + '%'");
+                query.Add("c.CandidateGuid LIKE @CandidateGuidPrefix + '%'");
             }
             if (request.CandidateId.HasValue)
             {
-                query.Add("CandidateId = @CandidateId");
+                query.Add("c.CandidateId = @CandidateId");
             }
 
             var sql = 
@@ -101,7 +101,7 @@ JOIN Candidate c ON p.PersonId = c.PersonId
 JOIN County ct on c.CountyId = ct.CountyId 
 JOIN [Application] a ON c.CandidateId = a.CandidateId
 JOIN Vacancy v ON a.VacancyId = v.VacancyId 
-WHERE " + string.Join(" AND ", query);
+WHERE a.ApplicationStatusTypeId >= 2 AND " + string.Join(" AND ", query);
 
             if (request.ProviderSiteIds != null)
             {
