@@ -181,7 +181,7 @@
 
             var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
 
-            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).Where(v => v.VacancyManagerId == null || ownedProviderSites.Contains(v.VacancyManagerId.Value)).ToDictionary(v => v.VacancyId, v => v);
+            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).Where(v => (v.VacancyManagerId != null && ownedProviderSites.Contains(v.VacancyManagerId.Value)) || (v.DeliveryOrganisationId != null && ownedProviderSites.Contains(v.DeliveryOrganisationId.Value))).ToDictionary(v => v.VacancyId, v => v);
             var vacancyOwnerRelationships = _providerService.GetVacancyParties(vacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyOwnerRelationships.Values.Select(vor => vor.EmployerId)).ToDictionary(e => e.EmployerId, e => e);
 
