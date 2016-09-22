@@ -5,6 +5,8 @@ using System.Web.Http;
 
 namespace SFA.Apprenticeship.Web.Api
 {
+    using Newtonsoft.Json.Serialization;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -19,6 +21,9 @@ namespace SFA.Apprenticeship.Web.Api
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new DefaultContractResolver { IgnoreSerializableAttribute = true };
         }
     }
 }

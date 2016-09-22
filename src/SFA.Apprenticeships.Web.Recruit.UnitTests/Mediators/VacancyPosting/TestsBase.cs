@@ -18,6 +18,7 @@
     using Domain.Entities.Raa.Parties;
     using Common.Configuration;
     using Raa.Common.Configuration;
+    using Raa.Common.Strategies;
     using Recruit.Mediators.VacancyPosting;
 
     using SFA.Apprenticeships.Application.Interfaces;
@@ -46,6 +47,7 @@
         private Mock<IUserProfileService> _mockUserProfileService;
         protected Mock<IGeoCodeLookupService> MockGeoCodingService;
         protected Mock<ILocalAuthorityLookupService> MockLocalAuthorityService;
+        private Mock<IVacancySummaryStrategy> _mockVacancySummaryStrategy;
 
         [SetUp]
         public void SetUp()
@@ -80,6 +82,7 @@
             _mockUserProfileService = new Mock<IUserProfileService>();
             MockGeoCodingService = new Mock<IGeoCodeLookupService>();
             MockLocalAuthorityService = new Mock<ILocalAuthorityLookupService>();
+            _mockVacancySummaryStrategy = new Mock<IVacancySummaryStrategy>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -98,7 +101,8 @@
                 _mockCurrentUserService.Object,
                 _mockUserProfileService.Object,
                 MockGeoCodingService.Object,
-                MockLocalAuthorityService.Object);
+                MockLocalAuthorityService.Object,
+                _mockVacancySummaryStrategy.Object);
         }
 
         protected IVacancyPostingMediator GetMediator()

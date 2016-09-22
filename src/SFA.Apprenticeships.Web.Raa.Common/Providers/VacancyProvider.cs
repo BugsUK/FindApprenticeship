@@ -25,6 +25,7 @@
     using Application.Interfaces;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Raa.Parties;
+    using Strategies;
     using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
@@ -33,6 +34,7 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using Order = ViewModels.Order;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
@@ -55,6 +57,7 @@
         private readonly IMapper _mapper;
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
+        private IVacancySummaryStrategy _vacancySummaryStrategy;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -62,7 +65,7 @@
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService,
-            ILocalAuthorityLookupService localAuthLookupService)
+            ILocalAuthorityLookupService localAuthLookupService, IVacancySummaryStrategy vacancySummaryStrategy)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -83,6 +86,7 @@
             _userProfileService = userProfileService;
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
+            _vacancySummaryStrategy = vacancySummaryStrategy;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -745,127 +749,17 @@
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            var vacancyPage = _vacancySummaryStrategy.GetVacancySummaries(vacanciesSummarySearch.SearchString,
+                providerSiteId,
+                providerId,
+                vacanciesSummarySearch.VacancyType,
+                vacanciesSummarySearch.FilterType,
+                vacanciesSummarySearch.OrderByField,
+                vacanciesSummarySearch.Order,
+                vacanciesSummarySearch.PageSize,
+                vacanciesSummarySearch.CurrentPage);
 
-            var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
-            if (isVacancySearch)
-            {
-                //When searching, the ﬁlters (lottery numbers) are ignored and the search applies to all vacancies
-                vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
-            }
-
-            // Although the most straightforward thing to do would be to get by Vacancy.VacancyManagerId, this is sometimes null.
-            // TODO: It may be that we should (and AVMS did) try Vacancy.VacancyManagerId first and then fall back to VacancyParty (aka VacancyOwnerRelationship)
-            var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
-            _logService.Info($"Retrieved vacancy parties {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var ownedProviderSites = _providerService.GetOwnedProviderSites(providerId);
-
-            var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(
-                vacancyParties.Select(vp => vp.VacancyPartyId), providerId, ownedProviderSites.Select(ps => ps.ProviderSiteId))
-                .Values
-                .SelectMany(a => a)
-                .Where(
-                    v => (v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown)
-                         && v.Status != VacancyStatus.Withdrawn && v.Status != VacancyStatus.Deleted);
-            _logService.Info($"Retrieved minimal vacancy details {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var hasVacancies = minimalVacancyDetails.Any();
-
-            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.OfflineVacancy == false).Select(a => a.VacancyId);
-
-            var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
-            _logService.Info($"Retrieved application counts {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            // Apply each of the filters to the vacancies
-
-            // Get vacancies for selected filter
-            var filteredVacancies = (IEnumerable<IMinimalVacancyDetails>)Filter(minimalVacancyDetails, vacanciesSummarySearch.FilterType, applicationCountsByVacancyId).ToList();
-            _logService.Info($"Filtered vacancies {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var vacancyPartyIds = new HashSet<int>(filteredVacancies.Select(v => v.OwnerPartyId));
-            var employers = _employerService.GetMinimalEmployerDetails(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct(), false);
-            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
-            _logService.Info($"Retrieved employers {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            filteredVacancies = filteredVacancies.Select(v =>
-            {
-                v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName; // vacancyPartyToEmployerMap[v.OwnerPartyId].Name;
-                v.ApplicationOrClickThroughCount = v.OfflineVacancy.HasValue && v.OfflineVacancy.Value ? v.ApplicationOrClickThroughCount : applicationCountsByVacancyId[v.VacancyId].AllApplications;
-                return v;
-            });
-
-            // try to filter as soon as we can to not get too many vacancies from DB
-            if (isVacancySearch)
-            {
-                _logService.Info($"Running vacancy search {stopwatch.ElapsedMilliseconds}ms elapsed");
-                // If doing a search then all the vacancies have been fetched and after filtering need to be cut down to the current page
-
-                string vacancyReference;
-                if (VacancyHelper.TryGetVacancyReference(vacanciesSummarySearch.SearchString, out vacancyReference))
-                {
-                    var vacancyReferenceNumber = int.Parse(vacancyReference);
-                    filteredVacancies = filteredVacancies.Where(v => v.VacancyReferenceNumber == vacancyReferenceNumber);
-                }
-                else
-                {
-                    filteredVacancies = filteredVacancies.Where(v =>
-                        (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                        v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
-                    );
-                }
-                _logService.Info($"Vacancy search completed {stopwatch.ElapsedMilliseconds}ms elapsed");
-            }
-
-            var vacanciesToFetch = Sort(filteredVacancies, vacanciesSummarySearch).GetCurrentPage(vacanciesSummarySearch).ToList();
-            _logService.Info($"Sorted vacancies {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var vacanciesWithoutEmployerName =
-                _vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId));
-            _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var vacancies = Sort(vacanciesWithoutEmployerName.Select(v =>
-            {
-                v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName;
-                v.ApplicationOrClickThroughCount = v.OfflineVacancy.HasValue && v.OfflineVacancy.Value ? v.OfflineApplicationClickThroughCount : applicationCountsByVacancyId[v.VacancyId].AllApplications;
-                return v;
-            }), vacanciesSummarySearch);
-
-            var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
-            _logService.Info($"Mapped vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var applicationCountsByVacancyIdForPage = applicationCountsByVacancyId;
-
-            if (isVacancySearch || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.All || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.Completed)
-            {
-                //Get counts again but just for the page of vacancies
-                applicationCountsByVacancyIdForPage =
-                    _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(
-                        vacancySummaries.Where(v => v.Status.CanHaveApplicationsOrClickThroughs())
-                            .Select(a => a.VacancyId));
-            }
-
-            var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
-            _logService.Info($"Retrieved vacancy locations {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            foreach (var vacancySummary in vacancySummaries)
-            {
-                vacancySummary.EmployerName = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId).FullName;
-                vacancySummary.ApplicationCount = applicationCountsByVacancyIdForPage[vacancySummary.VacancyId].AllApplications;
-                vacancySummary.NewApplicationCount = applicationCountsByVacancyIdForPage[vacancySummary.VacancyId].NewApplications;
-                vacancySummary.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancySummary.VacancyId)).ToList();
-            }
-
-            var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
-            {
-                Page = vacancySummaries,
-                ResultsCount = vacancySummaries.Count,
-                CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = filteredVacancies.TotalPages(vacanciesSummarySearch)
-            };
-
-            Func<VacanciesSummaryFilterTypes, int> count = type => Filter(minimalVacancyDetails, type, applicationCountsByVacancyId).Count();
+            Func<VacanciesSummaryFilterTypes, int> count = type => Filter(vacan, type, vacancyPage.ResultsCount).Count();
             var vacanciesSummary = new VacanciesSummaryViewModel
             {
                 VacanciesSummarySearch = vacanciesSummarySearch,
