@@ -3,7 +3,6 @@
     using System.Web.Mvc;
     using Application.Interfaces;
     using Mediators.InformationRadiator;
-    using SFA.Infrastructure.Interfaces;
 
     public class InformationRadiatorController : ManagementControllerBase
     {
