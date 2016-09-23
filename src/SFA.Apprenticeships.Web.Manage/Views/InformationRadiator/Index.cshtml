@@ -6,52 +6,10 @@
 <section>
     <!--<h1 class="heading-xlarge">Information radiator</h1>-->
     <div class="grid-wrapper" style="Margin-Bottom: 20px">
-        <h2 class="heading-medium">Providers (@Model.TotalProviders in total)</h2>
-        <ul class="vacancies-summary">
-            <li>
-                <figure class="data">
-                    <p class="count">@Model.TotalProvidersAskedToOnboard</p>
-                    <figcaption>
-                        <h2>Total providers asked to onboard</h2>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure class="data">
-                    <p class="count">@Model.TotalProvidersOnboarded</p>
-                    <figcaption>
-                        <h2>Total providers onboarded</h2>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure class="data">
-                    <p class="count">@Model.TotalProvidersForcedToMigrate</p>
-                    <figcaption>
-                        <h2>Total providers forced to migrate</h2>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure class="data">
-                    <p class="count">@Model.TotalProvidersMigrated</p>
-                    <figcaption>
-                        <h2>Total providers fully migrated</h2>
-                    </figcaption>
-                </figure>
-            </li>
-            <!--<li>
-                <figure class="data">
-                    <p class="count">@Model.TotalProviderUserAccounts</p>
-                    <figcaption>
-                        <h2>Total provider users onboarded</h2>
-                    </figcaption>
-                </figure>
-            </li>-->
-        </ul>
+        <h2 class="heading-medium">Providers (@Model.TotalProviders in total, @Model.TotalProvidersMigrated with accounts in recruit)</h2>
     </div>
     <div class="grid-wrapper" style="Margin-Bottom: 20px">
-        <h2 class="heading-medium">Vacancies</h2>
+        <h2 class="heading-medium">Vacancies (@Model.TotalVacanciesInReviewViaRaa awaiting review via manage)</h2>
         <ul class="vacancies-summary">
             <li>
                 <figure class="data">
@@ -63,25 +21,9 @@
             </li>
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalDraftVacanciesCreatedViaRaa</p>
+                    <p class="count">@Model.TotalVacanciesSubmittedViaRaa</p>
                     <figcaption>
-                        <h2>Total in draft via recruit</h2>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure class="data">
-                    <p class="count">@Model.TotalVacanciesInReviewViaRaa</p>
-                    <figcaption>
-                        <h2>Total waiting review via manage</h2>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure class="data">
-                    <p class="count">@Model.TotalVacanciesReferredViaRaa</p>
-                    <figcaption>
-                        <h2>Total referred via manage</h2>
+                        <h2>of those, total submitted (@(Math.Round((double)Model.TotalVacanciesSubmittedViaRaa/Model.TotalVacanciesCreatedViaRaa * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
@@ -89,23 +31,83 @@
                 <figure class="data">
                     <p class="count">@Model.TotalVacanciesApprovedViaRaa</p>
                     <figcaption>
-                        <h2>Total made live via manage</h2>
+                        <h2>of those, total made live (@(Math.Round((double)Model.TotalVacanciesApprovedViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalVacanciesClosedViaRaa</p>
+                    <p class="count">@Model.TotalVacanciesReferredViaRaa</p>
                     <figcaption>
-                        <h2>Total closed via closing date</h2>
+                        <h2>of those, total referred at least once (@(Math.Round((double)Model.TotalVacanciesReferredViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+        <ul class="vacancies-summary">
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.VacanciesSubmittedToday</p>
+                    <figcaption>
+                        <h2>Vacancies submitted today</h2>
                     </figcaption>
                 </figure>
             </li>
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalVacanciesArchivedViaRaa</p>
+                    <p class="count">@Model.VacanciesSubmittedYesterday</p>
                     <figcaption>
-                        <h2>Total archived via recruit</h2>
+                        <h2>Vacancies submitted yesterday</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.VacanciesSubmittedTwoDaysAgo</p>
+                    <figcaption>
+                        <h2>Vacancies submitted two days ago</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.VacanciesSubmittedThreeDaysAgo</p>
+                    <figcaption>
+                        <h2>Vacancies submitted three days ago</h2>
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+        <ul class="vacancies-summary">
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.VacanciesReviewedToday</p>
+                    <figcaption>
+                        <h2>Vacancies reviewed today</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.VacanciesReviewedYesterday</p>
+                    <figcaption>
+                        <h2>Vacancies reviewed yesterday</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.VacanciesReviewedTwoDaysAgo</p>
+                    <figcaption>
+                        <h2>Vacancies reviewed two days ago</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.VacanciesReviewedThreeDaysAgo</p>
+                    <figcaption>
+                        <h2>Vacancies reviewed three days ago</h2>
                     </figcaption>
                 </figure>
             </li>
@@ -116,33 +118,33 @@
         <ul class="vacancies-summary">
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalApplicationsStartedForRaaVacancies</p>
+                    <p class="count">@Model.TotalApplicationsStartedInPastFourWeeks</p>
                     <figcaption>
-                        <h2>Total started for recruit vacancies</h2>
+                        <h2>Total started in past four weeks</h2>
                     </figcaption>
                 </figure>
             </li>
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalApplicationsSubmittedForRaaVacancies</p>
+                    <p class="count">@Model.TotalApplicationsSubmittedInPastFourWeeks</p>
                     <figcaption>
-                        <h2>Total submitted for recruit vacancies</h2>
+                        <h2>of those, total submitted (@(Math.Round((double)Model.TotalApplicationsSubmittedInPastFourWeeks / Model.TotalApplicationsStartedInPastFourWeeks * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalUnsuccessfulApplicationsViaRaa</p>
+                    <p class="count">@Model.TotalUnsuccessfulApplicationsInPastFourWeeks</p>
                     <figcaption>
-                        <h2>Total made unsuccessful via recruit</h2>
+                        <h2>of those, total made unsuccessful (@(Math.Round((double)Model.TotalUnsuccessfulApplicationsInPastFourWeeks / Model.TotalApplicationsSubmittedInPastFourWeeks * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
             <li>
                 <figure class="data">
-                    <p class="count">@Model.TotalSuccessfulApplicationsViaRaa</p>
+                    <p class="count">@Model.TotalSuccessfulApplicationsInPastFourWeeks</p>
                     <figcaption>
-                        <h2>Total made successful via recruit</h2>
+                        <h2>of those, total made successful (@(Math.Round((double)Model.TotalSuccessfulApplicationsInPastFourWeeks / Model.TotalApplicationsSubmittedInPastFourWeeks * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
@@ -155,6 +157,6 @@
     <script>
         setTimeout(function () {
             location.reload();
-        }, 10000);
+        }, 30000);
     </script>
 }
