@@ -26,22 +26,26 @@
                 var data = _reportingRepo.GetInformationRadiatorData();
 
                 viewModel.TotalProviders = data.TotalProviders;
-                viewModel.TotalProvidersAskedToOnboard = data.TotalProvidersAskedToOnboard;
-                viewModel.TotalProvidersForcedToMigrate = data.TotalProvidersForcedToMigrate;
-                viewModel.TotalProvidersOnboarded = data.TotalProvidersOnboarded;
                 viewModel.TotalProvidersMigrated = data.TotalProvidersMigrated;
-                viewModel.TotalProviderUserAccounts = data.TotalProviderUserAccounts;
                 viewModel.TotalVacanciesCreatedViaRaa = data.TotalVacanciesCreatedViaRaa;
-                viewModel.TotalDraftVacanciesCreatedViaRaa = data.TotalDraftVacanciesCreatedViaRaa;
-                viewModel.TotalVacanciesInReviewViaRaa = data.TotalVacanciesInReviewViaRaa;
-                viewModel.TotalVacanciesReferredViaRaa = data.TotalVacanciesReferredViaRaa;
+                viewModel.TotalVacanciesSubmittedViaRaa = data.TotalVacanciesSubmittedViaRaa;
                 viewModel.TotalVacanciesApprovedViaRaa = data.TotalVacanciesApprovedViaRaa;
-                viewModel.TotalVacanciesClosedViaRaa = data.TotalVacanciesClosedViaRaa;
-                viewModel.TotalVacanciesArchivedViaRaa = data.TotalVacanciesArchivedViaRaa;
-                viewModel.TotalApplicationsStartedForRaaVacancies = data.TotalApplicationsStartedForRaaVacancies;
-                viewModel.TotalApplicationsSubmittedForRaaVacancies = data.TotalApplicationsSubmittedForRaaVacancies;
-                viewModel.TotalUnsuccessfulApplicationsViaRaa = data.TotalUnsuccessfulApplicationsViaRaa;
-                viewModel.TotalSuccessfulApplicationsViaRaa = data.TotalSuccessfulApplicationsViaRaa;
+                viewModel.TotalVacanciesReferredViaRaa = data.TotalVacanciesReferredViaRaa;
+                viewModel.TotalVacanciesInReviewViaRaa = data.TotalVacanciesInReviewViaRaa;
+                viewModel.VacanciesSubmittedToday = data.VacanciesSubmittedToday;
+                viewModel.VacanciesSubmittedYesterday = data.VacanciesSubmittedYesterday;
+                viewModel.VacanciesSubmittedTwoDaysAgo = data.VacanciesSubmittedTwoDaysAgo;
+                viewModel.VacanciesSubmittedThreeDaysAgo = data.VacanciesSubmittedThreeDaysAgo;
+                viewModel.VacanciesSubmittedFourDaysAgo = data.VacanciesSubmittedFourDaysAgo;
+                viewModel.VacanciesReviewedToday = data.VacanciesReviewedToday;
+                viewModel.VacanciesReviewedYesterday = data.VacanciesReviewedYesterday;
+                viewModel.VacanciesReviewedTwoDaysAgo = data.VacanciesReviewedTwoDaysAgo;
+                viewModel.VacanciesReviewedThreeDaysAgo = data.VacanciesReviewedThreeDaysAgo;
+                viewModel.VacanciesReviewedFourDaysAgo = data.VacanciesReviewedFourDaysAgo;
+                viewModel.TotalApplicationsStartedInPastFourWeeks = data.TotalApplicationsStartedInPastFourWeeks;
+                viewModel.TotalApplicationsSubmittedInPastFourWeeks = data.TotalApplicationsSubmittedInPastFourWeeks;
+                viewModel.TotalUnsuccessfulApplicationsInPastFourWeeks = data.TotalUnsuccessfulApplicationsInPastFourWeeks;
+                viewModel.TotalSuccessfulApplicationsInPastFourWeeks = data.TotalSuccessfulApplicationsInPastFourWeeks;
 
                 return GetMediatorResponse(InformationRadiatorMediatorCodes.IndexCodes.Ok, viewModel);
             }
