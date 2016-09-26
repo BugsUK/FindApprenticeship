@@ -128,12 +128,19 @@
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel, vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel, vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
 
-            var error = response.Errors.SingleOrDefault(e => e.PropertyName == "VacancyDatesViewModel.ClosingDate");
-            error.Should().NotBeNull();
-            error?.ErrorMessage.Should().Be(expectedMessage);
-            var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate");
-            aggregateError.Should().NotBeNull();
-            aggregateError?.ErrorMessage.Should().Be(expectedMessage);
+            var closingDateError = response.Errors.SingleOrDefault(e => e.PropertyName == "VacancyDatesViewModel.ClosingDate");
+            closingDateError.Should().NotBeNull();
+            closingDateError?.ErrorMessage.Should().Be(expectedMessage);
+            var closingDateAggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate");
+            closingDateAggregateError.Should().NotBeNull();
+            closingDateAggregateError?.ErrorMessage.Should().Be(expectedMessage);
+
+            var possibleStartDateError = response.Errors.SingleOrDefault(e => e.PropertyName == "VacancyDatesViewModel.PossibleStartDate");
+            possibleStartDateError.Should().NotBeNull();
+            possibleStartDateError?.ErrorMessage.Should().Be(VacancyViewModelMessages.PossibleStartDate.AfterTodayErrorText);
+            var possibleStartDateAggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate");
+            possibleStartDateAggregateError.Should().NotBeNull();
+            possibleStartDateAggregateError?.ErrorMessage.Should().Be(VacancyViewModelMessages.PossibleStartDate.AfterTodayErrorText);
         }
 
         [TestCase(VacancyStatus.Unknown, false)]
@@ -147,7 +154,7 @@
         [TestCase(VacancyStatus.Completed, false)]
         [TestCase(VacancyStatus.PostedInError, false)]
         [TestCase(VacancyStatus.ReservedForQA, false)]
-        public void DateCanBeTodayIfLive(VacancyStatus vacancyStatus, bool expectValid)
+        public void ClosingDateCanBeTodayIfLive(VacancyStatus vacancyStatus, bool expectValid)
         {
             var today = DateTime.Today;
 
@@ -156,7 +163,6 @@
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(today),
-                    PossibleStartDate = new DateViewModel(today),
                     VacancyStatus = vacancyStatus
                 },
                 Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
@@ -171,41 +177,23 @@
             {
                 _validator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyDatesViewModel,
                     vm => vm.VacancyDatesViewModel.ClosingDate, viewModel, RuleSet);
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyDatesViewModel,
-                    vm => vm.VacancyDatesViewModel.PossibleStartDate, viewModel, RuleSet);
                 _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel,
                     vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel,
                     vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate, vacancyViewModel);
                 _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel,
                     vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel,
                     vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate, vacancyViewModel, RuleSet);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel,
-                    vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel,
-                    vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel,
-                    vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel,
-                    vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel,
-                    RuleSet);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(vm => vm.VacancyDatesViewModel,
                     vm => vm.VacancyDatesViewModel.ClosingDate, viewModel, RuleSet);
-                _validator.ShouldHaveValidationErrorFor(vm => vm.VacancyDatesViewModel,
-                    vm => vm.VacancyDatesViewModel.PossibleStartDate, viewModel, RuleSet);
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel,
                     vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel,
                     vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate, vacancyViewModel);
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel,
                     vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel,
                     vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate, vacancyViewModel, RuleSet);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel,
-                    vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel,
-                    vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel,
-                    vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel,
-                    vm => vm.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel,
-                    RuleSet);
 
                 var error = response.Errors.SingleOrDefault(e => e.PropertyName == "VacancyDatesViewModel.ClosingDate");
                 error.Should().NotBeNull();
