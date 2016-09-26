@@ -22,6 +22,7 @@
     @Html.HiddenFor(m => m.Wage.Type)
     @Html.HiddenFor(m => m.Wage.Amount)
     @Html.HiddenFor(m => m.Wage.Unit)
+    @Html.HiddenFor(m => m.VacancyDatesViewModel.VacancyStatus)
 
     <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">
         <a name="@Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
