@@ -105,7 +105,7 @@ WHERE a.ApplicationStatusTypeId >= 2 AND " + string.Join(" AND ", query);
 
             if (request.ProviderSiteIds != null)
             {
-                sql += @" AND v.VacancyManagerId IN @ProviderSiteIds";
+                sql += @" AND (VacancyManagerId IN @providerSiteIds OR DeliveryOrganisationId IN @providerSiteIds)";
             }
 
             var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
