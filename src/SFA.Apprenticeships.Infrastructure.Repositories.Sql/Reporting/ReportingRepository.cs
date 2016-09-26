@@ -490,36 +490,32 @@
         {
             var data = new InformationRadiatorData();
 
-            var command = new SqlCommand(
-                @"SELECT 
+            var midnightToday = DateTime.UtcNow.Date;
+
+            var sql = $@"SELECT 
 (SELECT COUNT(DISTINCT UKPRN) FROM Provider) as TotalProviders,
-(SELECT COUNT(DISTINCT UKPRN) FROM Provider WHERE ProviderToUseFAA = 1) as TotalProvidersAskedToOnboard,
-(SELECT COUNT(DISTINCT UKPRN) FROM Provider WHERE ProviderToUseFAA = 2) as TotalProvidersForcedToMigrate,
-(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser] WHERE ProviderId NOT IN (SELECT ProviderId FROM Provider WHERE ProviderToUseFAA = 2)) as TotalProvidersOnboarded,
-(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser] WHERE ProviderId IN (SELECT ProviderId FROM Provider WHERE ProviderToUseFAA = 2)) as TotalProvidersMigrated,
-(SELECT COUNT(*) FROM [Provider].[ProviderUser]) as TotalProviderUserAccounts,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1) as TotalVacanciesCreatedViaRaa,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 1) as TotalDraftVacanciesCreatedViaRaa,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 5) as TotalVacanciesInReviewViaRaa,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 3) as TotalVacanciesReferredViaRaa,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 2) as TotalVacanciesApprovedViaRaa,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 6) as TotalVacanciesClosedViaRaa,
-(SELECT COUNT(*) FROM Vacancy WHERE VacancyId < -1 AND VacancyStatusId = 8) as TotalVacanciesArchivedViaRaa,
-(SELECT COUNT(*)
-FROM [dbo].[Application] a
-WHERE a.VacancyId < -1) as TotalApplicationsStartedForRaaVacancies,
-(SELECT COUNT(*)
-FROM [dbo].[Application] a
-WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId >= 2) as TotalApplicationsSubmittedForRaaVacancies,
-(SELECT COUNT(*)
-FROM [dbo].[Application] a
-JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
-WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 5 and ah.ApplicationHistoryEventSubTypeId = 5) as TotalUnsuccessfulApplicationsViaRaa,
-(SELECT COUNT(*)
-FROM [dbo].[Application] a
-JOIN ApplicationHistory ah ON a.ApplicationId = ah.ApplicationId
-WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHistoryEventSubTypeId = 6) as TotalSuccessfulApplicationsViaRaa"
-                , (SqlConnection)_getOpenConnection.GetOpenConnection());
+(SELECT COUNT(DISTINCT ProviderId) FROM [Provider].[ProviderUser]) as TotalProvidersMigrated,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE VacancyId < -1) as TotalVacanciesCreatedViaRaa,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE VacancyId < -1 AND VacancyHistoryEventSubTypeId = 5) as TotalVacanciesSubmittedViaRaa,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE VacancyId < -1 AND VacancyHistoryEventSubTypeId = 2) as TotalVacanciesApprovedViaRaa,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE VacancyId < -1 AND VacancyHistoryEventSubTypeId = 3) as TotalVacanciesReferredViaRaa,
+(SELECT COUNT(DISTINCT VacancyId) FROM Vacancy WHERE VacancyStatusId IN (5, 10, 11)) as TotalVacanciesInReviewViaRaa,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId = 5) as VacanciesSubmittedToday,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-1).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId = 5) as VacanciesSubmittedYesterday,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-2).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-1).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId = 5) as VacanciesSubmittedTwoDaysAgo,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-3).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-2).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId = 5) as VacanciesSubmittedThreeDaysAgo,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-4).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-3).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId = 5) as VacanciesSubmittedFourDaysAgo,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedToday,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-1).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedYesterday,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-2).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-1).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedTwoDaysAgo,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-3).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-2).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedThreeDaysAgo,
+(SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-4).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-3).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedFourDaysAgo,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') as TotalApplicationsStartedInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId >= 2) as TotalApplicationsSubmittedInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId = 5) as TotalUnsuccessfulApplicationsInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId = 6) as TotalSuccessfulApplicationsInPastFourWeeks";
+
+            var command = new SqlCommand(sql, (SqlConnection)_getOpenConnection.GetOpenConnection());
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -527,22 +523,26 @@ WHERE a.VacancyId < -1 AND a.ApplicationStatusTypeId = 6 and ah.ApplicationHisto
                 data = new InformationRadiatorData
                 {
                     TotalProviders = Convert.ToInt32(reader["TotalProviders"]),
-                    TotalProvidersAskedToOnboard = Convert.ToInt32(reader["TotalProvidersAskedToOnboard"]),
-                    TotalProvidersForcedToMigrate = Convert.ToInt32(reader["TotalProvidersForcedToMigrate"]),
-                    TotalProvidersOnboarded = Convert.ToInt32(reader["TotalProvidersOnboarded"]),
                     TotalProvidersMigrated = Convert.ToInt32(reader["TotalProvidersMigrated"]),
-                    TotalProviderUserAccounts = Convert.ToInt32(reader["TotalProviderUserAccounts"]),
                     TotalVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalVacanciesCreatedViaRaa"]),
-                    TotalDraftVacanciesCreatedViaRaa = Convert.ToInt32(reader["TotalDraftVacanciesCreatedViaRaa"]),
+                    TotalVacanciesSubmittedViaRaa = Convert.ToInt32(reader["TotalVacanciesSubmittedViaRaa"]),
+                    TotalVacanciesApprovedViaRaa = Convert.ToInt32(reader["TotalVacanciesApprovedViaRaa"]),
                     TotalVacanciesReferredViaRaa = Convert.ToInt32(reader["TotalVacanciesReferredViaRaa"]),
                     TotalVacanciesInReviewViaRaa = Convert.ToInt32(reader["TotalVacanciesInReviewViaRaa"]),
-                    TotalVacanciesApprovedViaRaa = Convert.ToInt32(reader["TotalVacanciesApprovedViaRaa"]),
-                    TotalVacanciesClosedViaRaa = Convert.ToInt32(reader["TotalVacanciesClosedViaRaa"]),
-                    TotalVacanciesArchivedViaRaa = Convert.ToInt32(reader["TotalVacanciesArchivedViaRaa"]),
-                    TotalApplicationsStartedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsStartedForRaaVacancies"]),
-                    TotalApplicationsSubmittedForRaaVacancies = Convert.ToInt32(reader["TotalApplicationsSubmittedForRaaVacancies"]),
-                    TotalUnsuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsViaRaa"]),
-                    TotalSuccessfulApplicationsViaRaa = Convert.ToInt32(reader["TotalSuccessfulApplicationsViaRaa"]),
+                    VacanciesSubmittedToday = Convert.ToInt32(reader["VacanciesSubmittedToday"]),
+                    VacanciesSubmittedYesterday = Convert.ToInt32(reader["VacanciesSubmittedYesterday"]),
+                    VacanciesSubmittedTwoDaysAgo = Convert.ToInt32(reader["VacanciesSubmittedTwoDaysAgo"]),
+                    VacanciesSubmittedThreeDaysAgo = Convert.ToInt32(reader["VacanciesSubmittedThreeDaysAgo"]),
+                    VacanciesSubmittedFourDaysAgo = Convert.ToInt32(reader["VacanciesSubmittedFourDaysAgo"]),
+                    VacanciesReviewedToday = Convert.ToInt32(reader["VacanciesReviewedToday"]),
+                    VacanciesReviewedYesterday = Convert.ToInt32(reader["VacanciesReviewedYesterday"]),
+                    VacanciesReviewedTwoDaysAgo = Convert.ToInt32(reader["VacanciesReviewedTwoDaysAgo"]),
+                    VacanciesReviewedThreeDaysAgo = Convert.ToInt32(reader["VacanciesReviewedThreeDaysAgo"]),
+                    VacanciesReviewedFourDaysAgo = Convert.ToInt32(reader["VacanciesReviewedFourDaysAgo"]),
+                    TotalApplicationsStartedInPastFourWeeks = Convert.ToInt32(reader["TotalApplicationsStartedInPastFourWeeks"]),
+                    TotalApplicationsSubmittedInPastFourWeeks = Convert.ToInt32(reader["TotalApplicationsSubmittedInPastFourWeeks"]),
+                    TotalUnsuccessfulApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsInPastFourWeeks"]),
+                    TotalSuccessfulApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalSuccessfulApplicationsInPastFourWeeks"]),
                 };
             }
 

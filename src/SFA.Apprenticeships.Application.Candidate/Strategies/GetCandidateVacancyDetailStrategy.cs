@@ -3,12 +3,11 @@
     using System;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
     using Vacancy;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
-    public class GetCandidateVacancyDetailStrategy<TVacancyDetail> : ILegacyGetCandidateVacancyDetailStrategy<TVacancyDetail>
+    public class GetCandidateVacancyDetailStrategy<TVacancyDetail> : IGetCandidateVacancyDetailStrategy<TVacancyDetail>
         where TVacancyDetail : VacancyDetail
     {
         private readonly ILogService _logger;

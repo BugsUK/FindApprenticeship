@@ -6,15 +6,13 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class SaveCandidateStrategy : ISaveCandidateStrategy
     {
         private readonly ILogService _logger;
 
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
-        private readonly ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
@@ -25,7 +23,6 @@
             ICandidateReadRepository candidateReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
-            ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
             ILogService logger)
         {
             _candidateWriteRepository = candidateWriteRepository;
@@ -33,7 +30,6 @@
             _candidateReadRepository = candidateReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
-            _sendMobileVerificationCodeStrategy = sendMobileVerificationCodeStrategy;
             _logger = logger;
         }
 

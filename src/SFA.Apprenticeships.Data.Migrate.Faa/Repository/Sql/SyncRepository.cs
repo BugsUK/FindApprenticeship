@@ -16,7 +16,7 @@
 
         public SyncParams GetSyncParams()
         {
-            var databaseSyncParams = _getOpenConnection.Query<DatabaseSyncParams>("SELECT LastSyncVersion, ApprenticeshipLastCreatedDate, ApprenticeshipLastUpdatedDate, TraineeshipLastCreatedDate, TraineeshipLastUpdatedDate, CandidateLastCreatedDate, CandidateLastUpdatedDate FROM Sync.SyncParams").SingleOrDefault() ?? new DatabaseSyncParams();
+            var databaseSyncParams = _getOpenConnection.Query<DatabaseSyncParams>("SELECT LastSyncVersion, ApprenticeshipLastCreatedDate, ApprenticeshipLastUpdatedDate, TraineeshipLastCreatedDate, TraineeshipLastUpdatedDate, CandidateLastCreatedDate, CandidateLastUpdatedDate, LastAuditEventDate FROM Sync.SyncParams").SingleOrDefault() ?? new DatabaseSyncParams();
 
             var syncParams = new SyncParams
             {
@@ -47,6 +47,10 @@
             if (databaseSyncParams.CandidateLastUpdatedDate.HasValue)
             {
                 syncParams.CandidateLastUpdatedDate = new DateTime(databaseSyncParams.CandidateLastUpdatedDate.Value.Ticks, DateTimeKind.Utc);
+            }
+            if (databaseSyncParams.LastAuditEventDate.HasValue)
+            {
+                syncParams.LastAuditEventDate = new DateTime(databaseSyncParams.LastAuditEventDate.Value.Ticks, DateTimeKind.Utc);
             }
 
             return syncParams;
@@ -85,6 +89,16 @@
                 });
         }
 
+        public void SetAuditEventSyncParams(SyncParams syncParams)
+        {
+            _getOpenConnection.MutatingQuery<int>(
+                @"UPDATE Sync.SyncParams SET LastAuditEventDate = @lastAuditEventDate",
+                new
+                {
+                    lastAuditEventDate = syncParams.LastAuditEventDate == DateTime.MinValue ? null : (DateTime?)syncParams.LastAuditEventDate
+                });
+        }
+
         public class DatabaseSyncParams
         {
             public int? LastSyncVersion { get; set; }
@@ -94,6 +108,7 @@
             public DateTime? TraineeshipLastUpdatedDate { get; set; }
             public DateTime? CandidateLastCreatedDate { get; set; }
             public DateTime? CandidateLastUpdatedDate { get; set; }
+            public DateTime? LastAuditEventDate { get; set; }
         }
     }
 }

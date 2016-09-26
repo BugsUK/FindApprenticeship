@@ -174,15 +174,12 @@
     </Compile>
     <Compile Include="Applications\ApplicationHousekeepingRequestSubscriber.cs" />
     <Compile Include="Applications\ApplicationStatusChangedSubscriber.cs" />
-    <Compile Include="Applications\ApplicationStatusSummaryPageSubscriber.cs" />
     <Compile Include="Applications\ApplicationStatusSummarySubscriber.cs" />
     <Compile Include="Applications\CommunicationHousekeepingRequestSubscriber.cs" />
     <Compile Include="Applications\SubmitApprenticeshipApplicationRequestSubscriber.cs" />
     <Compile Include="Applications\SubmitTraineeshipApplicationRequestSubscriber.cs" />
     <Compile Include="Candidates\CandidateAccountHousekeepingSubscriber.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesSubscriber.cs" />
-    <Compile Include="Candidates\CreateCandidateRequestSubscriber.cs" />
-    <Compile Include="Candidates\SaveCandidateRequestSubscriber.cs" />
     <Compile Include="Communications\CandidateCommunicationHelper.cs" />
     <Compile Include="Communications\Commands\CandidateDailyDigestCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CandidateCommunicationCommand.cs" />
@@ -373,10 +370,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
       <Project>{c7cb47e8-c024-4dc0-9bdc-e325d3bfeadc}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
-      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LocationLookup\SFA.Apprenticeships.Infrastructure.LocationLookup.csproj">
       <Project>{1C6F7710-0AE6-4D9F-BC73-0FAA9C9C60CA}</Project>

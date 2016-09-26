@@ -105,7 +105,6 @@
     <Compile Include="Mappers\ApprenticeshipSummaryMapper.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyDetailMapper.cs" />
     <Compile Include="Mappers\VacancySummaryUpdateMapper.cs" />
-    <Compile Include="NullApplicationStatusesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApprenticeshipVacancyDataProvider.cs" />
     <Compile Include="Strategies\GetReleaseNotesStrategy.cs" />

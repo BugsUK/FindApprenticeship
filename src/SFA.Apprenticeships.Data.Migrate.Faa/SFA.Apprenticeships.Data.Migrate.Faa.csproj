@@ -116,6 +116,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AuditMigrationProcessor.cs" />
     <Compile Include="CandidateMigrationProcessor.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
     <Compile Include="Entities\ApplicationWithSubVacancy.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Entities\Mongo\Address.cs" />
     <Compile Include="Entities\Mongo\ApplicationStatuses.cs" />
     <Compile Include="Entities\Mongo\ApplicationTemplate.cs" />
+    <Compile Include="Entities\Mongo\AuditItem.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />
     <Compile Include="Entities\Mongo\CandidateUser.cs" />
     <Compile Include="Entities\Mongo\CommunicationPreference.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="Mappers\IApplicationMappers.cs" />
     <Compile Include="Mappers\ICandidateMappers.cs" />
     <Compile Include="Mappers\SchoolAttendedMappers.cs" />
+    <Compile Include="Repository\Mongo\AuditRepository.cs" />
     <Compile Include="Repository\Mongo\UpdateVacancyApplicationsRepository.cs" />
     <Compile Include="Repository\Sql\CandidateHistoryRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationRepository.cs" />

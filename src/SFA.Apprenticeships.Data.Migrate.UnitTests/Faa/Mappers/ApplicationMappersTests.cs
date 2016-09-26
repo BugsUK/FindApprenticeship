@@ -490,9 +490,40 @@
             //Assert
             application.ApplicationId.Should().Be(applicationId);
             application.CandidateId.Should().Be(candidate.LegacyCandidateId);
-            //Should only update in progress status
             application.ApplicationStatusTypeId.Should().Be(applicationStatusTypeIdInProgress);
             applicationWithSubVacancy.UpdateStatusTo.Should().Be(ApplicationStatuses.InProgress);
+        }
+
+        [Test]
+        public void SourceApplicationStatusTypeIdUnsuccessfulTest()
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(ApplicationStatuses.Submitted).WithLegacyApplicationId(0).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
+            const int applicationId = 42;
+            var applicationIds = new Dictionary<Guid, int>
+            {
+                {vacancyApplication.Id, applicationId}
+            };
+            const int applicationStatusTypeIdInProgress = 3;
+            const int applicationStatusTypeIdUnsuccessful = 5;
+            var sourceApplicationSummaries = new Dictionary<int, ApplicationSummary>
+            {
+                { applicationId, new ApplicationSummary {ApplicationStatusTypeId = applicationStatusTypeIdUnsuccessful} }
+            };
+
+            //Act
+            var applicationWithSubVacancy = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds, sourceApplicationSummaries, new Dictionary<int, int>(), new Dictionary<int, SubVacancy>());
+            var application = applicationWithSubVacancy.Application;
+
+            //Assert
+            application.ApplicationId.Should().Be(applicationId);
+            application.CandidateId.Should().Be(candidate.LegacyCandidateId);
+            //We're going to set old applications with an incorrect outcome to in progress so as not to alert the candidates about older outcomes
+            application.ApplicationStatusTypeId.Should().Be(applicationStatusTypeIdInProgress);
+            applicationWithSubVacancy.UpdateStatusTo.Should().Be(ApplicationStatuses.InProgress);
+            //application.ApplicationStatusTypeId.Should().Be(applicationStatusTypeIdUnsuccessful);
+            //applicationWithSubVacancy.UpdateStatusTo.Should().Be(ApplicationStatuses.Unsuccessful);
         }
 
         [Test]
@@ -506,6 +537,7 @@
             {
                 {vacancyApplication.Id, applicationId}
             };
+            const int applicationStatusTypeIdInProgress = 3;
             const int applicationStatusTypeIdSuccessful = 6;
             var sourceApplicationSummaries = new Dictionary<int, ApplicationSummary>
             {
@@ -519,9 +551,11 @@
             //Assert
             application.ApplicationId.Should().Be(applicationId);
             application.CandidateId.Should().Be(candidate.LegacyCandidateId);
-            //Should only update in progress status
-            application.ApplicationStatusTypeId.Should().Be(2);
-            applicationWithSubVacancy.UpdateStatusTo.Should().Be(null);
+            application.ApplicationStatusTypeId.Should().Be(applicationStatusTypeIdInProgress);
+            applicationWithSubVacancy.UpdateStatusTo.Should().Be(ApplicationStatuses.InProgress);
+            //We're going to set old applications with an incorrect outcome to in progress so as not to alert the candidates about older outcomes
+            //application.ApplicationStatusTypeId.Should().Be(applicationStatusTypeIdSuccessful);
+            //applicationWithSubVacancy.UpdateStatusTo.Should().Be(ApplicationStatuses.Successful);
         }
 
         [Test]
