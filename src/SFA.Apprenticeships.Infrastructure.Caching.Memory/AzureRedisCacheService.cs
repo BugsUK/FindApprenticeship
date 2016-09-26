@@ -4,6 +4,7 @@ using SFA.Apprenticeships.Application.Interfaces.Caching;
 
 namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
 {
+    using System.Linq;
     using Application.Interfaces;
     using Newtonsoft.Json;
     using SFA.Infrastructure.Configuration;
@@ -29,7 +30,7 @@ namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
         public AzureRedisCacheService(ILogService logService)
         {
             _logger = logService;
-
+           
             _cache = Connection.GetDatabase();
         }
 
@@ -48,6 +49,7 @@ namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
 
             //MemoryCache is thread safe however only the access is protected. The cache pattern of check then retrieve if null is not protected.
             //This allows multiple threads to execute the dataFunc uneccessarily. A lock here solves this issue
+            
             lock (_locker)
             {
                 var value = _cache.StringGet(cacheKey);
@@ -132,7 +134,8 @@ namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
 
         public void FlushAll()
         {
-            // todo implementation!
+            //todo correct implementation?
+            Connection.GetServer(Connection.GetEndPoints().First()).FlushAllDatabases();
         }
     }
 }
