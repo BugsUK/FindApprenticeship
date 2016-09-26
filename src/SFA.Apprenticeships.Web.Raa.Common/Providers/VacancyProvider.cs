@@ -1019,7 +1019,6 @@
 
             var utcNow = _dateTimeService.UtcNow;
 
-            //ra-217: The ~Yesterday and ~MoreThan48hours handle special cases. See work item and unit tests for verbose description.
             var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
             var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
 
@@ -1127,10 +1126,36 @@
             {
                 if (utcNow.DayOfWeek == DayOfWeek.Saturday)
                 {
-                    return false;
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-1) && v.DateSubmitted < utcNow.Date;
                 }
 
                 if (utcNow.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
+                }
+
+                if (utcNow.DayOfWeek == DayOfWeek.Monday)
+                {
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-3) && v.DateSubmitted < utcNow.Date.AddDays(-2);
+                }
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Saturday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Monday)
+                {
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
+                }
+
+                if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
+                {
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-3) && v.DateSubmitted < utcNow.Date.AddDays(-2);
+                }
+            }
+
+            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Sunday)
+            {
+                if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
                 {
                     return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
                 }
