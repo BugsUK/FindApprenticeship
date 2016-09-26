@@ -1019,7 +1019,7 @@
 
             var utcNow = _dateTimeService.UtcNow;
 
-            var submittedToday = vacancies.Where(v => IsVacancySubmittedToday(v, utcNow)).ToList();
+            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
             var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
 
             var submittedYesterday =
@@ -1081,24 +1081,6 @@
             return viewModel;
         }
 
-        private static bool IsVacancySubmittedToday(VacancySummary v, DateTime utcNow)
-        {
-            if (!v.DateSubmitted.HasValue)
-            {
-                return false;
-            }
-
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    return v.DateSubmitted >= utcNow.Date.AddDays(-1);
-                }
-            }
-
-            return v.DateSubmitted >= utcNow.Date;
-        }
-
         private static bool IsVacancySubmittedMoreThan48HrsAgo(VacancySummary v, DateTime utcNow)
         {
             if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
@@ -1144,7 +1126,7 @@
             {
                 if (utcNow.DayOfWeek == DayOfWeek.Saturday)
                 {
-                    return false;
+                    return v.DateSubmitted >= utcNow.Date.AddDays(-1) && v.DateSubmitted < utcNow.Date;
                 }
 
                 if (utcNow.DayOfWeek == DayOfWeek.Sunday)

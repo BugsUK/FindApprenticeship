@@ -302,7 +302,7 @@
         [Test]
         public void GetPendingQAVacanciesOverviewShouldReturnVacanciesSubmittedToday()
         {
-            //sub fri, seen: fri, SAT <==== special (should be fri alone)
+            //sub fri, seen: fri
             //sub sat, seen: sat
             //sub sun, seen: sun
             //sub mon, seen: mon
@@ -323,7 +323,7 @@
             var paramSets = new List<Tuple<DateTime, DateTime, bool>>();
 
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstDayOf2016_Friday, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstSaturdayIn2016, true));
+            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstSaturdayIn2016, false));
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastSaturdayIn2015, true));
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastSundayIn2015, false));
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSundayIn2015, _lastSundayIn2015, true));
@@ -419,7 +419,7 @@
         [Test]
         public void GetPendingQAVacanciesOverviewShouldReturnVacanciesSubmittedYesterday()
         {
-            //sub fri, not seen: sat, seen: sun, MON <==== special (should be sat)
+            //sub fri, seen: sat, SUN, MON <==== special (should be sat)
             //sub sat, seen: sun, MON, TUES <==== special (should be sun alone)
             //sub sun, seen: mon, TUES <==== special (should be mon alone)
             //sub mon, seen: tues <= normal
@@ -427,6 +427,7 @@
             //sub weds, seen: thurs <= normal
             //sub thurs, seen: fri <= normal
 
+            var _lastFridayIn2015 = new DateTime(2015, 12, 25);
             var _lastSaturdayIn2015 = new DateTime(2015, 12, 26);
             var _lastSundayIn2015 = new DateTime(2015, 12, 27);
             var _lastMondayIn2015 = new DateTime(2015, 12, 28);
@@ -441,9 +442,10 @@
             //Date submitted, Date viewed, should be Visible
             var paramSets = new List<Tuple<DateTime, DateTime, bool>>();
             
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstSaturdayIn2016, false));
+            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstSaturdayIn2016, true));
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstSundayIn2016, true));
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstMondayIn2016, true));
+            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastFridayIn2015, _lastTuesdayIn2015, false));
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstSaturdayIn2016, _firstSundayIn2016, true));
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstSaturdayIn2016, _firstMondayIn2016, true));
             paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastTuesdayIn2015, true));
