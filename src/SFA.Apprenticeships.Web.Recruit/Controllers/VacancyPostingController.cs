@@ -489,6 +489,7 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation:
+                case VacancyPostingMediatorCodes.ManageDates.FailedCrossFieldValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return View("VacancySummary", viewModel);
 
