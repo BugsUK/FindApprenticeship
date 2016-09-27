@@ -13,7 +13,7 @@
     <div class="grid-wrapper">
         <div class="grid grid-2-3">
             <div class="hgroup text">
-                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.Title</h1>
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@HtmlExtensions.HtmlRawEscaped(Model.Title)</h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
             </div>
         </div>
