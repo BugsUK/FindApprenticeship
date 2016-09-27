@@ -166,7 +166,7 @@ WriteLiteral(">");
 
             
             #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                                                                                      Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.NewVacancyViewModel.OwnerParty.EmployerDescription)));
+                                                                                                                                                      Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.NewVacancyViewModel.OwnerParty.EmployerDescription)));
 
             
             #line default
@@ -849,7 +849,7 @@ WriteLiteral(">");
 
             
             #line 171 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)));
+                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)));
 
             
             #line default

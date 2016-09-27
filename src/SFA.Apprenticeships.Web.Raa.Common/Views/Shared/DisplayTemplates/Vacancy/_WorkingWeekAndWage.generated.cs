@@ -172,7 +172,7 @@ WriteLiteral(">");
 
             
             #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                                                                                           Write(HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.FurtherVacancyDetailsViewModel.WorkingWeek)));
+                                                                                                                                           Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.FurtherVacancyDetailsViewModel.WorkingWeek)));
 
             
             #line default

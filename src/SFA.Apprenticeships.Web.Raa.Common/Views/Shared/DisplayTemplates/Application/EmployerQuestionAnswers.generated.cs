@@ -92,7 +92,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.Vacancy.FirstQuestion)));
+                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.Vacancy.FirstQuestion)));
 
             
             #line default
@@ -151,7 +151,7 @@ WriteLiteral(">");
 
             
             #line 16 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.Vacancy.SecondQuestion)));
+                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.Vacancy.SecondQuestion)));
 
             
             #line default

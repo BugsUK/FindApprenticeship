@@ -125,7 +125,7 @@ WriteLiteral(">");
 
             
             #line 20 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                          Write(HtmlExtensions.HtmlRawEscaped(Model.Title));
+                                                                          Write(HtmlExtensions.EscapeHtmlEncoding(Model.Title));
 
             
             #line default
@@ -452,7 +452,7 @@ WriteLiteral(">");
 
             
             #line 76 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                    Write(HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.WorkingWeek)));
+                                                                                    Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.WorkingWeek)));
 
             
             #line default
@@ -710,7 +710,7 @@ WriteLiteral(">");
 
             
             #line 115 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                               Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.FullDescription)));
+                                                                                                               Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.FullDescription)));
 
             
             #line default
@@ -793,7 +793,7 @@ WriteLiteral(">");
 
             
             #line 134 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                                                            Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.SkillsRequired)));
+                                                                                                                                            Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.SkillsRequired)));
 
             
             #line default
@@ -843,7 +843,7 @@ WriteLiteral(">");
 
             
             #line 139 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                                                                     Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.PersonalQualities)));
+                                                                                                                                                     Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.PersonalQualities)));
 
             
             #line default
@@ -893,7 +893,7 @@ WriteLiteral(">");
 
             
             #line 144 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.QualificationRequired)));
+                                                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.QualificationRequired)));
 
             
             #line default
@@ -958,7 +958,7 @@ WriteLiteral(">");
 
             
             #line 155 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                                                              Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.FutureProspects)));
+                                                                                                                                              Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.FutureProspects)));
 
             
             #line default
@@ -1008,7 +1008,7 @@ WriteLiteral(">");
 
             
             #line 160 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                                                        Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.RealityCheck)));
+                                                                                                                                        Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.RealityCheck)));
 
             
             #line default
@@ -1091,7 +1091,7 @@ WriteLiteral(">");
 
             
             #line 174 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.EmployerDescription)));
+                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.EmployerDescription)));
 
             
             #line default
@@ -1513,7 +1513,7 @@ WriteLiteral(">\r\n                            Additional location information\r
 
             
             #line 244 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                      Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.AdditionalLocationInformation)));
+                      Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.AdditionalLocationInformation)));
 
             
             #line default
@@ -1616,7 +1616,7 @@ WriteLiteral(">");
 
             
             #line 262 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.TrainingToBeProvided)));
+                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.TrainingToBeProvided)));
 
             
             #line default
@@ -1856,7 +1856,7 @@ WriteLiteral(">");
 
             
             #line 304 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                      Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.OtherInformation)));
+                                                                                      Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.OtherInformation)));
 
             
             #line default

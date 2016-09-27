@@ -103,7 +103,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                    Write(HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.SupplementaryQuestion1)));
+                                                                                                    Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.SupplementaryQuestion1)));
 
             
             #line default
@@ -116,7 +116,7 @@ WriteLiteral(">");
 
             
             #line 10 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                Write(HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.CandidateAnswer1)));
+                                                Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.CandidateAnswer1)));
 
             
             #line default
@@ -162,7 +162,7 @@ WriteLiteral(">");
 
             
             #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                    Write(HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.SupplementaryQuestion2)));
+                                                                                                    Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.SupplementaryQuestion2)));
 
             
             #line default
@@ -175,7 +175,7 @@ WriteLiteral(">");
 
             
             #line 17 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                Write(HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.CandidateAnswer2)));
+                                                Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.CandidateAnswer2)));
 
             
             #line default

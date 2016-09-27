@@ -103,7 +103,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.SupplementaryQuestion1)));
+                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.SupplementaryQuestion1)));
 
             
             #line default
@@ -162,7 +162,7 @@ WriteLiteral(">");
 
             
             #line 16 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.SupplementaryQuestion2)));
+                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.SupplementaryQuestion2)));
 
             
             #line default

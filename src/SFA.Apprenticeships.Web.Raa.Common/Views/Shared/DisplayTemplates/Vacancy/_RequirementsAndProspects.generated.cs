@@ -169,7 +169,7 @@ WriteLiteral(">");
 
             
             #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                                                                                                                                                                            Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)));
+                                                                                                                                                                            Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)));
 
             
             #line default
@@ -271,7 +271,7 @@ WriteLiteral(">");
 
             
             #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                                                                                                                                                                                      Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)));
+                                                                                                                                                                                      Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)));
 
             
             #line default
@@ -373,7 +373,7 @@ WriteLiteral(">");
 
             
             #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                                                                                                                                                                                                    Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)));
+                                                                                                                                                                                                    Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)));
 
             
             #line default
@@ -496,7 +496,7 @@ WriteLiteral(">");
 
             
             #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                                                                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)));
+                                                                                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)));
 
             
             #line default
@@ -617,7 +617,7 @@ WriteLiteral(">");
 
             
             #line 103 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-                                                                                                                                                                                 Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)));
+                                                                                                                                                                                 Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)));
 
             
             #line default

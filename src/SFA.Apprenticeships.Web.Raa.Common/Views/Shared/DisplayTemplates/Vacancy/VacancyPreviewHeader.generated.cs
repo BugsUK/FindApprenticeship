@@ -193,7 +193,7 @@ WriteLiteral("                    ");
 
             
             #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-               Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title))));
+               Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title))));
 
             
             #line default
@@ -335,7 +335,7 @@ WriteLiteral(">");
 
             
             #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-                                                                                                                                   Write(HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.NewVacancyViewModel.ShortDescription)));
+                                                                                                                                   Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.NewVacancyViewModel.ShortDescription)));
 
             
             #line default

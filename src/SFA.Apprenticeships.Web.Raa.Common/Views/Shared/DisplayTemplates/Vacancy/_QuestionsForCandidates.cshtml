@@ -20,7 +20,7 @@
                                 First question
                                 @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, Model.QuestionsLink))
                             </h3>
-                            <p class="@Model.VacancyQuestionsViewModel.FirstQuestion.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion))</p>
+                            <p class="@Model.VacancyQuestionsViewModel.FirstQuestion.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion))</p>
                             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment))
                         </div>
                     }
@@ -31,7 +31,7 @@
                                 Second question
                                 @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, Model.QuestionsLink))
                             </h3>
-                            <p class="@Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion))</p>
+                            <p class="@Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion))</p>
                             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
                         </div>
                     }

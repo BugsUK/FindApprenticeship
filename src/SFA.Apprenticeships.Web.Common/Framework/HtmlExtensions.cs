@@ -183,12 +183,12 @@
             return "";
         }
 
-        public static string HtmlRawEscaped(IHtmlString originalString)
+        public static string EscapeHtmlEncoding(IHtmlString originalString)
         {
-            return HtmlRawEscaped(originalString.ToString());
+            return EscapeHtmlEncoding(originalString.ToString());
         }
 
-        public static string HtmlRawEscaped(string originalString)
+        public static string EscapeHtmlEncoding(string originalString)
         {
             return originalString.Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0");
         }

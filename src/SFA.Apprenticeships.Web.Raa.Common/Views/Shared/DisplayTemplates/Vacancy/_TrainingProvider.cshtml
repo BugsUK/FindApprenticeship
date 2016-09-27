@@ -28,7 +28,7 @@
                         }
                         else
                         {
-                            <p id="vacancy-training-to-be-provided" class="@Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()">@Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Model.TrainingDetailsViewModel.TrainingProvided))</p>
+                            <p id="vacancy-training-to-be-provided" class="@Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()">@Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Model.TrainingDetailsViewModel.TrainingProvided))</p>
                         }
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
                     </div>

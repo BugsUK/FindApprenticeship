@@ -192,7 +192,7 @@ WriteLiteral(">");
 
             
             #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                                                                                                                                        Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Model.TrainingDetailsViewModel.TrainingProvided)));
+                                                                                                                                                        Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Model.TrainingDetailsViewModel.TrainingProvided)));
 
             
             #line default
