@@ -190,7 +190,7 @@
 
         public static string EscapeHtmlEncoding(string originalString)
         {
-            return originalString.Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0");
+            return originalString?.Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0");
         }
 
         #endregion
