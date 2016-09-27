@@ -9,7 +9,7 @@
             
         }
 
-        public ApplicationSelectionViewModel(Guid applicationId)
+        public ApplicationSelectionViewModel(Guid applicationId, int vacancyReferenceNumber) : base(vacancyReferenceNumber)
         {
             ApplicationId = applicationId;
         }
