@@ -79,7 +79,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <div class="reactive-title">@vacancy.Title</div>
+                                        <div class="reactive-title">@HtmlExtensions.HtmlRawEscaped(vacancy.Title)</div>
                                     </td>
                                     <td>
                                         @vacancy.VacancyType.ToString()
