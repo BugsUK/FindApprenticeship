@@ -24,7 +24,7 @@
                         }
                         else
                         {
-                            <p id="vacancy-skills-required" itemprop="skills" class="@Model.VacancyRequirementsProspectsViewModel.DesiredSkills.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))</p>
+                            <p id="vacancy-skills-required" itemprop="skills" class="@Model.VacancyRequirementsProspectsViewModel.DesiredSkills.GetPreserveFormattingCssClass()">@Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))</p>
                         }
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
                     </div>
@@ -41,7 +41,7 @@
                         }
                         else
                         {
-                            <p id="vacancy-qualities-required" itemprop="qualities" class="@Model.VacancyRequirementsProspectsViewModel.PersonalQualities.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))</p>
+                            <p id="vacancy-qualities-required" itemprop="qualities" class="@Model.VacancyRequirementsProspectsViewModel.PersonalQualities.GetPreserveFormattingCssClass()">@Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))</p>
                         }
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
                     </div>
@@ -58,7 +58,7 @@
                         }
                         else
                         {
-                            <p id="vacancy-qualifications-required" itemprop="qualifications" class="@Model.VacancyRequirementsProspectsViewModel.DesiredQualifications.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))</p>
+                            <p id="vacancy-qualifications-required" itemprop="qualifications" class="@Model.VacancyRequirementsProspectsViewModel.DesiredQualifications.GetPreserveFormattingCssClass()">@Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))</p>
                         }
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
                     </div>

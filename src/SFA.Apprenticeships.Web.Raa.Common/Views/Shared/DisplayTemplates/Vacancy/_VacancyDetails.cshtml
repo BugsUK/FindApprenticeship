@@ -154,7 +154,7 @@
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment, Model.SummaryLink))
                 </h3>
             }
-            <p id="vacancy-full-descrpition" class="@Model.FurtherVacancyDetailsViewModel.LongDescription.GetPreserveFormattingCssClass()">@Html.Raw(Model.FurtherVacancyDetailsViewModel.LongDescription)</p>
+            <p id="vacancy-full-descrpition" class="@Model.FurtherVacancyDetailsViewModel.LongDescription.GetPreserveFormattingCssClass()">@Html.Raw(HtmlExtensions.HtmlRawEscaped(Model.FurtherVacancyDetailsViewModel.LongDescription))</p>
             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment))
         </div>
         @if (Model.VacancyType == VacancyType.Traineeship)
