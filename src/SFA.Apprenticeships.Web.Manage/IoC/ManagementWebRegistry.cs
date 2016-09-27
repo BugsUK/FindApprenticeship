@@ -37,6 +37,9 @@
     using Mediators.Reporting;
     using Raa.Common.Providers;
     using Application.Interfaces;
+    using Application.Interfaces.Security;
+    using Infrastructure.Security;
+    using Raa.Common.ViewModels.Application;
 
     public class ManagementWebRegistry : Registry
     {
@@ -68,6 +71,7 @@
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
             For<IGeoCodingProvider>().Use<GeoCodingProvider>();
+            For<IEncryptionProvider>().Use<AES256Provider>();
         }
 
         private void RegisterServices()
@@ -82,6 +86,7 @@
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
+            For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
         }
 
         private void RegisterStrategies()
