@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
     using System.Web.Routing;
@@ -180,6 +181,16 @@
             }
 
             return "";
+        }
+
+        public static string HtmlRawEscaped(IHtmlString originalString)
+        {
+            return originalString.ToString().Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0");
+        }
+
+        public static string HtmlRawEscaped(string originalString)
+        {
+            return originalString.Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0");
         }
 
         #endregion

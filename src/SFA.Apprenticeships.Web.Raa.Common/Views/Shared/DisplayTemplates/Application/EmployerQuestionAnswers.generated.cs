@@ -92,7 +92,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                                                                   Write(Html.Raw(Model.Vacancy.FirstQuestion));
+                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.Vacancy.FirstQuestion)));
 
             
             #line default
@@ -135,23 +135,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 824), Tuple.Create("\"", 909)
-, Tuple.Create(Tuple.Create("", 832), Tuple.Create("form-label", 832), true)
-, Tuple.Create(Tuple.Create(" ", 842), Tuple.Create("text", 843), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 896), Tuple.Create("\"", 981)
+, Tuple.Create(Tuple.Create("", 904), Tuple.Create("form-label", 904), true)
+, Tuple.Create(Tuple.Create(" ", 914), Tuple.Create("text", 915), true)
             
             #line 16 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-, Tuple.Create(Tuple.Create(" ", 847), Tuple.Create<System.Object, System.Int32>(Model.Vacancy.SecondQuestion.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 919), Tuple.Create<System.Object, System.Int32>(Model.Vacancy.SecondQuestion.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 848), false)
+, 920), false)
 );
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                                                                    Write(Html.Raw(Model.Vacancy.SecondQuestion));
+                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.Vacancy.SecondQuestion)));
 
             
             #line default

@@ -2,6 +2,7 @@
 @using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@using HtmlExtensions = SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions
 @model VacancyViewModel
 
 @{
@@ -163,7 +164,7 @@
                     Training to be provided
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
                 </h3>
-                <p id="vacancy-training-to-be-provided" class="@Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()">@Html.Raw(Model.TrainingDetailsViewModel.TrainingProvided)</p>
+                <p id="vacancy-training-to-be-provided" class="@Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.TrainingDetailsViewModel.TrainingProvided))</p>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
             </div>
             <div class="@editableItemClass">
@@ -172,7 +173,7 @@
                         Future prospects
                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))
                     </h3>
-                    <p id="vacancy-future-prospects" itemprop="incentives" class="@Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
+                    <p id="vacancy-future-prospects" itemprop="incentives" class="@Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects))</p>
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
                 </div>
             </div>

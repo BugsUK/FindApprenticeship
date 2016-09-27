@@ -103,7 +103,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                    Write(Html.Raw(Model.SupplementaryQuestion1));
+                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.SupplementaryQuestion1)));
 
             
             #line default
@@ -146,23 +146,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 749), Tuple.Create("\"", 834)
-, Tuple.Create(Tuple.Create("", 757), Tuple.Create("form-label", 757), true)
-, Tuple.Create(Tuple.Create(" ", 767), Tuple.Create("text", 768), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 821), Tuple.Create("\"", 906)
+, Tuple.Create(Tuple.Create("", 829), Tuple.Create("form-label", 829), true)
+, Tuple.Create(Tuple.Create(" ", 839), Tuple.Create("text", 840), true)
             
             #line 16 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-, Tuple.Create(Tuple.Create(" ", 772), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 844), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 773), false)
+, 845), false)
 );
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                    Write(Html.Raw(Model.SupplementaryQuestion2));
+                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.HtmlRawEscaped(Html.Raw(Model.SupplementaryQuestion2)));
 
             
             #line default
