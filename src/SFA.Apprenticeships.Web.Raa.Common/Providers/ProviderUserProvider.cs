@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SFA.Apprenticeships.Application.Interfaces.Users;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SFA.Apprenticeships.Application.Interfaces.Users;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
@@ -22,7 +22,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public ProviderUserProvider(
             IUserProfileService userProfileService,
             IProviderService providerService,
-            IProviderUserAccountService providerUserAccountService, 
+            IProviderUserAccountService providerUserAccountService,
             IReferenceDataService referenceDataService)
         {
             _userProfileService = userProfileService;
@@ -77,7 +77,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _userProfileService.UpdateProviderUser(providerUser);
 
             return true;
-        }                
+        }
 
         public ProviderUserViewModel SaveProviderUser(
             string username, string ukprn, ProviderUserViewModel providerUserViewModel)
@@ -105,12 +105,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
-
-            var defaultProviderSiteId = providerUserViewModel.DefaultProviderSiteId > 0
-                ? providerUserViewModel.DefaultProviderSiteId
-                : default(int?);
-
-            providerUser.PreferredProviderSiteId = defaultProviderSiteId;
+            providerUser.PreferredProviderSiteId = providerUserViewModel.DefaultProviderSiteId;
 
             var savedProviderUser = isNewProviderUser
                 ? _userProfileService.CreateProviderUser(providerUser)
@@ -154,6 +149,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             };
 
             return viewModel;
-        }        
+        }
     }
 }
