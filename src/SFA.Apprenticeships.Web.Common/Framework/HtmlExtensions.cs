@@ -185,7 +185,7 @@
 
         public static string HtmlRawEscaped(IHtmlString originalString)
         {
-            return originalString.ToString().Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0");
+            return HtmlRawEscaped(originalString.ToString());
         }
 
         public static string HtmlRawEscaped(string originalString)
