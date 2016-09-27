@@ -60,7 +60,12 @@
                     var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
                     if (returnUrl.IsValidReturnUrl())
                     {
-                        return Redirect(Server.UrlDecode(returnUrl));
+                        var decodedUrl = Server.UrlDecode(returnUrl);
+                        if (decodedUrl != null)
+                        {
+                            decodedUrl = decodedUrl.Replace("&amp;", "&");
+                            return Redirect(decodedUrl.Replace("&amp;", "&"));
+                        }
                     }
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
 
