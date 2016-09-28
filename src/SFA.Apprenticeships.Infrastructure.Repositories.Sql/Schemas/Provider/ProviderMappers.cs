@@ -21,6 +21,14 @@
         }
     }
 
+    public class BoolToProviderToUseFaa : ValueResolver<bool, int?>
+    {
+        protected override int? ResolveCore(bool source)
+        {
+            return source ? 2 : (int?)null;
+        }
+    }
+
     public class ProviderMappers : MapperEngine
     {
         public override void Initialise()
@@ -31,7 +39,10 @@
             Mapper.CreateMap<DomainProvider, DatabaseProvider>()
                 .ForMember(dest => dest.Ukprn,
                     opt => opt.ResolveUsing<StringToIntConverter>().FromMember(source => source.Ukprn))
-                .ForMember(dest => dest.ProviderToUseFAA, opt => opt.Ignore());
+                .ForMember(dest => dest.ProviderToUseFAA, opt => opt.ResolveUsing<BoolToProviderToUseFaa>().FromMember(src => src.IsMigrated))
+                .ForMember(dest => dest.IsContracted, opt => opt.UseValue(true))
+                .ForMember(dest => dest.ProviderStatusTypeId, opt => opt.UseValue(1))
+                .ForMember(dest => dest.IsNasProvider, opt => opt.UseValue(false));
         }
     }
 }

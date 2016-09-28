@@ -50,7 +50,7 @@
 
             viewModel = _providerProvider.CreateProvider(viewModel);
 
-            return GetMediatorResponse(AdminMediatorCodes.CreateProvider.Ok, viewModel);
+            return GetMediatorResponse(AdminMediatorCodes.CreateProvider.Ok, viewModel, ProviderViewModelMessages.ProviderCreatedSuccessfully, UserMessageLevel.Info);
         }
     }
 }
