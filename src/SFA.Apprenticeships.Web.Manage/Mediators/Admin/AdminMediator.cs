@@ -33,24 +33,24 @@
             return GetMediatorResponse(AdminMediatorCodes.SearchProviders.Ok, viewModel);
         }
 
-        public MediatorResponse<ProviderViewModel> AddProvider(ProviderViewModel viewModel)
+        public MediatorResponse<ProviderViewModel> CreateProvider(ProviderViewModel viewModel)
         {
             var validatonResult = _providerViewModelServerValidator.Validate(viewModel);
 
             if (!validatonResult.IsValid)
             {
-                return GetMediatorResponse(AdminMediatorCodes.AddProvider.FailedValidation, viewModel, validatonResult);
+                return GetMediatorResponse(AdminMediatorCodes.CreateProvider.FailedValidation, viewModel, validatonResult);
             }
 
             var existingViewModel = _providerProvider.GetProviderViewModel(viewModel.Ukprn, false);
             if (existingViewModel != null)
             {
-                return GetMediatorResponse(AdminMediatorCodes.AddProvider.UkprnAlreadyExists, viewModel, ProviderViewModelMessages.UkprnAlreadyExists, UserMessageLevel.Error);
+                return GetMediatorResponse(AdminMediatorCodes.CreateProvider.UkprnAlreadyExists, viewModel, ProviderViewModelMessages.UkprnAlreadyExists, UserMessageLevel.Error);
             }
 
-            viewModel = _providerProvider.AddProvider(viewModel);
+            viewModel = _providerProvider.CreateProvider(viewModel);
 
-            return GetMediatorResponse(AdminMediatorCodes.AddProvider.Ok, viewModel);
+            return GetMediatorResponse(AdminMediatorCodes.CreateProvider.Ok, viewModel);
         }
     }
 }

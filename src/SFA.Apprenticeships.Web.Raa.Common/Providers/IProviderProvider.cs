@@ -16,6 +16,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel);
         EmployerSearchViewModel GetVacancyPartyViewModels(int providerSiteId);
         EmployerSearchViewModel GetVacancyPartyViewModels(EmployerSearchViewModel viewModel);
-        ProviderViewModel AddProvider(ProviderViewModel viewModel);
+        ProviderViewModel CreateProvider(ProviderViewModel viewModel);
     }
 }

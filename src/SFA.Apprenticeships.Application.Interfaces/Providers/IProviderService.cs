@@ -47,5 +47,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
 
         Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);
+
+        Provider CreateProvider(Provider provider);
     }
 }

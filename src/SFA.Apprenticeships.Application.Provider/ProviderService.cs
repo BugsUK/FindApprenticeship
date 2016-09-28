@@ -18,6 +18,7 @@
         private readonly IEmployerService _employerService;
         private readonly ILogService _logService;
         private readonly IProviderReadRepository _providerReadRepository;
+        private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
         private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
@@ -26,7 +27,7 @@
             IProviderSiteReadRepository providerSiteReadRepository,
             IVacancyPartyReadRepository vacancyPartyReadRepository,
             IVacancyPartyWriteRepository vacancyPartyWriteRepository,
-            ILogService logService, IEmployerService employerService)
+            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
@@ -34,6 +35,7 @@
             _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
             _logService = logService;
             _employerService = employerService;
+            _providerWriteRepository = providerWriteRepository;
         }
 
         public Provider GetProvider(int providerId)
@@ -196,6 +198,11 @@
             pageable.TotalNumberOfPages = resultCount/pageSize + 1;
 
             return pageable;
+        }
+
+        public Provider CreateProvider(Provider provider)
+        {
+            return _providerWriteRepository.Create(provider);
         }
 
         private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)

@@ -8,11 +8,11 @@
             public const string Ok = "AdminMediatorCodes.SearchProviders.Ok";
         }
 
-        public class AddProvider
+        public class CreateProvider
         {
-            public const string FailedValidation = "AdminMediatorCodes.AddProvider.FailedValidation";
-            public const string UkprnAlreadyExists = "AdminMediatorCodes.UkprnAlreadyExists.FailedValidation";
-            public const string Ok = "AdminMediatorCodes.AddProvider.Ok";
+            public const string FailedValidation = "AdminMediatorCodes.CreateProvider.FailedValidation";
+            public const string UkprnAlreadyExists = "AdminMediatorCodes.CreateProvider.UkprnAlreadyExists";
+            public const string Ok = "AdminMediatorCodes.CreateProvider.Ok";
         }
     }
 }

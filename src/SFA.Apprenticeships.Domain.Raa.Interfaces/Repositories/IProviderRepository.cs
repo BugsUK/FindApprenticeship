@@ -14,6 +14,7 @@
 
     public interface IProviderWriteRepository
     {
-        Provider Update(Provider entity);
+        Provider Create(Provider provider);
+        Provider Update(Provider provider);
     }
 }
