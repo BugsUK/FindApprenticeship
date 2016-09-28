@@ -13,7 +13,6 @@
         public override void Initialise()
         {
             Mapper.CreateMap<DatabaseProviderSite, DomainProviderSite>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.FullName))
                 .IgnoreMember(dest => dest.Address)
                 .IgnoreMember(dest => dest.ProviderSiteRelationships)
                 .AfterMap((source, dest) =>
@@ -40,7 +39,6 @@
                 });
 
             Mapper.CreateMap<DomainProviderSite, DatabaseProviderSite>()
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(source => source.Name))
                 .IgnoreMember(dest => dest.CountyId)
                 .IgnoreMember(dest => dest.GeocodeEasting)
                 .IgnoreMember(dest => dest.GeocodeNorthing)

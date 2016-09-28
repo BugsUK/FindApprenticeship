@@ -11,10 +11,14 @@
     {
         public int ProviderSiteId { get; set; }
 
-        public string Name { get; set; }
+        public string EdsUrn { get; set; }
+
+        public string FullName { get; set; }
+
+        public string TradingName { get; set; }
 
         [Display(Name = ProviderSiteViewModelMessages.NameMessages.LabelText)]
-        public string DisplayName => $"{Name}, {Address.Town}";
+        public string DisplayName => $"{FullName}, {Address.Town}";
 
         public string EmailAddress { get; set; }
 
