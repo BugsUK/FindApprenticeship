@@ -91,13 +91,13 @@
                     <p>You've made @Model.UnsuccessfulApplicationsCount candidates unsuccessful</p>
                 }
 
-                @if (Model.NewApplicationsCount + Model.ViewedApplicationsCount == 1)
+                @if (Model.NewApplicationsCount + Model.InProgressApplicationsCount == 1)
                 {
                     <p>1 candidate needs to be notified whether their application has been successful/unsuccessful</p>
                 }
-                else if (Model.NewApplicationsCount + Model.ViewedApplicationsCount > 1)
+                else if (Model.NewApplicationsCount + Model.InProgressApplicationsCount > 1)
                 {
-                    <p>@(Model.NewApplicationsCount + Model.ViewedApplicationsCount) candidates need to be notified whether their applications have been successful/unsuccessful</p>
+                    <p>@(Model.NewApplicationsCount + Model.InProgressApplicationsCount) candidates need to be notified whether their applications have been successful/unsuccessful</p>
                 }
             </div>
         </section>
@@ -140,21 +140,21 @@
                         }
                     </li>
                     <li>
-                        @if (filterType == VacancyApplicationsFilterTypes.Viewed)
+                        @if (filterType == VacancyApplicationsFilterTypes.InProgress)
                         {
                             <figure class="data">
-                                <p class="count">@Model.ViewedApplicationsCount</p>
+                                <p class="count">@Model.InProgressApplicationsCount</p>
                                 <figcaption>
-                                    <h2>Viewed</h2></figcaption>
+                                    <h2>In progress</h2></figcaption>
                             </figure>
                         }
                         else
                         {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Viewed).RouteValues)" class="vacancy-filter">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.InProgress).RouteValues)" class="vacancy-filter">
                                 <figure class="data">
-                                    <p class="count">@Model.ViewedApplicationsCount</p>
+                                    <p class="count">@Model.InProgressApplicationsCount</p>
                                     <figcaption>
-                                        <h2>Viewed</h2></figcaption>
+                                        <h2>In progress</h2></figcaption>
                                 </figure>
                             </a>
                         }

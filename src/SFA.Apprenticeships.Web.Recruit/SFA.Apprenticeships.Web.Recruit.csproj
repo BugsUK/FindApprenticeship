@@ -884,7 +884,7 @@
     </Content>
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ChangeUkprn.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\ConfirmRevertToViewed.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmRevertToInProgress.cshtml" />
     <Content Include="Views\Candidate\Search.cshtml" />
     <Content Include="Views\Candidate\Candidate.cshtml" />
     <Content Include="Views\InformationRadiator\Index.cshtml" />
