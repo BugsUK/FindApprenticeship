@@ -5,16 +5,6 @@
 
     public interface IProviderMediator
     {
-        MediatorResponse<ProviderSiteSearchViewModel> AddSite();
-
-        MediatorResponse<ProviderSiteSearchViewModel> AddSite(ProviderSiteSearchViewModel viewModel);
-
         MediatorResponse<ProviderViewModel> Sites(string ukprn);
-
-        MediatorResponse<ProviderViewModel> UpdateSites(string ukprn, string username, ProviderViewModel providerViewModel);
-
-        MediatorResponse<ProviderSiteViewModel> GetSite(string edsUrn);
-
-        MediatorResponse<ProviderSiteViewModel> UpdateSite(ProviderSiteViewModel providerSiteViewModel);
     }
 }

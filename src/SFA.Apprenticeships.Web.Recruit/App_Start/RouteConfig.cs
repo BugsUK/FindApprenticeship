@@ -116,18 +116,6 @@
                 );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.AddProviderSite,
-               url: "sites/add",
-               defaults: new { controller = "Provider", action = "AddSite" }
-               );
-
-            routes.MapRoute(
-               name: RecruitmentRouteNames.EditProviderSite,
-               url: "sites/edit",
-               defaults: new { controller = "Provider", action = "EditSite" }
-               );
-
-            routes.MapRoute(
                name: RecruitmentRouteNames.CreateVacancy,
                url: "vacancy/create",
                defaults: new { controller = "VacancyPosting", action = "CreateVacancy" }
