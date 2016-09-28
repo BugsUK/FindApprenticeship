@@ -10,7 +10,6 @@
     using Application.Interfaces.VacancyPosting;
     using Configuration;
     using Converters;
-    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Reference;
@@ -19,13 +18,13 @@
     using Infrastructure.Presentation;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
+    using Application.Vacancy;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Raa.Parties;
-    using Strategies;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
@@ -34,7 +33,7 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
-    using Order = ViewModels.Order;
+    using Order = Domain.Raa.Interfaces.Repositories.Models.Order;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
@@ -57,7 +56,7 @@
         private readonly IMapper _mapper;
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
-        private IVacancySummaryStrategy _vacancySummaryStrategy;
+        private IVacancySummaryService _vacancySummaryService;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -65,7 +64,7 @@
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService,
-            ILocalAuthorityLookupService localAuthLookupService, IVacancySummaryStrategy vacancySummaryStrategy)
+            ILocalAuthorityLookupService localAuthLookupService, IVacancySummaryService vacancySummaryService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -86,7 +85,7 @@
             _userProfileService = userProfileService;
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
-            _vacancySummaryStrategy = vacancySummaryStrategy;
+            _vacancySummaryService = vacancySummaryService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -749,94 +748,60 @@
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
-            var vacancyPage = _vacancySummaryStrategy.GetVacancySummaries(vacanciesSummarySearch.SearchString,
-                providerSiteId,
-                providerId,
-                vacanciesSummarySearch.VacancyType,
-                vacanciesSummarySearch.FilterType,
-                vacanciesSummarySearch.OrderByField,
-                vacanciesSummarySearch.Order,
-                vacanciesSummarySearch.PageSize,
-                vacanciesSummarySearch.CurrentPage);
+            var orderByField = string.IsNullOrEmpty(vacanciesSummarySearch.OrderByField)
+                ? VacancySummaryOrderByColumn.OrderByFilter
+                : (VacancySummaryOrderByColumn)
+                Enum.Parse(typeof(VacancySummaryOrderByColumn), vacanciesSummarySearch.OrderByField);
 
-            Func<VacanciesSummaryFilterTypes, int> count = type => Filter(vacan, type, vacancyPage.ResultsCount).Count();
-            var vacanciesSummary = new VacanciesSummaryViewModel
+            var query = new VacancySummaryQuery()
             {
-                VacanciesSummarySearch = vacanciesSummarySearch,
-                LiveCount = count(VacanciesSummaryFilterTypes.Live),
-                SubmittedCount = count(VacanciesSummaryFilterTypes.Submitted),
-                RejectedCount = count(VacanciesSummaryFilterTypes.Rejected),
-                ClosingSoonCount = count(VacanciesSummaryFilterTypes.ClosingSoon),
-                ClosedCount = count(VacanciesSummaryFilterTypes.Closed),
-                DraftCount = count(VacanciesSummaryFilterTypes.Draft),
-                NewApplicationsAcrossAllVacanciesCount = minimalVacancyDetails.Sum(v => applicationCountsByVacancyId[v.VacancyId].NewApplications),
-                CompletedCount = count(VacanciesSummaryFilterTypes.Completed),
-                HasVacancies = hasVacancies,
-                Vacancies = vacancyPage
+                ProviderId = providerId,
+                ProviderSiteId = providerSiteId,
+                OrderByField = orderByField,
+                Filter = vacanciesSummarySearch.FilterType,
+                PageSize = vacanciesSummarySearch.PageSize,
+                RequestedPage = vacanciesSummarySearch.CurrentPage,
+                SearchString = vacanciesSummarySearch.SearchString
             };
-            _logService.Info($"Complete {stopwatch.ElapsedMilliseconds}ms elapsed");
 
-            return vacanciesSummary;
-        }
+            var summaries = _vacancySummaryService.GetSummariesForProvider(query);
+            var mapped = _mapper.Map<IList<VacancySummary>, IList<VacancySummaryViewModel>>(summaries);
 
-        private IEnumerable<T> Filter<T>(IEnumerable<T> data, VacanciesSummaryFilterTypes vacanciesSummaryFilterType, IReadOnlyDictionary<int, IApplicationCounts> applicationCountsByVacancyId) where T : IMinimalVacancyDetails
-        {
-            switch (vacanciesSummaryFilterType)
+            var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
             {
-                case VacanciesSummaryFilterTypes.All:       return data;
-                case VacanciesSummaryFilterTypes.Live:      return data.Where(v => v.Status == VacancyStatus.Live);
-                case VacanciesSummaryFilterTypes.Submitted: return data.Where(v => v.Status.EqualsAnyOf(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
-                case VacanciesSummaryFilterTypes.Rejected:  return data.Where(v => v.Status == VacancyStatus.Referred);
-                case VacanciesSummaryFilterTypes.ClosingSoon:
-                    return data.Where(v =>
-                    v.Status == VacancyStatus.Live &&
-                    v.LiveClosingDate >= _dateTimeService.UtcNow.Date &&
-                    v.LiveClosingDate.AddDays(-5) < _dateTimeService.UtcNow);
-                case VacanciesSummaryFilterTypes.Closed:    return data.Where(v => v.Status == VacancyStatus.Closed);
-                case VacanciesSummaryFilterTypes.Draft:     return data.Where(v => v.Status == VacancyStatus.Draft);
-                case VacanciesSummaryFilterTypes.NewApplications:
-                    return data.Where(v => applicationCountsByVacancyId[v.VacancyId].NewApplications > 0);
-                case VacanciesSummaryFilterTypes.Completed: return data.Where(v => v.Status == VacancyStatus.Completed);
-                default: throw new ArgumentException($"{vacanciesSummaryFilterType}");
-            }
-        }
+                Page = mapped,
+                ResultsCount = summaries.Count,
+                CurrentPage = vacanciesSummarySearch.CurrentPage,
+                TotalNumberOfPages = 12 //TODO need total results and pages returned
+            };
 
-        private IEnumerable<T> Sort<T>(IEnumerable<T> data, VacanciesSummarySearchViewModel vacanciesSummarySearch) where T : IMinimalVacancyDetails
-        {
-            if(string.IsNullOrEmpty(vacanciesSummarySearch.OrderByField))
+            var viewModel = new VacanciesSummaryViewModel()
             {
-                switch (vacanciesSummarySearch.FilterType)
-                {
-                    case VacanciesSummaryFilterTypes.ClosingSoon:
-                    case VacanciesSummaryFilterTypes.NewApplications:
-                        return data.OrderBy(v => v.LiveClosingDate).ThenByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
-                    case VacanciesSummaryFilterTypes.Closed:
-                    case VacanciesSummaryFilterTypes.Live:
-                    case VacanciesSummaryFilterTypes.Completed:
-                        return data.OrderBy(v => v.EmployerName).ThenBy(v => v.Title);
-                    case VacanciesSummaryFilterTypes.All:
-                    case VacanciesSummaryFilterTypes.Submitted:
-                    case VacanciesSummaryFilterTypes.Rejected:
-                    case VacanciesSummaryFilterTypes.Draft:
-                        // Requirement is "most recently created first" (Faizal 30/6/2016).
-                        // Previously there was no ordering in the code and it was coming out in natural database order
-                        return data.OrderByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
-                    default:
-                        throw new ArgumentException($"{vacanciesSummarySearch.FilterType}");
-                }
-            }
+                Vacancies = vacancyPage,
+                VacanciesSummarySearch = vacanciesSummarySearch,
+            };
 
-            switch (vacanciesSummarySearch.OrderByField)
-            {
-                case VacanciesSummarySearchViewModel.OrderByFieldTitle:
-                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.Title) : data.OrderBy(v => v.Title);
-                case VacanciesSummarySearchViewModel.OrderByEmployer:
-                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.EmployerName) : data.OrderBy(v => v.EmployerName);
-                case VacanciesSummarySearchViewModel.OrderByApplications:
-                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.ApplicationOrClickThroughCount) : data.OrderBy(v => v.ApplicationOrClickThroughCount);
-                default:
-                    throw new ArgumentException($"{vacanciesSummarySearch.OrderByField}");
-            }
+            var counts = _vacancySummaryService.GetLotteryCounts(query);
+
+            viewModel.LiveCount = counts.LiveCount;
+            viewModel.ClosedCount = counts.ClosedCount;
+            viewModel.ClosingSoonCount = counts.ClosingSoonCount;
+            viewModel.CompletedCount = counts.CompletedCount;
+            viewModel.DraftCount = counts.DraftCount;
+            viewModel.RejectedCount = counts.RejectedCount;
+            viewModel.SubmittedCount = counts.SubmittedCount;
+            viewModel.NewApplicationsAcrossAllVacanciesCount = counts.NewApplicationsCount;
+
+            viewModel.HasVacancies = (viewModel.LiveCount +
+                                      viewModel.ClosedCount +
+                                      viewModel.ClosingSoonCount +
+                                      viewModel.CompletedCount +
+                                      viewModel.DraftCount +
+                                      viewModel.RejectedCount +
+                                      viewModel.SubmittedCount +
+                                      viewModel.NewApplicationsAcrossAllVacanciesCount) > 0;
+
+            return viewModel;
         }
 
         public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)

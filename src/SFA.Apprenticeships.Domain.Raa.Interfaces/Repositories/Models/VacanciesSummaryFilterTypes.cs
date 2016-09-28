@@ -1,4 +1,10 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 {
     public enum VacanciesSummaryFilterTypes
     {

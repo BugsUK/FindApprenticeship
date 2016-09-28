@@ -27,15 +27,14 @@ namespace SFA.Apprenticeship.Web.Api.DependencyResolution {
     using Apprenticeships.Application.Interfaces.Organisations;
     using Apprenticeships.Application.Organisation;
     using Apprenticeships.Application.ReferenceData;
+    using Apprenticeships.Application.Vacancy;
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Infrastructure.Raa;
     using Apprenticeships.Infrastructure.Raa.Mappers;
     using Apprenticeships.Infrastructure.Raa.Strategies;
     using Apprenticeships.Web.Raa.Common.Mappers;
-    using Apprenticeships.Web.Raa.Common.Strategies;
     using StructureMap.Configuration.DSL;
-    using StructureMap.Graph;
-	
+
     public class DefaultRegistry : Registry {
         #region Constructors and Destructors
 
@@ -49,7 +48,7 @@ namespace SFA.Apprenticeship.Web.Api.DependencyResolution {
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
 
-            For<IVacancySummaryStrategy>().Use<VacancySummaryStrategy>().Ctor<IMapper>().Named("RaaCommonWebMappers");
+            For<IVacancySummaryService>().Use<VacancySummaryService>().Ctor<IMapper>().Named("RaaCommonWebMappers");
 
             For<IEmployerService>().Use<EmployerService>();
             For<IOrganisationService>().Use<OrganisationService>();

@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels
 {
+    using Domain.Raa.Interfaces.Repositories.Models;
+
     //TODO: Use this class and PageableSearchViewModel throughout RAA
 
     /// <summary>

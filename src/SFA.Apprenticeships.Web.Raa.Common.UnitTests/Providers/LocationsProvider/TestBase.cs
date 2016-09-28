@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
+    using Application.Vacancy;
     using Moq;
     using NUnit.Framework;
     using Common.Providers;
@@ -16,9 +17,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
     using Domain.Entities.Raa.Parties;
     using Ploeh.AutoFixture;
 
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
-    using Strategies;
+    using Application.Interfaces;
     using Web.Common.Configuration;
 
     public abstract class TestBase
@@ -38,7 +37,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
         private Mock<IUserProfileService> _mockUserProfileService;
         private Mock<IGeoCodeLookupService> _mockGeoCodeLookupService;
         private Mock<ILocalAuthorityLookupService> _mockLocalAuthorityLookupService;
-        private Mock<IVacancySummaryStrategy> _mockVacancySummaryStrategy;
+        private Mock<IVacancySummaryService> _mockVacancySummaryService;
 
         [SetUp]
         public void SetUpBase()
@@ -67,7 +66,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
             _mockUserProfileService = new Mock<IUserProfileService>();
             _mockGeoCodeLookupService = new Mock<IGeoCodeLookupService>();
             _mockLocalAuthorityLookupService = new Mock<ILocalAuthorityLookupService>();
-            _mockVacancySummaryStrategy = new Mock<IVacancySummaryStrategy>();
+            _mockVacancySummaryService = new Mock<IVacancySummaryService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -87,7 +86,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
                 _mockUserProfileService.Object,
                 _mockGeoCodeLookupService.Object,
                 _mockLocalAuthorityLookupService.Object,
-                _mockVacancySummaryStrategy.Object);
+                _mockVacancySummaryService.Object);
         }
     }
 }

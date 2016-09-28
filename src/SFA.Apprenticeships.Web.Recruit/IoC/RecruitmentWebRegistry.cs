@@ -116,6 +116,7 @@
             For<IVacancyManagementService>().Use<VacancyManagementService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
+            For<IVacancySummaryService>().Use<VacancySummaryService>();
         }
 
         private void RegisterStrategies()

@@ -1,12 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 {
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     public class VacanciesSummarySearchViewModel : OrderedPageableSearchViewModel
     {
-        public const string OrderByFieldTitle = "Title";
-        public const string OrderByEmployer = "Employer";
-        public const string OrderByApplications = "Applications";
+        public static readonly string OrderByFieldTitle = VacancySummaryOrderByColumn.Title.ToString();
+        public static readonly string OrderByEmployer = VacancySummaryOrderByColumn.Title.ToString();
+        public static readonly string OrderByApplications = VacancySummaryOrderByColumn.Title.ToString();
 
         public VacanciesSummarySearchViewModel()
         {

@@ -1,29 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 
 namespace SFA.Apprenticeship.Web.Api.Controllers
 {
-    using Apprenticeships.Application.Interfaces.Providers;
+    using Apprenticeships.Application.Vacancy;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Apprenticeships.Web.Common.ViewModels;
-    using Apprenticeships.Web.Raa.Common.Strategies;
-    using Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
-    using Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
+    using Apprenticeships.Domain.Raa.Interfaces.Repositories.Models;
 
     /// <summary>
     /// CRUD vacancies for the calling provider
     /// </summary>
     public class VacancyController : ApiController
     {
-        private IVacancySummaryStrategy _vacancySummaryStrategy;
+        private IVacancySummaryService _VacancySummaryService;
 
-        public VacancyController(IVacancySummaryStrategy vacancySummaryStrategy)
+        public VacancyController(IVacancySummaryService VacancySummaryService)
         {
-            _vacancySummaryStrategy = vacancySummaryStrategy;
+            _VacancySummaryService = VacancySummaryService;
         }
 
         /// <summary>
@@ -34,9 +27,21 @@ namespace SFA.Apprenticeship.Web.Api.Controllers
         /// <param name="providerId">The providers database id</param>
         /// <param name="type">The type of vacancy; Apprenticeship or Traineeeship</param>
         /// <returns>A list of vacancies</returns>
-        public IEnumerable<VacancySummaryViewModel> Get(VacancyType type, VacanciesSummaryFilterTypes filter, int providerId, int providerSiteId)
+        public IEnumerable<VacancySummary> Get(VacancyType type, VacanciesSummaryFilterTypes filter, int providerId, int providerSiteId)
         {
-            return _vacancySummaryStrategy.GetVacancySummaries(null, providerSiteId, providerId, type, filter, null, Order.Ascending, 25, 1).Page;
+            var query = new VacancySummaryQuery()
+            {
+                PageSize = 100,
+                RequestedPage = 1,
+                VacancyType = type,
+                Filter = filter,
+                OrderByField = VacancySummaryOrderByColumn.OrderByFilter,
+                Order = Order.Ascending,
+                ProviderId = providerId,
+                ProviderSiteId = providerSiteId
+            };
+
+            return _VacancySummaryService.GetSummariesForProvider(query);
         }
 
         /// <summary>

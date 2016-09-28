@@ -296,9 +296,17 @@
       <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
       <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{E3F2F285-16EB-49C5-9668-8D8E1DB6C610}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
+      <Project>{CF497DD1-550D-4203-8FBF-C0A3B0109D2B}</Project>
+      <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>

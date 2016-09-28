@@ -20,7 +20,7 @@
     using ViewModels.Application.Traineeship;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
-    using Order = ViewModels.Order;
+    using Order = Domain.Raa.Interfaces.Repositories.Models.Order;
 
     public class ApplicationProvider : IApplicationProvider
     {

@@ -16,7 +16,7 @@
     <RootNamespace>SFA.Apprenticeships.Web.Recruit</RootNamespace>
     <AssemblyName>SFA.Apprenticeships.Web.Recruit</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -797,7 +797,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CreateVacancy.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>VacancySubmitted.generated.cs</LastGenOutput>
@@ -947,8 +946,6 @@
       <LastGenOutput>_LoginPartial.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\ProviderUser\Home.cshtml" />
-    <Content Include="Views\Provider\AddSite.cshtml" />
-    <Content Include="Views\Provider\EditSite.cshtml" />
     <Content Include="Views\ProviderUser\Settings.cshtml" />
     <Content Include="Views\ProviderUser\VerifyEmail.cshtml" />
     <Content Include="Views\Shared\ValidationSummary.cshtml">
