@@ -469,6 +469,12 @@
                defaults: new { controller = "Candidate", action = "SortCandidate" }
                );
 
+            routes.MapRoute(
+                name: RecruitmentRouteNames.InformationRadiator,
+                url: "informationradiator",
+                defaults: new {controller = "InformationRadiator", action = "Index"}
+            );
+
             routes.LowercaseUrls = true;
         }
     }

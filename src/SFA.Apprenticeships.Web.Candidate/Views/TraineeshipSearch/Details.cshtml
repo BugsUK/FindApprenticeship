@@ -13,7 +13,7 @@
     <div class="grid-wrapper">
         <div class="grid grid-2-3">
             <div class="hgroup text">
-                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.Title</h1>
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@HtmlExtensions.EscapeHtmlEncoding(Model.Title)</h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
             </div>
         </div>
@@ -37,7 +37,7 @@
         <section class=" grid-wrapper">
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
-                    <p class="@Model.Description.GetPreserveFormattingCssClass()">@Html.Raw(Model.Description)</p>
+                    <p class="@Model.Description.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.Description))</p>
                 </div>
             </div>
             <div class="grid grid-1-3">
@@ -48,9 +48,9 @@
             <h2 class="heading-large">Traineeship details</h2>
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
-                    <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@Html.Raw(Model.FullDescription)</p>
+                    <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.FullDescription))</p>
                     <h3 class="heading-medium">Training to be provided</h3>
-                    <p class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@Html.Raw(Model.TrainingToBeProvided)</p>
+                    <p class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.TrainingToBeProvided))</p>
                 </div>
             </div>
             <div class="grid grid-1-3">
@@ -130,7 +130,7 @@
                         <h3 class="bold-small">
                             Additional location information
                         </h3>
-                        <p>@Html.Raw(Model.AdditionalLocationInformation)</p>
+                        <p>@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.AdditionalLocationInformation))</p>
                     </div>
                 }
             </div>
@@ -139,13 +139,13 @@
             <div class="text">
                 <h2 class="heading-large">Desired skills and what this will lead to</h2>
                 <h3 class="heading-small">Desired skills and qualities</h3>
-                <p class="@Model.SkillsRequired.GetPreserveFormattingCssClass()">@Html.Raw(Model.SkillsRequired)</p>
-                <p class="@Model.PersonalQualities.GetPreserveFormattingCssClass()">@Html.Raw(Model.PersonalQualities)</p>
+                <p class="@Model.SkillsRequired.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.SkillsRequired))</p>
+                <p class="@Model.PersonalQualities.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.PersonalQualities))</p>
 
                 @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
         {
                     <h3 class="heading-small">What this will lead to</h3>
-                    <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()">@Html.Raw(Model.FutureProspects)</p>
+                    <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.FutureProspects))</p>
                 }
             </div>
         </section>
@@ -155,7 +155,7 @@
             <section class="grid-wrapper">
                 <div class="text">
                     <h2 class="heading-large">Other information</h2>
-                    <p id="vacany-other-information" class="@Model.OtherInformation.GetPreserveFormattingCssClass()">@Html.Raw(Model.OtherInformation)</p>
+                    <p id="vacany-other-information" class="@Model.OtherInformation.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.OtherInformation))</p>
                 </div>
             </section>
         }

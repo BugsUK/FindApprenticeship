@@ -108,5 +108,8 @@
         public const string SearchCandidates = "SearchCandidates";
         public const string ViewCandidate = "ViewCandidate";
         public const string SortCandidate = "SortCandidate";
+
+        //Service status
+        public static string InformationRadiator = "InformationRadiator";
     }
 }
