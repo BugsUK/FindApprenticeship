@@ -22,7 +22,7 @@
 
         ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
 
-        ApplicationSelectionViewModel RevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel);
+        ApplicationSelectionViewModel RevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         TraineeshipApplicationViewModel GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
 

@@ -18,7 +18,7 @@
 
         void SetUnsuccessfulDecision(Guid applicationId);
 
-        void RevertToViewed(Guid applicationId);
+        void RevertToInProgress(Guid applicationId);
     }
 }
  

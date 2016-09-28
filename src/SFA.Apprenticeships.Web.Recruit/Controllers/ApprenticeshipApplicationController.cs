@@ -107,9 +107,9 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewRevertToViewed(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public ActionResult ReviewRevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ReviewRevertToViewed(apprenticeshipApplicationViewModel);
+            var response = _apprenticeshipApplicationMediator.ReviewRevertToInProgress(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -121,14 +121,14 @@
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Error:
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.Error:
                     return View("Review", response.ViewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.FailedValidation:
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Ok:
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.ConfirmRevertToInProgress, viewModel.ApplicationSelection.RouteValues);
 
                 default:
@@ -267,14 +267,14 @@
         }
 
         [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "RevertToViewed")]
-        public ActionResult RevertToViewed(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "RevertToInProgress")]
+        public ActionResult RevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.RevertToViewed(apprenticeshipApplicationViewModel.ApplicationSelection);
+            var response = _apprenticeshipApplicationMediator.RevertToInProgress(apprenticeshipApplicationViewModel.ApplicationSelection);
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.RevertToViewed.Ok:
+                case ApprenticeshipApplicationMediatorCodes.RevertToInProgress.Ok:
                     if (response.Message != null)
                     {
                         SetUserMessage(response.Message.Text);

@@ -30,7 +30,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
             SetDecision(applicationId, ApplicationStatuses.Unsuccessful);
         }
 
-        public void RevertToViewed(Guid applicationId)
+        public void RevertToInProgress(Guid applicationId)
         {
             var application = _apprenticeshipApplicationReadRepository.Get(applicationId);
             application.SetStateInProgress();
