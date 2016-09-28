@@ -25,13 +25,13 @@
 
         public int NewApplicationsCount { get; set; }
 
-        public int ViewedApplicationsCount { get; set; }
+        public int InProgressApplicationsCount { get; set; }
 
         public int SuccessfulApplicationsCount { get; set; }
 
         public int UnsuccessfulApplicationsCount { get; set; }
 
-        public int TotalNumberOfApplications => NewApplicationsCount + ViewedApplicationsCount + SuccessfulApplicationsCount +
+        public int TotalNumberOfApplications => NewApplicationsCount + InProgressApplicationsCount + SuccessfulApplicationsCount +
                                                 UnsuccessfulApplicationsCount;
 
         public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }

@@ -105,7 +105,7 @@
             applications = SearchCandidateApplications(vacancyApplicationsSearch, applications);
 
             var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
-            var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
+            var inProgress = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
             var successful = applications.Where(v => v.Status == ApplicationStatuses.Successful).ToList();
             var unsuccessful = applications.Where(v => v.Status == ApplicationStatuses.Unsuccessful).ToList();
 
@@ -114,8 +114,8 @@
                 case VacancyApplicationsFilterTypes.New:
                     applications = @new;
                     break;
-                case VacancyApplicationsFilterTypes.Viewed:
-                    applications = viewed;
+                case VacancyApplicationsFilterTypes.InProgress:
+                    applications = inProgress;
                     break;
                 case VacancyApplicationsFilterTypes.Successful:
                     applications = successful;
@@ -127,7 +127,7 @@
 
             //TODO: return as part of data query - probably needs migration
             viewModel.NewApplicationsCount = @new.Count;
-            viewModel.ViewedApplicationsCount = viewed.Count;
+            viewModel.InProgressApplicationsCount = inProgress.Count;
             viewModel.SuccessfulApplicationsCount = successful.Count;
             viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
 
