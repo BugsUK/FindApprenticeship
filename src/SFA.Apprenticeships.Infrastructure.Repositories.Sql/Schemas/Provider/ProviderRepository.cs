@@ -104,6 +104,17 @@
             return providers.Select(MapProvider);
         }
 
+        public Provider Create(Provider provider)
+        {
+            _logger.Info("Creating provider with Ukprn={0}", provider.Ukprn);
+
+            var dbProvider = MapProvider(provider);
+
+            _getOpenConnection.Insert(dbProvider);
+
+            return GetByUkprn(provider.Ukprn);
+        }
+
         /// <summary>
         /// UpdateEntityTimeStamps
         /// Save to Collection

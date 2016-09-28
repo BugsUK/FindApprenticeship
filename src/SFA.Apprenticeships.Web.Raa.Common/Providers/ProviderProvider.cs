@@ -10,13 +10,17 @@
     using Converters;
     using Domain.Entities.Raa.Vacancies;
     using Application.Interfaces;
+    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
+    using Mappers;
     using ViewModels.Provider;
     using ViewModels.VacancyPosting;
     using Web.Common.Converters;
 
     public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
+        private readonly IMapper _providerMappers = new ProviderMappers();
+
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
@@ -208,9 +212,13 @@
             return viewModel;
         }
 
-        public ProviderViewModel AddProvider(ProviderViewModel viewModel)
+        public ProviderViewModel CreateProvider(ProviderViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var provider = _providerMappers.Map<ProviderViewModel, Provider>(viewModel);
+
+            provider = _providerService.CreateProvider(provider);
+
+            return _providerMappers.Map<Provider, ProviderViewModel>(provider);
         }
     }
 }

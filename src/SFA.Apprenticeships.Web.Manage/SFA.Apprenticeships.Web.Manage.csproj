@@ -851,7 +851,7 @@
     <Content Include="Views\Report\RegisteredCandidatesCsv.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Providers.cshtml" />
-    <Content Include="Views\Admin\AddProvider.cshtml" />
+    <Content Include="Views\Admin\CreateProvider.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

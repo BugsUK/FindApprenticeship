@@ -57,16 +57,16 @@
         }
 
         [HttpGet]
-        public ActionResult AddProvider()
+        public ActionResult CreateProvider()
         {
             return View(new ProviderViewModel());
         }
 
         [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "AddProviderAction")]
-        public ActionResult AddProvider(ProviderViewModel viewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateProviderAction")]
+        public ActionResult CreateProvider(ProviderViewModel viewModel)
         {
-            var response = _adminMediator.AddProvider(viewModel);
+            var response = _adminMediator.CreateProvider(viewModel);
 
             ModelState.Clear();
 
@@ -74,14 +74,14 @@
 
             switch (response.Code)
             {
-                case AdminMediatorCodes.AddProvider.FailedValidation:
+                case AdminMediatorCodes.CreateProvider.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
                     return View(response.ViewModel);
 
-                case AdminMediatorCodes.AddProvider.UkprnAlreadyExists:
+                case AdminMediatorCodes.CreateProvider.UkprnAlreadyExists:
                     return View(response.ViewModel);
 
-                case AdminMediatorCodes.AddProvider.Ok:
+                case AdminMediatorCodes.CreateProvider.Ok:
                     return View(response.ViewModel);
 
                 default:

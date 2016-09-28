@@ -272,9 +272,9 @@
                );
 
             routes.MapRoute(
-               name: ManagementRouteNames.AdminAddProvider,
-               url: "admin/providers/add",
-               defaults: new { controller = "Admin", action = "AddProvider" }
+               name: ManagementRouteNames.AdminCreateProvider,
+               url: "admin/providers/create",
+               defaults: new { controller = "Admin", action = "CreateProvider" }
                );
 
             routes.LowercaseUrls = true;
