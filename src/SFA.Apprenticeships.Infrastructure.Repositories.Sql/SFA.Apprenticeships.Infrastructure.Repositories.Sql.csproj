@@ -166,6 +166,7 @@
     <Compile Include="Schemas\Reference\ReferenceMappers.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
     <Compile Include="Schemas\Vacancy\Entities\PropertyMapItem.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\VacancySummary.cs" />
     <Compile Include="Schemas\Vacancy\VacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyHistory.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />

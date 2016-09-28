@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DbVacancy = SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy;
+using DbVacancySummary = SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.VacancySummary;
 
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
@@ -100,7 +100,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             dbo.GetFirstSubmittedDate(v.VacancyID) AS FirstSubmittedDate,
 		                    dbo.GetSubmittedDate(v.VacancyID) AS SubmittedDate,
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
-                            e.FullName AS EmployerAnonymousName
+                            e.FullName AS EmployerName
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
@@ -120,9 +120,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     OFFSET (@skip) ROWS FETCH NEXT (@take) ROWS ONLY";
 
 
-            var vacancies = _getOpenConnection.Query<DbVacancy>(sql, sqlParams);
+            var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
 
-            var mapped = _mapper.Map<IList<DbVacancy>, IList<VacancySummary>>(vacancies);
+            var mapped = _mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
 
             return mapped;
         }

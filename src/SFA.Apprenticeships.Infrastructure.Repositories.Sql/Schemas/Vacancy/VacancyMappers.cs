@@ -12,6 +12,7 @@
     using Presentation;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using DbVacancy = Entities.Vacancy;
+    using DbVacancySummary = Entities.VacancySummary;
     using DbVacancyLocation = Entities.VacancyLocation;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
@@ -334,6 +335,83 @@
                 .IgnoreMember(av => av.RegionalTeam)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
                 .IgnoreMember(av => av.EmployerName)
+                .IgnoreMember(av => av.ApplicationOrClickThroughCount)
+                .AfterMap((v, av) =>
+                {
+                    av.Address = new DomainPostalAddress
+                    {
+                        AddressLine1 = v.AddressLine1,
+                        AddressLine2 = v.AddressLine2,
+                        AddressLine3 = v.AddressLine3,
+                        AddressLine4 = v.AddressLine4,
+                        AddressLine5 = v.AddressLine5,
+                        Postcode = v.PostCode,
+                        Town = v.Town
+                    };
+
+                    if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
+                        (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue))
+                    {
+                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
+
+                    if (v.Latitude.HasValue && v.Longitude.HasValue)
+                    {
+                        av.Address.GeoPoint.Latitude = (double)v.Latitude.Value;
+                        av.Address.GeoPoint.Longitude = (double)v.Longitude.Value;
+                    }
+
+                    if (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue)
+                    {
+                        av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
+                        av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
+                    }
+                })
+                .End();
+
+
+            Mapper.CreateMap<DbVacancySummary, VacancySummary>()
+                .MapMemberFrom(av => av.VacancyId, v => v.VacancyId)
+                .MapMemberFrom(av => av.VacancyGuid, v => v.VacancyGuid)
+                .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
+                .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
+                .MapMemberFrom(av => av.OwnerPartyId, v => v.VacancyOwnerRelationshipId)
+                .MapMemberFrom(av => av.Title, v => v.Title)
+                .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
+                .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
+                .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
+                .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
+                .MapMemberFrom(av => av.WorkingWeek, v => v.WorkingWeek)
+                .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
+                .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
+                .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
+                .MapMemberFrom(av => av.DeliveryOrganisationId, v => v.DeliveryOrganisationID)
+                .IgnoreMember(av => av.TrainingType)
+                .MapMemberFrom(av => av.ApprenticeshipLevel, v => v.ApprenticeshipType ?? 0)
+                .MapMemberFrom(av => av.FrameworkCodeName, v => v.ApprenticeshipFrameworkId.HasValue ? v.ApprenticeshipFrameworkId.ToString() : null)
+                .MapMemberFrom(av => av.StandardId, v => v.StandardId)
+                .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
+                .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
+                .ForMember(av => av.Wage, opt => opt.MapFrom(v => MapWage(v)))
+                .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
+                .MapMemberFrom(av => av.Duration, v => v.DurationValue)
+                .IgnoreMember(av => av.QAUserName)
+                .IgnoreMember(av => av.DateQAApproved)
+                .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)
+                .MapMemberFrom(av => av.DateStartedToQA, v => v.StartedToQADateTime)
+                .IgnoreMember(av => av.DateSubmitted)
+                .MapMemberFrom(av => av.QAUserName, v => v.QAUserName)
+                .MapMemberFrom(av => av.TrainingType, v => v.TrainingTypeId)
+                .MapMemberFrom(av => av.UpdatedDateTime, v => v.UpdatedDateTime)
+                .MapMemberFrom(av => av.SectorCodeName, v => v.SectorId.HasValue ? v.SectorId.ToString() : null)
+                .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(av => av.DateFirstSubmitted)
+                .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
+                .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
+                .IgnoreMember(av => av.RegionalTeam)
+                .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
+                .MapMemberFrom(av => av.EmployerName, v => v.EmployerName)
                 .IgnoreMember(av => av.ApplicationOrClickThroughCount)
                 .AfterMap((v, av) =>
                 {
