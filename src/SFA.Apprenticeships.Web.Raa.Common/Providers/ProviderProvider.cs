@@ -30,9 +30,14 @@
             _employerService = employerService;
         }
 
-        public ProviderViewModel GetProviderViewModel(string ukprn)
+        public ProviderViewModel GetProviderViewModel(string ukprn, bool errorIfNotFound = true)
         {
-            var provider = _providerService.GetProvider(ukprn);
+            var provider = _providerService.GetProvider(ukprn, errorIfNotFound);
+            if (provider == null)
+            {
+                return null;
+            }
+
             var providerSites = _providerService.GetProviderSites(ukprn);
 
             return provider.Convert(providerSites);
@@ -201,6 +206,11 @@
             viewModel.EmployerResultsPage = resultsPage;
 
             return viewModel;
+        }
+
+        public ProviderViewModel AddProvider(ProviderViewModel viewModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }

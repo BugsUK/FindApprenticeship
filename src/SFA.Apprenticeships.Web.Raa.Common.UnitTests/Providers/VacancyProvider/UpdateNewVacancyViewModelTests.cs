@@ -88,7 +88,7 @@
                 .Returns(new RecruitWebConfiguration {AutoSaveTimeoutInSeconds = 60});
             var referenceDataService = new Mock<IReferenceDataService>();
             referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProvider(ukprn, true)).Returns(new Provider());
             var currentUserService = new Mock<ICurrentUserService>();
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             var dateTimeService = new Mock<IDateTimeService>();

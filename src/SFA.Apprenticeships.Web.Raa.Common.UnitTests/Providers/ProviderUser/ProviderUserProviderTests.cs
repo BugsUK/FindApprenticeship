@@ -119,7 +119,7 @@
 
             _mockProviderService
                 .Setup(mock =>
-                    mock.GetProvider(provider.Ukprn))
+                    mock.GetProvider(provider.Ukprn, true))
                 .Returns(provider);
 
             var providerUserProvider = new ProviderUserProviderBuilder()
@@ -137,7 +137,7 @@
 
             // Assert: calls.
             _mockProviderService.Verify(mock =>
-                mock.GetProvider(provider.Ukprn), Times.Once);
+                mock.GetProvider(provider.Ukprn, true), Times.Once);
 
             // Assert: saved provider user.
             newProviderUser.ProviderId.Should().Be(provider.ProviderId);
@@ -224,7 +224,7 @@
 
             _mockProviderService
                 .Setup(mock =>
-                    mock.GetProvider(provider.Ukprn))
+                    mock.GetProvider(provider.Ukprn, true))
                 .Returns(provider);
 
             var providerUserProvider = new ProviderUserProviderBuilder()

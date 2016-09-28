@@ -7,7 +7,7 @@
     public interface IProviderReadRepository
     {
         Provider GetById(int providerId);
-        Provider GetByUkprn(string ukprn);
+        Provider GetByUkprn(string ukprn, bool errorIfNotFound = true);
         IEnumerable<Provider> GetByIds(IEnumerable<int> providerIds);
         IEnumerable<Provider> Search(ProviderSearchParameters searchParameters);
     }

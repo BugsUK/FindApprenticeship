@@ -11,6 +11,7 @@
         public class AddProvider
         {
             public const string FailedValidation = "AdminMediatorCodes.AddProvider.FailedValidation";
+            public const string UkprnAlreadyExists = "AdminMediatorCodes.UkprnAlreadyExists.FailedValidation";
             public const string Ok = "AdminMediatorCodes.AddProvider.Ok";
         }
     }

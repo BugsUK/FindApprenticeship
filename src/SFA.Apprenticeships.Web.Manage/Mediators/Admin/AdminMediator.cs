@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Admin
 {
+    using Common.Constants;
     using Common.Mediators;
+    using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
@@ -33,7 +35,22 @@
 
         public MediatorResponse<ProviderViewModel> AddProvider(ProviderViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            var validatonResult = _providerViewModelServerValidator.Validate(viewModel);
+
+            if (!validatonResult.IsValid)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.AddProvider.FailedValidation, viewModel, validatonResult);
+            }
+
+            var existingViewModel = _providerProvider.GetProviderViewModel(viewModel.Ukprn, false);
+            if (existingViewModel != null)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.AddProvider.UkprnAlreadyExists, viewModel, ProviderViewModelMessages.UkprnAlreadyExists, UserMessageLevel.Error);
+            }
+
+            viewModel = _providerProvider.AddProvider(viewModel);
+
+            return GetMediatorResponse(AdminMediatorCodes.AddProvider.Ok, viewModel);
         }
     }
 }
