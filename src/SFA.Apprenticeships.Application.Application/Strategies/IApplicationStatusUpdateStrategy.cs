@@ -3,6 +3,9 @@
     using Application.Entities;
     using Domain.Entities.Applications;
 
+    /// <summary>
+    /// TODO: consider merging this with ISetApplicationStatusStrategy
+    /// </summary>
     public interface IApplicationStatusUpdateStrategy
     {
         void Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatus);
