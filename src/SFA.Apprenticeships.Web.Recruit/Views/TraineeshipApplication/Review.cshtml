@@ -38,13 +38,17 @@
         </div>
     }
 
-    <div>
-        <div class="hgroup">
+    <div class="grid-wrapper hgroup">
+        <div class="grid-2-3 grid">
             <h1 class="heading-xlarge med-btm-margin">@Model.Vacancy.Title</h1>
             <p class="subtitle">@Model.Vacancy.EmployerName</p>
-            <!--<p>
-                <a href="live-apprenticeship-summary.html">Traineeship summary</a>
-            </p>-->
+        </div>
+        <div class="grid grid-1-3">
+            <div class="page-link hide-nojs">
+                <p>
+                    <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
+                </p>
+            </div>
         </div>
         <div class="grid-wrapper">
             <div class="grid grid-2-3">
@@ -84,4 +88,9 @@
             </section>
         }
     </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/print")
 }

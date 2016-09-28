@@ -496,6 +496,7 @@
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
+    <Content Include="Content\_assets\js\print.js" />
     <Content Include="Content\_assets\js\sticky.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\adapters\jquery.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\build-config.js" />
