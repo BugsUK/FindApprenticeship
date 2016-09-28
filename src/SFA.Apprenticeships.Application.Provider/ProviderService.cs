@@ -20,6 +20,7 @@
         private readonly IProviderReadRepository _providerReadRepository;
         private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
+        private readonly IProviderSiteWriteRepository _providerSiteWriteRepository;
         private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
 
@@ -27,7 +28,7 @@
             IProviderSiteReadRepository providerSiteReadRepository,
             IVacancyPartyReadRepository vacancyPartyReadRepository,
             IVacancyPartyWriteRepository vacancyPartyWriteRepository,
-            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository)
+            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository, IProviderSiteWriteRepository providerSiteWriteRepository)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
@@ -36,6 +37,7 @@
             _logService = logService;
             _employerService = employerService;
             _providerWriteRepository = providerWriteRepository;
+            _providerSiteWriteRepository = providerSiteWriteRepository;
         }
 
         public Provider GetProvider(int providerId)
@@ -203,6 +205,11 @@
         public Provider CreateProvider(Provider provider)
         {
             return _providerWriteRepository.Create(provider);
+        }
+
+        public ProviderSite CreateProviderSite(ProviderSite providerSite)
+        {
+            return _providerSiteWriteRepository.Create(providerSite);
         }
 
         private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)

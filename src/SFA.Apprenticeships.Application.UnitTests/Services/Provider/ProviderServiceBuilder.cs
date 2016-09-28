@@ -34,7 +34,7 @@
         {
             var provider = new ProviderService(_providerReadRepository, _providerSiteReadRepository, 
                 _vacancyPartyReadRepository, _vacancyPartyWriteRepository, _logService, 
-                _employerService, _providerWriteRepository);
+                _employerService, _providerWriteRepository, _providerSiteWriteRepository);
             return provider;
         }
 

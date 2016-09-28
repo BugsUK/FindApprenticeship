@@ -3,6 +3,8 @@
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Provider;
+    using Web.Common.Validators;
+    using Common = Common;
 
     public class ProviderSiteViewModelClientValidator : AbstractValidator<ProviderSiteViewModel>
     {
@@ -49,6 +51,16 @@
                 .WithMessage(ProviderSiteViewModelMessages.TradingName.TooLongErrorText)
                 .Matches(ProviderSiteViewModelMessages.TradingName.WhiteListRegularExpression)
                 .WithMessage(ProviderSiteViewModelMessages.TradingName.WhiteListErrorText);
+
+            validator.RuleFor(x => x.Address).SetValidator(new AddressViewModelValidator());
+
+            validator.RuleFor(m => m.WebPage)
+                .NotEmpty()
+                .WithMessage(ProviderSiteViewModelMessages.WebPage.RequiredErrorText)
+                .Length(0, 100)
+                .WithMessage(ProviderSiteViewModelMessages.WebPage.TooLongErrorText)
+                .Must(Common.IsValidUrl)
+                .WithMessage(ProviderSiteViewModelMessages.WebPage.ErrorUriText);
         }
 
         internal static void AddClientRules(this AbstractValidator<ProviderSiteViewModel> validator)
