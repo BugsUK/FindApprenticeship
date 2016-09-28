@@ -386,9 +386,9 @@
                );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.ConfirmRevertToViewed,
-               url: "apprenticeshipapplication/confirmreverttoviewed",
-               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmRevertToViewed" }
+               name: RecruitmentRouteNames.ConfirmRevertToInProgress,
+               url: "apprenticeshipapplication/confirmreverttoinprogress",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmRevertToInProgress" }
                );
 
             routes.MapRoute(

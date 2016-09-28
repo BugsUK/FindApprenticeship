@@ -206,17 +206,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, viewModel, message, UserMessageLevel.Info);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
             {
                 _logService.Error("Confirm revert to viewed failed: VacancyGuid is empty.");
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
             }
 
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
 
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.Ok, viewModel);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.Ok, viewModel);
         }
 
         public MediatorResponse<ApplicationSelectionViewModel> RevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)

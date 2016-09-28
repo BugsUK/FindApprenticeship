@@ -129,7 +129,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ConfirmRevertToViewed, viewModel.ApplicationSelection.RouteValues);
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmRevertToInProgress, viewModel.ApplicationSelection.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -248,16 +248,16 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmRevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ActionResult ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmRevertToViewed(applicationSelectionViewModel);
+            var response = _apprenticeshipApplicationMediator.ConfirmRevertToInProgress(applicationSelectionViewModel);
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.Ok:
+                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.Ok:
                     return View(response.ViewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.NoApplicationId:
+                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.NoApplicationId:
                     SetUserMessage(response.Message);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 

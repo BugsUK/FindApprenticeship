@@ -64,7 +64,7 @@
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok";
         }
 
-        public class ConfirmRevertToViewed
+        public class ConfirmRevertToInProgress
         {
             public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.NoApplicationId";
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.Ok";

@@ -87,7 +87,7 @@
         public const string ConfirmSuccessfulApprenticeshipApplication = "ConfirmSuccessfulApprenticeshipApplication";
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
         public const string ViewAnonymousApprenticeshipApplication = "ViewAnonymousApprenticeshipApplication";
-        public const string ConfirmRevertToViewed = "ConfirmRevertToViewed";
+        public const string ConfirmRevertToInProgress = "ConfirmRevertToInProgress";
 
         // Traineeships
         public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
