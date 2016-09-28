@@ -18,13 +18,7 @@
         public TraineeshipApplicationDetail GetApplicationForReview(Guid applicationId)
         {
             var application = _traineeshipApplicationReadRepository.Get(applicationId);
-
-            if (application.Status == ApplicationStatuses.Submitted || application.Status == ApplicationStatuses.InProgress)
-            {
-                application.SetStateInProgress();
-                application = _traineeshipApplicationWriteRepository.Save(application);
-            }
-
+            
             return application;
         }
     }
