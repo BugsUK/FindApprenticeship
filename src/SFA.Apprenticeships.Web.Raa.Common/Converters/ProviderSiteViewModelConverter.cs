@@ -10,7 +10,8 @@
             var viewModel = new ProviderSiteViewModel
             {
                 ProviderSiteId = providerSite.ProviderSiteId,
-                Name = providerSite.TradingName,
+                FullName = providerSite.FullName,
+                TradingName = providerSite.TradingName,
                 EmployerDescription = providerSite.EmployerDescription,
                 CandidateDescription = providerSite.CandidateDescription,
                 ContactDetailsForEmployer = providerSite.EmployerDescription,

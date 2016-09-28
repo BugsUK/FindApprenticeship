@@ -13,7 +13,7 @@
 
         private void AddCommonRules()
         {
-            RuleFor(m => m.Name)
+            RuleFor(m => m.FullName)
                 .NotEmpty()
                 .WithMessage(ProviderSiteViewModelMessages.NameMessages.RequiredErrorText)
                 .Length(0, 100)
