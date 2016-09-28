@@ -272,6 +272,12 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.AdminViewProvider,
+               url: "admin/provider",
+               defaults: new { controller = "Admin", action = "Provider" }
+               );
+
+            routes.MapRoute(
                name: ManagementRouteNames.AdminCreateProvider,
                url: "admin/providers/create",
                defaults: new { controller = "Admin", action = "CreateProvider" }

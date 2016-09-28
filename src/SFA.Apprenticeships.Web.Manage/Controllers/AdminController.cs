@@ -57,6 +57,14 @@
         }
 
         [HttpGet]
+        public ActionResult Provider(int providerId)
+        {
+            var response = _adminMediator.GetProvider(providerId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
         public ActionResult CreateProvider()
         {
             return View(new ProviderViewModel());

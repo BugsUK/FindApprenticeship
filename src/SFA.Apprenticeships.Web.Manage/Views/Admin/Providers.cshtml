@@ -51,7 +51,7 @@
                                 <td>@provider.Ukprn</td>
                                 <td>@provider.FullName</td>
                                 <td>@provider.TradingName</td>
-                                <td></td>
+                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewProvider, new { provider.ProviderId })</td>
                             </tr>
                         }
                     </tbody>

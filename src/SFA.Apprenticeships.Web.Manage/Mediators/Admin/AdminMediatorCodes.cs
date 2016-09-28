@@ -8,6 +8,11 @@
             public const string Ok = "AdminMediatorCodes.SearchProviders.Ok";
         }
 
+        public class GetProvider
+        {
+            public const string Ok = "AdminMediatorCodes.GetProvider.Ok";
+        }
+
         public class CreateProvider
         {
             public const string FailedValidation = "AdminMediatorCodes.CreateProvider.FailedValidation";
