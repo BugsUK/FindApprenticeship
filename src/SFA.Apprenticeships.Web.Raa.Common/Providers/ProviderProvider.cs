@@ -9,9 +9,8 @@
     using Configuration;
     using Converters;
     using Domain.Entities.Raa.Vacancies;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using ViewModels.Provider;
     using ViewModels.VacancyPosting;
     using Web.Common.Converters;
@@ -45,6 +44,25 @@
             var providerSites = _providerService.GetProviderSites(provider.Ukprn);
 
             return provider.Convert(providerSites);
+        }
+
+        public ProviderSearchResultsViewModel SearchProviders(ProviderSearchViewModel searchViewModel)
+        {
+            var searchParameters = new ProviderSearchParameters
+            {
+                Ukprn = searchViewModel.Ukprn,
+                Name = searchViewModel.Name
+            };
+
+            var providers = _providerService.SearchProviders(searchParameters);
+
+            var viewModel = new ProviderSearchResultsViewModel
+            {
+                SearchViewModel = searchViewModel,
+                Providers = providers.Select(p => p.Convert()).ToList()
+            };
+
+            return viewModel;
         }
 
         public ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn)

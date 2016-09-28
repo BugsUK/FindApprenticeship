@@ -4,10 +4,13 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using FluentValidation.Results;
+
     public interface IProviderProvider
     {
         ProviderViewModel GetProviderViewModel(string ukprn);
         ProviderViewModel GetProviderViewModel(int providerId);
+        ProviderSearchResultsViewModel SearchProviders(ProviderSearchViewModel searchViewModel);
         ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn);
         IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn);
         VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId);
