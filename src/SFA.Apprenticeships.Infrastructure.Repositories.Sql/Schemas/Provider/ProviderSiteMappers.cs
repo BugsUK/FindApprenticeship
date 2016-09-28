@@ -50,7 +50,11 @@
                 .MapMemberFrom(dest => dest.PostCode, source => source.Address.Postcode)
                 .MapMemberFrom(dest => dest.Town, source => source.Address.Town)
                 .MapMemberFrom(dest => dest.Latitude, source => (decimal)source.Address.GeoPoint.Latitude) // use a converter?
-                .MapMemberFrom(dest => dest.Longitude, source => (decimal)source.Address.GeoPoint.Longitude); // use a converter?
+                .MapMemberFrom(dest => dest.Longitude, source => (decimal)source.Address.GeoPoint.Longitude) // use a converter?
+                .ForMember(dest => dest.OutofDate, opt => opt.UseValue(false))
+                .ForMember(dest => dest.TrainingProviderStatusTypeId, opt => opt.UseValue(1))
+                .ForMember(dest => dest.HideFromSearch, opt => opt.UseValue(false))
+                .ForMember(dest => dest.IsRecruitmentAgency, opt => opt.UseValue(false));
 
 
             Mapper.CreateMap<DatabaseProviderSiteRelationship, DomainProviderSiteRelationship>();

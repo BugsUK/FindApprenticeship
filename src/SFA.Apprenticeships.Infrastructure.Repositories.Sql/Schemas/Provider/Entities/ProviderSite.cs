@@ -46,5 +46,15 @@
         public decimal? Longitude { get; set; }
 
         public decimal? Latitude { get; set; }
+
+        public string WebPage { get; set; }
+
+        public bool OutofDate { get; set; }
+
+        public int TrainingProviderStatusTypeId { get; set; }
+
+        public bool HideFromSearch { get; set; }
+
+        public bool IsRecruitmentAgency { get; set; }
     }
 }

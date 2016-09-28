@@ -81,7 +81,7 @@
         {
             var providerSite = _providerService.GetProviderSite(edsUrn);
 
-            return providerSite.Convert();
+            return providerSite?.Convert();
         }
 
         public IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn)
@@ -224,7 +224,23 @@
 
         public ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var providerSite = _providerMappers.Map<ProviderSiteViewModel, ProviderSite>(viewModel);
+            //Create a relationship between the provider and new provider site
+            providerSite.ProviderSiteRelationships = new List<ProviderSiteRelationship>
+            {
+                new ProviderSiteRelationship
+                {
+                    ProviderId = viewModel.ProviderId,
+                    ProviderSiteRelationShipTypeId = 1 //Owner
+                }
+            };
+
+            providerSite = _providerService.CreateProviderSite(providerSite);
+
+            var providerSiteViewModel = _providerMappers.Map<ProviderSite, ProviderSiteViewModel>(providerSite);
+            providerSiteViewModel.ProviderId = viewModel.ProviderId;
+
+            return providerSiteViewModel;
         }
     }
 }

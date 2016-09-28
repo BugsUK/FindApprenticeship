@@ -167,11 +167,31 @@
             return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships));
         }
 
+        public ProviderSite Create(ProviderSite providerSite)
+        {
+            _logger.Info("Creating provider site with EDSURN={0}", providerSite.EdsUrn);
+
+            var dbProviderSite = MapProviderSite(providerSite);
+
+            _getOpenConnection.Insert(dbProviderSite);
+
+            var newProviderSite = GetByEdsUrn(providerSite.EdsUrn);
+
+            var providerSiteId = newProviderSite.ProviderSiteId;
+            foreach (var providerSiteRelationship in providerSite.ProviderSiteRelationships)
+            {
+                providerSiteRelationship.ProviderSiteId = providerSiteId;
+                _getOpenConnection.Insert(providerSiteRelationship);
+            }
+
+            return GetById(providerSiteId);
+        }
+
         public ProviderSite Update(ProviderSite providerSite)
         {
             _logger.Debug("Saving provider site with ProviderSiteId={0}", providerSite.ProviderSiteId);
 
-            var dbProviderSite = MapProvider(providerSite);
+            var dbProviderSite = MapProviderSite(providerSite);
 
             if (!_getOpenConnection.UpdateSingle(dbProviderSite))
             {
@@ -181,7 +201,7 @@
             return GetById(providerSite.ProviderSiteId);
         }
 
-        private Entities.ProviderSite MapProvider(ProviderSite providerSite)
+        private Entities.ProviderSite MapProviderSite(ProviderSite providerSite)
         {
             return _mapper.Map<ProviderSite, Entities.ProviderSite>(providerSite);
         }
@@ -194,7 +214,14 @@
             }
 
             var providerSite = _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
-            providerSite.ProviderSiteRelationships = _mapper.Map<List<Entities.ProviderSiteRelationship>, List<ProviderSiteRelationship>>(providerSiteRelationships[providerSite.ProviderSiteId]);
+            if (providerSiteRelationships.Count > 0)
+            {
+                providerSite.ProviderSiteRelationships = _mapper.Map<List<Entities.ProviderSiteRelationship>, List<ProviderSiteRelationship>>(providerSiteRelationships[providerSite.ProviderSiteId]);
+            }
+            else
+            {
+                providerSite.ProviderSiteRelationships = new List<ProviderSiteRelationship>();
+            }
 
             return providerSite;
         }

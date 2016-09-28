@@ -11,18 +11,19 @@
     {
         public int ProviderSiteId { get; set; }
 
+        public int ProviderId { get; set; }
+
+        [Display(Name = ProviderSiteViewModelMessages.EdsUrn.LabelText)]
         public string EdsUrn { get; set; }
 
+        [Display(Name = ProviderSiteViewModelMessages.FullName.LabelText)]
         public string FullName { get; set; }
 
+        [Display(Name = ProviderSiteViewModelMessages.TradingName.LabelText)]
         public string TradingName { get; set; }
 
         [Display(Name = ProviderSiteViewModelMessages.DisplayName.LabelText)]
         public string DisplayName => $"{FullName}, {Address.Town}";
-
-        public string EmailAddress { get; set; }
-
-        public string PhoneNumber { get; set; }
 
         public string EmployerDescription { get; set; }
 
@@ -33,5 +34,8 @@
         public string ContactDetailsForCandidate { get; set; }
 
         public AddressViewModel Address { get; set; }
+
+        [Display(Name = ProviderSiteViewModelMessages.WebPage.LabelText)]
+        public string WebPage { get; set; }
     }
 }

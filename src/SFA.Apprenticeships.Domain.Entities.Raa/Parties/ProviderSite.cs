@@ -23,6 +23,8 @@
 
         public PostalAddress Address { get; set; }
 
+        public string WebPage { get; set; }
+
         public IList<ProviderSiteRelationship> ProviderSiteRelationships { get; set; }
     }
 }

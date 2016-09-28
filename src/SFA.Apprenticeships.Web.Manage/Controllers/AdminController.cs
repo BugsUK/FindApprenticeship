@@ -98,9 +98,9 @@
         }
 
         [HttpGet]
-        public ActionResult CreateProviderSite()
+        public ActionResult CreateProviderSite(int providerId)
         {
-            return View(new ProviderSiteViewModel());
+            return View(new ProviderSiteViewModel { ProviderId = providerId });
         }
 
         [HttpPost]
@@ -123,7 +123,7 @@
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateProviderSite.Ok:
-                    return View(response.ViewModel);
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new {viewModel.ProviderId});
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

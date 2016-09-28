@@ -20,7 +20,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
         {
             public const string LabelText = "Full name";
             public const string RequiredErrorText = "Enter the provider's full name";
-            public const string TooLongErrorText = "Full name must not be more than 100 characters";
+            public const string TooLongErrorText = "Full name must not be more than 255 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Full name " + Whitelists.FreetextWhitelist.ErrorText;
         }
@@ -28,8 +28,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
         public static class TradingName
         {
             public const string LabelText = "Trading name";
-            public const string RequiredErrorText = "Enter the provider's Trading name";
-            public const string TooLongErrorText = "Trading name must not be more than 100 characters";
+            public const string RequiredErrorText = "Enter the provider's trading name";
+            public const string TooLongErrorText = "Trading name must not be more than 255 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Trading name " + Whitelists.FreetextWhitelist.ErrorText;
         }
