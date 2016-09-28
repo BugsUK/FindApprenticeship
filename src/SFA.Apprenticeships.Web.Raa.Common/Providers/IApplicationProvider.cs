@@ -31,5 +31,6 @@
         void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes);
 
         void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
+        ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelection);
     }
 }

@@ -141,7 +141,7 @@
             switch (apprenticeshipApplicationViewModel.Status)
             {
                 case ApplicationStatuses.Submitted:
-                    return SaveAndExit(apprenticeshipApplicationViewModel);
+                    return SetToSubmitted(apprenticeshipApplicationViewModel);
                 case ApplicationStatuses.InProgress:
                     return PromoteToInProgress(apprenticeshipApplicationViewModel);
                 case ApplicationStatuses.Successful:
@@ -182,7 +182,7 @@
             }
         }
 
-        private ActionResult SaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        private ActionResult SetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var response = _apprenticeshipApplicationMediator.ReviewSaveAndExit(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;

@@ -272,6 +272,15 @@
             return applicationSelectionViewModel;
         }
 
+        public ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationId = applicationSelectionViewModel.ApplicationId;
+
+            _apprenticeshipApplicationService.SetStateSubmitted(applicationId);
+
+            return applicationSelectionViewModel;
+        }
+
         public TraineeshipApplicationViewModel GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var application = _traineeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);

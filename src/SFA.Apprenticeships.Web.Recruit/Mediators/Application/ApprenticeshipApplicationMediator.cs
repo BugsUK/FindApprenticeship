@@ -142,6 +142,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             try
             {
                 _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+                _applicationProvider.SetStateSubmitted(apprenticeshipApplicationViewModel.ApplicationSelection);
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok, apprenticeshipApplicationViewModel);
             }
             catch (Exception)

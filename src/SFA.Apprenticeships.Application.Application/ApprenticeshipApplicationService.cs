@@ -75,6 +75,11 @@
             _setApplicationStatusStrategy.SetStateInProgress(applicationId);
         }
 
+        public void SetStateSubmitted(Guid applicationId)
+        {
+            _setApplicationStatusStrategy.SetStateSubmitted(applicationId);
+        }
+
         public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
             return _apprenticeshipApplicationStatsRepository.GetCountsForVacancyIds(vacancyIds);
