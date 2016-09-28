@@ -6,6 +6,10 @@
 
 <h1 id="heading" class="heading-xlarge">Providers</h1>
 
+<p>
+    @Html.RouteLink("Add Provider", ManagementRouteNames.AdminAddProvider)
+</p>
+
 @using (Html.BeginRouteForm(ManagementRouteNames.AdminProviders))
 {
     @Html.AntiForgeryToken()
@@ -35,8 +39,8 @@
                     <thead>
                         <tr>
                             <th>UKPRN</th>
-                            <th>Name</th>
-                            <th></th>
+                            <th>Full Name</th>
+                            <th>Trading Name</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -45,8 +49,8 @@
                         {
                             <tr>
                                 <td>@provider.Ukprn</td>
-                                <td>@provider.ProviderName</td>
-                                <td></td>
+                                <td>@provider.FullName</td>
+                                <td>@provider.TradingName</td>
                                 <td></td>
                             </tr>
                         }

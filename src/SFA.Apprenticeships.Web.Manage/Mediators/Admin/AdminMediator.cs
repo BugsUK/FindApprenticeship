@@ -8,6 +8,7 @@
     public class AdminMediator : MediatorBase, IAdminMediator
     {
         private readonly ProviderSearchViewModelServerValidator _providerSearchViewModelServerValidator = new ProviderSearchViewModelServerValidator();
+        private readonly ProviderViewModelServerValidator _providerViewModelServerValidator = new ProviderViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
 
@@ -28,6 +29,11 @@
             var viewModel = _providerProvider.SearchProviders(searchViewModel);
 
             return GetMediatorResponse(AdminMediatorCodes.SearchProviders.Ok, viewModel);
+        }
+
+        public MediatorResponse<ProviderViewModel> AddProvider(ProviderViewModel viewModel)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

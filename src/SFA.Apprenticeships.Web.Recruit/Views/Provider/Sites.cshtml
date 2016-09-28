@@ -18,8 +18,8 @@
 
     <div class="form-group">
         <h2 class="heading-medium">Provider name</h2>
-        <span>@Model.ProviderName</span>
-        @Html.HiddenFor(m => m.ProviderName)
+        <span>@Model.FullName</span>
+        @Html.HiddenFor(m => m.FullName)
     </div>
 
     //@Html.FormTextFor(m => m.ProviderName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })
@@ -40,9 +40,7 @@
                     {
                         <tr>
                             <td>@providerSiteViewModel.DisplayName</td>
-                            <td>
-                                <!--<a href="@Url.RouteUrl(RecruitmentRouteNames.EditProviderSite, new {providerSiteId = providerSiteViewModel.ProviderSiteId})">Edit</a>-->
-                            </td>
+                            <td></td>
                             <td></td>
                         </tr>
                     }
@@ -50,9 +48,6 @@
                 </table>
             </div>
         </section>
-        <!--<div class="form-group">
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.AddProviderSite)" class=""><i class="fa fa-plus"></i>Add a new site</a>
-        </div>-->
     </div>
     <div class="toggle-content" id="newProviderContinue">
         <a href="@Url.RouteUrl(RecruitmentRouteNames.Settings)" class="button" id="newProviderContinueBtn">Continue</a>

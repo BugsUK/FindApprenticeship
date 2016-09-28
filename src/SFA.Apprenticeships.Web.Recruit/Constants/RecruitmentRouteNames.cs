@@ -4,16 +4,12 @@
     {
         public const string RecruitmentHome = "RecruitmentHome";
 
-        // Provider set up
-        public const string ManageProviderSites = "ManageProviderSites";
-        public const string AddProviderSite = "AddProviderSite";
-        public const string EditProviderSite = "EditProviderSite";
-        public const string OnBoardingComplete = "OnBoardingComplete";
-
         // Account set up
         public const string Settings = "Settings";
+        public const string ManageProviderSites = "ManageProviderSites";
         public const string VerifyEmail = "VerifyEmail";
         public const string ResendVerificationCode = "ResendVerificationCode";
+        public const string OnBoardingComplete = "OnBoardingComplete";
         public const string DismissReleaseNotes = "DismissReleaseNotes";
 
         // Authetication

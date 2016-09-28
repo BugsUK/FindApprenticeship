@@ -39,7 +39,8 @@
             viewModel.Should().NotBeNull();
 
             viewModel.ProviderId.Should().Be(provider.ProviderId);
-            viewModel.ProviderName.Should().Be(provider.TradingName);
+            viewModel.FullName.Should().Be(provider.FullName);
+            viewModel.TradingName.Should().Be(provider.TradingName);
             viewModel.IsMigrated.Should().Be(provider.IsMigrated);
 
             viewModel.ProviderSiteViewModels.Should().NotBeNull();

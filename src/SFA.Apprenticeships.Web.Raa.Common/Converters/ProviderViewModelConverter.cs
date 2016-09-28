@@ -18,7 +18,8 @@
             {
                 ProviderId = provider.ProviderId,
                 Ukprn = provider.Ukprn,
-                ProviderName = provider.TradingName,
+                FullName = provider.FullName,
+                TradingName = provider.TradingName,
                 IsMigrated = provider.IsMigrated,
             };
 

@@ -888,6 +888,7 @@
     <Content Include="Views\Candidate\Search.cshtml" />
     <Content Include="Views\Candidate\Candidate.cshtml" />
     <Content Include="Views\InformationRadiator\Index.cshtml" />
+    <Content Include="Views\Provider\Sites.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -942,14 +943,11 @@
     <Content Include="Configs\settings.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
-    <Content Include="Views\Provider\Sites.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_LoginPartial.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\ProviderUser\Home.cshtml" />
-    <Content Include="Views\Provider\AddSite.cshtml" />
-    <Content Include="Views\Provider\EditSite.cshtml" />
     <Content Include="Views\ProviderUser\Settings.cshtml" />
     <Content Include="Views\ProviderUser\VerifyEmail.cshtml" />
     <Content Include="Views\Shared\ValidationSummary.cshtml">

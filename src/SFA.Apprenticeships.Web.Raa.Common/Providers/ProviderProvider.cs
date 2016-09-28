@@ -48,6 +48,13 @@
 
         public ProviderSearchResultsViewModel SearchProviders(ProviderSearchViewModel searchViewModel)
         {
+            var viewModel = new ProviderSearchResultsViewModel
+            {
+                SearchViewModel = searchViewModel
+            };
+
+            if(!searchViewModel.PerformSearch) return viewModel;
+
             var searchParameters = new ProviderSearchParameters
             {
                 Ukprn = searchViewModel.Ukprn,
@@ -56,11 +63,7 @@
 
             var providers = _providerService.SearchProviders(searchParameters);
 
-            var viewModel = new ProviderSearchResultsViewModel
-            {
-                SearchViewModel = searchViewModel,
-                Providers = providers.Select(p => p.Convert()).ToList()
-            };
+            viewModel.Providers = providers.Select(p => p.Convert()).ToList();
 
             return viewModel;
         }

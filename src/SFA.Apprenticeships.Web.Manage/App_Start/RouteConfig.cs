@@ -271,6 +271,12 @@
                defaults: new { controller = "Admin", action = "Providers" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminAddProvider,
+               url: "admin/providers/add",
+               defaults: new { controller = "Admin", action = "AddProvider" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

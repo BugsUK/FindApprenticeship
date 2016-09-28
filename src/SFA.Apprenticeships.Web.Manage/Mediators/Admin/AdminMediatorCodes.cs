@@ -7,5 +7,11 @@
             public const string FailedValidation = "AdminMediatorCodes.SearchProviders.FailedValidation";
             public const string Ok = "AdminMediatorCodes.SearchProviders.Ok";
         }
+
+        public class AddProvider
+        {
+            public const string FailedValidation = "AdminMediatorCodes.AddProvider.FailedValidation";
+            public const string Ok = "AdminMediatorCodes.AddProvider.Ok";
+        }
     }
 }

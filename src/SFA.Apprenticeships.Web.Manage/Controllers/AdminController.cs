@@ -55,5 +55,33 @@
             viewModel.SearchViewModel.PerformSearch = true;
             return RedirectToRoute(ManagementRouteNames.AdminProviders, viewModel.SearchViewModel);
         }
+
+        [HttpGet]
+        public ActionResult AddProvider()
+        {
+            return View(new ProviderViewModel());
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "AddProviderAction")]
+        public ActionResult AddProvider(ProviderViewModel viewModel)
+        {
+            var response = _adminMediator.AddProvider(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.AddProvider.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.AddProvider.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
     }
 }
