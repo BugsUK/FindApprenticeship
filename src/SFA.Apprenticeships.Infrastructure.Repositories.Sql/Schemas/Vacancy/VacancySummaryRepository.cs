@@ -64,7 +64,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                 {
                     case VacanciesSummaryFilterTypes.ClosingSoon:
                     case VacanciesSummaryFilterTypes.NewApplications:
-                        orderByField = "v.ApplicationClosingDate, CreatedDate"; //created date
+                        orderByField = @"(CASE v.ApplyOutsideNAVMS
+ 			                                WHEN 1 THEN 0
+			                                ELSE dbo.GetNewApplicantCount(v.VacancyId)
+		                                END), CreatedDate"; //created date
                         break;
                     case VacanciesSummaryFilterTypes.Closed:
                     case VacanciesSummaryFilterTypes.Live:

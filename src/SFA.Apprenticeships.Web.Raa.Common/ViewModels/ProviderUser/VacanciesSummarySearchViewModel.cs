@@ -6,8 +6,8 @@
     public class VacanciesSummarySearchViewModel : OrderedPageableSearchViewModel
     {
         public static readonly string OrderByFieldTitle = VacancySummaryOrderByColumn.Title.ToString();
-        public static readonly string OrderByEmployer = VacancySummaryOrderByColumn.Title.ToString();
-        public static readonly string OrderByApplications = VacancySummaryOrderByColumn.Title.ToString();
+        public static readonly string OrderByEmployer = VacancySummaryOrderByColumn.Employer.ToString();
+        public static readonly string OrderByApplications = VacancySummaryOrderByColumn.Applications.ToString();
 
         public VacanciesSummarySearchViewModel()
         {

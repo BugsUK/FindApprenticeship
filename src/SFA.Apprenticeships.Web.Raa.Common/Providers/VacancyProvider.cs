@@ -18,6 +18,7 @@
     using Infrastructure.Presentation;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
@@ -748,6 +749,11 @@
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            _logService.Debug("Starting GetVacanciesSummaryForProvider");
+
             var orderByField = string.IsNullOrEmpty(vacanciesSummarySearch.OrderByField)
                 ? VacancySummaryOrderByColumn.OrderByFilter
                 : (VacancySummaryOrderByColumn)
@@ -761,11 +767,19 @@
                 Filter = vacanciesSummarySearch.FilterType,
                 PageSize = vacanciesSummarySearch.PageSize,
                 RequestedPage = vacanciesSummarySearch.CurrentPage,
-                SearchString = vacanciesSummarySearch.SearchString
+                SearchString = vacanciesSummarySearch.SearchString,
+                Order = vacanciesSummarySearch.Order
             };
 
+            _logService.Debug("Calling Vacancy Summary Service: " + stopwatch.Elapsed);
+
             var summaries = _vacancySummaryService.GetSummariesForProvider(query);
+
+            _logService.Debug("Mapping vacancy summaries: " + stopwatch.Elapsed);
+
             var mapped = _mapper.Map<IList<VacancySummary>, IList<VacancySummaryViewModel>>(summaries);
+
+            _logService.Debug("Constructing view models: " + stopwatch.Elapsed);
 
             var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
             {
@@ -780,6 +794,8 @@
                 Vacancies = vacancyPage,
                 VacanciesSummarySearch = vacanciesSummarySearch,
             };
+
+            _logService.Debug("Fetching vacancy counts: " + stopwatch.Elapsed);
 
             var counts = _vacancySummaryService.GetLotteryCounts(query);
 
@@ -800,6 +816,9 @@
                                       viewModel.RejectedCount +
                                       viewModel.SubmittedCount +
                                       viewModel.NewApplicationsAcrossAllVacanciesCount) > 0;
+
+            _logService.Debug("Finished getting vacancy summaries: " + stopwatch.Elapsed);
+            stopwatch.Stop();
 
             return viewModel;
         }
