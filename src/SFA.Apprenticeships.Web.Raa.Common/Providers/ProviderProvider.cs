@@ -215,6 +215,7 @@
         public ProviderViewModel CreateProvider(ProviderViewModel viewModel)
         {
             var provider = _providerMappers.Map<ProviderViewModel, Provider>(viewModel);
+            provider.IsMigrated = true;
 
             provider = _providerService.CreateProvider(provider);
 
