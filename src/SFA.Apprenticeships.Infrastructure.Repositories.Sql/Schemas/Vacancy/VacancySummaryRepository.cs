@@ -51,7 +51,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     orderByField = "v.Title";
                     break;
                 case VacancySummaryOrderByColumn.Applications:
-                    orderByField = "v.ApplicantCount";
+                    orderByField = @"(CASE v.ApplyOutsideNAVMS
+ 			                                WHEN 1 THEN 0
+			                                ELSE dbo.GetNewApplicantCount(v.VacancyId)
+		                                END)";
                     break;
                 case VacancySummaryOrderByColumn.Employer:
                     orderByField = "e.FullName";
