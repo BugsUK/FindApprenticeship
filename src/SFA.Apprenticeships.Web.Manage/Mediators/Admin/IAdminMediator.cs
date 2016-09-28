@@ -6,6 +6,7 @@
     public interface IAdminMediator
     {
         MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel);
+        MediatorResponse<ProviderViewModel> GetProvider(int providerId);
         MediatorResponse<ProviderViewModel> CreateProvider(ProviderViewModel viewModel);
     }
 }

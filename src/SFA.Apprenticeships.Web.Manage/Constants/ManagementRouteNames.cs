@@ -53,6 +53,7 @@
         //Admin
         public const string AdminList = "AdminList";
         public const string AdminProviders = "AdminProviders";
+        public const string AdminViewProvider = "AdminViewProvider";
         public const string AdminCreateProvider = "AdminCreateProvider";
     }
 }

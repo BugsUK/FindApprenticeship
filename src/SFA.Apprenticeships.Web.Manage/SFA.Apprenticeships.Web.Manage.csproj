@@ -852,6 +852,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Providers.cshtml" />
     <Content Include="Views\Admin\CreateProvider.cshtml" />
+    <Content Include="Views\Admin\Provider.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

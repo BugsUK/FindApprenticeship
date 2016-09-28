@@ -33,6 +33,13 @@
             return GetMediatorResponse(AdminMediatorCodes.SearchProviders.Ok, viewModel);
         }
 
+        public MediatorResponse<ProviderViewModel> GetProvider(int providerId)
+        {
+            var viewModel = _providerProvider.GetProviderViewModel(providerId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetProvider.Ok, viewModel);
+        }
+
         public MediatorResponse<ProviderViewModel> CreateProvider(ProviderViewModel viewModel)
         {
             var validatonResult = _providerViewModelServerValidator.Validate(viewModel);
