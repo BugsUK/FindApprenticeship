@@ -97,21 +97,30 @@
                 <div class="form-group">
                     <div class="detail-content qa-comment">
                         <div class="blocklabel-single-container">
-                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"})
                         </div>
+                        <p>
+                            <label for="application-status-submitted" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new {id = "application-status-submitted"}) Submitted
+                            </label>
+                            <br/>
+                            <label for="application-status-inprogress" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new {id = "application-status-inprogress"}) In progress
+                            </label>
+                            <br/>
+                            <label for="application-status-unsuccessful" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Unsuccessful, new {id = "application-status-unsuccessful"}) Unsuccessful
+                            </label>
+                            <br />
+                            <label for="application-status-successful" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Successful, new { id = "application-status-successful" }) Successful
+                            </label>
+                        </p>
+                        <p>
+                            <button type="submit" class="button" name="Review" value="ReviewSaveAndExit">Save and exit</button>
+                            @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new {Model.Vacancy.VacancyReferenceNumber})
+                        </p>
                     </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="button" name="Review" value="ReviewSaveAndExit">Save and exit</button>
-
-                    <p class="med-btm-margin">
-                        <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">
-                            Inform this candidate that their application has been unsuccessful
-                        </button>
-                        <button type="submit" class="button-link" name="Review" value="ReviewAppointCandidate">
-                            Confirm this candidate that their application has been successful
-                        </button>
-                    </p>
                 </div>
             </section>
         }

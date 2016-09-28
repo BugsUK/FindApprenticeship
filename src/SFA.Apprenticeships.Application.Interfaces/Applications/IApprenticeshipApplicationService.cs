@@ -18,7 +18,7 @@
 
         void SetUnsuccessfulDecision(Guid applicationId);
 
-        void RevertToInProgress(Guid applicationId);
+        void SetStateInProgress(Guid applicationId);
     }
 }
  

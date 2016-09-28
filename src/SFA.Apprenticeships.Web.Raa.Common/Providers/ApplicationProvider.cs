@@ -263,11 +263,11 @@
             return applicationSelectionViewModel;
         }
 
-        public ApplicationSelectionViewModel RevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ApplicationSelectionViewModel SetStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
 
-            _apprenticeshipApplicationService.RevertToInProgress(applicationId);
+            _apprenticeshipApplicationService.SetStateInProgress(applicationId);
 
             return applicationSelectionViewModel;
         }

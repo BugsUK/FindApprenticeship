@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -11,6 +12,7 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Application.Interfaces;
+    using Domain.Entities.Applications;
 
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -42,10 +44,8 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-
-        [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        
+        private ActionResult ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var response = _apprenticeshipApplicationMediator.ReviewAppointCandidate(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
@@ -73,10 +73,8 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-
-        [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        
+        private ActionResult ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var response = _apprenticeshipApplicationMediator.ReviewRejectCandidate(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
@@ -139,6 +137,52 @@
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
         public ActionResult ReviewSaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            switch (apprenticeshipApplicationViewModel.Status)
+            {
+                case ApplicationStatuses.Submitted:
+                    return SaveAndExit(apprenticeshipApplicationViewModel);
+                case ApplicationStatuses.InProgress:
+                    return PromoteToInProgress(apprenticeshipApplicationViewModel);
+                case ApplicationStatuses.Successful:
+                    return ReviewAppointCandidate(apprenticeshipApplicationViewModel);
+                case ApplicationStatuses.Unsuccessful:
+                    return ReviewRejectCandidate(apprenticeshipApplicationViewModel);
+                default:
+                    throw new InvalidOperationException("Invalid status change");
+            }
+        }
+
+        private ActionResult PromoteToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.PromoteToInProgress(apprenticeshipApplicationViewModel);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message);
+            }
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Error:
+                    return View("Review", response.ViewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        private ActionResult SaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var response = _apprenticeshipApplicationMediator.ReviewSaveAndExit(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;

@@ -151,6 +151,28 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             }
         }
 
+        public MediatorResponse<ApprenticeshipApplicationViewModel> PromoteToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var validationResult = _apprenticeshipApplicationViewModelServerValidator.Validate(apprenticeshipApplicationViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation, apprenticeshipApplicationViewModel, validationResult);
+            }
+
+            try
+            {
+                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+                _applicationProvider.SetStateInProgress(apprenticeshipApplicationViewModel.ApplicationSelection);
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok, apprenticeshipApplicationViewModel);
+            }
+            catch (Exception)
+            {
+                var viewModel = GetFailedUpdateApprenticeshipApplicationViewModel(apprenticeshipApplicationViewModel.ApplicationSelection);
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Error, viewModel, ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
+            }
+        }
+
         private ApprenticeshipApplicationViewModel GetFailedUpdateApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
@@ -222,7 +244,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         public MediatorResponse<ApplicationSelectionViewModel> RevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
-            var viewModel = _applicationProvider.RevertToInProgress(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.SetStateInProgress(applicationSelectionViewModel);
 
             var candidateName = applicationViewModel.ApplicantDetails.Name;
             var message = string.Format(ApplicationViewModelMessages.RevertToInProgressFormat, candidateName);

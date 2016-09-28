@@ -42,6 +42,13 @@
             public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Error";
         }
 
+        public class PromoteToInProgress
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok";
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation";
+            public const string Error = "ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Error";
+        }
+
         public class ConfirmSuccessfulDecision
         {
             public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.NoApplicationId";

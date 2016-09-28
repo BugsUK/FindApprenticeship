@@ -70,9 +70,9 @@
             _setApplicationStatusStrategy.SetUnsuccessfulDecision(applicationId);
         }
 
-        public void RevertToInProgress(Guid applicationId)
+        public void SetStateInProgress(Guid applicationId)
         {
-            _setApplicationStatusStrategy.RevertToInProgress(applicationId);
+            _setApplicationStatusStrategy.SetStateInProgress(applicationId);
         }
 
         public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
