@@ -50,5 +50,8 @@
         public const string ReportVacancyExtensions = "ReportVacancyExtensions";
         public const string ReportRegisteredCandidates = "ReportRegisteredCandidates";
 
+        //Admin
+        public const string AdminList = "AdminList";
+        public const string AdminProviders = "AdminProviders";
     }
 }

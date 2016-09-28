@@ -259,6 +259,18 @@
                 defaults: new { controller = "InformationRadiator", action = "Index" }
                 );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminList,
+               url: "admin",
+               defaults: new { controller = "Admin", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminProviders,
+               url: "admin/changeukprn",
+               defaults: new { controller = "Admin", action = "Providers" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }
