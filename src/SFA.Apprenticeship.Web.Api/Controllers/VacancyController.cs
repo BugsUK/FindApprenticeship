@@ -41,7 +41,8 @@ namespace SFA.Apprenticeship.Web.Api.Controllers
                 ProviderSiteId = providerSiteId
             };
 
-            return _VacancySummaryService.GetSummariesForProvider(query);
+            int totalRecords;
+            return _VacancySummaryService.GetSummariesForProvider(query, out totalRecords);
         }
 
         /// <summary>

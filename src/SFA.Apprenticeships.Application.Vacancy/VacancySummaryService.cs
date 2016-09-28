@@ -14,9 +14,9 @@
             _vacancySummaryRepository = vacancySummaryRepository;
         }
 
-        public IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query)
+        public IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords)
         {
-           return  _vacancySummaryRepository.GetSummariesForProvider(query);
+            return _vacancySummaryRepository.GetSummariesForProvider(query, out totalRecords);
         }
 
         public VacancyCounts GetLotteryCounts(VacancySummaryQuery query)

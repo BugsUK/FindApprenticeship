@@ -768,12 +768,14 @@
                 PageSize = vacanciesSummarySearch.PageSize,
                 RequestedPage = vacanciesSummarySearch.CurrentPage,
                 SearchString = vacanciesSummarySearch.SearchString,
-                Order = vacanciesSummarySearch.Order
+                Order = vacanciesSummarySearch.Order,
+                VacancyType = vacanciesSummarySearch.VacancyType
             };
 
             _logService.Debug("Calling Vacancy Summary Service: " + stopwatch.Elapsed);
 
-            var summaries = _vacancySummaryService.GetSummariesForProvider(query);
+            int totalRecords;
+            var summaries = _vacancySummaryService.GetSummariesForProvider(query, out totalRecords);
 
             _logService.Debug("Mapping vacancy summaries: " + stopwatch.Elapsed);
 
@@ -784,9 +786,9 @@
             var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
             {
                 Page = mapped,
-                ResultsCount = summaries.Count,
+                ResultsCount = totalRecords,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = 12 //TODO need total results and pages returned
+                TotalNumberOfPages = (int)Math.Ceiling((double)totalRecords / (double)vacanciesSummarySearch.PageSize)
             };
 
             var viewModel = new VacanciesSummaryViewModel()

@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
 
     public interface IVacancySummaryRepository
     {
-        IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query);
+        IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords);
         VacancyCounts GetLotteryCounts(VacancySummaryQuery query);
     }
 }

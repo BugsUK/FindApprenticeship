@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Application.Vacancy
 
     public interface IVacancySummaryService
     {
-        IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query);
+        IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords);
         VacancyCounts GetLotteryCounts(VacancySummaryQuery query);
     }
 }

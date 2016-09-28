@@ -33,7 +33,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             _configurationService = configurationService;
         }
 
-        public IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query)
+        public IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords)
         {
             var sqlParams = new
             {
@@ -67,10 +67,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                 {
                     case VacanciesSummaryFilterTypes.ClosingSoon:
                     case VacanciesSummaryFilterTypes.NewApplications:
-                        orderByField = @"(CASE v.ApplyOutsideNAVMS
- 			                                WHEN 1 THEN 0
-			                                ELSE dbo.GetNewApplicantCount(v.VacancyId)
-		                                END), CreatedDate"; //created date
+                        orderByField = @"v.ApplicationClosingDate, CreatedDate"; //created date
+                        query.Order = Order.Descending;
                         break;
                     case VacanciesSummaryFilterTypes.Closed:
                     case VacanciesSummaryFilterTypes.Live:
@@ -84,6 +82,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         // Requirement is "most recently created first" (Faizal 30/6/2016).
                         // Previously there was no ordering in the code and it was coming out in natural database order
                         orderByField = "CreatedDate";
+                        query.Order = Order.Descending;
                         break;
                     default:
                         throw new ArgumentException($"{query.Filter}");
@@ -92,7 +91,24 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
             var filterSql = GetFilterSql(query.Filter);
 
-            var sql = $@"SELECT	v.{string.Join(", v.", VacancyRepositoryResources.VacancySummaryColumns)},
+            var sql = $@"SELECT COUNT(*) OVER () AS TotalResultCount,
+                            v.VacancyId,
+                            v.VacancyOwnerRelationshipId,
+                            v.VacancyReferenceNumber,
+                            v.VacancyGuid,
+                            v.VacancyStatusId,
+                            v.VacancyTypeId,
+                            v.Title,
+                            v.AddressLine1,
+                            v.AddressLine2,
+                            v.AddressLine3,
+                            v.AddressLine4,
+                            v.AddressLine5,
+                            v.Town,
+                            v.CountyId,
+                            v.PostCode,
+                            v.ApplyOutsideNAVMS,
+                            v.ApplicationClosingDate,
 		                    CASE v.ApplyOutsideNAVMS
  			                    WHEN 1 THEN COALESCE(v.NoOfOfflineApplicants, 0)
 			                    ELSE dbo.GetApplicantCount(v.VacancyId)
@@ -103,8 +119,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 			                    ELSE dbo.GetNewApplicantCount(v.VacancyId)
 		                    END
 		                    AS NewApplicantCount,
-                            dbo.GetFirstSubmittedDate(v.VacancyID) AS FirstSubmittedDate,
-		                    dbo.GetSubmittedDate(v.VacancyID) AS SubmittedDate,
+                            dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
+		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
                             e.FullName AS EmployerName
                     FROM	Vacancy v
@@ -112,9 +128,14 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
                     JOIN	Employer e
                     ON		o.EmployerId = e.EmployerId
+                    JOIN	ProviderSiteRelationship s
+					ON		s.ProviderSiteId = o.ProviderSiteId
                     WHERE	o.ProviderSiteID = @ProviderSiteId
                     AND		(v.VacancyManagerId = @ProviderSiteId
-                    OR		v.DeliveryOrganisationId = @ProviderSiteId)
+                            OR v.DeliveryOrganisationId = @ProviderSiteId)
+                    AND		s.ProviderId = @providerId
+					AND		s.ProviderSiteRelationshipTypeId = 1
+                    AND     (v.VacancyTypeId = {(int)query.VacancyType} OR v.VacancyTypeId = {(int)VacancyType.Unknown})
                     --Text search
                     AND		((@query IS NULL OR @query = '')
 		                    OR (CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query
@@ -127,6 +148,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
 
             var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
+
+            // return the total record count as well
+            totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
 
             var mapped = _mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
 
@@ -153,9 +177,14 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         FROM	Vacancy v
                         JOIN	VacancyOwnerRelationship o
                         ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                        JOIN	ProviderSiteRelationship s
+					    ON		s.ProviderSiteId = o.ProviderSiteId
                         WHERE	o.ProviderSiteID = @ProviderSiteId
                         AND		(v.VacancyManagerId = @ProviderSiteId
                         OR		v.DeliveryOrganisationId = @ProviderSiteId)
+                        AND     (v.VacancyTypeId = {(int)query.VacancyType} OR v.VacancyTypeId = {(int)VacancyType.Unknown})
+                        AND		s.ProviderId = @providerId
+					    AND		s.ProviderSiteRelationshipTypeId = 1
                     ";
 
             var counts = _getOpenConnection.Query<VacancyCounts>(sql, sqlParams);
