@@ -130,7 +130,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             }
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> ReviewSaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> ReviewSetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var validationResult = _apprenticeshipApplicationViewModelServerValidator.Validate(apprenticeshipApplicationViewModel);
 

@@ -184,7 +184,7 @@
 
         private ActionResult SetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ReviewSaveAndExit(apprenticeshipApplicationViewModel);
+            var response = _apprenticeshipApplicationMediator.ReviewSetToSubmitted(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
