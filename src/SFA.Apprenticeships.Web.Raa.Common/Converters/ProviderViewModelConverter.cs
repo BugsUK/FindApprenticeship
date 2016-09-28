@@ -17,6 +17,7 @@
             var viewModel = new ProviderViewModel
             {
                 ProviderId = provider.ProviderId,
+                Ukprn = provider.Ukprn,
                 ProviderName = provider.TradingName,
                 IsMigrated = provider.IsMigrated,
             };

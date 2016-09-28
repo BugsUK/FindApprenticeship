@@ -368,6 +368,9 @@
     <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacancyExtensionsResultItemClassMap.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
+    <Compile Include="Mediators\Admin\AdminMediator.cs" />
+    <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
+    <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
     <Compile Include="Mediators\AgencyUser\IAgencyUserMediator.cs" />
@@ -847,6 +850,7 @@
     <Content Include="Views\InformationRadiator\Index.cshtml" />
     <Content Include="Views\Report\RegisteredCandidatesCsv.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Providers.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -878,7 +882,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Mappers\" />
+    <Folder Include="Validators\Admin\" />
+    <Folder Include="ViewModels\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

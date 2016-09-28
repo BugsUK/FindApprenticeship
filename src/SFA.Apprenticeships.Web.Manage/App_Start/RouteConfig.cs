@@ -267,7 +267,7 @@
 
             routes.MapRoute(
                name: ManagementRouteNames.AdminProviders,
-               url: "admin/changeukprn",
+               url: "admin/providers",
                defaults: new { controller = "Admin", action = "Providers" }
                );
 

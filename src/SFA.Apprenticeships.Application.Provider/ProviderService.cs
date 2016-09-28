@@ -7,6 +7,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Interfaces;
     using Interfaces.Employers;
     using Interfaces.Generic;
@@ -52,6 +53,11 @@
         public IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds)
         {
             return _providerReadRepository.GetByIds(providerIds);
+        }
+
+        public IEnumerable<Provider> SearchProviders(ProviderSearchParameters searchParameters)
+        {
+            return _providerReadRepository.Search(searchParameters);
         }
 
         public ProviderSite GetProviderSite(int providerSiteId)
