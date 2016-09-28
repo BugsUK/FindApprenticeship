@@ -1,0 +1,53 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderViewModel
+@{
+    ViewBag.Title = "Providers";
+}
+
+<h1 id="heading" class="heading-xlarge">Provider</h1>
+
+<p>
+    <ul>
+        <li>UKPRN: @Model.Ukprn</li>
+        <li>Full name: @Model.FullName</li>
+        <li>Trading Name: @Model.TradingName</li>
+    </ul>
+</p>
+
+<h2 class="heading-medium">Provider Sites</h2>
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-1">
+        <table>
+            <colgroup>
+                <col class="t30">
+                <col class="t30">
+                <col class="t30">
+                <col class="t10">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>EDSURN</th>
+                <th>Full Name</th>
+                <th>Trading Name</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var providerSite in Model.ProviderSiteViewModels)
+            {
+                <tr>
+                    <td>@providerSite.EdsUrn</td>
+                    <td>@providerSite.FullName</td>
+                    <td>@providerSite.TradingName</td>
+                    <td></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<p>
+    @Html.RouteLink("New Provider Site", ManagementRouteNames.AdminCreateProviderSite, new {Model.ProviderId})
+</p>

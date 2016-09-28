@@ -7,6 +7,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Interfaces;
     using Interfaces.Employers;
     using Interfaces.Generic;
@@ -17,7 +18,9 @@
         private readonly IEmployerService _employerService;
         private readonly ILogService _logService;
         private readonly IProviderReadRepository _providerReadRepository;
+        private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
+        private readonly IProviderSiteWriteRepository _providerSiteWriteRepository;
         private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
 
@@ -25,7 +28,7 @@
             IProviderSiteReadRepository providerSiteReadRepository,
             IVacancyPartyReadRepository vacancyPartyReadRepository,
             IVacancyPartyWriteRepository vacancyPartyWriteRepository,
-            ILogService logService, IEmployerService employerService)
+            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository, IProviderSiteWriteRepository providerSiteWriteRepository)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
@@ -33,6 +36,8 @@
             _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
             _logService = logService;
             _employerService = employerService;
+            _providerWriteRepository = providerWriteRepository;
+            _providerSiteWriteRepository = providerSiteWriteRepository;
         }
 
         public Provider GetProvider(int providerId)
@@ -40,18 +45,23 @@
             return _providerReadRepository.GetById(providerId);
         }
 
-        public Provider GetProvider(string ukprn)
+        public Provider GetProvider(string ukprn, bool errorIfNotFound = true)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
 
             _logService.Debug("Calling ProviderReadRepository to get provider with UKPRN='{0}'.", ukprn);
 
-            return _providerReadRepository.GetByUkprn(ukprn);
+            return _providerReadRepository.GetByUkprn(ukprn, errorIfNotFound);
         }
 
         public IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds)
         {
             return _providerReadRepository.GetByIds(providerIds);
+        }
+
+        public IEnumerable<Provider> SearchProviders(ProviderSearchParameters searchParameters)
+        {
+            return _providerReadRepository.Search(searchParameters);
         }
 
         public ProviderSite GetProviderSite(int providerSiteId)
@@ -190,6 +200,16 @@
             pageable.TotalNumberOfPages = resultCount/pageSize + 1;
 
             return pageable;
+        }
+
+        public Provider CreateProvider(Provider provider)
+        {
+            return _providerWriteRepository.Create(provider);
+        }
+
+        public ProviderSite CreateProviderSite(ProviderSite providerSite)
+        {
+            return _providerSiteWriteRepository.Create(providerSite);
         }
 
         private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)

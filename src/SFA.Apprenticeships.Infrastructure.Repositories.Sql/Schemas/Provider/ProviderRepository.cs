@@ -3,13 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Infrastructure.Interfaces;
     using Common;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Users;
     using Domain.Raa.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Domain.Raa.Interfaces.Repositories.Models;
+    using Application.Interfaces;
 
     public class ProviderRepository : IProviderReadRepository, IProviderWriteRepository
     {
@@ -45,7 +44,7 @@
             return MapProvider(dbProvider);
         }
 
-        public Provider GetByUkprn(string ukprn)
+        public Provider GetByUkprn(string ukprn, bool errorIfNotFound = true)
         {
             _logger.Debug("Getting activated provider with Ukprn={0}", ukprn);
 
@@ -59,6 +58,11 @@
             };
 
             var dbVacancy = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams).SingleOrDefault();
+
+            if (dbVacancy == null && !errorIfNotFound)
+            {
+                return null;
+            }
 
             _logger.Debug("Got activated provider with Ukprn={0}", ukprn);
 
@@ -80,6 +84,35 @@
             var providers = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams);
 
             return providers.Select(MapProvider);
+        }
+
+        public IEnumerable<Provider> Search(ProviderSearchParameters searchParameters)
+        {
+            var sql = "SELECT * FROM dbo.Provider WHERE ";
+            if (!string.IsNullOrEmpty(searchParameters.Ukprn))
+            {
+                sql += "UKPRN = @ukprn ";
+            }
+            if (!string.IsNullOrEmpty(searchParameters.Name))
+            {
+                sql += "FullName LIKE '%' + @name + '%' OR TradingName LIKE '%' + @name + '%' ";
+            }
+            sql += "ORDER BY FullName";
+
+            var providers = _getOpenConnection.Query<Entities.Provider>(sql, searchParameters);
+
+            return providers.Select(MapProvider);
+        }
+
+        public Provider Create(Provider provider)
+        {
+            _logger.Info("Creating provider with Ukprn={0}", provider.Ukprn);
+
+            var dbProvider = MapProvider(provider);
+
+            _getOpenConnection.Insert(dbProvider);
+
+            return GetByUkprn(provider.Ukprn);
         }
 
         /// <summary>

@@ -177,6 +177,7 @@
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\LocationSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ProviderSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
     <Compile Include="Constants\ViewModels\ShareApplicationsViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyPartyViewModelMessages.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\CandidateMappers.cs" />
+    <Compile Include="Mappers\ProviderMappers.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToVacancyDatesViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToFurtherVacancyDetailsViewModelConverter.cs" />
@@ -241,6 +243,9 @@
     <Compile Include="Strategies\VacancySummaryStrategy.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
+    <Compile Include="ViewModels\Provider\ProviderSearchResultsViewModel.cs" />
+    <Compile Include="ViewModels\Provider\ProviderSearchViewModel.cs" />
+    <Compile Include="Validators\Provider\ProviderSearchViewModelValidator.cs" />
     <Compile Include="ViewModels\Candidate\CandidateApplicationSummariesViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateApplicationSummaryViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateApplicationsViewModel.cs" />

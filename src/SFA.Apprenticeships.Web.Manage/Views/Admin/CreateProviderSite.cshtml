@@ -1,0 +1,38 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteViewModel
+@{
+    ViewBag.Title = "Providers";
+}
+
+<h1 id="heading" class="heading-xlarge">New Provider Site</h1>
+
+<p>Adding a new provider site will also link it to the provider</p>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateProviderSite))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.HiddenFor(m => m.ProviderId);
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.EdsUrn, controlHtmlAttributes: new { type = "tel", size = 9, autofocus = "autofocus" })
+        @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
+
+        @Html.FormTextFor(m => m.Address.AddressLine1, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.Address.AddressLine2, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.Address.AddressLine3, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.Address.AddressLine4, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.Address.AddressLine5, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.Address.Town, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.Address.Postcode, controlHtmlAttributes: new { type = "text" })
+
+        @Html.FormTextFor(m => m.WebPage, controlHtmlAttributes: new { type = "text" })
+
+        <div class="form-group">
+            <button id="add-provider-site-button" type="submit" class="button" name="CreateProviderSiteAction" value="CreateProviderSite">Add Provider Site</button>
+        </div>
+    </div>
+}
