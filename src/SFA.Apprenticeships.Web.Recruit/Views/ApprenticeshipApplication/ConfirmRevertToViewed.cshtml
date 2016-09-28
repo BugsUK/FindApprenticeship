@@ -3,7 +3,7 @@
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
 
 @{
-    ViewBag.Title = "Recruit an Apprentice - Revered to viewed";
+    ViewBag.Title = "Recruit an Apprentice - Revert to In progress";
 }
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmRevertToViewed, FormMethod.Post))
@@ -15,9 +15,9 @@
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
     <div>
         <div class="hgroup">
-            <h1 class="heading-xlarge med-btm-margin">Confirm revert to viewed</h1>
+            <h1 class="heading-xlarge med-btm-margin">Confirm revert to In progress</h1>
         </div>
-        <p>You are about to return @Model.ApplicantDetails.Name's application to the viewed state.</p>
+        <p>You are about to return @Model.ApplicantDetails.Name's application to the In progress state.</p>
         <p>Be aware that the candidate will already have recieved a successful or unsuccessful message for this role.</p>
         <section>
             <div class="form-group">
