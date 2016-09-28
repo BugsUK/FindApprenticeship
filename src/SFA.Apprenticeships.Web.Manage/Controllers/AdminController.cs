@@ -96,5 +96,38 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
+
+        [HttpGet]
+        public ActionResult CreateProviderSite()
+        {
+            return View(new ProviderSiteViewModel());
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateProviderSiteAction")]
+        public ActionResult CreateProviderSite(ProviderSiteViewModel viewModel)
+        {
+            var response = _adminMediator.CreateProviderSite(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.CreateProviderSite.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateProviderSite.EdsUrnAlreadyExists:
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateProviderSite.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
     }
 }

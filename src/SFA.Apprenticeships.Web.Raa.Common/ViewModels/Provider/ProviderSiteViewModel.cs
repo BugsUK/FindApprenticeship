@@ -6,7 +6,7 @@
     using FluentValidation.Attributes;
     using Validators.Provider;
 
-    [Validator(typeof(ProviderSiteViewModelValidator))]
+    [Validator(typeof(ProviderSiteViewModelClientValidator))]
     public class ProviderSiteViewModel
     {
         public int ProviderSiteId { get; set; }
@@ -17,7 +17,7 @@
 
         public string TradingName { get; set; }
 
-        [Display(Name = ProviderSiteViewModelMessages.NameMessages.LabelText)]
+        [Display(Name = ProviderSiteViewModelMessages.DisplayName.LabelText)]
         public string DisplayName => $"{FullName}, {Address.Town}";
 
         public string EmailAddress { get; set; }

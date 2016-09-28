@@ -283,6 +283,12 @@
                defaults: new { controller = "Admin", action = "CreateProvider" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateProviderSite,
+               url: "admin/providersites/create",
+               defaults: new { controller = "Admin", action = "CreateProviderSite" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

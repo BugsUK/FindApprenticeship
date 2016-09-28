@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
             public const string RequiredErrorText = "Enter the provider's UKPRN";
             public const string RequiredLengthErrorText = "UKPRN must be 8 digits";
             public const string WhiteListRegularExpression = Whitelists.NumericalWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Full name " + Whitelists.NumericalWhitelist.ErrorText;
+            public const string WhiteListErrorText = "UKPRN " + Whitelists.NumericalWhitelist.ErrorText;
         }
 
         public static class FullName
@@ -28,7 +28,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
         public static class TradingName
         {
             public const string LabelText = "Trading name";
-            public const string RequiredErrorText = "Enter the provider'stTrading name";
+            public const string RequiredErrorText = "Enter the provider's Trading name";
             public const string TooLongErrorText = "Trading name must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Trading name " + Whitelists.FreetextWhitelist.ErrorText;
