@@ -14,7 +14,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     {
         Provider GetProvider(int providerId);
 
-        Provider GetProvider(string ukprn);
+        Provider GetProvider(string ukprn, bool errorIfNotFound = true);
 
         IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds);
 

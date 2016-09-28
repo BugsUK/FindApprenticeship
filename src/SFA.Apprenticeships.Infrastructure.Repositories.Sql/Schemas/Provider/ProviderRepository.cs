@@ -44,7 +44,7 @@
             return MapProvider(dbProvider);
         }
 
-        public Provider GetByUkprn(string ukprn)
+        public Provider GetByUkprn(string ukprn, bool errorIfNotFound = true)
         {
             _logger.Debug("Getting activated provider with Ukprn={0}", ukprn);
 
@@ -58,6 +58,11 @@
             };
 
             var dbVacancy = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams).SingleOrDefault();
+
+            if (dbVacancy == null && !errorIfNotFound)
+            {
+                return null;
+            }
 
             _logger.Debug("Got activated provider with Ukprn={0}", ukprn);
 

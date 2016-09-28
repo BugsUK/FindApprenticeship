@@ -335,7 +335,7 @@
                         .With(e => e.EmployerId, employerId)
                         .With(e => e.Address, address)
                         .Create());
-            MockProviderService.Setup(s => s.GetProvider(ukprn))
+            MockProviderService.Setup(s => s.GetProvider(ukprn, true))
                 .Returns(new Fixture().Build<Provider>().With(p => p.ProviderId, providerId).Create());
             MockLocalAuthorityService.Setup(s => s.GetLocalAuthorityCode(employersPostcode)).Returns(localAuthorityCode);
 
@@ -357,7 +357,7 @@
             MockVacancyPostingService.Verify(s => s.GetNextVacancyReferenceNumber());
             MockProviderService.Verify(s => s.GetVacancyParty(vacancyPartyId, true));
             MockEmployerService.Verify(s => s.GetEmployer(employerId, It.IsAny<bool>()));
-            MockProviderService.Verify(s => s.GetProvider(ukprn));
+            MockProviderService.Verify(s => s.GetProvider(ukprn, true));
             MockLocalAuthorityService.Verify(s => s.GetLocalAuthorityCode(employersPostcode));
             MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => 
                 v.VacancyGuid == vacancyGuid 
@@ -409,7 +409,7 @@
                         .With(e => e.EmployerId, employerId)
                         .With(e => e.Address, address)
                         .Create());
-            MockProviderService.Setup(s => s.GetProvider(ukprn))
+            MockProviderService.Setup(s => s.GetProvider(ukprn, true))
                 .Returns(new Fixture().Build<Provider>().With(p => p.ProviderId, providerId).Create());
             MockLocalAuthorityService.Setup(s => s.GetLocalAuthorityCode(employersPostcode)).Returns(localAuthorityCode);
 
@@ -464,7 +464,7 @@
                         .With(e => e.EmployerId, employerId)
                         .With(e => e.Address, address)
                         .Create());
-            MockProviderService.Setup(s => s.GetProvider(ukprn))
+            MockProviderService.Setup(s => s.GetProvider(ukprn, true))
                 .Returns(new Fixture().Build<Provider>().With(p => p.ProviderId, providerId).Create());
             MockLocalAuthorityService.Setup(s => s.GetLocalAuthorityCode(employersPostcode)).Returns(localAuthorityCode);
 

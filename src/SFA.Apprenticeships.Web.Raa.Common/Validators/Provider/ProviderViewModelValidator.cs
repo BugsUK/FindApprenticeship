@@ -26,11 +26,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Provider
     {
         internal static void AddCommonRules(this AbstractValidator<ProviderViewModel> validator)
         {
-            validator.RuleFor(m => m.FullName)
+            validator.RuleFor(m => m.Ukprn)
                 .NotEmpty()
                 .WithMessage(ProviderViewModelMessages.Ukprn.RequiredErrorText)
-                .Length(0, 8)
-                .WithMessage(ProviderViewModelMessages.Ukprn.TooLongErrorText)
+                .Length(8, 8)
+                .WithMessage(ProviderViewModelMessages.Ukprn.RequiredLengthErrorText)
                 .Matches(ProviderViewModelMessages.Ukprn.WhiteListRegularExpression)
                 .WithMessage(ProviderViewModelMessages.Ukprn.WhiteListErrorText);
 

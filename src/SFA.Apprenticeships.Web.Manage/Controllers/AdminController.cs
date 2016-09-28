@@ -70,10 +70,15 @@
 
             ModelState.Clear();
 
+            SetUserMessage(response.Message);
+
             switch (response.Code)
             {
                 case AdminMediatorCodes.AddProvider.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.AddProvider.UkprnAlreadyExists:
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.AddProvider.Ok:

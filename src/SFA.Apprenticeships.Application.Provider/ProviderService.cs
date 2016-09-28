@@ -41,13 +41,13 @@
             return _providerReadRepository.GetById(providerId);
         }
 
-        public Provider GetProvider(string ukprn)
+        public Provider GetProvider(string ukprn, bool errorIfNotFound = true)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
 
             _logService.Debug("Calling ProviderReadRepository to get provider with UKPRN='{0}'.", ukprn);
 
-            return _providerReadRepository.GetByUkprn(ukprn);
+            return _providerReadRepository.GetByUkprn(ukprn, errorIfNotFound);
         }
 
         public IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds)

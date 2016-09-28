@@ -4,13 +4,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 {
     public class ProviderViewModelMessages
     {
+        public const string UkprnAlreadyExists = "The supplied UKPRN is already associated with a provider";
+
         public static class Ukprn
         {
             public const string LabelText = "UKPRN";
             public const string RequiredErrorText = "Enter the provider's UKPRN";
-            public const string TooLongErrorText = "UKPRN must not be more than 8 characters";
-            public const string WhiteListRegularExpression = Whitelists.IntegerWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Full name " + Whitelists.IntegerWhitelist.ErrorText;
+            public const string RequiredLengthErrorText = "UKPRN must be 8 digits";
+            public const string WhiteListRegularExpression = Whitelists.NumericalWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Full name " + Whitelists.NumericalWhitelist.ErrorText;
         }
 
         public static class FullName

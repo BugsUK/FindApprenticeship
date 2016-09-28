@@ -20,7 +20,7 @@
                 .Create<Provider>();
 
             MockProviderService.Setup(mock =>
-                mock.GetProvider(provider.Ukprn))
+                mock.GetProvider(provider.Ukprn, true))
                 .Returns(provider);
 
             var providerSites = new Fixture()
