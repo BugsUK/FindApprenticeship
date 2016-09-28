@@ -12,6 +12,9 @@ namespace SFA.Apprenticeships.Web.Recruit
             bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
                 "~/Content/_assets/js/nas/dashboard.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/print").Include(
+                "~/Content/_assets/js/print.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/autosave").Include(
                 "~/Content/_assets/js/nas/autosave.js"));
 

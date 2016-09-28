@@ -259,6 +259,36 @@
                 defaults: new { controller = "InformationRadiator", action = "Index" }
                 );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminList,
+               url: "admin",
+               defaults: new { controller = "Admin", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminProviders,
+               url: "admin/providers",
+               defaults: new { controller = "Admin", action = "Providers" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewProvider,
+               url: "admin/provider",
+               defaults: new { controller = "Admin", action = "Provider" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateProvider,
+               url: "admin/providers/create",
+               defaults: new { controller = "Admin", action = "CreateProvider" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateProviderSite,
+               url: "admin/providersites/create",
+               defaults: new { controller = "Admin", action = "CreateProviderSite" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

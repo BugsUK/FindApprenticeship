@@ -1098,7 +1098,7 @@ WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is null
                 dbVacancy.LocalAuthorityId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT LocalAuthorityId
 FROM   dbo.LocalAuthority
-WHERE  CodeName = @LocalAuthorityCode",
+WHERE  CodeName LIKE '%' + @LocalAuthorityCode",
                     new
                     {
                         entity.LocalAuthorityCode

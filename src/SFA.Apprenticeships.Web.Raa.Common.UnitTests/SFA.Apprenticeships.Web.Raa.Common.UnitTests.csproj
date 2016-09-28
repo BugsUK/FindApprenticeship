@@ -163,6 +163,7 @@
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyViewModelMapperTests.cs" />
     <Compile Include="Mappers\DateTimeToDateViewModelMapperTests.cs" />
     <Compile Include="Mappers\GeoPointToGeoPointViewModelTests.cs" />
+    <Compile Include="Mappers\ProviderMappersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\GeoCodingProvider\GeoCodingProviderTests.cs" />
     <Compile Include="Providers\LocationsProvider\LocationsTests.cs" />

@@ -45,7 +45,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(provider);
 
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
@@ -90,7 +90,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(provider);
 
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
@@ -132,7 +132,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(provider);
 
             mockProviderService.Setup(mock => mock
@@ -184,7 +184,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(provider);
 
             mockProviderService.Setup(mock => mock
@@ -232,7 +232,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(default(Provider));
 
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);

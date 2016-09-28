@@ -28,7 +28,7 @@
 
         public int NewApplicationsCount { get; set; }
 
-        public int ViewedApplicationsCount { get; set; }
+        public int InProgressApplicationsCount { get; set; }
 
         public int SuccessfulApplicationsCount { get; set; }
 

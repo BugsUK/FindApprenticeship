@@ -23,7 +23,7 @@
 {
     <meta name="DCS.dcsaut" content="@User.Identity.Name" />
     <meta name="DCSext.sfaukprn" content="@User.GetUkprn()" />
-    <meta name="DCSext.sfaukprname" content="@Model.ProviderViewModel.ProviderName"/>
+    <meta name="DCSext.sfaukprname" content="@Model.ProviderViewModel.FullName"/>
     <meta name="WT.sp" content="@ViewBag.Title" />
 }
 
@@ -49,7 +49,7 @@
         <div class="grid grid-1-2">
             <h1 class="heading-xlarge">
                 Recruitment home
-                <span class="heading-secondary">@Model.ProviderViewModel.ProviderName</span>
+                <span class="heading-secondary">@Model.ProviderViewModel.FullName</span>
             </h1>
         </div>
         <div class="grid grid-1-2">
@@ -409,7 +409,7 @@
                                                 }
                                             }
                                             <a href="@Url.RouteUrl(routeName, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">
-                                                @title
+                                                @HtmlExtensions.EscapeHtmlEncoding(title)
                                                 @if (isOfflineVacancy)
                                                 {
                                                     <span class="subtitle"><br />(Applications managed externally)</span>

@@ -3,37 +3,74 @@
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Provider;
+    using Web.Common.Validators;
+    using Common = Common;
 
-    public class ProviderSiteViewModelValidator : AbstractValidator<ProviderSiteViewModel>
+    public class ProviderSiteViewModelClientValidator : AbstractValidator<ProviderSiteViewModel>
     {
-        public ProviderSiteViewModelValidator()
+        public ProviderSiteViewModelClientValidator()
         {
-            AddCommonRules();
+            this.AddCommonRules();
+            this.AddClientRules();
+        }
+    }
+
+    public class ProviderSiteViewModelServerValidator : AbstractValidator<ProviderSiteViewModel>
+    {
+        public ProviderSiteViewModelServerValidator()
+        {
+            this.AddCommonRules();
+            this.AddServerRules();
+        }
+    }
+
+    internal static class ProviderSiteViewModelValidatorRules
+    {
+        internal static void AddCommonRules(this AbstractValidator<ProviderSiteViewModel> validator)
+        {
+            validator.RuleFor(m => m.EdsUrn)
+                .NotEmpty()
+                .WithMessage(ProviderSiteViewModelMessages.EdsUrn.RequiredErrorText)
+                .Length(9, 9)
+                .WithMessage(ProviderSiteViewModelMessages.EdsUrn.RequiredLengthErrorText)
+                .Matches(ProviderSiteViewModelMessages.EdsUrn.WhiteListRegularExpression)
+                .WithMessage(ProviderSiteViewModelMessages.EdsUrn.WhiteListErrorText);
+
+            validator.RuleFor(m => m.FullName)
+                .NotEmpty()
+                .WithMessage(ProviderSiteViewModelMessages.FullName.RequiredErrorText)
+                .Length(0, 255)
+                .WithMessage(ProviderSiteViewModelMessages.FullName.TooLongErrorText)
+                .Matches(ProviderSiteViewModelMessages.FullName.WhiteListRegularExpression)
+                .WithMessage(ProviderSiteViewModelMessages.FullName.WhiteListErrorText);
+
+            validator.RuleFor(m => m.TradingName)
+                .NotEmpty()
+                .WithMessage(ProviderSiteViewModelMessages.TradingName.RequiredErrorText)
+                .Length(0, 255)
+                .WithMessage(ProviderSiteViewModelMessages.TradingName.TooLongErrorText)
+                .Matches(ProviderSiteViewModelMessages.TradingName.WhiteListRegularExpression)
+                .WithMessage(ProviderSiteViewModelMessages.TradingName.WhiteListErrorText);
+
+            validator.RuleFor(x => x.Address).SetValidator(new AddressViewModelValidator());
+
+            validator.RuleFor(m => m.WebPage)
+                .NotEmpty()
+                .WithMessage(ProviderSiteViewModelMessages.WebPage.RequiredErrorText)
+                .Length(0, 100)
+                .WithMessage(ProviderSiteViewModelMessages.WebPage.TooLongErrorText)
+                .Must(Common.IsValidUrl)
+                .WithMessage(ProviderSiteViewModelMessages.WebPage.ErrorUriText);
         }
 
-        private void AddCommonRules()
+        internal static void AddClientRules(this AbstractValidator<ProviderSiteViewModel> validator)
         {
-            RuleFor(m => m.Name)
-                .NotEmpty()
-                .WithMessage(ProviderSiteViewModelMessages.NameMessages.RequiredErrorText)
-                .Length(0, 100)
-                .WithMessage(ProviderSiteViewModelMessages.NameMessages.TooLongErrorText);
 
-            RuleFor(m => m.EmailAddress)
-                .Length(0, 100)
-                .WithMessage(ProviderSiteViewModelMessages.EmailAddressMessages.TooLongErrorText)
-                .NotEmpty()
-                .WithMessage(ProviderSiteViewModelMessages.EmailAddressMessages.RequiredErrorText)
-                .Matches(ProviderSiteViewModelMessages.EmailAddressMessages.WhiteListRegularExpression)
-                .WithMessage(ProviderSiteViewModelMessages.EmailAddressMessages.WhiteListErrorText);
+        }
 
-            RuleFor(x => x.PhoneNumber)
-                .Length(8, 16)
-                .WithMessage(ProviderSiteViewModelMessages.PhoneNumberMessages.LengthErrorText)
-                .NotEmpty()
-                .WithMessage(ProviderSiteViewModelMessages.PhoneNumberMessages.RequiredErrorText)
-                .Matches(ProviderSiteViewModelMessages.PhoneNumberMessages.WhiteListRegularExpression)
-                .WithMessage(ProviderSiteViewModelMessages.PhoneNumberMessages.WhiteListErrorText);
+        internal static void AddServerRules(this AbstractValidator<ProviderSiteViewModel> validator)
+        {
+
         }
     }
 }

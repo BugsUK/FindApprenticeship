@@ -17,11 +17,9 @@
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
     using Raa.Common.ViewModels.Vacancy;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using ViewModels;
-    using SFA.Infrastructure.Interfaces;
+
     public class AgencyUserController : ManagementControllerBase
     {
         private readonly IAgencyUserMediator _agencyUserMediator;
@@ -60,7 +58,12 @@
                     var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
                     if (returnUrl.IsValidReturnUrl())
                     {
-                        return Redirect(Server.UrlDecode(returnUrl));
+                        var decodedUrl = Server.UrlDecode(returnUrl);
+                        if (decodedUrl != null)
+                        {
+                            decodedUrl = decodedUrl.Replace("&amp;", "&");
+                            return Redirect(decodedUrl.Replace("&amp;", "&"));
+                        }
                     }
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
 

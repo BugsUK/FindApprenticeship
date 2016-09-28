@@ -496,6 +496,7 @@
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
+    <Content Include="Content\_assets\js\print.js" />
     <Content Include="Content\_assets\js\sticky.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\adapters\jquery.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\build-config.js" />
@@ -882,10 +883,11 @@
     </Content>
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ChangeUkprn.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\ConfirmRevertToViewed.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmRevertToInProgress.cshtml" />
     <Content Include="Views\Candidate\Search.cshtml" />
     <Content Include="Views\Candidate\Candidate.cshtml" />
     <Content Include="Views\InformationRadiator\Index.cshtml" />
+    <Content Include="Views\Provider\Sites.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -940,7 +942,6 @@
     <Content Include="Configs\settings.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
-    <Content Include="Views\Provider\Sites.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_LoginPartial.generated.cs</LastGenOutput>

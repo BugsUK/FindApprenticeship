@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 {
     using System.Collections.Generic;
     using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     /// <summary>
     /// For maintaining provider profiles, sites, etc.
@@ -13,9 +14,11 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     {
         Provider GetProvider(int providerId);
 
-        Provider GetProvider(string ukprn);
+        Provider GetProvider(string ukprn, bool errorIfNotFound = true);
 
         IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds);
+
+        IEnumerable<Provider> SearchProviders(ProviderSearchParameters searchParameters);
 
         ProviderSite GetProviderSite(int providerSiteId);
 
@@ -43,6 +46,10 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         
         IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
 
-        Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);        
+        Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);
+
+        Provider CreateProvider(Provider provider);
+
+        ProviderSite CreateProviderSite(ProviderSite providerSite);
     }
 }

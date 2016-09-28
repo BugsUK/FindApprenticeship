@@ -6,8 +6,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     public interface IProviderProvider
     {
-        ProviderViewModel GetProviderViewModel(string ukprn);
+        ProviderViewModel GetProviderViewModel(string ukprn, bool errorIfNotFound = true);
         ProviderViewModel GetProviderViewModel(int providerId);
+        ProviderSearchResultsViewModel SearchProviders(ProviderSearchViewModel searchViewModel);
         ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn);
         IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn);
         VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId);
@@ -15,5 +16,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel);
         EmployerSearchViewModel GetVacancyPartyViewModels(int providerSiteId);
         EmployerSearchViewModel GetVacancyPartyViewModels(EmployerSearchViewModel viewModel);
+        ProviderViewModel CreateProvider(ProviderViewModel viewModel);
+        ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel);
     }
 }

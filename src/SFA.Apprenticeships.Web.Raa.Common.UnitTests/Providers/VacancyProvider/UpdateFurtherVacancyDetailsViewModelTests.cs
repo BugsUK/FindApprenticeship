@@ -69,7 +69,7 @@
             var referenceDataService = new Mock<IReferenceDataService>();
             referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
             var providerService = new Mock<IProviderService>();
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProvider(ukprn, true)).Returns(new Provider());
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var currentUserService = new Mock<ICurrentUserService>();

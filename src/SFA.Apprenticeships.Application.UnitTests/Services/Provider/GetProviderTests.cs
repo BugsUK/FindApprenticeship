@@ -24,7 +24,7 @@
         public void FromRepository()
         {
             var repository = new Mock<IProviderReadRepository>();
-            repository.Setup(r => r.GetByUkprn(Ukprn)).Returns(_provider1);
+            repository.Setup(r => r.GetByUkprn(Ukprn, true)).Returns(_provider1);
             var service = new ProviderServiceBuilder().With(repository.Object).Build();
 
             var provider = service.GetProvider(Ukprn);

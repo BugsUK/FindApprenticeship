@@ -354,6 +354,7 @@
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -367,6 +368,9 @@
     <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacancyExtensionsResultItemClassMap.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
+    <Compile Include="Mediators\Admin\AdminMediator.cs" />
+    <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
+    <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
     <Compile Include="Mediators\AgencyUser\IAgencyUserMediator.cs" />
@@ -845,6 +849,11 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
     <Content Include="Views\InformationRadiator\Index.cshtml" />
     <Content Include="Views\Report\RegisteredCandidatesCsv.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Providers.cshtml" />
+    <Content Include="Views\Admin\CreateProvider.cshtml" />
+    <Content Include="Views\Admin\Provider.cshtml" />
+    <Content Include="Views\Admin\CreateProviderSite.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -876,7 +885,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Mappers\" />
+    <Folder Include="Validators\Admin\" />
+    <Folder Include="ViewModels\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -1029,6 +1039,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Security\SFA.Apprenticeships.Infrastructure.Security.csproj">
+      <Project>{e8841e6e-382a-476b-9af0-acdbd4870659}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

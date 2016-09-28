@@ -1,5 +1,6 @@
 ﻿@using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Manage.Controllers
+@using Roles = SFA.Apprenticeships.Domain.Entities.Raa.Roles
 
 @if (Request.IsAuthenticated)
 {
@@ -9,6 +10,10 @@
             <a id="signout-link" href="@Url.RouteUrl(ManagementRouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
         <div>
+            @if (User.IsInRole(Roles.Admin))
+            {
+                <a class="account-link" id="adminLink" href="@Url.RouteUrl(ManagementRouteNames.AdminList)">Admin</a>
+            }
             <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(ManagementRouteNames.Dashboard)">Agency home</a>
         </div>
     </div>

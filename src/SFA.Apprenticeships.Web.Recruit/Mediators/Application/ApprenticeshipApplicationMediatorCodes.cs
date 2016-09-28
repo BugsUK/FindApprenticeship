@@ -28,11 +28,11 @@
             public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.Error";
         }
 
-        public class ReviewRevertToViewed
+        public class ReviewRevertToInProgress
         {
-            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Ok";
-            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.FailedValidation";
-            public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Error";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.Ok";
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.FailedValidation";
+            public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.Error";
         }
 
         public class ReviewSaveAndExit
@@ -40,6 +40,13 @@
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok";
             public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation";
             public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Error";
+        }
+
+        public class PromoteToInProgress
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok";
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation";
+            public const string Error = "ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Error";
         }
 
         public class ConfirmSuccessfulDecision
@@ -64,15 +71,15 @@
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok";
         }
 
-        public class ConfirmRevertToViewed
+        public class ConfirmRevertToInProgress
         {
-            public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.NoApplicationId";
-            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.Ok";
+            public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.NoApplicationId";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.Ok";
         }
 
-        public class RevertToViewed
+        public class RevertToInProgress
         {
-            public const string Ok = "ApprenticeshipApplicationMediatorCodes.RevertToViewed.Ok";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.RevertToInProgress.Ok";
         }
     }
 }

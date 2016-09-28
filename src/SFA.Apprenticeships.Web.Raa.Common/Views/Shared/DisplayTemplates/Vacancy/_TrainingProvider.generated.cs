@@ -192,7 +192,7 @@ WriteLiteral(">");
 
             
             #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                                                                                                                                        Write(Html.Raw(Model.TrainingDetailsViewModel.TrainingProvided));
+                                                                                                                                                        Write(Html.Raw(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Model.TrainingDetailsViewModel.TrainingProvided)));
 
             
             #line default
@@ -217,14 +217,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("\r\n                    </div>\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1999), Tuple.Create("\"", 2025)
+WriteAttribute("class", Tuple.Create(" class=\"", 2075), Tuple.Create("\"", 2101)
             
             #line 35 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-, Tuple.Create(Tuple.Create("", 2007), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 2083), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 2007), false)
+, 2083), false)
 );
 
 WriteLiteral(">\r\n");
@@ -380,22 +380,22 @@ WriteLiteral(">");
 
             
             #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                         Write(Model.Provider.ProviderName);
+                                         Write(Model.Provider.TradingName);
 
             
             #line default
             #line hidden
 WriteLiteral("</p>\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4109), Tuple.Create("\"", 4140)
-, Tuple.Create(Tuple.Create("", 4117), Tuple.Create("text", 4117), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4184), Tuple.Create("\"", 4215)
+, Tuple.Create(Tuple.Create("", 4192), Tuple.Create("text", 4192), true)
             
             #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4121), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create(" ", 4196), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 4122), false)
+, 4197), false)
 );
 
 WriteLiteral(">\r\n                <h3");
