@@ -1,0 +1,24 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteViewModel
+@{
+    ViewBag.Title = "Providers";
+}
+
+<h1 id="heading" class="heading-xlarge">New Provider Site</h1>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateProviderSite))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.EdsUrn, controlHtmlAttributes: new { type = "tel", size = 9, autofocus = "autofocus" })
+        @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
+
+        <div class="form-group">
+            <button id="add-provider-site-button" type="submit" class="button" name="CreateProviderSiteAction" value="CreateProviderSite">Add ProviderSite</button>
+        </div>
+    </div>
+}

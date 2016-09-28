@@ -221,5 +221,10 @@
 
             return _providerMappers.Map<Provider, ProviderViewModel>(provider);
         }
+
+        public ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
