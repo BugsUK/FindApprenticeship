@@ -101,7 +101,7 @@
 
             //Assert
             response.ViewModel.Status.Should().Be(ApplicationStatuses.Submitted);
-            response.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok, false, false);
+            response.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok, false, false);
             mockApplicationProvider.Verify(m => m.SetStateSubmitted(viewModel.ApplicationSelection), Times.Once);
             mockApplicationProvider.Verify(m => m.UpdateApprenticeshipApplicationViewModelNotes(viewModel.ApplicationSelection.ApplicationId, viewModel.Notes), Times.Once);
         }
