@@ -89,7 +89,7 @@
             }
             <div>
                 <h3 class="bold-small">Reference number</h3>
-                @if (Model.NewVacancyViewModel.LocationAddresses.Count > 1)
+                @if (Model.NewVacancyViewModel.LocationAddresses!=null && Model.NewVacancyViewModel.LocationAddresses.Count > 1)
                 {
                     <p>Will be generated on approval</p>
                 }
