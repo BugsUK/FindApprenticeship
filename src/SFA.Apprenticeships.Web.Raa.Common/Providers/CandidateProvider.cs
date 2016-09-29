@@ -23,6 +23,7 @@
     using Application.Interfaces;
     using Application.Interfaces.Security;
     using Common.Extensions;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using ViewModels;
     using Web.Common.Configuration;
     using Web.Common.ViewModels;

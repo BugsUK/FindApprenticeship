@@ -259,6 +259,54 @@
                 defaults: new { controller = "InformationRadiator", action = "Index" }
                 );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminList,
+               url: "admin",
+               defaults: new { controller = "Admin", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminProviders,
+               url: "admin/providers",
+               defaults: new { controller = "Admin", action = "Providers" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewProvider,
+               url: "admin/provider",
+               defaults: new { controller = "Admin", action = "Provider" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateProvider,
+               url: "admin/providers/create",
+               defaults: new { controller = "Admin", action = "CreateProvider" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminProviderSites,
+               url: "admin/providersites",
+               defaults: new { controller = "Admin", action = "ProviderSites" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewProviderSite,
+               url: "admin/providersite",
+               defaults: new { controller = "Admin", action = "ProviderSite" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateProviderSite,
+               url: "admin/providersites/create",
+               defaults: new { controller = "Admin", action = "CreateProviderSite" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEditProviderSite,
+               url: "admin/providersite/edit",
+               defaults: new { controller = "Admin", action = "EditProviderSite" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

@@ -20,7 +20,7 @@
     using ViewModels.Application.Traineeship;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
-    using Order = ViewModels.Order;
+    using Order = Domain.Raa.Interfaces.Repositories.Models.Order;
 
     public class ApplicationProvider : IApplicationProvider
     {
@@ -81,7 +81,7 @@
             var unsuccessful = applications.Where(v => v.Status == ApplicationStatuses.Unsuccessful).ToList();
 
             viewModel.NewApplicationsCount = @new.Count;
-            viewModel.ViewedApplicationsCount = viewed.Count;
+            viewModel.InProgressApplicationsCount = viewed.Count;
             viewModel.SuccessfulApplicationsCount = successful.Count;
             viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
             viewModel.ApplicationSummaries = _mapper.Map<List<ApplicationSummary>, List<ApplicationSummaryViewModel>>(applications.OrderBy(a => a.CandidateDetails.LastName).ToList());
@@ -105,7 +105,7 @@
             applications = SearchCandidateApplications(vacancyApplicationsSearch, applications);
 
             var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
-            var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
+            var inProgress = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
             var successful = applications.Where(v => v.Status == ApplicationStatuses.Successful).ToList();
             var unsuccessful = applications.Where(v => v.Status == ApplicationStatuses.Unsuccessful).ToList();
 
@@ -114,8 +114,8 @@
                 case VacancyApplicationsFilterTypes.New:
                     applications = @new;
                     break;
-                case VacancyApplicationsFilterTypes.Viewed:
-                    applications = viewed;
+                case VacancyApplicationsFilterTypes.InProgress:
+                    applications = inProgress;
                     break;
                 case VacancyApplicationsFilterTypes.Successful:
                     applications = successful;
@@ -127,7 +127,7 @@
 
             //TODO: return as part of data query - probably needs migration
             viewModel.NewApplicationsCount = @new.Count;
-            viewModel.ViewedApplicationsCount = viewed.Count;
+            viewModel.InProgressApplicationsCount = inProgress.Count;
             viewModel.SuccessfulApplicationsCount = successful.Count;
             viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
 
@@ -263,11 +263,20 @@
             return applicationSelectionViewModel;
         }
 
-        public ApplicationSelectionViewModel RevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ApplicationSelectionViewModel SetStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
 
-            _apprenticeshipApplicationService.RevertToViewed(applicationId);
+            _apprenticeshipApplicationService.SetStateInProgress(applicationId);
+
+            return applicationSelectionViewModel;
+        }
+
+        public ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationId = applicationSelectionViewModel.ApplicationId;
+
+            _apprenticeshipApplicationService.SetStateSubmitted(applicationId);
 
             return applicationSelectionViewModel;
         }

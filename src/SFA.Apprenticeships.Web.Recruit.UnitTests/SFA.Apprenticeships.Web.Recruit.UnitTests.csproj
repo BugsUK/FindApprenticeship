@@ -169,7 +169,6 @@
     <Compile Include="Mediators\ProviderUser\TestBase.cs" />
     <Compile Include="Mediators\ProviderUser\VerifyEmailAddressTests.cs" />
     <Compile Include="Mediators\ProviderUser\UpdateUserTests.cs" />
-    <Compile Include="Mediators\Provider\ProviderMediatorTests.cs" />
     <Compile Include="Mediators\VacancyManagement\ConfirmDeleteActionTests.cs" />
     <Compile Include="Mediators\VacancyManagement\DeleteVacancyTests.cs" />
     <Compile Include="Mediators\VacancyManagement\TestsBase.cs" />
@@ -187,7 +186,6 @@
     <Compile Include="Validators\Applications\ApprenticeshipApplicationViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\Applications\ApprenticeshipApplicationViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\Providers\ProviderSiteEmployerLinkViewModelValidatorTests.cs" />
-    <Compile Include="Validators\Providers\ProviderSiteSearchViewModelValidatorTests.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyDatesViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\ValidFreeTextTest.cs" />

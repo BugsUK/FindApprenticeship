@@ -98,7 +98,7 @@
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>())).Returns(employerWithGeocode);
             MockLocalAuthorityLookupService.Setup(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode)).Returns(localAuthorityCode);
-            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
             MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
 
             var provider = GetVacancyPostingProvider();
@@ -150,7 +150,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(vacancy);
 
-            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 
@@ -202,7 +202,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(vacancy);
 
-            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 

@@ -6,9 +6,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using Sql.Common;
     using Sql.Schemas.Provider;
 
@@ -69,7 +67,7 @@
             var edsUrn = SeedData.ProviderSites.HopwoodCampus.EdsUrn;
             var originalProvideSite = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
-            originalProvideSite.Name = new string(originalProvideSite.Name.Reverse().ToArray());
+            originalProvideSite.FullName = new string(originalProvideSite.FullName.Reverse().ToArray());
 
             // Act.
             var updatedProviderSite = _providerSiteWriteRepository.Update(originalProvideSite);

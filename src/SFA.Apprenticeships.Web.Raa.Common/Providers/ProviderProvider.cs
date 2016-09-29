@@ -9,15 +9,18 @@
     using Configuration;
     using Converters;
     using Domain.Entities.Raa.Vacancies;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories.Models;
+    using Mappers;
     using ViewModels.Provider;
     using ViewModels.VacancyPosting;
     using Web.Common.Converters;
 
     public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
+        private readonly IMapper _providerMappers = new ProviderMappers();
+
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
@@ -31,9 +34,14 @@
             _employerService = employerService;
         }
 
-        public ProviderViewModel GetProviderViewModel(string ukprn)
+        public ProviderViewModel GetProviderViewModel(string ukprn, bool errorIfNotFound = true)
         {
-            var provider = _providerService.GetProvider(ukprn);
+            var provider = _providerService.GetProvider(ukprn, errorIfNotFound);
+            if (provider == null)
+            {
+                return null;
+            }
+
             var providerSites = _providerService.GetProviderSites(ukprn);
 
             return provider.Convert(providerSites);
@@ -42,22 +50,73 @@
         public ProviderViewModel GetProviderViewModel(int providerId)
         {
             var provider = _providerService.GetProvider(providerId);
-            var providerSites = _providerService.GetProviderSites(provider.Ukprn);
+            var providerSites = _providerService.GetProviderSites(providerId);
 
             return provider.Convert(providerSites);
+        }
+
+        public ProviderSearchResultsViewModel SearchProviders(ProviderSearchViewModel searchViewModel)
+        {
+            var viewModel = new ProviderSearchResultsViewModel
+            {
+                SearchViewModel = searchViewModel
+            };
+
+            if(!searchViewModel.PerformSearch) return viewModel;
+
+            var searchParameters = new ProviderSearchParameters
+            {
+                Ukprn = searchViewModel.Ukprn,
+                Name = searchViewModel.Name
+            };
+
+            var providers = _providerService.SearchProviders(searchParameters);
+
+            viewModel.Providers = providers.Select(p => p.Convert()).ToList();
+
+            return viewModel;
+        }
+
+        public ProviderSiteViewModel GetProviderSiteViewModel(int providerSiteId)
+        {
+            var providerSite = _providerService.GetProviderSite(providerSiteId);
+
+            return providerSite?.Convert();
         }
 
         public ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn)
         {
             var providerSite = _providerService.GetProviderSite(edsUrn);
 
-            return providerSite.Convert();
+            return providerSite?.Convert();
         }
 
         public IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn)
         {
             var providerSites = _providerService.GetProviderSites(ukprn);
             return providerSites.Select(ps => ps.Convert());
+        }
+
+        public ProviderSiteSearchResultsViewModel SearchProviderSites(ProviderSiteSearchViewModel searchViewModel)
+        {
+            var viewModel = new ProviderSiteSearchResultsViewModel
+            {
+                SearchViewModel = searchViewModel
+            };
+
+            if (!searchViewModel.PerformSearch) return viewModel;
+
+            var searchParameters = new ProviderSiteSearchParameters
+            {
+                EdsUrn = searchViewModel.EdsUrn,
+                Name = searchViewModel.Name
+            };
+
+            var providerSites = _providerService.SearchProviderSites(searchParameters);
+
+            viewModel.ProviderSites = providerSites.Select(p => p.Convert()).ToList();
+
+            return viewModel;
         }
 
         public VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId)
@@ -180,6 +239,70 @@
             viewModel.EmployerResultsPage = resultsPage;
 
             return viewModel;
+        }
+
+        public ProviderViewModel CreateProvider(ProviderViewModel viewModel)
+        {
+            var provider = _providerMappers.Map<ProviderViewModel, Provider>(viewModel);
+            provider.IsMigrated = true;
+
+            provider = _providerService.CreateProvider(provider);
+
+            return _providerMappers.Map<Provider, ProviderViewModel>(provider);
+        }
+
+        public ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel)
+        {
+            var providerSite = _providerMappers.Map<ProviderSiteViewModel, ProviderSite>(viewModel);
+            //Create a relationship between the provider and new provider site
+            providerSite.ProviderSiteRelationships = new List<ProviderSiteRelationship>
+            {
+                new ProviderSiteRelationship
+                {
+                    ProviderId = viewModel.ProviderId,
+                    ProviderSiteRelationShipTypeId = ProviderSiteRelationshipTypes.Owner
+                }
+            };
+
+            providerSite = _providerService.CreateProviderSite(providerSite);
+
+            var providerSiteViewModel = _providerMappers.Map<ProviderSite, ProviderSiteViewModel>(providerSite);
+            providerSiteViewModel.ProviderId = viewModel.ProviderId;
+
+            return providerSiteViewModel;
+        }
+
+        public ProviderSiteViewModel SaveProviderSite(ProviderSiteViewModel viewModel)
+        {
+            var providerSite = _providerService.GetProviderSite(viewModel.ProviderSiteId);
+
+            //Copy over changes
+            foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
+            {
+                var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);
+                if (providerSiteRelationship != null)
+                {
+                    providerSiteRelationship.ProviderSiteRelationShipTypeId = providerSiteRelationshipViewModel.ProviderSiteRelationshipType;
+                }
+            }
+
+            var updatedProviderSite = _providerService.SaveProviderSite(providerSite);
+
+            return _providerMappers.Map<ProviderSite, ProviderSiteViewModel>(updatedProviderSite);
+        }
+
+        public ProviderSiteViewModel CreateProviderSiteRelationship(ProviderSiteViewModel viewModel, int providerId)
+        {
+            var providerSiteRelationship = new ProviderSiteRelationship
+            {
+                ProviderId = providerId,
+                ProviderSiteId = viewModel.ProviderSiteId,
+                ProviderSiteRelationShipTypeId = viewModel.ProviderSiteRelationshipType
+            };
+
+            _providerService.CreateProviderSiteRelationship(providerSiteRelationship);
+
+            return GetProviderSiteViewModel(viewModel.ProviderSiteId);
         }
     }
 }

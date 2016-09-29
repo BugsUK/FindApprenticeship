@@ -1,0 +1,11 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@{
+    ViewBag.Title = "Administrator functions";
+}
+
+<h1 id="heading" class="heading-xlarge">Administrator functions</h1>
+
+<ul>
+    <li>@Html.RouteLink("Manage Providers", ManagementRouteNames.AdminProviders)</li>
+    <li>@Html.RouteLink("Manage Provider Sites", ManagementRouteNames.AdminProviderSites)</li>
+</ul>

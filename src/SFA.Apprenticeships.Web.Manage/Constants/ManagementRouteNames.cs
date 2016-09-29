@@ -50,5 +50,14 @@
         public const string ReportVacancyExtensions = "ReportVacancyExtensions";
         public const string ReportRegisteredCandidates = "ReportRegisteredCandidates";
 
+        //Admin
+        public const string AdminList = "AdminList";
+        public const string AdminProviders = "AdminProviders";
+        public const string AdminViewProvider = "AdminViewProvider";
+        public const string AdminCreateProvider = "AdminCreateProvider";
+        public const string AdminProviderSites = "AdminProviderSites";
+        public const string AdminViewProviderSite = "AdminViewProviderSite";
+        public const string AdminCreateProviderSite = "AdminCreateProviderSite";
+        public const string AdminEditProviderSite = "AdminEditProviderSite";
     }
 }

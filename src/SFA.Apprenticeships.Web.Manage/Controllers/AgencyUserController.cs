@@ -17,11 +17,9 @@
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
     using Raa.Common.ViewModels.Vacancy;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using ViewModels;
-    using SFA.Infrastructure.Interfaces;
+
     public class AgencyUserController : ManagementControllerBase
     {
         private readonly IAgencyUserMediator _agencyUserMediator;
