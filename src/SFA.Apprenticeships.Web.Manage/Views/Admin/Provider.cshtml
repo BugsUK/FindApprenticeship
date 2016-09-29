@@ -6,11 +6,14 @@
 
 <h1 id="heading" class="heading-xlarge">Provider</h1>
 
+<p>@Html.RouteLink("Manage Providers", ManagementRouteNames.AdminProviders)</p>
+
 <p>
     <ul>
         <li>UKPRN: @Model.Ukprn</li>
         <li>Full name: @Model.FullName</li>
         <li>Trading Name: @Model.TradingName</li>
+        <li>Status: @Model.ProviderStatusType</li>
     </ul>
 </p>
 

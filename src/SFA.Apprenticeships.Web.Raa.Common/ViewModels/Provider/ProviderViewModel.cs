@@ -6,6 +6,8 @@ using SFA.Apprenticeships.Web.Raa.Common.Validators.Provider;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 {
+    using Domain.Entities.Users;
+
     [Validator(typeof(ProviderViewModelClientValidator))]
     public class ProviderViewModel
     {
@@ -23,5 +25,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
         public string TradingName { get; set; }
         public IEnumerable<ProviderSiteViewModel> ProviderSiteViewModels { get; set; }
         public bool IsMigrated { get; set; }
+        public ProviderStatuses ProviderStatusType { get; set; }
     }
 }
