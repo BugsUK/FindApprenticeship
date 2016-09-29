@@ -38,6 +38,7 @@
     using Raa.Common.Providers;
     using Application.Interfaces;
     using Application.Interfaces.Security;
+    using Application.Vacancy;
     using Infrastructure.Security;
     using Mediators.Admin;
     using Raa.Common.ViewModels.Application;
@@ -89,6 +90,7 @@
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
             For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
+            For<IVacancySummaryService>().Use<VacancySummaryService>();
         }
 
         private void RegisterStrategies()
