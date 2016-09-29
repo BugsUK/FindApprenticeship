@@ -108,6 +108,7 @@
     <Compile Include="Repositories\Models\VacanciesSummaryFilterTypes.cs" />
     <Compile Include="Repositories\Models\VacancySummaryQuery.cs" />
     <Compile Include="Repositories\Models\ProviderSearchParameters.cs" />
+    <Compile Include="Repositories\Models\ProviderSiteSearchParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">

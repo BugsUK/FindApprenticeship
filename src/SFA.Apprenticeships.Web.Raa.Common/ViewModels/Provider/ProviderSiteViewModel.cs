@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using Web.Common.ViewModels.Locations;
     using Constants.ViewModels;
+    using Domain.Entities.Raa.Parties;
     using FluentValidation.Attributes;
     using Validators.Provider;
 
@@ -40,5 +41,11 @@
         public string WebPage { get; set; }
 
         public IList<ProviderSiteRelationshipViewModel> ProviderSiteRelationships { get; set; }
+
+        [Display(Name = ProviderSiteViewModelMessages.ProviderUkprn.LabelText)]
+        public string ProviderUkprn { get; set; }
+
+        [Display(Name = ProviderSiteViewModelMessages.ProviderSiteRelationshipType.LabelText)]
+        public ProviderSiteRelationshipTypes ProviderSiteRelationshipType { get; set; }
     }
 }

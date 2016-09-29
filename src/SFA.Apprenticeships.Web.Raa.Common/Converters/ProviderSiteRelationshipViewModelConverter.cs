@@ -12,7 +12,10 @@
                 ProviderSiteRelationshipId = providerSiteRelationship.ProviderSiteRelationshipId,
                 ProviderId = providerSiteRelationship.ProviderId,
                 ProviderSiteId = providerSiteRelationship.ProviderSiteId,
-                ProviderSiteRelationshipType = providerSiteRelationship.ProviderSiteRelationShipTypeId
+                ProviderSiteRelationshipType = providerSiteRelationship.ProviderSiteRelationShipTypeId,
+                ProviderUkprn = providerSiteRelationship.ProviderUkprn,
+                ProviderFullName = providerSiteRelationship.ProviderFullName,
+                ProviderTradingName = providerSiteRelationship.ProviderTradingName
             };
 
             return viewModel;
