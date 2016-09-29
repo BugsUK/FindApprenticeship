@@ -116,18 +116,6 @@
                 );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.AddProviderSite,
-               url: "sites/add",
-               defaults: new { controller = "Provider", action = "AddSite" }
-               );
-
-            routes.MapRoute(
-               name: RecruitmentRouteNames.EditProviderSite,
-               url: "sites/edit",
-               defaults: new { controller = "Provider", action = "EditSite" }
-               );
-
-            routes.MapRoute(
                name: RecruitmentRouteNames.CreateVacancy,
                url: "vacancy/create",
                defaults: new { controller = "VacancyPosting", action = "CreateVacancy" }
@@ -386,9 +374,9 @@
                );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.ConfirmRevertToViewed,
-               url: "apprenticeshipapplication/confirmreverttoviewed",
-               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmRevertToViewed" }
+               name: RecruitmentRouteNames.ConfirmRevertToInProgress,
+               url: "apprenticeshipapplication/confirmreverttoinprogress",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmRevertToInProgress" }
                );
 
             routes.MapRoute(
@@ -440,9 +428,9 @@
                );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.ResetUkprn,
+               name: RecruitmentRouteNames.AdminResetUkprn,
                url: "admin/resetukprn",
-               defaults: new { controller = "Admin", action = "ResetUkprn" }
+               defaults: new { controller = "Admin", action = "AdminResetUkprn" }
                );
 
             routes.MapRoute(

@@ -16,6 +16,7 @@
 
     public interface IProviderSiteWriteRepository
     {
+        ProviderSite Create(ProviderSite providerSite);
         ProviderSite Update(ProviderSite providerSite);
     }
 }

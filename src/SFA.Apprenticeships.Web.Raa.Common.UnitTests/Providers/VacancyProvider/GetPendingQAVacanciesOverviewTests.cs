@@ -90,7 +90,7 @@
             _vacancyPostingService.Setup(p => p.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)).Returns(vacancies);
 
             _providerService = new Mock<IProviderService>();
-            _providerService.Setup(s => s.GetProvider(It.IsAny<string>())).Returns(new Fixture().Create<Provider>());
+            _providerService.Setup(s => s.GetProvider(It.IsAny<string>(), true)).Returns(new Fixture().Create<Provider>());
             _providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider>{new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create()});
 
             _provider = new VacancyProviderBuilder().With(_vacancyPostingService).With(_providerService).With(_dateTimeService).Build();

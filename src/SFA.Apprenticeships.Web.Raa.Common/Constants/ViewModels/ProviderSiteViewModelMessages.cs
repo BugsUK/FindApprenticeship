@@ -4,31 +4,47 @@
 
     public class ProviderSiteViewModelMessages
     {
-        public static class NameMessages
+        public const string EdsUrnAlreadyExists = "The supplied EDSURN is already associated with a provider site";
+        public const string ProviderSiteCreatedSuccessfully = "New provider site added successfully";
+
+        public static class DisplayName
         {
-            public const string LabelText = "Training site name";
-            public const string RequiredErrorText = "Enter your training site name";
-            public const string TooLongErrorText = "Training site name must not be more than 100 characters";
-            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Training site name " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string LabelText = "Provider site";
         }
 
-        public static class EmailAddressMessages
+        public static class EdsUrn
         {
-            public const string LabelText = "Key contact email address";
-            public const string RequiredErrorText = "Enter the key contact email address";
-            public const string TooLongErrorText = "Key contact email address must not be more than 100 characters";
-            public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Key contact email address " + Whitelists.EmailAddressWhitelist.ErrorText;
+            public const string LabelText = "EDSURN";
+            public const string RequiredErrorText = "Enter the provider site's EDSURN";
+            public const string RequiredLengthErrorText = "EDSURN must be 9 digits";
+            public const string WhiteListRegularExpression = Whitelists.NumericalWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "EDSURN " + Whitelists.NumericalWhitelist.ErrorText;
         }
 
-        public static class PhoneNumberMessages
+        public static class FullName
         {
-            public const string LabelText = "Phone number number";
-            public const string RequiredErrorText = "Enter phone number";
-            public const string LengthErrorText = "Phone number number must be between 8 and 16 digits";
-            public const string WhiteListRegularExpression = Whitelists.PhoneNumberWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Phone number " + Whitelists.PhoneNumberWhitelist.ErrorText;
+            public const string LabelText = "Full name";
+            public const string RequiredErrorText = "Enter the provider site's full name";
+            public const string TooLongErrorText = "Full name must not be more than 255 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Full name " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
+        public static class TradingName
+        {
+            public const string LabelText = "Trading name";
+            public const string RequiredErrorText = "Enter the provider sites's trading name";
+            public const string TooLongErrorText = "Trading name must not be more than 255 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Trading name " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
+        public static class WebPage
+        {
+            public const string LabelText = "Web page";
+            public const string RequiredErrorText = "Enter the provider sites's web site";
+            public const string TooLongErrorText = "Web site must not be more than 100 characters";
+            public const string ErrorUriText = "Enter a valid website url";
         }
     }
 }

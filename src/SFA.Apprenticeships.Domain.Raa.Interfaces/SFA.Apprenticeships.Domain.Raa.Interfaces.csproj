@@ -101,6 +101,7 @@
     <Compile Include="Repositories\IProviderSiteRepository.cs" />
     <Compile Include="Repositories\IReferenceRepository.cs" />
     <Compile Include="Repositories\IVacancyWriteRepository.cs" />
+    <Compile Include="Repositories\Models\ProviderSearchParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">

@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 {
-    using FluentValidation.Results;
-
     public class NewVacancyViewModelMessages
     {
         public static class ApprenticeshipLevel
