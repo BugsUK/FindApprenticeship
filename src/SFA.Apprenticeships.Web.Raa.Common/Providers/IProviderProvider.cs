@@ -21,5 +21,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         ProviderViewModel CreateProvider(ProviderViewModel viewModel);
         ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel);
         ProviderSiteViewModel SaveProviderSite(ProviderSiteViewModel viewModel);
+        ProviderSiteViewModel CreateProviderSiteRelationship(ProviderSiteViewModel viewModel, int providerId);
     }
 }

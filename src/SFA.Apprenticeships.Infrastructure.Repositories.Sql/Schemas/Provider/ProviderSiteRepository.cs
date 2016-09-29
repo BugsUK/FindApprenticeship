@@ -232,6 +232,13 @@
             return GetById(providerSite.ProviderSiteId);
         }
 
+        public ProviderSiteRelationship Create(ProviderSiteRelationship providerSiteRelationship)
+        {
+            var dbProviderSiteRelationship = _mapper.Map<ProviderSiteRelationship, Entities.ProviderSiteRelationship>(providerSiteRelationship);
+            providerSiteRelationship.ProviderSiteRelationshipId = (int)_getOpenConnection.Insert(dbProviderSiteRelationship);
+            return providerSiteRelationship;
+        }
+
         private Entities.ProviderSite MapProviderSite(ProviderSite providerSite)
         {
             return _mapper.Map<ProviderSite, Entities.ProviderSite>(providerSite);

@@ -222,6 +222,11 @@
             return _providerSiteWriteRepository.Update(providerSite);
         }
 
+        public ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship)
+        {
+            return _providerSiteWriteRepository.Create(providerSiteRelationship);
+        }
+
         private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();

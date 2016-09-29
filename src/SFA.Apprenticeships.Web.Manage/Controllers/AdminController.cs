@@ -181,7 +181,7 @@
             {
                 case AdminMediatorCodes.SaveProviderSite.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
-                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
+                    return View("ProviderSite", response.ViewModel);
 
                 case AdminMediatorCodes.SaveProviderSite.Error:
                     return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
@@ -198,7 +198,7 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateProviderSiteRelationshipAction")]
         public ActionResult CreateProviderSiteRelationship(ProviderSiteViewModel viewModel)
         {
-            /*var response = _adminMediator.CreateProviderSite(viewModel);
+            var response = _adminMediator.CreateProviderSiteRelationship(viewModel);
 
             ModelState.Clear();
 
@@ -206,21 +206,22 @@
 
             switch (response.Code)
             {
-                case AdminMediatorCodes.CreateProviderSite.FailedValidation:
+                case AdminMediatorCodes.CreateProviderSiteRelationship.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
-                    return View(response.ViewModel);
+                    return View("ProviderSite", response.ViewModel);
 
-                case AdminMediatorCodes.CreateProviderSite.EdsUrnAlreadyExists:
-                    return View(response.ViewModel);
+                case AdminMediatorCodes.CreateProviderSiteRelationship.InvalidUkprn:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
 
-                case AdminMediatorCodes.CreateProviderSite.Ok:
-                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new {viewModel.ProviderId});
+                case AdminMediatorCodes.CreateProviderSiteRelationship.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
+
+                case AdminMediatorCodes.CreateProviderSiteRelationship.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
-            }*/
-
-            return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
+            }
         }
     }
 }

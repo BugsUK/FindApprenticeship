@@ -246,6 +246,7 @@
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
+    <Compile Include="Validators\Provider\ProviderSiteRelationshipViewModelValidator.cs" />
     <Compile Include="ViewModels\Provider\ProviderSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSearchViewModel.cs" />

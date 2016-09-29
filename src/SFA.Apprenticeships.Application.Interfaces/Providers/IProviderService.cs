@@ -55,5 +55,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         ProviderSite CreateProviderSite(ProviderSite providerSite);
 
         ProviderSite SaveProviderSite(ProviderSite providerSite);
+
+        ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship);
     }
 }

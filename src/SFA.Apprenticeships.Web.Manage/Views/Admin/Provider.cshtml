@@ -49,7 +49,11 @@
                         @{
                             var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderId == Model.ProviderId);
                         }
-                        @if (providerSiteRelationship != null)
+                        @if (providerSiteRelationship == null)
+                        {
+                            <text>Visible via subcontractor relationship</text>    
+                        }
+                        else
                         {
                             @providerSiteRelationship.ProviderSiteRelationshipType
                         }

@@ -15,6 +15,7 @@
         private readonly ProviderViewModelServerValidator _providerViewModelServerValidator = new ProviderViewModelServerValidator();
         private readonly ProviderSiteSearchViewModelServerValidator _providerSiteSearchViewModelServerValidator = new ProviderSiteSearchViewModelServerValidator();
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
+        private readonly ProviderSiteRelationshipViewModelServerValidator _providerSiteRelationshipViewModelServerValidator = new ProviderSiteRelationshipViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
         private readonly ILogService _logService;
@@ -120,6 +121,39 @@
                 _logService.Error($"Failed to save provider site with id={viewModel.ProviderSiteId}", ex);
                 viewModel = _providerProvider.GetProviderSiteViewModel(viewModel.ProviderSiteId);
                 return GetMediatorResponse(AdminMediatorCodes.SaveProviderSite.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteSaveError, UserMessageLevel.Error);
+            }
+        }
+
+        public MediatorResponse<ProviderSiteViewModel> CreateProviderSiteRelationship(ProviderSiteViewModel viewModel)
+        {
+            var existingViewModel = _providerProvider.GetProviderSiteViewModel(viewModel.ProviderSiteId);
+            existingViewModel.ProviderUkprn = viewModel.ProviderUkprn;
+            existingViewModel.ProviderSiteRelationshipType = viewModel.ProviderSiteRelationshipType;
+            viewModel = existingViewModel;
+
+            var validatonResult = _providerSiteRelationshipViewModelServerValidator.Validate(viewModel);
+
+            if (!validatonResult.IsValid)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateProviderSiteRelationship.FailedValidation, viewModel, validatonResult);
+            }
+
+            var providerViewModel = _providerProvider.GetProviderViewModel(viewModel.ProviderUkprn);
+            if (providerViewModel == null)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateProviderSiteRelationship.InvalidUkprn, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipInvalidUkprn, UserMessageLevel.Error);
+            }
+
+            try
+            {
+                viewModel = _providerProvider.CreateProviderSiteRelationship(viewModel, providerViewModel.ProviderId);
+
+                return GetMediatorResponse(AdminMediatorCodes.CreateProviderSiteRelationship.Ok, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipCreatedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to create provider site relationship for provider site with id={viewModel.ProviderSiteId}", ex);
+                return GetMediatorResponse(AdminMediatorCodes.CreateProviderSiteRelationship.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipCreationError, UserMessageLevel.Error);
             }
         }
     }

@@ -290,5 +290,19 @@
 
             return _providerMappers.Map<ProviderSite, ProviderSiteViewModel>(updatedProviderSite);
         }
+
+        public ProviderSiteViewModel CreateProviderSiteRelationship(ProviderSiteViewModel viewModel, int providerId)
+        {
+            var providerSiteRelationship = new ProviderSiteRelationship
+            {
+                ProviderId = providerId,
+                ProviderSiteId = viewModel.ProviderSiteId,
+                ProviderSiteRelationShipTypeId = viewModel.ProviderSiteRelationshipType
+            };
+
+            _providerService.CreateProviderSiteRelationship(providerSiteRelationship);
+
+            return GetProviderSiteViewModel(viewModel.ProviderSiteId);
+        }
     }
 }

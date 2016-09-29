@@ -11,7 +11,10 @@
 
 @using (Html.BeginRouteForm(ManagementRouteNames.AdminEditProviderSite))
 {
-    @Html.HiddenFor(m => m.ProviderSiteId);
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.HiddenFor(m => m.ProviderSiteId)
 
     <p>
         <ul>

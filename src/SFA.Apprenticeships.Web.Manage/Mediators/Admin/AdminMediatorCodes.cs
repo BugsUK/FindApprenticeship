@@ -44,5 +44,13 @@
             public const string Error = "AdminMediatorCodes.SaveProviderSite.Error";
             public const string Ok = "AdminMediatorCodes.SaveProviderSite.Ok";
         }
+
+        public class CreateProviderSiteRelationship
+        {
+            public const string FailedValidation = "AdminMediatorCodes.CreateProviderSiteRelationship.FailedValidation";
+            public const string InvalidUkprn = "AdminMediatorCodes.CreateProviderSiteRelationship.InvalidUkprn";
+            public const string Error = "AdminMediatorCodes.CreateProviderSiteRelationship.Error";
+            public const string Ok = "AdminMediatorCodes.CreateProviderSiteRelationship.Ok";
+        }
     }
 }

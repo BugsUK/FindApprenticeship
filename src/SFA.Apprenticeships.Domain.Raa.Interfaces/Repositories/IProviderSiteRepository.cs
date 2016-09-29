@@ -21,5 +21,6 @@
     {
         ProviderSite Create(ProviderSite providerSite);
         ProviderSite Update(ProviderSite providerSite);
+        ProviderSiteRelationship Create(ProviderSiteRelationship providerSiteRelationship);
     }
 }
