@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Admin
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class TransferVacanciesViewModel
@@ -8,5 +9,7 @@
                                                                  "vacancy reference numbers")]
         [RegularExpression(@"^([a-zA-Z0-9, ]+)$", ErrorMessage = "Enter Valid Vacancy Reference Numbers")]
         public string VacancyReferenceNumbers { get; set; }
+
+        public IList<TransferVacanciesViewModel> VacanciesToBeTransferredVm { get; set; }
     }
 }

@@ -7,7 +7,7 @@
     using Common.Providers;
     using Constants;
     using Domain.Entities.Raa;
-    using Domain.Entities.Vacancies;
+    using FluentValidation.Mvc;
     using Mediators.Admin;
     using System.Collections.Generic;
     using System.Security.Claims;
@@ -80,29 +80,16 @@
             if (ModelState.IsValid)
             {
                 IList<string> vacancies = viewModel.VacancyReferenceNumbers.Split(',');
-                IList<string> vacancyReferences = new List<string>();
-                foreach (var vacancy in vacancies)
-                {
-                    string vacancyReference;
-                    if (VacancyHelper.TryGetVacancyReference(vacancy, out vacancyReference))
-                        vacancyReferences.Add(vacancyReference);
-                }
-                var response = _adminMediator.CreateProvider(viewModel);
-
+                var response = _adminMediator.GetVacancyDetails(vacancies);
                 ModelState.Clear();
-
-                SetUserMessage(response.Message);
 
                 switch (response.Code)
                 {
-                    case AdminMediatorCodes.CreateProvider.FailedValidation:
-                        response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    case AdminMediatorCodes.GetVacancyDetails.NoRecordsFound:
+                        //response.ValidationResult.AddToModelState(ModelState, "TransferVacanciesViewModel");
                         return View(response.ViewModel);
 
-                    case AdminMediatorCodes.CreateProvider.UkprnAlreadyExists:
-                        return View(response.ViewModel);
-
-                    case AdminMediatorCodes.CreateProvider.Ok:
+                    case AdminMediatorCodes.GetVacancyDetails.Ok:
                         return View(response.ViewModel);
 
                     default:

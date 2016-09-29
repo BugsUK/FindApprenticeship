@@ -6,6 +6,6 @@
 
     public interface IAdminMediator
     {
-        MediatorResponse<VacancyDetailsViewModel> GetVacancyDetails(IList<string> vacancyReferences);
+        MediatorResponse<TransferVacanciesViewModel> GetVacancyDetails(IList<string> vacancies);
     }
 }

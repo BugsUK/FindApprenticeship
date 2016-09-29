@@ -9,6 +9,7 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.TransferVacancies))
 {
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
     <div class="form-group">
         <fieldset class="form-group inline-fixed">
             @Html.FormTextFor(m => m.VacancyReferenceNumbers,

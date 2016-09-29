@@ -2,10 +2,10 @@
 {
     public class AdminMediatorCodes
     {
-        public class SearchProviders
+        public class GetVacancyDetails
         {
-            public const string FailedValidation = "AdminMediatorCodes.SearchProviders.FailedValidation";
-            public const string Ok = "AdminMediatorCodes.SearchProviders.Ok";
+            public const string NoRecordsFound = "AdminMediatorCodes.GetVacancyDetails.NoRecordsFound";
+            public const string Ok = "AdminMediatorCodes.GetVacancyDetails.Ok";
         }
     }
 }
