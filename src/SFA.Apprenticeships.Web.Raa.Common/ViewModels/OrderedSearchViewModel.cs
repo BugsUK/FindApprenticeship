@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels
 {
+    using Domain.Raa.Interfaces.Repositories.Models;
+
     public class OrderedSearchViewModel
     {
         public OrderedSearchViewModel()

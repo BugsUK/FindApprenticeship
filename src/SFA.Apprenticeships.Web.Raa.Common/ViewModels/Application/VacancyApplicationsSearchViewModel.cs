@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     public class VacancyApplicationsSearchViewModel : OrderedPageableSearchViewModel
     {

@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
+    using Domain.Raa.Interfaces.Repositories.Models;
+
     public class DashboardVacancySummariesSearchViewModel : OrderedSearchViewModel
     {
         public const string OrderByFieldTitle = "Title";

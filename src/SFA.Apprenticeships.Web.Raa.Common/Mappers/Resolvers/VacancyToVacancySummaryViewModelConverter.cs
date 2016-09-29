@@ -29,7 +29,7 @@
                 Title = source.Title,
                 OwnerPartyId = source.OwnerPartyId,
                 //ProviderName = source.ProviderName,
-                //EmployerName = source.EmployerName,
+                EmployerName = source.EmployerName,
                 Location = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address),
                 OfflineVacancy = source.OfflineVacancy,
                 //ApplicationCount = source.ApplicationCount,

@@ -241,8 +241,6 @@
     <Compile Include="Providers\VacancyManagementProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Providers\VacancyStatusChangeProvider.cs" />
-    <Compile Include="Strategies\IVacancySummaryStrategy.cs" />
-    <Compile Include="Strategies\VacancySummaryStrategy.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
@@ -301,7 +299,6 @@
     <Compile Include="ViewModels\Candidate\CandidateSearchViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateTraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateApplicationsSearchViewModel.cs" />
-    <Compile Include="ViewModels\Order.cs" />
     <Compile Include="ViewModels\OrderedPageableSearchViewModel.cs" />
     <Compile Include="ViewModels\OrderedSearchViewModel.cs" />
     <Compile Include="ViewModels\PageableSearchViewModel.cs" />
@@ -321,7 +318,6 @@
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\ProviderUser\VacanciesSummaryFilterTypes.cs" />
     <Compile Include="ViewModels\ProviderUser\VacanciesSummarySearchViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VacanciesSummaryViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VerifyEmailViewModel.cs" />
@@ -671,6 +667,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Strategies\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

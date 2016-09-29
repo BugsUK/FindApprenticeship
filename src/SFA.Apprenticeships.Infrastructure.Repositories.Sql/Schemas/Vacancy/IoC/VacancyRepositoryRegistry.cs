@@ -31,6 +31,9 @@
                 .Use<VacancyLocationRepository>()
                 .Ctor<IMapper>()
                 .Named("VacancyMappers");
+
+            For<IVacancySummaryRepository>()
+                .Use<VacancySummaryRepository>();
         }
     }
 }

@@ -120,6 +120,7 @@
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
+            For<IVacancySummaryService>().Use<VacancySummaryService>();
         }
 
         private void RegisterStrategies()
