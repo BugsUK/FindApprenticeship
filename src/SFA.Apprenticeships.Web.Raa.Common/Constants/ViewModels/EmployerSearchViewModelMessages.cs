@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
     public class EmployerSearchViewModelMessages
     {
         public const string NameAndLocationSearchRequiredErrorText = "Enter an employer name and a town or postcode to search";
+        public const string NameOrLocationSearchRequiredErrorText = "Enter an employer name or a town or postcode to search";
         public const string NoResultsText = "We could not find any employers that match your search criteria";
         public const string NoResultsErnRequiredText = "We could not find any employers that match your search criteria. In order to process this vacancy, Contact the <a href=\"http://edrs.lsc.gov.uk/search/lsc/\">Blue Sheep/EDRS service</a> to get an Employer Reference Number (ERN) created for your chosen employer";
         public const string ErnAdviceText = "If you cannot find any employers that match your search criteria, Contact the <a href=\"http://edrs.lsc.gov.uk/search/lsc/\">Blue Sheep/EDRS service</a> to get an Employer Reference Number (ERN) created for your chosen employer";

@@ -11,7 +11,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
     {
         Undefined,
         EdsUrn,
-        NameAndLocation
+        NameAndLocation,
+        NameOrLocation
     }
 
     public class EmployerSearchViewModel
