@@ -2,6 +2,7 @@
 {
     using Common.Mediators;
     using System.Collections.Generic;
+    using ViewModels.Admin;
 
     public interface IAdminMediator
     {
