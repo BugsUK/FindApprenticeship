@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.Admin
 {
     using Common.Mediators;
-    using System.Collections.Generic;
     using ViewModels.Admin;
 
     public interface IAdminMediator
     {
-        MediatorResponse<TransferVacanciesViewModel> GetVacancyDetails(IList<string> vacancies);
+        MediatorResponse<TransferVacanciesViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel);
     }
 }

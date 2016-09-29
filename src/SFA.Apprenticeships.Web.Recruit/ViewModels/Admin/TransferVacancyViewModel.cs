@@ -2,11 +2,12 @@
 {
     public class TransferVacancyViewModel
     {
-        public string VacancyReferenceNumber { get; set; }
-        public string ProviderId { get; set; }
+        public int VacancyReferenceNumber { get; set; }
+        public int ContractOwnerId { get; set; }
         public string ProviderName { get; set; }
-        public string ProviderSiteId { get; set; }
+        public int? VacancyManagerId { get; set; }
         public string ProviderSiteName { get; set; }
-        public string VacancyOwnerRelationShipId { get; set; }
+        public int VacancyOwnerRelationShipId { get; set; }
+        public int? DeliveryOrganisationId { get; set; }
     }
 }

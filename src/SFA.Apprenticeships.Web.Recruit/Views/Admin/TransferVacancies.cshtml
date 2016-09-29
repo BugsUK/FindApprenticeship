@@ -13,11 +13,47 @@
     <div class="form-group">
         <fieldset class="form-group inline-fixed">
             @Html.FormTextFor(m => m.VacancyReferenceNumbers,
-           controlHtmlAttributes: new { @class = "form-control-medium", type = "text"})
+                controlHtmlAttributes: new { @class = "form-control-medium", type = "text" })
         </fieldset>
 
         <div class="form-group">
             <button type="submit" class="button">Confirm Details</button>
         </div>
     </div>
+
+    if (Model != null && Model.VacanciesToBeTransferredVm != null && Model.VacanciesToBeTransferredVm.Any())
+    {
+        <div class="grid-wrapper">
+            <div class="grid grid-1-1">
+                <table>
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Vacancy Reference Number</th>
+                            <th>Provider Name</th>
+                            <th>ProviderSite Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vacancyViewModel in Model.VacanciesToBeTransferredVm)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>@vacancyViewModel.VacancyReferenceNumber</td>
+                                <td>@vacancyViewModel.ProviderName</td>
+                                <td>@vacancyViewModel.ProviderSiteName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    }
 }

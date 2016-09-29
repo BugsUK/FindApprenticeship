@@ -7,9 +7,7 @@
     using Common.Providers;
     using Constants;
     using Domain.Entities.Raa;
-    using FluentValidation.Mvc;
     using Mediators.Admin;
-    using System.Collections.Generic;
     using System.Security.Claims;
     using System.Web.Mvc;
     using ViewModels.Admin;
@@ -79,16 +77,11 @@
         {
             if (ModelState.IsValid)
             {
-                IList<string> vacancies = viewModel.VacancyReferenceNumbers.Split(',');
-                var response = _adminMediator.GetVacancyDetails(vacancies);
+                var response = _adminMediator.GetVacancyDetails(viewModel);
                 ModelState.Clear();
 
                 switch (response.Code)
                 {
-                    case AdminMediatorCodes.GetVacancyDetails.NoRecordsFound:
-                        //response.ValidationResult.AddToModelState(ModelState, "TransferVacanciesViewModel");
-                        return View(response.ViewModel);
-
                     case AdminMediatorCodes.GetVacancyDetails.Ok:
                         return View(response.ViewModel);
 
