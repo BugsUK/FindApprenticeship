@@ -6,6 +6,8 @@
 
 <h1 id="heading" class="heading-xlarge">New Provider</h1>
 
+<p>@Html.RouteLink("Manage Providers", ManagementRouteNames.AdminProviders)</p>
+
 @using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateProvider))
 {
     @Html.AntiForgeryToken()
