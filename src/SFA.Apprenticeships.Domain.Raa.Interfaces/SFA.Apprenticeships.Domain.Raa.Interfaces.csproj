@@ -100,7 +100,13 @@
     <Compile Include="Repositories\IProviderUserRepository.cs" />
     <Compile Include="Repositories\IProviderSiteRepository.cs" />
     <Compile Include="Repositories\IReferenceRepository.cs" />
+    <Compile Include="Repositories\IVacancySummaryRepository.cs" />
     <Compile Include="Repositories\IVacancyWriteRepository.cs" />
+    <Compile Include="Repositories\Models\VacancyCounts.cs" />
+    <Compile Include="Repositories\Models\VacancySummaryOrderByColumn.cs" />
+    <Compile Include="Repositories\Models\Order.cs" />
+    <Compile Include="Repositories\Models\VacanciesSummaryFilterTypes.cs" />
+    <Compile Include="Repositories\Models\VacancySummaryQuery.cs" />
     <Compile Include="Repositories\Models\ProviderSearchParameters.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
+﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 {
     public enum VacanciesSummaryFilterTypes
     {

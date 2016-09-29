@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Candidate
 {
     using System;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     public class CandidateApplicationsSearchViewModel : OrderedPageableSearchViewModel
     {
