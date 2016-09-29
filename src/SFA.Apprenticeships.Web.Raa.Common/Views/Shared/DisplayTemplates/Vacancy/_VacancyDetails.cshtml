@@ -86,18 +86,7 @@
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment))
                     }
                 </div>
-            }
-            <div>
-                <h3 class="bold-small">Reference number</h3>
-                @if (Model.NewVacancyViewModel.LocationAddresses.Count > 1)
-                {
-                    <p>Will be generated on approval</p>
-                }
-                else
-                {
-                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber.GetVacancyReference()</p>
-                }
-            </div>
+            }            
             @if (Model.IsSingleLocation)
             {
                 <div class="@editableItemClass">
