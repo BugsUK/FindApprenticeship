@@ -136,8 +136,8 @@
             {
                 //Subcontractors can also see the lead's provider sites
                 //Get all the ProviderSiteRelationships where the provider owns the provider site but that provider site is also subcontracted to another provider
-                var subContractorProviderSiteRelationships = providerSiteRelationships.Values.Where(psrl => psrl.Any(psr => psr.ProviderID == providerId && psr.ProviderSiteRelationShipTypeID == OwnerRelationship)).SelectMany(psrl => psrl.Where(psr => psr.ProviderSiteRelationShipTypeID == SubcontractorRelationship));
-                var subContractorOwnerProviderSites = GetByProviderIds(subContractorProviderSiteRelationships.Select(psr => psr.ProviderID).Distinct(), new []{ OwnerRelationship });
+                var subContractorProviderSiteRelationships = providerSiteRelationships.Values.Where(psrl => psrl.Any(psr => psr.ProviderId == providerId && psr.ProviderSiteRelationShipTypeId == OwnerRelationship)).SelectMany(psrl => psrl.Where(psr => psr.ProviderSiteRelationShipTypeId == SubcontractorRelationship));
+                var subContractorOwnerProviderSites = GetByProviderIds(subContractorProviderSiteRelationships.Select(psr => psr.ProviderId).Distinct(), new []{ OwnerRelationship });
                 providerSites = providerSites.Union(subContractorOwnerProviderSites);
             }
 
@@ -200,8 +200,9 @@
             var providerSiteId = newProviderSite.ProviderSiteId;
             foreach (var providerSiteRelationship in providerSite.ProviderSiteRelationships)
             {
-                providerSiteRelationship.ProviderSiteId = providerSiteId;
-                _getOpenConnection.Insert(providerSiteRelationship);
+                var dbProviderSiteRelationship = _mapper.Map<ProviderSiteRelationship, Entities.ProviderSiteRelationship>(providerSiteRelationship);
+                dbProviderSiteRelationship.ProviderSiteId = providerSiteId;
+                _getOpenConnection.Insert(dbProviderSiteRelationship);
             }
 
             return GetById(providerSiteId);
@@ -216,6 +217,16 @@
             if (!_getOpenConnection.UpdateSingle(dbProviderSite))
             {
                 throw new Exception($"Failed to save provider site with ProviderSiteId={providerSite.ProviderSiteId}");
+            }
+
+            foreach (var providerSiteRelationship in providerSite.ProviderSiteRelationships)
+            {
+                var dbProviderSiteRelationship = _mapper.Map<ProviderSiteRelationship, Entities.ProviderSiteRelationship>(providerSiteRelationship);
+                
+                if (!_getOpenConnection.UpdateSingle(dbProviderSiteRelationship))
+                {
+                    throw new Exception($"Failed to save provider site relationship with ProviderSiteRelationshipId={providerSiteRelationship.ProviderSiteRelationshipId}");
+                }
             }
 
             return GetById(providerSite.ProviderSiteId);
@@ -265,13 +276,13 @@
             var providerSiteRelationships = _getOpenConnection.Query<Entities.ProviderSiteRelationship>(sql, sqlParams);
             foreach (var providerSiteRelationship in providerSiteRelationships)
             {
-                if (map.ContainsKey(providerSiteRelationship.ProviderSiteID))
+                if (map.ContainsKey(providerSiteRelationship.ProviderSiteId))
                 {
-                    map[providerSiteRelationship.ProviderSiteID].Add(providerSiteRelationship);
+                    map[providerSiteRelationship.ProviderSiteId].Add(providerSiteRelationship);
                 }
                 else
                 {
-                    map[providerSiteRelationship.ProviderSiteID] = new List<Entities.ProviderSiteRelationship> { providerSiteRelationship };
+                    map[providerSiteRelationship.ProviderSiteId] = new List<Entities.ProviderSiteRelationship> { providerSiteRelationship };
                 }
             }
 

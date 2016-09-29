@@ -217,6 +217,11 @@
             return _providerSiteWriteRepository.Create(providerSite);
         }
 
+        public ProviderSite SaveProviderSite(ProviderSite providerSite)
+        {
+            return _providerSiteWriteRepository.Update(providerSite);
+        }
+
         private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();

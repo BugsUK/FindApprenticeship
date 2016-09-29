@@ -6,6 +6,8 @@
     {
         public const string EdsUrnAlreadyExists = "The supplied EDSURN is already associated with a provider site";
         public const string ProviderSiteCreatedSuccessfully = "New provider site added successfully";
+        public const string ProviderSiteSavedSuccessfully = "The changes to the provider site were saved successfully";
+        public const string ProviderSiteSaveError = "An error occured when saving the provider site. Please check your entries and try again";
 
         public static class DisplayName
         {
@@ -45,6 +47,20 @@
             public const string RequiredErrorText = "Enter the provider sites's web site";
             public const string TooLongErrorText = "Web site must not be more than 100 characters";
             public const string ErrorUriText = "Enter a valid website url";
+        }
+
+        public static class ProviderUkprn
+        {
+            public const string LabelText = "Provider UKPRN";
+        }
+
+        public static class ProviderSiteRelationshipType
+        {
+            public const string LabelText = "Relationship Type";
+            public const string RequiredErrorText = "Enter the provider's UKPRN";
+            public const string RequiredLengthErrorText = "UKPRN must be 8 digits";
+            public const string WhiteListRegularExpression = Whitelists.NumericalWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "UKPRN " + Whitelists.NumericalWhitelist.ErrorText;
         }
     }
 }

@@ -58,5 +58,6 @@
         public const string AdminProviderSites = "AdminProviderSites";
         public const string AdminViewProviderSite = "AdminViewProviderSite";
         public const string AdminCreateProviderSite = "AdminCreateProviderSite";
+        public const string AdminEditProviderSite = "AdminEditProviderSite";
     }
 }

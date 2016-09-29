@@ -37,5 +37,12 @@
             public const string EdsUrnAlreadyExists = "AdminMediatorCodes.CreateProviderSite.EdsUrnAlreadyExists";
             public const string Ok = "AdminMediatorCodes.CreateProviderSite.Ok";
         }
+
+        public class SaveProviderSite
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveProviderSite.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveProviderSite.Error";
+            public const string Ok = "AdminMediatorCodes.SaveProviderSite.Ok";
+        }
     }
 }

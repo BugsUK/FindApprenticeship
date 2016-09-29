@@ -301,6 +301,12 @@
                defaults: new { controller = "Admin", action = "CreateProviderSite" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEditProviderSite,
+               url: "admin/providersite/edit",
+               defaults: new { controller = "Admin", action = "EditProviderSite" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

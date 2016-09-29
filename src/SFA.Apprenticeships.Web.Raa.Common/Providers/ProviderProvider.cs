@@ -271,5 +271,24 @@
 
             return providerSiteViewModel;
         }
+
+        public ProviderSiteViewModel SaveProviderSite(ProviderSiteViewModel viewModel)
+        {
+            var providerSite = _providerService.GetProviderSite(viewModel.ProviderSiteId);
+
+            //Copy over changes
+            foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
+            {
+                var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);
+                if (providerSiteRelationship != null)
+                {
+                    providerSiteRelationship.ProviderSiteRelationShipTypeId = providerSiteRelationshipViewModel.ProviderSiteRelationshipType;
+                }
+            }
+
+            var updatedProviderSite = _providerService.SaveProviderSite(providerSite);
+
+            return _providerMappers.Map<ProviderSite, ProviderSiteViewModel>(updatedProviderSite);
+        }
     }
 }

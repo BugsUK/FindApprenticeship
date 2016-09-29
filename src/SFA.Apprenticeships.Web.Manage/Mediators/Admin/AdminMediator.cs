@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Admin
 {
+    using System;
+    using Application.Interfaces;
     using Common.Constants;
     using Common.Mediators;
     using Raa.Common.Constants.ViewModels;
@@ -15,10 +17,12 @@
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
+        private readonly ILogService _logService;
 
-        public AdminMediator(IProviderProvider providerProvider)
+        public AdminMediator(IProviderProvider providerProvider, ILogService logService)
         {
             _providerProvider = providerProvider;
+            _logService = logService;
         }
 
         public MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel)
@@ -101,6 +105,22 @@
             viewModel = _providerProvider.CreateProviderSite(viewModel);
 
             return GetMediatorResponse(AdminMediatorCodes.CreateProviderSite.Ok, viewModel, ProviderSiteViewModelMessages.ProviderSiteCreatedSuccessfully, UserMessageLevel.Info);
+        }
+
+        public MediatorResponse<ProviderSiteViewModel> SaveProviderSite(ProviderSiteViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _providerProvider.SaveProviderSite(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveProviderSite.Ok, viewModel, ProviderSiteViewModelMessages.ProviderSiteSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save provider site with id={viewModel.ProviderSiteId}", ex);
+                viewModel = _providerProvider.GetProviderSiteViewModel(viewModel.ProviderSiteId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveProviderSite.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteSaveError, UserMessageLevel.Error);
+            }
         }
     }
 }
