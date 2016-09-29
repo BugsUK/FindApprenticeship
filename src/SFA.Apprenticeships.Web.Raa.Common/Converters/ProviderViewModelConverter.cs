@@ -21,6 +21,7 @@
                 FullName = provider.FullName,
                 TradingName = provider.TradingName,
                 IsMigrated = provider.IsMigrated,
+                ProviderStatusType = provider.ProviderStatusType,
             };
 
             return viewModel;

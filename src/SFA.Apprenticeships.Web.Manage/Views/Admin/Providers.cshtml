@@ -31,16 +31,18 @@
             <div class="grid grid-1-1">
                 <table>
                     <colgroup>
-                        <col class="t30">
-                        <col class="t30">
-                        <col class="t30">
-                        <col class="t10">
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
                     </colgroup>
                     <thead>
                         <tr>
                             <th>UKPRN</th>
                             <th>Full Name</th>
                             <th>Trading Name</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -51,6 +53,7 @@
                                 <td>@provider.Ukprn</td>
                                 <td>@provider.FullName</td>
                                 <td>@provider.TradingName</td>
+                                <td>@provider.ProviderStatusType</td>
                                 <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewProvider, new { provider.ProviderId })</td>
                             </tr>
                         }

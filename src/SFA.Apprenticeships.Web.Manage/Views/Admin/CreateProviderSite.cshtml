@@ -6,7 +6,7 @@
 
 <h1 id="heading" class="heading-xlarge">New Provider Site</h1>
 
-<p>Adding a new provider site will also link it to the provider</p>
+<p>Adding a new provider site will also link it to @Html.RouteLink("the provider", ManagementRouteNames.AdminViewProvider, new { Model.ProviderId })</p>
 
 @using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateProviderSite))
 {

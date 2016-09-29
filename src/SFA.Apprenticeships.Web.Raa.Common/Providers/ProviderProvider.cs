@@ -50,7 +50,7 @@
         public ProviderViewModel GetProviderViewModel(int providerId)
         {
             var provider = _providerService.GetProvider(providerId);
-            var providerSites = _providerService.GetProviderSites(provider.Ukprn);
+            var providerSites = _providerService.GetProviderSites(providerId);
 
             return provider.Convert(providerSites);
         }
@@ -231,7 +231,7 @@
                 new ProviderSiteRelationship
                 {
                     ProviderId = viewModel.ProviderId,
-                    ProviderSiteRelationShipTypeId = 1 //Owner
+                    ProviderSiteRelationShipTypeId = ProviderSiteRelationshipTypes.Owner
                 }
             };
 

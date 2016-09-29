@@ -107,7 +107,7 @@
         public IEnumerable<ProviderSite> GetOwnedProviderSites(int providerId)
         {
             var providerSites = _providerSiteReadRepository.GetByProviderId(providerId);
-            return providerSites.Where(ps => ps.ProviderSiteRelationships.Any(psr => psr.ProviderId == providerId && psr.ProviderSiteRelationShipTypeId == 1));
+            return providerSites.Where(ps => ps.ProviderSiteRelationships.Any(psr => psr.ProviderId == providerId && psr.ProviderSiteRelationShipTypeId == ProviderSiteRelationshipTypes.Owner));
         }
 
         public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
