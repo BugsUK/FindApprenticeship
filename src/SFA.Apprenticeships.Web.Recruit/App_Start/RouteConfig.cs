@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit
 {
+    using Constants;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Constants;
 
     public class RouteConfig
     {
@@ -208,7 +208,7 @@
             routes.MapRoute(
                 name: RecruitmentRouteNames.SelectExistingEmployer,
                 url: "vacancy/employer/select",
-                defaults: new {controller = "VacancyPosting", action = "SelectEmployer" }
+                defaults: new { controller = "VacancyPosting", action = "SelectEmployer" }
                 );
 
             routes.MapRoute(
@@ -222,7 +222,7 @@
                 url: "vacancy/employer/searchexisting",
                 defaults: new { controller = "VacancyPosting", action = "SearchExistingEmployer" }
                 );
-            
+
             routes.MapRoute(
                 name: RecruitmentRouteNames.AddEmployer,
                 url: "vacancy/employer/add",
@@ -232,7 +232,7 @@
             routes.MapRoute(
                 name: RecruitmentRouteNames.ConfirmEmployer,
                 url: "vacancy/employer/confirm",
-                defaults: new {controller = "VacancyPosting", action = "ConfirmEmployer"}
+                defaults: new { controller = "VacancyPosting", action = "ConfirmEmployer" }
                 );
 
             routes.MapRoute(
@@ -434,6 +434,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.TransferVacancies,
+               url: "admin/transfervacancies",
+               defaults: new { controller = "Admin", action = "TransferVacancies" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.CandidateSearch,
                url: "candidates",
                defaults: new { controller = "Candidate", action = "Index" }
@@ -460,7 +466,7 @@
             routes.MapRoute(
                 name: RecruitmentRouteNames.InformationRadiator,
                 url: "informationradiator",
-                defaults: new {controller = "InformationRadiator", action = "Index"}
+                defaults: new { controller = "InformationRadiator", action = "Index" }
             );
 
             routes.LowercaseUrls = true;

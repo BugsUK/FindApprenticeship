@@ -98,6 +98,7 @@
         public const string AdminList = "AdminList";
         public const string AdminChangeUkprn = "AdminChangeUkprn";
         public const string AdminResetUkprn = "AdminResetUkprn";
+        public const string TransferVacancies = "TransferVacancies";
 
         //Candidates
         public const string CandidateSearch = "CandidateSearch";

@@ -39,6 +39,7 @@
     using Infrastructure.Repositories.Sql.Schemas.dbo;
     using Infrastructure.Security;
     using Mappers;
+    using Mediators.Admin;
     using Mediators.Application;
     using Mediators.Candidate;
     using Mediators.Provider;
@@ -170,6 +171,7 @@
             For<IReportMediator>().Use<ReportMediator>();
             For<IVacancyManagementMediator>().Use<VacancyManagementMediator>();
             For<ICandidateMediator>().Use<CandidateMediator>();
+            For<IAdminMediator>().Use<AdminMediator>();
         }
 
         private void RegisterRepositories()

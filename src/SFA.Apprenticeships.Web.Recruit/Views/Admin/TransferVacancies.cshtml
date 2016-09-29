@@ -1,0 +1,22 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Recruit.ViewModels.Admin.TransferVacanciesViewModel
+
+@{
+    ViewBag.Title = "TransferVacancies";
+}
+
+<h1 id="heading" class="heading-xlarge">Transfer Vacancies</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.TransferVacancies))
+{
+    <div class="form-group">
+        <fieldset class="form-group inline-fixed">
+            @Html.FormTextFor(m => m.VacancyReferenceNumbers,
+           controlHtmlAttributes: new { @class = "form-control-medium", type = "text"})
+        </fieldset>
+
+        <div class="form-group">
+            <button type="submit" class="button">Confirm Details</button>
+        </div>
+    </div>
+}
