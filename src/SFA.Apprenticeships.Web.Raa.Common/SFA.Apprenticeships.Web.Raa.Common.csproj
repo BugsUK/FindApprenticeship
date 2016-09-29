@@ -192,6 +192,7 @@
     <Compile Include="Converters\ContactDetailsAndVacancyHistoryViewModelConverter.cs" />
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
+    <Compile Include="Converters\ProviderSiteRelationshipViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\ProviderViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="ViewModels\OrderedPageableSearchViewModel.cs" />
     <Compile Include="ViewModels\OrderedSearchViewModel.cs" />
     <Compile Include="ViewModels\PageableSearchViewModel.cs" />
+    <Compile Include="ViewModels\Provider\ProviderSiteRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
     <Compile Include="ViewModels\Vacancy\DeleteVacancyViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />

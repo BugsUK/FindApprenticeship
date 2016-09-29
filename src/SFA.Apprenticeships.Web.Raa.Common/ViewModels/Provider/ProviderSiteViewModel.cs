@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Web.Common.ViewModels.Locations;
     using Constants.ViewModels;
@@ -37,5 +38,7 @@
 
         [Display(Name = ProviderSiteViewModelMessages.WebPage.LabelText)]
         public string WebPage { get; set; }
+
+        public IList<ProviderSiteRelationshipViewModel> ProviderSiteRelationships { get; set; }
     }
 }

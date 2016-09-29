@@ -75,8 +75,9 @@
             <section>
                 <div class="form-group">
                     <div class="detail-content qa-comment">
+                        <p class="heading-medium">Notes (optional)</p>
                         <div class="blocklabel-single-container">
-                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"})
                         </div>
                     </div>
                 </div>

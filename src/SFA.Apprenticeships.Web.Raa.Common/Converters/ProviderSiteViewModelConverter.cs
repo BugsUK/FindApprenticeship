@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
+    using System.Linq;
     using Domain.Entities.Raa.Parties;
     using ViewModels.Provider;
 
@@ -18,6 +19,7 @@
                 ContactDetailsForEmployer = providerSite.EmployerDescription,
                 ContactDetailsForCandidate = providerSite.ContactDetailsForCandidate,
                 Address = providerSite.Address.Convert(),
+                ProviderSiteRelationships = providerSite.ProviderSiteRelationships.Select(psr => psr.Convert()).ToList()
             };
 
             return viewModel;

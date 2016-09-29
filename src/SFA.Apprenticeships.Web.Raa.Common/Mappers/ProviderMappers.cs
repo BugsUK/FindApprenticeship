@@ -14,7 +14,8 @@
             Mapper.CreateMap<ProviderViewModel, Provider>();
 
             Mapper.CreateMap<ProviderSite, ProviderSiteViewModel>()
-                .ForMember(dest => dest.ProviderId, opt => opt.Ignore());
+                .ForMember(dest => dest.ProviderId, opt => opt.Ignore())
+                .ForMember(dest => dest.ProviderSiteRelationships, opt => opt.Ignore());
             Mapper.CreateMap<ProviderSiteViewModel, ProviderSite>()
                 .ForMember(dest => dest.ProviderSiteRelationships, opt => opt.Ignore());
         }
