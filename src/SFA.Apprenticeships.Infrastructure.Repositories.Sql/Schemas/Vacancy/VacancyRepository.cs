@@ -17,6 +17,7 @@
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
@@ -32,16 +33,6 @@
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
-
-        private readonly string[] VacancySummaryColumns = new string[] {
-            "VacancyId", "VacancyOwnerRelationshipId", "VacancyReferenceNumber", "VacancyStatusId",
-            "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4", "AddressLine5", "Town", "CountyId", "PostCode", "LocalAuthorityId", "Longitude", "Latitude",
-            "ApprenticeshipFrameworkId", "Title", "ApprenticeshipType", "ShortDescription", "WeeklyWage", "WageType", "WageText", "NumberofPositions",
-            "ApplicationClosingDate", "InterviewsFromDate", "ExpectedStartDate", "ExpectedDuration", "WorkingWeek", "EmployerAnonymousName",
-            "ApplyOutsideNAVMS", "LockedForSupportUntil", "NoOfOfflineApplicants", "MasterVacancyId", "VacancyLocationTypeId", "VacancyManagerID", "DeliveryOrganisationID", "ContractOwnerID",
-            "VacancyGuid", "SubmissionCount", "StartedToQADateTime", "StandardId", "HoursPerWeek", "WageUnitId", "DurationTypeId", "DurationValue", "QAUserName",
-            "TrainingTypeId", "VacancyTypeId", "SectorId", "UpdatedDateTime"
-        };
 
         private const int StandardsApprenticeshipOccupationId = 100;
 
@@ -130,7 +121,7 @@
 
             var vacancies =
                 _getOpenConnection.Query<VacancyPlus>($@"
-SELECT {string.Join(", ", VacancySummaryColumns)},
+SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)},
        (SELECT TOP 1 HistoryDate
         FROM   dbo.VacancyHistory h
         WHERE  h.VacancyId                    = v.VacancyId
@@ -160,7 +151,7 @@ WHERE  v.VacancyId IN @VacancyIds",
 
             var vacancies =
                 _getOpenConnection.Query<Vacancy>($@"
-SELECT {string.Join(", ", VacancySummaryColumns)}
+SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)}
 FROM   dbo.Vacancy 
 WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
                     new { VacancyOwnerRelationshipIds = ownerPartyIdsArray });
@@ -201,7 +192,7 @@ WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
 
 
             var sql = $@"
-            SELECT {string.Join(", ", VacancySummaryColumns)}
+            SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)}
             FROM dbo.Vacancy";
 
             if (filterByProviderBeenMigrated)
@@ -277,7 +268,7 @@ order by HistoryDate desc) >= @LiveDate" : "") + @"
 SELECT COUNT(*)
 " + coreQuery + @"
 
-SELECT " + string.Join(", ", VacancySummaryColumns) + @"
+SELECT " + string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns) + @"
 " + coreQuery + @"
 ORDER BY VacancyReferenceNumber
 OFFSET ((@CurrentPage - 1) * @PageSize) ROWS

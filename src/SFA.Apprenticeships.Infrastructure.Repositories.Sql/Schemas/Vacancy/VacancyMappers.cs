@@ -12,6 +12,7 @@
     using Presentation;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using DbVacancy = Entities.Vacancy;
+    using DbVacancySummary = Entities.VacancySummary;
     using DbVacancyLocation = Entities.VacancyLocation;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
@@ -365,6 +366,66 @@
                         av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
                         av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
                     }
+                })
+                .End();
+
+
+            Mapper.CreateMap<DbVacancySummary, VacancySummary>()
+                .MapMemberFrom(av => av.VacancyId, v => v.VacancyId)
+                .MapMemberFrom(av => av.VacancyGuid, v => v.VacancyGuid)
+                .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
+                .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
+                .MapMemberFrom(av => av.OwnerPartyId, v => v.VacancyOwnerRelationshipId)
+                .MapMemberFrom(av => av.Title, v => v.Title)
+                .IgnoreMember(av => av.ShortDescription)
+                .IgnoreMember(av => av.NumberOfPositions)
+                .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
+                .IgnoreMember(av => av.PossibleStartDate)
+                .IgnoreMember(av => av.WorkingWeek)
+                .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
+                .IgnoreMember(av => av.OfflineApplicationClickThroughCount)
+                .IgnoreMember(av => av.VacancyManagerId)
+                .IgnoreMember(av => av.DeliveryOrganisationId)
+                .IgnoreMember(av => av.TrainingType)
+                .IgnoreMember(av => av.ApprenticeshipLevel)
+                .IgnoreMember(av => av.FrameworkCodeName)
+                .IgnoreMember(av => av.StandardId)
+                .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
+                .IgnoreMember(av => av.IsEmployerLocationMainApprenticeshipLocation)
+                .IgnoreMember(av => av.EmployerAnonymousName)
+                .IgnoreMember(av => av.Wage)
+                .IgnoreMember(av => av.DurationType)
+                .IgnoreMember(av => av.Duration)
+                .IgnoreMember(av => av.QAUserName)
+                .IgnoreMember(av => av.DateQAApproved)
+                .IgnoreMember(av => av.SubmissionCount)
+                .IgnoreMember(av => av.DateStartedToQA)
+                .IgnoreMember(av => av.DateSubmitted)
+                .IgnoreMember(av => av.QAUserName)
+                .IgnoreMember(av => av.TrainingType)
+                .IgnoreMember(av => av.UpdatedDateTime)
+                .IgnoreMember(av => av.SectorCodeName)
+                .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(av => av.DateFirstSubmitted)
+                .IgnoreMember(av => av.ParentVacancyId)
+                .IgnoreMember(av => av.ProviderId)
+                .IgnoreMember(av => av.RegionalTeam)
+                .IgnoreMember(av => av.VacancyLocationType)
+                .IgnoreMember(av => av.ExpectedDuration)
+                .MapMemberFrom(av => av.EmployerName, v => v.EmployerName)
+                .IgnoreMember(av => av.ApplicationOrClickThroughCount)
+                .AfterMap((v, av) =>
+                {
+                    av.Address = new DomainPostalAddress
+                    {
+                        AddressLine1 = v.AddressLine1,
+                        AddressLine2 = v.AddressLine2,
+                        AddressLine3 = v.AddressLine3,
+                        AddressLine4 = v.AddressLine4,
+                        AddressLine5 = v.AddressLine5,
+                        Postcode = v.PostCode,
+                        Town = v.Town
+                    };
                 })
                 .End();
 
