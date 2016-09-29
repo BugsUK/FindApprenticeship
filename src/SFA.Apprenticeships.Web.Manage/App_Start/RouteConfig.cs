@@ -284,9 +284,27 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.AdminProviderSites,
+               url: "admin/providersites",
+               defaults: new { controller = "Admin", action = "ProviderSites" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewProviderSite,
+               url: "admin/providersite",
+               defaults: new { controller = "Admin", action = "ProviderSite" }
+               );
+
+            routes.MapRoute(
                name: ManagementRouteNames.AdminCreateProviderSite,
                url: "admin/providersites/create",
                defaults: new { controller = "Admin", action = "CreateProviderSite" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEditProviderSite,
+               url: "admin/providersite/edit",
+               defaults: new { controller = "Admin", action = "EditProviderSite" }
                );
 
             routes.LowercaseUrls = true;

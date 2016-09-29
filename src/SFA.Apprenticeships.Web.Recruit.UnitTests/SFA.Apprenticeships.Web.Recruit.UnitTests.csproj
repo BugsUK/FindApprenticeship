@@ -186,7 +186,6 @@
     <Compile Include="Validators\Applications\ApprenticeshipApplicationViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\Applications\ApprenticeshipApplicationViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\Providers\ProviderSiteEmployerLinkViewModelValidatorTests.cs" />
-    <Compile Include="Validators\Providers\ProviderSiteSearchViewModelValidatorTests.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyDatesViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\ValidFreeTextTest.cs" />

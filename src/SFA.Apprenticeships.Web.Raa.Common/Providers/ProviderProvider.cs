@@ -77,6 +77,13 @@
             return viewModel;
         }
 
+        public ProviderSiteViewModel GetProviderSiteViewModel(int providerSiteId)
+        {
+            var providerSite = _providerService.GetProviderSite(providerSiteId);
+
+            return providerSite?.Convert();
+        }
+
         public ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn)
         {
             var providerSite = _providerService.GetProviderSite(edsUrn);
@@ -88,6 +95,28 @@
         {
             var providerSites = _providerService.GetProviderSites(ukprn);
             return providerSites.Select(ps => ps.Convert());
+        }
+
+        public ProviderSiteSearchResultsViewModel SearchProviderSites(ProviderSiteSearchViewModel searchViewModel)
+        {
+            var viewModel = new ProviderSiteSearchResultsViewModel
+            {
+                SearchViewModel = searchViewModel
+            };
+
+            if (!searchViewModel.PerformSearch) return viewModel;
+
+            var searchParameters = new ProviderSiteSearchParameters
+            {
+                EdsUrn = searchViewModel.EdsUrn,
+                Name = searchViewModel.Name
+            };
+
+            var providerSites = _providerService.SearchProviderSites(searchParameters);
+
+            viewModel.ProviderSites = providerSites.Select(p => p.Convert()).ToList();
+
+            return viewModel;
         }
 
         public VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId)
@@ -241,6 +270,39 @@
             providerSiteViewModel.ProviderId = viewModel.ProviderId;
 
             return providerSiteViewModel;
+        }
+
+        public ProviderSiteViewModel SaveProviderSite(ProviderSiteViewModel viewModel)
+        {
+            var providerSite = _providerService.GetProviderSite(viewModel.ProviderSiteId);
+
+            //Copy over changes
+            foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
+            {
+                var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);
+                if (providerSiteRelationship != null)
+                {
+                    providerSiteRelationship.ProviderSiteRelationShipTypeId = providerSiteRelationshipViewModel.ProviderSiteRelationshipType;
+                }
+            }
+
+            var updatedProviderSite = _providerService.SaveProviderSite(providerSite);
+
+            return _providerMappers.Map<ProviderSite, ProviderSiteViewModel>(updatedProviderSite);
+        }
+
+        public ProviderSiteViewModel CreateProviderSiteRelationship(ProviderSiteViewModel viewModel, int providerId)
+        {
+            var providerSiteRelationship = new ProviderSiteRelationship
+            {
+                ProviderId = providerId,
+                ProviderSiteId = viewModel.ProviderSiteId,
+                ProviderSiteRelationShipTypeId = viewModel.ProviderSiteRelationshipType
+            };
+
+            _providerService.CreateProviderSiteRelationship(providerSiteRelationship);
+
+            return GetProviderSiteViewModel(viewModel.ProviderSiteId);
         }
     }
 }

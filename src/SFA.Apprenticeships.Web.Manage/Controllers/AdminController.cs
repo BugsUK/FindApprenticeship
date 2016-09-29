@@ -98,6 +98,43 @@
         }
 
         [HttpGet]
+        public ActionResult ProviderSites(ProviderSiteSearchViewModel viewModel)
+        {
+            var response = _adminMediator.SearchProviderSites(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SearchProviderSites.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.SearchProviderSites.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchProviderSitesAction")]
+        public ActionResult SearchProviderSites(ProviderSiteSearchResultsViewModel viewModel)
+        {
+            viewModel.SearchViewModel.PerformSearch = true;
+            return RedirectToRoute(ManagementRouteNames.AdminProviderSites, viewModel.SearchViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ProviderSite(int providerSiteId)
+        {
+            var response = _adminMediator.GetProviderSite(providerSiteId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
         public ActionResult CreateProviderSite(int providerId)
         {
             return View(new ProviderSiteViewModel { ProviderId = providerId });
@@ -124,6 +161,63 @@
 
                 case AdminMediatorCodes.CreateProviderSite.Ok:
                     return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new {viewModel.ProviderId});
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SaveProviderSiteAction")]
+        public ActionResult SaveProviderSite(ProviderSiteViewModel viewModel)
+        {
+            var response = _adminMediator.SaveProviderSite(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SaveProviderSite.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("ProviderSite", response.ViewModel);
+
+                case AdminMediatorCodes.SaveProviderSite.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
+
+                case AdminMediatorCodes.SaveProviderSite.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateProviderSiteRelationshipAction")]
+        public ActionResult CreateProviderSiteRelationship(ProviderSiteViewModel viewModel)
+        {
+            var response = _adminMediator.CreateProviderSiteRelationship(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.CreateProviderSiteRelationship.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("ProviderSite", response.ViewModel);
+
+                case AdminMediatorCodes.CreateProviderSiteRelationship.InvalidUkprn:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
+
+                case AdminMediatorCodes.CreateProviderSiteRelationship.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
+
+                case AdminMediatorCodes.CreateProviderSiteRelationship.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

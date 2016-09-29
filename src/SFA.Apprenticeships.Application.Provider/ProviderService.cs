@@ -110,6 +110,11 @@
             return providerSites.Where(ps => ps.ProviderSiteRelationships.Any(psr => psr.ProviderId == providerId && psr.ProviderSiteRelationShipTypeId == ProviderSiteRelationshipTypes.Owner));
         }
 
+        public IEnumerable<ProviderSite> SearchProviderSites(ProviderSiteSearchParameters searchParameters)
+        {
+            return _providerSiteReadRepository.Search(searchParameters);
+        }
+
         public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
         {
             return _vacancyPartyReadRepository.GetByIds(new[] {vacancyPartyId}, currentOnly).FirstOrDefault();
@@ -210,6 +215,16 @@
         public ProviderSite CreateProviderSite(ProviderSite providerSite)
         {
             return _providerSiteWriteRepository.Create(providerSite);
+        }
+
+        public ProviderSite SaveProviderSite(ProviderSite providerSite)
+        {
+            return _providerSiteWriteRepository.Update(providerSite);
+        }
+
+        public ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship)
+        {
+            return _providerSiteWriteRepository.Create(providerSiteRelationship);
         }
 
         private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
