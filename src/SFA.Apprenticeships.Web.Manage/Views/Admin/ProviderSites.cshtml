@@ -38,7 +38,7 @@
                             <th>EDSURN</th>
                             <th>Full Name</th>
                             <th>Trading Name</th>
-                            <th>Relationships</th>
+                            <th>Relationship Count</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -49,14 +49,7 @@
                                 <td>@providerSite.EdsUrn</td>
                                 <td>@providerSite.FullName</td>
                                 <td>@providerSite.TradingName</td>
-                                <td>
-                                    <ul>
-                                        @foreach (var providerSiteRelationships in providerSite.ProviderSiteRelationships)
-                                        {
-                                            <li>@providerSiteRelationships.ProviderId @providerSiteRelationships.ProviderSiteRelationshipType</li>
-                                        }
-                                    </ul>
-                                </td>
+                                <td>@providerSite.ProviderSiteRelationships.Count</td>
                                 <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewProviderSite, new { providerSite.ProviderSiteId })</td>
                             </tr>
                         }

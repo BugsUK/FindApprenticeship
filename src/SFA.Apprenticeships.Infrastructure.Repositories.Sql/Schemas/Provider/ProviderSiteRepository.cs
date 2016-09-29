@@ -249,10 +249,10 @@
         private IReadOnlyDictionary<int, List<Entities.ProviderSiteRelationship>> GetProviderIdByProviderSiteId(IEnumerable<int> providerSiteIds)
         {
             const string sql = @"
-                SELECT *
+                SELECT psr.*, p.UKPRN As ProviderUkprn, p.FullName as ProviderFullName, p.TradingName as ProviderTradingName
                 FROM dbo.ProviderSiteRelationship AS psr 
-                JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
-                WHERE ps.ProviderSiteId IN @providerSiteIds
+                JOIN Provider p ON psr.ProviderID = p.ProviderId 
+                WHERE ProviderSiteId IN @providerSiteIds
                 ORDER BY psr.ProviderSiteRelationshipTypeID";
 
             var sqlParams = new

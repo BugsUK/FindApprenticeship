@@ -30,7 +30,9 @@
             </colgroup>
             <thead>
             <tr>
-                <th>Provider</th>
+                <th>Provider UKPRN</th>
+                <th>Provider Full Name</th>
+                <th>Provider Trading Name</th>
                 <th>Relationship Type</th>
                 <th></th>
             </tr>
@@ -39,7 +41,9 @@
             @foreach (var providerSiteRelationship in Model.ProviderSiteRelationships)
             {
                 <tr>
-                    <td>@providerSiteRelationship.ProviderId</td>
+                    <td>@Html.RouteLink(providerSiteRelationship.ProviderUkprn, ManagementRouteNames.AdminViewProvider, new {providerSiteRelationship.ProviderId})</td>
+                    <td>@providerSiteRelationship.ProviderFullName</td>
+                    <td>@providerSiteRelationship.ProviderTradingName</td>
                     <td>@providerSiteRelationship.ProviderSiteRelationshipType</td>
                     <td></td>
                 </tr>
