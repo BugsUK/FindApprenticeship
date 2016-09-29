@@ -155,5 +155,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             return this;
         }
+
+        public VacancyProviderBuilder With(Mock<IVacancySummaryService> vacancySummaryService)
+        {
+            _mockVacancySummaryService = vacancySummaryService;
+            return this;
+        }
     }
 }

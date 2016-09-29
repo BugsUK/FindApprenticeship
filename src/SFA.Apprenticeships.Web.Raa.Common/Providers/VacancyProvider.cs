@@ -759,6 +759,10 @@
                 : (VacancySummaryOrderByColumn)
                 Enum.Parse(typeof(VacancySummaryOrderByColumn), vacanciesSummarySearch.OrderByField);
 
+            vacanciesSummarySearch.FilterType = string.IsNullOrEmpty(vacanciesSummarySearch.SearchString)
+                ? vacanciesSummarySearch.FilterType
+                : VacanciesSummaryFilterTypes.All;
+
             var query = new VacancySummaryQuery()
             {
                 ProviderId = providerId,

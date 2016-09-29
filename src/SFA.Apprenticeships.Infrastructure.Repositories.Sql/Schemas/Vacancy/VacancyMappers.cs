@@ -411,6 +411,7 @@
                 .IgnoreMember(av => av.ProviderId)
                 .IgnoreMember(av => av.RegionalTeam)
                 .IgnoreMember(av => av.VacancyLocationType)
+                .IgnoreMember(av => av.ExpectedDuration)
                 .MapMemberFrom(av => av.EmployerName, v => v.EmployerName)
                 .IgnoreMember(av => av.ApplicationOrClickThroughCount)
                 .AfterMap((v, av) =>
