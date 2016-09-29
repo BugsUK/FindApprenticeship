@@ -7,7 +7,7 @@
 
     public class VacancySummaryService : IVacancySummaryService
     {
-        private IVacancySummaryRepository _vacancySummaryRepository;
+        private readonly IVacancySummaryRepository _vacancySummaryRepository;
 
         public VacancySummaryService(IVacancySummaryRepository vacancySummaryRepository)
         {

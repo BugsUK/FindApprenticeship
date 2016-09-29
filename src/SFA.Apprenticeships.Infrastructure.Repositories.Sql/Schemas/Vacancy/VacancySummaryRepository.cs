@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using DbVacancySummary = SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.VacancySummary;
 
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
-    using Application.Interfaces;
     using Common;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
@@ -15,22 +13,13 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
     public class VacancySummaryRepository : IVacancySummaryRepository
     {
-        private IGetOpenConnection _getOpenConnection;
-        private IMapper _mapper;
-        private IDateTimeService _dateTimeService;
-        private ILogService _logger;
-        private ICurrentUserService _currentUserService;
-        private IConfigurationService _configurationService;
+        private readonly IGetOpenConnection _getOpenConnection;
+        private readonly VacancyMappers _mapper;
 
-        public VacancySummaryRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
-            ILogService logger, ICurrentUserService currentUserService, IConfigurationService configurationService)
+        public VacancySummaryRepository(IGetOpenConnection getOpenConnection)
         {
             _getOpenConnection = getOpenConnection;
-            _mapper = mapper;
-            _dateTimeService = dateTimeService;
-            _logger = logger;
-            _currentUserService = currentUserService;
-            _configurationService = configurationService;
+            _mapper = new VacancyMappers();
         }
 
         public IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords)
@@ -44,7 +33,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                 query.ProviderSiteId
             };
 
-            string orderByField = "v.Title";
+            string orderByField = "";
             switch (query.OrderByField)
             {
                 case VacancySummaryOrderByColumn.Title:

@@ -759,6 +759,7 @@
                 : (VacancySummaryOrderByColumn)
                 Enum.Parse(typeof(VacancySummaryOrderByColumn), vacanciesSummarySearch.OrderByField);
 
+            // reset filter on search
             vacanciesSummarySearch.FilterType = string.IsNullOrEmpty(vacanciesSummarySearch.SearchString)
                 ? vacanciesSummarySearch.FilterType
                 : VacanciesSummaryFilterTypes.All;

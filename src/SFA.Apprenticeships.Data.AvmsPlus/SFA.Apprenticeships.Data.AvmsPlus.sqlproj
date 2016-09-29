@@ -959,6 +959,11 @@
     <Build Include="Security\faa_user.sql" />
     <Build Include="Security\das_user.sql" />
     <Build Include="Security\datascience_user.sql" />
+    <Build Include="dbo\Functions\fnGetApplicantCount.function.sql" />
+    <Build Include="dbo\Functions\fnGetNewApplicantCount.function.sql" />
+    <Build Include="dbo\Functions\fnGetCreatedDate.function.sql" />
+    <Build Include="dbo\Functions\fnGetSubmittedDate.function.sql" />
+    <Build Include="dbo\Functions\fnGetFirstSubmittedDate.function.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

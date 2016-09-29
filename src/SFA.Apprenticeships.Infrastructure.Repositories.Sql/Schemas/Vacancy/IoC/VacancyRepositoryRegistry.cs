@@ -33,9 +33,7 @@
                 .Named("VacancyMappers");
 
             For<IVacancySummaryRepository>()
-                .Use<VacancySummaryRepository>()
-                .Ctor<IMapper>()
-                .Named("VacancyMappers");
+                .Use<VacancySummaryRepository>();
         }
     }
 }

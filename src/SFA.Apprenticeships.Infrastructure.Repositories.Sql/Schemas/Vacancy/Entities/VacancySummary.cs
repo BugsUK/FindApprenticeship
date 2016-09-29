@@ -1,11 +1,7 @@
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities
 {
     using System;
-    using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies;
-    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancySummary
