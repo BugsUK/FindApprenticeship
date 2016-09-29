@@ -231,7 +231,7 @@
                 new ProviderSiteRelationship
                 {
                     ProviderId = viewModel.ProviderId,
-                    ProviderSiteRelationShipTypeId = 1 //Owner
+                    ProviderSiteRelationShipTypeId = ProviderSiteRelationshipTypes.Owner
                 }
             };
 
