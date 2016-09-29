@@ -98,6 +98,43 @@
         }
 
         [HttpGet]
+        public ActionResult ProviderSites(ProviderSiteSearchViewModel viewModel)
+        {
+            var response = _adminMediator.SearchProviderSites(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SearchProviderSites.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.SearchProviderSites.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchProviderSitesAction")]
+        public ActionResult SearchProviderSites(ProviderSiteSearchResultsViewModel viewModel)
+        {
+            viewModel.SearchViewModel.PerformSearch = true;
+            return RedirectToRoute(ManagementRouteNames.AdminProviderSites, viewModel.SearchViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ProviderSite(int providerSiteId)
+        {
+            var response = _adminMediator.GetProviderSite(providerSiteId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
         public ActionResult CreateProviderSite(int providerId)
         {
             return View(new ProviderSiteViewModel { ProviderId = providerId });

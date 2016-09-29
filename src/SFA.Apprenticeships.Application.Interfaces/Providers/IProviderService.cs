@@ -32,6 +32,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         IEnumerable<ProviderSite> GetOwnedProviderSites(int providerId);
 
+        IEnumerable<ProviderSite> SearchProviderSites(ProviderSiteSearchParameters searchParameters);
+
         VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly);
 
         IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);

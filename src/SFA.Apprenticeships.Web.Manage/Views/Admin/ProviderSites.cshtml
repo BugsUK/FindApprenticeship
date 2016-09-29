@@ -1,0 +1,68 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteSearchResultsViewModel
+@{
+    ViewBag.Title = "Provider Sites";
+}
+
+<h1 id="heading" class="heading-xlarge">Provider Sites</h1>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminProviderSites))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.SearchViewModel.EdsUrn, controlHtmlAttributes: new {type = "tel", size = 9, autofocus = "autofocus"})
+        @Html.FormTextFor(m => m.SearchViewModel.Name, controlHtmlAttributes: new {type = "text"})
+
+        <div class="form-group">
+            <button id="search-provider-sites-button" type="submit" class="button" name="SearchProviderSitesAction" value="SearchProviderSites">Search Provider Sites</button>
+        </div>
+    </div>
+
+    if (Model.ProviderSites != null && Model.ProviderSites.Count > 0)
+    {
+        <div class="grid-wrapper">
+            <div class="grid grid-1-1">
+                <table>
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>EDSURN</th>
+                            <th>Full Name</th>
+                            <th>Trading Name</th>
+                            <th>Relationships</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var providerSite in Model.ProviderSites)
+                        {
+                            <tr>
+                                <td>@providerSite.EdsUrn</td>
+                                <td>@providerSite.FullName</td>
+                                <td>@providerSite.TradingName</td>
+                                <td>
+                                    <ul>
+                                        @foreach (var providerSiteRelationships in providerSite.ProviderSiteRelationships)
+                                        {
+                                            <li>@providerSiteRelationships.ProviderId @providerSiteRelationships.ProviderSiteRelationshipType</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewProviderSite, new { providerSite.ProviderSiteId })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}

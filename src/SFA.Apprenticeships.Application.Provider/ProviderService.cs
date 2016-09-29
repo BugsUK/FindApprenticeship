@@ -110,6 +110,11 @@
             return providerSites.Where(ps => ps.ProviderSiteRelationships.Any(psr => psr.ProviderId == providerId && psr.ProviderSiteRelationShipTypeId == ProviderSiteRelationshipTypes.Owner));
         }
 
+        public IEnumerable<ProviderSite> SearchProviderSites(ProviderSiteSearchParameters searchParameters)
+        {
+            return _providerSiteReadRepository.Search(searchParameters);
+        }
+
         public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
         {
             return _vacancyPartyReadRepository.GetByIds(new[] {vacancyPartyId}, currentOnly).FirstOrDefault();

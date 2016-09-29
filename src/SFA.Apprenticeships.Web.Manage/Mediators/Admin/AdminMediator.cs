@@ -11,6 +11,7 @@
     {
         private readonly ProviderSearchViewModelServerValidator _providerSearchViewModelServerValidator = new ProviderSearchViewModelServerValidator();
         private readonly ProviderViewModelServerValidator _providerViewModelServerValidator = new ProviderViewModelServerValidator();
+        private readonly ProviderSiteSearchViewModelServerValidator _providerSiteSearchViewModelServerValidator = new ProviderSiteSearchViewModelServerValidator();
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
@@ -59,6 +60,27 @@
             viewModel = _providerProvider.CreateProvider(viewModel);
 
             return GetMediatorResponse(AdminMediatorCodes.CreateProvider.Ok, viewModel, ProviderViewModelMessages.ProviderCreatedSuccessfully, UserMessageLevel.Info);
+        }
+
+        public MediatorResponse<ProviderSiteSearchResultsViewModel> SearchProviderSites(ProviderSiteSearchViewModel searchViewModel)
+        {
+            var validatonResult = _providerSiteSearchViewModelServerValidator.Validate(searchViewModel);
+
+            if (!validatonResult.IsValid)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.SearchProviderSites.FailedValidation, new ProviderSiteSearchResultsViewModel { SearchViewModel = searchViewModel }, validatonResult);
+            }
+
+            var viewModel = _providerProvider.SearchProviderSites(searchViewModel);
+
+            return GetMediatorResponse(AdminMediatorCodes.SearchProviderSites.Ok, viewModel);
+        }
+
+        public MediatorResponse<ProviderSiteViewModel> GetProviderSite(int providerSiteId)
+        {
+            var viewModel = _providerProvider.GetProviderSiteViewModel(providerSiteId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetProviderSite.Ok, viewModel);
         }
 
         public MediatorResponse<ProviderSiteViewModel> CreateProviderSite(ProviderSiteViewModel viewModel)

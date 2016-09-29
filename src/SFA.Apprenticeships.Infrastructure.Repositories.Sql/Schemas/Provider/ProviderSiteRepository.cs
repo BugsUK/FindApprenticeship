@@ -7,6 +7,7 @@
     using Domain.Raa.Interfaces.Repositories;
     using Application.Interfaces;
     using Domain.Entities.Feature;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using ProviderSite = Domain.Entities.Raa.Parties.ProviderSite;
     using ProviderSiteRelationship = Domain.Entities.Raa.Parties.ProviderSiteRelationship;
 
@@ -141,6 +142,25 @@
             }
 
             return providerSites;
+        }
+
+        public IEnumerable<ProviderSite> Search(ProviderSiteSearchParameters searchParameters)
+        {
+            var sql = "SELECT * FROM dbo.ProviderSite WHERE ";
+            if (!string.IsNullOrEmpty(searchParameters.EdsUrn))
+            {
+                sql += "EDSURN = @EdsUrn ";
+            }
+            if (!string.IsNullOrEmpty(searchParameters.Name))
+            {
+                sql += "FullName LIKE '%' + @name + '%' OR TradingName LIKE '%' + @name + '%' ";
+            }
+            sql += "ORDER BY FullName";
+
+            var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, searchParameters);
+            var providerSiteRelationships = GetProviderIdByProviderSiteId(providerSites.Select(ps => ps.ProviderSiteId).Distinct());
+
+            return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships));
         }
 
         private IEnumerable<ProviderSite> GetByProviderIds(IEnumerable<int> providerIds, IEnumerable<int> providerSiteRelationShipTypeIds)

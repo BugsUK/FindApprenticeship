@@ -1,20 +1,18 @@
-using System.ComponentModel.DataAnnotations;
-using FluentValidation.Attributes;
-using SFA.Apprenticeships.Web.Raa.Common.Validators.Provider;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 {
-    [Validator(typeof(ProviderSiteSearchViewModelValidator))]
+    using System.ComponentModel.DataAnnotations;
+    using Constants.ViewModels;
+    using FluentValidation.Attributes;
+    using Validators.Provider;
+
+    [Validator(typeof(ProviderSiteSearchViewModelClientValidator))]
     public class ProviderSiteSearchViewModel
     {
-        public ProviderSiteSearchViewModel()
-        {
-            SiteSearchMode = ProviderSiteSearchMode.EmployerReferenceNumber;
-        }
+        [Display(Name = ProviderSiteSearchViewModelMessages.EdsUrn.LabelText)]
+        public string EdsUrn { get; set; }
+        [Display(Name = ProviderSiteSearchViewModelMessages.Name.LabelText)]
+        public string Name { get; set; }
 
-        public ProviderSiteSearchMode SiteSearchMode { get; set; }
-
-        [Display(Name = ProviderSiteSearchViewModelMessages.EmployerReferenceNumberMessages.LabelText)]
-        public string EmployerReferenceNumber { get; set; }
+        public bool PerformSearch { get; set; }
     }
 }

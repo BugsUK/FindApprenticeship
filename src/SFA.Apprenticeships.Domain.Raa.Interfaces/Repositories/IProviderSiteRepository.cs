@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Entities.Raa.Parties;
+    using Models;
 
     public interface IProviderSiteReadRepository
     {
@@ -12,6 +13,8 @@
         IReadOnlyDictionary<int, ProviderSite> GetByIds(IEnumerable<int> providerSiteIds);
 
         IEnumerable<ProviderSite> GetByProviderId(int providerId);
+
+        IEnumerable<ProviderSite> Search(ProviderSiteSearchParameters searchParameters);
     }
 
     public interface IProviderSiteWriteRepository

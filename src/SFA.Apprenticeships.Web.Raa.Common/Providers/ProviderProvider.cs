@@ -77,6 +77,13 @@
             return viewModel;
         }
 
+        public ProviderSiteViewModel GetProviderSiteViewModel(int providerSiteId)
+        {
+            var providerSite = _providerService.GetProviderSite(providerSiteId);
+
+            return providerSite?.Convert();
+        }
+
         public ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn)
         {
             var providerSite = _providerService.GetProviderSite(edsUrn);
@@ -88,6 +95,28 @@
         {
             var providerSites = _providerService.GetProviderSites(ukprn);
             return providerSites.Select(ps => ps.Convert());
+        }
+
+        public ProviderSiteSearchResultsViewModel SearchProviderSites(ProviderSiteSearchViewModel searchViewModel)
+        {
+            var viewModel = new ProviderSiteSearchResultsViewModel
+            {
+                SearchViewModel = searchViewModel
+            };
+
+            if (!searchViewModel.PerformSearch) return viewModel;
+
+            var searchParameters = new ProviderSiteSearchParameters
+            {
+                EdsUrn = searchViewModel.EdsUrn,
+                Name = searchViewModel.Name
+            };
+
+            var providerSites = _providerService.SearchProviderSites(searchParameters);
+
+            viewModel.ProviderSites = providerSites.Select(p => p.Convert()).ToList();
+
+            return viewModel;
         }
 
         public VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId)
