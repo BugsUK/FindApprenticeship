@@ -53,6 +53,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipSearch/_Apply.cshtml")]
@@ -108,7 +109,7 @@ WriteLiteral("  target = \"_blank\" href=\"");
 
             
             #line 16 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-                                                                              Write(Url.RouteUrl(CandidateRouteNames.RedirectToExternalWebsite));
+                                                                              Write(Url.RouteUrl(CandidateRouteNames.RedirectToExternalWebsite, new {id = Model.Id}));
 
             
             #line default
@@ -117,7 +118,7 @@ WriteLiteral("\" ");
 
             
             #line 16 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-                                                                                                                                            Write(Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"])));
+                                                                                                                                                                 Write(Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"])));
 
             
             #line default
@@ -173,14 +174,14 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Resume application\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1428), Tuple.Create("\"", 1511)
+WriteAttribute("href", Tuple.Create(" href=\"", 1449), Tuple.Create("\"", 1532)
             
             #line 30 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-                                , Tuple.Create(Tuple.Create("", 1435), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {@id = Model.Id})
+                                , Tuple.Create(Tuple.Create("", 1456), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {@id = Model.Id})
             
             #line default
             #line hidden
-, 1435), false)
+, 1456), false)
 );
 
 WriteLiteral(" ");
@@ -247,14 +248,14 @@ WriteLiteral("                <a");
 
 WriteLiteral(" id=\"track-application-status\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2210), Tuple.Create("\"", 2294)
+WriteAttribute("href", Tuple.Create(" href=\"", 2231), Tuple.Create("\"", 2315)
             
             #line 42 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 2217), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipTrack, new { id = Model.Id })
+, Tuple.Create(Tuple.Create("", 2238), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipTrack, new { id = Model.Id })
             
             #line default
             #line hidden
-, 2217), false)
+, 2238), false)
 );
 
 WriteLiteral(">Track application status</a>\r\n");
@@ -272,14 +273,14 @@ WriteLiteral("                <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2423), Tuple.Create("\"", 2479)
+WriteAttribute("href", Tuple.Create(" href=\"", 2444), Tuple.Create("\"", 2500)
             
             #line 46 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 2430), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2451), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2430), false)
+, 2451), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n");
@@ -305,14 +306,14 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Apply for apprenticeship\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2718), Tuple.Create("\"", 2803)
+WriteAttribute("href", Tuple.Create(" href=\"", 2739), Tuple.Create("\"", 2824)
             
             #line 52 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-                                  , Tuple.Create(Tuple.Create("", 2725), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })
+                                  , Tuple.Create(Tuple.Create("", 2746), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })
             
             #line default
             #line hidden
-, 2725), false)
+, 2746), false)
 );
 
 WriteLiteral(" ");
@@ -346,14 +347,14 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Sign in to apply\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3145), Tuple.Create("\"", 3230)
+WriteAttribute("href", Tuple.Create(" href=\"", 3166), Tuple.Create("\"", 3251)
             
             #line 57 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-                      , Tuple.Create(Tuple.Create("", 3152), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })
+                      , Tuple.Create(Tuple.Create("", 3173), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })
             
             #line default
             #line hidden
-, 3152), false)
+, 3173), false)
 );
 
 WriteLiteral(" ");
