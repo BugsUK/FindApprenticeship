@@ -13,7 +13,7 @@
 
     if (Model.IsWellFormedVacancyUrl)
     {
-        <a  id="external-employer-website" rel="external"  target = "_blank" href="@Url.RouteUrl(CandidateRouteNames.RedirectToExternalWebsite)" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
+        <a  id="external-employer-website" rel="external"  target = "_blank" href="@Url.RouteUrl(CandidateRouteNames.RedirectToExternalWebsite, new {id = Model.Id})" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
     }
     else
     {
