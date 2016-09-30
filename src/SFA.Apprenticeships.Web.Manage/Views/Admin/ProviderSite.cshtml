@@ -16,13 +16,24 @@
 
     @Html.HiddenFor(m => m.ProviderSiteId)
 
-    <p>
-        <ul>
-            <li>EDSURN: @Model.EdsUrn</li>
-            <li>Full name: @Model.FullName</li>
-            <li>Trading Name: @Model.TradingName</li>
-        </ul>
-    </p>
+    <div class="form-group">
+        <p>
+            <ul>
+                <li>ID: @Model.ProviderSiteId</li>
+                <li>EDSURN: @Model.EdsUrn</li>
+                <li>Full name: @Model.FullName</li>
+                <li>Trading Name: @Model.TradingName</li>
+                <li>Web Page: <a href="@Model.WebPage">@Model.WebPage</a></li>
+            </ul>
+        </p>
+        <h3 class="bold-small">Address</h3>
+        <p class="small-btm-margin">@Model.Address.AddressLine1</p>
+        <p class="small-btm-margin">@Model.Address.AddressLine2</p>
+        <p class="small-btm-margin">@Model.Address.AddressLine3</p>
+        <p class="small-btm-margin">@Model.Address.Town</p>
+        <p class="small-btm-margin">@Model.Address.County</p>
+        <p class="small-btm-margin">@Model.Address.Postcode</p>
+    </div>
 
     <h2 class="heading-medium">Provider Site Relationships</h2>
 

@@ -37,7 +37,7 @@
         internal static void AddServerRules(this AbstractValidator<ProviderSearchViewModel> validator)
         {
             validator.RuleFor(x => x)
-                .Must(x => !string.IsNullOrEmpty(x.Ukprn) || !string.IsNullOrEmpty(x.Name) || !x.PerformSearch)
+                .Must(x => !string.IsNullOrEmpty(x.Id) || !string.IsNullOrEmpty(x.Ukprn) || !string.IsNullOrEmpty(x.Name) || !x.PerformSearch)
                 .WithMessage(ProviderSearchViewModelMessages.NoSearchCriteriaErrorText);
         }
     }
