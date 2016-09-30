@@ -84,7 +84,9 @@
                 {
                     case AdminMediatorCodes.GetVacancyDetails.Ok:
                         return View(response.ViewModel);
-
+                    case AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(response.ViewModel);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }

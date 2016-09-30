@@ -363,6 +363,7 @@
     <Compile Include="Mediators\Admin\AdminMediator.cs" />
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
+    <Compile Include="Mediators\Admin\TransferVacanciesMessages.cs" />
     <Compile Include="Mediators\Application\ITraineeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Application\TraineeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Application\ApprenticeshipApplicationMediator.cs" />
