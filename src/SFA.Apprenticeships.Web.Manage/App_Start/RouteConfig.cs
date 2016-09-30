@@ -307,6 +307,24 @@
                defaults: new { controller = "Admin", action = "EditProviderSite" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminApiUsers,
+               url: "admin/apiusers",
+               defaults: new { controller = "Admin", action = "ApiUsers" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewApiUser,
+               url: "admin/apiuser",
+               defaults: new { controller = "Admin", action = "ApiUser" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateApiUser,
+               url: "admin/apiuser/create",
+               defaults: new { controller = "Admin", action = "CreateApiUser" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

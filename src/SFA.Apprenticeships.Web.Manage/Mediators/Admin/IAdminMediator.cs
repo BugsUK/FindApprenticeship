@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Admin
 {
+    using System;
     using Common.Mediators;
+    using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
 
     public interface IAdminMediator
@@ -13,5 +15,7 @@
         MediatorResponse<ProviderSiteViewModel> CreateProviderSite(ProviderSiteViewModel viewModel);
         MediatorResponse<ProviderSiteViewModel> SaveProviderSite(ProviderSiteViewModel viewModel);
         MediatorResponse<ProviderSiteViewModel> CreateProviderSiteRelationship(ProviderSiteViewModel viewModel);
+        MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel);
+        MediatorResponse<ApiUserViewModel> GetApiUser(Guid externalSystemId);
     }
 }

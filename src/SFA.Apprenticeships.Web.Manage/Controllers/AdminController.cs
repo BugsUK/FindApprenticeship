@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
@@ -9,6 +10,7 @@
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.Admin;
+    using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
 
     [AuthorizeUser(Roles = Roles.Raa)]
@@ -222,6 +224,43 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpGet]
+        public ActionResult ApiUsers(ApiUserSearchViewModel viewModel)
+        {
+            var response = _adminMediator.SearchApiUsers(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SearchApiUsers.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.SearchApiUsers.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchApiUsersAction")]
+        public ActionResult SearchApiUsers(ApiUserSearchResultsViewModel viewModel)
+        {
+            viewModel.SearchViewModel.PerformSearch = true;
+            return RedirectToRoute(ManagementRouteNames.AdminApiUsers, viewModel.SearchViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ApiUser(Guid externalSystemId)
+        {
+            var response = _adminMediator.GetApiUser(externalSystemId);
+
+            return View(response.ViewModel);
         }
     }
 }

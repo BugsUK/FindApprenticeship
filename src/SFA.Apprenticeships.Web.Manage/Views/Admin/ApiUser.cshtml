@@ -1,0 +1,19 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Api.ApiUserViewModel
+@{
+    ViewBag.Title = "API User";
+}
+
+<h1 id="heading" class="heading-xlarge">API User</h1>
+
+<p>@Html.RouteLink("Manage API Users", ManagementRouteNames.AdminApiUsers)</p>
+
+<p>
+    <ul>
+        <li>External System ID (Username): @Model.ExternalSystemId</li>
+        <li>Company ID: @Model.CompanyId</li>
+        <li>Business Category: @Model.BusinessCategory</li>
+        <li>Employee Type: @Model.EmployeeType</li>
+        <li>Authorised API Endpoints: @string.Join(", ", Model.AuthorisedApiEndpoints)</li>
+    </ul>
+</p>

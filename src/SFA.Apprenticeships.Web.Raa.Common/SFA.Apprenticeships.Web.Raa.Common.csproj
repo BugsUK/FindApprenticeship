@@ -170,6 +170,7 @@
     <Compile Include="Configuration\ManageWebConfiguration.cs" />
     <Compile Include="Configuration\RecruitWebConfiguration.cs" />
     <Compile Include="Constants\Pages\PrivacyPageMessages.cs" />
+    <Compile Include="Constants\ViewModels\ApiSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
@@ -245,6 +246,9 @@
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteRelationshipViewModelValidator.cs" />
+    <Compile Include="ViewModels\Api\ApiUserSearchResultsViewModel.cs" />
+    <Compile Include="ViewModels\Api\ApiUserSearchViewModel.cs" />
+    <Compile Include="ViewModels\Api\ApiUserViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSearchViewModel.cs" />

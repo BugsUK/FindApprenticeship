@@ -7,6 +7,7 @@
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Provider;
+    using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
 
     public class AdminMediator : MediatorBase, IAdminMediator
@@ -155,6 +156,16 @@
                 _logService.Error($"Failed to create provider site relationship for provider site with id={viewModel.ProviderSiteId}", ex);
                 return GetMediatorResponse(AdminMediatorCodes.CreateProviderSiteRelationship.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipCreationError, UserMessageLevel.Error);
             }
+        }
+
+        public MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MediatorResponse<ApiUserViewModel> GetApiUser(Guid externalSystemId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

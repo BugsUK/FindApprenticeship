@@ -52,5 +52,16 @@
             public const string Error = "AdminMediatorCodes.CreateProviderSiteRelationship.Error";
             public const string Ok = "AdminMediatorCodes.CreateProviderSiteRelationship.Ok";
         }
+
+        public class SearchApiUsers
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SearchApiUsers.FailedValidation";
+            public const string Ok = "AdminMediatorCodes.SearchApiUsers.Ok";
+        }
+
+        public class GetApiUser
+        {
+            public const string Ok = "AdminMediatorCodes.GetApiUser.Ok";
+        }
     }
 }
