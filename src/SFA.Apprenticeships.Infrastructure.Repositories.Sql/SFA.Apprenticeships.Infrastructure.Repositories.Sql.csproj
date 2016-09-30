@@ -130,6 +130,7 @@
     <Compile Include="Reporting\ReportingRepository.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
+    <Compile Include="Schemas\dbo\ApiUserRepository.cs" />
     <Compile Include="Schemas\dbo\CandidateMappers.cs" />
     <Compile Include="Schemas\dbo\CandidateRepository.cs" />
     <Compile Include="Schemas\dbo\Constants.cs" />

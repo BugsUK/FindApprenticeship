@@ -5,11 +5,11 @@
 
     public class ApiUserSearchViewModel
     {
-        [Display(Name = ApiSearchViewModelMessages.ExternalSystemId.LabelText)]
+        [Display(Name = ApiUserSearchViewModelMessages.ExternalSystemId.LabelText)]
         public string ExternalSystemId { get; set; }
-        [Display(Name = ApiSearchViewModelMessages.Id.LabelText)]
+        [Display(Name = ApiUserSearchViewModelMessages.Id.LabelText)]
         public string Id { get; set; }
-        [Display(Name = ApiSearchViewModelMessages.Name.LabelText)]
+        [Display(Name = ApiUserSearchViewModelMessages.Name.LabelText)]
         public string Name { get; set; }
 
         public bool PerformSearch { get; set; }

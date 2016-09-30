@@ -6,6 +6,7 @@
     using Common.Mediators;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.Api;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
@@ -17,13 +18,16 @@
         private readonly ProviderSiteSearchViewModelServerValidator _providerSiteSearchViewModelServerValidator = new ProviderSiteSearchViewModelServerValidator();
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
         private readonly ProviderSiteRelationshipViewModelServerValidator _providerSiteRelationshipViewModelServerValidator = new ProviderSiteRelationshipViewModelServerValidator();
+        private readonly ApiUserSearchViewModelServerValidator _apiUserSearchViewModelServerValidator = new ApiUserSearchViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
+        private readonly IApiUserProvider _apiUserProvider;
         private readonly ILogService _logService;
 
-        public AdminMediator(IProviderProvider providerProvider, ILogService logService)
+        public AdminMediator(IProviderProvider providerProvider, IApiUserProvider apiUserProvider, ILogService logService)
         {
             _providerProvider = providerProvider;
+            _apiUserProvider = apiUserProvider;
             _logService = logService;
         }
 
@@ -160,12 +164,23 @@
 
         public MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel)
         {
-            throw new NotImplementedException();
+            var validatonResult = _apiUserSearchViewModelServerValidator.Validate(searchViewModel);
+
+            if (!validatonResult.IsValid)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.SearchApiUsers.FailedValidation, new ApiUserSearchResultsViewModel { SearchViewModel = searchViewModel }, validatonResult);
+            }
+
+            var viewModel = _apiUserProvider.SearchApiUsers(searchViewModel);
+
+            return GetMediatorResponse(AdminMediatorCodes.SearchApiUsers.Ok, viewModel);
         }
 
         public MediatorResponse<ApiUserViewModel> GetApiUser(Guid externalSystemId)
         {
-            throw new NotImplementedException();
+            var viewModel = _apiUserProvider.GetApiUserViewModel(externalSystemId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetApiUser.Ok, viewModel);
         }
     }
 }
