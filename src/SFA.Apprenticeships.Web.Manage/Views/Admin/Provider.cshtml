@@ -34,6 +34,7 @@
                 <th>EDSURN</th>
                 <th>Full Name</th>
                 <th>Trading Name</th>
+                <th>Location</th>
                 <th>Relationship Type</th>
                 <th></th>
             </tr>
@@ -45,6 +46,7 @@
                     <td>@Html.RouteLink(providerSite.EdsUrn, ManagementRouteNames.AdminViewProviderSite, new { providerSite.ProviderSiteId })</td>
                     <td>@providerSite.FullName</td>
                     <td>@providerSite.TradingName</td>
+                    <td>@providerSite.Address.Town</td>
                     <td>
                         @{
                             var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderId == Model.ProviderId);
