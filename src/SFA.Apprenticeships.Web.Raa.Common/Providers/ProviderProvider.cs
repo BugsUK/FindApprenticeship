@@ -66,6 +66,7 @@
 
             var searchParameters = new ProviderSearchParameters
             {
+                Id = searchViewModel.Id,
                 Ukprn = searchViewModel.Ukprn,
                 Name = searchViewModel.Name
             };
@@ -108,6 +109,7 @@
 
             var searchParameters = new ProviderSiteSearchParameters
             {
+                Id = searchViewModel.Id,
                 EdsUrn = searchViewModel.EdsUrn,
                 Name = searchViewModel.Name
             };

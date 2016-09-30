@@ -147,6 +147,10 @@
         public IEnumerable<ProviderSite> Search(ProviderSiteSearchParameters searchParameters)
         {
             var sql = "SELECT * FROM dbo.ProviderSite WHERE ";
+            if (!string.IsNullOrEmpty(searchParameters.Id))
+            {
+                sql += "ProviderSiteId = @Id ";
+            }
             if (!string.IsNullOrEmpty(searchParameters.EdsUrn))
             {
                 sql += "EDSURN = @EdsUrn ";

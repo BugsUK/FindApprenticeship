@@ -17,6 +17,7 @@
 
     <div class="form-group">
 
+        @Html.FormTextFor(m => m.SearchViewModel.Id, controlHtmlAttributes: new {type = "tel", size = 8})
         @Html.FormTextFor(m => m.SearchViewModel.Ukprn, controlHtmlAttributes: new {type = "tel", size = 8, autofocus = "autofocus"})
         @Html.FormTextFor(m => m.SearchViewModel.Name, controlHtmlAttributes: new {type = "text"})
 
@@ -36,9 +37,11 @@
                         <col>
                         <col>
                         <col>
+                        <col>
                     </colgroup>
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>UKPRN</th>
                             <th>Full Name</th>
                             <th>Trading Name</th>
@@ -50,6 +53,7 @@
                         @foreach (var provider in Model.Providers)
                         {
                             <tr>
+                                <td>@provider.ProviderId</td>
                                 <td>@provider.Ukprn</td>
                                 <td>@provider.FullName</td>
                                 <td>@provider.TradingName</td>
