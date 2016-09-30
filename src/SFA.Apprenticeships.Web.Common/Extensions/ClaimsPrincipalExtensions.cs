@@ -11,7 +11,8 @@
         {
             var claimsPrincipal = principal as ClaimsPrincipal;
             var ukprnClaim = claimsPrincipal?.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Ukprn);
-            var ukprnOverrideClaim = claimsPrincipal?.Claims.SingleOrDefault(c => c.Type == ClaimTypes.UkprnOverride);
+            //TODO: Work out why this claim ends up being duplicated
+            var ukprnOverrideClaim = claimsPrincipal?.Claims.LastOrDefault(c => c.Type == ClaimTypes.UkprnOverride);
 
             return !string.IsNullOrEmpty(ukprnOverrideClaim?.Value) ? ukprnOverrideClaim.Value : ukprnClaim?.Value;
         }
