@@ -10,5 +10,7 @@
         public ApiBusinessCategory BusinessCategory { get; set; }
         public ApiEmployeeType EmployeeType { get; set; }
         public IList<ApiEndpoint> AuthorisedApiEndpoints { get; set; }
+        public string FullName { get; set; }
+        public string TradingName { get; set; }
     }
 }

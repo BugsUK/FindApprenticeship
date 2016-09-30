@@ -43,6 +43,7 @@
                         <tr>
                             <th>External System ID (Username)</th>
                             <th>Company ID</th>
+                            <th>Company Name</th>
                             <th>Business Category</th>
                             <th>Employee Type</th>
                             <th>Authorised API Endpoints</th>
@@ -55,6 +56,16 @@
                             <tr>
                                 <td>@apiUser.ExternalSystemId</td>
                                 <td>@apiUser.CompanyId</td>
+                                <td>
+                                    @if (apiUser.FullName == apiUser.TradingName)
+                                    {
+                                        <span>@apiUser.FullName</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@apiUser.TradingName (@apiUser.FullName)</span>
+                                    }
+                                </td>
                                 <td>@apiUser.BusinessCategory</td>
                                 <td>@apiUser.EmployeeType</td>
                                 <td>@string.Join(", ", apiUser.AuthorisedApiEndpoints)</td>
