@@ -10,6 +10,7 @@
 
 <p>
     <ul>
+        <li>ID: @Model.ProviderId</li>
         <li>UKPRN: @Model.Ukprn</li>
         <li>Full name: @Model.FullName</li>
         <li>Trading Name: @Model.TradingName</li>
@@ -28,9 +29,11 @@
                 <col>
                 <col>
                 <col>
+                <col>
             </colgroup>
             <thead>
             <tr>
+                <th>ID</th>
                 <th>EDSURN</th>
                 <th>Full Name</th>
                 <th>Trading Name</th>
@@ -43,6 +46,7 @@
             @foreach (var providerSite in Model.ProviderSiteViewModels)
             {
                 <tr>
+                    <td>@providerSite.ProviderSiteId</td>
                     <td>@Html.RouteLink(providerSite.EdsUrn, ManagementRouteNames.AdminViewProviderSite, new { providerSite.ProviderSiteId })</td>
                     <td>@providerSite.FullName</td>
                     <td>@providerSite.TradingName</td>

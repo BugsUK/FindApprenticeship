@@ -8,6 +8,8 @@
     [Validator(typeof(ProviderSiteSearchViewModelClientValidator))]
     public class ProviderSiteSearchViewModel
     {
+        [Display(Name = ProviderSiteSearchViewModelMessages.Id.LabelText)]
+        public string Id { get; set; }
         [Display(Name = ProviderSiteSearchViewModelMessages.EdsUrn.LabelText)]
         public string EdsUrn { get; set; }
         [Display(Name = ProviderSiteSearchViewModelMessages.Name.LabelText)]

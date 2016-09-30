@@ -4,6 +4,11 @@
     {
         public const string NoSearchCriteriaErrorText = "You must enter at least one search criteria";
 
+        public class Id
+        {
+            public const string LabelText = "ID (optional)";
+        }
+
         public class Ukprn
         {
             public const string LabelText = "UKPRN (optional)";

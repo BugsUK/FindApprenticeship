@@ -89,6 +89,10 @@
         public IEnumerable<Provider> Search(ProviderSearchParameters searchParameters)
         {
             var sql = "SELECT * FROM dbo.Provider WHERE ";
+            if (!string.IsNullOrEmpty(searchParameters.Id))
+            {
+                sql += "ProviderId = @Id ";
+            }
             if (!string.IsNullOrEmpty(searchParameters.Ukprn))
             {
                 sql += "UKPRN = @ukprn ";
