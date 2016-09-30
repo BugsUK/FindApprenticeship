@@ -45,7 +45,7 @@
 
         public ApiUserViewModel GetApiUserViewModel(Guid externalSystemId)
         {
-            throw new NotImplementedException();
+            return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.GetApiUser(externalSystemId));
         }
     }
 }

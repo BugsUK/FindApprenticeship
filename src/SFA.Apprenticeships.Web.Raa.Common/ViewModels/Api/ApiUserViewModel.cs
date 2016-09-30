@@ -13,5 +13,20 @@
         public IList<ApiEndpoint> AuthorisedApiEndpoints { get; set; }
         public string FullName { get; set; }
         public string TradingName { get; set; }
+
+        public string CompanyName
+        {
+            get
+            {
+                if(FullName == TradingName)
+                {
+                    return FullName;
+                }
+                else
+                {
+                    return $"{TradingName} ({FullName})";
+                }
+            }
+        }
     }
 }

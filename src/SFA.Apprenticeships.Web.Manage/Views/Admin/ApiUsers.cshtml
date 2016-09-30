@@ -56,16 +56,7 @@
                             <tr>
                                 <td>@apiUser.ExternalSystemId</td>
                                 <td>@apiUser.CompanyId</td>
-                                <td>
-                                    @if (apiUser.FullName == apiUser.TradingName)
-                                    {
-                                        <span>@apiUser.FullName</span>
-                                    }
-                                    else
-                                    {
-                                        <span>@apiUser.TradingName (@apiUser.FullName)</span>
-                                    }
-                                </td>
+                                <td>@apiUser.CompanyName</td>
                                 <td>@apiUser.BusinessCategory</td>
                                 <td>@apiUser.EmployeeType</td>
                                 <td>@string.Join(", ", apiUser.AuthorisedApiEndpoints)</td>

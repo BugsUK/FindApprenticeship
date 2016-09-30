@@ -57,6 +57,22 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
             return externalSystemPermissions.Select(MapApiUser);
         }
 
+        public ApiUser GetApiUser(Guid externalSystemId)
+        {
+            var sql = @"SELECT esp.*, 
+  COALESCE(p.FullName, e.FullName, tp.ThirdPartyName) AS FullName, 
+  COALESCE(p.TradingName, e.TradingName, tp.ThirdPartyName) AS TradingName 
+  FROM ExternalSystemPermission esp
+  LEFT JOIN Provider p ON esp.Company = p.UKPRN
+  LEFT JOIN Employer e ON esp.Company = e.EDSURN
+  LEFT JOIN ThirdParty tp ON esp.Company = tp.EDSURN 
+  WHERE Username = @ExternalSystemId";
+
+            var externalSystemPermission = _getOpenConnection.Query<ExternalSystemPermission>(sql, new { externalSystemId }).Single();
+
+            return MapApiUser(externalSystemPermission);
+        }
+
         private static ApiUser MapApiUser(ExternalSystemPermission externalSystemPermission)
         {
             var apiUser = new ApiUser
