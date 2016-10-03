@@ -95,8 +95,8 @@
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
-                        ClosingDate = new DateViewModel(DateTime.Now),
-                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                        ClosingDate = new DateViewModel(new DateTime(2016, 09, 01)),
+                        PossibleStartDate = new DateViewModel(new DateTime(2016, 09, 08))
                     },
                     Wage = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, hoursPerWeek)
                 },
