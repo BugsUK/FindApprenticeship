@@ -183,6 +183,7 @@
             }
             return RedirectToRoute(RecruitmentRouteNames.AdminProviders, viewModel.SearchViewModel);
         }
+
         public ActionResult ChooseProvider(ProviderSearchResultsViewModel resultsViewModel)
         {
             return View("ChooseProvider");

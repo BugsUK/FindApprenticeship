@@ -206,13 +206,25 @@
                             }
                         }
                     }
-                }                    
+                }
                 transferVacanciesResultsViewModel.VacanciesToBeTransferredVm = vacanciesToBeTransferred;
                 return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.Ok, transferVacanciesResultsViewModel);
             }
             catch (CustomException exception) when (exception.Code == ErrorCodes.ProviderVacancyAuthorisation.Failed)
             {
                 return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation, new TransferVacanciesResultsViewModel(), TransferVacanciesMessages.UnAuthorisedAccess, UserMessageLevel.Warning);
+            }
+        }
+
+        public MediatorResponse<ManageVacancyTransferResultsViewModel> ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        {
+            try
+            {
+                return new MediatorResponse<ManageVacancyTransferResultsViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
