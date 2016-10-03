@@ -13,6 +13,7 @@
     using Raa.Common.ViewModels.Admin;
     using Raa.Common.ViewModels.Provider;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
     using System.Web.Mvc;
 
@@ -113,7 +114,8 @@
         public ActionResult Providers(ProviderSearchViewModel viewModel)
         {
             var response = _adminMediator.SearchProviders(viewModel);
-
+            response.ViewModel.VacancyReferenceNumbers = viewModel.VacancyReferenceNumbers.Split(',').Select(int.Parse).ToList();
+            //response.ViewModel.SearchViewModel.VacancyReferenceNumbers = viewModel.VacancyReferenceNumbers;
             ModelState.Clear();
 
             switch (response.Code)
@@ -131,20 +133,21 @@
         }
 
         [HttpGet]
-        public ActionResult Provider(int providerId, List<int> vacancyreferencenumbers)
+        public ActionResult Provider(int providerId, string vacancyreferencenumbers)
         {
             var response = _adminMediator.GetProvider(providerId);
-
+            response.ViewModel.VacanciesReferenceNumbers = vacancyreferencenumbers;
             return View(response.ViewModel);
         }
 
         [HttpGet]
-        public ActionResult ManageVacanciesTransfers(int providerId, int providerSiteId)
+        public ActionResult ManageVacanciesTransfers(int providerId, int providerSiteId, string vacancyreferencenumbers)
         {
             var manageVacancyViewModel = new ManageVacancyTransferViewModel
             {
                 ProviderId = providerId,
-                ProviderSiteId = providerSiteId
+                ProviderSiteId = providerSiteId,
+                VacancyReferenceNumbers = vacancyreferencenumbers.Split(',').Select(int.Parse).ToList()
             };
             return View(manageVacancyViewModel);
         }

@@ -8,9 +8,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin
     {
         public IList<int> VacancyReferenceNumbers { get; set; }
 
-        [Display(Name = "ProviderId")]
+        [Display(Name = "ProviderName")]
+        public string ProviderName { get; set; }
+        [Display(Name = "ProviderSiteName")]
+        public string ProviderSiteName { get; set; }
+
         public int ProviderId { get; set; }
-        [Display(Name = "ProviderSiteId")]
         public int ProviderSiteId { get; set; }
+
+
     }
 }

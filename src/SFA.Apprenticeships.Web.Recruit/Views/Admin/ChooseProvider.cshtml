@@ -8,9 +8,9 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.SearchProvider))
 {
     @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
-    if (Model.VacancyReferenceNumbers != null)
-    {
+    @Html.Partial("ValidationSummary", ViewData.ModelState)               
+        if (Model.VacancyReferenceNumbers != null)
+        {
         <h2>Vacancy Reference Numbers:</h2>
         <ul>
             @foreach (var number in Model.VacancyReferenceNumbers)
@@ -32,46 +32,45 @@
         <div class="form-group">
             <button id="search-providers-button" type="submit" class="button" name="SearchProvidersAction" value="SearchProviders">Search Providers</button>
         </div>
-    </div>
-
+    </div>  
     if (Model != null && Model.Providers != null && Model.Providers.Count > 0)
-    {
+    {        
         <div class="grid-wrapper">
-            <div class="grid grid-1-1">
-                <table>
-                    <colgroup>
-                        <col>
-                        <col>
-                        <col>
-                        <col>
-                        <col>
-                        <col>
-                    </colgroup>
-                    <thead>
+        <div class="grid grid-1-1">
+            <table>
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>UKPRN</th>
+                        <th>Full Name</th>
+                        <th>Trading Name</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var provider in Model.Providers)
+                    {                        
                         <tr>
-                            <th>ID</th>
-                            <th>UKPRN</th>
-                            <th>Full Name</th>
-                            <th>Trading Name</th>
-                            <th>Status</th>
-                            <th></th>
+                            <td>@provider.ProviderId</td>
+                            <td>@provider.Ukprn</td>
+                            <td>@provider.FullName</td>
+                            <td>@provider.TradingName</td>
+                            <td>@provider.ProviderStatusType</td>
+                            <td>@Html.RouteLink("Select Provider", RecruitmentRouteNames.AdminViewProvider, new { provider.ProviderId,Model.SearchViewModel.VacancyReferenceNumbers })</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var provider in Model.Providers)
-                        {
-                            <tr>
-                                <td>@provider.ProviderId</td>
-                                <td>@provider.Ukprn</td>
-                                <td>@provider.FullName</td>
-                                <td>@provider.TradingName</td>
-                                <td>@provider.ProviderStatusType</td>
-                                <td>@Html.RouteLink("Select Provider", RecruitmentRouteNames.AdminViewProvider, new { provider.ProviderId })</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
+    </div>
     }
 }

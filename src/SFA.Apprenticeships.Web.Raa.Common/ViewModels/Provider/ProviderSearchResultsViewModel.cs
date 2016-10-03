@@ -9,5 +9,6 @@
         public IList<ProviderViewModel> Providers { get; set; }
 
         public IList<int> VacancyReferenceNumbers { get; set; }
+        
     }
 }
