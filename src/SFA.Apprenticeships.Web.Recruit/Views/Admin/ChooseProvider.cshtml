@@ -5,13 +5,24 @@
     ViewBag.Title = "Choose Provider";
 }
 
-<h1 id="heading" class="heading-xlarge">Choose Provider</h1>
-
 @using (Html.BeginRouteForm(RecruitmentRouteNames.SearchProvider))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
-
+    if (Model.VacancyReferenceNumbers != null)
+    {
+        <h2>Vacancy Reference Numbers:</h2>
+        <ul>
+            @foreach (var number in Model.VacancyReferenceNumbers)
+            {
+                <li>@number</li>
+                @Html.Hidden("VacancyReferenceNumbers", number)
+            }
+        </ul>
+        <hr />
+        <br />
+    }
+    <h1 id="heading" class="heading-xlarge">Choose Provider</h1>
     <div class="form-group">
 
         @Html.FormTextFor(m => m.SearchViewModel.Id, controlHtmlAttributes: new { type = "tel", size = 8 })
@@ -23,7 +34,7 @@
         </div>
     </div>
 
-    if (Model!=null && Model.Providers != null && Model.Providers.Count > 0)
+    if (Model != null && Model.Providers != null && Model.Providers.Count > 0)
     {
         <div class="grid-wrapper">
             <div class="grid grid-1-1">

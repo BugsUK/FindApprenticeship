@@ -8,10 +8,9 @@
 <h1 id="heading" class="heading-xlarge">Transfer Vacancies</h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmVacancies))
+{
+    if (Model != null && Model.VacanciesToBeTransferredVm != null && Model.VacanciesToBeTransferredVm.Any())
     {
-        if (Model != null && Model.VacanciesToBeTransferredVm!=null && Model.VacanciesToBeTransferredVm.Any())
-        {
-        <p>Select vacancies you need to transfer</p>
         <div class="grid-wrapper">
             <div class="grid grid-1-1">
                 <table>
@@ -24,7 +23,7 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>Select</th>
+                            @*<th>Select</th>*@
                             <th>Vacancy Reference Number</th>
                             <th>Provider Name</th>
                             <th>ProviderSite Name</th>
@@ -32,11 +31,11 @@
                     </thead>
                     <tbody>
                         @foreach (var viewModel in Model.VacanciesToBeTransferredVm)
-{
+                        {
                             <tr>
-                                <td>@Html.CheckBoxFor(x => viewModel.Selected)</td>
+                                @*<td>@Html.CheckBoxFor(x => viewModel.Selected)</td>*@
                                 <td>@viewModel.VacancyReferenceNumber </td>
-                                    @Html.Hidden("VacancyReferenceNumber", viewModel.VacancyReferenceNumber)
+                                @Html.Hidden("VacancyReferenceNumber", viewModel.VacancyReferenceNumber)
                                 <td>@viewModel.ProviderName </td>
                                 <td>@viewModel.ProviderSiteName </td>
                             </tr>
@@ -46,10 +45,12 @@
             </div>
         </div>
         <div class="form-group">
-           <div class="form-group">
-               <button id="add-provider-site-relationship-button" type="submit" class="button" name="ChooseProviderAction" 
-                       value="ChooseProvider">Choose Provider</button>
-            </div>           
+            <div class="form-group">
+                <button id="add-provider-site-relationship-button" type="submit" class="button" name="ChooseProviderAction"
+                        value="ChooseProvider">
+                    Choose Provider
+                </button>
+            </div>
         </div>
     }
 }

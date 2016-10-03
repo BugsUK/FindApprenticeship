@@ -12,6 +12,7 @@
     using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Admin;
     using Raa.Common.ViewModels.Provider;
+    using System.Collections.Generic;
     using System.Security.Claims;
     using System.Web.Mvc;
 
@@ -99,9 +100,13 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "ChooseProviderAction")]
-        public ActionResult ChooseProvider(TransferVacanciesResultsViewModel vacanciesToBeTransferredVm)
+        public ActionResult ChooseProvider(List<int> vacancyreferencenumber)
         {
-            return View();
+            ProviderSearchResultsViewModel providerSearchResultsViewModel = new ProviderSearchResultsViewModel()
+            {
+                VacancyReferenceNumbers = vacancyreferencenumber
+            };
+            return View(providerSearchResultsViewModel);
         }
 
         [HttpGet]
@@ -126,7 +131,7 @@
         }
 
         [HttpGet]
-        public ActionResult Provider(int providerId)
+        public ActionResult Provider(int providerId, List<int> vacancyreferencenumbers)
         {
             var response = _adminMediator.GetProvider(providerId);
 
@@ -157,27 +162,15 @@
         public ActionResult SearchProviders(ProviderSearchResultsViewModel viewModel)
         {
             viewModel.SearchViewModel.PerformSearch = true;
+            if (viewModel.VacancyReferenceNumbers != null)
+            {
+                viewModel.SearchViewModel.VacancyReferenceNumbers = string.Join(",", viewModel.VacancyReferenceNumbers);
+            }
             return RedirectToRoute(RecruitmentRouteNames.AdminProviders, viewModel.SearchViewModel);
         }
         public ActionResult ChooseProvider(ProviderSearchResultsViewModel resultsViewModel)
         {
             return View("ChooseProvider");
         }
-
-        //[HttpPost]
-        //public ActionResult ConfirmVacancies(TransferVacanciesResultsViewModel resultsViewModel)
-        //{
-        //    return View("ChooseProvider");
-        //}
-
-        //[HttpPost]
-        //[MultipleFormActionsButton(SubmitButtonActionName = "ChooseProviderAction")]
-        //public ActionResult ChooseProvider(TransferVacanciesResultsViewModel resultsViewModel, TransferVacancyViewModel viewModel)
-        //{
-        //    return View();
-        //}
-
-
-
     }
 }

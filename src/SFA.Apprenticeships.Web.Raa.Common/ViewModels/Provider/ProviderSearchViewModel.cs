@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 {
-    using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
+    using System.ComponentModel.DataAnnotations;
     using Validators.Provider;
 
     [Validator(typeof(ProviderSearchViewModelClientValidator))]
@@ -16,5 +16,7 @@
         public string Name { get; set; }
 
         public bool PerformSearch { get; set; }
+
+        public string VacancyReferenceNumbers { get; set; }
     }
 }
