@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Api;
 
     public class ApiUserViewModel
@@ -10,7 +11,7 @@
         public string CompanyId { get; set; }
         public ApiBusinessCategory BusinessCategory { get; set; }
         public ApiEmployeeType EmployeeType { get; set; }
-        public IList<ApiEndpoint> AuthorisedApiEndpoints { get; set; }
+        public IList<ApiEndpointViewModel> ApiEndpoints { get; set; }
         public string FullName { get; set; }
         public string TradingName { get; set; }
 
@@ -22,10 +23,16 @@
                 {
                     return FullName;
                 }
-                else
-                {
-                    return $"{TradingName} ({FullName})";
-                }
+                return $"{TradingName} ({FullName})";
+            }
+        }
+
+        public string AuthorisedApiEndpoints
+        {
+            get
+            {
+                return string.Join(", ",
+                    ApiEndpoints.Where(ae => ae.Authorised).Select(ae => ae.Endpoint).OrderBy(ae => ae));
             }
         }
     }

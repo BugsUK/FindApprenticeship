@@ -203,6 +203,8 @@
     <Compile Include="Extensions\CandidateSearchExtensions.cs" />
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Mappers\Resolvers\ApiEndpointConverter.cs" />
+    <Compile Include="Mappers\Resolvers\ApiEndpointViewModelConverter.cs" />
     <Compile Include="Mappers\ApiUserMappers.cs" />
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mappers\ProviderMappers.cs" />
@@ -250,6 +252,7 @@
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteRelationshipViewModelValidator.cs" />
+    <Compile Include="ViewModels\Api\ApiEndpointViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserSearchViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserViewModel.cs" />

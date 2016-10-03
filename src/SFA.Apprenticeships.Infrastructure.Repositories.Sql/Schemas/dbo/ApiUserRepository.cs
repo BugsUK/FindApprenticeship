@@ -81,7 +81,7 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
                 CompanyId = externalSystemPermission.Company,
                 BusinessCategory = (ApiBusinessCategory)Enum.Parse(typeof(ApiBusinessCategory), externalSystemPermission.Businesscategory),
                 EmployeeType = (ApiEmployeeType)Enum.Parse(typeof(ApiEmployeeType), externalSystemPermission.Employeetype),
-                AuthorisedApiEndpoints = externalSystemPermission.UserParameters.Split(',').Select(s => ApiEndpointsMap[s]).ToList(),
+                AuthorisedApiEndpoints = externalSystemPermission.UserParameters.Split(',').Where(s => ApiEndpointsMap.ContainsKey(s)).Select(s => ApiEndpointsMap[s]).ToList(),
                 FullName = externalSystemPermission.FullName,
                 TradingName = externalSystemPermission.TradingName
             };
