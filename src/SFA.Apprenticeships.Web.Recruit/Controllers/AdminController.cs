@@ -161,6 +161,7 @@
         [HttpPost]
         public ActionResult ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel)
         {
+            var response = _adminMediator.ManageVacanciesTransfers(vacancyTransferViewModel);
             return View(vacancyTransferViewModel);
         }
 

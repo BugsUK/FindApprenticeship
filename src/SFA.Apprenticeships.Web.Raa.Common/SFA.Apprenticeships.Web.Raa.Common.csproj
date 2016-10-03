@@ -214,6 +214,7 @@
     <Compile Include="Mediators\Admin\AdminMediator.cs" />
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
+    <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />
     <Compile Include="Mediators\Admin\TransferVacanciesMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
