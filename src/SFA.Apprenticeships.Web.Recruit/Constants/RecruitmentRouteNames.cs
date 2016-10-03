@@ -114,5 +114,10 @@
         public static string AdminViewProvider = "AdminViewProvider";
         public static string ConfirmVacancies = "ConfirmVacancies";
         public static string SearchProvider = "SearchProvider";
+        public static string AdminProviders = "AdminProviders";
+        public static string AdminViewProviderSite = "AdminViewProviderSite";
+        public static string AdminProviderSites = "AdminProviderSites";
+        public static string AdminEditProviderSite = "AdminEditProviderSite";
+        public static string ManageVacanciesTransfers = "ManageVacanciesTransfers";
     }
 }

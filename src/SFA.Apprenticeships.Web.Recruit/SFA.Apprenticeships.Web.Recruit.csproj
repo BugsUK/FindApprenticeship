@@ -891,6 +891,9 @@
     <Content Include="Views\Admin\TransferVacancies.cshtml" />
     <Content Include="Views\Admin\ChooseProvider.cshtml" />
     <Content Include="Views\Admin\ConfirmVacancies.cshtml" />
+    <Content Include="Views\Admin\Provider.cshtml" />
+    <Content Include="Views\Admin\ProviderSite.cshtml" />
+    <Content Include="Views\Admin\ManageVacanciesTransfers.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

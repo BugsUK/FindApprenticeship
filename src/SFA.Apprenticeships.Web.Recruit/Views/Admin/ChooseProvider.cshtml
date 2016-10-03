@@ -7,7 +7,7 @@
 
 <h1 id="heading" class="heading-xlarge">Choose Provider</h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ChooseProvider))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.SearchProvider))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

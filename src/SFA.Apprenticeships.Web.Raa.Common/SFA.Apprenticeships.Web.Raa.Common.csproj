@@ -250,6 +250,7 @@
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteRelationshipViewModelValidator.cs" />
     <Compile Include="ViewModels\Admin\ChangeUkprnViewModel.cs" />
+    <Compile Include="ViewModels\Admin\ManageVacancyTransferViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacanciesResultsViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacanciesViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacancyViewModel.cs" />

@@ -448,7 +448,31 @@
             routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmVacancies,
                url: "admin/transfervacancies/confirmvacancies",
-               defaults: new { controller = "Admin", action = "ChooseProviders" }
+               defaults: new { controller = "Admin", action = "ChooseProvider" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminProviders,
+               url: "admin/providers",
+               defaults: new { controller = "Admin", action = "Providers" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminViewProvider,
+               url: "admin/provider",
+               defaults: new { controller = "Admin", action = "Provider" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ManageVacanciesTransfers,
+               url: "admin/managevacanciestransfers",
+               defaults: new { controller = "Admin", action = "ManageVacanciesTransfers" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminViewProviderSite,
+               url: "admin/providersite",
+               defaults: new { controller = "Admin", action = "ProviderSite" }
                );
 
             routes.MapRoute(

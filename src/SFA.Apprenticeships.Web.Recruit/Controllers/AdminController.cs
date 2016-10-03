@@ -87,7 +87,6 @@
                 {
                     case AdminMediatorCodes.GetVacancyDetails.Ok:
                         return View("ConfirmVacancies", response.ViewModel);
-                    //return View(response.ViewModel);
                     case AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View();
@@ -126,7 +125,40 @@
             }
         }
 
+        [HttpGet]
+        public ActionResult Provider(int providerId)
+        {
+            var response = _adminMediator.GetProvider(providerId);
 
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ManageVacanciesTransfers(int providerId, int providerSiteId)
+        {
+            var manageVacancyViewModel = new ManageVacancyTransferViewModel
+            {
+                ProviderId = providerId,
+                ProviderSiteId = providerSiteId
+            };
+            return View(manageVacancyViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ProviderSite(int providerSiteId)
+        {
+            var response = _adminMediator.GetProviderSite(providerSiteId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchProvidersAction")]
+        public ActionResult SearchProviders(ProviderSearchResultsViewModel viewModel)
+        {
+            viewModel.SearchViewModel.PerformSearch = true;
+            return RedirectToRoute(RecruitmentRouteNames.AdminProviders, viewModel.SearchViewModel);
+        }
         public ActionResult ChooseProvider(ProviderSearchResultsViewModel resultsViewModel)
         {
             return View("ChooseProvider");
