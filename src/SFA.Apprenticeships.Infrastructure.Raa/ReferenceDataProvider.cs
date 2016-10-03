@@ -117,6 +117,7 @@
         {
             var occupations = _referenceRepository.GetOccupations().ToList();
 
+            //TODO: We may be unnuecessarily doing this twice (once in the repo and then again here)
             occupations.ForEach(o =>
             {
                 o.Frameworks.ToList().ForEach(f => f.ParentCategoryCodeName = o.CodeName);
