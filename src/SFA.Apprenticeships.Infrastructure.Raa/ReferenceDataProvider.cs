@@ -32,6 +32,7 @@
                 var sectorSubjectAreaTier1Category = categories.Single(c => c.Id == sectorSubjectAreaTier1Id);
                 var standards = standardSector.Standards.Select(s => new Category(s.Id, CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard)).ToList();
                 var standardSectorCategory = new Category(standardSector.Id, standardSectorCode, standardSector.Name, CategoryPrefixes.GetSectorSubjectAreaTier1Code(sectorSubjectAreaTier1Category.CodeName), CategoryType.StandardSector, standards);
+                //TODO: indiscriminate addition here may lead to the subsequent need to de-duplicate subCategories
                 sectorSubjectAreaTier1Category.SubCategories.Add(standardSectorCategory);
             }
 
