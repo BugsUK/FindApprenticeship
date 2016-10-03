@@ -141,15 +141,27 @@
         }
 
         [HttpGet]
-        public ActionResult ManageVacanciesTransfers(int providerId, int providerSiteId, string vacancyreferencenumbers)
+        public ActionResult ManageVacanciesTransfers(int providerId, int providerSiteId, string vacanciesReferenceNumbers)
         {
+            var providerResponse = _adminMediator.GetProvider(providerId);
+            var providerSiteResponse = _adminMediator.GetProviderSite(providerSiteId);
             var manageVacancyViewModel = new ManageVacancyTransferViewModel
             {
                 ProviderId = providerId,
+                ProviderName = providerResponse.ViewModel.FullName,
                 ProviderSiteId = providerSiteId,
-                VacancyReferenceNumbers = vacancyreferencenumbers.Split(',').Select(int.Parse).ToList()
+                ProviderSiteName = providerSiteResponse.ViewModel.DisplayName + "(" + providerSiteResponse.ViewModel.EdsUrn + ")"
             };
+            if (vacanciesReferenceNumbers != null)
+                manageVacancyViewModel.VacancyReferenceNumbers =
+                    vacanciesReferenceNumbers.Split(',').Select(int.Parse).ToList();
             return View(manageVacancyViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        {
+            return View(vacancyTransferViewModel);
         }
 
         [HttpGet]
