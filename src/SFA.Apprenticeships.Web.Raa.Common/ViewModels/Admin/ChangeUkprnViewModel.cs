@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Admin
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin
 {
     using System.ComponentModel.DataAnnotations;
 

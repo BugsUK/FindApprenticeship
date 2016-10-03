@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
-    using System.Web;
     using Application.Candidate;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
@@ -28,8 +27,8 @@
     using Application.Reporting;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
-    using Application.VacancyPosting.Strategies;
     using Application.Vacancy;
+    using Application.VacancyPosting.Strategies;
     using Common.Configuration;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Common.IoC;
@@ -39,9 +38,9 @@
     using Infrastructure.Repositories.Sql.Schemas.dbo;
     using Infrastructure.Security;
     using Mappers;
-    using Mediators.Admin;
     using Mediators.Application;
     using Mediators.Candidate;
+    using Mediators.Home;
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.Report;
@@ -49,11 +48,12 @@
     using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
     using Raa.Common.Mappers;
+    using Raa.Common.Mediators.Admin;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Application;
-    using Mediators.Home;
     using StructureMap;
     using StructureMap.Configuration.DSL;
+    using System.Web;
     using CandidateRepository = Infrastructure.Repositories.Mongo.Candidates.CandidateRepository;
     using ISubmitContactMessageStrategy = Application.UserAccount.Strategies.ProviderUserAccount.ISubmitContactMessageStrategy;
     using SubmitContactMessageStrategy = Application.UserAccount.Strategies.ProviderUserAccount.SubmitContactMessageStrategy;
@@ -168,7 +168,7 @@
             For<IApplicationMediator>().Use<ApplicationMediator>();
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
-            For<IHomeMediator>().Use<HomeMediator>();            
+            For<IHomeMediator>().Use<HomeMediator>();
             For<IReportMediator>().Use<ReportMediator>();
             For<IVacancyManagementMediator>().Use<VacancyManagementMediator>();
             For<ICandidateMediator>().Use<CandidateMediator>();

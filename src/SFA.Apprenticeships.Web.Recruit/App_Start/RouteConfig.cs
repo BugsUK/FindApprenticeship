@@ -440,6 +440,18 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.SearchProvider,
+               url: "admin/transfervacancies/searchprovider",
+               defaults: new { controller = "Admin", action = "SearchProvider" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ConfirmVacancies,
+               url: "admin/transfervacancies/confirmvacancies",
+               defaults: new { controller = "Admin", action = "ChooseProviders" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.CandidateSearch,
                url: "candidates",
                defaults: new { controller = "Candidate", action = "Index" }

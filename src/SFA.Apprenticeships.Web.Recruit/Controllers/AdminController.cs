@@ -2,15 +2,18 @@
 {
     using Application.Interfaces;
     using Attributes;
+    using Common.Attributes;
     using Common.Extensions;
     using Common.Mediators;
     using Common.Providers;
     using Constants;
     using Domain.Entities.Raa;
-    using Mediators.Admin;
+    using FluentValidation.Mvc;
+    using Raa.Common.Mediators.Admin;
+    using Raa.Common.ViewModels.Admin;
+    using Raa.Common.ViewModels.Provider;
     using System.Security.Claims;
     using System.Web.Mvc;
-    using ViewModels.Admin;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.Admin)]
@@ -83,16 +86,66 @@
                 switch (response.Code)
                 {
                     case AdminMediatorCodes.GetVacancyDetails.Ok:
-                        return View(response.ViewModel);
+                        return View("ConfirmVacancies", response.ViewModel);
+                    //return View(response.ViewModel);
                     case AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View(response.ViewModel);
+                        return View();
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
-
             }
             return View();
         }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ChooseProviderAction")]
+        public ActionResult ChooseProvider(TransferVacanciesResultsViewModel vacanciesToBeTransferredVm)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Providers(ProviderSearchViewModel viewModel)
+        {
+            var response = _adminMediator.SearchProviders(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SearchProviders.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("ChooseProvider", response.ViewModel);
+
+                case AdminMediatorCodes.SearchProviders.Ok:
+                    return View("ChooseProvider", response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+
+        public ActionResult ChooseProvider(ProviderSearchResultsViewModel resultsViewModel)
+        {
+            return View("ChooseProvider");
+        }
+
+        //[HttpPost]
+        //public ActionResult ConfirmVacancies(TransferVacanciesResultsViewModel resultsViewModel)
+        //{
+        //    return View("ChooseProvider");
+        //}
+
+        //[HttpPost]
+        //[MultipleFormActionsButton(SubmitButtonActionName = "ChooseProviderAction")]
+        //public ActionResult ChooseProvider(TransferVacanciesResultsViewModel resultsViewModel, TransferVacancyViewModel viewModel)
+        //{
+        //    return View();
+        //}
+
+
+
     }
 }

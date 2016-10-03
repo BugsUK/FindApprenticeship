@@ -10,7 +10,8 @@
     using Domain.Entities.Vacancies;
     using System;
     using System.Collections.Generic;
-    using ViewModels.Admin;
+    using Raa.Common.Mediators.Admin;
+    using Raa.Common.ViewModels.Admin;
 
     public class AdminMediator : MediatorBase, IAdminMediator
     {
@@ -23,39 +24,48 @@
             _providerService = providerService;
         }
 
-        public MediatorResponse<TransferVacanciesViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel)
+        public MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel)
         {
             try
             {
-                viewModel.VacanciesToBeTransferredVm = new List<TransferVacancyViewModel>();
+                IList<TransferVacancyViewModel> vacanciesToBeTransferred = new List<TransferVacancyViewModel>();
+                TransferVacanciesResultsViewModel transferVacanciesResultsViewModel = new TransferVacanciesResultsViewModel()
+                {
+                    TransferVacanciesViewModel = viewModel
+                };
+
                 foreach (var vacancy in viewModel.VacancyReferenceNumbers.Split(','))
                 {
                     string vacancyReference;
                     if (VacancyHelper.TryGetVacancyReference(vacancy, out vacancyReference))
                     {
                         Vacancy vacancyDetails = _vacancyPostingService.GetVacancyByReferenceNumber(Convert.ToInt32(vacancyReference));
-                        TransferVacancyViewModel vacancyView = new TransferVacancyViewModel
+                        if (vacancyDetails != null)
                         {
-                            ContractOwnerId = vacancyDetails.ProviderId,
-                            VacancyManagerId = vacancyDetails.VacancyManagerId,
-                            VacancyReferenceNumber = vacancyDetails.VacancyReferenceNumber,
-                            DeliveryOrganisationId = vacancyDetails.DeliveryOrganisationId,
-                            VacancyOwnerRelationShipId = vacancyDetails.VacancyOwnerRelationshipId,
-                            ProviderName = _providerService.GetProvider(vacancyDetails.ProviderId).TradingName,
-                        };
-                        if (vacancyDetails.VacancyManagerId.HasValue)
-                        {
-                            vacancyView.ProviderSiteName =
-                                _providerService.GetProviderSite(vacancyDetails.VacancyManagerId.Value).TradingName;
+                            TransferVacancyViewModel vacancyView = new TransferVacancyViewModel
+                            {
+                                ContractOwnerId = vacancyDetails.ProviderId,
+                                VacancyManagerId = vacancyDetails.VacancyManagerId,
+                                VacancyReferenceNumber = vacancyDetails.VacancyReferenceNumber,
+                                DeliveryOrganisationId = vacancyDetails.DeliveryOrganisationId,
+                                VacancyOwnerRelationShipId = vacancyDetails.VacancyOwnerRelationshipId,
+                                ProviderName = _providerService.GetProvider(vacancyDetails.ProviderId).TradingName,
+                            };
+                            if (vacancyDetails.VacancyManagerId.HasValue)
+                            {
+                                vacancyView.ProviderSiteName =
+                                    _providerService.GetProviderSite(vacancyDetails.VacancyManagerId.Value).TradingName;
+                            }
+                            vacanciesToBeTransferred.Add(vacancyView);
                         }
-                        viewModel.VacanciesToBeTransferredVm.Add(vacancyView);
                     }
                 }
-                return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.Ok, viewModel);
+                transferVacanciesResultsViewModel.VacanciesToBeTransferredVm = vacanciesToBeTransferred;
+                return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.Ok, transferVacanciesResultsViewModel);
             }
             catch (CustomException exception) when (exception.Code == ErrorCodes.ProviderVacancyAuthorisation.Failed)
             {
-                return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation, new TransferVacanciesViewModel(), TransferVacanciesMessages.UnAuthorisedAccess, UserMessageLevel.Warning);
+                return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation, new TransferVacanciesResultsViewModel(), TransferVacanciesMessages.UnAuthorisedAccess, UserMessageLevel.Warning);
             }
         }
     }

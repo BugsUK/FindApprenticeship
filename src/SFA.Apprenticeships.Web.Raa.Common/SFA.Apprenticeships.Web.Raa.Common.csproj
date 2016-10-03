@@ -211,6 +211,10 @@
     <Compile Include="Mappers\Resolvers\VacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
+    <Compile Include="Mediators\Admin\AdminMediator.cs" />
+    <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
+    <Compile Include="Mediators\Admin\IAdminMediator.cs" />
+    <Compile Include="Mediators\Admin\TransferVacanciesMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\CandidateProvider.cs" />
@@ -245,6 +249,10 @@
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteRelationshipViewModelValidator.cs" />
+    <Compile Include="ViewModels\Admin\ChangeUkprnViewModel.cs" />
+    <Compile Include="ViewModels\Admin\TransferVacanciesResultsViewModel.cs" />
+    <Compile Include="ViewModels\Admin\TransferVacanciesViewModel.cs" />
+    <Compile Include="ViewModels\Admin\TransferVacancyViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSearchViewModel.cs" />
