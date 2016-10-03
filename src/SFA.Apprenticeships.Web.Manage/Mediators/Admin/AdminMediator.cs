@@ -19,6 +19,7 @@
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
         private readonly ProviderSiteRelationshipViewModelServerValidator _providerSiteRelationshipViewModelServerValidator = new ProviderSiteRelationshipViewModelServerValidator();
         private readonly ApiUserSearchViewModelServerValidator _apiUserSearchViewModelServerValidator = new ApiUserSearchViewModelServerValidator();
+        private readonly ApiUserViewModelServerValidator _apiUserViewModelServerValidator = new ApiUserViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
         private readonly IApiUserProvider _apiUserProvider;
@@ -185,7 +186,22 @@
 
         public MediatorResponse<ApiUserViewModel> CreateApiUser(ApiUserViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var validatonResult = _apiUserViewModelServerValidator.Validate(viewModel);
+
+            if (!validatonResult.IsValid)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.FailedValidation, viewModel, validatonResult);
+            }
+
+            var searchResultsViewModel = _apiUserProvider.SearchApiUsers(new ApiUserSearchViewModel {Id = viewModel.CompanyId, PerformSearch = true});
+            if (searchResultsViewModel.ApiUsers.Count > 0)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists, viewModel, ApiUserViewModelMessages.CompanyIdAlreadyExists, UserMessageLevel.Error);
+            }
+
+            viewModel = _apiUserProvider.CreateApiUser(viewModel);
+
+            return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.Ok, viewModel, ApiUserViewModelMessages.ApiUserCreatedSuccessfully, UserMessageLevel.Info);
         }
 
         public MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel)

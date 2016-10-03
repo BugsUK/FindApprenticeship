@@ -249,6 +249,7 @@
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Providers\VacancyStatusChangeProvider.cs" />
     <Compile Include="Validators\Api\ApiUserSearchViewModelServerValidator.cs" />
+    <Compile Include="Validators\Api\ApiUserViewModelValidator.cs" />
     <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />

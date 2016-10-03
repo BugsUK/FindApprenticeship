@@ -890,7 +890,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Validators\Admin\" />
     <Folder Include="ViewModels\Admin\" />
   </ItemGroup>
   <ItemGroup>

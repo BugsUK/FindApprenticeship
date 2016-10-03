@@ -277,7 +277,7 @@
                     response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
                     return View(response.ViewModel);
 
-                case AdminMediatorCodes.CreateApiUser.EdsUrnAlreadyExists:
+                case AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists:
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateApiUser.Ok:
