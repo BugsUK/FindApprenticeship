@@ -182,5 +182,26 @@
 
             return GetMediatorResponse(AdminMediatorCodes.GetApiUser.Ok, viewModel);
         }
+
+        public MediatorResponse<ApiUserViewModel> CreateApiUser(ApiUserViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _apiUserProvider.SaveApiUser(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveApiUser.Ok, viewModel, ApiUserViewModelMessages.ApiUserSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save api user with external system id={viewModel.ExternalSystemId}", ex);
+                viewModel = _apiUserProvider.GetApiUserViewModel(viewModel.ExternalSystemId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveApiUser.Error, viewModel, ApiUserViewModelMessages.ApiUserSaveError, UserMessageLevel.Error);
+            }
+        }
     }
 }

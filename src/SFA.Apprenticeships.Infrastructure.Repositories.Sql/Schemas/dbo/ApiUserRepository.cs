@@ -22,6 +22,15 @@
             {"ATS", ApiEndpoint.ApplicationTracking}
         };
 
+        private static readonly IDictionary<ApiEndpoint, string> ApiEndpointsCodeMap = new Dictionary<ApiEndpoint, string>
+        {
+            {ApiEndpoint.VacancySummary, "VSI"},
+            {ApiEndpoint.VacancyDetail, "VDI"},
+            {ApiEndpoint.ReferenceData, "RDS"},
+            {ApiEndpoint.BulkVacancyUpload, "BVU"},
+            {ApiEndpoint.ApplicationTracking, "ATS"}
+        };
+
         public ApiUserRepository(IGetOpenConnection getOpenConnection)
         {
             _getOpenConnection = getOpenConnection;
@@ -71,6 +80,24 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
             var externalSystemPermission = _getOpenConnection.Query<ExternalSystemPermission>(sql, new { externalSystemId }).Single();
 
             return MapApiUser(externalSystemPermission);
+        }
+
+        public ApiUser Create(ApiUser apiUser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ApiUser Update(ApiUser apiUser)
+        {
+            var sql = "SELECT * FROM ExternalSystemPermission esp WHERE Username = @ExternalSystemId";
+
+            var externalSystemPermission = _getOpenConnection.Query<ExternalSystemPermission>(sql, new { apiUser.ExternalSystemId }).Single();
+
+            externalSystemPermission.UserParameters = string.Join(",", apiUser.AuthorisedApiEndpoints.Select(ae => ApiEndpointsCodeMap[ae]));
+
+            _getOpenConnection.UpdateSingle(externalSystemPermission);
+
+            return GetApiUser(apiUser.ExternalSystemId);
         }
 
         private static ApiUser MapApiUser(ExternalSystemPermission externalSystemPermission)

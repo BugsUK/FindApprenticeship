@@ -171,6 +171,7 @@
     <Compile Include="Configuration\RecruitWebConfiguration.cs" />
     <Compile Include="Constants\Pages\PrivacyPageMessages.cs" />
     <Compile Include="Constants\ViewModels\ApiUserSearchViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ApiUserViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />

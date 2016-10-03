@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Raa.Api;
     using Domain.Raa.Interfaces.Repositories;
@@ -46,6 +47,23 @@
         public ApiUserViewModel GetApiUserViewModel(Guid externalSystemId)
         {
             return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.GetApiUser(externalSystemId));
+        }
+
+        public ApiUserViewModel CreateApiUser(ApiUserViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ApiUserViewModel SaveApiUser(ApiUserViewModel viewModel)
+        {
+            var apiUser = _apiUserRepository.GetApiUser(viewModel.ExternalSystemId);
+
+            //Copy over changes
+            apiUser.AuthorisedApiEndpoints = _apiUserMappers.Map<IList<ApiEndpointViewModel>, IList<ApiEndpoint>>(viewModel.ApiEndpoints);
+
+            var updatedApiUser = _apiUserRepository.Update(apiUser);
+
+            return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(updatedApiUser);
         }
     }
 }

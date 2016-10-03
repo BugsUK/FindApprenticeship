@@ -8,6 +8,7 @@
     public class ApiUserViewModel
     {
         public Guid ExternalSystemId { get; set; }
+        public string Password { get; set; }
         public string CompanyId { get; set; }
         public ApiBusinessCategory BusinessCategory { get; set; }
         public ApiEmployeeType EmployeeType { get; set; }
@@ -31,8 +32,7 @@
         {
             get
             {
-                return string.Join(", ",
-                    ApiEndpoints.Where(ae => ae.Authorised).Select(ae => ae.Endpoint).OrderBy(ae => ae));
+                return string.Join(", ", ApiEndpoints.Where(ae => ae.Authorised).Select(ae => ae.Endpoint));
             }
         }
     }

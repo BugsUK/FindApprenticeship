@@ -7,5 +7,7 @@
     {
         ApiUserSearchResultsViewModel SearchApiUsers(ApiUserSearchViewModel searchViewModel);
         ApiUserViewModel GetApiUserViewModel(Guid externalSystemId);
+        ApiUserViewModel CreateApiUser(ApiUserViewModel viewModel);
+        ApiUserViewModel SaveApiUser(ApiUserViewModel viewModel);
     }
 }

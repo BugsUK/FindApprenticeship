@@ -8,13 +8,34 @@
 
 <p>@Html.RouteLink("Manage API Users", ManagementRouteNames.AdminApiUsers)</p>
 
-<p>
-    <ul>
-        <li>External System ID (Username): @Model.ExternalSystemId</li>
-        <li>Company ID: @Model.CompanyId</li>
-        <li>Company Name: @Model.CompanyName</li>
-        <li>Business Category: @Model.BusinessCategory</li>
-        <li>Employee Type: @Model.EmployeeType</li>
-        <li>Authorised API Endpoints: @Model.AuthorisedApiEndpoints</li>
-    </ul>
-</p>
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditApiUser))
+{
+    @Html.HiddenFor(m => m.ExternalSystemId);
+
+    <p>
+        <ul>
+            <li>External System ID (Username): @Model.ExternalSystemId</li>
+            <li>Company ID: @Model.CompanyId</li>
+            <li>Company Name: @Model.CompanyName</li>
+            <li>Business Category: @Model.BusinessCategory</li>
+            <li>Employee Type: @Model.EmployeeType</li>
+        </ul>
+    </p>
+
+    <h2 class="heading-medium">Authorised API Endpoints</h2>
+
+    for (int i = 0; i < Model.ApiEndpoints.Count; i++)
+    {
+        var apiEndpoint = Model.ApiEndpoints[i];
+
+        <div class="form-group">
+            @Html.Label("ApiEndpoints[" + i + "].Authorised", apiEndpoint.Endpoint.ToString())
+            @Html.Hidden("ApiEndpoints[" + i + "].Endpoint", apiEndpoint.Endpoint)
+            @Html.CheckBox("ApiEndpoints[" + i + "].Authorised", apiEndpoint.Authorised)
+        </div>
+    }
+
+    <div class="form-group">
+        <button id="save-api-user-button" type="submit" class="button" name="SaveApiUserAction" value="SaveApiUser">Save</button>
+    </div>
+}

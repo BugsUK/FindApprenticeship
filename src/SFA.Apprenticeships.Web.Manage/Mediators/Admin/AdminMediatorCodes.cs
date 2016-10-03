@@ -63,5 +63,19 @@
         {
             public const string Ok = "AdminMediatorCodes.GetApiUser.Ok";
         }
+
+        public class CreateApiUser
+        {
+            public const string FailedValidation = "AdminMediatorCodes.CreateApiUser.FailedValidation";
+            public const string EdsUrnAlreadyExists = "AdminMediatorCodes.CreateApiUser.EdsUrnAlreadyExists";
+            public const string Ok = "AdminMediatorCodes.CreateApiUser.Ok";
+        }
+
+        public class SaveApiUser
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveApiUser.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveApiUser.Error";
+            public const string Ok = "AdminMediatorCodes.SaveApiUser.Ok";
+        }
     }
 }

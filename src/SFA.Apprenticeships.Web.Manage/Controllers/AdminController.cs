@@ -256,11 +256,71 @@
         }
 
         [HttpGet]
+        public ActionResult CreateApiUser()
+        {
+            return View(new ApiUserViewModel());
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateApiUserAction")]
+        public ActionResult CreateApiUser(ApiUserViewModel viewModel)
+        {
+            var response = _adminMediator.CreateApiUser(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.CreateApiUser.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateApiUser.EdsUrnAlreadyExists:
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateApiUser.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewApiUser, new { response.ViewModel.ExternalSystemId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
         public ActionResult ApiUser(Guid externalSystemId)
         {
             var response = _adminMediator.GetApiUser(externalSystemId);
 
             return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SaveApiUserAction")]
+        public ActionResult SaveApiUser(ApiUserViewModel viewModel)
+        {
+            var response = _adminMediator.SaveApiUser(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SaveApiUser.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("ApiUser", response.ViewModel);
+
+                case AdminMediatorCodes.SaveApiUser.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewApiUser, new { viewModel.ExternalSystemId });
+
+                case AdminMediatorCodes.SaveApiUser.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewApiUser, new { viewModel.ExternalSystemId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
     }
 }

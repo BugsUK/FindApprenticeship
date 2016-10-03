@@ -325,6 +325,12 @@
                defaults: new { controller = "Admin", action = "CreateApiUser" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEditApiUser,
+               url: "admin/apiuser/edit",
+               defaults: new { controller = "Admin", action = "EditApiUser" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

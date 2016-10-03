@@ -14,6 +14,7 @@
             Mapper.CreateMap<IList<ApiEndpointViewModel>, IList<ApiEndpoint>>().ConvertUsing<ApiEndpointConverter>();
 
             Mapper.CreateMap<ApiUser, ApiUserViewModel>()
+                .ForMember(dest => dest.Password, opt => opt.Ignore())
                 .ForMember(dest => dest.ApiEndpoints, opt => opt.MapFrom(src => src.AuthorisedApiEndpoints));
             Mapper.CreateMap<ApiUserViewModel, ApiUser>()
                 .ForMember(dest => dest.AuthorisedApiEndpoints, opt => opt.MapFrom(src => src.ApiEndpoints));

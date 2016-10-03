@@ -17,5 +17,7 @@
         MediatorResponse<ProviderSiteViewModel> CreateProviderSiteRelationship(ProviderSiteViewModel viewModel);
         MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel);
         MediatorResponse<ApiUserViewModel> GetApiUser(Guid externalSystemId);
+        MediatorResponse<ApiUserViewModel> CreateApiUser(ApiUserViewModel viewModel);
+        MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel);
     }
 }

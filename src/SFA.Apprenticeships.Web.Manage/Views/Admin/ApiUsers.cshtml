@@ -59,7 +59,7 @@
                                 <td>@apiUser.CompanyName</td>
                                 <td>@apiUser.BusinessCategory</td>
                                 <td>@apiUser.EmployeeType</td>
-                                <td>@Model.AuthorisedApiEndpoints</td>
+                                <td>@apiUser.AuthorisedApiEndpoints</td>
                                 <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewApiUser, new { apiUser.ExternalSystemId })</td>
                             </tr>
                         }

@@ -9,5 +9,7 @@
     {
         IEnumerable<ApiUser> SearchApiUsers(ApiUserSearchParameters searchParameters);
         ApiUser GetApiUser(Guid externalSystemId);
+        ApiUser Create(ApiUser apiUser);
+        ApiUser Update(ApiUser apiUser);
     }
 }
