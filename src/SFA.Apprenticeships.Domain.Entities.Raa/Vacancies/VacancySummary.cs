@@ -46,7 +46,6 @@
         public DateTime? UpdatedDateTime { get; set; }
         public PostalAddress Address { get; set; }
         public int ProviderId { get; set; }
-
         public RegionalTeam RegionalTeam { get; set; }
         public VacancyLocationType VacancyLocationType { get; set; }
 
@@ -73,5 +72,7 @@
         public string EmployerName { get; set; }
 
         public int? ApplicationOrClickThroughCount { get; set; }
+
+        public int NewApplicationCount { get; set; }
     }
 }

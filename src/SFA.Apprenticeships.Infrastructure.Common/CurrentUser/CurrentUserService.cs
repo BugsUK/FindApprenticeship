@@ -14,7 +14,7 @@
 
         public string GetClaimValue(string type)
         {
-            return ((ClaimsPrincipal)Thread.CurrentPrincipal).Claims.SingleOrDefault(c => c.Type == type)?.Value;
+            return ((ClaimsPrincipal)Thread.CurrentPrincipal).Claims.LastOrDefault(c => c.Type == type)?.Value;
         }
     }
 }

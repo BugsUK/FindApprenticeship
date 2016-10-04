@@ -27,7 +27,6 @@
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
         public IList<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
         public int? ParentVacancyId { get; set; }
-
         public int NewApplicationCount { get; set; }
     }
 }
