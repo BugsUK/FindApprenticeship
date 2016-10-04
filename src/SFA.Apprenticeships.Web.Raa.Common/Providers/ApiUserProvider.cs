@@ -49,6 +49,11 @@
             return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.GetApiUser(externalSystemId));
         }
 
+        public ApiUserViewModel GetApiUserViewModel(string companyId)
+        {
+            throw new NotImplementedException();
+        }
+
         public ApiUserViewModel CreateApiUser(ApiUserViewModel viewModel)
         {
             throw new NotImplementedException();

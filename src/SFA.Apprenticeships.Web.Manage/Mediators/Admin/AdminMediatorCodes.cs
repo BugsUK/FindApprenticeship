@@ -68,6 +68,8 @@
         {
             public const string FailedValidation = "AdminMediatorCodes.CreateApiUser.FailedValidation";
             public const string CompanyIdAlreadyExists = "AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists";
+            public const string UnknownCompanyId = "AdminMediatorCodes.CreateApiUser.UnknownCompanyId";
+            public const string Error = "AdminMediatorCodes.CreateApiUser.Error";
             public const string Ok = "AdminMediatorCodes.CreateApiUser.Ok";
         }
 

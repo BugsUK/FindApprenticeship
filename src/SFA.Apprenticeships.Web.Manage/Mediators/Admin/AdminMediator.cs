@@ -199,9 +199,25 @@
                 return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists, viewModel, ApiUserViewModelMessages.CompanyIdAlreadyExists, UserMessageLevel.Error);
             }
 
-            viewModel = _apiUserProvider.CreateApiUser(viewModel);
+            var viewModelToCreate = _apiUserProvider.GetApiUserViewModel(viewModel.CompanyId);
+            if (viewModelToCreate == null)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.UnknownCompanyId, viewModel, ApiUserViewModelMessages.UnknownCompanyId, UserMessageLevel.Error);
+            }
 
-            return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.Ok, viewModel, ApiUserViewModelMessages.ApiUserCreatedSuccessfully, UserMessageLevel.Info);
+            viewModelToCreate.ApiEndpoints = viewModel.ApiEndpoints;
+
+            try
+            {
+                viewModel = _apiUserProvider.CreateApiUser(viewModelToCreate);
+
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.Ok, viewModel, ApiUserViewModelMessages.ApiUserCreatedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to create API user for company with id={viewModel.CompanyId}", ex);
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.Error, viewModel, ApiUserViewModelMessages.ApiUserCreationError, UserMessageLevel.Error);
+            }
         }
 
         public MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel)

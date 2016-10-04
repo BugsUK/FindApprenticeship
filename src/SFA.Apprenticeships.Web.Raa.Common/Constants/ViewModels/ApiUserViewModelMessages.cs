@@ -5,6 +5,8 @@
     public class ApiUserViewModelMessages
     {
         public const string CompanyIdAlreadyExists = "The supplied Company ID already has an API user associated with it";
+        public const string UnknownCompanyId = "The supplied Company ID has not been found";
+        public const string ApiUserCreationError = "An error occured when creating the api user. Please check your entries and try again";
         public const string ApiUserCreatedSuccessfully = "New api user added successfully";
         public const string ApiUserSavedSuccessfully = "The changes to the api user were saved successfully";
         public const string ApiUserSaveError = "An error occured when saving the api user. Please check your entries and try again";
