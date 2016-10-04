@@ -10,19 +10,29 @@
         Transferring Vacancies With Vacancy Reference Numbers:
     </p>
     if (@Model.VacancyReferenceNumbers != null)
-     {
-         <ul>
-             @foreach (var vacancyReferenceNumber in Model.VacancyReferenceNumbers)
-             {
-                 <li>@vacancyReferenceNumber</li>
-                 @Html.Hidden("VacancyReferenceNumbers", vacancyReferenceNumber)
-             }
-         </ul>
-     }
+    {
+        <ul>
+            @foreach (var vacancyReferenceNumber in Model.VacancyReferenceNumbers)
+            {
+                <li>@vacancyReferenceNumber</li>
+                @Html.Hidden("VacancyReferenceNumbers", vacancyReferenceNumber)
+            }
+        </ul>
+    }
     <p>To</p>
-    @Html.FormTextFor(m => m.ProviderName)
-    @Html.Hidden("ProviderId", Model.ProviderId)
-    @Html.FormTextFor(m => m.ProviderSiteName)
-    @Html.Hidden("ProviderSiteId", Model.ProviderSiteId)
-    <button type="submit" class="button">Confirm Transfer</button>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProviderName)
+        <div class="form-control">
+            @Html.DisplayTextFor(m => m.ProviderName)
+            @Html.Hidden("ProviderId", Model.ProviderId)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProviderSiteName)
+        <div class="form-control">
+            @Html.DisplayTextFor(m => m.ProviderSiteName)
+            @Html.Hidden("ProviderSiteId", Model.ProviderSiteId)
+        </div>
+    </div>
+        <button type="submit" class="button">Confirm Transfer</button>
 }
