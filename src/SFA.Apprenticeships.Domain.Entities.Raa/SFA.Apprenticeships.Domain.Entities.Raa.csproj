@@ -81,6 +81,10 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\ApiBusinessCategory.cs" />
+    <Compile Include="Api\ApiEmployeeType.cs" />
+    <Compile Include="Api\ApiEndpoint.cs" />
+    <Compile Include="Api\ApiUser.cs" />
     <Compile Include="ICreatableEntity.cs" />
     <Compile Include="IUpdatableEntity.cs" />
     <Compile Include="Locations\GeoPoint.cs" />

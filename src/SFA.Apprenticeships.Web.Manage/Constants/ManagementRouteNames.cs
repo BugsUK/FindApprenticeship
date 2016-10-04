@@ -59,5 +59,9 @@
         public const string AdminViewProviderSite = "AdminViewProviderSite";
         public const string AdminCreateProviderSite = "AdminCreateProviderSite";
         public const string AdminEditProviderSite = "AdminEditProviderSite";
+        public const string AdminApiUsers = "AdminApiUsers";
+        public const string AdminViewApiUser = "AdminViewApiUser";
+        public const string AdminCreateApiUser = "AdminCreateApiUser";
+        public const string AdminEditApiUser = "AdminEditApiUser";
     }
 }

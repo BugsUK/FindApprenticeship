@@ -92,6 +92,7 @@
     <Compile Include="Reporting\Models\ReportVacanciesResultItem.cs" />
     <Compile Include="Reporting\Models\ReportVacancyExtensionsResultItem.cs" />
     <Compile Include="Repositories\IAgencyUserRepository.cs" />
+    <Compile Include="Repositories\IApiUserRepository.cs" />
     <Compile Include="Repositories\IProviderRepository.cs" />
     <Compile Include="Repositories\IVacancyLocationRepository.cs" />
     <Compile Include="Repositories\IVacancyPartyRepository.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Repositories\IReferenceRepository.cs" />
     <Compile Include="Repositories\IVacancySummaryRepository.cs" />
     <Compile Include="Repositories\IVacancyWriteRepository.cs" />
+    <Compile Include="Repositories\Models\ApiUserSearchParameters.cs" />
     <Compile Include="Repositories\Models\VacancyCounts.cs" />
     <Compile Include="Repositories\Models\VacancySummaryOrderByColumn.cs" />
     <Compile Include="Repositories\Models\Order.cs" />

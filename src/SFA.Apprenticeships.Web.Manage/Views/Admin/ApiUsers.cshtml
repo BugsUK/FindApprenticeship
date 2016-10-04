@@ -1,0 +1,71 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Api.ApiUserSearchResultsViewModel
+@{
+    ViewBag.Title = "API Users";
+}
+
+<h1 id="heading" class="heading-xlarge">API Users</h1>
+
+<p>
+    @Html.RouteLink("New API User", ManagementRouteNames.AdminCreateApiUser)
+</p>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminApiUsers))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.SearchViewModel.ExternalSystemId, controlHtmlAttributes: new {type = "text", autofocus = "autofocus" })
+        @Html.FormTextFor(m => m.SearchViewModel.Id, controlHtmlAttributes: new {type = "tel", size = 9})
+        @Html.FormTextFor(m => m.SearchViewModel.Name, controlHtmlAttributes: new {type = "text"})
+
+        <div class="form-group">
+            <button id="search-api-users-button" type="submit" class="button" name="SearchApiUsersAction" value="SearchApiUsers">Search Provider Sites</button>
+        </div>
+    </div>
+
+    if (Model.ApiUsers != null && Model.ApiUsers.Count > 0)
+    {
+        <div class="grid-wrapper">
+            <div class="grid grid-1-1">
+                <table>
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>External System ID (Username)</th>
+                            <th>Company ID</th>
+                            <th>Company Name</th>
+                            <th>Business Category</th>
+                            <th>Employee Type</th>
+                            <th>Authorised API Endpoints</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var apiUser in Model.ApiUsers)
+                        {
+                            <tr>
+                                <td>@apiUser.ExternalSystemId</td>
+                                <td>@apiUser.CompanyId</td>
+                                <td>@apiUser.CompanyName</td>
+                                <td>@apiUser.BusinessCategory</td>
+                                <td>@apiUser.EmployeeType</td>
+                                <td>@apiUser.AuthorisedApiEndpoints</td>
+                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewApiUser, new { apiUser.ExternalSystemId })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}

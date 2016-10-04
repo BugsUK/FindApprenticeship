@@ -33,6 +33,7 @@
             For<IAgencyUserWriteRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
             For<IReportingRepository>().Use<ReportingRepository>();
             For<IReferenceNumberRepository>().Use<ReferenceNumberRepository>();
+            For<IApiUserRepository>().Use<ApiUserRepository>();
         }
     }
 }
