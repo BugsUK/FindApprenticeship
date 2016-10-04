@@ -11,6 +11,19 @@
         public const string ApiUserSavedSuccessfully = "The changes to the api user were saved successfully";
         public const string ApiUserSaveError = "An error occured when saving the api user. Please check your entries and try again";
 
+        public class ExternalSystemId
+        {
+            public const string LabelText = "External System ID (Username. Optional. Will be created for you if not specified)";
+        }
+
+        public class Password
+        {
+            public const string LabelText = "Password (optional. Will be created for you if not specified)";
+            public const string RequiredLengthErrorText = "Password must be 16 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Password " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
         public class CompanyId
         {
             public const string LabelText = "Company ID (UKPRN or EDSURN)";

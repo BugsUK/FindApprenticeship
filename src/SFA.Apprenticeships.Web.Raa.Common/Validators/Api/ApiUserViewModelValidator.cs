@@ -26,6 +26,12 @@
     {
         internal static void AddCommonRules(this AbstractValidator<ApiUserViewModel> validator)
         {
+            validator.RuleFor(m => m.Password)
+                .Length(16)
+                .WithMessage(ApiUserViewModelMessages.Password.RequiredLengthErrorText)
+                .Matches(ApiUserViewModelMessages.Password.WhiteListRegularExpression)
+                .WithMessage(ApiUserViewModelMessages.Password.WhiteListErrorText);
+
             validator.RuleFor(m => m.CompanyId)
                 .NotEmpty()
                 .WithMessage(ApiUserViewModelMessages.CompanyId.RequiredErrorText)

@@ -129,17 +129,19 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
             var externalSystemPermission = GetExternalSystemPermission(apiUser.CompanyId);
 
-            externalSystemPermission.Username = Guid.NewGuid();
+            externalSystemPermission.Username = apiUser.ExternalSystemId == Guid.Empty ? Guid.NewGuid() : apiUser.ExternalSystemId;
             externalSystemPermission.Password = new byte[64];
             externalSystemPermission.UserParameters = string.Join(",", apiUser.AuthorisedApiEndpoints.Select(ae => ApiEndpointsCodeMap[ae]));
             externalSystemPermission.Salt = apiConfiguration.Salt;
 
             _getOpenConnection.Insert(externalSystemPermission);
 
-            var password = GetApiPassword();
+            var password = string.IsNullOrEmpty(apiUser.Password) ? GetApiPassword() : apiUser.Password;
 
-            var sql = @"UPDATE ExternalSystemPermission 
-SET Password = CONVERT(VARBINARY(25), HASHBYTES('SHA1', @password), 1)
+            var sql = @"DECLARE @DbPassword [varchar](64)
+SET @DbPassword = @password
+UPDATE ExternalSystemPermission 
+SET Password = CONVERT(VARBINARY(25), HASHBYTES('SHA1', @DbPassword), 1)
 WHERE Username = @Username";
             _getOpenConnection.MutatingQuery<ExternalSystemPermission>(sql, new { password, externalSystemPermission.Username });
 

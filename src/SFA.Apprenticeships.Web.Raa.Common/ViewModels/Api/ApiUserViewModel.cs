@@ -21,7 +21,9 @@
             };
         }
 
+        [Display(Name = ApiUserViewModelMessages.ExternalSystemId.LabelText)]
         public Guid ExternalSystemId { get; set; }
+        [Display(Name = ApiUserViewModelMessages.Password.LabelText)]
         public string Password { get; set; }
         [Display(Name = ApiUserViewModelMessages.CompanyId.LabelText)]
         public string CompanyId { get; set; }

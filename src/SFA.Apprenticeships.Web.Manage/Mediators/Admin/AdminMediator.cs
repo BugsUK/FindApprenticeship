@@ -205,6 +205,8 @@
                 return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.UnknownCompanyId, viewModel, ApiUserViewModelMessages.UnknownCompanyId, UserMessageLevel.Error);
             }
 
+            viewModelToCreate.ExternalSystemId = viewModel.ExternalSystemId;
+            viewModelToCreate.Password = viewModel.Password;
             viewModelToCreate.ApiEndpoints = viewModel.ApiEndpoints;
 
             try

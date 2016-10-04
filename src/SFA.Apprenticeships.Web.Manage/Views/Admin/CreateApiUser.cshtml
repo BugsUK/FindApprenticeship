@@ -16,6 +16,8 @@
     <div class="form-group">
 
         @Html.FormTextFor(m => m.CompanyId, controlHtmlAttributes: new { type = "tel", size = 9 })
+        @Html.FormTextFor(m => m.ExternalSystemId, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.Password, controlHtmlAttributes: new { type = "text", size = 16 })
 
         <h2 class="heading-medium">Authorised API Endpoints</h2>
 
