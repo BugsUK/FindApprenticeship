@@ -124,22 +124,9 @@
             return _vacancyLocationsStrategies.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
         }
 
-        public IList<Vacancy> UpdateVacanciesWithNewProvider(IList<Vacancy> vacancies)
+        public Vacancy UpdateVacanciesWithNewProvider(Vacancy vacancy)
         {
-            IList<Vacancy> updatedVacancies = new List<Vacancy>();
-            foreach (var vacancy in vacancies)
-            {
-                try
-                {
-                    var responseVacancy = _updateVacancyStrategy.UpdateVacancyWithNewProvider(vacancy);
-                    updatedVacancies.Add(responseVacancy);
-                }
-                catch (Exception exception)
-                {
-                    throw exception;
-                }
-            }
-            return updatedVacancies;
+            return _updateVacancyStrategy.UpdateVacancyWithNewProvider(vacancy);
         }
     }
 }

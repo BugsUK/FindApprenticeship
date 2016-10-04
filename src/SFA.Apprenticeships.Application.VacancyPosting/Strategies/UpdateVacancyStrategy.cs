@@ -31,6 +31,12 @@
             return _upsertVacancyStrategy.UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
         }
 
+        public Vacancy UpdateVacancyWithNewProvider(Vacancy vacancy)
+        {
+            var updatedVacancy = _upsertVacancyStrategy.UpsertVacancyForAdmin(vacancy, v => _vacancyWriteRepository.Update(v));
+            return updatedVacancy;
+        }
+
         private static void SetSectorAsNullIfApprenticeship(VacancySummary vacancy)
         {
             if (vacancy.VacancyType == VacancyType.Apprenticeship)

@@ -19,7 +19,6 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
-    using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
     using System;
@@ -51,7 +50,6 @@
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
-        private readonly IDictionary<VacancyType, ICommonApplicationService> _commonApplicationService;
         private readonly IVacancyLockingService _vacancyLockingService;
         private readonly ICurrentUserService _currentUserService;
         private readonly IUserProfileService _userProfileService;
@@ -60,7 +58,6 @@
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
-        private readonly IVacancyWriteRepository _vacancyWriteRepository;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -69,7 +66,7 @@
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService,
             IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
-            IVacancySummaryService vacancySummaryService, IVacancyWriteRepository vacancyWriteRepository)
+            IVacancySummaryService vacancySummaryService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -81,17 +78,12 @@
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
-            _commonApplicationService = new Dictionary<VacancyType, ICommonApplicationService>() {
-                { VacancyType.Apprenticeship, apprenticeshipApplicationService },
-                { VacancyType.Traineeship,    traineeshipApplicationService }
-            };
             _vacancyLockingService = vacancyLockingService;
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
             _vacancySummaryService = vacancySummaryService;
-            _vacancyWriteRepository = vacancyWriteRepository;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -320,19 +312,34 @@
             });
         }
 
-        public IList<Vacancy> TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        public IList<IDictionary<Vacancy, VacancyParty>> TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
         {
-            IList<Vacancy> vacancies = new List<Vacancy>();
-            foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
+            IList<IDictionary<Vacancy, VacancyParty>> vacancyWithVacancyPartyList = new List<IDictionary<Vacancy, VacancyParty>>();
+            try
             {
-                var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
-                vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
-                vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
-                vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
-                vacancies.Add(vacancy);
+                foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
+                {
+                    var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
+                    vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
+                    vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
+                    vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
+
+                    var updatedVacancy = _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
+
+                    var updatedVacancyOwnerRelationship = _providerService.UpdateVacancyOwnerRelationshipWithNewProvider
+                        (vacancy.VacancyOwnerRelationshipId, vacancyTransferViewModel.ProviderSiteId);
+                    Dictionary<Vacancy, VacancyParty> vacancyWithVacancyParty = new Dictionary<Vacancy, VacancyParty>
+                    {
+                        {updatedVacancy, updatedVacancyOwnerRelationship}
+                    };
+                    vacancyWithVacancyPartyList.Add(vacancyWithVacancyParty);
+                }
             }
-            _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancies);
-            return vacancies;
+            catch (Exception exception)
+            {
+                _logService.Error($"Exception occurred while transferring the vacancy:{exception.Message}");
+            }
+            return vacancyWithVacancyPartyList;
         }
 
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
