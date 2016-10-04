@@ -8,69 +8,86 @@
 
 <p>@Html.RouteLink("Manage Providers", ManagementRouteNames.AdminProviders)</p>
 
-<p>
-    <ul>
-        <li>ID: @Model.ProviderId</li>
-        <li>UKPRN: @Model.Ukprn</li>
-        <li>Full name: @Model.FullName</li>
-        <li>Trading Name: @Model.TradingName</li>
-        <li>Status: @Model.ProviderStatusType</li>
-    </ul>
-</p>
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditProvider))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-<h2 class="heading-medium">Provider Sites</h2>
+    @Html.HiddenFor(m => m.ProviderId)
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-1">
-        <table>
-            <colgroup>
-                <col>
-                <col>
-                <col>
-                <col>
-                <col>
-                <col>
-            </colgroup>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>EDSURN</th>
-                <th>Full Name</th>
-                <th>Trading Name</th>
-                <th>Location</th>
-                <th>Relationship Type</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var providerSite in Model.ProviderSiteViewModels)
-            {
-                <tr>
-                    <td>@providerSite.ProviderSiteId</td>
-                    <td>@Html.RouteLink(providerSite.EdsUrn, ManagementRouteNames.AdminViewProviderSite, new { providerSite.ProviderSiteId })</td>
-                    <td>@providerSite.FullName</td>
-                    <td>@providerSite.TradingName</td>
-                    <td>@providerSite.Address.Town</td>
-                    <td>
-                        @{
-                            var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderId == Model.ProviderId);
-                        }
-                        @if (providerSiteRelationship == null)
-                        {
-                            <text>Visible via subcontractor relationship</text>    
-                        }
-                        else
-                        {
-                            @providerSiteRelationship.ProviderSiteRelationshipType
-                        }
-                    </td>
-                    <td></td>
-                </tr>
-            }
-            </tbody>
-        </table>
+    <p>
+        <ul>
+            <li>ID: @Model.ProviderId</li>
+            <li>UKPRN: @Model.Ukprn</li>
+            <li>Status: @Model.ProviderStatusType</li>
+        </ul>
+    </p>
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
+        @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
+
     </div>
-</div>
+
+    <h2 class="heading-medium">Provider Sites</h2>
+
+    <div class="grid-wrapper">
+        <div class="grid grid-1-1">
+            <table>
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>EDSURN</th>
+                    <th>Full Name</th>
+                    <th>Trading Name</th>
+                    <th>Location</th>
+                    <th>Relationship Type</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var providerSite in Model.ProviderSiteViewModels)
+                {
+                    <tr>
+                        <td>@providerSite.ProviderSiteId</td>
+                        <td>@Html.RouteLink(providerSite.EdsUrn, ManagementRouteNames.AdminViewProviderSite, new {providerSite.ProviderSiteId})</td>
+                        <td>@providerSite.FullName</td>
+                        <td>@providerSite.TradingName</td>
+                        <td>@providerSite.Address.Town</td>
+                        <td>
+                            @{
+                                var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderId == Model.ProviderId);
+                            }
+                            @if (providerSiteRelationship == null)
+                            {
+                                <text>Visible via subcontractor relationship</text>
+                            }
+                            else
+                            {
+                                @providerSiteRelationship.ProviderSiteRelationshipType
+                            }
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button id="save-provider-button" type="submit" class="button" name="SaveProviderAction" value="SaveProvider">Save</button>
+    </div>
+}
 
 <p>
     @Html.RouteLink("New Provider Site", ManagementRouteNames.AdminCreateProviderSite, new {Model.ProviderId})

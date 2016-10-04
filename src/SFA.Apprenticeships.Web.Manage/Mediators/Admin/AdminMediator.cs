@@ -73,6 +73,22 @@
             return GetMediatorResponse(AdminMediatorCodes.CreateProvider.Ok, viewModel, ProviderViewModelMessages.ProviderCreatedSuccessfully, UserMessageLevel.Info);
         }
 
+        public MediatorResponse<ProviderViewModel> SaveProvider(ProviderViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _providerProvider.SaveProvider(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveProvider.Ok, viewModel, ProviderViewModelMessages.ProviderSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save provider with id={viewModel.ProviderId}", ex);
+                viewModel = _providerProvider.GetProviderViewModel(viewModel.ProviderId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveProvider.Error, viewModel, ProviderViewModelMessages.ProviderSaveError, UserMessageLevel.Error);
+            }
+        }
+
         public MediatorResponse<ProviderSiteSearchResultsViewModel> SearchProviderSites(ProviderSiteSearchViewModel searchViewModel)
         {
             var validatonResult = _providerSiteSearchViewModelServerValidator.Validate(searchViewModel);
