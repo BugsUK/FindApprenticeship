@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -8,25 +9,25 @@
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
+    using Application.Vacancy;
     using Configuration;
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
-    using Application.Interfaces;
-    using Application.Vacancy;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Raa.Parties;
-    using Domain.Raa.Interfaces.Repositories.Models;
     using ViewModels;
+    using ViewModels.Admin;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -314,7 +315,19 @@
                 EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
             });
         }
-        
+
+        public void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        {
+            foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
+            {
+                var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
+                vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
+                vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
+                vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
+                _vacancyPostingService.UpdateVacancy(vacancy);
+            }
+        }
+
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
             return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : CategoryPrefixes.GetOriginalFrameworkCode(trainingDetailsViewModel.FrameworkCodeName);
@@ -374,14 +387,14 @@
             //                    ? employer.Address
             //                    : null;
             //vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
-            
+
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
 
             return newVacancyViewModel;
         }
-        
+
         public TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -1113,7 +1126,7 @@
             var vacancies = GetTeamVacancySummaries();
 
             var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
-                vacancies); 
+                vacancies);
 
             return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ProviderId)) : null;
         }
@@ -1216,7 +1229,7 @@
                 VacancyType = vacancy.VacancyType
             };
         }
-        
+
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
@@ -1346,7 +1359,7 @@
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
-            
+
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
                 return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.InvalidVacancy);
@@ -1599,14 +1612,14 @@
 
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            vacancy.NumberOfPositions = null;           
+            vacancy.NumberOfPositions = null;
             vacancy.Address = employer.Address;
             vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
             vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
             vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
-            
-			GeoCodeVacancyLocations(viewModel);
-			
+
+            GeoCodeVacancyLocations(viewModel);
+
             if (addresses.Count() == 1)
             {
                 //Set address
@@ -1627,7 +1640,7 @@
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
-					vacancyLocation.LocalAuthorityCode =
+                    vacancyLocation.LocalAuthorityCode =
                     _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
@@ -1664,7 +1677,7 @@
             {
                 vacancy.AdditionalLocationInformation = null;
                 _vacancyPostingService.UpdateVacancy(vacancy);
-                
+
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
             }
         }
@@ -1677,7 +1690,7 @@
 
     public static class Extensions
     {
-        public static V GetValueOrDefault<K,V>(this IReadOnlyDictionary<K,V> dict, K key)
+        public static V GetValueOrDefault<K, V>(this IReadOnlyDictionary<K, V> dict, K key)
         {
             return GetValueOrDefault(dict, key, _ => default(V));
         }

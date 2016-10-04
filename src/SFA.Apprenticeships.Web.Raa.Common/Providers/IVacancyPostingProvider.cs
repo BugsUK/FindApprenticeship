@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using ViewModels.Admin;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -64,5 +66,6 @@
 
         void EmptyVacancyLocation(int vacancyReferenceNumber);
         void CreateVacancy(VacancyMinimumData vacancyMinimumData);
+        IList<Vacancy> TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel);
     }
 }

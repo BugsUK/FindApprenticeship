@@ -115,7 +115,6 @@
         {
             var response = _adminMediator.SearchProviders(viewModel);
             response.ViewModel.VacancyReferenceNumbers = viewModel.VacancyReferenceNumbers.Split(',').Select(int.Parse).ToList();
-            //response.ViewModel.SearchViewModel.VacancyReferenceNumbers = viewModel.VacancyReferenceNumbers;
             ModelState.Clear();
 
             switch (response.Code)

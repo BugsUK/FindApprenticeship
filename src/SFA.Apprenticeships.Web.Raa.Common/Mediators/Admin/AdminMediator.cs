@@ -10,6 +10,7 @@
     using Providers;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Validators.Provider;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -23,18 +24,20 @@
         private readonly ProviderSiteSearchViewModelServerValidator _providerSiteSearchViewModelServerValidator = new ProviderSiteSearchViewModelServerValidator();
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
         private readonly ProviderSiteRelationshipViewModelServerValidator _providerSiteRelationshipViewModelServerValidator = new ProviderSiteRelationshipViewModelServerValidator();
-
         private readonly IProviderProvider _providerProvider;
         private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
+        private readonly IVacancyPostingProvider _vacancyPostingProvider;
 
-        public AdminMediator(IProviderProvider providerProvider, ILogService logService, IVacancyPostingService vacancyPostingService, IProviderService providerService)
+        public AdminMediator(IProviderProvider providerProvider, ILogService logService, IVacancyPostingService vacancyPostingService,
+            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider)
         {
             _providerProvider = providerProvider;
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
             _providerService = providerService;
+            _vacancyPostingProvider = vacancyPostingProvider;
         }
 
         public MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel)
@@ -220,6 +223,19 @@
         {
             try
             {
+                if (vacancyTransferViewModel.ProviderId != 0 && vacancyTransferViewModel.ProviderSiteId != 0 && vacancyTransferViewModel.VacancyReferenceNumbers.Any())
+                {
+                    _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
+                    //foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
+                    //{
+                    //    var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
+                    //    vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
+                    //    vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
+                    //    vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
+                    //    _vacancyWriteRepository.Update(vacancy);
+                    //}
+                }
+
                 return new MediatorResponse<ManageVacancyTransferResultsViewModel>();
             }
             catch (Exception)
