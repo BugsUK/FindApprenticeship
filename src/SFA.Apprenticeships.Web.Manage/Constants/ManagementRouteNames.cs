@@ -55,6 +55,7 @@
         public const string AdminProviders = "AdminProviders";
         public const string AdminViewProvider = "AdminViewProvider";
         public const string AdminCreateProvider = "AdminCreateProvider";
+        public const string AdminEditProvider = "AdminEditProvider";
         public const string AdminProviderSites = "AdminProviderSites";
         public const string AdminViewProviderSite = "AdminViewProviderSite";
         public const string AdminCreateProviderSite = "AdminCreateProviderSite";
