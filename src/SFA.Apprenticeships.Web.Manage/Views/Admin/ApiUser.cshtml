@@ -15,6 +15,10 @@
     <p>
         <ul>
             <li>External System ID (Username): @Model.ExternalSystemId</li>
+            @if (!string.IsNullOrEmpty(Model.Password))
+            {
+                <li>Password: @Model.Password <strong>Copy this down immediately! It will not be shown again. Please add it to the API Users.xlsx spreadsheet in the private repository</strong></li>
+            }
             <li>Company ID: @Model.CompanyId</li>
             <li>Company Name: @Model.CompanyName</li>
             <li>Business Category: @Model.BusinessCategory</li>

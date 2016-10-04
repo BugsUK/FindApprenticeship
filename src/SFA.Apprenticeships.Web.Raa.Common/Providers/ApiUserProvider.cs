@@ -56,7 +56,9 @@
 
         public ApiUserViewModel CreateApiUser(ApiUserViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var apiUser = _apiUserMappers.Map<ApiUserViewModel, ApiUser>(viewModel);
+
+            return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.Create(apiUser));
         }
 
         public ApiUserViewModel SaveApiUser(ApiUserViewModel viewModel)

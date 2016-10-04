@@ -256,6 +256,14 @@
         }
 
         [HttpGet]
+        public ActionResult ApiUser(Guid externalSystemId)
+        {
+            var response = _adminMediator.GetApiUser(externalSystemId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
         public ActionResult CreateApiUser()
         {
             return View(new ApiUserViewModel());
@@ -287,19 +295,11 @@
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateApiUser.Ok:
-                    return RedirectToRoute(ManagementRouteNames.AdminViewApiUser, new { response.ViewModel.ExternalSystemId });
+                    return View("ApiUser", response.ViewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
-        }
-
-        [HttpGet]
-        public ActionResult ApiUser(Guid externalSystemId)
-        {
-            var response = _adminMediator.GetApiUser(externalSystemId);
-
-            return View(response.ViewModel);
         }
 
         [HttpPost]

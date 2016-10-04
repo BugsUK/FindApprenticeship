@@ -3,7 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography;
+    using Application.Interfaces;
     using Common;
+    using Configuration;
     using Domain.Entities.Raa.Api;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
@@ -12,6 +15,7 @@
     public class ApiUserRepository : IApiUserRepository
     {
         private readonly IGetOpenConnection _getOpenConnection;
+        private readonly IConfigurationService _configurationService;
 
         private static readonly IDictionary<string, ApiEndpoint> ApiEndpointsMap = new Dictionary<string, ApiEndpoint>
         {
@@ -31,9 +35,19 @@
             {ApiEndpoint.ApplicationTracking, "ATS"}
         };
 
-        public ApiUserRepository(IGetOpenConnection getOpenConnection)
+        private static readonly char[] ApiPasswordCharacters =
+        {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', '='
+        };
+
+        public ApiUserRepository(IGetOpenConnection getOpenConnection, IConfigurationService configurationService)
         {
             _getOpenConnection = getOpenConnection;
+            _configurationService = configurationService;
         }
 
         public IEnumerable<ApiUser> SearchApiUsers(ApiUserSearchParameters searchParameters)
@@ -84,6 +98,12 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
         public ApiUser GetApiUser(string companyId)
         {
+            var externalSystemPermission = GetExternalSystemPermission(companyId);
+            return externalSystemPermission != null ? MapApiUser(externalSystemPermission) : null;
+        }
+
+        private ExternalSystemPermission GetExternalSystemPermission(string companyId)
+        {
             var sqls = new[]
             {
                 "SELECT '' AS UserParameters, 'LearningProvider' AS Businesscategory, UKPRN as Company, 'TrainingProviderInterfaceAdmin' AS Employeetype, FullName, TradingName FROM Provider WHERE UKPRN = @CompanyId",
@@ -96,7 +116,7 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
                 var externalSystemPermission = _getOpenConnection.Query<ExternalSystemPermission>(sql, new { companyId }).SingleOrDefault();
                 if (externalSystemPermission != null)
                 {
-                    return MapApiUser(externalSystemPermission);
+                    return externalSystemPermission;
                 }
             }
 
@@ -105,7 +125,28 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
         public ApiUser Create(ApiUser apiUser)
         {
-            throw new NotImplementedException();
+            var apiConfiguration = _configurationService.Get<ApiConfiguration>();
+
+            var externalSystemPermission = GetExternalSystemPermission(apiUser.CompanyId);
+
+            externalSystemPermission.Username = Guid.NewGuid();
+            externalSystemPermission.Password = new byte[64];
+            externalSystemPermission.UserParameters = string.Join(",", apiUser.AuthorisedApiEndpoints.Select(ae => ApiEndpointsCodeMap[ae]));
+            externalSystemPermission.Salt = apiConfiguration.Salt;
+
+            _getOpenConnection.Insert(externalSystemPermission);
+
+            var password = GetApiPassword();
+
+            var sql = @"UPDATE ExternalSystemPermission 
+SET Password = CONVERT(VARBINARY(25), HASHBYTES('SHA1', @password), 1)
+WHERE Username = @Username";
+            _getOpenConnection.MutatingQuery<ExternalSystemPermission>(sql, new { password, externalSystemPermission.Username });
+
+            var createdApiUser = GetApiUser(externalSystemPermission.Username);
+            createdApiUser.Password = password;
+
+            return createdApiUser;
         }
 
         public ApiUser Update(ApiUser apiUser)
@@ -135,6 +176,27 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
             };
 
             return apiUser;
+        }
+
+        private static string GetApiPassword()
+        {
+            const int length = 16;
+
+            var identifier = new char[length];
+            var randomData = new byte[length];
+
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(randomData);
+            }
+
+            for (var idx = 0; idx < identifier.Length; idx++)
+            {
+                var pos = randomData[idx] % ApiPasswordCharacters.Length;
+                identifier[idx] = ApiPasswordCharacters[pos];
+            }
+
+            return new string(identifier);
         }
     }
 }

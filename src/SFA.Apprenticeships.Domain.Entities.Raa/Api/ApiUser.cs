@@ -6,6 +6,7 @@
     public class ApiUser
     {
         public Guid ExternalSystemId { get; set; }
+        public string Password { get; set; }
         public string CompanyId { get; set; }
         public ApiBusinessCategory BusinessCategory { get; set; }
         public ApiEmployeeType EmployeeType { get; set; }
