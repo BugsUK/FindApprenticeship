@@ -161,7 +161,19 @@
         public ActionResult ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel)
         {
             var response = _adminMediator.ManageVacanciesTransfers(vacancyTransferViewModel);
-            return View(vacancyTransferViewModel);
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.GetVacancyDetails.Ok:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View();
+                case AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]

@@ -318,7 +318,7 @@
 
         public IList<Vacancy> TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
         {
-            IList<Vacancy> vacancies=new List<Vacancy>();
+            IList<Vacancy> vacancies = new List<Vacancy>();
             foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
             {
                 var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
@@ -329,6 +329,20 @@
                 vacancies.Add(responseVacancy);
             }
             return vacancies;
+        }
+
+        public void UpdateVacancyOwnerRelationship(IList<Vacancy> vacancies)
+        {
+            if (vacancies.Any())
+            {
+                foreach (var vacancy in vacancies)
+                {
+                    var vacancyOwnerRelationship = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
+                    if (vacancy.VacancyManagerId.HasValue)
+                        vacancyOwnerRelationship.ProviderSiteId = vacancy.VacancyManagerId.Value;
+                    _providerService.SaveVacancyParty(vacancyOwnerRelationship);
+                }
+            }
         }
 
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)

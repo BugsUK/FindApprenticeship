@@ -181,7 +181,7 @@
                     TransferVacanciesViewModel = viewModel
                 };
 
-                if (viewModel != null)
+                if (viewModel != null && viewModel.VacancyReferenceNumbers.Any())
                 {
                     foreach (var vacancy in viewModel.VacancyReferenceNumbers.Split(','))
                     {
@@ -199,6 +199,8 @@
                                     DeliveryOrganisationId = vacancyDetails.DeliveryOrganisationId,
                                     VacancyOwnerRelationShipId = vacancyDetails.VacancyOwnerRelationshipId,
                                     ProviderName = _providerService.GetProvider(vacancyDetails.ProviderId).TradingName,
+                                    VacancyTitle = vacancyDetails.Title,
+                                    EmployerName = vacancyDetails.EmployerName
                                 };
                                 if (vacancyDetails.VacancyManagerId.HasValue)
                                 {
@@ -225,14 +227,15 @@
             {
                 if (vacancyTransferViewModel.ProviderId != 0 && vacancyTransferViewModel.ProviderSiteId != 0 && vacancyTransferViewModel.VacancyReferenceNumbers.Any())
                 {
-                    _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);                    
+                    var vacancies = _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
+                    _vacancyPostingProvider.UpdateVacancyOwnerRelationship(vacancies);
                 }
 
                 return new MediatorResponse<ManageVacancyTransferResultsViewModel>();
             }
-            catch (Exception)
+            catch (CustomException exception) when (exception.Code == ErrorCodes.ProviderVacancyAuthorisation.Failed)
             {
-                throw;
+                return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation, new ManageVacancyTransferResultsViewModel(), TransferVacanciesMessages.UnAuthorisedAccess, UserMessageLevel.Warning);
             }
         }
     }

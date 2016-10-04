@@ -12,15 +12,14 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     <div class="form-group">
         <fieldset class="form-group inline-fixed">
-            @Html.FormTextFor(m => m.VacancyReferenceNumbers,
-                controlHtmlAttributes: new { @class = "form-control-medium", type = "text" })
-        </fieldset>
-
-        <div class="form-group">
-            <button id="confirm-vacancy-details" type="submit" class="button">
-                Confirm Details
-            </button>
-            @Html.ActionLink("Cancel", "TransferVacancies", "Admin")
+            @Html.FormTextAreaFor(m => m.VacancyReferenceNumbers,
+                controlHtmlAttributes: new { type = "textarea" ,rows=5, @data_val_length_max="799"})
+        </fieldset>             
+            <div class="form-group">
+                <button id="confirm-vacancy-details" type="submit" class="button">
+                    Confirm Details
+                </button>
+                @Html.ActionLink("Cancel", "TransferVacancies", "Admin")
+            </div>
         </div>
-    </div>
 }
