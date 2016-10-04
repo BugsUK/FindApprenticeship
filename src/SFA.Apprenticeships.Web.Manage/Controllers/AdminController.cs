@@ -280,6 +280,12 @@
                 case AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists:
                     return View(response.ViewModel);
 
+                case AdminMediatorCodes.CreateApiUser.UnknownCompanyId:
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateApiUser.Error:
+                    return View(response.ViewModel);
+
                 case AdminMediatorCodes.CreateApiUser.Ok:
                     return RedirectToRoute(ManagementRouteNames.AdminViewApiUser, new { response.ViewModel.ExternalSystemId });
 

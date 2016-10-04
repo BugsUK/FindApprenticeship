@@ -51,7 +51,7 @@
 
         public ApiUserViewModel GetApiUserViewModel(string companyId)
         {
-            throw new NotImplementedException();
+            return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.GetApiUser(companyId));
         }
 
         public ApiUserViewModel CreateApiUser(ApiUserViewModel viewModel)

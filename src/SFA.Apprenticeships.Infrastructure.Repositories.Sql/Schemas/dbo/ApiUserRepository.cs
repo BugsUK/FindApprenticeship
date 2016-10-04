@@ -82,6 +82,27 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
             return MapApiUser(externalSystemPermission);
         }
 
+        public ApiUser GetApiUser(string companyId)
+        {
+            var sqls = new[]
+            {
+                "SELECT '' AS UserParameters, 'LearningProvider' AS Businesscategory, UKPRN as Company, 'TrainingProviderInterfaceAdmin' AS Employeetype, FullName, TradingName FROM Provider WHERE UKPRN = @CompanyId",
+                "SELECT '' AS UserParameters, 'Employer' AS Businesscategory, EDSURN as Company, 'EmployerInterfaceAdmin' AS Employeetype, FullName, TradingName FROM Employer WHERE EDSURN = @CompanyId",
+                "SELECT '' AS UserParameters, 'ThirdParty' AS Businesscategory, EDSURN as Company, 'NasInterfaceAdmin' AS Employeetype, ThirdPartyName AS FullName, ThirdPartyName AS TradingName FROM ThirdParty WHERE EDSURN = @CompanyId"
+            };
+
+            foreach (var sql in sqls)
+            {
+                var externalSystemPermission = _getOpenConnection.Query<ExternalSystemPermission>(sql, new { companyId }).SingleOrDefault();
+                if (externalSystemPermission != null)
+                {
+                    return MapApiUser(externalSystemPermission);
+                }
+            }
+
+            return null;
+        }
+
         public ApiUser Create(ApiUser apiUser)
         {
             throw new NotImplementedException();
