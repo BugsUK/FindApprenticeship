@@ -52,6 +52,6 @@
         /// <returns>VacancyPartId => VacancyLocation</returns>
         IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
 
-        IList<Vacancy> UpdateVacanciesWithNewProvider(IList<Vacancy> vacancies);
+        Vacancy UpdateVacanciesWithNewProvider(Vacancy vacancies);
     }
 }

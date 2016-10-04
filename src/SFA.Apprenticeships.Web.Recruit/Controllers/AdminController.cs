@@ -165,10 +165,10 @@
 
             switch (response.Code)
             {
-                case AdminMediatorCodes.GetVacancyDetails.Ok:
+                case AdminMediatorCodes.TransferVacancy.Ok:
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View();
-                case AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation:
+                case AdminMediatorCodes.TransferVacancy.FailedTransfer:
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View();
                 default:
