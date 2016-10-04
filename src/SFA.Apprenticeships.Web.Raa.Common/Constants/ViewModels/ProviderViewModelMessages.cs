@@ -6,6 +6,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
     {
         public const string UkprnAlreadyExists = "The supplied UKPRN is already associated with a provider";
         public const string ProviderCreatedSuccessfully = "New provider added successfully";
+        public const string ProviderSavedSuccessfully = "The changes to the provider were saved successfully";
+        public const string ProviderSaveError = "An error occured when saving the provider. Please check your entries and try again";
 
         public static class Ukprn
         {

@@ -20,6 +20,13 @@
             public const string Ok = "AdminMediatorCodes.CreateProvider.Ok";
         }
 
+        public class SaveProvider
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveProvider.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveProvider.Error";
+            public const string Ok = "AdminMediatorCodes.SaveProvider.Ok";
+        }
+
         public class SearchProviderSites
         {
             public const string FailedValidation = "AdminMediatorCodes.SearchProviderSites.FailedValidation";

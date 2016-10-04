@@ -254,6 +254,19 @@
             return _providerMappers.Map<Provider, ProviderViewModel>(provider);
         }
 
+        public ProviderViewModel SaveProvider(ProviderViewModel viewModel)
+        {
+            var provider = _providerService.GetProvider(viewModel.ProviderId);
+
+            //Copy over changes
+            provider.FullName = viewModel.FullName;
+            provider.TradingName = viewModel.TradingName;
+
+            var updatedProvider = _providerService.SaveProvider(provider);
+
+            return _providerMappers.Map<Provider, ProviderViewModel>(updatedProvider);
+        }
+
         public ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel)
         {
             var providerSite = _providerMappers.Map<ProviderSiteViewModel, ProviderSite>(viewModel);
@@ -280,6 +293,8 @@
             var providerSite = _providerService.GetProviderSite(viewModel.ProviderSiteId);
 
             //Copy over changes
+            providerSite.FullName = viewModel.FullName;
+            providerSite.TradingName = viewModel.TradingName;
             foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
             {
                 var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);

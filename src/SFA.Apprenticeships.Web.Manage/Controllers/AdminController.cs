@@ -99,6 +99,33 @@
             }
         }
 
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SaveProviderAction")]
+        public ActionResult SaveProvider(ProviderViewModel viewModel)
+        {
+            var response = _adminMediator.SaveProvider(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SaveProvider.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("Provider", response.ViewModel);
+
+                case AdminMediatorCodes.SaveProvider.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new { viewModel.ProviderId });
+
+                case AdminMediatorCodes.SaveProvider.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new { viewModel.ProviderId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         [HttpGet]
         public ActionResult ProviderSites(ProviderSiteSearchViewModel viewModel)
         {
