@@ -72,5 +72,7 @@
         public string EmployerName { get; set; }
 
         public int? ApplicationOrClickThroughCount { get; set; }
+
+        public int NewApplicationCount { get; set; }
     }
 }
