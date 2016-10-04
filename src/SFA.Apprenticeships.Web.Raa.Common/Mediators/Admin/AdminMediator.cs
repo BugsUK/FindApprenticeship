@@ -225,15 +225,7 @@
             {
                 if (vacancyTransferViewModel.ProviderId != 0 && vacancyTransferViewModel.ProviderSiteId != 0 && vacancyTransferViewModel.VacancyReferenceNumbers.Any())
                 {
-                    _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
-                    //foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
-                    //{
-                    //    var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
-                    //    vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
-                    //    vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
-                    //    vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
-                    //    _vacancyWriteRepository.Update(vacancy);
-                    //}
+                    _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);                    
                 }
 
                 return new MediatorResponse<ManageVacancyTransferResultsViewModel>();

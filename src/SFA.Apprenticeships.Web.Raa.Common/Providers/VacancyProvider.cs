@@ -316,16 +316,19 @@
             });
         }
 
-        public void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        public IList<Vacancy> TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
         {
+            IList<Vacancy> vacancies=new List<Vacancy>();
             foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
             {
                 var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
                 vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
                 vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
                 vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
-                _vacancyPostingService.UpdateVacancy(vacancy);
+                var responseVacancy = _vacancyPostingService.UpdateVacancy(vacancy);
+                vacancies.Add(responseVacancy);
             }
+            return vacancies;
         }
 
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
