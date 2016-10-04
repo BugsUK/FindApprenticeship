@@ -25,6 +25,7 @@
             
         }
 
+        //TODO: This ctor is only used in unit tests. Consider removing it. Please, oh please: remove it.
         public Category(int id, string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories) : this(id, codeName, fullName, null, categoryType, subCategories, null)
         {
             

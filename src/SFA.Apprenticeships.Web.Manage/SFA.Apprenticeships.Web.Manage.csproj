@@ -856,6 +856,9 @@
     <Content Include="Views\Admin\CreateProviderSite.cshtml" />
     <Content Include="Views\Admin\ProviderSites.cshtml" />
     <Content Include="Views\Admin\ProviderSite.cshtml" />
+    <Content Include="Views\Admin\ApiUsers.cshtml" />
+    <Content Include="Views\Admin\ApiUser.cshtml" />
+    <Content Include="Views\Admin\CreateApiUser.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -887,7 +890,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Validators\Admin\" />
     <Folder Include="ViewModels\Admin\" />
   </ItemGroup>
   <ItemGroup>

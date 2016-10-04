@@ -75,6 +75,7 @@
             For<IGeoCodingProvider>().Use<GeoCodingProvider>();
             For<IEncryptionProvider>().Use<AES256Provider>();
             For<IProviderProvider>().Use<ProviderProvider>();
+            For<IApiUserProvider>().Use<ApiUserProvider>();
         }
 
         private void RegisterServices()

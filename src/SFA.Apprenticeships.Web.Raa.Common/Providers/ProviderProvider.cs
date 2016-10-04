@@ -212,6 +212,7 @@
                     parameters = new EmployerSearchRequest(viewModel.ProviderSiteId, viewModel.EdsUrn);
                     break;
                 case EmployerFilterType.NameAndLocation:
+                case EmployerFilterType.NameOrLocation:
                     parameters = new EmployerSearchRequest(viewModel.ProviderSiteId, viewModel.Name, viewModel.Location);
                     break;
                 case EmployerFilterType.Undefined:

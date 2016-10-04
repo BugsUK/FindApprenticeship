@@ -125,9 +125,13 @@
             {
                 employerFilterViewModel.FilterType = EmployerFilterType.EdsUrn;
             }
-            else if (!string.IsNullOrWhiteSpace(employerFilterViewModel.Location) || !string.IsNullOrWhiteSpace(employerFilterViewModel.Name))
+            else if (!string.IsNullOrWhiteSpace(employerFilterViewModel.Location) && !string.IsNullOrWhiteSpace(employerFilterViewModel.Name))
             {
                 employerFilterViewModel.FilterType = EmployerFilterType.NameAndLocation;
+            }
+            else if (!string.IsNullOrWhiteSpace(employerFilterViewModel.Location) || !string.IsNullOrWhiteSpace(employerFilterViewModel.Name))
+            {
+                employerFilterViewModel.FilterType = EmployerFilterType.NameOrLocation;
             }
             else
             {

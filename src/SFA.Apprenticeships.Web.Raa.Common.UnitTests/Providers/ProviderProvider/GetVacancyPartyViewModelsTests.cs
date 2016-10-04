@@ -131,6 +131,123 @@
             viewModel.EmployerResultsPage.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
         }
 
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(PageSize)]
+        public void ShoulReturnEmployersForNameOrLocationEmployerSearchViewModel(int unactivatedEmployerCount)
+        {
+            // Arrange.
+            var searchViewModel = new EmployerSearchViewModel
+            {
+                FilterType = EmployerFilterType.NameOrLocation,
+                ProviderSiteId = 42,
+                Name = "a",
+                EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>
+                {
+                    CurrentPage = 3
+                }
+            };
+
+            var employers = new Fixture()
+                .CreateMany<Employer>(PageSize)
+                .ToArray();
+
+            var vacancyParties = BuildFakeVacancyParties(employers, unactivatedEmployerCount);
+
+            var pageableVacancyParties = new Fixture()
+                .Build<Pageable<VacancyParty>>()
+                .With(each => each.Page, vacancyParties)
+                .Create();
+
+            Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == searchViewModel.ProviderSiteId;
+
+            MockProviderService.Setup(mock => mock
+                .GetVacancyParties(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
+                .Returns(pageableVacancyParties);
+
+            Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
+
+            MockEmployerService.Setup(mock => mock
+                .GetEmployers(It.Is(matchingEmployerIds), It.IsAny<bool>()))
+                .Returns(employers);
+
+            var provider = GetProviderProvider();
+
+            // Act.
+            var viewModel = provider.GetVacancyPartyViewModels(searchViewModel);
+
+            // Assert.
+            viewModel.Should().NotBeNull();
+
+            viewModel.ProviderSiteId.Should().Be(searchViewModel.ProviderSiteId);
+
+            viewModel.EmployerResultsPage.Should().NotBeNull();
+            viewModel.EmployerResultsPage.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
+
+            viewModel.FilterType.Should().Be(EmployerFilterType.NameOrLocation);
+
+            viewModel.Name.Should().NotBeEmpty();
+        }
+
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(PageSize)]
+        public void ShoulReturnEmployersForNameAndLocationEmployerSearchViewModel(int unactivatedEmployerCount)
+        {
+            // Arrange.
+            var searchViewModel = new EmployerSearchViewModel
+            {
+                FilterType = EmployerFilterType.NameAndLocation,
+                ProviderSiteId = 42,
+                Name = "a",
+                Location = "b",
+                EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>
+                {
+                    CurrentPage = 3
+                }
+            };
+
+            var employers = new Fixture()
+                .CreateMany<Employer>(PageSize)
+                .ToArray();
+
+            var vacancyParties = BuildFakeVacancyParties(employers, unactivatedEmployerCount);
+
+            var pageableVacancyParties = new Fixture()
+                .Build<Pageable<VacancyParty>>()
+                .With(each => each.Page, vacancyParties)
+                .Create();
+
+            Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == searchViewModel.ProviderSiteId;
+
+            MockProviderService.Setup(mock => mock
+                .GetVacancyParties(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
+                .Returns(pageableVacancyParties);
+
+            Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
+
+            MockEmployerService.Setup(mock => mock
+                .GetEmployers(It.Is(matchingEmployerIds), It.IsAny<bool>()))
+                .Returns(employers);
+
+            var provider = GetProviderProvider();
+
+            // Act.
+            var viewModel = provider.GetVacancyPartyViewModels(searchViewModel);
+
+            // Assert.
+            viewModel.Should().NotBeNull();
+
+            viewModel.ProviderSiteId.Should().Be(searchViewModel.ProviderSiteId);
+
+            viewModel.EmployerResultsPage.Should().NotBeNull();
+            viewModel.EmployerResultsPage.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
+
+            viewModel.FilterType.Should().Be(EmployerFilterType.NameAndLocation);
+            viewModel.Name.Should().NotBeEmpty();
+            viewModel.Location.Should().NotBeEmpty();
+        }
+
         private static IEnumerable<VacancyParty> BuildFakeVacancyParties(IReadOnlyList<Employer> employers, int unactivatedEmployerCount)
         {
             var vacancyParties = new Fixture()

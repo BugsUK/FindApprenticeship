@@ -6,7 +6,9 @@
     using Common.Mediators;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.Api;
     using Raa.Common.Validators.Provider;
+    using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
 
     public class AdminMediator : MediatorBase, IAdminMediator
@@ -16,13 +18,17 @@
         private readonly ProviderSiteSearchViewModelServerValidator _providerSiteSearchViewModelServerValidator = new ProviderSiteSearchViewModelServerValidator();
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
         private readonly ProviderSiteRelationshipViewModelServerValidator _providerSiteRelationshipViewModelServerValidator = new ProviderSiteRelationshipViewModelServerValidator();
+        private readonly ApiUserSearchViewModelServerValidator _apiUserSearchViewModelServerValidator = new ApiUserSearchViewModelServerValidator();
+        private readonly ApiUserViewModelServerValidator _apiUserViewModelServerValidator = new ApiUserViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
+        private readonly IApiUserProvider _apiUserProvider;
         private readonly ILogService _logService;
 
-        public AdminMediator(IProviderProvider providerProvider, ILogService logService)
+        public AdminMediator(IProviderProvider providerProvider, IApiUserProvider apiUserProvider, ILogService logService)
         {
             _providerProvider = providerProvider;
+            _apiUserProvider = apiUserProvider;
             _logService = logService;
         }
 
@@ -154,6 +160,81 @@
             {
                 _logService.Error($"Failed to create provider site relationship for provider site with id={viewModel.ProviderSiteId}", ex);
                 return GetMediatorResponse(AdminMediatorCodes.CreateProviderSiteRelationship.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipCreationError, UserMessageLevel.Error);
+            }
+        }
+
+        public MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel)
+        {
+            var validatonResult = _apiUserSearchViewModelServerValidator.Validate(searchViewModel);
+
+            if (!validatonResult.IsValid)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.SearchApiUsers.FailedValidation, new ApiUserSearchResultsViewModel { SearchViewModel = searchViewModel }, validatonResult);
+            }
+
+            var viewModel = _apiUserProvider.SearchApiUsers(searchViewModel);
+
+            return GetMediatorResponse(AdminMediatorCodes.SearchApiUsers.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApiUserViewModel> GetApiUser(Guid externalSystemId)
+        {
+            var viewModel = _apiUserProvider.GetApiUserViewModel(externalSystemId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetApiUser.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApiUserViewModel> CreateApiUser(ApiUserViewModel viewModel)
+        {
+            var validatonResult = _apiUserViewModelServerValidator.Validate(viewModel);
+
+            if (!validatonResult.IsValid)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.FailedValidation, viewModel, validatonResult);
+            }
+
+            var searchResultsViewModel = _apiUserProvider.SearchApiUsers(new ApiUserSearchViewModel {Id = viewModel.CompanyId, PerformSearch = true});
+            if (searchResultsViewModel.ApiUsers.Count > 0)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists, viewModel, ApiUserViewModelMessages.CompanyIdAlreadyExists, UserMessageLevel.Error);
+            }
+
+            var viewModelToCreate = _apiUserProvider.GetApiUserViewModel(viewModel.CompanyId);
+            if (viewModelToCreate == null)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.UnknownCompanyId, viewModel, ApiUserViewModelMessages.UnknownCompanyId, UserMessageLevel.Error);
+            }
+
+            viewModelToCreate.ExternalSystemId = viewModel.ExternalSystemId;
+            viewModelToCreate.Password = viewModel.Password;
+            viewModelToCreate.ApiEndpoints = viewModel.ApiEndpoints;
+
+            try
+            {
+                viewModel = _apiUserProvider.CreateApiUser(viewModelToCreate);
+
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.Ok, viewModel, ApiUserViewModelMessages.ApiUserCreatedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to create API user for company with id={viewModel.CompanyId}", ex);
+                return GetMediatorResponse(AdminMediatorCodes.CreateApiUser.Error, viewModel, ApiUserViewModelMessages.ApiUserCreationError, UserMessageLevel.Error);
+            }
+        }
+
+        public MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _apiUserProvider.SaveApiUser(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveApiUser.Ok, viewModel, ApiUserViewModelMessages.ApiUserSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save api user with external system id={viewModel.ExternalSystemId}", ex);
+                viewModel = _apiUserProvider.GetApiUserViewModel(viewModel.ExternalSystemId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveApiUser.Error, viewModel, ApiUserViewModelMessages.ApiUserSaveError, UserMessageLevel.Error);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
@@ -9,6 +10,7 @@
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.Admin;
+    using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
 
     [AuthorizeUser(Roles = Roles.Raa)]
@@ -218,6 +220,109 @@
 
                 case AdminMediatorCodes.CreateProviderSiteRelationship.Ok:
                     return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { viewModel.ProviderSiteId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ApiUsers(ApiUserSearchViewModel viewModel)
+        {
+            var response = _adminMediator.SearchApiUsers(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SearchApiUsers.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.SearchApiUsers.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchApiUsersAction")]
+        public ActionResult SearchApiUsers(ApiUserSearchResultsViewModel viewModel)
+        {
+            viewModel.SearchViewModel.PerformSearch = true;
+            return RedirectToRoute(ManagementRouteNames.AdminApiUsers, viewModel.SearchViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ApiUser(Guid externalSystemId)
+        {
+            var response = _adminMediator.GetApiUser(externalSystemId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult CreateApiUser()
+        {
+            return View(new ApiUserViewModel());
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateApiUserAction")]
+        public ActionResult CreateApiUser(ApiUserViewModel viewModel)
+        {
+            var response = _adminMediator.CreateApiUser(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.CreateApiUser.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists:
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateApiUser.UnknownCompanyId:
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateApiUser.Error:
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateApiUser.Ok:
+                    return View("ApiUser", response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SaveApiUserAction")]
+        public ActionResult SaveApiUser(ApiUserViewModel viewModel)
+        {
+            var response = _adminMediator.SaveApiUser(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SaveApiUser.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("ApiUser", response.ViewModel);
+
+                case AdminMediatorCodes.SaveApiUser.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewApiUser, new { viewModel.ExternalSystemId });
+
+                case AdminMediatorCodes.SaveApiUser.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewApiUser, new { viewModel.ExternalSystemId });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
