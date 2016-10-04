@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyPosting
 {
-    //TODO: rename project to SFA.Management.Application.VacancyPosting?
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Interfaces.VacancyPosting;
     using Strategies;
+    //TODO: rename project to SFA.Management.Application.VacancyPosting?
+    using System;
+    using System.Collections.Generic;
 
     public class VacancyPostingService : IVacancyPostingService
     {
@@ -122,6 +122,24 @@
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
         {
             return _vacancyLocationsStrategies.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+        }
+
+        public IList<Vacancy> UpdateVacanciesWithNewProvider(IList<Vacancy> vacancies)
+        {
+            IList<Vacancy> updatedVacancies = new List<Vacancy>();
+            foreach (var vacancy in vacancies)
+            {
+                try
+                {
+                    var responseVacancy = _updateVacancyStrategy.UpdateVacancyWithNewProvider(vacancy);
+                    updatedVacancies.Add(responseVacancy);
+                }
+                catch (Exception exception)
+                {
+                    throw exception;
+                }
+            }
+            return updatedVacancies;
         }
     }
 }

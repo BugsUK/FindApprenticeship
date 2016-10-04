@@ -58,6 +58,13 @@
             public const string NoRecordsFound = "AdminMediatorCodes.GetVacancyDetails.NoRecordsFound";
             public const string FailedAuthorisation = "AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation";
             public const string Ok = "AdminMediatorCodes.GetVacancyDetails.Ok";
+            public const string FailedTransfer = "AdminMediatorCodes.GetVacancyDetails.FailedException";
+        }
+
+        public class TransferVacancy
+        {
+            public const string FailedTransfer = "AdminMediatorCodes.TransferVacancy.FailedTransfer";
+            public const string Ok = "AdminMediatorCodes.TransferVacancy.Ok";
         }
     }
 }

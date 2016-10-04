@@ -67,6 +67,5 @@
         void EmptyVacancyLocation(int vacancyReferenceNumber);
         void CreateVacancy(VacancyMinimumData vacancyMinimumData);
         IList<Vacancy> TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel);
-        void UpdateVacancyOwnerRelationship(IList<Vacancy> vacancies);
     }
 }

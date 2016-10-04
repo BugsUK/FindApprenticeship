@@ -225,17 +225,18 @@
         {
             try
             {
+                ManageVacancyTransferResultsViewModel resultsViewModel = new ManageVacancyTransferResultsViewModel();
                 if (vacancyTransferViewModel.ProviderId != 0 && vacancyTransferViewModel.ProviderSiteId != 0 && vacancyTransferViewModel.VacancyReferenceNumbers.Any())
                 {
-                    var vacancies = _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
-                    _vacancyPostingProvider.UpdateVacancyOwnerRelationship(vacancies);
+                    resultsViewModel.Vacancies = _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
                 }
-
-                return new MediatorResponse<ManageVacancyTransferResultsViewModel>();
+                return GetMediatorResponse(AdminMediatorCodes.TransferVacancy.Ok, resultsViewModel, TransferVacanciesMessages.Ok, UserMessageLevel.Success);
             }
-            catch (CustomException exception) when (exception.Code == ErrorCodes.ProviderVacancyAuthorisation.Failed)
+            catch (Exception exception)
             {
-                return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation, new ManageVacancyTransferResultsViewModel(), TransferVacanciesMessages.UnAuthorisedAccess, UserMessageLevel.Warning);
+                _logService.Error("Failed to transfer vacancies with vacancy referencenumbers" +
+                                  $" ={string.Join(",", vacancyTransferViewModel.VacancyReferenceNumbers)}", exception);
+                return GetMediatorResponse(AdminMediatorCodes.TransferVacancy.FailedTransfer, new ManageVacancyTransferResultsViewModel(), TransferVacanciesMessages.FailedTransfer, UserMessageLevel.Error);
             }
         }
     }

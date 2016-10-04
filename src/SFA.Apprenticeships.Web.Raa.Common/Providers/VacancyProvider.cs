@@ -19,6 +19,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
+    using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
     using System;
@@ -58,15 +59,17 @@
         private readonly IMapper _mapper;
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
-        private IVacancySummaryService _vacancySummaryService;
+        private readonly IVacancySummaryService _vacancySummaryService;
+        private readonly IVacancyWriteRepository _vacancyWriteRepository;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
             IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
-            ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService,
-            ILocalAuthorityLookupService localAuthLookupService, IVacancySummaryService vacancySummaryService)
+            ICurrentUserService currentUserService, IUserProfileService userProfileService,
+            IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
+            IVacancySummaryService vacancySummaryService, IVacancyWriteRepository vacancyWriteRepository)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -88,6 +91,7 @@
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
             _vacancySummaryService = vacancySummaryService;
+            _vacancyWriteRepository = vacancyWriteRepository;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -325,24 +329,10 @@
                 vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
                 vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
                 vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
-                var responseVacancy = _vacancyPostingService.UpdateVacancy(vacancy);
-                vacancies.Add(responseVacancy);
+                vacancies.Add(vacancy);
             }
+            _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancies);
             return vacancies;
-        }
-
-        public void UpdateVacancyOwnerRelationship(IList<Vacancy> vacancies)
-        {
-            if (vacancies.Any())
-            {
-                foreach (var vacancy in vacancies)
-                {
-                    var vacancyOwnerRelationship = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
-                    if (vacancy.VacancyManagerId.HasValue)
-                        vacancyOwnerRelationship.ProviderSiteId = vacancy.VacancyManagerId.Value;
-                    _providerService.SaveVacancyParty(vacancyOwnerRelationship);
-                }
-            }
         }
 
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)

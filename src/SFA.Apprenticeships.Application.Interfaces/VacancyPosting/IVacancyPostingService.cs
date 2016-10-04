@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using System;
+    using System.Collections.Generic;
 
     public interface IVacancyPostingService
     {
@@ -16,7 +16,7 @@
         Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetVacancy(Guid vacancyGuid);
-        
+
         List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses);
 
         IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds);
@@ -51,5 +51,7 @@
         /// <param name="vacancyPartyIds"></param>
         /// <returns>VacancyPartId => VacancyLocation</returns>
         IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
+
+        IList<Vacancy> UpdateVacanciesWithNewProvider(IList<Vacancy> vacancies);
     }
 }
