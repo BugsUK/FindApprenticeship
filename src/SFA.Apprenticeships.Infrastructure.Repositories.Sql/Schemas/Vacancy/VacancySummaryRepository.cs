@@ -161,7 +161,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.ClosingSoon, "WHEN")} THEN 1 END) AS ClosingSoonCount,
                         COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.Closed, "WHEN")} THEN 1 END) AS ClosedCount,
                         COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.Draft, "WHEN")} THEN 1 END) AS DraftCount,
-                        COUNT(CASE WHEN dbo.GetNewApplicantCount(v.VacancyId) > 0 THEN 1 END) AS NewApplicationsCount,
+                        SUM(dbo.GetNewApplicantCount(v.VacancyId)) AS NewApplicationsCount,
                         COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.Completed, "WHEN")} THEN 1 END) AS CompletedCount
                         FROM	Vacancy v
                         JOIN	VacancyOwnerRelationship o

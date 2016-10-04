@@ -34,6 +34,11 @@
             {
                 ukprn = ukprnoverride;
             }
+            else if (_currentUserService.IsInRole(Roles.Admin))
+            {
+                //This is to fix the anonymous view issue when impersonating
+                return;
+            }
             var provider = _providerService.GetProvider(ukprn);
             var vacancyId = vacancy.VacancyId;
             var contractOwnerId = vacancy.ProviderId;

@@ -248,6 +248,7 @@
                 .MapMemberFrom(av => av.VacancySource, v => v.VacancySourceId)
                 .IgnoreMember(av => av.EmployerName)
                 .IgnoreMember(av => av.ApplicationOrClickThroughCount)
+                .IgnoreMember(av => av.NewApplicationCount)
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
@@ -336,6 +337,7 @@
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
                 .IgnoreMember(av => av.EmployerName)
                 .IgnoreMember(av => av.ApplicationOrClickThroughCount)
+                .IgnoreMember(av => av.NewApplicationCount)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
@@ -413,7 +415,8 @@
                 .IgnoreMember(av => av.VacancyLocationType)
                 .IgnoreMember(av => av.ExpectedDuration)
                 .MapMemberFrom(av => av.EmployerName, v => v.EmployerName)
-                .IgnoreMember(av => av.ApplicationOrClickThroughCount)
+                .MapMemberFrom(av => av.ApplicationOrClickThroughCount, v => v.ApplicantCount)
+                .MapMemberFrom(av => av.NewApplicationCount, v => v.NewApplicantCount)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
