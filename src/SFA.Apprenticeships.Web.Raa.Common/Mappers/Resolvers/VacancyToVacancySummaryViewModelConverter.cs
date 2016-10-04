@@ -28,17 +28,17 @@
                 Status = source.Status,
                 Title = source.Title,
                 OwnerPartyId = source.OwnerPartyId,
-                //ProviderName = source.ProviderName,
                 EmployerName = source.EmployerName,
                 Location = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address),
                 OfflineVacancy = source.OfflineVacancy,
-                //ApplicationCount = source.ApplicationCount,
+                ApplicationCount = source.ApplicationOrClickThroughCount ?? 0,
                 OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
                 ClosingDate = context.Engine.Map<DateTime?, DateViewModel>(source.ClosingDate),
                 DateSubmitted = source.DateSubmitted,
                 SubmissionCount = source.SubmissionCount,
                 IsEmployerLocationMainApprenticeshipLocation = source.IsEmployerLocationMainApprenticeshipLocation,
-                ParentVacancyId = source.ParentVacancyId
+                ParentVacancyId = source.ParentVacancyId,
+                NewApplicationCount = source.NewApplicationCount
             };
 
             return destination;

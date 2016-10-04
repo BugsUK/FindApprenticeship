@@ -4,7 +4,6 @@
     using Application.Interfaces;
     using Common.Mediators;
     using Mediators.Application;
-    using SFA.Infrastructure.Interfaces;
 
     public class EmployerApplicationController : Common.Controllers.ControllerBase
     {
