@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.ViewModels
 {
     using System;
+    using System.Globalization;
 
     public class DateViewModel
     {
@@ -39,7 +40,13 @@
                 if (!Month.HasValue) throw new InvalidOperationException("Month not set");
                 if (!Year.HasValue) throw new InvalidOperationException("Year not set");
 
-                return new DateTime(Year.Value, Month.Value, Day.Value);
+                var year = Year.Value;
+                if (year.ToString().Length == 2)
+                {
+                    year = CultureInfo.InvariantCulture.Calendar.ToFourDigitYear(year);
+                }
+
+                return new DateTime(year, Month.Value, Day.Value);
             }
         }
     }
