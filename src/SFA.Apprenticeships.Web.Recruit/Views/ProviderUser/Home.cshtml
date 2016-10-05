@@ -473,10 +473,44 @@
                                         }
                                     </td>
                                     <td class="vac-status">
-                                        @{ Html.RenderPartial("_vacancyStatus", vacancy.Status); }
+                                        @switch (vacancy.Status)
+                                        {
+                                            case VacancyStatus.Draft:
+                                                <span class="tag-draft" style="width: 110px">Draft</span>
+                                                break;
+                                            case VacancyStatus.Submitted:
+                                            case VacancyStatus.ReservedForQA:
+                                                <span class="tag-pending" style="width: 110px">Submitted</span>
+                                                break;
+                                            case VacancyStatus.Referred:
+                                                <span class="tag-pending" style="width: 110px">Referred</span>
+                                                break;
+                                            case VacancyStatus.Live:
+                                                <span class="tag-live" style="width: 110px">Live</span>
+                                                break;
+                                            case VacancyStatus.Closed:
+                                                <span class="tag-live" style="width: 110px">Closed</span>
+                                                break;
+                                            case VacancyStatus.Completed:
+                                                <span class="tag-live" style="width: 110px">Archived</span>
+                                                break;
+                                            case VacancyStatus.Withdrawn:
+                                                <span class="tag-live" style="width: 110px">Withdrawn</span>
+                                                break;
+                                        }
                                         @if (vacancy.Status == VacancyStatus.Live)
                                         {
-                                            Html.RenderPartial("_closingDate", vacancy.ClosingDate);
+                                            if (vacancy.ClosingDate != null && vacancy.ClosingDate.HasValue)
+                                            {
+                                                if (vacancy.ClosingDate.Date.ShouldEmphasiseClosingDate())
+                                                {
+                                                    <span class="note-text" style="color: red; font-weight: bold">@vacancy.ClosingDate.Date.GetClosingDate()</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="note-text">@vacancy.ClosingDate.Date.GetClosingDate()</span>
+                                                }
+                                            }
                                         }
                                     </td>
                                     <td class="vac-toolbox">
