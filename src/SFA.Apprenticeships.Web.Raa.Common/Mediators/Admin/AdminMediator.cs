@@ -5,7 +5,6 @@
     using Application.Interfaces.VacancyPosting;
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using Providers;
     using System;
@@ -231,7 +230,7 @@
                 var resultsViewModel = new ManageVacancyTransferResultsViewModel();
                 if (vacancyTransferViewModel.ProviderId != 0 && vacancyTransferViewModel.ProviderSiteId != 0 && vacancyTransferViewModel.VacancyReferenceNumbers.Any())
                 {
-                    resultsViewModel.Vacancies = _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
+                    _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
                 }
                 return GetMediatorResponse(AdminMediatorCodes.TransferVacancy.Ok, resultsViewModel, TransferVacanciesMessages.Ok, UserMessageLevel.Success);
             }

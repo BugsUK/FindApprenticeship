@@ -312,9 +312,8 @@
             });
         }
 
-        public IList<IDictionary<Vacancy, VacancyParty>> TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        public void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
         {
-            IList<IDictionary<Vacancy, VacancyParty>> vacancyWithVacancyPartyList = new List<IDictionary<Vacancy, VacancyParty>>();
             try
             {
                 foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
@@ -336,13 +335,7 @@
                     vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
                     vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
 
-                    var updatedVacancy = _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
-
-                    var vacancyWithVacancyParty = new Dictionary<Vacancy, VacancyParty>
-                    {
-                        {updatedVacancy, vacancyOwnerRelationship}
-                    };
-                    vacancyWithVacancyPartyList.Add(vacancyWithVacancyParty);
+                    _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
                 }
             }
             catch (Exception exception)
@@ -350,7 +343,6 @@
                 _logService.Error($"Exception occurred while transferring the vacancy:{exception.Message}");
                 throw exception;
             }
-            return vacancyWithVacancyPartyList;
         }
 
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
