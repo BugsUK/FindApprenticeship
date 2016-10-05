@@ -209,6 +209,7 @@
                                 }
                                 vacanciesToBeTransferred.Add(vacancyView);
                             }
+                            return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.NoRecordsFound, transferVacanciesResultsViewModel, TransferVacanciesMessages.NoRecordsFound, UserMessageLevel.Warning);
                         }
                     }
                 }

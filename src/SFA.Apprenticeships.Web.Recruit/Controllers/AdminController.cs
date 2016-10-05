@@ -87,6 +87,9 @@
 
                 switch (response.Code)
                 {
+                    case AdminMediatorCodes.GetVacancyDetails.NoRecordsFound:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View();
                     case AdminMediatorCodes.GetVacancyDetails.Ok:
                         return View("ConfirmVacancies", response.ViewModel);
                     case AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation:
