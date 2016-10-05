@@ -326,8 +326,8 @@
 
                     var updatedVacancy = _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
 
-                    var updatedVacancyOwnerRelationship = _providerService.UpdateVacancyOwnerRelationshipWithNewProvider
-                        (vacancy.VacancyOwnerRelationshipId, vacancyTransferViewModel.ProviderSiteId);
+                    var updatedVacancyOwnerRelationship = _providerService.CheckIfVacancyOwnerRelationshipExistsBetweenNewProviderAndEmployer
+                        (vacancy.VacancyOwnerRelationshipId, vacancyTransferViewModel.ProviderSiteId,updatedVacancy.VacancyReferenceNumber);
                     Dictionary<Vacancy, VacancyParty> vacancyWithVacancyParty = new Dictionary<Vacancy, VacancyParty>
                     {
                         {updatedVacancy, updatedVacancyOwnerRelationship}

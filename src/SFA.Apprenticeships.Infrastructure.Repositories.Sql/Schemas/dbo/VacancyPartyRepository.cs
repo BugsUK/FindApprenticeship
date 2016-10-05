@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
     using Common;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-    using Application.Interfaces;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class VacancyPartyRepository : IVacancyPartyReadRepository, IVacancyPartyWriteRepository
     {
@@ -19,7 +19,7 @@
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
-        
+
         public VacancyPartyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
         {
             _getOpenConnection = getOpenConnection;

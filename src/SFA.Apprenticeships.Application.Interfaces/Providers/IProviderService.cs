@@ -59,6 +59,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         ProviderSite SaveProviderSite(ProviderSite providerSite);
 
         ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship);
-        VacancyParty UpdateVacancyOwnerRelationshipWithNewProvider(int vacancyOwnerRelationshipId, int providerSiteId);
+        VacancyParty CheckIfVacancyOwnerRelationshipExistsBetweenNewProviderAndEmployer(int vacancyOwnerRelationshipId, int providerSiteId, int vacancyReferenceNumber);
+        VacancyParty GetVacancyParty(int employerId, int providerSiteId);
     }
 }

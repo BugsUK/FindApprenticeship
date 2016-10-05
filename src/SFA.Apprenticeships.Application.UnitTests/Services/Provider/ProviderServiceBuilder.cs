@@ -2,10 +2,10 @@
 {
     using Apprenticeships.Application.Provider;
     using Domain.Raa.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Employers;
     using Interfaces.Providers;
     using Moq;
-    using Interfaces;
 
     public class ProviderServiceBuilder
     {
@@ -16,6 +16,8 @@
         private readonly IProviderSiteWriteRepository _providerSiteWriteRepository;
         private IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
+        private readonly IVacancyReadRepository _vacancyReadRepository;
+        private readonly IVacancyWriteRepository _vacancyWriteRepository;
         private readonly ILogService _logService;
 
         public ProviderServiceBuilder()
@@ -27,14 +29,16 @@
             _providerSiteWriteRepository = new Mock<IProviderSiteWriteRepository>().Object;
             _vacancyPartyReadRepository = new Mock<IVacancyPartyReadRepository>().Object;
             _vacancyPartyWriteRepository = new Mock<IVacancyPartyWriteRepository>().Object;
+            _vacancyReadRepository = new Mock<IVacancyReadRepository>().Object;
+            _vacancyWriteRepository = new Mock<IVacancyWriteRepository>().Object;
             _logService = new Mock<ILogService>().Object;
         }
 
         public IProviderService Build()
         {
-            var provider = new ProviderService(_providerReadRepository, _providerSiteReadRepository, 
-                _vacancyPartyReadRepository, _vacancyPartyWriteRepository, _logService, 
-                _employerService, _providerWriteRepository, _providerSiteWriteRepository);
+            var provider = new ProviderService(_providerReadRepository, _providerSiteReadRepository,
+                _vacancyPartyReadRepository, _vacancyPartyWriteRepository, _logService,
+                _employerService, _providerWriteRepository, _providerSiteWriteRepository, _vacancyReadRepository, _vacancyWriteRepository);
             return provider;
         }
 

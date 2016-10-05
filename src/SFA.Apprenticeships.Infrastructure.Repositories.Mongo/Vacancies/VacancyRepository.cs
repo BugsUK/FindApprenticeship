@@ -1,12 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using Application.Interfaces;
     using Common;
     using Common.Configuration;
+    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
@@ -14,7 +11,10 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
-    using Domain.Entities.Raa.Locations;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
 
     public class VacancyRepository : GenericMongoClient2<MongoVacancy>, IVacancyReadRepository, IVacancyWriteRepository
     {
@@ -80,6 +80,13 @@
             return mongoEntities.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
 
+        public List<VacancySummary> GetByOwnerPartyId(int ownerPartyId)
+        {
+            var mongoEntity = Collection.Find(Query<VacancySummary>.EQ(v => v.OwnerPartyId, ownerPartyId));
+
+            return mongoEntity.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
+        }
+
         public int CountWithStatus(params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to count apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
@@ -94,7 +101,7 @@
         public List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
-            
+
             var mongoEntities = Collection.Find(Query<Vacancy>.In(v => v.Status, desiredStatuses))
                 .Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e))
                 .ToList();
@@ -233,7 +240,7 @@
             Collection.Save(mongoEntity);
             return mongoEntity;
         }
-        
+
         public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
