@@ -167,7 +167,7 @@
             {
                 case AdminMediatorCodes.TransferVacancy.Ok:
                     SetUserMessage(response.Message.Text, response.Message.Level);
-                    return View();
+                    return View("TransferVacancies");
                 case AdminMediatorCodes.TransferVacancy.FailedTransfer:
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View("TransferVacancies");
