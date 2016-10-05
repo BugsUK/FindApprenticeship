@@ -49,7 +49,6 @@
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
-        private readonly IDictionary<VacancyType, ICommonApplicationService> _commonApplicationService;
         private readonly IVacancyLockingService _vacancyLockingService;
         private readonly ICurrentUserService _currentUserService;
         private readonly IUserProfileService _userProfileService;
@@ -77,10 +76,6 @@
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
-            _commonApplicationService = new Dictionary<VacancyType, ICommonApplicationService>() {
-                { VacancyType.Apprenticeship, apprenticeshipApplicationService },
-                { VacancyType.Traineeship,    traineeshipApplicationService }
-            };
             _vacancyLockingService = vacancyLockingService;
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
