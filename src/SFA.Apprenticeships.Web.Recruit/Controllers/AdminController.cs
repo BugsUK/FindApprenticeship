@@ -3,6 +3,7 @@
     using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
+    using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;
     using Common.Providers;
@@ -83,6 +84,11 @@
             if (ModelState.IsValid)
             {
                 var response = _adminMediator.GetVacancyDetails(viewModel);
+                if (response.ViewModel.NotFoundVacancyNumbers.Any())
+                {
+                    SetUserMessage("No vacancies found for the given vacancy reference numbers: " +
+                                   $"{string.Join(", ", response.ViewModel.NotFoundVacancyNumbers)}", UserMessageLevel.Error);
+                }
                 ModelState.Clear();
 
                 switch (response.Code)

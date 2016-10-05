@@ -320,17 +320,27 @@
                 foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
                 {
                     var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
+                    var vacancyOwnerRelationship = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
+                    var existingVacancyOwnerRelationship = _providerService.GetVacancyParty(vacancyOwnerRelationship.EmployerId, vacancyTransferViewModel.ProviderSiteId);
+                    if (existingVacancyOwnerRelationship == null)
+                    {
+                        vacancyOwnerRelationship.ProviderSiteId = vacancyTransferViewModel.ProviderSiteId;
+                        _providerService.SaveVacancyParty(vacancyOwnerRelationship);
+                    }
+                    else
+                    {
+                        vacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyPartyId;
+                    }
+
                     vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
                     vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
                     vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
 
                     var updatedVacancy = _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
 
-                    var updatedVacancyOwnerRelationship = _providerService.CheckIfVacancyOwnerRelationshipExistsBetweenNewProviderAndEmployer
-                        (vacancy.VacancyOwnerRelationshipId, vacancyTransferViewModel.ProviderSiteId,updatedVacancy.VacancyReferenceNumber);
-                    Dictionary<Vacancy, VacancyParty> vacancyWithVacancyParty = new Dictionary<Vacancy, VacancyParty>
+                    var vacancyWithVacancyParty = new Dictionary<Vacancy, VacancyParty>
                     {
-                        {updatedVacancy, updatedVacancyOwnerRelationship}
+                        {updatedVacancy, vacancyOwnerRelationship}
                     };
                     vacancyWithVacancyPartyList.Add(vacancyWithVacancyParty);
                 }

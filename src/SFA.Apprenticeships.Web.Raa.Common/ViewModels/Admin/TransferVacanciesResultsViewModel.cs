@@ -6,5 +6,6 @@
     {
         public TransferVacanciesViewModel TransferVacanciesViewModel { get; set; }
         public IList<TransferVacancyViewModel> VacanciesToBeTransferredVm { get; set; }
+        public IList<string> NotFoundVacancyNumbers { get; set; }
     }
 }

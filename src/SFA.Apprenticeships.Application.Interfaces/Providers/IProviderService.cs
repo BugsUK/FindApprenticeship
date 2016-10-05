@@ -36,6 +36,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly);
 
+        VacancyParty GetVacancyParty(int employerId, int providerSiteId);
+
         IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);
 
         VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
@@ -59,7 +61,5 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         ProviderSite SaveProviderSite(ProviderSite providerSite);
 
         ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship);
-        VacancyParty CheckIfVacancyOwnerRelationshipExistsBetweenNewProviderAndEmployer(int vacancyOwnerRelationshipId, int providerSiteId, int vacancyReferenceNumber);
-        VacancyParty GetVacancyParty(int employerId, int providerSiteId);
     }
 }

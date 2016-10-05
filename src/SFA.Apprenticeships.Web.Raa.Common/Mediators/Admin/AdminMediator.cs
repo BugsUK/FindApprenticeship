@@ -175,10 +175,11 @@
         {
             try
             {
-                IList<TransferVacancyViewModel> vacanciesToBeTransferred = new List<TransferVacancyViewModel>();
-                TransferVacanciesResultsViewModel transferVacanciesResultsViewModel = new TransferVacanciesResultsViewModel()
+                var vacanciesToBeTransferred = new List<TransferVacancyViewModel>();
+                var transferVacanciesResultsViewModel = new TransferVacanciesResultsViewModel
                 {
-                    TransferVacanciesViewModel = viewModel
+                    TransferVacanciesViewModel = viewModel,
+                    NotFoundVacancyNumbers = new List<string>()
                 };
 
                 if (viewModel != null && viewModel.VacancyReferenceNumbers.Any())
@@ -188,10 +189,10 @@
                         string vacancyReference;
                         if (VacancyHelper.TryGetVacancyReference(vacancy, out vacancyReference))
                         {
-                            Vacancy vacancyDetails = _vacancyPostingService.GetVacancyByReferenceNumber(Convert.ToInt32(vacancyReference));
+                            var vacancyDetails = _vacancyPostingService.GetVacancyByReferenceNumber(Convert.ToInt32(vacancyReference));
                             if (vacancyDetails != null)
                             {
-                                TransferVacancyViewModel vacancyView = new TransferVacancyViewModel
+                                var vacancyView = new TransferVacancyViewModel
                                 {
                                     ContractOwnerId = vacancyDetails.ProviderId,
                                     VacancyManagerId = vacancyDetails.VacancyManagerId,
@@ -209,7 +210,8 @@
                                 }
                                 vacanciesToBeTransferred.Add(vacancyView);
                             }
-                            return GetMediatorResponse(AdminMediatorCodes.GetVacancyDetails.NoRecordsFound, transferVacanciesResultsViewModel, TransferVacanciesMessages.NoRecordsFound, UserMessageLevel.Warning);
+                            else
+                                transferVacanciesResultsViewModel.NotFoundVacancyNumbers.Add(vacancy);
                         }
                     }
                 }
@@ -226,7 +228,7 @@
         {
             try
             {
-                ManageVacancyTransferResultsViewModel resultsViewModel = new ManageVacancyTransferResultsViewModel();
+                var resultsViewModel = new ManageVacancyTransferResultsViewModel();
                 if (vacancyTransferViewModel.ProviderId != 0 && vacancyTransferViewModel.ProviderSiteId != 0 && vacancyTransferViewModel.VacancyReferenceNumbers.Any())
                 {
                     resultsViewModel.Vacancies = _vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
