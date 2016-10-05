@@ -11,7 +11,7 @@
         public ApplicationRepositoryRegistry()
         {
             // Apprenticeships.
-            For<IMapper>().Use<ApprenticeshipApplicationMappers>().Name = "ApplicationDetailMapper";
+            For<IMapper>().Singleton().Use<ApprenticeshipApplicationMappers>().Name = "ApplicationDetailMapper";
 
             For<IApprenticeshipApplicationWriteRepository>()
                 .Use<ApprenticeshipApplicationRepository>()
@@ -29,7 +29,7 @@
                 .Named("ApplicationDetailMapper");
 
             // Traineeships.
-            For<IMapper>().Use<TraineeshipApplicationMappers>().Name = "TraineeshipApplicationDetailMapper";
+            For<IMapper>().Singleton().Use<TraineeshipApplicationMappers>().Name = "TraineeshipApplicationDetailMapper";
 
             For<ITraineeshipApplicationWriteRepository>()
                 .Use<TraineeshipApplicationRepository>()
