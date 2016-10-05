@@ -21,8 +21,6 @@
             <ul>
                 <li>ID: @Model.ProviderSiteId</li>
                 <li>EDSURN: @Model.EdsUrn</li>
-                <li>Full name: @Model.FullName</li>
-                <li>Trading Name: @Model.TradingName</li>
                 <li>Web Page: <a href="@Model.WebPage">@Model.WebPage</a></li>
             </ul>
         </p>
@@ -33,6 +31,13 @@
         <p class="small-btm-margin">@Model.Address.Town</p>
         <p class="small-btm-margin">@Model.Address.County</p>
         <p class="small-btm-margin">@Model.Address.Postcode</p>
+    </div>
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
+        @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
+
     </div>
 
     <h2 class="heading-medium">Provider Site Relationships</h2>

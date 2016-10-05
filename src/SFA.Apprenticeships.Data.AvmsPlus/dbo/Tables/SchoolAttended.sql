@@ -13,3 +13,7 @@
     CONSTRAINT [uq_idx_schoolAttended] UNIQUE NONCLUSTERED ([CandidateId] ASC, [ApplicationId] ASC)
 );
 
+GO
+CREATE NONCLUSTERED INDEX [idx_SchoolAttended_ApplicationId_CandidateId] 
+	ON [dbo].[SchoolAttended] ([ApplicationId], [CandidateId]) 
+	INCLUDE ([SchoolAttendedId]) 

@@ -52,6 +52,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         Provider CreateProvider(Provider provider);
 
+        Provider SaveProvider(Provider provider);
+
         ProviderSite CreateProviderSite(ProviderSite providerSite);
 
         ProviderSite SaveProviderSite(ProviderSite providerSite);

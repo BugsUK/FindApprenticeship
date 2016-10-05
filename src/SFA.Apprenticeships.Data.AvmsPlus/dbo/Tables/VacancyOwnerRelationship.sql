@@ -34,5 +34,11 @@ CREATE NONCLUSTERED INDEX [idx_VacancyOwnerRelationship_StatusTypeId]
 
 GO
 CREATE NONCLUSTERED INDEX [idx_VacancyOwnerRelationship_EditedInRaa]
-	ON [dbo].[VacancyOwnerRelationship]([EditedInRaa] ASC)
+	ON [dbo].[VacancyOwnerRelationship]([EditedInRaa] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [idx_VacancyOwnerRelationship_ProviderSiteID_StatusTypeId] 
+	ON [dbo].[VacancyOwnerRelationship] ([ProviderSiteID], [StatusTypeId]) 
+	INCLUDE ([ContractHolderIsEmployer], [EditedInRaa], [EmployerDescription], [EmployerId], [EmployerLogoAttachmentId], [EmployerWebsite], [ManagerIsEmployer], [NationWideAllowed], [Notes], [VacancyOwnerRelationshipId]) 
 GO

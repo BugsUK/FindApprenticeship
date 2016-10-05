@@ -212,6 +212,11 @@
             return _providerWriteRepository.Create(provider);
         }
 
+        public Provider SaveProvider(Provider provider)
+        {
+            return _providerWriteRepository.Update(provider);
+        }
+
         public ProviderSite CreateProviderSite(ProviderSite providerSite)
         {
             return _providerSiteWriteRepository.Create(providerSite);

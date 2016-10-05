@@ -65,5 +65,10 @@
 GO
 CREATE NONCLUSTERED INDEX [idx_Candidate_CandidateStatusTypeID]
     ON [dbo].[Candidate]([CandidateStatusTypeId] ASC)
-    INCLUDE([CandidateId], [Postcode]);
+    INCLUDE([CandidateId], [Postcode])
 
+
+GO
+CREATE NONCLUSTERED INDEX [idx_Candidate_CandidateGuid] 
+	ON [dbo].[Candidate] ([CandidateGuid]) 
+	INCLUDE ([CandidateId], [PersonId]) ;
