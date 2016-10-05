@@ -338,6 +338,7 @@
             catch (Exception exception)
             {
                 _logService.Error($"Exception occurred while transferring the vacancy:{exception.Message}");
+                throw exception;
             }
             return vacancyWithVacancyPartyList;
         }

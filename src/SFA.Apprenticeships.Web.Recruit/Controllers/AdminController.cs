@@ -149,7 +149,7 @@
                 ProviderId = providerId,
                 ProviderName = providerResponse.ViewModel.FullName,
                 ProviderSiteId = providerSiteId,
-                ProviderSiteName = providerSiteResponse.ViewModel.DisplayName + "(" + providerSiteResponse.ViewModel.EdsUrn + ")"
+                ProviderSiteName = providerSiteResponse.ViewModel.DisplayName + " (" + providerSiteResponse.ViewModel.EdsUrn + ")"
             };
             if (vacanciesReferenceNumbers != null)
                 manageVacancyViewModel.VacancyReferenceNumbers =
@@ -170,7 +170,7 @@
                     return View();
                 case AdminMediatorCodes.TransferVacancy.FailedTransfer:
                     SetUserMessage(response.Message.Text, response.Message.Level);
-                    return View();
+                    return View("TransferVacancies");
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
