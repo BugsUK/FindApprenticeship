@@ -11,7 +11,7 @@
 
     public class ApiUserProvider : IApiUserProvider
     {
-        private readonly ApiUserMappers _apiUserMappers = new ApiUserMappers();
+        private static readonly ApiUserMappers ApiUserMappers = new ApiUserMappers();
 
         //Referencing the repository directly in the provider. Supposed to go through a service to follow the usual pattern but as API users are considered legacy and this is for an admin screen, I feel it's OK
         private readonly IApiUserRepository _apiUserRepository;
@@ -39,26 +39,26 @@
 
             var apiUsers = _apiUserRepository.SearchApiUsers(searchParameters);
 
-            viewModel.ApiUsers = apiUsers.Select(a => _apiUserMappers.Map<ApiUser, ApiUserViewModel>(a)).ToList();
+            viewModel.ApiUsers = apiUsers.Select(a => ApiUserMappers.Map<ApiUser, ApiUserViewModel>(a)).ToList();
 
             return viewModel;
         }
 
         public ApiUserViewModel GetApiUserViewModel(Guid externalSystemId)
         {
-            return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.GetApiUser(externalSystemId));
+            return ApiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.GetApiUser(externalSystemId));
         }
 
         public ApiUserViewModel GetApiUserViewModel(string companyId)
         {
-            return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.GetApiUser(companyId));
+            return ApiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.GetApiUser(companyId));
         }
 
         public ApiUserViewModel CreateApiUser(ApiUserViewModel viewModel)
         {
-            var apiUser = _apiUserMappers.Map<ApiUserViewModel, ApiUser>(viewModel);
+            var apiUser = ApiUserMappers.Map<ApiUserViewModel, ApiUser>(viewModel);
 
-            return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.Create(apiUser));
+            return ApiUserMappers.Map<ApiUser, ApiUserViewModel>(_apiUserRepository.Create(apiUser));
         }
 
         public ApiUserViewModel SaveApiUser(ApiUserViewModel viewModel)
@@ -66,11 +66,11 @@
             var apiUser = _apiUserRepository.GetApiUser(viewModel.ExternalSystemId);
 
             //Copy over changes
-            apiUser.AuthorisedApiEndpoints = _apiUserMappers.Map<IList<ApiEndpointViewModel>, IList<ApiEndpoint>>(viewModel.ApiEndpoints);
+            apiUser.AuthorisedApiEndpoints = ApiUserMappers.Map<IList<ApiEndpointViewModel>, IList<ApiEndpoint>>(viewModel.ApiEndpoints);
 
             var updatedApiUser = _apiUserRepository.Update(apiUser);
 
-            return _apiUserMappers.Map<ApiUser, ApiUserViewModel>(updatedApiUser);
+            return ApiUserMappers.Map<ApiUser, ApiUserViewModel>(updatedApiUser);
         }
     }
 }

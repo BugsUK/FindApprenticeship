@@ -13,13 +13,12 @@
     public class CandidateRepository : ICandidateReadRepository
     {
         private readonly IGetOpenConnection _getOpenConnection;
-        private readonly IMapper _candidateMapper;
+        private static readonly IMapper CandidateMapper = new CandidateMappers();
         private readonly ILogService _logService;
 
         public CandidateRepository(IGetOpenConnection getOpenConnection, ILogService logService)
         {
             _getOpenConnection = getOpenConnection;
-            _candidateMapper = new CandidateMappers();
             _logService = logService;
         }
 
@@ -108,7 +107,7 @@ WHERE a.ApplicationStatusTypeId >= 2 AND " + string.Join(" AND ", query);
                 sql += @" AND (VacancyManagerId IN @providerSiteIds OR DeliveryOrganisationId IN @providerSiteIds)";
             }
 
-            var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
+            var candidates = CandidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
                 _getOpenConnection.Query<DbCandidateSummary>(sql,
                     new
                     {

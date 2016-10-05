@@ -14,12 +14,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
     public class VacancySummaryRepository : IVacancySummaryRepository
     {
         private readonly IGetOpenConnection _getOpenConnection;
-        private readonly VacancyMappers _mapper;
+        private static readonly VacancyMappers Mapper = new VacancyMappers();
 
         public VacancySummaryRepository(IGetOpenConnection getOpenConnection)
         {
             _getOpenConnection = getOpenConnection;
-            _mapper = new VacancyMappers();
         }
 
         public IList<VacancySummary> GetSummariesForProvider(VacancySummaryQuery query, out int totalRecords)
@@ -141,7 +140,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             // return the total record count as well
             totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
 
-            var mapped = _mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
+            var mapped = Mapper.Map<IList<DbVacancySummary>, IList<VacancySummary>>(vacancies);
 
             return mapped;
         }
