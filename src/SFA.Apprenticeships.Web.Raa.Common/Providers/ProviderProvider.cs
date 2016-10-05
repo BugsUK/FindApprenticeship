@@ -267,19 +267,6 @@
             return ProviderMappers.Map<Provider, ProviderViewModel>(updatedProvider);
         }
 
-        public ProviderViewModel SaveProvider(ProviderViewModel viewModel)
-        {
-            var provider = _providerService.GetProvider(viewModel.ProviderId);
-
-            //Copy over changes
-            provider.FullName = viewModel.FullName;
-            provider.TradingName = viewModel.TradingName;
-
-            var updatedProvider = _providerService.SaveProvider(provider);
-
-            return _providerMappers.Map<Provider, ProviderViewModel>(updatedProvider);
-        }
-
         public ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel)
         {
             var providerSite = ProviderMappers.Map<ProviderSiteViewModel, ProviderSite>(viewModel);
