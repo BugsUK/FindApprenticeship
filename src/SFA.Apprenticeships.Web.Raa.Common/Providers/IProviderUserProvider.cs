@@ -8,7 +8,9 @@
     {
         ProviderUserViewModel GetUserProfileViewModel(string username);
 
-        IEnumerable<ProviderUserViewModel> GetUserProfileViewModels(string ukprn);
+        IEnumerable<ProviderUserViewModel> GetProviderUsers(string ukprn);
+
+        ProviderUserSearchResultsViewModel SearchProviderUsers(ProviderUserSearchViewModel searchViewModel);
 
         bool ValidateEmailVerificationCode(string username, string code);
 

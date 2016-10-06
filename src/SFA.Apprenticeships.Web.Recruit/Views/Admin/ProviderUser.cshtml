@@ -1,0 +1,41 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser.ProviderUserViewModel
+
+@{
+    ViewBag.Title = "Provider User";
+}
+
+<h1 id="heading" class="heading-xlarge">Provider User</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminProviderUsers))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <p>
+        <ul>
+            <li>ID: @Model.ProviderUserId</li>
+            <li>GUID: @Model.ProviderUserGuid</li>
+            <li>UKPRN: @Model.Ukprn</li>
+            <li>Email Verified: @Model.EmailAddressVerified</li>
+        </ul>
+    </p>
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.Fullname, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
+        @Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { type = "text" })
+
+        <div class="form-group">
+            <button id="save-provider-user-button" type="submit" class="button" name="SaveProviderUserAction" value="SaveProviderUser">Save</button>
+        </div>
+
+        @if (!Model.EmailAddressVerified)
+        {
+            <div class="form-group">
+                <button id="verify-provider-user-email-button" type="submit" class="button" name="VerifyProviderUserEmailAction" value="VerifyProviderUserEmail">Verify Email</button>
+            </div>
+        }
+    </div>
+}

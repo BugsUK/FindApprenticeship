@@ -66,5 +66,16 @@
             public const string FailedTransfer = "AdminMediatorCodes.TransferVacancy.FailedTransfer";
             public const string Ok = "AdminMediatorCodes.TransferVacancy.Ok";
         }
+
+        public class GetProviderUsers
+        {
+            public const string Ok = "AdminMediatorCodes.GetProviderUsers.Ok";
+        }
+
+        public class SearchProviderUsers
+        {
+            public const string FailedValidation = "AdminMediatorCodes.FailedValidation.Ok";
+            public const string Ok = "AdminMediatorCodes.SearchProviderUsers.Ok";
+        }
     }
 }

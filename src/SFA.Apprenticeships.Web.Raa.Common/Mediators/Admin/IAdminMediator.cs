@@ -2,6 +2,7 @@
 {
     using ViewModels.Admin;
     using ViewModels.Provider;
+    using ViewModels.ProviderUser;
     using Web.Common.Mediators;
 
     public interface IAdminMediator
@@ -16,5 +17,6 @@
         MediatorResponse<ProviderSiteViewModel> CreateProviderSiteRelationship(ProviderSiteViewModel viewModel);
         MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel);
         MediatorResponse<ManageVacancyTransferResultsViewModel> ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel);
+        MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn);
     }
 }

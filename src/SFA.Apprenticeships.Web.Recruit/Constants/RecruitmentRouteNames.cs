@@ -97,6 +97,7 @@
         //Admin
         public const string AdminList = "AdminList";
         public const string AdminProviderUsers = "AdminProviderUsers";
+        public const string AdminViewProviderUser = "AdminViewProviderUser";
         public const string AdminChangeUkprn = "AdminChangeUkprn";
         public const string AdminResetUkprn = "AdminResetUkprn";
         public const string TransferVacancies = "TransferVacancies";

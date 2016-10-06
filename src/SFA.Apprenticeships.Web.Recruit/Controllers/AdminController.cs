@@ -17,6 +17,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Web.Mvc;
+    using Raa.Common.ViewModels.ProviderUser;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.Admin)]
@@ -39,9 +40,32 @@
         }
 
         [HttpGet]
-        public ActionResult ProviderUsers()
+        public ActionResult ProviderUsers(ProviderUserSearchViewModel viewModel)
         {
-            return View();
+            var response = _adminMediator.SearchProviderUsers(viewModel, User.GetUkprn());
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SearchProviderUsers.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.SearchProviderUsers.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchProviderUsersAction")]
+        public ActionResult SearchProviderUsers(ProviderUserSearchResultsViewModel viewModel)
+        {
+            viewModel.SearchViewModel.PerformSearch = true;
+            return RedirectToRoute(RecruitmentRouteNames.AdminProviderUsers, viewModel.SearchViewModel);
         }
 
         [HttpGet]

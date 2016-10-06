@@ -37,7 +37,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             if (providerUser != null)
             {
-                return Convert(providerUser);
+                return Convert(providerUser, "");
             }
 
             return null;
@@ -55,10 +55,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _userProfileService.UpdateProviderUser(providerUser);
         }
 
-        public IEnumerable<ProviderUserViewModel> GetUserProfileViewModels(string ukprn)
+        public IEnumerable<ProviderUserViewModel> GetProviderUsers(string ukprn)
         {
             var providerUsers = _userProfileService.GetProviderUsers(ukprn);
-            return providerUsers.Select(Convert);
+            return providerUsers.Select(pu => Convert(pu, ukprn));
+        }
+
+        public ProviderUserSearchResultsViewModel SearchProviderUsers(ProviderUserSearchViewModel searchViewModel)
+        {
+            throw new NotImplementedException();
         }
 
         public bool ValidateEmailVerificationCode(string username, string code)
@@ -116,7 +121,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 _providerUserAccountService.SendEmailVerificationCode(username);
             }
 
-            return Convert(savedProviderUser);
+            return Convert(savedProviderUser, ukprn);
         }
 
         public void ResendEmailVerificationCode(string username)
@@ -124,7 +129,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _providerUserAccountService.ResendEmailVerificationCode(username);
         }
 
-        private ProviderUserViewModel Convert(ProviderUser providerUser)
+        private ProviderUserViewModel Convert(ProviderUser providerUser, string ukprn)
         {
             ReleaseNoteViewModel releaseNoteViewModel = null;
             var releaseNotes = _referenceDataService.GetReleaseNotes(DasApplication.Recruit);
@@ -140,6 +145,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             var viewModel = new ProviderUserViewModel
             {
+                ProviderUserId = providerUser.ProviderUserId,
+                ProviderUserGuid = providerUser.ProviderUserGuid,
+                ProviderId = providerUser.ProviderId,
+                Ukprn = ukprn,
+                Username = providerUser.Username,
                 DefaultProviderSiteId = providerUser.PreferredProviderSiteId ?? 0,
                 EmailAddress = providerUser.Email,
                 EmailAddressVerified = providerUser.Status == ProviderUserStatus.EmailVerified,

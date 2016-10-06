@@ -13,6 +13,7 @@
     using Validators.Provider;
     using ViewModels.Admin;
     using ViewModels.Provider;
+    using ViewModels.ProviderUser;
     using Web.Common.Constants;
     using Web.Common.Mediators;
 
@@ -28,15 +29,17 @@
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
+        private readonly IProviderUserProvider _providerUserProvider;
 
         public AdminMediator(IProviderProvider providerProvider, ILogService logService, IVacancyPostingService vacancyPostingService,
-            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider)
+            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider, IProviderUserProvider providerUserProvider)
         {
             _providerProvider = providerProvider;
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
             _providerService = providerService;
             _vacancyPostingProvider = vacancyPostingProvider;
+            _providerUserProvider = providerUserProvider;
         }
 
         public MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel)
@@ -240,6 +243,26 @@
                                   $" ={string.Join(",", vacancyTransferViewModel.VacancyReferenceNumbers)}", exception);
                 return GetMediatorResponse(AdminMediatorCodes.TransferVacancy.FailedTransfer, new ManageVacancyTransferResultsViewModel(), TransferVacanciesMessages.FailedTransfer, UserMessageLevel.Error);
             }
+        }
+
+        public MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn)
+        {
+            if (searchViewModel.PerformSearch)
+            {
+                var searchResultsViewModel = _providerUserProvider.SearchProviderUsers(searchViewModel);
+                return GetMediatorResponse(AdminMediatorCodes.SearchProviderUsers.Ok, searchResultsViewModel);
+            }
+
+            var provider = _providerService.GetProvider(ukprn);
+
+            var viewModel = new ProviderUserSearchResultsViewModel
+            {
+                SearchViewModel = new ProviderUserSearchViewModel(),
+                ProviderName = $"{provider.TradingName} ({provider.Ukprn})",
+                ProviderUsers = _providerUserProvider.GetProviderUsers(ukprn).ToList()
+            };
+
+            return GetMediatorResponse(AdminMediatorCodes.SearchProviderUsers.Ok, viewModel);
         }
     }
 }
