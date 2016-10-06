@@ -801,7 +801,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CreateVacancy.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>VacancySubmitted.generated.cs</LastGenOutput>

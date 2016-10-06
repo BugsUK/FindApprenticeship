@@ -10,7 +10,8 @@
             base.Initialise();
 
             Mapper.CreateMap<Provider, ProviderViewModel>()
-                .ForMember(dest => dest.ProviderSiteViewModels, opt => opt.Ignore());
+                .ForMember(dest => dest.ProviderSiteViewModels, opt => opt.Ignore())
+                .ForMember(dest => dest.VacanciesReferenceNumbers, opt => opt.Ignore());
             Mapper.CreateMap<ProviderViewModel, Provider>();
 
             Mapper.CreateMap<ProviderSite, ProviderSiteViewModel>()
