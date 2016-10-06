@@ -69,6 +69,7 @@
         {
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
             For<IVacancyQAProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
+            For<IVacancyPostingProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
@@ -76,6 +77,7 @@
             For<IEncryptionProvider>().Use<AES256Provider>();
             For<IProviderProvider>().Use<ProviderProvider>();
             For<IApiUserProvider>().Use<ApiUserProvider>();
+            For<IProviderUserProvider>().Use<ProviderUserProvider>();
         }
 
         private void RegisterServices()
@@ -124,6 +126,8 @@
             For<IGetReleaseNotesStrategy>().Use<GetReleaseNotesStrategy>();
 
             For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
+
+            For<Application.UserAccount.Strategies.ProviderUserAccount.ISubmitContactMessageStrategy>().Use<Application.UserAccount.Strategies.ProviderUserAccount.SubmitContactMessageStrategy>();
         }
 
         private void RegisterMediators()

@@ -96,6 +96,7 @@
             For<IEncryptionProvider>().Use<AES256Provider>();
             For<IVacancyStatusChangeProvider>().Use<VacancyStatusChangeProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
+            For<IApiUserProvider>().Use<ApiUserProvider>();
         }
 
         private void RegisterServices()
