@@ -16,7 +16,7 @@
                 TradingName = providerSite.TradingName,
                 EmployerDescription = providerSite.EmployerDescription,
                 CandidateDescription = providerSite.CandidateDescription,
-                ContactDetailsForEmployer = providerSite.EmployerDescription,
+                ContactDetailsForEmployer = providerSite.ContactDetailsForEmployer,
                 ContactDetailsForCandidate = providerSite.ContactDetailsForCandidate,
                 Address = providerSite.Address.Convert(),
                 WebPage = providerSite.WebPage,
