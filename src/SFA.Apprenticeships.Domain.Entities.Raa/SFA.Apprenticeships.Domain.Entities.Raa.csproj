@@ -97,6 +97,7 @@
     <Compile Include="Parties\ProviderSite.cs" />
     <Compile Include="Parties\ProviderSiteRelationship.cs" />
     <Compile Include="Parties\ProviderSiteRelationshipTypes.cs" />
+    <Compile Include="Parties\EmployerTrainingProviderStatuses.cs" />
     <Compile Include="Parties\VacancyParty.cs" />
     <Compile Include="Parties\EmployerEqualityComparer.cs" />
     <Compile Include="Parties\VacancyPartyEqualityComparer.cs" />

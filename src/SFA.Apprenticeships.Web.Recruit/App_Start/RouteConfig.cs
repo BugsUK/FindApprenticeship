@@ -430,7 +430,7 @@
             routes.MapRoute(
                name: RecruitmentRouteNames.AdminResetUkprn,
                url: "admin/resetukprn",
-               defaults: new { controller = "Admin", action = "AdminResetUkprn" }
+               defaults: new { controller = "Admin", action = "ResetUkprn" }
                );
 
             routes.MapRoute(

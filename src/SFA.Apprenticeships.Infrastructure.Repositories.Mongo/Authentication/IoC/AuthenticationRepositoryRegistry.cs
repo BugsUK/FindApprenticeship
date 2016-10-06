@@ -11,7 +11,7 @@
     {
         public AuthenticationRepositoryRegistry()
         {
-            For<IMapper>().Use<AuthenticationMappers>().Name = "AuthenticationMappers";
+            For<IMapper>().Singleton().Use<AuthenticationMappers>().Name = "AuthenticationMappers";
 
             For<IAuthenticationRepository>()
                 .Use<AuthenticationRepository>()

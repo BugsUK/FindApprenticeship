@@ -834,12 +834,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ProviderUser\_vacancyStatus.cshtml" />
     <Content Include="Views\razorgenerator.directives" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ApprenticeshipLevel.cshtml" />
-    <Content Include="Views\ProviderUser\_closingDate.cshtml" />
     <Content Include="Content\_assets\scss\main.scss" />
     <Content Include="Content\_assets\scss\main-ie8.scss" />
     <None Include="compilerconfig.json" />

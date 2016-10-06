@@ -15,7 +15,7 @@
     {
         public VacancySearchRegistry()
         {
-            For<IMapper>().Use<VacancySearchMapper>().Name = "VacancySearchMapper";
+            For<IMapper>().Singleton().Use<VacancySearchMapper>().Name = "VacancySearchMapper";
 
             For<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>().Use<ApprenticeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
             For<IVacancySearchProvider<TraineeshipSearchResponse, TraineeshipSearchParameters>>().Use<TraineeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");

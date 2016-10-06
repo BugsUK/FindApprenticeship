@@ -149,7 +149,7 @@
             For<IGetReleaseNotesStrategy>().Use<GetReleaseNotesStrategy>();
             For<IDeleteVacancyStrategy>().Use<DeleteVacancyStrategy>();
 
-            For<IMapper>().Use<Infrastructure.Repositories.Mongo.Candidates.Mappers.CandidateMappers>().Name = "MongoCandidateMapper";
+            For<IMapper>().Singleton().Use<Infrastructure.Repositories.Mongo.Candidates.Mappers.CandidateMappers>().Name = "MongoCandidateMapper";
             For<ICandidateReadRepository>().Use<CandidateRepository>().Ctor<IMapper>().Named("MongoCandidateMapper");
             For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
             For<IGetCandidateSummariesStrategy>().Use<GetCandidateSummariesStrategy>();
