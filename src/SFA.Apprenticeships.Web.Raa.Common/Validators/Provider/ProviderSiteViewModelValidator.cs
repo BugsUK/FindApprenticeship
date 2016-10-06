@@ -52,6 +52,32 @@
                 .Matches(ProviderSiteViewModelMessages.TradingName.WhiteListRegularExpression)
                 .WithMessage(ProviderSiteViewModelMessages.TradingName.WhiteListErrorText);
 
+            validator.RuleFor(m => m.EmployerDescription)
+                .Matches(ProviderSiteViewModelMessages.EmployerDescription.WhiteListRegularExpression)
+                .WithMessage(ProviderSiteViewModelMessages.EmployerDescription.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(ProviderSiteViewModelMessages.EmployerDescription.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.EmployerDescription));
+
+            validator.RuleFor(m => m.CandidateDescription)
+                .Matches(ProviderSiteViewModelMessages.CandidateDescription.WhiteListRegularExpression)
+                .WithMessage(ProviderSiteViewModelMessages.CandidateDescription.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(ProviderSiteViewModelMessages.CandidateDescription.WhiteListInvalidTagErrorText)
+                .When(x => Common.IsNotEmpty(x.CandidateDescription));
+
+            validator.RuleFor(m => m.ContactDetailsForEmployer)
+                .Length(0, 255)
+                .WithMessage(ProviderSiteViewModelMessages.ContactDetailsForEmployer.TooLongErrorText)
+                .Matches(ProviderSiteViewModelMessages.ContactDetailsForEmployer.WhiteListRegularExpression)
+                .WithMessage(ProviderSiteViewModelMessages.ContactDetailsForEmployer.WhiteListErrorText);
+
+            validator.RuleFor(m => m.ContactDetailsForCandidate)
+                .Length(0, 255)
+                .WithMessage(ProviderSiteViewModelMessages.ContactDetailsForCandidate.TooLongErrorText)
+                .Matches(ProviderSiteViewModelMessages.ContactDetailsForCandidate.WhiteListRegularExpression)
+                .WithMessage(ProviderSiteViewModelMessages.ContactDetailsForCandidate.WhiteListErrorText);
+
             validator.RuleFor(x => x.Address).SetValidator(new AddressViewModelValidator());
 
             validator.RuleFor(m => m.WebPage)
