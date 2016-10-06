@@ -40,6 +40,9 @@
         [Display(Name = ProviderSiteViewModelMessages.WebPage.LabelText)]
         public string WebPage { get; set; }
 
+        [Display(Name = ProviderSiteViewModelMessages.TrainingProviderStatus.LabelText)]
+        public EmployerTrainingProviderStatuses TrainingProviderStatus { get; set; }
+
         public IList<ProviderSiteRelationshipViewModel> ProviderSiteRelationships { get; set; }
 
         [Display(Name = ProviderSiteViewModelMessages.ProviderUkprn.LabelText)]

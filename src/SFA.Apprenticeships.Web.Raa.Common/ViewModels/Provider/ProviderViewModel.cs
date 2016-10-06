@@ -25,6 +25,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
         public string TradingName { get; set; }
         public IEnumerable<ProviderSiteViewModel> ProviderSiteViewModels { get; set; }
         public bool IsMigrated { get; set; }
+        [Display(Name = ProviderViewModelMessages.ProviderStatusType.LabelText)]
         public ProviderStatuses ProviderStatusType { get; set; }
     }
 }

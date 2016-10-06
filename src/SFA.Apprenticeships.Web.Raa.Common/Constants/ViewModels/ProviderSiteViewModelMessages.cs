@@ -52,6 +52,11 @@
             public const string ErrorUriText = "Enter a valid website url";
         }
 
+        public static class TrainingProviderStatus
+        {
+            public const string LabelText = "Status";
+        }
+
         public static class ProviderUkprn
         {
             public const string LabelText = "Provider UKPRN";

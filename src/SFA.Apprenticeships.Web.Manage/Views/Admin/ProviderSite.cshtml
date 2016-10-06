@@ -37,6 +37,8 @@
 
         @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
         @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
+        @Html.LabelFor(m => m.TrainingProviderStatus, new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.TrainingProviderStatus, EnumHelper.GetSelectList(typeof(EmployerTrainingProviderStatuses), Model.TrainingProviderStatus))
 
     </div>
 
