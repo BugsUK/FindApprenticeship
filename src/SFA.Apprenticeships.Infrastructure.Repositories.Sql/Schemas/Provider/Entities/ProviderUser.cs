@@ -3,13 +3,14 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Dapper.Contrib.Extensions;
 
     // TODO: SQL: AG: keep annotations (including Table)?
 
-    [Table("Provider.ProviderUser")]
+    [System.ComponentModel.DataAnnotations.Schema.Table("Provider.ProviderUser")]
     public class ProviderUser
     {
-        [Key]
+        [System.ComponentModel.DataAnnotations.Key]
         public int ProviderUserId { get; set; }
 
         [Required]
@@ -48,8 +49,10 @@
 
         public int ReleaseNoteVersion { get; set; }
 
+        [Write(false)]
         public string Ukprn { get; set; }
 
+        [Write(false)]
         public string ProviderName { get; set; }
     }
 }

@@ -82,5 +82,12 @@
         {
             public const string Ok = "AdminMediatorCodes.GetProviderUser.Ok";
         }
+
+        public class SaveProviderUser
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveProviderUser.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveProviderUser.Error";
+            public const string Ok = "AdminMediatorCodes.SaveProviderUser.Ok";
+        }
     }
 }

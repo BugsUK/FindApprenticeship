@@ -272,9 +272,25 @@
 
         public MediatorResponse<ProviderUserViewModel> GetProviderUser(int providerUserId)
         {
-            var viewModel = _providerUserProvider.GetUserProviderViewModel(providerUserId);
+            var viewModel = _providerUserProvider.GetProviderUserViewModel(providerUserId);
 
             return GetMediatorResponse(AdminMediatorCodes.GetProviderUser.Ok, viewModel);
+        }
+
+        public MediatorResponse<ProviderUserViewModel> SaveProviderUser(ProviderUserViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _providerUserProvider.SaveProviderUser(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveProviderUser.Ok, viewModel, ProviderUserViewModelMessages.ProviderUserSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save provider user with id={viewModel.ProviderUserId}", ex);
+                viewModel = _providerUserProvider.GetProviderUserViewModel(viewModel.ProviderUserId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveProviderUser.Error, viewModel, ProviderUserViewModelMessages.ProviderUserSaveError, UserMessageLevel.Error);
+            }
         }
 
         private ProviderUserSearchResultsViewModel GetProviderUsers(string ukprn)

@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _referenceDataService = referenceDataService;
         }
 
-        public ProviderUserViewModel GetUserProviderViewModel(int providerUserId)
+        public ProviderUserViewModel GetProviderUserViewModel(int providerUserId)
         {
             var providerUser = _userProfileService.GetProviderUser(providerUserId);
             return Convert(providerUser);
@@ -144,6 +144,18 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 _providerUserAccountService.SendEmailVerificationCode(username);
             }
 
+            return Convert(savedProviderUser);
+        }
+
+        public ProviderUserViewModel SaveProviderUser(ProviderUserViewModel providerUserViewModel)
+        {
+            var providerUser = _userProfileService.GetProviderUser(providerUserViewModel.ProviderUserId);
+
+            providerUser.Fullname = providerUserViewModel.Fullname;
+            providerUser.Email = providerUserViewModel.EmailAddress;
+            providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
+
+            var savedProviderUser = _userProfileService.UpdateProviderUser(providerUser);
             return Convert(savedProviderUser);
         }
 

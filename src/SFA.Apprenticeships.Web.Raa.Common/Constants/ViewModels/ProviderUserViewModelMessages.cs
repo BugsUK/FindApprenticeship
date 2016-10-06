@@ -7,6 +7,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
         public const string AccountCreated = "You've successfully created your account";
         public const string EmailUpdated = "Your details have been updated successfully";
         public const string AccountUpdated = "Your details have been updated successfully";
+        public const string ProviderUserSavedSuccessfully = "The changes to the provider user were saved successfully";
+        public const string ProviderUserSaveError = "An error occured when saving the provider user. Please check your entries and try again";
 
         public static class FullnameMessages
         {

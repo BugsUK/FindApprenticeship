@@ -6,7 +6,7 @@
 
     public interface IProviderUserProvider
     {
-        ProviderUserViewModel GetUserProviderViewModel(int providerUserId);
+        ProviderUserViewModel GetProviderUserViewModel(int providerUserId);
 
         ProviderUserViewModel GetUserProfileViewModel(string username);
 
@@ -17,6 +17,8 @@
         bool ValidateEmailVerificationCode(string username, string code);
 
         ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel);
+
+        ProviderUserViewModel SaveProviderUser(ProviderUserViewModel providerUserViewModel);
 
         void ResendEmailVerificationCode(string username);
 

@@ -12,6 +12,8 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
+    @Html.HiddenFor(m => m.ProviderUserId)
+
     <p>
         <ul>
             <li>ID: @Model.ProviderUserId</li>

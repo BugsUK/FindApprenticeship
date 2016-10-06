@@ -60,6 +60,14 @@
             }
         }
 
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchProviderUsersAction")]
+        public ActionResult SearchProviderUsers(ProviderUserSearchResultsViewModel viewModel)
+        {
+            viewModel.SearchViewModel.PerformSearch = true;
+            return RedirectToRoute(RecruitmentRouteNames.AdminProviderUsers, viewModel.SearchViewModel);
+        }
+
         [HttpGet]
         public ActionResult ProviderUser(int providerUserId)
         {
@@ -69,11 +77,30 @@
         }
 
         [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "SearchProviderUsersAction")]
-        public ActionResult SearchProviderUsers(ProviderUserSearchResultsViewModel viewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "SaveProviderUserAction")]
+        public ActionResult SaveProviderUser(ProviderUserViewModel viewModel)
         {
-            viewModel.SearchViewModel.PerformSearch = true;
-            return RedirectToRoute(RecruitmentRouteNames.AdminProviderUsers, viewModel.SearchViewModel);
+            var response = _adminMediator.SaveProviderUser(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SaveProviderUser.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("ProviderUser", response.ViewModel);
+
+                case AdminMediatorCodes.SaveProviderUser.Error:
+                    return RedirectToRoute(RecruitmentRouteNames.AdminViewProviderUser, new { viewModel.ProviderUserId });
+
+                case AdminMediatorCodes.SaveProviderUser.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.AdminViewProviderUser, new { viewModel.ProviderUserId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]
