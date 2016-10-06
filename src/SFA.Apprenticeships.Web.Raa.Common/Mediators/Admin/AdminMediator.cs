@@ -11,6 +11,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Validators.Provider;
+    using Validators.ProviderUser;
     using ViewModels.Admin;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
@@ -24,6 +25,7 @@
         private readonly ProviderSiteSearchViewModelServerValidator _providerSiteSearchViewModelServerValidator = new ProviderSiteSearchViewModelServerValidator();
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
         private readonly ProviderSiteRelationshipViewModelServerValidator _providerSiteRelationshipViewModelServerValidator = new ProviderSiteRelationshipViewModelServerValidator();
+        private readonly ProviderUserSearchViewModelServerValidator _providerUserSearchViewModelServerValidator = new ProviderUserSearchViewModelServerValidator();
         private readonly IProviderProvider _providerProvider;
         private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
@@ -247,12 +249,29 @@
 
         public MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn)
         {
+            ProviderUserSearchResultsViewModel viewModel;
+
             if (searchViewModel.PerformSearch)
             {
-                var searchResultsViewModel = _providerUserProvider.SearchProviderUsers(searchViewModel);
-                return GetMediatorResponse(AdminMediatorCodes.SearchProviderUsers.Ok, searchResultsViewModel);
+                var validatonResult = _providerUserSearchViewModelServerValidator.Validate(searchViewModel);
+
+                if (!validatonResult.IsValid)
+                {
+                    return GetMediatorResponse(AdminMediatorCodes.SearchProviderUsers.FailedValidation, GetProviderUsers(ukprn), validatonResult);
+                }
+
+                viewModel = _providerUserProvider.SearchProviderUsers(searchViewModel);
+            }
+            else
+            {
+                viewModel = GetProviderUsers(ukprn);
             }
 
+            return GetMediatorResponse(AdminMediatorCodes.SearchProviderUsers.Ok, viewModel);
+        }
+
+        private ProviderUserSearchResultsViewModel GetProviderUsers(string ukprn)
+        {
             var provider = _providerService.GetProvider(ukprn);
 
             var viewModel = new ProviderUserSearchResultsViewModel
@@ -262,7 +281,7 @@
                 ProviderUsers = _providerUserProvider.GetProviderUsers(ukprn).ToList()
             };
 
-            return GetMediatorResponse(AdminMediatorCodes.SearchProviderUsers.Ok, viewModel);
+            return viewModel;
         }
     }
 }

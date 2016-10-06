@@ -7,14 +7,15 @@
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Users;
     using Domain.Raa.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Domain.Raa.Interfaces.Repositories.Models;
+    using Application.Interfaces;
 
     // TODO: SQL: AG: double check logging.
 
     public class ProviderUserRepository : IProviderUserReadRepository, IProviderUserWriteRepository
     {
+        private const string ProviderUserSelect = "SELECT pu.*, p.Ukprn, p.TradingName as ProviderName FROM Provider.ProviderUser pu JOIN dbo.Provider p ON p.ProviderId = pu.ProviderId WHERE ";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -30,7 +31,7 @@
         {
             _logger.Debug("Getting provider user with Id={0}", id);
 
-            const string sql = "SELECT * FROM Provider.ProviderUser WHERE ProviderUserId = @ProviderUserId";
+            const string sql = ProviderUserSelect + "ProviderUserId = @ProviderUserId";
 
             var sqlParams = new
             {
@@ -52,7 +53,7 @@
         {
             _logger.Debug("Getting provider user with username=\"{0}\"", username);
 
-            const string sql = "SELECT * FROM Provider.ProviderUser WHERE Username = @username";
+            const string sql = ProviderUserSelect + "Username = @username";
 
             var sqlParams = new
             {
@@ -74,7 +75,7 @@
         {
             _logger.Debug("Getting provider user with username=\"{0}\"", email);
 
-            const string sql = "SELECT * FROM Provider.ProviderUser WHERE Email = @email";
+            const string sql = ProviderUserSelect + "Email = @email";
 
             var sqlParams = new
             {
@@ -92,11 +93,44 @@
             return MapProviderUser(dbProviderUser);
         }
 
+        public IEnumerable<ProviderUser> Search(ProviderUserSearchParameters searchParameters)
+        {
+            var sql = ProviderUserSelect;
+            var and = "";
+
+            if (!string.IsNullOrEmpty(searchParameters.Username))
+            {
+                sql += "Username LIKE '%' + @Username + '%' ";
+                and = "AND ";
+            }
+            if (!string.IsNullOrEmpty(searchParameters.Name))
+            {
+                sql += and + "Fullname LIKE '%' + @Name + '%' ";
+                and = "AND ";
+            }
+            if (!string.IsNullOrEmpty(searchParameters.Email))
+            {
+                sql += and + "Email LIKE '%' + @Email + '%' ";
+                and = "AND ";
+            }
+            if (searchParameters.AllUnverifiedEmails)
+            {
+                sql += and + "(EmailVerificationCode IS NOT NULL OR ProviderUserStatusId != 20) ";
+            }
+            sql += "ORDER BY FullName";
+
+            var providerUsers = _getOpenConnection
+                .Query<Entities.ProviderUser>(sql, searchParameters)
+                .Select(MapProviderUser);
+
+            return providerUsers;
+        }
+
         public IEnumerable<ProviderUser> GetAllByUkprn(string ukprn)
         {
             _logger.Debug("Getting provider users for provider with Ukprn=\"{0}\"", ukprn);
 
-            const string sql = "SELECT pu.* FROM Provider.ProviderUser pu INNER JOIN dbo.Provider p ON p.ProviderId = pu.ProviderId WHERE p.Ukprn = @ukprn AND p.ProviderStatusTypeId = @providerStatusTypeId";
+            const string sql = ProviderUserSelect + "p.Ukprn = @ukprn AND p.ProviderStatusTypeId = @providerStatusTypeId ORDER BY FullName";
 
             var sqlParams = new
             {

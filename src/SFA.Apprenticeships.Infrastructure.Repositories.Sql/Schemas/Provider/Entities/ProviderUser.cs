@@ -47,5 +47,9 @@
         public string PhoneNumber { get; set; }
 
         public int ReleaseNoteVersion { get; set; }
+
+        public string Ukprn { get; set; }
+
+        public string ProviderName { get; set; }
     }
 }

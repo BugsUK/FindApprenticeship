@@ -19,6 +19,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 
         public string Ukprn { get; set; }
 
+        public string ProviderName { get; set; }
+
         public string Username { get; set; }
 
         [Display(Name = ProviderUserViewModelMessages.FullnameMessages.LabelText)]

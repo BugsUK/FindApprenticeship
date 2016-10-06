@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Application.Interfaces.ReferenceData;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Web.Common.ViewModels;
 
     public class ProviderUserProvider : IProviderUserProvider
@@ -37,7 +38,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             if (providerUser != null)
             {
-                return Convert(providerUser, "");
+                return Convert(providerUser);
             }
 
             return null;
@@ -58,12 +59,28 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public IEnumerable<ProviderUserViewModel> GetProviderUsers(string ukprn)
         {
             var providerUsers = _userProfileService.GetProviderUsers(ukprn);
-            return providerUsers.Select(pu => Convert(pu, ukprn));
+            return providerUsers.Select(Convert);
         }
 
         public ProviderUserSearchResultsViewModel SearchProviderUsers(ProviderUserSearchViewModel searchViewModel)
         {
-            throw new NotImplementedException();
+            var searchParameters = new ProviderUserSearchParameters
+            {
+                Username = searchViewModel.Username,
+                Name = searchViewModel.Name,
+                Email = searchViewModel.Email,
+                AllUnverifiedEmails = searchViewModel.AllUnverifiedEmails
+            };
+
+            var providerUsers = _userProfileService.SearchProviderUsers(searchParameters);
+            
+            var viewModel = new ProviderUserSearchResultsViewModel
+            {
+                SearchViewModel = searchViewModel,
+                ProviderUsers = providerUsers.Select(Convert).ToList()
+            };
+
+            return viewModel;
         }
 
         public bool ValidateEmailVerificationCode(string username, string code)
@@ -121,7 +138,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 _providerUserAccountService.SendEmailVerificationCode(username);
             }
 
-            return Convert(savedProviderUser, ukprn);
+            return Convert(savedProviderUser);
         }
 
         public void ResendEmailVerificationCode(string username)
@@ -129,7 +146,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _providerUserAccountService.ResendEmailVerificationCode(username);
         }
 
-        private ProviderUserViewModel Convert(ProviderUser providerUser, string ukprn)
+        private ProviderUserViewModel Convert(ProviderUser providerUser)
         {
             ReleaseNoteViewModel releaseNoteViewModel = null;
             var releaseNotes = _referenceDataService.GetReleaseNotes(DasApplication.Recruit);
@@ -148,7 +165,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 ProviderUserId = providerUser.ProviderUserId,
                 ProviderUserGuid = providerUser.ProviderUserGuid,
                 ProviderId = providerUser.ProviderId,
-                Ukprn = ukprn,
+                Ukprn = providerUser.Ukprn,
+                ProviderName = providerUser.ProviderName,
                 Username = providerUser.Username,
                 DefaultProviderSiteId = providerUser.PreferredProviderSiteId ?? 0,
                 EmailAddress = providerUser.Email,
