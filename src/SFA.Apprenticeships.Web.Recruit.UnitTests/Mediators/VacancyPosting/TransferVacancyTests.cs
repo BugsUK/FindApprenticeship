@@ -53,8 +53,6 @@
 
             MockProviderService.Setup(ps => ps.GetVacancyParty(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyParty);
 
-            MockProviderService.Setup(ps => ps.GetVacancyParty(_vacancyParty.EmployerId, vacancyTransferViewModel.ProviderSiteId)).Returns(_vacancyPartyWithRelationship);
-
             var vacancyPostingProvider = GetVacancyPostingProvider();
 
             //Act
