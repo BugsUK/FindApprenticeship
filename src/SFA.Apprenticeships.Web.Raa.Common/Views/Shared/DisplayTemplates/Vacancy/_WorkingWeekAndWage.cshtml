@@ -22,7 +22,7 @@
             @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WorkingWeekComment))
         }
     </h3>
-    <p id="vacancy-working-week" itemprop="workHours" class="@Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.FurtherVacancyDetailsViewModel.WorkingWeek))</p>
+    <p id="vacancy-working-week" itemprop="workHours" class="@Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FurtherVacancyDetailsViewModel.WorkingWeek))</p>
     @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek.HasValue)
     {
         <a name="furthervacancydetailsviewmodel_hoursperweek"></a>
