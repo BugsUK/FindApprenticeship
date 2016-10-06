@@ -1,9 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Provider
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
@@ -12,6 +8,10 @@
     using Interfaces.Employers;
     using Interfaces.Generic;
     using Interfaces.Providers;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
     public class ProviderService : IProviderService
     {
@@ -28,7 +28,8 @@
             IProviderSiteReadRepository providerSiteReadRepository,
             IVacancyPartyReadRepository vacancyPartyReadRepository,
             IVacancyPartyWriteRepository vacancyPartyWriteRepository,
-            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository, IProviderSiteWriteRepository providerSiteWriteRepository)
+            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository,
+            IProviderSiteWriteRepository providerSiteWriteRepository)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
@@ -117,7 +118,7 @@
 
         public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
         {
-            return _vacancyPartyReadRepository.GetByIds(new[] {vacancyPartyId}, currentOnly).FirstOrDefault();
+            return _vacancyPartyReadRepository.GetByIds(new[] { vacancyPartyId }, currentOnly).FirstOrDefault();
         }
 
         public IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds,
@@ -142,7 +143,22 @@
 
             var vacancyParty =
                 _vacancyPartyReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employer.EmployerId) ??
-                new VacancyParty {ProviderSiteId = providerSiteId, EmployerId = employer.EmployerId};
+                new VacancyParty { ProviderSiteId = providerSiteId, EmployerId = employer.EmployerId };
+
+            return vacancyParty;
+        }
+
+        public VacancyParty GetVacancyParty(int employerId, int providerSiteId)
+        {
+            Condition.Requires(providerSiteId);
+            Condition.Requires(employerId);
+
+            _logService.Debug(
+                $"Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{providerSiteId}' and employer with Id='{employerId}'.");
+
+            var vacancyParty =
+                _vacancyPartyReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employerId) ??
+                new VacancyParty { ProviderSiteId = providerSiteId, EmployerId = employerId };
 
             return vacancyParty;
         }
@@ -200,9 +216,9 @@
 
             var resultCount = results.Count;
 
-            pageable.Page = results.Skip((currentPage - 1)*pageSize).Take(pageSize).ToList();
+            pageable.Page = results.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             pageable.ResultsCount = resultCount;
-            pageable.TotalNumberOfPages = resultCount/pageSize + 1;
+            pageable.TotalNumberOfPages = resultCount / pageSize + 1;
 
             return pageable;
         }

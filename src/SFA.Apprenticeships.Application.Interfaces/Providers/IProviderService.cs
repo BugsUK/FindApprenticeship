@@ -3,9 +3,9 @@ using SFA.Apprenticeships.Application.Interfaces.Generic;
 
 namespace SFA.Apprenticeships.Application.Interfaces.Providers
 {
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// For maintaining provider profiles, sites, etc.
@@ -36,6 +36,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly);
 
+        VacancyParty GetVacancyParty(int employerId, int providerSiteId);
+
         IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);
 
         VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
@@ -45,7 +47,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         void ResurrectVacancyParty(int providerSiteId, string edsUrn);
 
         VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
-        
+
         IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
 
         Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);
