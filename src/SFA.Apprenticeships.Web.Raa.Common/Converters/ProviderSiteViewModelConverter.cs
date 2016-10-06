@@ -19,6 +19,8 @@
                 ContactDetailsForEmployer = providerSite.EmployerDescription,
                 ContactDetailsForCandidate = providerSite.ContactDetailsForCandidate,
                 Address = providerSite.Address.Convert(),
+                WebPage = providerSite.WebPage,
+                TrainingProviderStatus = providerSite.TrainingProviderStatus,
                 ProviderSiteRelationships = providerSite.ProviderSiteRelationships.Select(psr => psr.Convert()).ToList()
             };
 

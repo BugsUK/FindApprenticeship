@@ -15,6 +15,7 @@
             Mapper.CreateMap<DatabaseProviderSite, DomainProviderSite>()
                 .IgnoreMember(dest => dest.Address)
                 .IgnoreMember(dest => dest.ProviderSiteRelationships)
+                .MapMemberFrom(dest => dest.TrainingProviderStatus, source => source.TrainingProviderStatusTypeId)
                 .AfterMap((source, dest) =>
                 {
                     dest.Address = new DomainPostalAddress

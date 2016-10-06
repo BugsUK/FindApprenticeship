@@ -35,5 +35,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Trading name " + Whitelists.FreetextWhitelist.ErrorText;
         }
+
+        public static class ProviderStatusType
+        {
+            public const string LabelText = "Status";
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Manage.Constants
+﻿@using SFA.Apprenticeships.Domain.Entities.Users
+@using SFA.Apprenticeships.Web.Manage.Constants
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderViewModel
 @{
     ViewBag.Title = "Provider";
@@ -19,7 +20,6 @@
         <ul>
             <li>ID: @Model.ProviderId</li>
             <li>UKPRN: @Model.Ukprn</li>
-            <li>Status: @Model.ProviderStatusType</li>
         </ul>
     </p>
 
@@ -27,6 +27,8 @@
 
         @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
         @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
+        @Html.LabelFor(m => m.ProviderStatusType, new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.ProviderStatusType, EnumHelper.GetSelectList(typeof(ProviderStatuses), Model.ProviderStatusType))
 
     </div>
 
