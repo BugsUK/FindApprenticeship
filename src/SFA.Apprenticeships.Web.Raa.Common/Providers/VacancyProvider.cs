@@ -794,8 +794,15 @@
                 : (VacancySummaryOrderByColumn)
                 Enum.Parse(typeof(VacancySummaryOrderByColumn), vacanciesSummarySearch.OrderByField);
 
+            // Support searching by full vacancy reference number
+            string searchString;
+            if (!VacancyHelper.TryGetVacancyReference(vacanciesSummarySearch.SearchString, out searchString))
+            {
+                searchString = vacanciesSummarySearch.SearchString;
+            }
+
             // reset filter on search
-            vacanciesSummarySearch.FilterType = string.IsNullOrEmpty(vacanciesSummarySearch.SearchString)
+            vacanciesSummarySearch.FilterType = string.IsNullOrEmpty(searchString)
                 ? vacanciesSummarySearch.FilterType
                 : VacanciesSummaryFilterTypes.All;
 
@@ -807,7 +814,7 @@
                 Filter = vacanciesSummarySearch.FilterType,
                 PageSize = vacanciesSummarySearch.PageSize,
                 RequestedPage = vacanciesSummarySearch.CurrentPage,
-                SearchString = vacanciesSummarySearch.SearchString,
+                SearchString = searchString,
                 Order = vacanciesSummarySearch.Order,
                 VacancyType = vacanciesSummarySearch.VacancyType
             };
