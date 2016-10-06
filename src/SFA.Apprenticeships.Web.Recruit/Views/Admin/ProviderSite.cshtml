@@ -1,0 +1,98 @@
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Raa.Parties
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteViewModel
+@{
+    ViewBag.Title = "Providers";
+}
+
+<h1 id="heading" class="heading-xlarge">Provider Site</h1>
+
+<p>@Html.RouteLink("Manage Provider Sites", RecruitmentRouteNames.AdminProviderSites)</p>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminEditProviderSite))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.HiddenFor(m => m.ProviderSiteId)
+
+    <div class="form-group">
+        <p>
+            <ul>
+                <li>ID: @Model.ProviderSiteId</li>
+                <li>EDSURN: @Model.EdsUrn</li>
+                <li>Full name: @Model.FullName</li>
+                <li>Trading Name: @Model.TradingName</li>
+                <li>Web Page: <a href="@Model.WebPage">@Model.WebPage</a></li>
+            </ul>
+        </p>
+        <h3 class="bold-small">Address</h3>
+        <p class="small-btm-margin">@Model.Address.AddressLine1</p>
+        <p class="small-btm-margin">@Model.Address.AddressLine2</p>
+        <p class="small-btm-margin">@Model.Address.AddressLine3</p>
+        <p class="small-btm-margin">@Model.Address.Town</p>
+        <p class="small-btm-margin">@Model.Address.County</p>
+        <p class="small-btm-margin">@Model.Address.Postcode</p>
+    </div>
+
+    <h2 class="heading-medium">Provider Site Relationships</h2>
+
+    <div class="grid-wrapper">
+        <div class="grid grid-1-1">
+            <table>
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>Provider UKPRN</th>
+                    <th>Provider Full Name</th>
+                    <th>Provider Trading Name</th>
+                    <th>Relationship Type</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (int i=0; i<Model.ProviderSiteRelationships.Count; i++)
+                {
+                    var providerSiteRelationship = Model.ProviderSiteRelationships[i];
+                    <tr>
+                        <td>@Html.RouteLink(providerSiteRelationship.ProviderUkprn, RecruitmentRouteNames.AdminViewProvider, new {providerSiteRelationship.ProviderId})</td>
+                        <td>@providerSiteRelationship.ProviderFullName</td>
+                        <td>@providerSiteRelationship.ProviderTradingName</td>
+                        <td>
+                            @Html.Hidden("ProviderSiteRelationships[" + i + "].ProviderSiteRelationshipId", providerSiteRelationship.ProviderSiteRelationshipId)
+                            @Html.DropDownList("ProviderSiteRelationships[" + i + "].ProviderSiteRelationshipType", EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes), providerSiteRelationship.ProviderSiteRelationshipType))
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button id="save-provider-site-button" type="submit" class="button" name="SaveProviderSiteAction" value="SaveProviderSite">Save</button>
+    </div>
+
+    <h2 class="heading-medium">Add Provider Site Relationship</h2>
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.ProviderUkprn, controlHtmlAttributes: new { type = "tel", size = 8 })
+        <div class="form-group">
+            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label"})
+            @Html.DropDownListFor(m => m.ProviderSiteRelationshipType, EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes)))
+        </div>
+
+        <div class="form-group">
+            <button id="add-provider-site-relationship-button" type="submit" class="button" name="CreateProviderSiteRelationshipAction" value="CreateProviderSiteRelationship">Add</button>
+        </div>
+    </div>
+}

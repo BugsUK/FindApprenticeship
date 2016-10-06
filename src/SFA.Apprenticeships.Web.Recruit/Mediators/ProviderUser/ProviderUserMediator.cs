@@ -106,7 +106,7 @@
 
             if (userProfile == null)
             {
-                var isFirstUser = !_providerUserProvider.GetUserProfileViewModels(ukprn).Any();
+                var isFirstUser = !_providerUserProvider.GetProviderUsers(ukprn).Any();
 
                 if (isFirstUser)
                 {

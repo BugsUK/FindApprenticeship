@@ -1,0 +1,60 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin.TransferVacanciesResultsViewModel
+
+@{
+    ViewBag.Title = "Confirm Vacancies";
+}
+
+<h1 id="heading" class="heading-xlarge">Transfer Vacancies</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmVacancies))
+{
+    if (Model != null && Model.VacanciesToBeTransferredVm != null && Model.VacanciesToBeTransferredVm.Any())
+    {
+        <div class="grid-wrapper">
+            <div class="grid grid-1-1">
+                <table>
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Vacancy Reference Number</th>
+                            <th>Vacancy Title</th>
+                            <th>Provider Name</th>
+                            <th>Provider Site Name</th>
+                            @*<th>Employer Name</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var viewModel in Model.VacanciesToBeTransferredVm)
+                        {
+                            <tr>
+                                <td>@viewModel.VacancyReferenceNumber </td>
+                                <td>@viewModel.VacancyTitle</td>
+                                @Html.Hidden("VacancyReferenceNumber", viewModel.VacancyReferenceNumber)
+                                <td>@viewModel.ProviderName </td>
+                                <td>@viewModel.ProviderSiteName </td>
+                                @*<td>@viewModel.EmployerName</td>*@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <button id="add-provider-site-relationship-button" type="submit" class="button" name="ChooseProviderAction"
+                        value="ChooseProvider">
+                    Choose Provider
+                </button>
+            </div>
+        </div>
+    }
+}

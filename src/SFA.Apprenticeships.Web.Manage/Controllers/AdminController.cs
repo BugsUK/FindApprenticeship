@@ -9,7 +9,7 @@
     using Constants;
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
-    using Mediators.Admin;
+    using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
 

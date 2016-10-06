@@ -133,6 +133,12 @@ CREATE NONCLUSTERED INDEX [idx_Vacancy_MasterVacancyId]
 
 
 GO
+CREATE NONCLUSTERED INDEX [idx_Vacancy_LocalAuthorityId] 
+	ON [dbo].[Vacancy] ([LocalAuthorityId]) 
+	INCLUDE ([PostCode]) 
+
+
+GO
 
 CREATE TRIGGER uDeleteVacancySearch
    ON  Vacancy

@@ -6,18 +6,26 @@
 
     public interface IProviderUserProvider
     {
+        ProviderUserViewModel GetProviderUserViewModel(int providerUserId);
+
         ProviderUserViewModel GetUserProfileViewModel(string username);
 
-        IEnumerable<ProviderUserViewModel> GetUserProfileViewModels(string ukprn);
+        IEnumerable<ProviderUserViewModel> GetProviderUsers(string ukprn);
+
+        ProviderUserSearchResultsViewModel SearchProviderUsers(ProviderUserSearchViewModel searchViewModel);
 
         bool ValidateEmailVerificationCode(string username, string code);
 
         ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel);
+
+        ProviderUserViewModel SaveProviderUser(ProviderUserViewModel providerUserViewModel);
 
         void ResendEmailVerificationCode(string username);
 
         ProviderUser GetProviderUser(string username);
 
         void DismissReleaseNotes(string username, int version);
+
+        ProviderUserViewModel VerifyProviderUserEmail(ProviderUserViewModel providerUserViewModel);
     }
 }

@@ -149,7 +149,7 @@
             }).Build();
             
             MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>(), true)).Returns(providerViewModel);
-            MockProviderUserProvider.Setup(p => p.GetUserProfileViewModels(It.IsAny<string>()))
+            MockProviderUserProvider.Setup(p => p.GetProviderUsers(It.IsAny<string>()))
                 .Returns(new List<ProviderUserViewModel> {new ProviderUserViewModel()});
 
             var mediator = GetMediator();

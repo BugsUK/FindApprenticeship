@@ -1,12 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
-    using Moq;
-    using NUnit.Framework;
-    using Ploeh.AutoFixture;
-    using Raa.Common.Validators.Provider;
-    using Raa.Common.Validators.Vacancy;
-    using Raa.Common.Providers;
-    using Raa.Common.Validators.VacancyPosting;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Applications;
     using Apprenticeships.Application.Interfaces.Employers;
     using Apprenticeships.Application.Interfaces.Locations;
@@ -16,17 +10,21 @@
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Application.Vacancy;
-    using Domain.Entities.Raa.Parties;
     using Common.Configuration;
+    using Domain.Entities.Raa.Parties;
+    using Moq;
+    using NUnit.Framework;
+    using Ploeh.AutoFixture;
     using Raa.Common.Configuration;
+    using Raa.Common.Providers;
+    using Raa.Common.Validators.Provider;
+    using Raa.Common.Validators.Vacancy;
+    using Raa.Common.Validators.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class TestsBase
     {
         protected Mock<IVacancyPostingProvider> VacancyPostingProvider;
-        protected Mock<IVacancyPostingService> VacancyPostingService;
         protected Mock<IProviderProvider> ProviderProvider;
         protected Mock<IEmployerProvider> EmployerProvider;
         protected Mock<IGeoCodingProvider> GeoCodingProvider;
@@ -52,7 +50,6 @@
         public void SetUp()
         {
             VacancyPostingProvider = new Mock<IVacancyPostingProvider>();
-            VacancyPostingService=new Mock<IVacancyPostingService>();
             ProviderProvider = new Mock<IProviderProvider>();
             EmployerProvider = new Mock<IEmployerProvider>();
             GeoCodingProvider = new Mock<IGeoCodingProvider>();
@@ -119,7 +116,7 @@
                 new VacancyRequirementsProspectsViewModelClientValidator(),
                 new VacancyQuestionsViewModelServerValidator(),
                 new VacancyQuestionsViewModelClientValidator(),
-                new VacancyViewModelValidator(), 
+                new VacancyViewModelValidator(),
                 new VacancyPartyViewModelValidator(),
                 new EmployerSearchViewModelServerValidator(),
                 new LocationSearchViewModelServerValidator(),

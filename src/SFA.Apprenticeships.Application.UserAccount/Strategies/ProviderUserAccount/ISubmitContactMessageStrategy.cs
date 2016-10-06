@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount
 {
-    using SFA.Apprenticeships.Domain.Entities.Communication;
+    using Domain.Entities.Communication;
 
     public interface ISubmitContactMessageStrategy
     {

@@ -2,10 +2,10 @@
 {
     using Apprenticeships.Application.Provider;
     using Domain.Raa.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Employers;
     using Interfaces.Providers;
     using Moq;
-    using Interfaces;
 
     public class ProviderServiceBuilder
     {
@@ -32,8 +32,8 @@
 
         public IProviderService Build()
         {
-            var provider = new ProviderService(_providerReadRepository, _providerSiteReadRepository, 
-                _vacancyPartyReadRepository, _vacancyPartyWriteRepository, _logService, 
+            var provider = new ProviderService(_providerReadRepository, _providerSiteReadRepository,
+                _vacancyPartyReadRepository, _vacancyPartyWriteRepository, _logService,
                 _employerService, _providerWriteRepository, _providerSiteWriteRepository);
             return provider;
         }
