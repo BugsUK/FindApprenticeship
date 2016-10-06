@@ -409,7 +409,7 @@
                                                 }
                                             }
                                             <a href="@Url.RouteUrl(routeName, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">
-                                                @HtmlExtensions.EscapeHtmlEncoding(title)
+                                                @HtmlExtensions.EscapeHtmlEncoding(Html, title)
                                                 @if (isOfflineVacancy)
                                                 {
                                                     <span class="subtitle"><br />(Applications managed externally)</span>
