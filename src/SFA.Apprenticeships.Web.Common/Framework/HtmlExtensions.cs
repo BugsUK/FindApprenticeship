@@ -183,14 +183,14 @@
             return "";
         }
 
-        public static string EscapeHtmlEncoding(IHtmlString originalString)
+        public static IHtmlString EscapeHtmlEncoding(HtmlHelper html, IHtmlString originalString)
         {
-            return EscapeHtmlEncoding(originalString.ToString());
+            return EscapeHtmlEncoding(html, originalString.ToString());
         }
 
-        public static string EscapeHtmlEncoding(string originalString)
+        public static IHtmlString EscapeHtmlEncoding(HtmlHelper html, string originalString)
         {
-            return originalString?.Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0");
+            return html.Raw(originalString?.Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0"));
         }
 
         #endregion
