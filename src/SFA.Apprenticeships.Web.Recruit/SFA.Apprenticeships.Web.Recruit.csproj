@@ -106,6 +106,10 @@
       <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NanoSpell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Content\_assets\js\vendor\nanospell\bin\NanoSpell.dll</HintPath>
@@ -830,12 +834,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ProviderUser\_vacancyStatus.cshtml" />
     <Content Include="Views\razorgenerator.directives" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ApprenticeshipLevel.cshtml" />
-    <Content Include="Views\ProviderUser\_closingDate.cshtml" />
     <Content Include="Content\_assets\scss\main.scss" />
     <Content Include="Content\_assets\scss\main-ie8.scss" />
     <None Include="compilerconfig.json" />
@@ -1098,6 +1100,9 @@
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
       <Name>SFA.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

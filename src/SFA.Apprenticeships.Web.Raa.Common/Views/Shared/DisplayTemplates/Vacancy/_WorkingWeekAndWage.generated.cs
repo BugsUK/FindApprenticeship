@@ -172,7 +172,7 @@ WriteLiteral(">");
 
             
             #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                                                                                           Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.FurtherVacancyDetailsViewModel.WorkingWeek)));
+                                                                                                                                            Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FurtherVacancyDetailsViewModel.WorkingWeek));
 
             
             #line default
@@ -253,14 +253,14 @@ WriteLiteral("\r\n</div>\r\n\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2171), Tuple.Create("\"", 2197)
+WriteAttribute("class", Tuple.Create(" class=\"", 2214), Tuple.Create("\"", 2240)
             
             #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 2179), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 2222), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 2179), false)
+, 2222), false)
 );
 
 WriteLiteral(">\r\n        <h3");

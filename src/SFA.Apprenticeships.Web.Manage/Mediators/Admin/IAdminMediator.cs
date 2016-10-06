@@ -10,6 +10,7 @@
         MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel);
         MediatorResponse<ProviderViewModel> GetProvider(int providerId);
         MediatorResponse<ProviderViewModel> CreateProvider(ProviderViewModel viewModel);
+        MediatorResponse<ProviderViewModel> SaveProvider(ProviderViewModel viewModel);
         MediatorResponse<ProviderSiteSearchResultsViewModel> SearchProviderSites(ProviderSiteSearchViewModel searchViewModel);
         MediatorResponse<ProviderSiteViewModel> GetProviderSite(int providerSiteId);
         MediatorResponse<ProviderSiteViewModel> CreateProviderSite(ProviderSiteViewModel viewModel);

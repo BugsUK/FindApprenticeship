@@ -19,7 +19,7 @@
 
     public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
-        private readonly IMapper _providerMappers = new ProviderMappers();
+        private static readonly IMapper ProviderMappers = new ProviderMappers();
 
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
@@ -246,17 +246,30 @@
 
         public ProviderViewModel CreateProvider(ProviderViewModel viewModel)
         {
-            var provider = _providerMappers.Map<ProviderViewModel, Provider>(viewModel);
+            var provider = ProviderMappers.Map<ProviderViewModel, Provider>(viewModel);
             provider.IsMigrated = true;
 
             provider = _providerService.CreateProvider(provider);
 
-            return _providerMappers.Map<Provider, ProviderViewModel>(provider);
+            return ProviderMappers.Map<Provider, ProviderViewModel>(provider);
+        }
+
+        public ProviderViewModel SaveProvider(ProviderViewModel viewModel)
+        {
+            var provider = _providerService.GetProvider(viewModel.ProviderId);
+
+            //Copy over changes
+            provider.FullName = viewModel.FullName;
+            provider.TradingName = viewModel.TradingName;
+
+            var updatedProvider = _providerService.SaveProvider(provider);
+
+            return ProviderMappers.Map<Provider, ProviderViewModel>(updatedProvider);
         }
 
         public ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel)
         {
-            var providerSite = _providerMappers.Map<ProviderSiteViewModel, ProviderSite>(viewModel);
+            var providerSite = ProviderMappers.Map<ProviderSiteViewModel, ProviderSite>(viewModel);
             //Create a relationship between the provider and new provider site
             providerSite.ProviderSiteRelationships = new List<ProviderSiteRelationship>
             {
@@ -269,7 +282,7 @@
 
             providerSite = _providerService.CreateProviderSite(providerSite);
 
-            var providerSiteViewModel = _providerMappers.Map<ProviderSite, ProviderSiteViewModel>(providerSite);
+            var providerSiteViewModel = ProviderMappers.Map<ProviderSite, ProviderSiteViewModel>(providerSite);
             providerSiteViewModel.ProviderId = viewModel.ProviderId;
 
             return providerSiteViewModel;
@@ -280,6 +293,8 @@
             var providerSite = _providerService.GetProviderSite(viewModel.ProviderSiteId);
 
             //Copy over changes
+            providerSite.FullName = viewModel.FullName;
+            providerSite.TradingName = viewModel.TradingName;
             foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
             {
                 var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);
@@ -291,7 +306,7 @@
 
             var updatedProviderSite = _providerService.SaveProviderSite(providerSite);
 
-            return _providerMappers.Map<ProviderSite, ProviderSiteViewModel>(updatedProviderSite);
+            return ProviderMappers.Map<ProviderSite, ProviderSiteViewModel>(updatedProviderSite);
         }
 
         public ProviderSiteViewModel CreateProviderSiteRelationship(ProviderSiteViewModel viewModel, int providerId)
