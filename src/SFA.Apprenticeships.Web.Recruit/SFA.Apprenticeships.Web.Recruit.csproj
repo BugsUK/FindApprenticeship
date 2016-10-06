@@ -890,6 +890,7 @@
     <Content Include="Views\Candidate\Candidate.cshtml" />
     <Content Include="Views\InformationRadiator\Index.cshtml" />
     <Content Include="Views\Provider\Sites.cshtml" />
+    <Content Include="Views\Admin\ProviderUsers.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
