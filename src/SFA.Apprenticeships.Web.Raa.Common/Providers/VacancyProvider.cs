@@ -319,23 +319,28 @@
                 foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
                 {
                     var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
-                    var vacancyOwnerRelationship = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
-                    var existingVacancyOwnerRelationship = _providerService.GetVacancyParty(vacancyOwnerRelationship.EmployerId, vacancyTransferViewModel.ProviderSiteId);
-                    if (existingVacancyOwnerRelationship == null)
+                    if (vacancy != null)
                     {
-                        vacancyOwnerRelationship.ProviderSiteId = vacancyTransferViewModel.ProviderSiteId;
-                        _providerService.SaveVacancyParty(vacancyOwnerRelationship);
-                    }
-                    else
-                    {
-                        vacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyPartyId;
-                    }
+                        var vacancyOwnerRelationship =
+                            _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
+                        var existingVacancyOwnerRelationship =
+                            _providerService.GetVacancyParty(vacancyOwnerRelationship.EmployerId,
+                                vacancyTransferViewModel.ProviderSiteId);
+                        if (existingVacancyOwnerRelationship == null)
+                        {
+                            vacancyOwnerRelationship.ProviderSiteId = vacancyTransferViewModel.ProviderSiteId;
+                            _providerService.SaveVacancyParty(vacancyOwnerRelationship);
+                        }
+                        else
+                        {
+                            vacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyPartyId;
+                        }
 
-                    vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
-                    vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
-                    vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
-
-                    _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
+                        vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
+                        vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
+                        vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
+                        _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
+                    }
                 }
             }
             catch (Exception exception)
