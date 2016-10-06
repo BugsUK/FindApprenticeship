@@ -130,6 +130,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 			                    OR v.Title LIKE '%' + @query + '%'
 			                    OR e.FullName LIKe '%' + @query + '%')
 		                    )
+                    AND     v.VacancyStatusId != 4
                     {filterSql}
                     ORDER BY {orderByField} {(query.Order == Order.Descending ? "DESC" : "")}
                     OFFSET (@skip) ROWS FETCH NEXT (@take) ROWS ONLY";
