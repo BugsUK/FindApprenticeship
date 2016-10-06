@@ -89,5 +89,11 @@
             public const string Error = "AdminMediatorCodes.SaveProviderUser.Error";
             public const string Ok = "AdminMediatorCodes.SaveProviderUser.Ok";
         }
+
+        public class VerifyProviderUserEmail
+        {
+            public const string Error = "AdminMediatorCodes.VerifyProviderUserEmail.Error";
+            public const string Ok = "AdminMediatorCodes.VerifyProviderUserEmail.Ok";
+        }
     }
 }

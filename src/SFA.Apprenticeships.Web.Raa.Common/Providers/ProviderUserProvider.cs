@@ -62,6 +62,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _userProfileService.UpdateProviderUser(providerUser);
         }
 
+        public ProviderUserViewModel VerifyProviderUserEmail(ProviderUserViewModel providerUserViewModel)
+        {
+            var providerUser = _userProfileService.GetProviderUser(providerUserViewModel.ProviderUserId);
+            providerUser.Status = ProviderUserStatus.EmailVerified;
+            providerUser.EmailVerificationCode = null;
+            var savedProviderUser = _userProfileService.UpdateProviderUser(providerUser);
+            return Convert(savedProviderUser);
+        }
+
         public IEnumerable<ProviderUserViewModel> GetProviderUsers(string ukprn)
         {
             var providerUsers = _userProfileService.GetProviderUsers(ukprn);

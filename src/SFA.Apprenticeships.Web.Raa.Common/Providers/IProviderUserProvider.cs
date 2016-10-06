@@ -25,5 +25,7 @@
         ProviderUser GetProviderUser(string username);
 
         void DismissReleaseNotes(string username, int version);
+
+        ProviderUserViewModel VerifyProviderUserEmail(ProviderUserViewModel providerUserViewModel);
     }
 }

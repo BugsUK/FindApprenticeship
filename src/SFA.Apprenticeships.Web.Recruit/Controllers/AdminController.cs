@@ -103,6 +103,29 @@
             }
         }
 
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "VerifyProviderUserEmailAction")]
+        public ActionResult VerifyProviderUserEmail(ProviderUserViewModel viewModel)
+        {
+            var response = _adminMediator.VerifyProviderUserEmail(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.VerifyProviderUserEmail.Error:
+                    return RedirectToRoute(RecruitmentRouteNames.AdminViewProviderUser, new { viewModel.ProviderUserId });
+
+                case AdminMediatorCodes.VerifyProviderUserEmail.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.AdminViewProviderUser, new { viewModel.ProviderUserId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         [HttpGet]
         public ActionResult ChangeUkprn()
         {

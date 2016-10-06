@@ -20,5 +20,6 @@
         MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn);
         MediatorResponse<ProviderUserViewModel> GetProviderUser(int providerUserId);
         MediatorResponse<ProviderUserViewModel> SaveProviderUser(ProviderUserViewModel viewModel);
+        MediatorResponse<ProviderUserViewModel> VerifyProviderUserEmail(ProviderUserViewModel viewModel);
     }
 }

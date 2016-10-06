@@ -293,6 +293,22 @@
             }
         }
 
+        public MediatorResponse<ProviderUserViewModel> VerifyProviderUserEmail(ProviderUserViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _providerUserProvider.VerifyProviderUserEmail(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.VerifyProviderUserEmail.Ok, viewModel, ProviderUserViewModelMessages.VerifiedProviderUserEmailSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to verify provider user's email with id={viewModel.ProviderUserId}", ex);
+                viewModel = _providerUserProvider.GetProviderUserViewModel(viewModel.ProviderUserId);
+                return GetMediatorResponse(AdminMediatorCodes.VerifyProviderUserEmail.Error, viewModel, ProviderUserViewModelMessages.VerifyProviderUserEmailError, UserMessageLevel.Error);
+            }
+        }
+
         private ProviderUserSearchResultsViewModel GetProviderUsers(string ukprn)
         {
             var provider = _providerService.GetProvider(ukprn);

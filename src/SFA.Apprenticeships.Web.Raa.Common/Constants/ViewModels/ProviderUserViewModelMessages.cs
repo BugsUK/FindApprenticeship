@@ -9,6 +9,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
         public const string AccountUpdated = "Your details have been updated successfully";
         public const string ProviderUserSavedSuccessfully = "The changes to the provider user were saved successfully";
         public const string ProviderUserSaveError = "An error occured when saving the provider user. Please check your entries and try again";
+        public const string VerifiedProviderUserEmailSuccessfully = "The provider user's email address was verified successfully";
+        public const string VerifyProviderUserEmailError = "An error occured when verifying the provider user's email address. Please try again";
 
         public static class FullnameMessages
         {
