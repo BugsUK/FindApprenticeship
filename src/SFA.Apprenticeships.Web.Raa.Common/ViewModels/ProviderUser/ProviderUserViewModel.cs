@@ -36,6 +36,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 
         public bool EmailAddressVerified { get; set; }
 
+        public DateTime CreatedDateTime { get; set; }
+
         public ReleaseNoteViewModel ReleaseNoteViewModel { get; set; }
     }
 }

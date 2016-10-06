@@ -270,6 +270,13 @@
             return GetMediatorResponse(AdminMediatorCodes.SearchProviderUsers.Ok, viewModel);
         }
 
+        public MediatorResponse<ProviderUserViewModel> GetProviderUser(int providerUserId)
+        {
+            var viewModel = _providerUserProvider.GetUserProviderViewModel(providerUserId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetProviderUser.Ok, viewModel);
+        }
+
         private ProviderUserSearchResultsViewModel GetProviderUsers(string ukprn)
         {
             var provider = _providerService.GetProvider(ukprn);

@@ -6,6 +6,8 @@
 
     public interface IProviderUserProvider
     {
+        ProviderUserViewModel GetUserProviderViewModel(int providerUserId);
+
         ProviderUserViewModel GetUserProfileViewModel(string username);
 
         IEnumerable<ProviderUserViewModel> GetProviderUsers(string ukprn);

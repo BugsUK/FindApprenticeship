@@ -60,6 +60,14 @@
             }
         }
 
+        [HttpGet]
+        public ActionResult ProviderUser(int providerUserId)
+        {
+            var response = _adminMediator.GetProviderUser(providerUserId);
+
+            return View(response.ViewModel);
+        }
+
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SearchProviderUsersAction")]
         public ActionResult SearchProviderUsers(ProviderUserSearchResultsViewModel viewModel)

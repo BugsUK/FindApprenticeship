@@ -77,5 +77,10 @@
             public const string FailedValidation = "AdminMediatorCodes.FailedValidation.Ok";
             public const string Ok = "AdminMediatorCodes.SearchProviderUsers.Ok";
         }
+
+        public class GetProviderUser
+        {
+            public const string Ok = "AdminMediatorCodes.GetProviderUser.Ok";
+        }
     }
 }

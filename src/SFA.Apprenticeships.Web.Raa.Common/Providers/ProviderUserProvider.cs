@@ -32,6 +32,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _referenceDataService = referenceDataService;
         }
 
+        public ProviderUserViewModel GetUserProviderViewModel(int providerUserId)
+        {
+            var providerUser = _userProfileService.GetProviderUser(providerUserId);
+            return Convert(providerUser);
+        }
+
         public ProviderUserViewModel GetUserProfileViewModel(string username)
         {
             var providerUser = _userProfileService.GetProviderUser(username);
@@ -173,6 +179,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 EmailAddressVerified = providerUser.Status == ProviderUserStatus.EmailVerified,
                 Fullname = providerUser.Fullname,
                 PhoneNumber = providerUser.PhoneNumber,
+                CreatedDateTime = providerUser.CreatedDateTime,
                 ReleaseNoteViewModel = releaseNoteViewModel
             };
 
