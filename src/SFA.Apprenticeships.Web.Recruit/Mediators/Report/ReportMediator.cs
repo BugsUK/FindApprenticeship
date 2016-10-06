@@ -38,11 +38,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Report
             return GetMediatorResponse(ReportMediatorCodes.ValidateApplicationsReceivedParameters.Ok, parameters, validationResult);
         }
 
-        public MediatorResponse<byte[]> GetApplicationsReceived(ApplicationsReceivedParameters parameters, string username)
+        public MediatorResponse<byte[]> GetApplicationsReceived(ApplicationsReceivedParameters parameters, string username, string ukprn)
         {
             try
             {
-                var reportResult = _reportingProvider.GetApplicationsReceivedResultItems(parameters.FromDate.Date, parameters.ToDate.Date, username);
+                var reportResult = _reportingProvider.GetApplicationsReceivedResultItems(parameters.FromDate.Date, parameters.ToDate.Date, username, ukprn);
 
                 var headerBuilder = new StringBuilder();
                 headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,,,,,,");
@@ -76,11 +76,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Report
             return GetMediatorResponse(ReportMediatorCodes.ValidateCandidatesWithApplicationsParameters.Ok, parameters, validationResult);
         }
 
-        public MediatorResponse<byte[]> GetCandidatesWithApplications(CandidatesWithApplicationsParameters parameters, string username)
+        public MediatorResponse<byte[]> GetCandidatesWithApplications(CandidatesWithApplicationsParameters parameters, string username, string ukprn)
         {
             try
             {
-                IList<CandidatesWithApplicationsResultItem> reportResult = _reportingProvider.GetCandidatesWithApplicationsResultItem(parameters.FromDate.Date, parameters.ToDate.Date, username);
+                IList<CandidatesWithApplicationsResultItem> reportResult = _reportingProvider.GetCandidatesWithApplicationsResultItem(parameters.FromDate.Date, parameters.ToDate.Date, username, ukprn);
 
                 var headerBuilder = new StringBuilder();
                 headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
