@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     using Web.Common.ViewModels.Locations;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Parties;
@@ -27,12 +28,18 @@
         [Display(Name = ProviderSiteViewModelMessages.DisplayName.LabelText)]
         public string DisplayName => $"{FullName}, {Address.Town}";
 
+        [AllowHtml]
+        [Display(Name = ProviderSiteViewModelMessages.EmployerDescription.LabelText)]
         public string EmployerDescription { get; set; }
 
+        [AllowHtml]
+        [Display(Name = ProviderSiteViewModelMessages.CandidateDescription.LabelText)]
         public string CandidateDescription { get; set; }
 
+        [Display(Name = ProviderSiteViewModelMessages.ContactDetailsForEmployer.LabelText)]
         public string ContactDetailsForEmployer { get; set; }
 
+        [Display(Name = ProviderSiteViewModelMessages.ContactDetailsForCandidate.LabelText)]
         public string ContactDetailsForCandidate { get; set; }
 
         public AddressViewModel Address { get; set; }

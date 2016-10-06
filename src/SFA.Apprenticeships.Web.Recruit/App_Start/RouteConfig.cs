@@ -422,6 +422,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AdminProviderUsers,
+               url: "admin/providerusers",
+               defaults: new { controller = "Admin", action = "ProviderUsers" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.AdminChangeUkprn,
                url: "admin/changeukprn",
                defaults: new { controller = "Admin", action = "ChangeUkprn" }

@@ -27,6 +27,12 @@
         }
 
         [HttpGet]
+        public ActionResult ProviderUsers()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult ChangeUkprn()
         {
             return View(new ChangeUkprnViewModel {Ukprn = User.GetUkprn()});
