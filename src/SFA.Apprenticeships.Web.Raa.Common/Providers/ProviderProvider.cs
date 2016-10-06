@@ -296,6 +296,10 @@
             //Copy over changes
             providerSite.FullName = viewModel.FullName;
             providerSite.TradingName = viewModel.TradingName;
+            providerSite.EmployerDescription = viewModel.EmployerDescription;
+            providerSite.CandidateDescription = viewModel.CandidateDescription;
+            providerSite.ContactDetailsForEmployer = viewModel.ContactDetailsForEmployer;
+            providerSite.ContactDetailsForCandidate = viewModel.ContactDetailsForCandidate;
             providerSite.TrainingProviderStatus = viewModel.TrainingProviderStatus;
             foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
             {
