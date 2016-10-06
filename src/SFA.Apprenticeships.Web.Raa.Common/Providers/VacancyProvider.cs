@@ -333,7 +333,7 @@
                         }
                         else
                         {
-                            vacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyPartyId;
+                            vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyPartyId;
                         }
 
                         vacancy.ProviderId = vacancyTransferViewModel.ProviderId;

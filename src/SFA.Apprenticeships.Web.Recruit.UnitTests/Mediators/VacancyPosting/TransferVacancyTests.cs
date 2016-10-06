@@ -2,10 +2,9 @@
 {
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+    using Moq;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Admin;
-    using Raa.Common.ViewModels.Provider;
-    using Raa.Common.ViewModels.Vacancy;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -17,18 +16,22 @@
         {
             VacancyOwnerRelationshipId = 101,
             VacancyReferenceNumber = 1001,
+            DeliveryOrganisationId = 200,
+            VacancyManagerId = 200,
+            ProviderId = 20
         };
 
         private readonly VacancyParty _vacancyParty = new VacancyParty
         {
             EmployerId = 10,
             VacancyPartyId = 101,
-            ProviderSiteId = 12
+            ProviderSiteId = 105
         };
 
-        private readonly VacancyParty _existingvacancyParty = new VacancyParty
+        private readonly VacancyParty _vacancyPartyWithRelationship = new VacancyParty
         {
             EmployerId = 10,
+            VacancyPartyId = 102,
             ProviderSiteId = 12
         };
 
@@ -41,19 +44,39 @@
                 ProviderSiteId = 12,
                 VacancyReferenceNumbers = new List<int> { 1001 }
             };
-            NewVacancyViewModel validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel
-            {
-                VacancyReferenceNumber = 1001,
-                OfflineVacancy = false,
-                OwnerParty = new VacancyPartyViewModel()
-            };
 
-            VacancyPostingService.Setup(vps => vps.UpdateVacanciesWithNewProvider(_existingVacancy))
+            MockVacancyPostingService.Setup(
+                vps =>
+                    vps.GetVacancyByReferenceNumber(
+                        vacancyTransferViewModel.VacancyReferenceNumbers.FirstOrDefault()))
                 .Returns(_existingVacancy);
 
-            MockProviderService.Setup(mps => mps.SaveVacancyParty(_vacancyParty)).Returns(_vacancyParty);
+            MockProviderService.Setup(ps => ps.GetVacancyParty(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyParty);
 
-            VacancyPostingService.Setup(
+            MockProviderService.Setup(ps => ps.GetVacancyParty(_vacancyParty.EmployerId, vacancyTransferViewModel.ProviderSiteId)).Returns(_vacancyPartyWithRelationship);
+
+            var vacancyPostingProvider = GetVacancyPostingProvider();
+
+            //Act
+            vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
+
+            //Assert
+            MockVacancyPostingService.Verify(mvps =>
+            mvps.UpdateVacanciesWithNewProvider(It.Is<Vacancy>(v => v.DeliveryOrganisationId == vacancyTransferViewModel.ProviderSiteId &&
+            v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ProviderId == vacancyTransferViewModel.ProviderId && v.VacancyOwnerRelationshipId == _vacancyParty.VacancyPartyId)));
+        }
+
+        [Test]
+        public void TransferVacancy_IfRelationshipExists_UpdateVacancyOwnerRelationshipIdOfVacancy()
+        {
+            var vacancyTransferViewModel = new ManageVacancyTransferViewModel
+            {
+                ProviderId = 10,
+                ProviderSiteId = 12,
+                VacancyReferenceNumbers = new List<int> { 1001 }
+            };
+
+            MockVacancyPostingService.Setup(
                 vps =>
                     vps.GetVacancyByReferenceNumber(
                         vacancyTransferViewModel.VacancyReferenceNumbers.FirstOrDefault()))
@@ -64,13 +87,16 @@
             MockProviderService.Setup(ps => ps.GetVacancyParty(_vacancyParty.EmployerId, vacancyTransferViewModel.ProviderSiteId)).Returns((VacancyParty)null);
 
             var vacancyPostingProvider = GetVacancyPostingProvider();
+
+            //Act
             vacancyPostingProvider.TransferVacancies(vacancyTransferViewModel);
-        }
 
-        [Test]
-        public void TransferVacancy_IfRelationshipExists_UpdateVacancyOwnerRelationshipIdOfVacancy()
-        {
+            //Assert
+            MockVacancyPostingService.Verify(mvps =>
+            mvps.UpdateVacanciesWithNewProvider(It.Is<Vacancy>(v => v.DeliveryOrganisationId == vacancyTransferViewModel.ProviderSiteId &&
+            v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ProviderId == vacancyTransferViewModel.ProviderId)));
 
+            MockProviderService.Verify(mps => mps.SaveVacancyParty(It.Is<VacancyParty>(vp => vp.ProviderSiteId == _vacancyPartyWithRelationship.ProviderSiteId)));
         }
     }
 }
