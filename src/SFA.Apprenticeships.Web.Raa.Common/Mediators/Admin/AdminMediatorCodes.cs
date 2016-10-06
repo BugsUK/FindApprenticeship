@@ -20,6 +20,13 @@
             public const string Ok = "AdminMediatorCodes.CreateProvider.Ok";
         }
 
+        public class SaveProvider
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveProvider.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveProvider.Error";
+            public const string Ok = "AdminMediatorCodes.SaveProvider.Ok";
+        }
+
         public class SearchProviderSites
         {
             public const string FailedValidation = "AdminMediatorCodes.SearchProviderSites.FailedValidation";
@@ -51,6 +58,33 @@
             public const string InvalidUkprn = "AdminMediatorCodes.CreateProviderSiteRelationship.InvalidUkprn";
             public const string Error = "AdminMediatorCodes.CreateProviderSiteRelationship.Error";
             public const string Ok = "AdminMediatorCodes.CreateProviderSiteRelationship.Ok";
+        }
+
+        public class SearchApiUsers
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SearchApiUsers.FailedValidation";
+            public const string Ok = "AdminMediatorCodes.SearchApiUsers.Ok";
+        }
+
+        public class GetApiUser
+        {
+            public const string Ok = "AdminMediatorCodes.GetApiUser.Ok";
+        }
+
+        public class CreateApiUser
+        {
+            public const string FailedValidation = "AdminMediatorCodes.CreateApiUser.FailedValidation";
+            public const string CompanyIdAlreadyExists = "AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists";
+            public const string UnknownCompanyId = "AdminMediatorCodes.CreateApiUser.UnknownCompanyId";
+            public const string Error = "AdminMediatorCodes.CreateApiUser.Error";
+            public const string Ok = "AdminMediatorCodes.CreateApiUser.Ok";
+        }
+
+        public class SaveApiUser
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveApiUser.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveApiUser.Error";
+            public const string Ok = "AdminMediatorCodes.SaveApiUser.Ok";
         }
 
         public class GetVacancyDetails

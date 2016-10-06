@@ -222,7 +222,7 @@
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />
-    <Compile Include="Mediators\Admin\TransferVacanciesMessages.cs" />
+    <Compile Include="Constants\Pages\TransferVacanciesMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApiUserProvider.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />

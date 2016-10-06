@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mediators.Admin
 {
+    using System;
     using ViewModels.Admin;
+    using ViewModels.Api;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using Web.Common.Mediators;
@@ -10,11 +12,16 @@
         MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel);
         MediatorResponse<ProviderViewModel> GetProvider(int providerId);
         MediatorResponse<ProviderViewModel> CreateProvider(ProviderViewModel viewModel);
+        MediatorResponse<ProviderViewModel> SaveProvider(ProviderViewModel viewModel);
         MediatorResponse<ProviderSiteSearchResultsViewModel> SearchProviderSites(ProviderSiteSearchViewModel searchViewModel);
         MediatorResponse<ProviderSiteViewModel> GetProviderSite(int providerSiteId);
         MediatorResponse<ProviderSiteViewModel> CreateProviderSite(ProviderSiteViewModel viewModel);
         MediatorResponse<ProviderSiteViewModel> SaveProviderSite(ProviderSiteViewModel viewModel);
         MediatorResponse<ProviderSiteViewModel> CreateProviderSiteRelationship(ProviderSiteViewModel viewModel);
+        MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel);
+        MediatorResponse<ApiUserViewModel> GetApiUser(Guid externalSystemId);
+        MediatorResponse<ApiUserViewModel> CreateApiUser(ApiUserViewModel viewModel);
+        MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel);
         MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel);
         MediatorResponse<ManageVacancyTransferResultsViewModel> ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel);
         MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn);

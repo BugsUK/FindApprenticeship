@@ -40,7 +40,7 @@
     using Application.Interfaces.Security;
     using Application.Vacancy;
     using Infrastructure.Security;
-    using Mediators.Admin;
+    using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Application;
 
     public class ManagementWebRegistry : Registry

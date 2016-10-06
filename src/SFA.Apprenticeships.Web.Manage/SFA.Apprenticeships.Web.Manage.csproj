@@ -381,9 +381,6 @@
     <Compile Include="CsvClassMaps\ReportVacancyExtensionsResultItemClassMap.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
-    <Compile Include="Mediators\Admin\AdminMediator.cs" />
-    <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
-    <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
     <Compile Include="Mediators\AgencyUser\IAgencyUserMediator.cs" />

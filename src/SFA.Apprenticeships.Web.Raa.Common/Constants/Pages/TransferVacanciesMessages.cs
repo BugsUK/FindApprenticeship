@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeships.Web.Raa.Common.Mediators.Admin
+namespace SFA.Apprenticeships.Web.Raa.Common.Constants.Pages
 {
     public class TransferVacanciesMessages
     {
