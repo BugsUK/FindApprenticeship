@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using FluentValidation.Attributes;
+﻿using FluentValidation.Attributes;
 using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
 using SFA.Apprenticeships.Web.Raa.Common.Validators.Provider;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 {
@@ -25,6 +25,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
         public string TradingName { get; set; }
         public IEnumerable<ProviderSiteViewModel> ProviderSiteViewModels { get; set; }
         public bool IsMigrated { get; set; }
+        [Display(Name = ProviderViewModelMessages.ProviderStatusType.LabelText)]
         public ProviderStatuses ProviderStatusType { get; set; }
+        public string VacanciesReferenceNumbers { get; set; }
     }
 }

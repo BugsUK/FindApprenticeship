@@ -1,0 +1,25 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin.TransferVacanciesViewModel 
+
+@{
+    ViewBag.Title = "Get Vacancies Details";
+}
+
+<h1 id="heading" class="heading-xlarge">Transfer Vacancies</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.TransferVacancies))
+{
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+    <div class="form-group">
+        <fieldset class="form-group inline-fixed">
+            @Html.FormTextAreaFor(m => m.VacancyReferenceNumbers,
+                controlHtmlAttributes: new { type = "textarea" ,rows=5, @data_val_length_max="799"})
+        </fieldset>             
+            <div class="form-group">
+                <button id="confirm-vacancy-details" type="submit" class="button">
+                    Confirm Details
+                </button>
+                @Html.ActionLink("Cancel", "TransferVacancies", "Admin")
+            </div>
+        </div>
+}

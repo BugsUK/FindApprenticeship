@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using ViewModels.Admin;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -64,5 +65,6 @@
 
         void EmptyVacancyLocation(int vacancyReferenceNumber);
         void CreateVacancy(VacancyMinimumData vacancyMinimumData);
+        void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel);
     }
 }

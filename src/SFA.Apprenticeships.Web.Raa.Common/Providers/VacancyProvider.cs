@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -8,25 +9,25 @@
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
+    using Application.Vacancy;
     using Configuration;
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
-    using Application.Interfaces;
-    using Application.Vacancy;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Raa.Parties;
-    using Domain.Raa.Interfaces.Repositories.Models;
     using ViewModels;
+    using ViewModels.Admin;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -56,15 +57,16 @@
         private readonly IMapper _mapper;
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
-        private IVacancySummaryService _vacancySummaryService;
+        private readonly IVacancySummaryService _vacancySummaryService;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
             IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
-            ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService,
-            ILocalAuthorityLookupService localAuthLookupService, IVacancySummaryService vacancySummaryService)
+            ICurrentUserService currentUserService, IUserProfileService userProfileService,
+            IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
+            IVacancySummaryService vacancySummaryService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -309,7 +311,45 @@
                 EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
             });
         }
-        
+
+        public void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        {
+            try
+            {
+                foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
+                {
+                    var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
+                    if (vacancy != null)
+                    {
+                        var vacancyOwnerRelationship =
+                            _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
+                        var existingVacancyOwnerRelationship =
+                            _providerService.GetVacancyParty(vacancyOwnerRelationship.EmployerId,
+                                vacancyTransferViewModel.ProviderSiteId);
+                        if (existingVacancyOwnerRelationship == null)
+                        {
+                            vacancyOwnerRelationship.ProviderSiteId = vacancyTransferViewModel.ProviderSiteId;
+                            _providerService.SaveVacancyParty(vacancyOwnerRelationship);
+                        }
+                        else
+                        {
+                            vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyPartyId;
+                        }
+
+                        vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
+                        vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
+                        vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
+                        _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                _logService.Error($"Exception occurred while transferring the vacancy:{exception.Message}");
+                throw exception;
+            }
+        }
+
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
             return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : CategoryPrefixes.GetOriginalFrameworkCode(trainingDetailsViewModel.FrameworkCodeName);
@@ -369,14 +409,14 @@
             //                    ? employer.Address
             //                    : null;
             //vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
-            
+
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
 
             return newVacancyViewModel;
         }
-        
+
         public TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -754,8 +794,15 @@
                 : (VacancySummaryOrderByColumn)
                 Enum.Parse(typeof(VacancySummaryOrderByColumn), vacanciesSummarySearch.OrderByField);
 
+            // Support searching by full vacancy reference number
+            string searchString;
+            if (!VacancyHelper.TryGetVacancyReference(vacanciesSummarySearch.SearchString, out searchString))
+            {
+                searchString = vacanciesSummarySearch.SearchString;
+            }
+
             // reset filter on search
-            vacanciesSummarySearch.FilterType = string.IsNullOrEmpty(vacanciesSummarySearch.SearchString)
+            vacanciesSummarySearch.FilterType = string.IsNullOrEmpty(searchString)
                 ? vacanciesSummarySearch.FilterType
                 : VacanciesSummaryFilterTypes.All;
 
@@ -767,7 +814,7 @@
                 Filter = vacanciesSummarySearch.FilterType,
                 PageSize = vacanciesSummarySearch.PageSize,
                 RequestedPage = vacanciesSummarySearch.CurrentPage,
-                SearchString = vacanciesSummarySearch.SearchString,
+                SearchString = searchString,
                 Order = vacanciesSummarySearch.Order,
                 VacancyType = vacanciesSummarySearch.VacancyType
             };
@@ -979,7 +1026,7 @@
             var vacancies = GetTeamVacancySummaries();
 
             var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
-                vacancies); 
+                vacancies);
 
             return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ProviderId)) : null;
         }
@@ -1082,7 +1129,7 @@
                 VacancyType = vacancy.VacancyType
             };
         }
-        
+
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
@@ -1199,7 +1246,7 @@
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
-            
+
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
                 return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.InvalidVacancy);
@@ -1452,14 +1499,14 @@
 
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            vacancy.NumberOfPositions = null;           
+            vacancy.NumberOfPositions = null;
             vacancy.Address = employer.Address;
             vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
             vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
             vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
-            
-			GeoCodeVacancyLocations(viewModel);
-			
+
+            GeoCodeVacancyLocations(viewModel);
+
             if (addresses.Count() == 1)
             {
                 //Set address
@@ -1480,7 +1527,7 @@
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
-					vacancyLocation.LocalAuthorityCode =
+                    vacancyLocation.LocalAuthorityCode =
                     _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
@@ -1517,7 +1564,7 @@
             {
                 vacancy.AdditionalLocationInformation = null;
                 _vacancyPostingService.UpdateVacancy(vacancy);
-                
+
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
             }
         }
@@ -1530,7 +1577,7 @@
 
     public static class Extensions
     {
-        public static V GetValueOrDefault<K,V>(this IReadOnlyDictionary<K,V> dict, K key)
+        public static V GetValueOrDefault<K, V>(this IReadOnlyDictionary<K, V> dict, K key)
         {
             return GetValueOrDefault(dict, key, _ => default(V));
         }

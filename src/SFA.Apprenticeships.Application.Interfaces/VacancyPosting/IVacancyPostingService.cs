@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Repositories.Models;
+    using System;
+    using System.Collections.Generic;
+	using Domain.Raa.Interfaces.Repositories.Models;
 
     public interface IVacancyPostingService
     {
@@ -53,7 +53,8 @@
         /// <returns>VacancyPartId => VacancyLocation</returns>
         IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
 
-
+        Vacancy UpdateVacanciesWithNewProvider(Vacancy vacancies);
+		
         IList<RegionalTeamMetrics> GetRegionalTeamsMetrics(VacancySummaryByStatusQuery query);
     }
 }

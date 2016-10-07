@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Admin
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mediators.Admin
 {
     public class AdminMediatorCodes
     {
@@ -85,6 +85,49 @@
             public const string FailedValidation = "AdminMediatorCodes.SaveApiUser.FailedValidation";
             public const string Error = "AdminMediatorCodes.SaveApiUser.Error";
             public const string Ok = "AdminMediatorCodes.SaveApiUser.Ok";
+        }
+
+        public class GetVacancyDetails
+        {
+            public const string NoRecordsFound = "AdminMediatorCodes.GetVacancyDetails.NoRecordsFound";
+            public const string FailedAuthorisation = "AdminMediatorCodes.GetVacancyDetails.FailedAuthorisation";
+            public const string Ok = "AdminMediatorCodes.GetVacancyDetails.Ok";
+            public const string FailedTransfer = "AdminMediatorCodes.GetVacancyDetails.FailedException";
+        }
+
+        public class TransferVacancy
+        {
+            public const string FailedTransfer = "AdminMediatorCodes.TransferVacancy.FailedTransfer";
+            public const string Ok = "AdminMediatorCodes.TransferVacancy.Ok";
+        }
+
+        public class GetProviderUsers
+        {
+            public const string Ok = "AdminMediatorCodes.GetProviderUsers.Ok";
+        }
+
+        public class SearchProviderUsers
+        {
+            public const string FailedValidation = "AdminMediatorCodes.FailedValidation.Ok";
+            public const string Ok = "AdminMediatorCodes.SearchProviderUsers.Ok";
+        }
+
+        public class GetProviderUser
+        {
+            public const string Ok = "AdminMediatorCodes.GetProviderUser.Ok";
+        }
+
+        public class SaveProviderUser
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveProviderUser.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveProviderUser.Error";
+            public const string Ok = "AdminMediatorCodes.SaveProviderUser.Ok";
+        }
+
+        public class VerifyProviderUserEmail
+        {
+            public const string Error = "AdminMediatorCodes.VerifyProviderUserEmail.Error";
+            public const string Ok = "AdminMediatorCodes.VerifyProviderUserEmail.Ok";
         }
     }
 }

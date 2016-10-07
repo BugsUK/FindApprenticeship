@@ -13,7 +13,7 @@
     {
         public VacancyIndexerRegistry()
         {
-            For<IMapper>().Use<VacancyIndexerMapper>().Name = "VacancyIndexerMapper";
+            For<IMapper>().Singleton().Use<VacancyIndexerMapper>().Name = "VacancyIndexerMapper";
 
             For<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>()
                 .Singleton()

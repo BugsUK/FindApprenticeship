@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
 {
-    using System;
-    using System.Collections.Generic;
     using Entities.Raa.Vacancies;
     using Queries;
+    using System;
+    using System.Collections.Generic;
 
     public interface IVacancyReadRepository
     {
@@ -18,6 +18,8 @@
         List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
+
+        List<VacancySummary> GetByOwnerPartyId(int ownerPartyId);
 
         int CountWithStatus(params VacancyStatus[] desiredStatuses);
 

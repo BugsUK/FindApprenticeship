@@ -261,6 +261,7 @@
             //Copy over changes
             provider.FullName = viewModel.FullName;
             provider.TradingName = viewModel.TradingName;
+            provider.ProviderStatusType = viewModel.ProviderStatusType;
 
             var updatedProvider = _providerService.SaveProvider(provider);
 
@@ -295,6 +296,11 @@
             //Copy over changes
             providerSite.FullName = viewModel.FullName;
             providerSite.TradingName = viewModel.TradingName;
+            providerSite.EmployerDescription = viewModel.EmployerDescription;
+            providerSite.CandidateDescription = viewModel.CandidateDescription;
+            providerSite.ContactDetailsForEmployer = viewModel.ContactDetailsForEmployer;
+            providerSite.ContactDetailsForCandidate = viewModel.ContactDetailsForCandidate;
+            providerSite.TrainingProviderStatus = viewModel.TrainingProviderStatus;
             foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
             {
                 var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);

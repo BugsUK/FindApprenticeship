@@ -12,9 +12,9 @@
     {
         public ProviderRepositoryRegistry()
         {
-            For<IMapper>().Use<ProviderMappers>().Name = "ProviderMappers";
-            For<IMapper>().Use<ProviderSiteMappers>().Name = "ProviderSiteMappers";
-            For<IMapper>().Use<VacancyPartyMappers>().Name = "VacancyPartyMappers";
+            For<IMapper>().Singleton().Use<ProviderMappers>().Name = "ProviderMappers";
+            For<IMapper>().Singleton().Use<ProviderSiteMappers>().Name = "ProviderSiteMappers";
+            For<IMapper>().Singleton().Use<VacancyPartyMappers>().Name = "VacancyPartyMappers";
 
             For<IProviderReadRepository>().Use<ProviderRepository>().Ctor<IMapper>().Named("ProviderMappers");
             For<IProviderWriteRepository>().Use<ProviderRepository>().Ctor<IMapper>().Named("ProviderMappers");

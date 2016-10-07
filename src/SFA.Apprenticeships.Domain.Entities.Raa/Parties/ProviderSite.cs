@@ -25,6 +25,8 @@
 
         public string WebPage { get; set; }
 
+        public EmployerTrainingProviderStatuses TrainingProviderStatus { get; set; }
+
         public IList<ProviderSiteRelationship> ProviderSiteRelationships { get; set; }
     }
 }

@@ -11,7 +11,7 @@
     {
         public CommunicationRepositoryRegistry()
         {
-            For<IMapper>().Use<CommunicationMappers>().Name = "CommunicationMappers";
+            For<IMapper>().Singleton().Use<CommunicationMappers>().Name = "CommunicationMappers";
             
             For<IExpiringApprenticeshipApplicationDraftRepository>()
                 .Use<ExpiringApprenticeshipApplicationDraftRepository>()
