@@ -326,7 +326,6 @@
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesSearchViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryFilterTypes.cs" />
     <Compile Include="ViewModels\Vacancy\EditLinkViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
@@ -347,7 +346,6 @@
     <Compile Include="ViewModels\Vacancy\IPartialVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\QAActionResult.cs" />
-    <Compile Include="ViewModels\Vacancy\RegionalTeamMetrics.cs" />
     <Compile Include="ViewModels\Vacancy\StandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />

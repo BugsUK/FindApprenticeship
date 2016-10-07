@@ -417,6 +417,10 @@
                 .MapMemberFrom(av => av.EmployerName, v => v.EmployerName)
                 .MapMemberFrom(av => av.ApplicationOrClickThroughCount, v => v.ApplicantCount)
                 .MapMemberFrom(av => av.NewApplicationCount, v => v.NewApplicantCount)
+                .MapMemberFrom(av => av.ProviderTradingName, v => v.ProviderTradingName)
+                .MapMemberFrom(av => av.DateSubmitted, v => v.DateSubmitted)
+                .MapMemberFrom(av => av.DateFirstSubmitted, v => v.DateFirstSubmitted)
+                .MapMemberFrom(av => av.CreatedDate, v => v.CreatedDate)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress

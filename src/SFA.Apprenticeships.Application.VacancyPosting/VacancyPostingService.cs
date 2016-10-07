@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Interfaces.VacancyPosting;
     using Strategies;
 
@@ -74,9 +75,9 @@
             return _getVacancyStrategies.GetVacancyById(vacancyId);
         }
 
-        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
+        public IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords)
         {
-            return _getVacancySummaryStrategies.GetWithStatus(desiredStatuses);
+            return _getVacancySummaryStrategies.GetByStatus(query, out totalRecords);
         }
 
         public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)
@@ -122,6 +123,11 @@
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
         {
             return _vacancyLocationsStrategies.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+        }
+
+        public IList<RegionalTeamMetrics> GetRegionalTeamsMetrics(VacancySummaryByStatusQuery query)
+        {
+            return _getVacancySummaryStrategies.GetRegionalTeamMetrics(query);
         }
     }
 }

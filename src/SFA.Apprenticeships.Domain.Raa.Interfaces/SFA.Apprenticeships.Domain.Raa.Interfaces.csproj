@@ -104,7 +104,9 @@
     <Compile Include="Repositories\IVacancySummaryRepository.cs" />
     <Compile Include="Repositories\IVacancyWriteRepository.cs" />
     <Compile Include="Repositories\Models\ApiUserSearchParameters.cs" />
+    <Compile Include="Repositories\Models\RegionalTeamMetrics.cs" />
     <Compile Include="Repositories\Models\VacancyCounts.cs" />
+    <Compile Include="Repositories\Models\VacancySummaryByStatusQuery.cs" />
     <Compile Include="Repositories\Models\VacancySummaryOrderByColumn.cs" />
     <Compile Include="Repositories\Models\Order.cs" />
     <Compile Include="Repositories\Models\VacanciesSummaryFilterTypes.cs" />

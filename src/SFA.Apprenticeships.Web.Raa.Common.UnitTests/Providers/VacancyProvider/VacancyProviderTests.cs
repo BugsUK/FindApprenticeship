@@ -8,7 +8,9 @@
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using FluentAssertions;
     using Moq;
     using Moq.Language.Flow;
@@ -22,83 +24,7 @@
     {
         private const int QAVacancyTimeout = 10;
         private const int ProviderId = 2;
-
-        [Test]
-        public void GetPendingQAVacanciesShouldOnlyReturnVacanciesAvailableToQa()
-        {
-            // Arrange
-            var today = new DateTime(2016, 3, 16, 12, 0, 0);
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var dateTimeService = new Mock<IDateTimeService>();
-            var vacancyLockingService = new Mock<IVacancyLockingService>();
-            dateTimeService.Setup(dts => dts.UtcNow).Returns(today);
-            const int anInt = 1;
-            const string username = "userName";
-            const int submissionCount = 2;
-            const int vacancyAvailableToQAReferenceNumber = 1;
-            const int vacancyNotAvailableToQAReferenceNumber = 2;
-
-            var apprenticeshipVacancies = new List<VacancySummary>
-            {
-                new VacancySummary
-                {
-                    ClosingDate = today,
-                    DateSubmitted = today,
-                    ProviderId = ProviderId,
-                    VacancyReferenceNumber = vacancyAvailableToQAReferenceNumber,
-                    Status = VacancyStatus.ReservedForQA,
-                    QAUserName = username,
-                    DateStartedToQA = null,
-                    SubmissionCount = submissionCount
-                },
-                new VacancySummary
-                {
-                    ClosingDate = today,
-                    DateSubmitted = today,
-                    ProviderId = ProviderId,
-                    VacancyReferenceNumber = vacancyNotAvailableToQAReferenceNumber,
-                    Status = VacancyStatus.ReservedForQA,
-                    QAUserName = username,
-                    DateStartedToQA = null,
-                    SubmissionCount = submissionCount
-                }
-            };
-
-            vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
-                .Returns(apprenticeshipVacancies);
-
-            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
-
-            vacancyLockingService.Setup(
-                vls =>
-                    vls.IsVacancyAvailableToQABy(username,
-                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyAvailableToQAReferenceNumber)))
-                .Returns(true);
-
-            vacancyLockingService.Setup(
-                vls =>
-                    vls.IsVacancyAvailableToQABy(username,
-                        It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyNotAvailableToQAReferenceNumber)))
-                .Returns(false);
-
-            var currentUserService = new Mock<ICurrentUserService>();
-            currentUserService.Setup(cus => cus.CurrentUserName).Returns(username);
-
-            var vacancyProvider =
-                new VacancyProviderBuilder()
-                    .With(providerService)
-                    .With(vacancyPostingService)
-                    .With(dateTimeService)
-                    .With(vacancyLockingService)
-                    .With(currentUserService)
-                    .Build();
-
-            var vacancies = vacancyProvider.GetPendingQAVacancies();
-            vacancies.Should().HaveCount(1);
-            vacancies.Single().VacancyReferenceNumber.Should().Be(vacancyAvailableToQAReferenceNumber);
-        }
+        
 
         [Test]
         public void GetVacanciesPendingQAShouldCallRepositoryWithPendingQAAsDesiredStatus()
@@ -110,8 +36,10 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
+            int total;
+
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total))
                 .Returns(new List<VacancySummary>
                 {
                     new VacancySummary
@@ -123,7 +51,19 @@
                     }
                 });
 
-            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
+            var metrics = new List<RegionalTeamMetrics>()
+            {
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastAnglia },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.North },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.NorthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthEast },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.WestMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.YorkshireAndHumberside },
+            };
+
+            vacancyPostingService.Setup(p => p.GetRegionalTeamsMetrics(It.IsAny<VacancySummaryByStatusQuery>())).Returns(metrics);
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -136,8 +76,8 @@
             vacancyProvider.GetPendingQAVacancies();
 
             //Assert
-            vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
-            providerService.Verify(ps => ps.GetProviders(new List<int> { ProviderId }), Times.Once);
+            vacancyPostingService.Verify(avr => avr.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total));
+            vacancyPostingService.Verify(avr => avr.GetRegionalTeamsMetrics(It.IsAny<VacancySummaryByStatusQuery>()));
         }
     }
 

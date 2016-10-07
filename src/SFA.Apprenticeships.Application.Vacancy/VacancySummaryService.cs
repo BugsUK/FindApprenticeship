@@ -23,5 +23,15 @@
         {
             return _vacancySummaryRepository.GetLotteryCounts(query);
         }
+
+        public IList<VacancySummary> GetByStatus(VacancySummaryByStatusQuery query, out int totalRecords)
+        {
+            return _vacancySummaryRepository.GetByStatus(query, out totalRecords);
+        }
+
+        public IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query)
+        {
+            return _vacancySummaryRepository.GetRegionalTeamMetrics(query);
+        }
     }
 }

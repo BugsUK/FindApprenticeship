@@ -10,7 +10,7 @@
         public const string OrderByFieldClosingDate = "ClosingDate";
         public const string OrderByFieldSubmissionCount = "SubmissionCount";
 
-        public DashboardVacancySummaryFilterTypes FilterType { get; set; }
+        public VacanciesSummaryFilterTypes FilterType { get; set; }
         public DashboardVacancySummariesMode Mode { get; set; }
         public string Provider { get; set; }
 
@@ -24,7 +24,7 @@
             SetValues(viewModel);
         }
 
-        public DashboardVacancySummariesSearchViewModel(DashboardVacancySummariesSearchViewModel viewModel, DashboardVacancySummaryFilterTypes filterType) : this(viewModel)
+        public DashboardVacancySummariesSearchViewModel(DashboardVacancySummariesSearchViewModel viewModel, VacanciesSummaryFilterTypes filterType) : this(viewModel)
         {
             FilterType = filterType;
             Mode = DashboardVacancySummariesMode.Review;

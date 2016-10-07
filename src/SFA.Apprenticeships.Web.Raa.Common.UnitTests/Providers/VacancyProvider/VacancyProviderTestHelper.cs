@@ -8,6 +8,7 @@
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Moq;
 
     using SFA.Apprenticeships.Application.Interfaces;
@@ -25,7 +26,9 @@
 
             postingService.Setup(ps => ps.GetVacancyLocations(It.IsAny<int>())).Returns(new List<VacancyLocation>());
 
-            postingService.Setup(ps => ps.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+            int total;
+
+            postingService.Setup(ps => ps.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total))
                 .Returns(new List<VacancySummary>());
 
             foreach (var vacancyReferenceNumber in vacancyReferenceNumbers)
