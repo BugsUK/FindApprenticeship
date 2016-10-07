@@ -136,7 +136,7 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewSaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public ActionResult ReviewSaveAndContinue(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             switch (apprenticeshipApplicationViewModel.Status)
             {
@@ -196,14 +196,14 @@
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Error:
+                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error:
                     return View("Review", response.ViewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation:
+                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
+                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
 
                 default:
