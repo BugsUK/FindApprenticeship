@@ -249,6 +249,8 @@
                 .IgnoreMember(av => av.EmployerName)
                 .IgnoreMember(av => av.ApplicationOrClickThroughCount)
                 .IgnoreMember(av => av.NewApplicationCount)
+                .IgnoreMember(av => av.ProviderTradingName)
+                .IgnoreMember(av => av.CreatedDate)
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
@@ -338,6 +340,8 @@
                 .IgnoreMember(av => av.EmployerName)
                 .IgnoreMember(av => av.ApplicationOrClickThroughCount)
                 .IgnoreMember(av => av.NewApplicationCount)
+                .IgnoreMember(av => av.ProviderTradingName)
+                .IgnoreMember(av => av.CreatedDate)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
