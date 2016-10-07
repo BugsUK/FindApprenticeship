@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
+    using Constants.ViewModels;
+    using Domain.Entities.Applications;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Constants.ViewModels;
-    using Domain.Entities.Applications;
 
     public class ApplicationViewModel
     {
@@ -40,5 +40,8 @@
 
         [Display(Name = ApplicationViewModelMessages.Notes.LabelText)]
         public string Notes { get; set; }
+
+        [Display(Name = ApplicationViewModelMessages.CandidateApplicationFeedback.LabelText)]
+        public string CandidateApplicationFeedback { get; set; }
     }
 }

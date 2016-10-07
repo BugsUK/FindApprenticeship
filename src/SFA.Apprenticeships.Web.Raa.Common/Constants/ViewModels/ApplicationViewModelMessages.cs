@@ -15,5 +15,11 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The vacancy manager notes " + Whitelists.FreetextWhitelist.ErrorText;
         }
+
+        public class CandidateApplicationFeedback
+        {
+            public const string RequiredText = "You must provide feedback explaining why the candidate\'s application was not successful";
+            public const string LabelText = "What feedback would you like to share with the candidate?";
+        }
     }
 }
