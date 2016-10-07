@@ -1,6 +1,5 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
-    using System;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Security;
     using Common.Constants;
@@ -11,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Raa.Common.Validators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
+    using System;
 
     public class ApprenticeshipApplicationMediator : MediatorBase, IApprenticeshipApplicationMediator
     {
@@ -220,13 +220,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
         public MediatorResponse<ApplicationSelectionViewModel> SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
+            var applicationViewModel =
+                _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
             var viewModel = _applicationProvider.SendUnsuccessfulDecision(applicationSelectionViewModel);
 
             var candidateName = applicationViewModel.ApplicantDetails.Name;
             var message = string.Format(ApplicationViewModelMessages.UnsuccessfulDecisionFormat, candidateName);
 
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, viewModel, message, UserMessageLevel.Info);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, viewModel,
+                message, UserMessageLevel.Info);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)

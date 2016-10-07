@@ -2,10 +2,13 @@
 {
     using Constants.ViewModels;
     using Domain.Entities.Applications;
+    using FluentValidation.Attributes;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Validators.Application;
 
+    [Validator(typeof(ApprenticeshipApplicationViewModelClientValidator))]
     public class ApplicationViewModel
     {
         public ApplicationStatuses Status { get; set; }

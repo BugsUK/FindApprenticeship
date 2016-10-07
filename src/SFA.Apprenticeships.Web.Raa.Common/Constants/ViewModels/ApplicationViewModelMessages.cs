@@ -18,8 +18,9 @@
 
         public class CandidateApplicationFeedback
         {
-            public const string RequiredText = "You must provide feedback explaining why the candidate\'s application was not successful";
-            public const string LabelText = "What feedback would you like to share with the candidate?";
+            public const string RequiredErrorText = "You must provide feedback explaining why the candidate\'s application was not successful";
+            //public const string LabelText = "What feedback would you like to share with the candidate?";
+            public const string LabelText = " ";
         }
     }
 }

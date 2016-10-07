@@ -20,8 +20,13 @@
         </div>
 
         <p> You are about to inform this candidate that they have not been selected for the role of @Model.Vacancy.Title</p>
-        <h2 class="heading-medium">@Html.DisplayNameFor(model => model.CandidateFeedback)</h2>
-        @Html.TextAreaFor(m=>m.CandidateFeedback, new { @class = "width-all-1-1 form-textarea-medium", type = "text" })        
+        <h2 class="heading-medium">What feedback would you like to share with the candidate?</h2>
+
+        @Html.FormTextAreaFor(
+                m => m.CandidateApplicationFeedback,
+                containerHtmlAttributes: new { @class = "form-group-compound heading-small" },
+                controlHtmlAttributes: new { @class = "form-control form-textarea-medium", type = "text", autofocus = "autofocus", spellcheck = "true" })
+
         <section>
             <div class="form-group">
                 <br/>                
