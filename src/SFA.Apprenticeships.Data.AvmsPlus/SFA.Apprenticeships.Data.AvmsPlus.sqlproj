@@ -964,6 +964,8 @@
     <Build Include="dbo\Functions\fnGetCreatedDate.function.sql" />
     <Build Include="dbo\Functions\fnGetSubmittedDate.function.sql" />
     <Build Include="dbo\Functions\fnGetFirstSubmittedDate.function.sql" />
+    <Build Include="dbo\Tables\RegionalTeams.sql" />
+    <Build Include="dbo\Tables\RegionalTeamMappings.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
