@@ -199,7 +199,7 @@
 
             var metrics = new List<RegionalTeamMetrics>()
             {
-                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastAnglia },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastAnglia, TotalCount = 1 },
                 new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastMidlands },
                 new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.North },
                 new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.NorthWest },

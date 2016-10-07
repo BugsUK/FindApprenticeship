@@ -7,6 +7,7 @@ using DbVacancySummary = SFA.Apprenticeships.Infrastructure.Repositories.Sql.Sch
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
     using Common;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
@@ -155,7 +156,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             };
 
             var sql = $@"SELECT
-                        COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.Live,"WHEN")} THEN 1 END) AS LiveCount,
+                        COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.Live, "WHEN")} THEN 1 END) AS LiveCount,
                         COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.Submitted, "WHEN")} THEN 1 END) AS SubmittedCount,
                         COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.Rejected, "WHEN")} THEN 1 END) AS RejectedCount,
                         COUNT(CASE {GetFilterSql(VacanciesSummaryFilterTypes.ClosingSoon, "WHEN")} THEN 1 END) AS ClosingSoonCount,
@@ -214,11 +215,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
             if (query.OrderByField == VacancySummaryOrderByColumn.OrderByFilter)
             {
-                switch (query.Filter)
-                {
-                    case VacanciesSummaryFilterTypes.All:
-                        break;
-                }
+                orderByField = "dbo.GetSubmittedDate(v.VacancyID)";
             }
 
             var filterSql = GetFilterSql(query.Filter);
@@ -293,7 +290,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
         {
             var sqlParams = new
             {
-                VacancyStatuses = query.DesiredStatuses.Select(s => (int)s)
+                VacancyStatuses = query.DesiredStatuses.Select(s => (int)s),
+                query = query.SearchString
             };
 
             var sql = $@"SELECT
@@ -308,6 +306,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
                         JOIN	Employer e
                         ON		o.EmployerId = e.EmployerId
+                        JOIN	Provider p
+                        ON		p.ProviderID = v.ContractOwnerID
                         JOIN	ProviderSite s
                         ON      s.ProviderSiteId = o.ProviderSiteId
                         JOIN	RegionalTeamMappings t
@@ -315,14 +315,35 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         JOIN	RegionalTeams rt
                         ON		rt.Id = t.RegionalTeam_Id
                         WHERE   v.VacancyStatusId IN @VacancyStatuses
+                        AND  	(((@query IS NULL OR @query = ''))
+		                            OR (p.TradingName LIKE '%' + @query + '%')
+		                        )
                         GROUP BY rt.TeamName, rt.Id
                         ORDER BY rt.Id ASC
                         ";
 
-            var counts = _getOpenConnection.Query<RegionalTeamMetrics>(sql, sqlParams);
+            var counts = _getOpenConnection.Query<RegionalTeamMetrics>(sql, sqlParams).ToList();
 
-            // only one item returns from this query
-            return counts;
+            // fill in any blanks as the query won't return any all-zero regions
+            var expectedRegions = new[]
+            {
+                RegionalTeam.EastMidlands,
+                RegionalTeam.North,
+                RegionalTeam.NorthWest,
+                RegionalTeam.SouthEast,
+                RegionalTeam.SouthWest,
+                RegionalTeam.WestMidlands,
+                RegionalTeam.YorkshireAndHumberside,
+                RegionalTeam.EastAnglia
+            };
+
+            var fillItems = expectedRegions
+                                .Where(w => counts.All(a => a.RegionalTeam != w))
+                                .Select(s => new RegionalTeamMetrics() { RegionalTeam = s});
+
+            counts.AddRange(fillItems);
+            
+            return counts.OrderBy(o => o.RegionalTeam).ToList();
         }
 
 
@@ -370,8 +391,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     DateTime yesterdayFromDate;
                     var yesterdayToDate = DateTime.Now.Date;
 
-                    var dayOfWeek = (int) DateTime.Now.DayOfWeek;
-                    if (dayOfWeek < 2) yesterdayFromDate = DateTime.Now.AddDays((dayOfWeek + 2)*-1);
+                    var dayOfWeek = (int)DateTime.Now.DayOfWeek;
+                    if (dayOfWeek < 2) yesterdayFromDate = DateTime.Now.AddDays((dayOfWeek + 2) * -1);
                     else if (dayOfWeek == 2) yesterdayFromDate = DateTime.Now.AddDays(-3);
                     else yesterdayFromDate = DateTime.Now.AddDays(-1);
 
@@ -386,10 +407,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     {
                         moreToDate = DateTime.Now.AddDays(-3);
                     }
-                    else 
+                    else
                     {
                         moreToDate = DateTime.Now.AddDays(-1);
-;                   }
+                        ;
+                    }
 
                     filterSql.Append($@"{sqlFilterKeyword} dbo.GetSubmittedDate(v.VacancyID) < CAST('{moreToDate:yyyy-MM-dd 00:00:00}' AS DATETIME)");
                     break;

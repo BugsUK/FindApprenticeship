@@ -915,13 +915,30 @@
 
             var regionalTeamsMetrics =  _vacancyPostingService.GetRegionalTeamsMetrics(query);
 
-            if (vacancies.Count == 0 && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
+            if (string.IsNullOrEmpty(searchViewModel.Provider) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
             {
                 //No vacancies for current team selection. Redirect to metrics
                 searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
             }
 
-            var currentTeamMetrics = regionalTeamsMetrics.SingleOrDefault(s => s.RegionalTeam == regionalTeam);
+            RegionalTeamMetrics currentTeamMetrics = null;
+
+            if (string.IsNullOrEmpty(searchViewModel.Provider))
+            {
+                currentTeamMetrics = regionalTeamsMetrics.SingleOrDefault(s => s.RegionalTeam == regionalTeam);
+            }
+            else
+            {
+                currentTeamMetrics = new RegionalTeamMetrics()
+                {
+                    RegionalTeam = RegionalTeam.Other,
+                    TotalCount = regionalTeamsMetrics.Sum(s => s.TotalCount),
+                    ResubmittedCount = regionalTeamsMetrics.Sum(s => s.ResubmittedCount),
+                    SubmittedYesterdayCount = regionalTeamsMetrics.Sum(s => s.SubmittedYesterdayCount),
+                    SubmittedMoreThan48HoursCount = regionalTeamsMetrics.Sum(s => s.SubmittedMoreThan48HoursCount),
+                    SubmittedTodayCount = regionalTeamsMetrics.Sum(s => s.SubmittedTodayCount)
+                };
+            }
 
             var viewModel = new DashboardVacancySummariesViewModel
             {
