@@ -210,7 +210,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     orderByField = "v.ApplicationClosingDate";
                     break;
                 case VacancySummaryOrderByColumn.SubmissionCount:
-                    //orderByField = "";
+                    orderByField = "v.SubmissionCount";
                     break;
             }
 
@@ -253,7 +253,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
                             e.FullName AS EmployerName,
-                            p.TradingName as ProviderTradingName
+                            p.TradingName as ProviderTradingName,
+                            v.SubmissionCount
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId

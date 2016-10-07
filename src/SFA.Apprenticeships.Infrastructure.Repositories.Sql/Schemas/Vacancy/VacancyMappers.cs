@@ -400,7 +400,7 @@
                 .IgnoreMember(av => av.Duration)
                 .IgnoreMember(av => av.QAUserName)
                 .IgnoreMember(av => av.DateQAApproved)
-                .IgnoreMember(av => av.SubmissionCount)
+                .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)
                 .IgnoreMember(av => av.DateStartedToQA)
                 .IgnoreMember(av => av.DateSubmitted)
                 .IgnoreMember(av => av.QAUserName)
