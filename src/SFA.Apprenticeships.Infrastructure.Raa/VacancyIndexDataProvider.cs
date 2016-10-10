@@ -53,7 +53,7 @@
             var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber - 1, false, _desiredStatuses);
             var vacancyParties = _providerService.GetVacancyOwnerRelationships(vacancies.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
-            var providers = _providerService.GetProviders(vacancies.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
+            var providers = _providerService.GetProviders(vacancies.Select(v => v.ContractOwnerId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
             var categories = _referenceDataProvider.GetCategories().ToList();
             //TODO: workaround to have the indexing partially working. Should be done properly
             var apprenticeshipSummaries =
@@ -64,7 +64,7 @@
                         {
                             return ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
                                 employers[vacancyParties[v.VacancyOwnerRelationshipId].EmployerId],
-                                providers[v.ProviderId],
+                                providers[v.ContractOwnerId],
                                 categories, _logService);
                         }
                         catch (Exception ex)
@@ -82,7 +82,7 @@
                         {
                             return TraineeshipSummaryMapper.GetTraineeshipSummary(v,
                                 employers[vacancyParties[v.VacancyOwnerRelationshipId].EmployerId],
-                                providers[v.ProviderId],
+                                providers[v.ContractOwnerId],
                                 categories, _logService);
                         }
                         catch (Exception ex)

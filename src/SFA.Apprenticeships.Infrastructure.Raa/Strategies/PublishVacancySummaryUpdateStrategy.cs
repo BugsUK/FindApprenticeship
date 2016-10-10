@@ -55,7 +55,7 @@
                     var vacancySummary = _vacancyReadRepository.GetByIds(new List<int> { vacancy.VacancyId }).Single();
                     var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationships(new List<int> { vacancySummary.VacancyOwnerRelationshipId }, false).Single().Value;
                     var employer = _employerService.GetEmployers(new List<int> { vacancyOwnerRelationship.EmployerId }).Single();
-                    var providers = _providerService.GetProviders(new List<int> { vacancy.ProviderId }).Single();
+                    var providers = _providerService.GetProviders(new List<int> { vacancy.ContractOwnerId }).Single();
                     var categories = _referenceDataProvider.GetCategories().ToList();
 
                     if (vacancy.VacancyType == VacancyType.Apprenticeship)

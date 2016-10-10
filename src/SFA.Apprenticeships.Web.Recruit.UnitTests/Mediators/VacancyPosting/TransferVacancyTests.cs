@@ -18,7 +18,7 @@
             VacancyReferenceNumber = 1001,
             DeliveryOrganisationId = 200,
             VacancyManagerId = 200,
-            ProviderId = 20
+            ContractOwnerId = 20
         };
 
         private readonly VacancyOwnerRelationship _vacancyOwnerRelationship = new VacancyOwnerRelationship
@@ -61,7 +61,7 @@
             //Assert
             MockVacancyPostingService.Verify(mvps =>
             mvps.UpdateVacanciesWithNewProvider(It.Is<Vacancy>(v => v.DeliveryOrganisationId == vacancyTransferViewModel.ProviderSiteId &&
-            v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ProviderId == vacancyTransferViewModel.ProviderId && v.VacancyOwnerRelationshipId == _vacancyOwnerRelationship.VacancyOwnerRelationshipId)));
+            v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ContractOwnerId == vacancyTransferViewModel.ProviderId && v.VacancyOwnerRelationshipId == _vacancyOwnerRelationship.VacancyOwnerRelationshipId)));
         }
 
         [Test]
@@ -92,7 +92,7 @@
             //Assert
             MockVacancyPostingService.Verify(mvps =>
             mvps.UpdateVacanciesWithNewProvider(It.Is<Vacancy>(v => v.DeliveryOrganisationId == vacancyTransferViewModel.ProviderSiteId &&
-            v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ProviderId == vacancyTransferViewModel.ProviderId)));
+            v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ContractOwnerId == vacancyTransferViewModel.ProviderId)));
 
             MockProviderService.Verify(mps => mps.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vp => vp.ProviderSiteId == _vacancyOwnerRelationshipWithRelationship.ProviderSiteId)));
         }

@@ -77,7 +77,7 @@
             vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
             vacancy.Duration = 2;
             vacancy.DurationType = DurationType.Years;
             vacancy.ExpectedDuration = "2 years";
@@ -146,7 +146,7 @@
             vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
             vacancy.Status = VacancyStatus.Submitted;
@@ -189,7 +189,7 @@
             vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var entity = writeRepository.Create(vacancy);
             vacancy.VacancyId = entity.VacancyId;
@@ -222,7 +222,7 @@
             vacancy.UpdatedDateTime = null;
             vacancy.CreatedDateTime = DateTime.MinValue;
             vacancy.ClosingDate = DateTime.UtcNow.AddDays(2);
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             writeRepository.Create(vacancy);
 
@@ -299,17 +299,17 @@
             var vacancy1 = CreateValidDomainVacancy();
             vacancy1.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy1.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
-            vacancy1.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy1.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var vacancy2 = CreateValidDomainVacancy();
             vacancy2.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy2.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
-            vacancy2.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy2.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var vacancy3 = CreateValidDomainVacancy();
             vacancy3.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy3.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
-            vacancy3.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy3.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy1 = writeRepository.Create(vacancy1);
             vacancy2 = writeRepository.Create(vacancy2);
@@ -344,7 +344,7 @@
             vacancy.Address.County = null;
             vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
             
@@ -399,7 +399,7 @@
             vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
             vacancy.Duration = 2;
             vacancy.DurationType = DurationType.Years;
             vacancy.ExpectedDuration = "2 years";

@@ -46,7 +46,7 @@
                     {
                         ClosingDate = DateTime.Now,
                         DateSubmitted = DateTime.Now,
-                        ProviderId = ProviderId,
+                        ContractOwnerId = ProviderId,
                         Status = VacancyStatus.Submitted
                     }
                 });

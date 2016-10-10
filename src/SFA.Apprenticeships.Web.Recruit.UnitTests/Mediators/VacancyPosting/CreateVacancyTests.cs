@@ -373,7 +373,7 @@
                 && v.NumberOfPositions == numberOfPositions 
                 && v.VacancyType == VacancyType.Unknown 
                 && v.Address == address 
-                && v.ProviderId == providerId 
+                && v.ContractOwnerId == providerId 
                 && v.LocalAuthorityCode == localAuthorityCode
                 && v.EmployerWebsiteUrl == employerWebsiteUrl
                 && v.EmployerDescription == employerDescription

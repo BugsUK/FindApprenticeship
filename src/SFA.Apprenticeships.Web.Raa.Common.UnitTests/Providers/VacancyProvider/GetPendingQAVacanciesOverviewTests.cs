@@ -47,7 +47,7 @@
                 .With(v => v.DateSubmitted, submittedTodayDate)
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedSubmittedTodayCount).ToList();
 
             var vacanciesSubmittedYesterdayUpperBoundary = new Fixture().Build<Vacancy>()
@@ -55,14 +55,14 @@
                 .With(v => v.DateSubmitted, utcNow.Date.AddSeconds(-1))
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
             var vacanciesSubmittedYesterdayLowerBoundary = new Fixture().Build<Vacancy>()
                 .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, utcNow.Date.AddDays(-1))
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
 
             var submittedMoreThan48HoursDate = utcNow.AddHours(-48).AddSeconds(-1);
@@ -71,7 +71,7 @@
                 .With(v => v.DateSubmitted, submittedMoreThan48HoursDate)
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedSubmittedMoreThan48HoursCount).ToList();
 
             var resubmittedDate = utcNow.Date.AddDays(-1).AddSeconds(-1);
@@ -80,7 +80,7 @@
                 .With(v => v.DateSubmitted, resubmittedDate)
                 .With(v => v.SubmissionCount, 3)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedResubmittedCount).ToList();
 
             var vacancies = _vacanciesSubmittedToday;

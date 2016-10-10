@@ -305,7 +305,8 @@
                 IsEmployerLocationMainApprenticeshipLocation = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
                 Address = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation ? employer.Address : null,
-                ProviderId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
+                ContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
+                OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
                 EmployerDescription = vacancyMinimumData.EmployerDescription,
                 EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
@@ -336,7 +337,7 @@
                             vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;
                         }
 
-                        vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
+                        vacancy.ContractOwnerId = vacancyTransferViewModel.ProviderId;
                         vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
                         vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
                         _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
@@ -641,7 +642,7 @@
         private VacancyViewModel GetVacancyViewModelFrom(Vacancy vacancy)
         {
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
-            var provider = _providerService.GetProvider(vacancy.ProviderId);
+            var provider = _providerService.GetProvider(vacancy.ContractOwnerId);
             viewModel.Provider = provider.Convert();
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Some current vacancies have non-current vacancy parties
             if (vacancyOwnerRelationship != null)
@@ -1028,7 +1029,7 @@
             var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
                 vacancies);
 
-            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ProviderId)) : null;
+            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ContractOwnerId)) : null;
         }
 
         public void UnReserveVacancyForQA(int vacancyReferenceNumber)

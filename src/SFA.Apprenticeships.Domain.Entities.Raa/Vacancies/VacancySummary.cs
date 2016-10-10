@@ -44,7 +44,8 @@
         public VacancyType VacancyType { get; set; }
         public DateTime? UpdatedDateTime { get; set; }
         public PostalAddress Address { get; set; }
-        public int ProviderId { get; set; }
+        public int ContractOwnerId { get; set; }
+        public int OriginalContractOwnerId { get; set; }
         public RegionalTeam RegionalTeam { get; set; }
         public VacancyLocationType VacancyLocationType { get; set; }
 

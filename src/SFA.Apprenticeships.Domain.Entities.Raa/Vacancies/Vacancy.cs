@@ -87,7 +87,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 ContactDetailsComment = ContactDetailsComment,
                 VacancyType = VacancyType,
                 Address = Address,
-                ProviderId = ProviderId,
+                ContractOwnerId = ContractOwnerId,
+                OriginalContractOwnerId = OriginalContractOwnerId,
                 EditedInRaa = EditedInRaa
             };
         }
