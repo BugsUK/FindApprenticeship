@@ -26,7 +26,7 @@
 
         private readonly Vacancy _existingVacancy = new Vacancy()
         {
-            OwnerPartyId = 2
+            VacancyOwnerRelationshipId = 2
         };
 
         private readonly VacancyParty _vacancyParty = new VacancyParty

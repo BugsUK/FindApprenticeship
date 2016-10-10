@@ -946,8 +946,7 @@ WHERE VacancyId IN @Ids", new
 
             var sqlParams = new
             {
-                vacancySummary.VacancyId,
-                vacancySummary.OwnerPartyId
+                vacancySummary.VacancyId
             };
 
             var postcode = _getOpenConnection.Query<string>(sql, sqlParams).FirstOrDefault();
@@ -1557,7 +1556,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             {
                 VacancyId = record.VacancyId;
                 VacancyReferenceNumber = record.VacancyReferenceNumber;
-                OwnerPartyId = record.VacancyOwnerRelationshipId;
+                VacancyOwnerRelationshipId = record.VacancyOwnerRelationshipId;
                 Status = (VacancyStatus)record.VacancyStatusId;
                 _closingDate = record.ApplicationClosingDate;
 
@@ -1575,7 +1574,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             public int VacancyId { get; private set; }
             public int VacancyReferenceNumber { get; }
 
-            public int OwnerPartyId { get; private set; }
+            public int VacancyOwnerRelationshipId { get; private set; }
 
             private DateTime? _closingDate;
             public DateTime LiveClosingDate

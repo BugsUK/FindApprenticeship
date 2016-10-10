@@ -20,7 +20,6 @@
         public int? Duration { get; set; }
         public DateTime? ClosingDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }
-        public int OwnerPartyId { get; set; }
         public bool? OfflineVacancy { get; set; }
         public int OfflineApplicationClickThroughCount { get; set; }
         public DateTime? DateSubmitted { get; set; }

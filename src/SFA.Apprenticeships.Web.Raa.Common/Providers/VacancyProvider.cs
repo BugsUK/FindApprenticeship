@@ -140,7 +140,7 @@
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
             viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);
@@ -300,7 +300,7 @@
             {
                 VacancyGuid = vacancyMinimumData.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                OwnerPartyId = vacancyParty.VacancyPartyId,
+                VacancyOwnerRelationshipId = vacancyParty.VacancyPartyId,
                 Status = VacancyStatus.Draft,
                 IsEmployerLocationMainApprenticeshipLocation = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
@@ -643,7 +643,7 @@
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
             var provider = _providerService.GetProvider(vacancy.ProviderId);
             viewModel.Provider = provider.Convert();
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Some current vacancies have non-current vacancy parties
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);  // Some current vacancies have non-current vacancy parties
             if (vacancyParty != null)
             {
                 var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);  //Same with employers
@@ -924,9 +924,9 @@
 
             _vacancyPostingService.CreateVacancy(vacancy);
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, true);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, true);
             if (vacancyParty == null)
-                throw new Exception($"Vacancy Party {vacancy.OwnerPartyId} not found / no longer current");
+                throw new Exception($"Vacancy Party {vacancy.VacancyOwnerRelationshipId} not found / no longer current");
 
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
             var result = vacancyParty.Convert(employer);

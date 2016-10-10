@@ -150,7 +150,7 @@
             var vacancy = GetVacancy(viewModel);
             if (vacancy != null)
             {
-                vacancy.OwnerPartyId = vacancyParty.VacancyPartyId;
+                vacancy.VacancyOwnerRelationshipId = vacancyParty.VacancyPartyId;
                 vacancy.EmployerWebsiteUrl = vacancyParty.EmployerWebsiteUrl;
                 vacancy.EmployerDescription = vacancyParty.EmployerDescription;
                 if (viewModel.IsEmployerLocationMainApprenticeshipLocation != null)

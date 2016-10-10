@@ -64,7 +64,7 @@
             MockVacancyPostingService.Verify(
                 s =>
                     s.UpdateVacancy(
-                        It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Once);
+                        It.Is<Vacancy>(v => v.VacancyOwnerRelationshipId == vacancyPartyId)), Times.Once);
 
 
         }
@@ -117,7 +117,7 @@
             MockVacancyPostingService.Verify(
                 s =>
                     s.CreateVacancy(
-                        It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Never);
+                        It.Is<Vacancy>(v => v.VacancyOwnerRelationshipId == vacancyPartyId)), Times.Never);
         }
 
         [Test]

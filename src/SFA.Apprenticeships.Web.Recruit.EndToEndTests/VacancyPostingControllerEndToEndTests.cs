@@ -242,7 +242,7 @@
                 OfflineVacancy = false,
                 PersonalQualities = "personal qualities",
                 PossibleStartDate = DateTime.UtcNow.AddDays(100),
-                OwnerPartyId = 42,
+                VacancyOwnerRelationshipId = 42,
                 ShortDescription = "short description",
                 Status = status,
                 TrainingType = TrainingType.Standards,

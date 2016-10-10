@@ -96,7 +96,7 @@
                 DateQAApproved = DateTime.UtcNow.AddHours(-4),
                 Status = VacancyStatus.Live,
                 ClosingDate = DateTime.UtcNow.AddDays(10),
-                OwnerPartyId = 42,
+                VacancyOwnerRelationshipId = 42,
                 EmployerAnonymousName = "Anon Corp"
         };
         }

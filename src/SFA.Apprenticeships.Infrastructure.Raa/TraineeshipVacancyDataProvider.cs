@@ -44,7 +44,7 @@
                 return null;
             }
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false); // Some current vacancies have non-current vacancy parties
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false); // Some current vacancies have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
 
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);

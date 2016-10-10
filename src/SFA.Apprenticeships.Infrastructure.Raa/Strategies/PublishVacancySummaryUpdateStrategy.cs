@@ -53,7 +53,7 @@
                 if (vacancy.Status == VacancyStatus.Live)
                 {
                     var vacancySummary = _vacancyReadRepository.GetByIds(new List<int> { vacancy.VacancyId }).Single();
-                    var vacancyParty = _providerService.GetVacancyParties(new List<int> { vacancySummary.OwnerPartyId }, false).Single().Value;
+                    var vacancyParty = _providerService.GetVacancyParties(new List<int> { vacancySummary.VacancyOwnerRelationshipId }, false).Single().Value;
                     var employer = _employerService.GetEmployers(new List<int> { vacancyParty.EmployerId }).Single();
                     var providers = _providerService.GetProviders(new List<int> { vacancy.ProviderId }).Single();
                     var categories = _referenceDataProvider.GetCategories().ToList();

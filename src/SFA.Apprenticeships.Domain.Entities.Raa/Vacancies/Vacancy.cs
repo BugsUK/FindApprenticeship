@@ -36,7 +36,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 DesiredQualificationsComment = DesiredQualificationsComment,
                 FirstQuestion = FirstQuestion,
                 SecondQuestion = SecondQuestion,
-                OwnerPartyId = OwnerPartyId,
                 EmployerDescription = EmployerDescription,
                 EmployerWebsiteUrl = EmployerWebsiteUrl,
                 OfflineVacancy = OfflineVacancy,

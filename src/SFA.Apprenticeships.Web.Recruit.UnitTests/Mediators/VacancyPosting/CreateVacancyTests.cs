@@ -364,7 +364,7 @@
                 && v.VacancyReferenceNumber == vacancyReferenceNumber 
                 && v.Title == null 
                 && v.ShortDescription == null 
-                && v.OwnerPartyId == vacancyPartyId 
+                && v.VacancyOwnerRelationshipId == vacancyPartyId 
                 && v.Status == VacancyStatus.Draft 
                 && v.OfflineVacancy.HasValue == false
                 && v.OfflineApplicationUrl == null 
@@ -508,7 +508,7 @@
                 DateQAApproved = DateTime.UtcNow.AddHours(-4),
                 Status = VacancyStatus.Live,
                 ClosingDate = DateTime.UtcNow.AddDays(10),
-                OwnerPartyId = 42,
+                VacancyOwnerRelationshipId = 42,
                 EmployerAnonymousName = "Anon Corp",
                 Address = new PostalAddress(),
                 NumberOfPositions = 2,
