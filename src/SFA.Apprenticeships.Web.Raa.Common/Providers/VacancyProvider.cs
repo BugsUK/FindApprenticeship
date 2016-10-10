@@ -326,7 +326,7 @@
                         var existingVacancyOwnerRelationship =
                             _providerService.GetVacancyParty(vacancyOwnerRelationship.EmployerId,
                                 vacancyTransferViewModel.ProviderSiteId);
-                        if (existingVacancyOwnerRelationship == null)
+                        if (existingVacancyOwnerRelationship == null || existingVacancyOwnerRelationship.VacancyPartyId == 0)
                         {
                             vacancyOwnerRelationship.ProviderSiteId = vacancyTransferViewModel.ProviderSiteId;
                             _providerService.SaveVacancyParty(vacancyOwnerRelationship);

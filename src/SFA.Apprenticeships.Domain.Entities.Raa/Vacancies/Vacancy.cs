@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
             return new Vacancy
             {
                 VacancyReferenceNumber = VacancyReferenceNumber,
+                VacancyOwnerRelationshipId = VacancyOwnerRelationshipId,
                 VacancyGuid = VacancyGuid,
                 Title = Title,
                 TitleComment = TitleComment,
