@@ -77,7 +77,7 @@
 
         public IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords)
         {
-            return _getVacancySummaryStrategies.GetByStatus(query, out totalRecords);
+            return _getVacancySummaryStrategies.GetWithStatus(query, out totalRecords);
         }
 
         public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)

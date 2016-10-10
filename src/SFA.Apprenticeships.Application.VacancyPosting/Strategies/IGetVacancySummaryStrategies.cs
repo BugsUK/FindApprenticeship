@@ -6,7 +6,7 @@
 
     public interface IGetVacancySummaryStrategies
     {
-        IList<VacancySummary> GetByStatus(VacancySummaryByStatusQuery query, out int totalRecords);
+        IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords);
 
         IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds);
 

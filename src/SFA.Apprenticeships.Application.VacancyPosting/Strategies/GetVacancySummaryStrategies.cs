@@ -18,9 +18,9 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
             _vacancySummaryService = vacancySummaryService;
         }
 
-        public IList<VacancySummary> GetByStatus(VacancySummaryByStatusQuery query, out int totalRecords)
+        public IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords)
         {
-            return _vacancySummaryService.GetByStatus(query, out totalRecords);
+            return _vacancySummaryService.GetWithStatus(query, out totalRecords);
         }
 
         public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)
