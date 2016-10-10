@@ -11,6 +11,10 @@ namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
         OrderByFilter, //default setting
         Title,
         Employer,
-        Applications
+        Applications,
+        Provider,
+        DateSubmitted,
+        ClosingDate,
+        SubmissionCount
     }
 }

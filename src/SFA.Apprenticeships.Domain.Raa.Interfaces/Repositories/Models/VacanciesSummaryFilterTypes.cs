@@ -14,6 +14,12 @@
         Draft,
         NewApplications,
         Withdrawn,
-        Completed
+        Completed,
+
+        // for manage dashboard
+        SubmittedToday,
+        SubmittedYesterday,
+        SubmittedMoreThan48Hours,
+        Resubmitted
     }
 }

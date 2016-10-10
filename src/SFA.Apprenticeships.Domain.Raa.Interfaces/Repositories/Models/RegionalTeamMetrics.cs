@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 {
-    using Domain.Entities.Raa.Reference;
+    using Entities.Raa.Reference;
 
     public class RegionalTeamMetrics
     {

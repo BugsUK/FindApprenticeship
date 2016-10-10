@@ -249,6 +249,8 @@
                 .IgnoreMember(av => av.EmployerName)
                 .IgnoreMember(av => av.ApplicationOrClickThroughCount)
                 .IgnoreMember(av => av.NewApplicationCount)
+                .IgnoreMember(av => av.ProviderTradingName)
+                .IgnoreMember(av => av.CreatedDate)
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
@@ -338,6 +340,8 @@
                 .IgnoreMember(av => av.EmployerName)
                 .IgnoreMember(av => av.ApplicationOrClickThroughCount)
                 .IgnoreMember(av => av.NewApplicationCount)
+                .IgnoreMember(av => av.ProviderTradingName)
+                .IgnoreMember(av => av.CreatedDate)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
@@ -400,7 +404,7 @@
                 .IgnoreMember(av => av.Duration)
                 .IgnoreMember(av => av.QAUserName)
                 .IgnoreMember(av => av.DateQAApproved)
-                .IgnoreMember(av => av.SubmissionCount)
+                .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)
                 .IgnoreMember(av => av.DateStartedToQA)
                 .IgnoreMember(av => av.DateSubmitted)
                 .IgnoreMember(av => av.QAUserName)
@@ -417,6 +421,10 @@
                 .MapMemberFrom(av => av.EmployerName, v => v.EmployerName)
                 .MapMemberFrom(av => av.ApplicationOrClickThroughCount, v => v.ApplicantCount)
                 .MapMemberFrom(av => av.NewApplicationCount, v => v.NewApplicantCount)
+                .MapMemberFrom(av => av.ProviderTradingName, v => v.ProviderTradingName)
+                .MapMemberFrom(av => av.DateSubmitted, v => v.DateSubmitted)
+                .MapMemberFrom(av => av.DateFirstSubmitted, v => v.DateFirstSubmitted)
+                .MapMemberFrom(av => av.CreatedDate, v => v.CreatedDate)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress

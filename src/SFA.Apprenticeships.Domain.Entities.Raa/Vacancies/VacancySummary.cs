@@ -74,5 +74,7 @@
         public int? ApplicationOrClickThroughCount { get; set; }
 
         public int NewApplicationCount { get; set; }
+        public string ProviderTradingName { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
