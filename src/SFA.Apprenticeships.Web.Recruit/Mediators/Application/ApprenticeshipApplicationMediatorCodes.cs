@@ -69,6 +69,7 @@
         public class SendUnsuccessfulDecision
         {
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok";
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.FailedValidation";
         }
 
         public class ConfirmRevertToInProgress

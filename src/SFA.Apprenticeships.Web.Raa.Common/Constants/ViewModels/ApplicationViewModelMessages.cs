@@ -19,7 +19,8 @@
         public class CandidateApplicationFeedback
         {
             public const string RequiredErrorText = "You must provide feedback explaining why the candidate\'s application was not successful";
-            //public const string LabelText = "What feedback would you like to share with the candidate?";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "The candidate application feedback " + Whitelists.FreetextWhitelist.ErrorText;
             public const string LabelText = " ";
         }
     }
