@@ -384,9 +384,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     break;
                 case VacanciesSummaryFilterTypes.SubmittedToday:
                     var todayFromDate = DateTime.Now.Date;
-                    var todaToDate = DateTime.Now.AddDays(1).Date;
+                    var todayToDate = DateTime.Now.AddDays(1).Date;
                     filterSql.Append($@"{sqlFilterKeyword} dbo.GetSubmittedDate(v.VacancyID) >= CAST('{todayFromDate:yyyy-MM-dd 00:00:00}' AS DATETIME)
-                                        AND     dbo.GetSubmittedDate(v.VacancyID) < CAST('{todaToDate:yyyy-MM-dd 00:00:00}' AS DATETIME)");
+                                        AND     dbo.GetSubmittedDate(v.VacancyID) < CAST('{todayToDate:yyyy-MM-dd 00:00:00}' AS DATETIME)");
                     break;
                 case VacanciesSummaryFilterTypes.SubmittedYesterday:
                     DateTime yesterdayFromDate;
@@ -404,15 +404,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     DateTime moreToDate;
 
                     var moreDayOfWeek = (int)DateTime.Now.DayOfWeek;
-                    if (moreDayOfWeek == 2)
-                    {
+                    if (moreDayOfWeek == 0)
+                        moreToDate = DateTime.Now.AddDays(-2);
+                    else if (moreDayOfWeek == 2 || moreDayOfWeek == 1)
                         moreToDate = DateTime.Now.AddDays(-3);
-                    }
                     else
-                    {
                         moreToDate = DateTime.Now.AddDays(-1);
-                        ;
-                    }
 
                     filterSql.Append($@"{sqlFilterKeyword} dbo.GetSubmittedDate(v.VacancyID) < CAST('{moreToDate:yyyy-MM-dd 00:00:00}' AS DATETIME)");
                     break;
