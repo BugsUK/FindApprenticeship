@@ -194,15 +194,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok, viewModel);
         }
 
-        public MediatorResponse<ApplicationSelectionViewModel> SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
             var viewModel = _applicationProvider.SendSuccessfulDecision(applicationSelectionViewModel);
-
-            var candidateName = applicationViewModel.ApplicantDetails.Name;
-            var message = string.Format(ApplicationViewModelMessages.SuccessfulDecisionFormat, candidateName);
-
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok, viewModel, message, UserMessageLevel.Info);
+            var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(viewModel);
+            applicationViewModel.ConfirmationStatusSentMessage = ApplicationViewModelMessages.UnsuccessfulDecisionFormat;
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok, applicationViewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
@@ -218,17 +215,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok, viewModel);
         }
 
-        public MediatorResponse<ApplicationSelectionViewModel> SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var applicationViewModel =
-                _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
             var viewModel = _applicationProvider.SendUnsuccessfulDecision(applicationSelectionViewModel);
-
-            var candidateName = applicationViewModel.ApplicantDetails.Name;
-            var message = string.Format(ApplicationViewModelMessages.UnsuccessfulDecisionFormat, candidateName);
-
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, viewModel,
-                message, UserMessageLevel.Info);
+            var applicationViewModel =
+                _applicationProvider.GetApprenticeshipApplicationViewModel(viewModel);
+            applicationViewModel.ConfirmationStatusSentMessage = ApplicationViewModelMessages.UnsuccessfulDecisionFormat;
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, applicationViewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)

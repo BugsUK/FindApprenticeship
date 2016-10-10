@@ -5,12 +5,11 @@
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Send unsuccessful decision";
-    
+
 }
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, FormMethod.Post))
 {
-    @*@Html.Partial("ValidationSummary", ViewData.ModelState)*@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ApplicationSelection.ApplicationId)
     @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
@@ -29,10 +28,10 @@
                 m => m.CandidateApplicationFeedback,
                 containerHtmlAttributes: new { @class = "form-group-compound heading-small" },
                 controlHtmlAttributes: new { @class = "form-control form-textarea-medium", type = "text", autofocus = "autofocus", spellcheck = "true" })
-        
+
         <section>
             <div class="form-group">
-                <br/>                
+                <br />
                 <button type="submit" class="button" name="SendUnsuccessfulDecision" value="SendUnsuccessfulDecision">
                     Confirm and send
                 </button>

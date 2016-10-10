@@ -8,7 +8,7 @@
 
     public class ApplicationViewModel
     {
-        public string ConfirmationSentMessage { get; set; }
+        public string ConfirmationStatusSentMessage { get; set; }
         public ApplicationStatuses Status { get; set; }
 
         public DateTime DateCreated { get; set; }
