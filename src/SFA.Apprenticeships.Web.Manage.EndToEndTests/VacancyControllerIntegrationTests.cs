@@ -632,7 +632,7 @@
                 PossibleStartDate = DateTime.UtcNow.AddDays(100),
                 // TODO: DOMAIN: add owner etc.
                 /*
-                VacancyParty = new OwnerParty
+                VacancyOwnerRelationship = new VacancyOwnerRelationship
                 {
                     DateCreated = DateTime.UtcNow,
                     Description = "employer link",

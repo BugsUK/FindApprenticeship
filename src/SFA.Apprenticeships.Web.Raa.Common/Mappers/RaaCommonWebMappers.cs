@@ -42,7 +42,7 @@
                 .ForMember(dest => dest.ValidationSourceKeyValue, opt => opt.Ignore())
                 .ForMember(dest => dest.DateValidated, opt => opt.Ignore());
             Mapper.CreateMap<Employer, EmployerViewModel>();
-            Mapper.CreateMap<VacancyParty, VacancyPartyViewModel>()
+            Mapper.CreateMap<VacancyOwnerRelationship, VacancyOwnerRelationshipViewModel>()
                 .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositions, opt => opt.Ignore())
@@ -69,7 +69,7 @@
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
                 .ForMember(dest => dest.Ukprn, opt => opt.Ignore())
-                .ForMember(dest => dest.OwnerParty, opt => opt.Ignore())
+                .ForMember(dest => dest.VacancyOwnerRelationship, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationAddresses, opt => opt.Ignore())
                 .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
 

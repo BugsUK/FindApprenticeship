@@ -2,13 +2,12 @@
 {
     using Application.Interfaces;
     using Common;
-    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-    using Entities;
     using System.Collections.Generic;
     using System.Linq;
+    using VacancyOwnerRelationship = Domain.Entities.Raa.Parties.VacancyOwnerRelationship;
 
-    public class VacancyPartyRepository : IVacancyPartyReadRepository, IVacancyPartyWriteRepository
+    public class VacancyOwnerRelationshipRepository : IVacancyOwnerRelationshipReadRepository, IVacancyOwnerRelationshipWriteRepository
     {
         private enum VacancyOwnerRelationshipStatusTypes
         {
@@ -20,14 +19,14 @@
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
 
-        public VacancyPartyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
+        public VacancyOwnerRelationshipRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
             _logger = logger;
         }
 
-        public VacancyParty GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
+        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
         {
             const string sql = @"
                 SELECT * FROM dbo.VacancyOwnerRelationship
@@ -42,40 +41,40 @@
                 StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
             };
 
-            var vacancyParty = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault();
+            var vacancyOwnerRelationship = _getOpenConnection.Query<Entities.VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault();
 
-            return _mapper.Map<VacancyOwnerRelationship, VacancyParty>(vacancyParty);
+            return _mapper.Map<Entities.VacancyOwnerRelationship, VacancyOwnerRelationship>(vacancyOwnerRelationship);
         }
 
-        public IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds, bool currentOnly = true)
+        public IEnumerable<VacancyOwnerRelationship> GetByIds(IEnumerable<int> vacancyOwnerRelationshipIds, bool currentOnly = true)
         {
-            var vacancyPartyIdsArray = vacancyPartyIds.Distinct().ToArray();
+            var vacancyOwnerRelationshipIdsArray = vacancyOwnerRelationshipIds.Distinct().ToArray();
 
-            _logger.Debug("Calling database to get vacancy parties with Ids={0}", string.Join(", ", vacancyPartyIdsArray));
+            _logger.Debug("Calling database to get vacancy parties with Ids={0}", string.Join(", ", vacancyOwnerRelationshipIdsArray));
 
             string sql = @"
                 SELECT *
                 FROM   dbo.VacancyOwnerRelationship
-                WHERE  VacancyOwnerRelationshipId IN @VacancyPartyIds
+                WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds
 " + (currentOnly ? "AND StatusTypeId = @StatusTypeId" : "");
 
-            List<VacancyOwnerRelationship> vacancyOwnerRelationships = new List<VacancyOwnerRelationship>();
-            var splitVacancyPartyIdsArray = DbHelpers.SplitIds(vacancyPartyIdsArray);
-            foreach (int[] ids in splitVacancyPartyIdsArray)
+            List<Entities.VacancyOwnerRelationship> vacancyOwnerRelationships = new List<Entities.VacancyOwnerRelationship>();
+            var splitVacancyOwnerRelationshipIdsArray = DbHelpers.SplitIds(vacancyOwnerRelationshipIdsArray);
+            foreach (int[] ids in splitVacancyOwnerRelationshipIdsArray)
             {
                 var sqlParams = new
                 {
-                    VacancyPartyIds = ids,
+                    VacancyOwnerRelationshipIds = ids,
                     StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
                 };
-                var vacancyParties = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams);
+                var vacancyParties = _getOpenConnection.Query<Entities.VacancyOwnerRelationship>(sql, sqlParams);
                 vacancyOwnerRelationships.AddRange(vacancyParties);
             }
 
-            return _mapper.Map<IEnumerable<VacancyOwnerRelationship>, IEnumerable<VacancyParty>>(vacancyOwnerRelationships);
+            return _mapper.Map<IEnumerable<Entities.VacancyOwnerRelationship>, IEnumerable<VacancyOwnerRelationship>>(vacancyOwnerRelationships);
         }
 
-        public IEnumerable<VacancyParty> GetByProviderSiteId(int providerSiteId)
+        public IEnumerable<VacancyOwnerRelationship> GetByProviderSiteId(int providerSiteId)
         {
             const string sql = @"
                 SELECT * FROM dbo.VacancyOwnerRelationship
@@ -88,14 +87,14 @@
                 StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
             };
 
-            var vacancyParties = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams);
+            var vacancyParties = _getOpenConnection.Query<Entities.VacancyOwnerRelationship>(sql, sqlParams);
 
-            return _mapper.Map<IEnumerable<VacancyOwnerRelationship>, IEnumerable<VacancyParty>>(vacancyParties);
+            return _mapper.Map<IEnumerable<Entities.VacancyOwnerRelationship>, IEnumerable<VacancyOwnerRelationship>>(vacancyParties);
         }
 
-        public VacancyParty Save(VacancyParty vacancyParty)
+        public VacancyOwnerRelationship Save(VacancyOwnerRelationship vacancyOwnerRelationship)
         {
-            var dbVacancyOwnerRelationship = _mapper.Map<VacancyParty, VacancyOwnerRelationship>(vacancyParty);
+            var dbVacancyOwnerRelationship = _mapper.Map<VacancyOwnerRelationship, Entities.VacancyOwnerRelationship>(vacancyOwnerRelationship);
 
             dbVacancyOwnerRelationship.StatusTypeId = (int)VacancyOwnerRelationshipStatusTypes.Live;
             dbVacancyOwnerRelationship.EditedInRaa = true;
@@ -117,7 +116,7 @@
                     dbVacancyOwnerRelationship.StatusTypeId
                 };
 
-                var existingVacancyOwnerRelationship = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams).Single();
+                var existingVacancyOwnerRelationship = _getOpenConnection.Query<Entities.VacancyOwnerRelationship>(sql, sqlParams).Single();
 
                 dbVacancyOwnerRelationship.ContractHolderIsEmployer = existingVacancyOwnerRelationship.ContractHolderIsEmployer;
                 dbVacancyOwnerRelationship.ManagerIsEmployer = existingVacancyOwnerRelationship.ManagerIsEmployer;
@@ -131,7 +130,7 @@
             return GetByIds(new[] { dbVacancyOwnerRelationship.VacancyOwnerRelationshipId }).Single();
         }
 
-        public bool IsADeletedVacancyParty(int providerSiteId, int employerId)
+        public bool IsADeletedVacancyOwnerRelationship(int providerSiteId, int employerId)
         {
             const string sql = @"
                 SELECT StatusTypeId FROM dbo.VacancyOwnerRelationship
@@ -144,10 +143,10 @@
                 EmployerId = employerId
             };
 
-            return _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault()?.StatusTypeId == (int)VacancyOwnerRelationshipStatusTypes.Deleted;
+            return _getOpenConnection.Query<Entities.VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault()?.StatusTypeId == (int)VacancyOwnerRelationshipStatusTypes.Deleted;
         }
 
-        public void ResurrectVacancyParty(int providerSiteId, int employerId)
+        public void ResurrectVacancyOwnerRelationship(int providerSiteId, int employerId)
         {
             const string sql = @"
                 UPDATE dbo.VacancyOwnerRelationship SET StatusTypeId = @StatusTypeId

@@ -1,17 +1,17 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.VacancyParty
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.VacancyOwnerRelationship
 {
     using NUnit.Framework;
     using Schemas.dbo;
 
     [TestFixture]
     [Parallelizable]
-    public class VacancyPartyMappersTests
+    public class VacancyOwnerRelationshipMappersTests
     {
         [Test]
         public void DoMappersMapEverything()
         {
             // Arrange
-            var mapper = new VacancyPartyMappers();
+            var mapper = new VacancyOwnerRelationshipMappers();
 
             // Act
             mapper.Initialise();

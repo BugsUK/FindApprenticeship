@@ -6,7 +6,7 @@
     {
         public string Ukprn { get; set; }
         public Guid VacancyGuid { get; set; }
-        public int VacancyPartyId { get; set; }
+        public int VacancyOwnerRelationshipId { get; set; }
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
         public int? NumberOfPositions { get; set; }
         public string EmployerWebsiteUrl { get; set; }

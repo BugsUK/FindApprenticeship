@@ -73,8 +73,8 @@
             var result = vacancyPostingController.ConfirmEmployer(providerSiteId, edsUrn, vacancyGuid, false, null);
             result.Should().BeOfType<ViewResult>();
             var view = result as ViewResult;
-            view.Model.Should().BeOfType<VacancyPartyViewModel>();
-            var viewModel = view.Model as VacancyPartyViewModel;
+            view.Model.Should().BeOfType<VacancyOwnerRelationshipViewModel>();
+            var viewModel = view.Model as VacancyOwnerRelationshipViewModel;
             viewModel.IsEmployerLocationMainApprenticeshipLocation.Should().NotHaveValue();
             viewModel.NumberOfPositions.Should().NotHaveValue();
         }
@@ -179,11 +179,11 @@
             vacancy.AdditionalLocationInformation.Should().Be(additionalLocationInformation);*/
         }
 
-        private static VacancyPartyViewModel GetProviderSiteEmployerLinkViewModel(int employerId,
+        private static VacancyOwnerRelationshipViewModel GetProviderSiteEmployerLinkViewModel(int employerId,
             bool isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, int providerSiteId,
             Guid vacancyGuid)
         {
-            return new VacancyPartyViewModel
+            return new VacancyOwnerRelationshipViewModel
             {
                 EmployerDescription = "desciption",
                 Employer = new EmployerViewModel

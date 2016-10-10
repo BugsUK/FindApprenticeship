@@ -86,18 +86,18 @@
             _vacancySummaryService = vacancySummaryService;
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
+        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId, true);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
-            var vacancyPartyViewModel = vacancyParty.Convert(employer);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancyOwnerRelationshipId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
+            var vacancyOwnerRelationshipViewModel = vacancyOwnerRelationship.Convert(employer);
 
             if (existingVacancy != null)
             {
                 var vacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(existingVacancy);
-                vacancyViewModel.OwnerParty = vacancyPartyViewModel;
+                vacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationshipViewModel;
                 vacancyViewModel.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
                 vacancyViewModel.LocationAddresses = GetLocationsAddressViewModel(existingVacancy);
@@ -106,7 +106,7 @@
 
             return new NewVacancyViewModel
             {
-                OwnerParty = vacancyPartyViewModel,
+                VacancyOwnerRelationship = vacancyOwnerRelationshipViewModel,
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions,
                 AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
@@ -140,11 +140,11 @@
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);
-            viewModel.OwnerParty = vacancyParty.Convert(employer);
+            viewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer);
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
             viewModel.VacancyGuid = vacancy.VacancyGuid;
@@ -239,12 +239,12 @@
 
         public VacancyMinimumData UpdateVacancy(VacancyMinimumData vacancyMinimumData)
         {
-            var vacancyParty =
-                _providerService.GetVacancyParty(vacancyMinimumData.VacancyPartyId, true);
-            if (vacancyParty == null)
-                throw new Exception($"Vacancy Party {vacancyMinimumData.VacancyPartyId} not found / no longer current");
+            var vacancyOwnerRelationship =
+                _providerService.GetVacancyOwnerRelationship(vacancyMinimumData.VacancyOwnerRelationshipId, true);
+            if (vacancyOwnerRelationship == null)
+                throw new Exception($"Vacancy Party {vacancyMinimumData.VacancyOwnerRelationshipId} not found / no longer current");
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
 
             if (!employer.Address.GeoPoint.IsValid())
             {
@@ -287,8 +287,8 @@
         public void CreateVacancy(VacancyMinimumData vacancyMinimumData)
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-            var vacancyParty = _providerService.GetVacancyParty(vacancyMinimumData.VacancyPartyId, true);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancyMinimumData.VacancyOwnerRelationshipId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
             var provider = _providerService.GetProvider(vacancyMinimumData.Ukprn);
 
             if (!employer.Address.GeoPoint.IsValid())
@@ -300,7 +300,7 @@
             {
                 VacancyGuid = vacancyMinimumData.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                VacancyOwnerRelationshipId = vacancyParty.VacancyPartyId,
+                VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId,
                 Status = VacancyStatus.Draft,
                 IsEmployerLocationMainApprenticeshipLocation = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
@@ -322,18 +322,18 @@
                     if (vacancy != null)
                     {
                         var vacancyOwnerRelationship =
-                            _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);
+                            _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);
                         var existingVacancyOwnerRelationship =
-                            _providerService.GetVacancyParty(vacancyOwnerRelationship.EmployerId,
+                            _providerService.GetVacancyOwnerRelationship(vacancyOwnerRelationship.EmployerId,
                                 vacancyTransferViewModel.ProviderSiteId);
-                        if (existingVacancyOwnerRelationship == null || existingVacancyOwnerRelationship.VacancyPartyId == 0)
+                        if (existingVacancyOwnerRelationship == null || existingVacancyOwnerRelationship.VacancyOwnerRelationshipId == 0)
                         {
                             vacancyOwnerRelationship.ProviderSiteId = vacancyTransferViewModel.ProviderSiteId;
-                            _providerService.SaveVacancyParty(vacancyOwnerRelationship);
+                            _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
                         }
                         else
                         {
-                            vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyPartyId;
+                            vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;
                         }
 
                         vacancy.ProviderId = vacancyTransferViewModel.ProviderId;
@@ -380,12 +380,12 @@
         {
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
 
-            var vacancyParty =
-                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId, true);
-            if (vacancyParty == null)
-                throw new Exception($"Vacancy Party {newVacancyViewModel.OwnerParty.VacancyPartyId} not found / no longer current");
+            var vacancyOwnerRelationship =
+                _providerService.GetVacancyOwnerRelationship(newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId, true);
+            if (vacancyOwnerRelationship == null)
+                throw new Exception($"Vacancy Party {newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId} not found / no longer current");
 
-            //var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+            //var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
 
             //if (!employer.Address.GeoPoint.IsValid())
             //{
@@ -643,12 +643,12 @@
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
             var provider = _providerService.GetProvider(vacancy.ProviderId);
             viewModel.Provider = provider.Convert();
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, false);  // Some current vacancies have non-current vacancy parties
-            if (vacancyParty != null)
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Some current vacancies have non-current vacancy parties
+            if (vacancyOwnerRelationship != null)
             {
-                var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);  //Same with employers
-                viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
-                var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
+                var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);  //Same with employers
+                viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy.EmployerAnonymousName);
+                var providerSite = _providerService.GetProviderSite(vacancyOwnerRelationship.ProviderSiteId);
                 viewModel.ProviderSite = providerSite.Convert();
             }
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
@@ -872,7 +872,7 @@
             return viewModel;
         }
 
-        public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)
+        public VacancyOwnerRelationshipViewModel CloneVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
@@ -924,12 +924,12 @@
 
             _vacancyPostingService.CreateVacancy(vacancy);
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.VacancyOwnerRelationshipId, true);
-            if (vacancyParty == null)
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, true);
+            if (vacancyOwnerRelationship == null)
                 throw new Exception($"Vacancy Party {vacancy.VacancyOwnerRelationshipId} not found / no longer current");
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
-            var result = vacancyParty.Convert(employer);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
+            var result = vacancyOwnerRelationship.Convert(employer);
             result.VacancyGuid = vacancy.VacancyGuid;
 
             return result;
@@ -1358,11 +1358,11 @@
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
-            var vacancyParty = _providerService.GetVacancyParty(viewModel.OwnerParty.VacancyPartyId, false);
-            if (vacancyParty == null)
-                throw new Exception($"Vacancy Party {viewModel.OwnerParty.VacancyPartyId} not found / no longer current");
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId, false);
+            if (vacancyOwnerRelationship == null)
+                throw new Exception($"Vacancy Party {viewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId} not found / no longer current");
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
 
             //update properties
             vacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
@@ -1459,11 +1459,11 @@
         {
             var addresses = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>);
 
-            var vacancyParty =
-                _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
-            viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
+            var vacancyOwnerRelationship =
+                _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
+            viewModel.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId;
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
 
             employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
 

@@ -192,7 +192,7 @@
     <Compile Include="Services\Location\GeoCodingServiceTests.cs" />
     <Compile Include="Services\Location\LocationSearchServiceTests.cs" />
     <Compile Include="Services\Location\PostalAddressSearchServiceTests.cs" />
-    <Compile Include="Services\Provider\GetVacancyPartiesTests.cs" />
+    <Compile Include="Services\Provider\GetVacancyOwnerRelationshipsTests.cs" />
     <Compile Include="Services\Provider\ProviderServiceBuilder.cs" />
     <Compile Include="Services\Provider\GetProviderTests.cs" />
     <Compile Include="SiteMap\SiteMapVacancyHelperTests.cs" />

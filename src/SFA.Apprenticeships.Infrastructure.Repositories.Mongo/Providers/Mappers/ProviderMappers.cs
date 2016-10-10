@@ -8,8 +8,8 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<VacancyParty, MongoVacancyParty>();
-            Mapper.CreateMap<MongoVacancyParty, VacancyParty>();
+            Mapper.CreateMap<VacancyOwnerRelationship, MongoVacancyOwnerRelationship>();
+            Mapper.CreateMap<MongoVacancyOwnerRelationship, VacancyOwnerRelationship>();
         }
     }
 }

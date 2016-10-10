@@ -6,6 +6,6 @@
 
     public class ManageVacancyTransferResultsViewModel
     {
-        public IList<IDictionary<Vacancy, VacancyParty>> Vacancies { get; set; }
+        public IList<IDictionary<Vacancy, VacancyOwnerRelationship>> Vacancies { get; set; }
     }
 }

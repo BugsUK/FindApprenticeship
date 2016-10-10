@@ -1508,7 +1508,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
         {
             var sql = @"SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
                         FROM   dbo.Vacancy
@@ -1520,14 +1520,14 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
 
             var vacancyCollections = new List<dynamic>();
-            var partyIds = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
-            var splitVacancyPartyIds = DbHelpers.SplitIds(partyIds);
-            foreach (var splitVacancyPartyId in splitVacancyPartyIds)
+            var relationshipIds = vacancyOwnerRelationshipIds as int[] ?? vacancyOwnerRelationshipIds.ToArray();
+            var splitVacancyOwnerRelationshipIds = DbHelpers.SplitIds(relationshipIds);
+            foreach (var splitVacancyOwnerRelationshipId in splitVacancyOwnerRelationshipIds)
             {
                 IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(sql,
                     new
                     {
-                        Ids = splitVacancyPartyId,
+                        Ids = splitVacancyOwnerRelationshipId,
                         providerId,
                         providerSiteIds
                     });

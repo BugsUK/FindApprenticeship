@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Address.En
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PostalAddress()
         {
-            //VacancyParties = new HashSet<Vacancy.VacancyParty>();
+            //VacancyParties = new HashSet<Vacancy.VacancyOwnerRelationship>();
         }
 
         public int PostalAddressId { get; set; }

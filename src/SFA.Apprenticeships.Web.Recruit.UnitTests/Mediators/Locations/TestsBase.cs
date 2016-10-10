@@ -40,7 +40,7 @@
                 new VacancyQuestionsViewModelServerValidator(),
                 new VacancyQuestionsViewModelClientValidator(),
                 new VacancyViewModelValidator(), 
-                new VacancyPartyViewModelValidator(),
+                new VacancyOwnerRelationshipViewModelValidator(),
                 new EmployerSearchViewModelServerValidator(),
                 new LocationSearchViewModelServerValidator(),
                 new Mock<ILocationsProvider>().Object,

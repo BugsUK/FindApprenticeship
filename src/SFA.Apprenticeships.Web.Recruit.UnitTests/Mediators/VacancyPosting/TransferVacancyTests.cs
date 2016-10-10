@@ -21,17 +21,17 @@
             ProviderId = 20
         };
 
-        private readonly VacancyParty _vacancyParty = new VacancyParty
+        private readonly VacancyOwnerRelationship _vacancyOwnerRelationship = new VacancyOwnerRelationship
         {
             EmployerId = 10,
-            VacancyPartyId = 101,
+            VacancyOwnerRelationshipId = 101,
             ProviderSiteId = 105
         };
 
-        private readonly VacancyParty _vacancyPartyWithRelationship = new VacancyParty
+        private readonly VacancyOwnerRelationship _vacancyOwnerRelationshipWithRelationship = new VacancyOwnerRelationship
         {
             EmployerId = 10,
-            VacancyPartyId = 102,
+            VacancyOwnerRelationshipId = 102,
             ProviderSiteId = 12
         };
 
@@ -51,7 +51,7 @@
                         vacancyTransferViewModel.VacancyReferenceNumbers.FirstOrDefault()))
                 .Returns(_existingVacancy);
 
-            MockProviderService.Setup(ps => ps.GetVacancyParty(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyParty);
+            MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyOwnerRelationship);
 
             var vacancyPostingProvider = GetVacancyPostingProvider();
 
@@ -61,7 +61,7 @@
             //Assert
             MockVacancyPostingService.Verify(mvps =>
             mvps.UpdateVacanciesWithNewProvider(It.Is<Vacancy>(v => v.DeliveryOrganisationId == vacancyTransferViewModel.ProviderSiteId &&
-            v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ProviderId == vacancyTransferViewModel.ProviderId && v.VacancyOwnerRelationshipId == _vacancyParty.VacancyPartyId)));
+            v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ProviderId == vacancyTransferViewModel.ProviderId && v.VacancyOwnerRelationshipId == _vacancyOwnerRelationship.VacancyOwnerRelationshipId)));
         }
 
         [Test]
@@ -80,9 +80,9 @@
                         vacancyTransferViewModel.VacancyReferenceNumbers.FirstOrDefault()))
                 .Returns(_existingVacancy);
 
-            MockProviderService.Setup(ps => ps.GetVacancyParty(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyParty);
+            MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyOwnerRelationship);
 
-            MockProviderService.Setup(ps => ps.GetVacancyParty(_vacancyParty.EmployerId, vacancyTransferViewModel.ProviderSiteId)).Returns((VacancyParty)null);
+            MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_vacancyOwnerRelationship.EmployerId, vacancyTransferViewModel.ProviderSiteId)).Returns((VacancyOwnerRelationship)null);
 
             var vacancyPostingProvider = GetVacancyPostingProvider();
 
@@ -94,7 +94,7 @@
             mvps.UpdateVacanciesWithNewProvider(It.Is<Vacancy>(v => v.DeliveryOrganisationId == vacancyTransferViewModel.ProviderSiteId &&
             v.VacancyManagerId == vacancyTransferViewModel.ProviderSiteId && v.ProviderId == vacancyTransferViewModel.ProviderId)));
 
-            MockProviderService.Verify(mps => mps.SaveVacancyParty(It.Is<VacancyParty>(vp => vp.ProviderSiteId == _vacancyPartyWithRelationship.ProviderSiteId)));
+            MockProviderService.Verify(mps => mps.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vp => vp.ProviderSiteId == _vacancyOwnerRelationshipWithRelationship.ProviderSiteId)));
         }
     }
 }

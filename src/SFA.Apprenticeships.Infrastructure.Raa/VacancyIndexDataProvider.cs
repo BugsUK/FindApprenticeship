@@ -51,7 +51,7 @@
         {
             //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
             var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber - 1, false, _desiredStatuses);
-            var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
+            var vacancyParties = _providerService.GetVacancyOwnerRelationships(vacancies.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
             var providers = _providerService.GetProviders(vacancies.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
             var categories = _referenceDataProvider.GetCategories().ToList();
