@@ -184,7 +184,7 @@
     <Compile Include="Constants\ViewModels\ProviderUserSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
     <Compile Include="Constants\ViewModels\ShareApplicationsViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\VacancyPartyViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\VacancyOwnerRelationshipViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
@@ -288,7 +288,7 @@
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\ShareApplicationsViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\VerifyEmailViewModelValidator.cs" />
-    <Compile Include="Validators\Provider\VacancyPartyViewModelValidator.cs" />
+    <Compile Include="Validators\Provider\VacancyOwnerRelationshipViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\Report\ReportParametersDateRangeValidator.cs" />
@@ -347,7 +347,7 @@
     <Compile Include="ViewModels\ProviderUser\VacanciesSummarySearchViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VacanciesSummaryViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VerifyEmailViewModel.cs" />
-    <Compile Include="ViewModels\Provider\VacancyPartyViewModel.cs" />
+    <Compile Include="ViewModels\Provider\VacancyOwnerRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />

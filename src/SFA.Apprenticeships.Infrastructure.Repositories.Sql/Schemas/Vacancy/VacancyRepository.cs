@@ -946,8 +946,7 @@ WHERE VacancyId IN @Ids", new
 
             var sqlParams = new
             {
-                vacancySummary.VacancyId,
-                vacancySummary.OwnerPartyId
+                vacancySummary.VacancyId
             };
 
             var postcode = _getOpenConnection.Query<string>(sql, sqlParams).FirstOrDefault();
@@ -1509,7 +1508,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
         {
             var sql = @"SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
                         FROM   dbo.Vacancy
@@ -1521,14 +1520,14 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
 
             var vacancyCollections = new List<dynamic>();
-            var partyIds = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
-            var splitVacancyPartyIds = DbHelpers.SplitIds(partyIds);
-            foreach (var splitVacancyPartyId in splitVacancyPartyIds)
+            var relationshipIds = vacancyOwnerRelationshipIds as int[] ?? vacancyOwnerRelationshipIds.ToArray();
+            var splitVacancyOwnerRelationshipIds = DbHelpers.SplitIds(relationshipIds);
+            foreach (var splitVacancyOwnerRelationshipId in splitVacancyOwnerRelationshipIds)
             {
                 IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(sql,
                     new
                     {
-                        Ids = splitVacancyPartyId,
+                        Ids = splitVacancyOwnerRelationshipId,
                         providerId,
                         providerSiteIds
                     });
@@ -1557,7 +1556,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             {
                 VacancyId = record.VacancyId;
                 VacancyReferenceNumber = record.VacancyReferenceNumber;
-                OwnerPartyId = record.VacancyOwnerRelationshipId;
+                VacancyOwnerRelationshipId = record.VacancyOwnerRelationshipId;
                 Status = (VacancyStatus)record.VacancyStatusId;
                 _closingDate = record.ApplicationClosingDate;
 
@@ -1575,7 +1574,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             public int VacancyId { get; private set; }
             public int VacancyReferenceNumber { get; }
 
-            public int OwnerPartyId { get; private set; }
+            public int VacancyOwnerRelationshipId { get; private set; }
 
             private DateTime? _closingDate;
             public DateTime LiveClosingDate

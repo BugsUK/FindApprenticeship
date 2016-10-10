@@ -95,7 +95,7 @@
     <Compile Include="Repositories\IApiUserRepository.cs" />
     <Compile Include="Repositories\IProviderRepository.cs" />
     <Compile Include="Repositories\IVacancyLocationRepository.cs" />
-    <Compile Include="Repositories\IVacancyPartyRepository.cs" />
+    <Compile Include="Repositories\IVacancyOwnerRelationshipRepository.cs" />
     <Compile Include="Repositories\IVacancyReadRepository.cs" />
     <Compile Include="Repositories\IEmployerRepository.cs" />
     <Compile Include="Repositories\IProviderUserRepository.cs" />

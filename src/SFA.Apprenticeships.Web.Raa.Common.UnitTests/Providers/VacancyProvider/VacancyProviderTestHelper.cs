@@ -43,7 +43,7 @@
                 .Returns(true);
 
             var providerService = new Mock<IProviderService>();
-            providerService.Setup(ps => ps.GetVacancyParty(It.IsAny<int>(), true)).Returns(new VacancyParty());
+            providerService.Setup(ps => ps.GetVacancyOwnerRelationship(It.IsAny<int>(), true)).Returns(new VacancyOwnerRelationship());
             providerService.Setup(ps => ps.GetProviderSite(It.IsAny<int>()))
                 .Returns(new ProviderSite { Address = new PostalAddress() });
 

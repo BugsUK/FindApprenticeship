@@ -41,17 +41,17 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="vacancyPartyIds"></param>
+        /// <param name="vacancyOwnerRelationshipIds"></param>
         /// <param name="providerId"></param>
-        /// <returns>VacancyPartyId => IVacancyIdStatusAndClosingDate</returns>
-        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds);
+        /// <returns>VacancyOwnerRelationshipId => IVacancyIdStatusAndClosingDate</returns>
+        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="vacancyPartyIds"></param>
+        /// <param name="vacancyOwnerRelationshipIds"></param>
         /// <returns>VacancyPartId => VacancyLocation</returns>
-        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
+        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyOwnerRelationshipIds);
 
         Vacancy UpdateVacanciesWithNewProvider(Vacancy vacancies);
 		

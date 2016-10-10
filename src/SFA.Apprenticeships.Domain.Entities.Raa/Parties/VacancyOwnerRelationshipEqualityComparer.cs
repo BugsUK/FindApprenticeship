@@ -2,15 +2,15 @@
 {
     using System.Collections.Generic;
 
-    public class VacancyPartyEqualityComparer : IEqualityComparer<VacancyParty>
+    public class VacancyOwnerRelationshipEqualityComparer : IEqualityComparer<VacancyOwnerRelationship>
     {
-        public bool Equals(VacancyParty x, VacancyParty y)
+        public bool Equals(VacancyOwnerRelationship x, VacancyOwnerRelationship y)
         {
             if (x == null && y == null) return true;
             return x?.EmployerId == y?.EmployerId;
         }
 
-        public int GetHashCode(VacancyParty obj)
+        public int GetHashCode(VacancyOwnerRelationship obj)
         {
             return obj.EmployerId;
         }

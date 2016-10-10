@@ -183,7 +183,7 @@
             var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
 
             var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).Where(v => (v.VacancyManagerId != null && ownedProviderSites.Contains(v.VacancyManagerId.Value)) || (v.DeliveryOrganisationId != null && ownedProviderSites.Contains(v.DeliveryOrganisationId.Value))).ToDictionary(v => v.VacancyId, v => v);
-            var vacancyOwnerRelationships = _providerService.GetVacancyParties(vacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
+            var vacancyOwnerRelationships = _providerService.GetVacancyOwnerRelationships(vacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyOwnerRelationships.Values.Select(vor => vor.EmployerId)).ToDictionary(e => e.EmployerId, e => e);
 
             //Restrict to only the applications for vacancies owned by the logged in user
@@ -254,8 +254,8 @@
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
             viewModel.Vacancy.EmployerName = employer.Name;
@@ -266,8 +266,8 @@
         private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
             viewModel.Vacancy.EmployerName = employer.Name;

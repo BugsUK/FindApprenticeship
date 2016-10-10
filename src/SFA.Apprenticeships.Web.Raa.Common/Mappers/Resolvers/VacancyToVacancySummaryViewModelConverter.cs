@@ -27,7 +27,7 @@
                 VacancyType = source.VacancyType,
                 Status = source.Status,
                 Title = source.Title,
-                OwnerPartyId = source.OwnerPartyId,
+                VacancyOwnerRelationshipId = source.VacancyOwnerRelationshipId,
                 EmployerName = source.EmployerName,
                 Location = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address),
                 OfflineVacancy = source.OfflineVacancy,

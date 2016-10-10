@@ -33,9 +33,9 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
             return _vacancyReadRepository.GetByOwnerPartyIds(ownerPartyIds);
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
         {
-            return _vacancyReadRepository.GetMinimalVacancyDetails(vacancyPartyIds, providerId, providerSiteIds);
+            return _vacancyReadRepository.GetMinimalVacancyDetails(vacancyOwnerRelationshipIds, providerId, providerSiteIds);
         }
 
         public IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query)

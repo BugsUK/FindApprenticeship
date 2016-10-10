@@ -221,7 +221,7 @@ WriteLiteral(">");
 
             
             #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-                                                                                                 Write(Model.NewVacancyViewModel.OwnerParty.Employer.Name);
+                                                                                                 Write(Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.Name);
 
             
             #line default

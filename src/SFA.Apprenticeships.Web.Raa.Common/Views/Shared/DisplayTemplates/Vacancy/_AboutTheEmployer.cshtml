@@ -12,17 +12,17 @@
     <div class="grid-wrapper">
         <div class="grid">
             <h3 class="bold-small">Employer</h3>
-            <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.OwnerParty.Employer.Name</p>
+            <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.Name</p>
         </div>
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">
                         Description
-                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
                     </h3>
-                    <p id="vacancy-employer-description" class="@Model.NewVacancyViewModel.OwnerParty.EmployerDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.OwnerParty.EmployerDescription))</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
+                    <p id="vacancy-employer-description" class="@Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription))</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                 </div>
             </div>
         </div>
@@ -38,19 +38,19 @@
         }
         <div class="@gridClass">
             <div class="inner-block-padr">
-                @if (Common.IsValidUrl(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl))
+                @if (Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl))
                 {
-                    var employerWebsiteUri = new UriBuilder(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl).Uri;
+                    var employerWebsiteUri = new UriBuilder(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl).Uri;
                     <div class="editable-item">
                         <h3 class="bold-small">
                             Website
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
                         </h3>
                         <a itemprop="url" href="@employerWebsiteUri"
                            id="vacancy-employer-website"
                            target="_blank"
-                           title="@Model.NewVacancyViewModel.OwnerParty.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl</a>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                           title="@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                     </div>
                 }
 

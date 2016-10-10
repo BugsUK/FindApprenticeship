@@ -8,7 +8,7 @@
 
         int VacancyReferenceNumber { get; }
 
-        int OwnerPartyId { get; }
+        int VacancyOwnerRelationshipId { get; }
 
         VacancyStatus Status { get; }
 

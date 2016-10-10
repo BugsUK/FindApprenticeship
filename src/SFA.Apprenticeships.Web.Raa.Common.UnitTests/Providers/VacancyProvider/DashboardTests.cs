@@ -41,7 +41,7 @@
             mapper.Setup(m => m.Map<VacancySummary, VacancySummaryViewModel>(It.IsAny<VacancySummary>()))
                 .Returns(new VacancySummaryViewModel
                 {
-                    OwnerPartyId = employerId,
+                    VacancyOwnerRelationshipId = employerId,
                     VacancyId = 0
                 });
             

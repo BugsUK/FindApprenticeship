@@ -27,7 +27,7 @@
             bool expectValid)
         {
             // Arrange.
-            var viewModel = new VacancyPartyViewModel
+            var viewModel = new VacancyOwnerRelationshipViewModel
             {
                 EmployerWebsiteUrl = websiteUrl,
                 EmployerDescription = "populated"
@@ -35,7 +35,7 @@
             string uriString = null;
 
             // Act.
-            var validator = new VacancyPartyViewModelValidator();
+            var validator = new VacancyOwnerRelationshipViewModelValidator();
             Action uriAction = () => { uriString = new UriBuilder(viewModel.EmployerWebsiteUrl).Uri.ToString(); };
 
             // Assert.
@@ -67,14 +67,14 @@
             bool expectValid)
         {
             // Arrange.
-            var viewModel = new VacancyPartyViewModel
+            var viewModel = new VacancyOwnerRelationshipViewModel
             {
                 EmployerWebsiteUrl = "http://www.valid.com",
                 EmployerDescription = description
             };
 
             // Act.
-            var validator = new VacancyPartyViewModelValidator();
+            var validator = new VacancyOwnerRelationshipViewModelValidator();
 
             // Assert.
             if (expectValid)

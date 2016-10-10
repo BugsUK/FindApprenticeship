@@ -17,7 +17,7 @@
 
     [TestFixture]
     [Parallelizable]
-    public class GetVacancyPartyViewModelsTests : TestBase
+    public class GetVacancyOwnerRelationshipViewModelsTests : TestBase
     {
         private const int PageSize = 10;
 
@@ -48,14 +48,14 @@
             var vacancyParties = BuildFakeVacancyParties(employers, unactivatedEmployerCount);
 
             var pageableVacancyParties = new Fixture()
-                .Build<Pageable<VacancyParty>>()
+                .Build<Pageable<VacancyOwnerRelationship>>()
                 .With(each => each.Page, vacancyParties)
                 .Create();
 
             Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == providerSiteId;
 
             MockProviderService.Setup(mock => mock
-                .GetVacancyParties(It.Is(matchingSearchRequest), pageNumber, PageSize))
+                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), pageNumber, PageSize))
                 .Returns(pageableVacancyParties);
 
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
@@ -67,7 +67,7 @@
             var provider = GetProviderProvider();
 
             // Act.
-            var viewModel = provider.GetVacancyPartyViewModels(providerSiteId);
+            var viewModel = provider.GetVacancyOwnerRelationshipViewModels(providerSiteId);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -101,14 +101,14 @@
             var vacancyParties = BuildFakeVacancyParties(employers, unactivatedEmployerCount);
 
             var pageableVacancyParties = new Fixture()
-                .Build<Pageable<VacancyParty>>()
+                .Build<Pageable<VacancyOwnerRelationship>>()
                 .With(each => each.Page, vacancyParties)
                 .Create();
 
             Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == searchViewModel.ProviderSiteId;
 
             MockProviderService.Setup(mock => mock
-                .GetVacancyParties(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
+                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
                 .Returns(pageableVacancyParties);
 
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
@@ -120,7 +120,7 @@
             var provider = GetProviderProvider();
 
             // Act.
-            var viewModel = provider.GetVacancyPartyViewModels(searchViewModel);
+            var viewModel = provider.GetVacancyOwnerRelationshipViewModels(searchViewModel);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -155,14 +155,14 @@
             var vacancyParties = BuildFakeVacancyParties(employers, unactivatedEmployerCount);
 
             var pageableVacancyParties = new Fixture()
-                .Build<Pageable<VacancyParty>>()
+                .Build<Pageable<VacancyOwnerRelationship>>()
                 .With(each => each.Page, vacancyParties)
                 .Create();
 
             Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == searchViewModel.ProviderSiteId;
 
             MockProviderService.Setup(mock => mock
-                .GetVacancyParties(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
+                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
                 .Returns(pageableVacancyParties);
 
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
@@ -174,7 +174,7 @@
             var provider = GetProviderProvider();
 
             // Act.
-            var viewModel = provider.GetVacancyPartyViewModels(searchViewModel);
+            var viewModel = provider.GetVacancyOwnerRelationshipViewModels(searchViewModel);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -214,14 +214,14 @@
             var vacancyParties = BuildFakeVacancyParties(employers, unactivatedEmployerCount);
 
             var pageableVacancyParties = new Fixture()
-                .Build<Pageable<VacancyParty>>()
+                .Build<Pageable<VacancyOwnerRelationship>>()
                 .With(each => each.Page, vacancyParties)
                 .Create();
 
             Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == searchViewModel.ProviderSiteId;
 
             MockProviderService.Setup(mock => mock
-                .GetVacancyParties(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
+                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
                 .Returns(pageableVacancyParties);
 
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
@@ -233,7 +233,7 @@
             var provider = GetProviderProvider();
 
             // Act.
-            var viewModel = provider.GetVacancyPartyViewModels(searchViewModel);
+            var viewModel = provider.GetVacancyOwnerRelationshipViewModels(searchViewModel);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -248,20 +248,20 @@
             viewModel.Location.Should().NotBeEmpty();
         }
 
-        private static IEnumerable<VacancyParty> BuildFakeVacancyParties(IReadOnlyList<Employer> employers, int unactivatedEmployerCount)
+        private static IEnumerable<VacancyOwnerRelationship> BuildFakeVacancyParties(IReadOnlyList<Employer> employers, int unactivatedEmployerCount)
         {
             var vacancyParties = new Fixture()
-                .CreateMany<VacancyParty>(PageSize)
+                .CreateMany<VacancyOwnerRelationship>(PageSize)
                 .ToArray();
 
             var random = new Random();
 
             // Assign each vacancy party a random employer.
-            foreach (var vacancyParty in vacancyParties)
+            foreach (var vacancyOwnerRelationship in vacancyParties)
             {
                 var employerIndex = random.Next(PageSize);
 
-                vacancyParty.EmployerId = employers[employerIndex].EmployerId;
+                vacancyOwnerRelationship.EmployerId = employers[employerIndex].EmployerId;
             }
 
             // Assign 'unactivated' employers to vacancy parties.

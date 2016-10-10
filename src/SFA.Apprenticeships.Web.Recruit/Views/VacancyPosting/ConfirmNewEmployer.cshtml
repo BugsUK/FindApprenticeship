@@ -1,4 +1,4 @@
-﻿@model VacancyPartyViewModel
+﻿@model VacancyOwnerRelationshipViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 @using SFA.Apprenticeships.Web.Recruit.Constants
@@ -17,7 +17,7 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmNewEmployer, FormMethod.Post))
 {
-    @Html.DisplayFor(m => m, VacancyPartyViewModel.PartialView)
+    @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
 
     <div class="grid grid-1-1">
         <button class="button">Save description and link to employer</button>

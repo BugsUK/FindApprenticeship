@@ -2,7 +2,7 @@
 {
     using Web.Common.Constants;
 
-    public class VacancyPartyViewModelMessages
+    public class VacancyOwnerRelationshipViewModelMessages
     {
         public static class EmployerDescription
         {

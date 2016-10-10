@@ -24,8 +24,8 @@
             const int providerSiteId = 2;
             const string edsurn = "edsurn";
 
-            ProviderProvider.Setup(pp => pp.GetVacancyPartyViewModel(providerSiteId, edsurn))
-                .Returns(new VacancyPartyViewModel
+            ProviderProvider.Setup(pp => pp.GetVacancyOwnerRelationshipViewModel(providerSiteId, edsurn))
+                .Returns(new VacancyOwnerRelationshipViewModel
                 {
                     Employer = new EmployerViewModel
                     {
@@ -47,8 +47,8 @@
             const int providerSiteId = 2;
             const string edsurn = "edsurn";
 
-            ProviderProvider.Setup(pp => pp.GetVacancyPartyViewModel(providerSiteId, edsurn))
-                .Returns(new VacancyPartyViewModel
+            ProviderProvider.Setup(pp => pp.GetVacancyOwnerRelationshipViewModel(providerSiteId, edsurn))
+                .Returns(new VacancyOwnerRelationshipViewModel
                 {
                     Employer = new EmployerViewModel
                     {
@@ -74,8 +74,8 @@
             const int providerSiteId = 2;
             const string edsurn = "edsurn";
 
-            ProviderProvider.Setup(pp => pp.GetVacancyPartyViewModel(providerSiteId, edsurn))
-                .Returns(new VacancyPartyViewModel
+            ProviderProvider.Setup(pp => pp.GetVacancyOwnerRelationshipViewModel(providerSiteId, edsurn))
+                .Returns(new VacancyOwnerRelationshipViewModel
                 {
                     Employer = new EmployerViewModel
                     {
@@ -91,7 +91,7 @@
             var mediatorResponse = mediator.GetEmployer(providerSiteId, edsurn, Guid.NewGuid(), null, null);
 
             mediatorResponse.AssertMessage(VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress,
-                VacancyPartyViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
+                VacancyOwnerRelationshipViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
         }
 
         [Test]
@@ -101,8 +101,8 @@
             const int providerSiteId = 2;
             const string edsurn = "edsurn";
 
-            ProviderProvider.Setup(pp => pp.GetVacancyPartyViewModel(providerSiteId, edsurn))
-                .Returns(new VacancyPartyViewModel
+            ProviderProvider.Setup(pp => pp.GetVacancyOwnerRelationshipViewModel(providerSiteId, edsurn))
+                .Returns(new VacancyOwnerRelationshipViewModel
                 {
                     Employer = new EmployerViewModel
                     {

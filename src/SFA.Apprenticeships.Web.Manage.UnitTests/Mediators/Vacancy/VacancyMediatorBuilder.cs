@@ -21,7 +21,7 @@
         private readonly Mock<IProviderQAProvider> _providerQaProvider = new Mock<IProviderQAProvider>();
         private readonly LocationSearchViewModelServerValidator _locationSearchViewModelServerValidator = new LocationSearchViewModelServerValidator();
         private readonly Mock<ILocationsProvider> _locationsProvider = new Mock<ILocationsProvider>();
-        private readonly VacancyPartyViewModelValidator _vacancyPartyViewModelValidator = new VacancyPartyViewModelValidator();
+        private readonly VacancyOwnerRelationshipViewModelValidator _vacancyOwnerRelationshipViewModelValidator = new VacancyOwnerRelationshipViewModelValidator();
 
         private readonly TrainingDetailsViewModelServerValidator _trainingDetailsViewModelServerValidator = new TrainingDetailsViewModelServerValidator();
 
@@ -30,7 +30,7 @@
             return new VacancyMediator(_vacancyProvider.Object, _vacancyViewModelValidator.Object,
                 _vacancySummaryViewModelServerValidator,
                 _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator,
-                _vacancyRequirementsProspectsViewModelServerValidator, _vacancyPartyViewModelValidator,
+                _vacancyRequirementsProspectsViewModelServerValidator, _vacancyOwnerRelationshipViewModelValidator,
                 _providerQaProvider.Object, _locationSearchViewModelServerValidator, _locationsProvider.Object, _trainingDetailsViewModelServerValidator);
         }
 

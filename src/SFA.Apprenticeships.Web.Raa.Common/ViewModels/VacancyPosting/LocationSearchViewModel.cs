@@ -59,7 +59,7 @@
         [Display(Name = LocationSearchViewModelMessages.AdditionalLocationInformationComment.LabelText)]
         public string AdditionalLocationInformationComment { get; set; }
 
-        public int VacancyPartyId { get; set; }
+        public int VacancyOwnerRelationshipId { get; set; }
 
         public int AutoSaveTimeoutInSeconds { get; set; }
     }

@@ -34,23 +34,23 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         IEnumerable<ProviderSite> SearchProviderSites(ProviderSiteSearchParameters searchParameters);
 
-        VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly);
+        VacancyOwnerRelationship GetVacancyOwnerRelationship(int vacancyOwnerRelationshipId, bool currentOnly);
 
-        VacancyParty GetVacancyParty(int employerId, int providerSiteId);
+        VacancyOwnerRelationship GetVacancyOwnerRelationship(int employerId, int providerSiteId);
 
-        IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);
+        IReadOnlyDictionary<int, VacancyOwnerRelationship> GetVacancyOwnerRelationships(IEnumerable<int> vacancyOwnerRelationshipIds, bool currentOnly);
 
-        VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
+        VacancyOwnerRelationship GetVacancyOwnerRelationship(int providerSiteId, string edsUrn);
 
-        bool IsADeletedVacancyParty(int providerSiteId, string edsUrn);
+        bool IsADeletedVacancyOwnerRelationship(int providerSiteId, string edsUrn);
 
-        void ResurrectVacancyParty(int providerSiteId, string edsUrn);
+        void ResurrectVacancyOwnerRelationship(int providerSiteId, string edsUrn);
 
-        VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
+        VacancyOwnerRelationship SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship);
 
-        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
+        IEnumerable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(int providerSiteId);
 
-        Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);
+        Pageable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(EmployerSearchRequest request, int currentPage, int pageSize);
 
         Provider CreateProvider(Provider provider);
 

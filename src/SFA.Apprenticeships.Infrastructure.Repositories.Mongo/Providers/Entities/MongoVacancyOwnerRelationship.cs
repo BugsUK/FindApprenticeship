@@ -4,13 +4,13 @@
     using Domain.Entities.Raa.Parties;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class MongoVacancyParty : VacancyParty
+    public class MongoVacancyOwnerRelationship : VacancyOwnerRelationship
     {
         [BsonId]
         public Guid Id
         {
-            get { return VacancyPartyGuid; }
-            set { VacancyPartyGuid = value; }
+            get { return VacancyOwnerRelationshipGuid; }
+            set { VacancyOwnerRelationshipGuid = value; }
         }
     }
 }
