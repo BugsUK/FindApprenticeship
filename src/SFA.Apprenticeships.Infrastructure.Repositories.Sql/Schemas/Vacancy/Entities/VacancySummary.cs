@@ -34,5 +34,13 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public int? NewApplicantCount { get; set; }
         public int? ApplicantCount { get; set; }
+
+        public string ProviderTradingName { get; set; }
+
+        public DateTime DateSubmitted { get; set; }
+        public DateTime DateFirstSubmitted { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public int SubmissionCount { get; set; }
     }
 }

@@ -1270,6 +1270,10 @@
     <None Include="Scripts\Data\dbo.Organisation.Upsert.sql" />
     <Build Include="Security\db_View_Reader.sql" />
     <Build Include="Security\db_SSIS_Role.sql" />
+    <Build Include="dbo\Tables\RegionalTeams.sql" />
+    <Build Include="dbo\Tables\RegionalTeams.sql" />
+    <None Include="Scripts\Data\dbo.RegionalTeams.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.RegionalTeamMappings.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

@@ -940,214 +940,85 @@
             var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
             var regionalTeam = agencyUser.RegionalTeam;
 
-            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
+            var orderByField = string.IsNullOrEmpty(searchViewModel.OrderByField)
+                ? VacancySummaryOrderByColumn.OrderByFilter
+                : (VacancySummaryOrderByColumn)
+                Enum.Parse(typeof(VacancySummaryOrderByColumn), searchViewModel.OrderByField);
 
-            vacancies = SearchVacancySummaries(searchViewModel, vacancies);
-
-            var utcNow = _dateTimeService.UtcNow;
-
-            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
-            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
-
-            var submittedYesterday =
-                vacancies.Where(v => IsVacancySubmittedYesterday(v, utcNow)).ToList();
-
-            var submittedMoreThan48Hours =
-                vacancies.Where(v => IsVacancySubmittedMoreThan48HrsAgo(v, utcNow)).ToList();
-
-            var regionalTeamsMetrics = GetRegionalTeamsMetrics(vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted);
-
-            if (!IsSearch(searchViewModel))
+            var query = new VacancySummaryByStatusQuery()
             {
-                //Only filter by regional team if not a search
-                vacancies = vacancies.Where(v => v.RegionalTeam == regionalTeam).ToList();
-                submittedToday = submittedToday.Where(v => v.RegionalTeam == regionalTeam).ToList();
-                submittedYesterday = submittedYesterday.Where(v => v.RegionalTeam == regionalTeam).ToList();
-                submittedMoreThan48Hours = submittedMoreThan48Hours.Where(v => v.RegionalTeam == regionalTeam).ToList();
-                resubmitted = resubmitted.Where(v => v.RegionalTeam == regionalTeam).ToList();
-            }
+                PageSize = 0,
+                RequestedPage = 1,
+                Filter = searchViewModel.FilterType,
+                OrderByField = orderByField,
+                SearchString = searchViewModel.Provider,
+                DesiredStatuses = new []{ VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
+                Order = searchViewModel.Order,
+                RegionalTeamName = regionalTeam
+            };
 
-            if (vacancies.Count == 0)
+            int totalRecords;
+            var vacancies = _vacancyPostingService.GetWithStatus(query, out totalRecords);
+
+            var regionalTeamsMetrics =  _vacancyPostingService.GetRegionalTeamsMetrics(query);
+
+            if (string.IsNullOrEmpty(searchViewModel.Provider) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
             {
                 //No vacancies for current team selection. Redirect to metrics
                 searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
             }
 
-            if (string.IsNullOrEmpty(searchViewModel.OrderByField))
-            {
-                switch (searchViewModel.FilterType)
-                {
-                    case DashboardVacancySummaryFilterTypes.SubmittedToday:
-                        vacancies = submittedToday.OrderBy(v => v.DateFirstSubmitted).ToList();
-                        break;
-                    case DashboardVacancySummaryFilterTypes.SubmittedYesterday:
-                        vacancies = submittedYesterday.OrderBy(v => v.DateFirstSubmitted).ToList();
-                        break;
-                    case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
-                        vacancies = submittedMoreThan48Hours;
-                        break;
-                    case DashboardVacancySummaryFilterTypes.Resubmitted:
-                        vacancies = resubmitted.OrderBy(v => v.DateFirstSubmitted).ToList();
-                        break;
-                }
-            }
+            RegionalTeamMetrics currentTeamMetrics = null;
 
-            var providerMap = _providerService.GetProviders(vacancies.Select(v => v.ProviderId)).ToDictionary(p => p.ProviderId, p => p);
+            if (string.IsNullOrEmpty(searchViewModel.Provider))
+            {
+                currentTeamMetrics = regionalTeamsMetrics.SingleOrDefault(s => s.RegionalTeam == regionalTeam);
+            }
+            else
+            {
+                currentTeamMetrics = new RegionalTeamMetrics()
+                {
+                    RegionalTeam = RegionalTeam.Other,
+                    TotalCount = regionalTeamsMetrics.Sum(s => s.TotalCount),
+                    ResubmittedCount = regionalTeamsMetrics.Sum(s => s.ResubmittedCount),
+                    SubmittedYesterdayCount = regionalTeamsMetrics.Sum(s => s.SubmittedYesterdayCount),
+                    SubmittedMoreThan48HoursCount = regionalTeamsMetrics.Sum(s => s.SubmittedMoreThan48HoursCount),
+                    SubmittedTodayCount = regionalTeamsMetrics.Sum(s => s.SubmittedTodayCount)
+                };
+            }
 
             var viewModel = new DashboardVacancySummariesViewModel
             {
                 SearchViewModel = searchViewModel,
-                SubmittedTodayCount = submittedToday.Count,
-                SubmittedYesterdayCount = submittedYesterday.Count,
-                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
-                ResubmittedCount = resubmitted.Count,
-                Vacancies = GetOrderedVacancySummaries(searchViewModel, vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.ProviderId]))).ToList(),
+                SubmittedTodayCount = currentTeamMetrics?.SubmittedTodayCount ?? 0,
+                SubmittedYesterdayCount = currentTeamMetrics?.SubmittedYesterdayCount ?? 0,
+                SubmittedMoreThan48HoursCount = currentTeamMetrics?.SubmittedMoreThan48HoursCount ?? 0,
+                ResubmittedCount = currentTeamMetrics?.ResubmittedCount ?? 0,
+                Vacancies = vacancies.Select(vacancy => ConvertToDashboardVacancySummaryViewModel(vacancy)).ToList(),
                 RegionalTeamsMetrics = regionalTeamsMetrics
             };
 
             return viewModel;
         }
 
-        private static bool IsVacancySubmittedMoreThan48HrsAgo(VacancySummary v, DateTime utcNow)
+        private List<VacancySummary> GetTeamVacancySummaries()
         {
-            if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
+            var regionalTeam = GetRegionalTeamForCurrentUser();
+
+            var query = new VacancySummaryByStatusQuery()
             {
-                return false;
-            }
+                DesiredStatuses = new[] { VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
+                PageSize = 0,
+                RequestedPage = 0,
+                RegionalTeamName = regionalTeam,
+                OrderByField = VacancySummaryOrderByColumn.DateSubmitted
+            };
 
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Sunday || utcNow.DayOfWeek == DayOfWeek.Monday)
-                {
-                    return v.DateSubmitted < utcNow.Date.AddDays(-3);
-                }
-            }
+            int totalRecords;
 
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Saturday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Monday || utcNow.DayOfWeek == DayOfWeek.Tuesday)
-                {
-                    return v.DateSubmitted < utcNow.Date.AddDays(-3);
-                }
-            }
+            var vacancies = _vacancyPostingService.GetWithStatus(query, out totalRecords);
 
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Sunday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
-                {
-                    return v.DateSubmitted < utcNow.Date.AddDays(-2);
-                }
-            }
-
-            return v.DateSubmitted < utcNow.Date.AddDays(-1);
-        }
-
-        private static bool IsVacancySubmittedYesterday(VacancySummary v, DateTime utcNow)
-        {
-            if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
-            {
-                return false;
-            }
-
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    return v.DateSubmitted >= utcNow.Date.AddDays(-1) && v.DateSubmitted < utcNow.Date;
-                }
-
-                if (utcNow.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
-                }
-
-                if (utcNow.DayOfWeek == DayOfWeek.Monday)
-                {
-                    return v.DateSubmitted >= utcNow.Date.AddDays(-3) && v.DateSubmitted < utcNow.Date.AddDays(-2);
-                }
-            }
-
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Saturday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Monday)
-                {
-                    return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
-                }
-
-                if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
-                {
-                    return v.DateSubmitted >= utcNow.Date.AddDays(-3) && v.DateSubmitted < utcNow.Date.AddDays(-2);
-                }
-            }
-
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Sunday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
-                {
-                    return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
-                }
-            }
-
-            return v.DateSubmitted >= utcNow.Date.AddDays(-1);
-        }
-
-        private List<VacancySummary> SearchVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, List<VacancySummary> vacancies)
-        {
-            if (IsSearch(searchViewModel))
-            {
-                if (!string.IsNullOrEmpty(searchViewModel.Provider) && searchViewModel.Provider.Length >= 3)
-                {
-                    var providers = _providerService.GetProviders(vacancies.Select(v => v.ProviderId));
-                    var providerIds = new List<int>();
-                    foreach (var provider in providers)
-                    {
-                        if (provider.TradingName.IndexOf(searchViewModel.Provider, StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            providerIds.Add(provider.ProviderId);
-                        }
-                    }
-                    vacancies = vacancies.Where(v => providerIds.Contains(v.ProviderId)).ToList();
-                }
-            }
-            return vacancies;
-        }
-
-        private bool IsSearch(DashboardVacancySummariesSearchViewModel searchViewModel)
-        {
-            return !string.IsNullOrEmpty(searchViewModel.Provider);
-        }
-
-        private IEnumerable<DashboardVacancySummaryViewModel> GetOrderedVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, IEnumerable<DashboardVacancySummaryViewModel> vacancySummaries)
-        {
-            switch (searchViewModel.OrderByField)
-            {
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldTitle:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.Title).ToList()
-                        : vacancySummaries.OrderBy(a => a.Title).ToList();
-                    break;
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldProvider:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.ProviderName).ToList()
-                        : vacancySummaries.OrderBy(a => a.ProviderName).ToList();
-                    break;
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldDateSubmitted:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.DateSubmitted).ToList()
-                        : vacancySummaries.OrderBy(a => a.DateSubmitted).ToList();
-                    break;
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldClosingDate:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.ClosingDate).ToList()
-                        : vacancySummaries.OrderBy(a => a.ClosingDate).ToList();
-                    break;
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldSubmissionCount:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.SubmissionCount).ToList()
-                        : vacancySummaries.OrderBy(a => a.SubmissionCount).ToList();
-                    break;
-            }
-            return vacancySummaries;
+            return vacancies.ToList();
         }
 
         public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
@@ -1210,35 +1081,7 @@
                 .ToArray();
         }
 
-        private static List<RegionalTeamMetrics> GetRegionalTeamsMetrics(List<VacancySummary> vacancies, List<VacancySummary> submittedToday, List<VacancySummary> submittedYesterday, List<VacancySummary> submittedMoreThan48Hours, List<VacancySummary> resubmitted)
-        {
-            return new List<RegionalTeamMetrics>
-            {
-                GetRegionalTeamMetrics(RegionalTeam.North, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.NorthWest, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.YorkshireAndHumberside, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.EastMidlands, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.WestMidlands, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.EastAnglia, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.SouthEast, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.SouthWest, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted)
-            };
-        }
-
-        private static RegionalTeamMetrics GetRegionalTeamMetrics(RegionalTeam regionalTeam, IEnumerable<VacancySummary> vacancies, IEnumerable<VacancySummary> submittedToday, IEnumerable<VacancySummary> submittedYesterday, IEnumerable<VacancySummary> submittedMoreThan48Hours, IEnumerable<VacancySummary> resubmitted)
-        {
-            return new RegionalTeamMetrics
-            {
-                RegionalTeam = regionalTeam,
-                TotalCount = vacancies.Count(v => v.RegionalTeam == regionalTeam),
-                SubmittedTodayCount = submittedToday.Count(v => v.RegionalTeam == regionalTeam),
-                SubmittedYesterdayCount = submittedYesterday.Count(v => v.RegionalTeam == regionalTeam),
-                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count(v => v.RegionalTeam == regionalTeam),
-                ResubmittedCount = resubmitted.Count(v => v.RegionalTeam == regionalTeam),
-            };
-        }
-
-        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy, Provider provider)
+        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy, Provider provider = null)
         {
             var userName = _currentUserService.CurrentUserName;
 
@@ -1247,7 +1090,7 @@
                 ClosingDate = vacancy.ClosingDate,
                 DateSubmitted = vacancy.DateSubmitted,
                 DateFirstSubmitted = vacancy.DateFirstSubmitted,
-                ProviderName = provider.TradingName,
+                ProviderName = provider?.TradingName ?? vacancy.ProviderTradingName,
                 Status = vacancy.Status,
                 Title = vacancy.Title,
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
@@ -1357,19 +1200,6 @@
             var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
             var regionalTeam = agencyUser.RegionalTeam;
             return regionalTeam;
-        }
-
-        private List<VacancySummary> GetTeamVacancySummaries()
-        {
-            var regionalTeam = GetRegionalTeamForCurrentUser();
-
-            var vacancies =
-                _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)
-                    .Where(v => v.RegionalTeam == regionalTeam)
-                    .OrderBy(v => v.DateSubmitted)
-                    .ToList();
-
-            return vacancies;
         }
 
         public VacancyViewModel ReviewVacancy(int vacancyReferenceNumber)

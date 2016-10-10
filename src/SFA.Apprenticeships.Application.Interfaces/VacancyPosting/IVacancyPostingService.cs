@@ -4,6 +4,7 @@
     using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
+	using Domain.Raa.Interfaces.Repositories.Models;
 
     public interface IVacancyPostingService
     {
@@ -16,8 +17,8 @@
         Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetVacancy(Guid vacancyGuid);
-
-        List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses);
+        
+        IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords);
 
         IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds);
 
@@ -53,5 +54,7 @@
         IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
 
         Vacancy UpdateVacanciesWithNewProvider(Vacancy vacancies);
+		
+        IList<RegionalTeamMetrics> GetRegionalTeamsMetrics(VacancySummaryByStatusQuery query);
     }
 }
