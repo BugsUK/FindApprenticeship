@@ -21,7 +21,7 @@
         public DateTime? ClosingDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }
         public bool? OfflineVacancy { get; set; }
-        public int OfflineApplicationClickThroughCount { get; set; }
+        public int NoOfOfflineApplicants { get; set; }
         public DateTime? DateSubmitted { get; set; }
         public DateTime? DateFirstSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }
@@ -71,9 +71,9 @@
 
         public string EmployerName { get; set; }
 
-        public int? ApplicationOrClickThroughCount { get; set; }
-
         public int NewApplicationCount { get; set; }
+		public int ApplicantCount { get; set; }
+		
         public string ProviderTradingName { get; set; }
         public DateTime CreatedDate { get; set; }
     }

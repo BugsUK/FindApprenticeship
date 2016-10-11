@@ -16,6 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public Guid VacancyGuid { get; set; }
         public string Title { get; set; }
         public bool? ApplyOutsideNAVMS { get; set; }
+        public int NoOfOfflineApplicants { get; set; }
         public VacancyStatus VacancyStatusId { get; set; }
         public VacancyType VacancyTypeId { get; set; }
         

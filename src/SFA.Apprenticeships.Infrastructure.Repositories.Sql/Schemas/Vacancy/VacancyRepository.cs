@@ -1567,7 +1567,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 VacancyType = (VacancyType)record.VacancyTypeId;
                 EmployerName = record.EmployerName;
                 Title = record.Title;
-                ApplicationOrClickThroughCount = record.NoOfOfflineApplicants;
                 OfflineVacancy = record.ApplyOutsideNAVMS;
             }
 
@@ -1598,8 +1597,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             public string EmployerName { get; set; }
 
             public string Title { get; private set; }
-
-            public int? ApplicationOrClickThroughCount { get; set; }
 
             public bool? OfflineVacancy { get; private set; }
         }

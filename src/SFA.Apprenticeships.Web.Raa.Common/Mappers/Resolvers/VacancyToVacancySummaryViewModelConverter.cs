@@ -31,14 +31,14 @@
                 EmployerName = source.EmployerName,
                 Location = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address),
                 OfflineVacancy = source.OfflineVacancy,
-                ApplicationCount = source.ApplicationOrClickThroughCount ?? 0,
-                OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
+                OfflineApplicationClickThroughCount = source.NoOfOfflineApplicants,
                 ClosingDate = context.Engine.Map<DateTime?, DateViewModel>(source.ClosingDate),
                 DateSubmitted = source.DateSubmitted,
                 SubmissionCount = source.SubmissionCount,
                 IsEmployerLocationMainApprenticeshipLocation = source.IsEmployerLocationMainApprenticeshipLocation,
                 ParentVacancyId = source.ParentVacancyId,
-                NewApplicationCount = source.NewApplicationCount
+                NewApplicationCount = source.NewApplicationCount,
+                ApplicationCount = source.ApplicantCount
             };
 
             return destination;

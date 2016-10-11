@@ -43,7 +43,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 OfflineApplicationUrlComment = OfflineApplicationUrlComment,
                 OfflineApplicationInstructions = OfflineApplicationInstructions,
                 OfflineApplicationInstructionsComment = OfflineApplicationInstructionsComment,
-                OfflineApplicationClickThroughCount = OfflineApplicationClickThroughCount,
+                NoOfOfflineApplicants = NoOfOfflineApplicants,
                 DateSubmitted = DateSubmitted,
                 DateFirstSubmitted = DateFirstSubmitted,
                 DateStartedToQA = DateStartedToQA,
