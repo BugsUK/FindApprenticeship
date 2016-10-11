@@ -324,19 +324,21 @@
                     {
                         var vacancyOwnerRelationship =
                             _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);
+                        //This method actually returns a new VOR but with an Id of 0 if none exists however that couples this code to that implementation so we should still perform the null check 
                         var existingVacancyOwnerRelationship =
                             _providerService.GetVacancyOwnerRelationship(vacancyOwnerRelationship.EmployerId,
                                 vacancyTransferViewModel.ProviderSiteId);
                         if (existingVacancyOwnerRelationship == null || existingVacancyOwnerRelationship.VacancyOwnerRelationshipId == 0)
                         {
-                            vacancyOwnerRelationship.ProviderSiteId = vacancyTransferViewModel.ProviderSiteId;
-                            _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
+                            //No matching VOR exists for the new provider and provider site so create it.
+                            //We do this because changing the provider site id for a VOR could make any non transfered vacancies associated with it unavailable to any provider
+                            existingVacancyOwnerRelationship = existingVacancyOwnerRelationship ?? new VacancyOwnerRelationship { ProviderSiteId = vacancyTransferViewModel.ProviderSiteId, EmployerId = vacancyOwnerRelationship.EmployerId };
+                            existingVacancyOwnerRelationship.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
+                            existingVacancyOwnerRelationship.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
+                            existingVacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship);
                         }
-                        else
-                        {
-                            vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;
-                        }
-
+                        
+                        vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;
                         vacancy.ContractOwnerId = vacancyTransferViewModel.ProviderId;
                         vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
                         vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
