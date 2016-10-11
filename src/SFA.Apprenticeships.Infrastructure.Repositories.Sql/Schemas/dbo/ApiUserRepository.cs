@@ -14,6 +14,12 @@
 
     public class ApiUserRepository : IApiUserRepository
     {
+        private const string SetPasswordSql = @"DECLARE @DbPassword [varchar](64)
+SET @DbPassword = @password
+UPDATE ExternalSystemPermission 
+SET Password = CONVERT(VARBINARY(25), HASHBYTES('SHA1', @DbPassword), 1)
+WHERE Username = @Username";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IConfigurationService _configurationService;
 
@@ -138,12 +144,7 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
             var password = string.IsNullOrEmpty(apiUser.Password) ? GetApiPassword() : apiUser.Password;
 
-            var sql = @"DECLARE @DbPassword [varchar](64)
-SET @DbPassword = @password
-UPDATE ExternalSystemPermission 
-SET Password = CONVERT(VARBINARY(25), HASHBYTES('SHA1', @DbPassword), 1)
-WHERE Username = @Username";
-            _getOpenConnection.MutatingQuery<ExternalSystemPermission>(sql, new { password, externalSystemPermission.Username });
+            _getOpenConnection.MutatingQuery<ExternalSystemPermission>(SetPasswordSql, new { password, externalSystemPermission.Username });
 
             var createdApiUser = GetApiUser(externalSystemPermission.Username);
             createdApiUser.Password = password;
@@ -162,6 +163,18 @@ WHERE Username = @Username";
             _getOpenConnection.UpdateSingle(externalSystemPermission);
 
             return GetApiUser(apiUser.ExternalSystemId);
+        }
+
+        public ApiUser ResetApiUserPassword(Guid externalSystemId)
+        {
+            var password = GetApiPassword();
+
+            _getOpenConnection.MutatingQuery<ExternalSystemPermission>(SetPasswordSql, new { password, Username = externalSystemId });
+
+            var apiUser = GetApiUser(externalSystemId);
+            apiUser.Password = password;
+
+            return apiUser;
         }
 
         private static ApiUser MapApiUser(ExternalSystemPermission externalSystemPermission)

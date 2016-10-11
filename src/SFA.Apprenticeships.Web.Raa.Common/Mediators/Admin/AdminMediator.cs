@@ -274,6 +274,22 @@
             }
         }
 
+        public MediatorResponse<ApiUserViewModel> ResetApiUserPassword(ApiUserViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _apiUserProvider.ResetApiUserPassword(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.ResetApiUserPassword.Ok, viewModel, ApiUserViewModelMessages.ResetApiUserPasswordSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save api user with external system id={viewModel.ExternalSystemId}", ex);
+                viewModel = _apiUserProvider.GetApiUserViewModel(viewModel.ExternalSystemId);
+                return GetMediatorResponse(AdminMediatorCodes.ResetApiUserPassword.Error, viewModel, ApiUserViewModelMessages.ResetApiUserPasswordError, UserMessageLevel.Error);
+            }
+        }
+
         public MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel)
         {
             try

@@ -10,5 +10,6 @@
         ApiUserViewModel GetApiUserViewModel(string companyId);
         ApiUserViewModel CreateApiUser(ApiUserViewModel viewModel);
         ApiUserViewModel SaveApiUser(ApiUserViewModel viewModel);
+        ApiUserViewModel ResetApiUserPassword(ApiUserViewModel viewModel);
     }
 }

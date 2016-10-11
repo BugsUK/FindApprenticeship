@@ -12,5 +12,6 @@
         ApiUser GetApiUser(string companyId);
         ApiUser Create(ApiUser apiUser);
         ApiUser Update(ApiUser apiUser);
+        ApiUser ResetApiUserPassword(Guid externalSystemId);
     }
 }

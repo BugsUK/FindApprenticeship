@@ -60,7 +60,10 @@
                                 <td>@apiUser.BusinessCategory</td>
                                 <td>@apiUser.EmployeeType</td>
                                 <td>@apiUser.AuthorisedApiEndpoints</td>
-                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewApiUser, new { apiUser.ExternalSystemId })</td>
+                                <td>
+                                    @Html.RouteLink("View", ManagementRouteNames.AdminViewApiUser, new { apiUser.ExternalSystemId })<br/>
+                                    @Html.RouteLink("Reset password", ManagementRouteNames.AdminResetApiUserPassword, new { apiUser.ExternalSystemId })<br />
+                                </td>
                             </tr>
                         }
                     </tbody>

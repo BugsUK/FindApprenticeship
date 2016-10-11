@@ -10,6 +10,8 @@
         public const string ApiUserCreatedSuccessfully = "New api user added successfully";
         public const string ApiUserSavedSuccessfully = "The changes to the api user were saved successfully";
         public const string ApiUserSaveError = "An error occured when saving the api user. Please check your entries and try again";
+        public const string ResetApiUserPasswordSuccessfully = "The api user's password was reset successfully";
+        public const string ResetApiUserPasswordError = "An error occured when resetting the api user's password. Please try again";
 
         public class ExternalSystemId
         {
