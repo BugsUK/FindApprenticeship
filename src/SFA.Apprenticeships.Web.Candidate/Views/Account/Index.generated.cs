@@ -244,14 +244,13 @@ WriteLiteral(">\r\n");
             {
                 var successOrUnsuccessful = applicationNotification.ApplicationStatus == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
 
-
             
             #line default
             #line hidden
 WriteLiteral("                <p>\r\n                    Your application for ");
 
             
-            #line 53 "..\..\Views\Account\Index.cshtml"
+            #line 52 "..\..\Views\Account\Index.cshtml"
                                     Write(applicationNotification.Title);
 
             
@@ -260,7 +259,7 @@ WriteLiteral("                <p>\r\n                    Your application for ")
 WriteLiteral(" has been ");
 
             
-            #line 53 "..\..\Views\Account\Index.cshtml"
+            #line 52 "..\..\Views\Account\Index.cshtml"
                                                                             Write(successOrUnsuccessful);
 
             
@@ -269,13 +268,13 @@ WriteLiteral(" has been ");
 WriteLiteral(".\r\n");
 
             
-            #line 54 "..\..\Views\Account\Index.cshtml"
+            #line 53 "..\..\Views\Account\Index.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 54 "..\..\Views\Account\Index.cshtml"
+            #line 53 "..\..\Views\Account\Index.cshtml"
                      if (applicationNotification.UnsuccessfulReason != null)
                     {
 
@@ -285,7 +284,7 @@ WriteLiteral(".\r\n");
 WriteLiteral("                        <a>Read feedback</a>\r\n");
 
             
-            #line 57 "..\..\Views\Account\Index.cshtml"
+            #line 56 "..\..\Views\Account\Index.cshtml"
                     }                        
 
             
@@ -294,7 +293,7 @@ WriteLiteral("                        <a>Read feedback</a>\r\n");
 WriteLiteral("                </p>\r\n");
 
             
-            #line 59 "..\..\Views\Account\Index.cshtml"
+            #line 58 "..\..\Views\Account\Index.cshtml"
             }
 
             
@@ -302,14 +301,15 @@ WriteLiteral("                </p>\r\n");
             #line hidden
 WriteLiteral("            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3008), Tuple.Create("\"", 3165)
+WriteAttribute("href", Tuple.Create(" href=\"", 3006), Tuple.Create("\"", 3189)
             
-            #line 61 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 3015), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
+            #line 60 "..\..\Views\Account\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 3013), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, 
+                        new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
-, 3015), false)
+, 3013), false)
 );
 
 WriteLiteral(" class=\"notInterested link-unimp icon-black\"");

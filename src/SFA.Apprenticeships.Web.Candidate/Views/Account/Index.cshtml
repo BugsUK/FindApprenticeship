@@ -48,7 +48,6 @@
             @foreach (var applicationNotification in Model.ApplicationStatusNotifications)
             {
                 var successOrUnsuccessful = applicationNotification.ApplicationStatus == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
-
                 <p>
                     Your application for @applicationNotification.Title has been @successOrUnsuccessful.
                     @if (applicationNotification.UnsuccessfulReason != null)
@@ -58,7 +57,8 @@
                 </p>
             }
             <p>
-                <a href="@Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
+                <a href="@Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, 
+                        new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
             </p>
         </div>
     </div>

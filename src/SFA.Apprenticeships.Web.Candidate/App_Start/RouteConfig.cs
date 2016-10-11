@@ -138,7 +138,7 @@
                 name: CandidateRouteNames.DeleteAccountSettings,
                 url: "deleteaccount",
                 defaults: new { controller = "Account", action = "DeleteAccountSettings" }
-                );            
+                );
 
             routes.MapRoute(
                 name: CandidateRouteNames.VerifyMobile,
@@ -282,6 +282,12 @@
                 name: CandidateRouteNames.ApprenticeshipView,
                 url: "apprenticeship/view/{id}",
                 defaults: new { controller = "ApprenticeshipApplication", action = "View" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.CandidateApplicationFeedback,
+                url: "apprenticeship/candidateapplicationfeedback/{id}",
+                defaults: new { controller = "ApprenticeshipApplication", action = "CandidateApplicationFeedback" }
                 );
 
             routes.MapRoute(

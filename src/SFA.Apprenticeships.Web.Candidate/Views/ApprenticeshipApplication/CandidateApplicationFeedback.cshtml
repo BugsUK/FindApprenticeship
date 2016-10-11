@@ -1,0 +1,28 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApprenticeshipApplicationViewModel
+
+@{
+    ViewBag.Title = "Candidate Application Feedback";
+}
+
+<div class="hgroup">
+    <h1 class="heading-xlarge med-btm-margin">Your feedback</h1>
+</div>
+
+@*@{
+        var reason = string.IsNullOrWhiteSpace(Model.UnsuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnsuccessfulReason;
+    }
+        <tr>
+            <td colspan="3">
+                <b>Reason:</b> <span id="application-status-description">@reason</span>
+            </td>
+        </tr>*@
+
+
+<h2 class="heading-medium">Next steps</h2>
+<p>If you require further information please contact the training provider.</p>
+<p>
+    For advice on how to ensure your application has a better chance of being
+    successful  @Html.RouteLink("see the next steps page", @CandidateRouteNames.NextSteps).
+</p>
+
+@*@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = Model.VacancyId,@class="button" })*@
