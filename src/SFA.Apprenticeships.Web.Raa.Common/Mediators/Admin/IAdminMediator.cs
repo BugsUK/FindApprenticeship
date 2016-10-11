@@ -22,6 +22,7 @@
         MediatorResponse<ApiUserViewModel> GetApiUser(Guid externalSystemId);
         MediatorResponse<ApiUserViewModel> CreateApiUser(ApiUserViewModel viewModel);
         MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel);
+        MediatorResponse<ApiUserViewModel> ResetApiUserPassword(ApiUserViewModel viewModel);
         MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel);
         MediatorResponse<ManageVacancyTransferResultsViewModel> ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel);
         MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn);
