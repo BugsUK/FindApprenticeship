@@ -869,6 +869,7 @@
     <Content Include="Views\Admin\ApiUsers.cshtml" />
     <Content Include="Views\Admin\ApiUser.cshtml" />
     <Content Include="Views\Admin\CreateApiUser.cshtml" />
+    <Content Include="Views\Admin\ResetApiUserPassword.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

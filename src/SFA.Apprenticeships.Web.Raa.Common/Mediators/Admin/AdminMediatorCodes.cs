@@ -87,6 +87,13 @@
             public const string Ok = "AdminMediatorCodes.SaveApiUser.Ok";
         }
 
+        public class ResetApiUserPassword
+        {
+            public const string FailedValidation = "AdminMediatorCodes.ResetApiUserPassword.FailedValidation";
+            public const string Error = "AdminMediatorCodes.ResetApiUserPassword.Error";
+            public const string Ok = "AdminMediatorCodes.ResetApiUserPassword.Ok";
+        }
+
         public class GetVacancyDetails
         {
             public const string NoRecordsFound = "AdminMediatorCodes.GetVacancyDetails.NoRecordsFound";

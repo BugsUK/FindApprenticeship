@@ -1,28 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
 {
-    using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
-    using Interfaces;
     using Interfaces.Providers;
     using ErrorCodes = Domain.Entities.ErrorCodes;
 
     public class CreateVacancyStrategy : ICreateVacancyStrategy
     {
         private readonly IVacancyWriteRepository _vacancyWriteRepository;
-        private readonly IProviderUserReadRepository _providerUserReadRepository;
-        private readonly ICurrentUserService _currentUserService;
         private readonly IUpsertVacancyStrategy _upsertVacancyStrategy;
         private readonly IProviderService _providerService;
 
-        public CreateVacancyStrategy(IVacancyWriteRepository vacancyWriteRepository, IProviderUserReadRepository providerUserReadRepository, ICurrentUserService currentUserService, IUpsertVacancyStrategy upsertVacancyStrategy, IProviderService providerService)
+        public CreateVacancyStrategy(IVacancyWriteRepository vacancyWriteRepository, IUpsertVacancyStrategy upsertVacancyStrategy, IProviderService providerService)
         {
             _vacancyWriteRepository = vacancyWriteRepository;
-            _providerUserReadRepository = providerUserReadRepository;
-            _currentUserService = currentUserService;
             _upsertVacancyStrategy = upsertVacancyStrategy;
             _providerService = providerService;
         }
@@ -37,28 +30,10 @@
                 throw new CustomException(message, ErrorCodes.EntityStateError);
             }
 
-            if (_currentUserService.IsInRole(Roles.Faa))
-            {
-                var username = _currentUserService.CurrentUserName;
-                var userProfile = _providerUserReadRepository.GetByUsername(username);
-
-                var ukprn = _currentUserService.GetClaimValue("ukprn");
-                var ukprnoverride = _currentUserService.GetClaimValue("ukprnoverride");
-                if (!string.IsNullOrEmpty(ukprnoverride))
-                {
-                    ukprn = ukprnoverride;
-                }
-
-                //Ensure that the provider site id assigned to the vacancy is valid for the current user and their (potentially impersonated) provider
-                var providerSites = _providerService.GetProviderSites(ukprn).ToList();
-                var providerSiteId = userProfile.PreferredProviderSiteId ?? 0;
-                if (providerSites.All(ps => ps.ProviderSiteId != providerSiteId))
-                {
-                    providerSiteId = providerSites.First().ProviderSiteId;
-                }
-
-                vacancy.VacancyManagerId = vacancy.DeliveryOrganisationId = providerSiteId;
-            }
+            //The VacancyManagerId, DeliveryOrganisationId and VacancyOwnerRelationship.ProviderSiteId should match.
+            //Due to impersonation and user's changing their default provider site, we can't completely rely on the user's DefaultProviderSiteId so using the VOR value instead
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);
+            vacancy.VacancyManagerId = vacancy.DeliveryOrganisationId = vacancyOwnerRelationship.ProviderSiteId;
 
             // Always set VacancySource as Raa when creating a vacancy from Raa
             vacancy.VacancySource = VacancySource.Raa;

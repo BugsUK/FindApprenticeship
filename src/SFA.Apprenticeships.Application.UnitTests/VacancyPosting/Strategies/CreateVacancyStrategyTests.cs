@@ -3,6 +3,7 @@
     using System;
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
@@ -12,7 +13,6 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class CreateVacancyStrategyTests
@@ -38,6 +38,7 @@
         private readonly Mock<ICurrentUserService> _mockCurrentUserService = new Mock<ICurrentUserService>();
         private readonly Mock<IProviderVacancyAuthorisationService> _mockProviderVacancyAuthorisationService = new Mock<IProviderVacancyAuthorisationService>();
         private readonly Mock<IProviderService> _mockProviderService = new Mock<IProviderService>();
+
         private ICreateVacancyStrategy _createVacancyStrategy;
 
         [SetUp]
@@ -46,9 +47,10 @@
             _mockProviderUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
             _mockProviderUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
             _mockProviderVacancyAuthorisationService.Setup(mock => mock.Authorise(_testVacancy)).Throws<UnauthorizedAccessException>();
+            _mockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(It.IsAny<int>(), false)).Returns(new Fixture().Create<VacancyOwnerRelationship>());
 
             var upsertVacancyStrategy = new UpsertVacancyStrategy(_mockCurrentUserService.Object, _mockProviderUserReadRepository.Object, _mockApprenticeshipVacancyReadRepository.Object, new AuthoriseCurrentUserStrategy(_mockProviderVacancyAuthorisationService.Object), new Mock<IPublishVacancySummaryUpdateStrategy>().Object);
-            _createVacancyStrategy = new CreateVacancyStrategy(_mockApprenticeshipVacancyWriteRepository.Object, _mockProviderUserReadRepository.Object, _mockCurrentUserService.Object, upsertVacancyStrategy,_mockProviderService.Object);
+            _createVacancyStrategy = new CreateVacancyStrategy(_mockApprenticeshipVacancyWriteRepository.Object, upsertVacancyStrategy, _mockProviderService.Object);
         }
 
         [Test]
@@ -77,8 +79,10 @@
         public void CreateVacancyShouldUpdateVacancyManagerAndDeliveryOrganisation()
         {
             // Arrange.
+            const int providerSiteId = 12345;
             _mockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
             _mockCurrentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
+            _mockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(It.IsAny<int>(), false)).Returns(new Fixture().Build<VacancyOwnerRelationship>().With(vor => vor.ProviderSiteId, providerSiteId).Create());
 
             var vacancy = new Vacancy
             {
@@ -88,16 +92,13 @@
 
             _mockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
-            // ReSharper disable once PossibleInvalidOperationException
-            var preferredProviderSiteId = _vacancyManager.PreferredProviderSiteId.Value;
-
             // Act.
             _createVacancyStrategy.CreateVacancy(vacancy);
 
             // Assert.
             _mockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v =>
-                v.VacancyManagerId == preferredProviderSiteId &&
-                v.DeliveryOrganisationId == preferredProviderSiteId)));
+                v.VacancyManagerId == providerSiteId &&
+                v.DeliveryOrganisationId == providerSiteId)));
         }
 
         [Test]

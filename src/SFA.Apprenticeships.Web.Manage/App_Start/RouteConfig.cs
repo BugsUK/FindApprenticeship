@@ -337,6 +337,12 @@
                defaults: new { controller = "Admin", action = "EditApiUser" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminResetApiUserPassword,
+               url: "admin/apiuser/resetpassword",
+               defaults: new { controller = "Admin", action = "ResetApiUserPassword" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }
