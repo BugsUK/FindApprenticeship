@@ -32,7 +32,7 @@
 
             //The VacancyManagerId, DeliveryOrganisationId and VacancyOwnerRelationship.ProviderSiteId should match.
             //Due to impersonation and user's changing their default provider site, we can't completely rely on the user's DefaultProviderSiteId so using the VOR value instead
-            var vacancyOwnerRelationship = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);
             vacancy.VacancyManagerId = vacancy.DeliveryOrganisationId = vacancyOwnerRelationship.ProviderSiteId;
 
             // Always set VacancySource as Raa when creating a vacancy from Raa

@@ -47,7 +47,7 @@
             _mockProviderUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
             _mockProviderUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
             _mockProviderVacancyAuthorisationService.Setup(mock => mock.Authorise(_testVacancy)).Throws<UnauthorizedAccessException>();
-            _mockProviderService.Setup(ps => ps.GetVacancyParty(It.IsAny<int>(), false)).Returns(new Fixture().Create<VacancyParty>());
+            _mockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(It.IsAny<int>(), false)).Returns(new Fixture().Create<VacancyOwnerRelationship>());
 
             var upsertVacancyStrategy = new UpsertVacancyStrategy(_mockCurrentUserService.Object, _mockProviderUserReadRepository.Object, _mockApprenticeshipVacancyReadRepository.Object, new AuthoriseCurrentUserStrategy(_mockProviderVacancyAuthorisationService.Object), new Mock<IPublishVacancySummaryUpdateStrategy>().Object);
             _createVacancyStrategy = new CreateVacancyStrategy(_mockApprenticeshipVacancyWriteRepository.Object, upsertVacancyStrategy, _mockProviderService.Object);
@@ -82,7 +82,7 @@
             const int providerSiteId = 12345;
             _mockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
             _mockCurrentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
-            _mockProviderService.Setup(ps => ps.GetVacancyParty(It.IsAny<int>(), false)).Returns(new Fixture().Build<VacancyParty>().With(vor => vor.ProviderSiteId, providerSiteId).Create());
+            _mockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(It.IsAny<int>(), false)).Returns(new Fixture().Build<VacancyOwnerRelationship>().With(vor => vor.ProviderSiteId, providerSiteId).Create());
 
             var vacancy = new Vacancy
             {
