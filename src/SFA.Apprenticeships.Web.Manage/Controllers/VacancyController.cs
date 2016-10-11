@@ -470,7 +470,7 @@
         }
 
         [HttpPost]
-        public ActionResult EmployerInformation(VacancyPartyViewModel viewModel)
+        public ActionResult EmployerInformation(VacancyOwnerRelationshipViewModel viewModel)
         {
             var response = _vacancyMediator.UpdateEmployerInformation(viewModel);
 

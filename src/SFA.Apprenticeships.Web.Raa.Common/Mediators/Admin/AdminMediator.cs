@@ -313,12 +313,12 @@
                             {
                                 var vacancyView = new TransferVacancyViewModel
                                 {
-                                    ContractOwnerId = vacancyDetails.ProviderId,
+                                    ContractOwnerId = vacancyDetails.ContractOwnerId,
                                     VacancyManagerId = vacancyDetails.VacancyManagerId,
                                     VacancyReferenceNumber = vacancyDetails.VacancyReferenceNumber,
                                     DeliveryOrganisationId = vacancyDetails.DeliveryOrganisationId,
                                     VacancyOwnerRelationShipId = vacancyDetails.VacancyOwnerRelationshipId,
-                                    ProviderName = _providerService.GetProvider(vacancyDetails.ProviderId).TradingName,
+                                    ProviderName = _providerService.GetProvider(vacancyDetails.ContractOwnerId).TradingName,
                                     VacancyTitle = vacancyDetails.Title,
                                     EmployerName = vacancyDetails.EmployerName
                                 };

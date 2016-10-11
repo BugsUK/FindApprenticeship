@@ -75,14 +75,14 @@
 
         public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
         {
-            var mongoEntities = Collection.Find(Query.In("OwnerPartyId", new BsonArray(ownerPartyIds)));
+            var mongoEntities = Collection.Find(Query.In("VacancyOwnerRelationshipId", new BsonArray(ownerPartyIds)));
 
             return mongoEntities.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
 
         public List<VacancySummary> GetByOwnerPartyId(int ownerPartyId)
         {
-            var mongoEntity = Collection.Find(Query<VacancySummary>.EQ(v => v.OwnerPartyId, ownerPartyId));
+            var mongoEntity = Collection.Find(Query<VacancySummary>.EQ(v => v.VacancyOwnerRelationshipId, ownerPartyId));
 
             return mongoEntity.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
@@ -276,7 +276,7 @@
             return null;
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
         {
             throw new NotImplementedException();
         }

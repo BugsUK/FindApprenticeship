@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
             return new Vacancy
             {
                 VacancyReferenceNumber = VacancyReferenceNumber,
+                VacancyOwnerRelationshipId = VacancyOwnerRelationshipId,
                 VacancyGuid = VacancyGuid,
                 Title = Title,
                 TitleComment = TitleComment,
@@ -35,7 +36,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 DesiredQualificationsComment = DesiredQualificationsComment,
                 FirstQuestion = FirstQuestion,
                 SecondQuestion = SecondQuestion,
-                OwnerPartyId = OwnerPartyId,
                 EmployerDescription = EmployerDescription,
                 EmployerWebsiteUrl = EmployerWebsiteUrl,
                 OfflineVacancy = OfflineVacancy,
@@ -87,7 +87,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 ContactDetailsComment = ContactDetailsComment,
                 VacancyType = VacancyType,
                 Address = Address,
-                ProviderId = ProviderId,
+                ContractOwnerId = ContractOwnerId,
+                OriginalContractOwnerId = OriginalContractOwnerId,
                 EditedInRaa = EditedInRaa
             };
         }

@@ -4,6 +4,7 @@
     using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
+	using Domain.Raa.Interfaces.Repositories.Models;
 
     public interface IVacancyPostingService
     {
@@ -16,8 +17,8 @@
         Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetVacancy(Guid vacancyGuid);
-
-        List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses);
+        
+        IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords);
 
         IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds);
 
@@ -40,18 +41,20 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="vacancyPartyIds"></param>
+        /// <param name="vacancyOwnerRelationshipIds"></param>
         /// <param name="providerId"></param>
-        /// <returns>VacancyPartyId => IVacancyIdStatusAndClosingDate</returns>
-        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds);
+        /// <returns>VacancyOwnerRelationshipId => IVacancyIdStatusAndClosingDate</returns>
+        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="vacancyPartyIds"></param>
+        /// <param name="vacancyOwnerRelationshipIds"></param>
         /// <returns>VacancyPartId => VacancyLocation</returns>
-        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
+        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyOwnerRelationshipIds);
 
         Vacancy UpdateVacanciesWithNewProvider(Vacancy vacancies);
+		
+        IList<RegionalTeamMetrics> GetRegionalTeamsMetrics(VacancySummaryByStatusQuery query);
     }
 }

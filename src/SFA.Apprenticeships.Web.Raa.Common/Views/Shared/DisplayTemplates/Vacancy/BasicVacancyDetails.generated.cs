@@ -565,7 +565,7 @@ Write(Html.HiddenFor(model => model.Ukprn));
             #line hidden
             
             #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-Write(Html.HiddenFor(model => model.OwnerParty.VacancyPartyId));
+Write(Html.HiddenFor(model => model.VacancyOwnerRelationship.VacancyOwnerRelationshipId));
 
             
             #line default

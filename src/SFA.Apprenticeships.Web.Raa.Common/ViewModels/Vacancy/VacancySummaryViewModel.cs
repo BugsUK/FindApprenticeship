@@ -10,11 +10,11 @@
     public class VacancySummaryViewModel
     {
         public int VacancyId { get; set; }
+        public int VacancyOwnerRelationshipId { get; set; }
         public int VacancyReferenceNumber { get; set; }
         public VacancyType VacancyType { get; set; }
         public VacancyStatus Status { get; set; }
         public string Title { get; set; }
-        public int OwnerPartyId { get; set; }
         public string ProviderName { get; set; }
         public string EmployerName { get; set; }
         public AddressViewModel Location { get; set; }

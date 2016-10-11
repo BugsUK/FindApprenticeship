@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using System.Collections.Generic;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     public class DashboardVacancySummariesViewModel
     {
@@ -16,6 +17,6 @@
 
         public List<DashboardVacancySummaryViewModel> Vacancies { get; set; }
 
-        public List<RegionalTeamMetrics> RegionalTeamsMetrics { get; set; }
+        public IList<RegionalTeamMetrics> RegionalTeamsMetrics { get; set; }
     }
 }

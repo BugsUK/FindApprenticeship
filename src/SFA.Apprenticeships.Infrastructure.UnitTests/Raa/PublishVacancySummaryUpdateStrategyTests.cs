@@ -43,7 +43,7 @@
                 ClosingDate = DateTime.UtcNow,
                 Wage = new Wage(WageType.ApprenticeshipMinimum, 0, null, WageUnit.NotApplicable, 0)
             } });
-            _mockProviderService.Setup(r => r.GetVacancyParties(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, VacancyParty> { { 1, new VacancyParty() } });
+            _mockProviderService.Setup(r => r.GetVacancyOwnerRelationships(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, VacancyOwnerRelationship> { { 1, new VacancyOwnerRelationship() } });
             _mockEmployerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new List<Employer> { new Employer() });
             _mockProviderService.Setup(r => r.GetProviderSites(It.IsAny<IEnumerable<int>>())).Returns(new Dictionary<int, ProviderSite> { { 2, new ProviderSite() } });
             _mockProviderService.Setup(r => r.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Provider() });

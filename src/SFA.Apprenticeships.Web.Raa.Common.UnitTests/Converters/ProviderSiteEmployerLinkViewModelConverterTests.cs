@@ -14,14 +14,14 @@
         public void ShouldAnonymiseEmployerWhenVacancyIsAnonymised(string anonymousName)
         {
             // Arrange.
-            var vacancyParty = new Fixture()
-                .Create<VacancyParty>();
+            var vacancyOwnerRelationship = new Fixture()
+                .Create<VacancyOwnerRelationship>();
 
             var employer = new Fixture()
                 .Create<Employer>();
 
             // Act.
-            var converted = vacancyParty.Convert(employer, anonymousName);
+            var converted = vacancyOwnerRelationship.Convert(employer, anonymousName);
 
             // Assert.
             converted.Should().NotBeNull();
@@ -34,8 +34,8 @@
         public void ShouldNotAnonymiseEmployerWhenVacancyIsNotAnonymised(string anonymousName, string employerName)
         {
             // Arrange.
-            var vacancyParty = new Fixture()
-                .Create<VacancyParty>();
+            var vacancyOwnerRelationship = new Fixture()
+                .Create<VacancyOwnerRelationship>();
 
             var employer = new Fixture()
                 .Build<Employer>()
@@ -43,7 +43,7 @@
                 .Create();
 
             // Act.
-            var converted = vacancyParty.Convert(employer, anonymousName);
+            var converted = vacancyOwnerRelationship.Convert(employer, anonymousName);
 
             // Assert.
             converted.Should().NotBeNull();

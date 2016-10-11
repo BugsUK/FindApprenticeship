@@ -14,6 +14,8 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Application.Interfaces;
+    using Domain.Raa.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using ViewModels.Vacancy;
 
     [TestFixture]
@@ -30,6 +32,7 @@
         private Mock<IDateTimeService> _dateTimeService;
         private List<VacancySummary> _vacanciesSubmittedToday;
         private IVacancyQAProvider _provider;
+        private Mock<IVacancySummaryRepository> _respository;
 
         [SetUp]
         public void Setup()
@@ -44,7 +47,7 @@
                 .With(v => v.DateSubmitted, submittedTodayDate)
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedSubmittedTodayCount).ToList();
 
             var vacanciesSubmittedYesterdayUpperBoundary = new Fixture().Build<Vacancy>()
@@ -52,14 +55,14 @@
                 .With(v => v.DateSubmitted, utcNow.Date.AddSeconds(-1))
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
             var vacanciesSubmittedYesterdayLowerBoundary = new Fixture().Build<Vacancy>()
                 .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, utcNow.Date.AddDays(-1))
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
 
             var submittedMoreThan48HoursDate = utcNow.AddHours(-48).AddSeconds(-1);
@@ -68,7 +71,7 @@
                 .With(v => v.DateSubmitted, submittedMoreThan48HoursDate)
                 .With(v => v.SubmissionCount, 1)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedSubmittedMoreThan48HoursCount).ToList();
 
             var resubmittedDate = utcNow.Date.AddDays(-1).AddSeconds(-1);
@@ -77,7 +80,7 @@
                 .With(v => v.DateSubmitted, resubmittedDate)
                 .With(v => v.SubmissionCount, 3)
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
-                .With(v => v.ProviderId, ProviderId)
+                .With(v => v.ContractOwnerId, ProviderId)
                 .CreateMany(ExpectedResubmittedCount).ToList();
 
             var vacancies = _vacanciesSubmittedToday;
@@ -86,8 +89,23 @@
             vacancies.AddRange(vacanciesSubmittedMoreThan48Hours);
             vacancies.AddRange(vacanciesResubmittedHours);
 
+            var metrics = new List<RegionalTeamMetrics>()
+            {
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastAnglia },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.North },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.NorthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthEast },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.WestMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.YorkshireAndHumberside },
+            };
+
+            int total;
+
             _vacancyPostingService = new Mock<IVacancyPostingService>();
-            _vacancyPostingService.Setup(p => p.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)).Returns(vacancies);
+            _vacancyPostingService.Setup(p => p.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total)).Returns(vacancies);
+            _vacancyPostingService.Setup(p => p.GetRegionalTeamsMetrics(It.IsAny<VacancySummaryByStatusQuery>())).Returns(metrics);
 
             _providerService = new Mock<IProviderService>();
             _providerService.Setup(s => s.GetProvider(It.IsAny<string>(), true)).Returns(new Fixture().Create<Provider>());
@@ -96,38 +114,30 @@
             _provider = new VacancyProviderBuilder().With(_vacancyPostingService).With(_providerService).With(_dateTimeService).Build();
         }
 
-        [TestCase(DashboardVacancySummaryFilterTypes.All, ExpectedSubmittedTodayCount + ExpectedSubmittedYesterdayCount + ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedToday, ExpectedSubmittedTodayCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedYesterday, ExpectedSubmittedYesterdayCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours, ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.Resubmitted, ExpectedResubmittedCount)]
-        public void ReturnsCorrectSearchViewModel(DashboardVacancySummaryFilterTypes filterType, int expectedCount)
+        [TestCase()]
+        public void ReturnsCorrectSearchViewModel()
         {
             //Arrange
             var searchViewModel = new DashboardVacancySummariesSearchViewModel
             {
-                FilterType = filterType
+                FilterType = VacanciesSummaryFilterTypes.All
             };
 
             //Act
             var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
 
             //Assert
-            vacancySummariesViewModel.SearchViewModel.FilterType.Should().Be(filterType);
+            vacancySummariesViewModel.SearchViewModel.FilterType.Should().Be(VacanciesSummaryFilterTypes.All);
             vacancySummariesViewModel.SearchViewModel.Should().Be(searchViewModel);
         }
 
-        [TestCase(DashboardVacancySummaryFilterTypes.All, ExpectedSubmittedTodayCount + ExpectedSubmittedYesterdayCount + ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedToday, ExpectedSubmittedTodayCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedYesterday, ExpectedSubmittedYesterdayCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours, ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.Resubmitted, ExpectedResubmittedCount)]
-        public void BasicCountTests(DashboardVacancySummaryFilterTypes filterType, int expectedCount)
+        [TestCase()]
+        public void BasicCountTests()
         {
             //Arrange
             var searchViewModel = new DashboardVacancySummariesSearchViewModel
             {
-                FilterType = filterType
+                FilterType = VacanciesSummaryFilterTypes.All
             };
 
             //Act
@@ -135,106 +145,7 @@
 
             //Assert
             vacancySummariesViewModel.Vacancies.Should().NotBeNullOrEmpty();
-            vacancySummariesViewModel.Vacancies.Count.Should().Be(expectedCount);
-        }
-
-        [Test]
-        public void GetAll_Counts()
-        {
-            //Arrange
-            var searchViewModel = new DashboardVacancySummariesSearchViewModel
-            {
-                FilterType = DashboardVacancySummaryFilterTypes.All
-            };
-
-            //Act
-            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
-
-            //Assert
-            vacancySummariesViewModel.SubmittedTodayCount.Should().Be(ExpectedSubmittedTodayCount);
-            vacancySummariesViewModel.SubmittedYesterdayCount.Should().Be(ExpectedSubmittedYesterdayCount);
-            vacancySummariesViewModel.SubmittedMoreThan48HoursCount.Should().Be(ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount);
-            vacancySummariesViewModel.ResubmittedCount.Should().Be(ExpectedResubmittedCount);
-        }
-
-        [Test]
-        public void GetAll_OrderedByDateSubmitted()
-        {
-            //Arrange
-            var searchViewModel = new DashboardVacancySummariesSearchViewModel
-            {
-                FilterType = DashboardVacancySummaryFilterTypes.All
-            };
-
-            //Act
-            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
-
-            //Assert
-            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateSubmitted);
-        }
-
-        [Test]
-        public void GetSubmittedToday_OrderedByDateFirstSubmitted()
-        {
-            //Arrange
-            var searchViewModel = new DashboardVacancySummariesSearchViewModel
-            {
-                FilterType = DashboardVacancySummaryFilterTypes.SubmittedToday
-            };
-
-            //Act
-            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
-
-            //Assert
-            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
-        }
-
-        [Test]
-        public void GetSubmittedYesterday_OrderedByDateFirstSubmitted()
-        {
-            //Arrange
-            var searchViewModel = new DashboardVacancySummariesSearchViewModel
-            {
-                FilterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday
-            };
-
-            //Act
-            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
-
-            //Assert
-            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
-        }
-
-        [Test]
-        public void GetSubmittedMoreThan48Hours_OrderedByDateSubmitted()
-        {
-            //Arrange
-            var searchViewModel = new DashboardVacancySummariesSearchViewModel
-            {
-                FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours
-            };
-
-            //Act
-            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
-
-            //Assert
-            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateSubmitted);
-        }
-
-        [Test]
-        public void GetResubmitted_OrderedByDateFirstSubmitted()
-        {
-            //Arrange
-            var searchViewModel = new DashboardVacancySummariesSearchViewModel
-            {
-                FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
-            };
-
-            //Act
-            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
-
-            //Assert
-            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
+            vacancySummariesViewModel.Vacancies.Count.Should().Be(18);
         }
 
         [Test]
@@ -245,8 +156,25 @@
             {
                 Mode = DashboardVacancySummariesMode.Review
             };
+
+            int total;
+
             _vacancyPostingService.Reset();
-            _vacancyPostingService.Setup(p => p.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)).Returns(new List<VacancySummary>());
+            _vacancyPostingService.Setup(p => p.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total)).Returns(new List<VacancySummary>());
+
+            var metrics = new List<RegionalTeamMetrics>()
+            {
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastAnglia },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.North },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.NorthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthEast },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.WestMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.YorkshireAndHumberside },
+            };
+
+            _vacancyPostingService.Setup(p => p.GetRegionalTeamsMetrics(It.IsAny<VacancySummaryByStatusQuery>())).Returns(metrics);
 
             //Act
             var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
@@ -260,11 +188,28 @@
         {
             var searchViewModel = new DashboardVacancySummariesSearchViewModel
             {
-                FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours,
+                FilterType = VacanciesSummaryFilterTypes.SubmittedMoreThan48Hours,
                 Mode = DashboardVacancySummariesMode.Review
             };
+
+            int total;
+
             _vacancyPostingService.Reset();
-            _vacancyPostingService.Setup(p => p.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)).Returns(_vacanciesSubmittedToday);
+            _vacancyPostingService.Setup(p => p.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total)).Returns(_vacanciesSubmittedToday);
+
+            var metrics = new List<RegionalTeamMetrics>()
+            {
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastAnglia, TotalCount = 1 },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.North },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.NorthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthEast },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.WestMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.YorkshireAndHumberside },
+            };
+
+            _vacancyPostingService.Setup(p => p.GetRegionalTeamsMetrics(It.IsAny<VacancySummaryByStatusQuery>())).Returns(metrics);
 
             //Act
             var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
@@ -280,12 +225,26 @@
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
 
+            int total;
+
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total))
                 .Returns(new List<VacancySummary>());
 
-            providerService.Setup(ps => ps.GetProvider(It.IsAny<int>())).Returns(new Provider());
+            var metrics = new List<RegionalTeamMetrics>()
+            {
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastAnglia },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.EastMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.North },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.NorthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthEast },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.SouthWest },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.WestMidlands },
+                new RegionalTeamMetrics() { RegionalTeam = RegionalTeam.YorkshireAndHumberside },
+            };
 
+            vacancyPostingService.Setup(p => p.GetRegionalTeamsMetrics(It.IsAny<VacancySummaryByStatusQuery>())).Returns(metrics);
+            
             var vacancyProvider =
                 new VacancyProviderBuilder()
                     .With(providerService)
@@ -296,455 +255,8 @@
             vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel());
 
             // Assert
-            vacancyPostingService.Verify(vps => vps.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA), Times.Once);
-        }
-
-        [Test]
-        public void GetPendingQAVacanciesOverviewShouldReturnVacanciesSubmittedToday()
-        {
-            //sub fri, seen: fri
-            //sub sat, seen: sat
-            //sub sun, seen: sun
-            //sub mon, seen: mon
-            //sub tues, seen: tues
-            //sub weds, seen: weds
-            //sub thurs, seen: thurs
-
-            var _lastSaturdayIn2015 = new DateTime(2015, 12, 26);
-            var _lastSundayIn2015 = new DateTime(2015, 12, 27);
-            var _lastMondayIn2015 = new DateTime(2015, 12, 28);
-            var _lastTuesdayIn2015 = new DateTime(2015, 12, 29);
-            var _lastWednesdayIn2015 = new DateTime(2015, 12, 30);
-            var _lastThursdayIn2015 = new DateTime(2015, 12, 31);
-            var _firstDayOf2016_Friday = new DateTime(2016, 1, 1);
-            var _firstSaturdayIn2016 = new DateTime(2016, 1, 2);
-            
-            //Date submitted, Date viewed, should be Visible
-            var paramSets = new List<Tuple<DateTime, DateTime, bool>>();
-
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstDayOf2016_Friday, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstSaturdayIn2016, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastSaturdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastSundayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSundayIn2015, _lastSundayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSundayIn2015, _lastMondayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastMondayIn2015, _lastMondayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastMondayIn2015, _lastTuesdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastTuesdayIn2015, _lastTuesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastTuesdayIn2015, _lastWednesdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastWednesdayIn2015,_lastWednesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastWednesdayIn2015,_lastThursdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastThursdayIn2015, _lastThursdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastThursdayIn2015, _firstDayOf2016_Friday, false));
-
-
-            foreach (var paramset in paramSets)
-            {
-                // Arrange
-                var today = paramset.Item2;
-                var vacancyPostingService = new Mock<IVacancyPostingService>();
-                var providerService = new Mock<IProviderService>();
-                var dateTimeService = new Mock<IDateTimeService>();
-                dateTimeService.Setup(dts => dts.UtcNow).Returns(today);
-                const int anInt = 1;
-                const string username = "userName";
-
-                var apprenticeshipVacancies = new List<VacancySummary>
-                {
-                    new VacancySummary
-                    {
-                        ClosingDate = today.AddDays(10),
-                        DateSubmitted = paramset.Item1,
-                        ProviderId = ProviderId,
-                        VacancyReferenceNumber = anInt,
-                        Status = VacancyStatus.ReservedForQA,
-                        QAUserName = username,
-                        DateStartedToQA = null
-                    }
-                };
-
-                vacancyPostingService.Setup(
-                    avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
-                    .Returns(apprenticeshipVacancies);
-
-                providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
-
-                var vacancyProvider =
-                    new VacancyProviderBuilder()
-                        .With(providerService)
-                        .With(vacancyPostingService)
-                        .With(dateTimeService)
-                        .Build();
-
-                //Act
-                var vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.SubmittedToday
-                    }).Vacancies;
-
-                //Assert
-                var shouldBeVisible = paramset.Item3;
-                if (shouldBeVisible)
-                {
-                    vacancies.Should().HaveCount(1);
-                }
-                else
-                {
-                    vacancies.Should().HaveCount(0);
-                }
-
-                //Act
-                vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.All
-                    }).Vacancies;
-
-                //Assert
-                vacancies.Should().HaveCount(1);
-
-                //Act
-                vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
-                    }).Vacancies;
-
-                //Assert
-                vacancies.Should().HaveCount(0);
-            }
-        }
-
-        [Test]
-        public void GetPendingQAVacanciesOverviewShouldReturnVacanciesSubmittedYesterday()
-        {
-            //sub fri, seen: sat, SUN, MON <==== special (should be sat)
-            //sub sat, seen: sun, MON, TUES <==== special (should be sun alone)
-            //sub sun, seen: mon, TUES <==== special (should be mon alone)
-            //sub mon, seen: tues <= normal
-            //sub tues, seen: weds <= normal
-            //sub weds, seen: thurs <= normal
-            //sub thurs, seen: fri <= normal
-
-            var _lastFridayIn2015 = new DateTime(2015, 12, 25);
-            var _lastSaturdayIn2015 = new DateTime(2015, 12, 26);
-            var _lastSundayIn2015 = new DateTime(2015, 12, 27);
-            var _lastMondayIn2015 = new DateTime(2015, 12, 28);
-            var _lastTuesdayIn2015 = new DateTime(2015, 12, 29);
-            var _lastWednesdayIn2015 = new DateTime(2015, 12, 30);
-            var _lastThursdayIn2015 = new DateTime(2015, 12, 31);
-            var _firstDayOf2016_Friday = new DateTime(2016, 1, 1);
-            var _firstSaturdayIn2016 = new DateTime(2016, 1, 2);
-            var _firstSundayIn2016 = new DateTime(2016, 1, 3);
-            var _firstMondayIn2016 = new DateTime(2016, 1, 4);
-
-            //Date submitted, Date viewed, should be Visible
-            var paramSets = new List<Tuple<DateTime, DateTime, bool>>();
-            
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstSaturdayIn2016, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstSundayIn2016, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstDayOf2016_Friday, _firstMondayIn2016, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastFridayIn2015, _lastTuesdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstSaturdayIn2016, _firstSundayIn2016, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_firstSaturdayIn2016, _firstMondayIn2016, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastTuesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastWednesdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSundayIn2015, _lastMondayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSundayIn2015, _lastTuesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSundayIn2015, _lastWednesdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastMondayIn2015, _lastTuesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastMondayIn2015, _lastWednesdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastTuesdayIn2015, _lastWednesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastTuesdayIn2015, _lastThursdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastThursdayIn2015, _firstDayOf2016_Friday, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastThursdayIn2015, _firstSaturdayIn2016, false));
-
-            foreach (var paramset in paramSets)
-            {
-                //Arrange
-                var dateSubmitted = paramset.Item1;
-                var closingDate = paramset.Item2.AddDays(14);
-                var vacancyPostingService = new Mock<IVacancyPostingService>();
-                var providerService = new Mock<IProviderService>();
-                var dateTimeService = new Mock<IDateTimeService>();
-                dateTimeService.Setup(dts => dts.UtcNow).Returns(paramset.Item2);
-                const int anInt = 1;
-                const string username = "userName";
-
-                var apprenticeshipVacancies = new List<VacancySummary>
-                {
-                    new VacancySummary
-                    {
-                        ClosingDate = closingDate,
-                        DateSubmitted = dateSubmitted,
-                        ProviderId = ProviderId,
-                        VacancyReferenceNumber = anInt,
-                        Status = VacancyStatus.ReservedForQA,
-                        QAUserName = username,
-                        DateStartedToQA = null
-                    }
-                };
-
-                vacancyPostingService.Setup(
-                    avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
-                    .Returns(apprenticeshipVacancies);
-
-                providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
-
-                var vacancyProvider =
-                    new VacancyProviderBuilder()
-                        .With(providerService)
-                        .With(vacancyPostingService)
-                        .With(dateTimeService)
-                        .Build();
-
-                //Act
-                var vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday
-                    }).Vacancies;
-
-
-                //Assert
-                var shouldBeVisible = paramset.Item3;
-                if (shouldBeVisible)
-                {
-                    vacancies.Should().HaveCount(1);
-                }
-                else
-                {
-                    vacancies.Should().HaveCount(0);
-                }
-                //Act
-                vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.All
-                    }).Vacancies;
-
-                //Assert
-                vacancies.Should().HaveCount(1);
-
-                //Act
-                vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
-                    }).Vacancies;
-
-                //Assert
-                vacancies.Should().HaveCount(0);
-            }
-        }
-
-        [Test]
-        public void GetPendingQAVacanciesOverviewShouldReturnVacanciesSubmittedMoreThan48HoursAgo_IgnoreWeekends()
-        {
-            //sub fri, not seen: sun mon, seen: tues <==== special (should be sun)
-            //sub sat, not seen: mon tues, seen: weds <=== special (should be mon)
-            //sub sun, not seen: tues, seen: weds <=== special (should be tues)
-            //sub mon, not seen: tues, seen: weds <= normal
-            //sub tues, not seen: weds, seen: thurs <= normal
-            //sub weds, not seen: thurs, seen: fri <= normal
-            //sub thurs, not seen: fri, seen: sat <= normal
-
-            var _lastFridayIn2015 = new DateTime(2015, 12, 25);
-            var _lastSaturdayIn2015 = new DateTime(2015, 12, 26);
-            var _lastSundayIn2015 = new DateTime(2015, 12, 27);
-            var _lastMondayIn2015 = new DateTime(2015, 12, 28);
-            var _lastTuesdayIn2015 = new DateTime(2015, 12, 29);
-            var _lastWednesdayIn2015 = new DateTime(2015, 12, 30);
-            var _lastThursdayIn2015 = new DateTime(2015, 12, 31);
-            var _firstDayOf2016_Friday = new DateTime(2016, 1, 1);
-            var _firstSaturdayIn2016 = new DateTime(2016, 1, 2);
-
-            //Date submitted, Date viewed, should be Visible
-            var paramSets = new List<Tuple<DateTime, DateTime, bool>>();
-
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastFridayIn2015, _lastSundayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastFridayIn2015, _lastMondayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastFridayIn2015, _lastTuesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastMondayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastTuesdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSaturdayIn2015, _lastWednesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSundayIn2015, _lastTuesdayIn2015, false));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastSundayIn2015, _lastWednesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastMondayIn2015, _lastWednesdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastTuesdayIn2015, _lastThursdayIn2015, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastWednesdayIn2015, _firstDayOf2016_Friday, true));
-            paramSets.Add(new Tuple<DateTime, DateTime, bool>(_lastThursdayIn2015, _firstSaturdayIn2016, true));
-
-            foreach (var paramSet in paramSets)
-            {
-                // Arrange
-                var today = paramSet.Item2;
-                var dateSubmitted = paramSet.Item1;
-                var vacancyPostingService = new Mock<IVacancyPostingService>();
-                var providerService = new Mock<IProviderService>();
-                var dateTimeService = new Mock<IDateTimeService>();
-                dateTimeService.Setup(dts => dts.UtcNow).Returns(today);
-                const int anInt = 1;
-                const string username = "userName";
-
-                var apprenticeshipVacancies = new List<VacancySummary>
-                {
-                    new VacancySummary
-                    {
-                        ClosingDate = dateSubmitted.AddDays(14),
-                        DateSubmitted = dateSubmitted,
-                        ProviderId = ProviderId,
-                        VacancyReferenceNumber = anInt,
-                        Status = VacancyStatus.ReservedForQA,
-                        QAUserName = username,
-                        DateStartedToQA = null
-                    }
-                };
-
-                vacancyPostingService.Setup(
-                    avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
-                    .Returns(apprenticeshipVacancies);
-
-                providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
-
-                var vacancyProvider =
-                    new VacancyProviderBuilder()
-                        .With(providerService)
-                        .With(vacancyPostingService)
-                        .With(dateTimeService)
-                        .Build();
-
-                //Act
-                var vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours
-                    }).Vacancies;
-
-                //Assert
-                var shouldBeVisible = paramSet.Item3;
-                if (shouldBeVisible)
-                {
-                    vacancies.Should().HaveCount(1);
-                }
-                else
-                {
-                    vacancies.Should().HaveCount(0, $"${paramSet.Item1} ${paramSet.Item2} ${paramSet.Item3}");
-                }
-
-                //Act
-                vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.All
-                    }).Vacancies;
-
-                //Assert
-                vacancies.Should().HaveCount(1);
-
-                //Act
-                vacancies =
-                    vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                    {
-                        FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
-                    }).Vacancies;
-
-                //Assert
-                vacancies.Should().HaveCount(0);
-            }
-        }
-
-        [Test]
-        public void GetPendingQAVacanciesOverviewShouldReturnVacanciesResubmitted()
-        {
-            // Arrange
-            var today = new DateTime(2016, 3, 16, 12, 0, 0);
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var dateTimeService = new Mock<IDateTimeService>();
-            dateTimeService.Setup(dts => dts.UtcNow).Returns(today);
-            const int anInt = 1;
-            const string username = "userName";
-            const int submissionCount = 2;
-
-            var apprenticeshipVacancies = new List<VacancySummary>
-            {
-                new VacancySummary
-                {
-                    ClosingDate = today,
-                    DateSubmitted = today,
-                    ProviderId = ProviderId,
-                    VacancyReferenceNumber = anInt,
-                    Status = VacancyStatus.ReservedForQA,
-                    QAUserName = username,
-                    DateStartedToQA = null,
-                    SubmissionCount = submissionCount
-                }
-            };
-
-            vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
-                .Returns(apprenticeshipVacancies);
-
-            providerService.Setup(s => s.GetProviders(It.IsAny<IEnumerable<int>>())).Returns(new List<Provider> { new Fixture().Build<Provider>().With(p => p.ProviderId, ProviderId).Create() });
-
-            var vacancyProvider =
-                new VacancyProviderBuilder()
-                    .With(providerService)
-                    .With(vacancyPostingService)
-                    .With(dateTimeService)
-                    .Build();
-
-            //Act
-            var vacancies =
-                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                {
-                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedToday
-                }).Vacancies;
-
-            //Assert
-            vacancies.Should().HaveCount(1);
-
-            //Act
-            vacancies =
-                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                {
-                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday
-                }).Vacancies;
-
-            //Assert
-            vacancies.Should().HaveCount(0);
-
-            //Act
-            vacancies =
-                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                {
-                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours
-                }).Vacancies;
-
-            //Assert
-            vacancies.Should().HaveCount(0);
-
-            //Act
-            vacancies =
-                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                {
-                    FilterType = DashboardVacancySummaryFilterTypes.All
-                }).Vacancies;
-
-            //Assert
-            vacancies.Should().HaveCount(1);
-
-            //Act
-            vacancies =
-                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
-                {
-                    FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
-                }).Vacancies;
-
-            //Assert
-            vacancies.Should().HaveCount(1);
+            vacancyPostingService.Verify(vps => vps.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total), Times.Once);
+            vacancyPostingService.Verify(vps => vps.GetRegionalTeamsMetrics(It.IsAny<VacancySummaryByStatusQuery>()), Times.Once);
         }
     }
 }

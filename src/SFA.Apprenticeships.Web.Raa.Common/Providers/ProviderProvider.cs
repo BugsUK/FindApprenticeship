@@ -121,38 +121,38 @@
             return viewModel;
         }
 
-        public VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId)
+        public VacancyOwnerRelationshipViewModel GetVacancyOwnerRelationshipViewModel(int vacancyOwnerRelationshipId)
         {
-            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId, true);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
-            return vacancyParty.Convert(employer);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancyOwnerRelationshipId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
+            return vacancyOwnerRelationship.Convert(employer);
         }
 
-        public VacancyPartyViewModel GetVacancyPartyViewModel(int providerSiteId, string edsUrn)
+        public VacancyOwnerRelationshipViewModel GetVacancyOwnerRelationshipViewModel(int providerSiteId, string edsUrn)
         {
-            var vacancyParty = _providerService.GetVacancyParty(providerSiteId, edsUrn);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
-            return vacancyParty.Convert(employer);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(providerSiteId, edsUrn);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
+            return vacancyOwnerRelationship.Convert(employer);
         }
 
-        public VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel)
+        public VacancyOwnerRelationshipViewModel ConfirmVacancyOwnerRelationship(VacancyOwnerRelationshipViewModel viewModel)
         {
-            if (_providerService.IsADeletedVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn))
+            if (_providerService.IsADeletedVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn))
             {
-                _providerService.ResurrectVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
+                _providerService.ResurrectVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
             } 
 
-            var vacancyParty = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
-            vacancyParty.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
-            vacancyParty.EmployerDescription = viewModel.EmployerDescription;
-            vacancyParty = _providerService.SaveVacancyParty(vacancyParty);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
+            vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+            vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
+            vacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
 
             var vacancy = GetVacancy(viewModel);
             if (vacancy != null)
             {
-                vacancy.OwnerPartyId = vacancyParty.VacancyPartyId;
-                vacancy.EmployerWebsiteUrl = vacancyParty.EmployerWebsiteUrl;
-                vacancy.EmployerDescription = vacancyParty.EmployerDescription;
+                vacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId;
+                vacancy.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
+                vacancy.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
                 if (viewModel.IsEmployerLocationMainApprenticeshipLocation != null)
                     vacancy.IsEmployerLocationMainApprenticeshipLocation =
                         viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
@@ -161,13 +161,13 @@
                 _vacancyPostingService.UpdateVacancy(vacancy);
             }
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
-            var result = vacancyParty.Convert(employer);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
+            var result = vacancyOwnerRelationship.Convert(employer);
             
             return result;
         }
 
-        private Vacancy GetVacancy(VacancyPartyViewModel viewModel)
+        private Vacancy GetVacancy(VacancyOwnerRelationshipViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid) ??
                           _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
@@ -175,23 +175,23 @@
             return vacancy;
         }
 
-        public EmployerSearchViewModel GetVacancyPartyViewModels(int providerSiteId)
+        public EmployerSearchViewModel GetVacancyOwnerRelationshipViewModels(int providerSiteId)
         {
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
             var parameters = new EmployerSearchRequest(providerSiteId);
-            var vacancyParties = _providerService.GetVacancyParties(parameters, 1, pageSize);
+            var vacancyParties = _providerService.GetVacancyOwnerRelationships(parameters, 1, pageSize);
 
             var employerIds = vacancyParties.Page
-                .Select(vacancyParty => vacancyParty.EmployerId)
+                .Select(vacancyOwnerRelationship => vacancyOwnerRelationship.EmployerId)
                 .Distinct();
 
             var employers = _employerService.GetEmployers(employerIds);
 
             var resultsPage = vacancyParties.ToViewModel(vacancyParties.Page
                 // Exclude employers from search results that are NOT returned from Employer Service, status may be 'Suspended' etc.
-                .Where(vacancyParty => employers
-                    .Any(employer => employer.EmployerId == vacancyParty.EmployerId))
-                .Select(vacancyParty => vacancyParty.Convert(employers.Single(employer => employer.EmployerId == vacancyParty.EmployerId))
+                .Where(vacancyOwnerRelationship => employers
+                    .Any(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
+                .Select(vacancyOwnerRelationship => vacancyOwnerRelationship.Convert(employers.Single(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
                     .Employer
                     .ConvertToResult()));
 
@@ -202,7 +202,7 @@
             };
         }
 
-        public EmployerSearchViewModel GetVacancyPartyViewModels(EmployerSearchViewModel viewModel)
+        public EmployerSearchViewModel GetVacancyOwnerRelationshipViewModels(EmployerSearchViewModel viewModel)
         {
             EmployerSearchRequest parameters;
 
@@ -223,7 +223,7 @@
             }
 
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
-            var vacancyParties = _providerService.GetVacancyParties(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
+            var vacancyParties = _providerService.GetVacancyOwnerRelationships(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
 
             var employerIds = vacancyParties.Page
                 .Select(vp => vp.EmployerId)
@@ -233,9 +233,9 @@
 
             var resultsPage = vacancyParties.ToViewModel(vacancyParties.Page
                 // Exclude employers from search results that are NOT returned from Employer Service, status may be 'Suspended' etc.
-                .Where(vacancyParty => employers
-                    .Any(employer => employer.EmployerId == vacancyParty.EmployerId))
-                .Select(vacancyParty => vacancyParty.Convert(employers.Single(employer => employer.EmployerId == vacancyParty.EmployerId))
+                .Where(vacancyOwnerRelationship => employers
+                    .Any(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
+                .Select(vacancyOwnerRelationship => vacancyOwnerRelationship.Convert(employers.Single(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
                     .Employer
                     .ConvertToResult()));
 

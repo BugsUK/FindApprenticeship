@@ -30,9 +30,9 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
             _vacancyLocationWriteRepository.DeleteFor(vacancyId);
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyOwnerRelationshipIds)
         {
-            return _vacancyLocationReadRepository.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+            return _vacancyLocationReadRepository.GetVacancyLocationsByVacancyIds(vacancyOwnerRelationshipIds);
         }
     }
 }

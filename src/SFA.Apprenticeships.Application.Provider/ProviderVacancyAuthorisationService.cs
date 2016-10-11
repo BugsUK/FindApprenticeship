@@ -41,7 +41,7 @@
             }
             var provider = _providerService.GetProvider(ukprn);
             var vacancyId = vacancy.VacancyId;
-            var contractOwnerId = vacancy.ProviderId;
+            var contractOwnerId = vacancy.ContractOwnerId;
             
             if (provider == null)
             {
