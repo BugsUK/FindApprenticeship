@@ -129,7 +129,7 @@
                 .MapMemberFrom(v => v.EmployersRecruitmentWebsite, av => av.OfflineApplicationUrl)
                 .IgnoreMember(v => v.BeingSupportedBy)
                 .IgnoreMember(v => v.LockedForSupportUntil)
-                .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)
+                .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.NoOfOfflineApplicants)
                 .ForMember(v => v.NoOfOfflineSystemApplicants, opt => opt.UseValue(0))
                 .MapMemberFrom(v => v.MasterVacancyId, av => av.ParentVacancyId)
                 .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
@@ -171,7 +171,7 @@
                 .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
                 .MapMemberFrom(av => av.OfflineApplicationInstructions, v => v.EmployersApplicationInstructions)
                 .MapMemberFrom(av => av.OfflineApplicationUrl, v => v.EmployersRecruitmentWebsite)
-                .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
+                .MapMemberFrom(av => av.NoOfOfflineApplicants, v => v.NoOfOfflineApplicants)
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .MapMemberFrom(av => av.EmployerWebsiteUrl, v => v.EmployersWebsite)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
@@ -195,6 +195,7 @@
                 .IgnoreMember(av => av.SecondQuestionComment)
                 .MapMemberFrom(av => av.AdditionalLocationInformation, v => v.AdditionalLocationInformation)
                 .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
+                .IgnoreMember(av => av.ApplicantCount)
                 .IgnoreMember(av => av.EmployerDescriptionComment)
                 .IgnoreMember(av => av.EmployerWebsiteUrlComment)
                 .IgnoreMember(av => av.LocationAddressesComment)
@@ -247,7 +248,6 @@
                 .MapMemberFrom(av => av.EditedInRaa, v => v.EditedInRaa)
                 .MapMemberFrom(av => av.VacancySource, v => v.VacancySourceId)
                 .IgnoreMember(av => av.EmployerName)
-                .IgnoreMember(av => av.ApplicationOrClickThroughCount)
                 .IgnoreMember(av => av.NewApplicationCount)
                 .AfterMap((v, av) =>
                 {
@@ -307,7 +307,7 @@
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
                 .MapMemberFrom(av => av.WorkingWeek, v => v.WorkingWeek)
                 .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
-                .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
+                .MapMemberFrom(av => av.NoOfOfflineApplicants, v => v.NoOfOfflineApplicants)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
                 .MapMemberFrom(av => av.DeliveryOrganisationId, v => v.DeliveryOrganisationID)
                 .IgnoreMember(av => av.TrainingType)
@@ -334,9 +334,9 @@
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .IgnoreMember(av => av.RegionalTeam)
+                .IgnoreMember(av => av.ApplicantCount)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
                 .IgnoreMember(av => av.EmployerName)
-                .IgnoreMember(av => av.ApplicationOrClickThroughCount)
                 .IgnoreMember(av => av.NewApplicationCount)
                 .AfterMap((v, av) =>
                 {
@@ -385,7 +385,7 @@
                 .IgnoreMember(av => av.PossibleStartDate)
                 .IgnoreMember(av => av.WorkingWeek)
                 .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
-                .IgnoreMember(av => av.OfflineApplicationClickThroughCount)
+                .MapMemberFrom(av => av.NoOfOfflineApplicants, v => v.NoOfOfflineApplicants)
                 .IgnoreMember(av => av.VacancyManagerId)
                 .IgnoreMember(av => av.DeliveryOrganisationId)
                 .IgnoreMember(av => av.TrainingType)
@@ -414,8 +414,8 @@
                 .IgnoreMember(av => av.RegionalTeam)
                 .IgnoreMember(av => av.VacancyLocationType)
                 .IgnoreMember(av => av.ExpectedDuration)
+                .MapMemberFrom(av => av.ApplicantCount, v => v.ApplicantCount)
                 .MapMemberFrom(av => av.EmployerName, v => v.EmployerName)
-                .MapMemberFrom(av => av.ApplicationOrClickThroughCount, v => v.ApplicantCount)
                 .MapMemberFrom(av => av.NewApplicationCount, v => v.NewApplicantCount)
                 .AfterMap((v, av) =>
                 {
