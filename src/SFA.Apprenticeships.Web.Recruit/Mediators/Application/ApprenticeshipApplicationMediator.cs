@@ -198,7 +198,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         {
             var viewModel = _applicationProvider.SendSuccessfulDecision(applicationSelectionViewModel);
             var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(viewModel);
-            applicationViewModel.ConfirmationStatusSentMessage = ApplicationViewModelMessages.UnsuccessfulDecisionFormat;
+            applicationViewModel.ConfirmationStatusSentMessage = ApplicationViewModelMessages.SuccessfulDecisionFormat;
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok, applicationViewModel);
         }
 

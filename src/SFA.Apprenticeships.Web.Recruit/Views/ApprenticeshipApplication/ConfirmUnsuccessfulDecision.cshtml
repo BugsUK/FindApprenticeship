@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
-@using SFA.Apprenticeships.Web.Recruit.Constants
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
 
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
 
@@ -14,8 +13,7 @@
     @Html.HiddenFor(m => m.ApplicationSelection.ApplicationId)
     @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
-    @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
-    @Html.HiddenFor(m=>m.ApplicationSelection.CandidateApplicationFeedback)
+    @Html.HiddenFor(m => m.ApplicationSelection.PageSize)    
 
     <div>
         <div class="hgroup">
