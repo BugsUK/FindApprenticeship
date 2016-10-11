@@ -169,12 +169,12 @@
 
         public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
-            _logger.Debug("Calling Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
+            _logger.Debug("Calling Mongodb to increment the NoOfOfflineApplicants property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
 
             var args = new FindAndModifyArgs
             {
                 Query = new QueryBuilder<Vacancy>().And(Query<Vacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber), Query<Vacancy>.EQ(d => d.OfflineVacancy, true)),
-                Update = MongoDB.Driver.Builders.Update.Inc("OfflineApplicationClickThroughCount", 1),
+                Update = MongoDB.Driver.Builders.Update.Inc("NoOfOfflineApplicants", 1),
                 VersionReturned = FindAndModifyDocumentVersion.Modified
             };
 
@@ -183,13 +183,13 @@
             if (result.Ok)
             {
                 _logger.Debug(
-                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} successfully",
+                    "Call to Mongodb to increment the NoOfOfflineApplicants property by one for vacancy with reference number: {0} successfully",
                     vacancyReferenceNumber);
             }
             else
             {
                 _logger.Warn(
-                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} failed: {1}, {2}",
+                    "Call to Mongodb to increment the NoOfOfflineApplicants property by one for vacancy with reference number: {0} failed: {1}, {2}",
                     vacancyReferenceNumber, result.Code, result.ErrorMessage);
             }
         }

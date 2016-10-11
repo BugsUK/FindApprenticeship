@@ -91,7 +91,7 @@
         public void OfflineApplicationClickThroughCount()
         {
             //Arrange
-            var source = new Fixture().Build<Vacancy>().With(av => av.OfflineApplicationClickThroughCount, 3).Create();
+            var source = new Fixture().Build<Vacancy>().With(av => av.NoOfOfflineApplicants, 3).Create();
 
             //Act
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
