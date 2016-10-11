@@ -159,7 +159,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 			and (VacancyRegion.GeographicRegionID != candidateregion.GeographicRegionID)))
 
 		AND ((@AgeRange = -1 ) or (@AgeRange <> -1 and c.DateofBirth between @MINDT and @MAXDT))
-		and (@ProviderSiteID = -1 or TP.ProviderSiteID = @ProviderSiteID)
+		and (@ProviderSiteID = 0 or TP.ProviderSiteID = @ProviderSiteID)
 		AND (@ManagedBy = '-1' OR TP.ManagingAreaID IN (SELECT LocalAuthorityGroupID FROM dbo.ReportGetChildManagingAreas(@ManagedBy)))
 		and a.applicationStatusTypeId = @succesfulApp
 		AND (@RecAgentID = -1 or v.vacancymanagerid = @RecAgentID)
