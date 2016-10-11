@@ -24,8 +24,6 @@
 
         string Title { get; }
 
-        int? ApplicationOrClickThroughCount { get; set; }
-
         bool? OfflineVacancy { get; }
     }
 }

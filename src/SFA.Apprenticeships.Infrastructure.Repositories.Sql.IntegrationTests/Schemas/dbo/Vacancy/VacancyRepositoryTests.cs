@@ -404,7 +404,7 @@
             vacancy.DurationType = DurationType.Years;
             vacancy.ExpectedDuration = "2 years";
 
-            vacancy.OfflineApplicationClickThroughCount = 0;
+            vacancy.NoOfOfflineApplicants = 0;
             
             vacancy = writeRepository.Create(vacancy);
             
@@ -416,7 +416,7 @@
 
             var entity = readRepository.Get(vacancy.VacancyId);
 
-            entity.OfflineApplicationClickThroughCount.Should().Be(5);
+            entity.NoOfOfflineApplicants.Should().Be(5);
         }
     }
 }

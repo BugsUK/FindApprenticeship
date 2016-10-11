@@ -41,8 +41,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     break;
                 case VacancySummaryOrderByColumn.Applications:
                     orderByField = @"(CASE v.ApplyOutsideNAVMS
- 			                                WHEN 1 THEN 0
-			                                ELSE dbo.GetNewApplicantCount(v.VacancyId)
+ 			                                WHEN 1 THEN COALESCE(v.NoOfOfflineApplicants, 0)
+			                                ELSE dbo.GetApplicantCount(v.VacancyId)
 		                                END)";
                     break;
                 case VacancySummaryOrderByColumn.Employer:
@@ -98,11 +98,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             v.PostCode,
                             v.ApplyOutsideNAVMS,
                             v.ApplicationClosingDate,
-		                    CASE v.ApplyOutsideNAVMS
- 			                    WHEN 1 THEN COALESCE(v.NoOfOfflineApplicants, 0)
-			                    ELSE dbo.GetApplicantCount(v.VacancyId)
-		                    END
-		                    AS ApplicantCount,
+                            v.NoOfOfflineApplicants,
+                            CASE v.ApplyOutsideNAVMS
+ 			                    WHEN 1 THEN 0
+                                ELSE dbo.GetApplicantCount(v.VacancyId) 
+                            END
+                            AS ApplicantCount,
 		                    CASE v.ApplyOutsideNAVMS
  			                    WHEN 1 THEN 0
 			                    ELSE dbo.GetNewApplicantCount(v.VacancyId)
