@@ -253,10 +253,28 @@ WriteAttribute("href", Tuple.Create(" href=\"", 1950), Tuple.Create("\"", 2006)
 , 1957), false)
 );
 
-WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
+WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n        <p");
+
+WriteLiteral(" class=\"hide-print\"");
+
+WriteLiteral(">\r\n            <a");
+
+WriteLiteral(" id=\"return-to-my-feedback\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 2126), Tuple.Create("\"", 2196)
+            
+            #line 51 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+, Tuple.Create(Tuple.Create("", 2133), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback)
+            
+            #line default
+            #line hidden
+, 2133), false)
+);
+
+WriteLiteral(">Return to your feedback</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 53 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 56 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate));
 
             
@@ -265,7 +283,7 @@ Write(Html.DisplayFor(m => m.Candidate));
 WriteLiteral("\r\n");
 
             
-            #line 54 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 57 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.Education));
 
             
@@ -274,7 +292,7 @@ Write(Html.DisplayFor(m => m.Candidate.Education));
 WriteLiteral("\r\n");
 
             
-            #line 55 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 58 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.Qualifications, "Application/Qualifications"));
 
             
@@ -283,7 +301,7 @@ Write(Html.DisplayFor(m => m.Candidate.Qualifications, "Application/Qualificatio
 WriteLiteral("\r\n");
 
             
-            #line 56 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 59 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.WorkExperience, "Application/WorkExperience"));
 
             
@@ -292,7 +310,7 @@ Write(Html.DisplayFor(m => m.Candidate.WorkExperience, "Application/WorkExperien
 WriteLiteral("\r\n");
 
             
-            #line 57 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 60 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.TrainingCourses, "Application/TrainingCourses"));
 
             
@@ -301,7 +319,7 @@ Write(Html.DisplayFor(m => m.Candidate.TrainingCourses, "Application/TrainingCou
 WriteLiteral("\r\n");
 
             
-            #line 58 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 61 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.AboutYou));
 
             
@@ -320,7 +338,7 @@ WriteLiteral(">\r\n        Additional questions\r\n    </h2>\r\n");
 WriteLiteral("    ");
 
             
-            #line 64 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 67 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers));
 
             
@@ -331,7 +349,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 65 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 68 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability"));
 
             
@@ -345,14 +363,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2820), Tuple.Create("\"", 2876)
+WriteAttribute("href", Tuple.Create(" href=\"", 3008), Tuple.Create("\"", 3064)
             
-            #line 70 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2827), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+            #line 73 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+, Tuple.Create(Tuple.Create("", 3015), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2827), false)
+, 3015), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");

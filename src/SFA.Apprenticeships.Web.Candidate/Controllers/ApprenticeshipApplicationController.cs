@@ -393,8 +393,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.View(UserContext.CandidateId, id);
-
+                var response = _apprenticeshipApplicationMediator.CandidateApplicationFeedback(UserContext.CandidateId, id);
                 switch (response.Code)
                 {
                     case ApprenticeshipApplicationMediatorCodes.View.Error:
@@ -404,7 +403,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.View.Ok:
-                        return View();
+                        return View(response.ViewModel);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

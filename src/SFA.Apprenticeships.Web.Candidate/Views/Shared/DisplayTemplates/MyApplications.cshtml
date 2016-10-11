@@ -66,14 +66,15 @@ else
                                     @foreach (var application in Model.SuccessfulApprenticeshipApplications)
                                     {
                                         <tr>
-                                            <td>
+                                            <td>                                                
                                                 @if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                                 {
-                                                    @application.Title @:with @application.EmployerName
-                                            }
+                                                    @application.Title
+                                                    @:with @application.EmployerName
+                                                }
                                                 else
                                                 {
-                                                    @Html.ActionLink(application.Title + " with " + application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                    @Html.ActionLink(application.Title + " with " + application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new {id = application.VacancyId}, new {@class = "link-unimp"})
                                                 }
                                             </td>
                                             <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
