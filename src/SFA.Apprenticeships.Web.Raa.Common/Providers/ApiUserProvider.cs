@@ -72,5 +72,12 @@
 
             return ApiUserMappers.Map<ApiUser, ApiUserViewModel>(updatedApiUser);
         }
+
+        public ApiUserViewModel ResetApiUserPassword(ApiUserViewModel viewModel)
+        {
+            var apiUser = _apiUserRepository.ResetApiUserPassword(viewModel.ExternalSystemId);
+
+            return ApiUserMappers.Map<ApiUser, ApiUserViewModel>(apiUser);
+        }
     }
 }
