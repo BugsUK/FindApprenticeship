@@ -120,6 +120,7 @@
             // Arrange.
             var applicationId = Guid.NewGuid();
             const int nextLegacyApplicationId = 2;
+            string feedback = "Does not have permission to work in the UK";
 
             var apprenticeshipApplicationDetail = new ApprenticeshipApplicationDetail
             {
@@ -155,7 +156,7 @@
                     break;
 
                 case ApplicationStatuses.Unsuccessful:
-                    _apprenticeshipApplicationService.SetUnsuccessfulDecision(applicationId);
+                    _apprenticeshipApplicationService.SetUnsuccessfulDecision(applicationId, feedback);
                     break;
             }
 

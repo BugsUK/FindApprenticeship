@@ -239,7 +239,7 @@
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok:
-                    return View("SentDecisionConfirmation", apprenticeshipApplicationViewModel);
+                    return View("SentDecisionConfirmation", response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -268,7 +268,7 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "SendUnsuccessfulDecision")]
         public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
+            var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel);
 
             switch (response.Code)
             {

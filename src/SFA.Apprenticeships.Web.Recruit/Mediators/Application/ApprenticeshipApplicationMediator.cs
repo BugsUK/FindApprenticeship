@@ -215,13 +215,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel applicationViewModel)
         {
-            var viewModel = _applicationProvider.SendUnsuccessfulDecision(applicationSelectionViewModel);
-            var applicationViewModel =
-                _applicationProvider.GetApprenticeshipApplicationViewModel(viewModel);
-            applicationViewModel.ConfirmationStatusSentMessage = ApplicationViewModelMessages.UnsuccessfulDecisionFormat;
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, applicationViewModel);
+            var selectionViewModel = _applicationProvider.SendUnsuccessfulDecision(applicationViewModel.ApplicationSelection, applicationViewModel.CandidateApplicationFeedback);
+            var updatedApplicationViewModel =
+                _applicationProvider.GetApprenticeshipApplicationViewModel(selectionViewModel);
+            updatedApplicationViewModel.ConfirmationStatusSentMessage = ApplicationViewModelMessages.UnsuccessfulDecisionFormat;
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, updatedApplicationViewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
