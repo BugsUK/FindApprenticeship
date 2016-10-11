@@ -305,7 +305,7 @@ as
      AND ((@AgeRange = -1 ) or (@AgeRange <> -1 and can.DateofBirth between @MINDT and @MAXDT))  
      AND ((@EthnicityID = '-1') OR (@EthnicityID <> '-1' AND eth.id IS NOT null))  
      AND ((@DisabilityID = -1) OR (@DisabilityID <> -1 AND can.Disability = @DisabilityID))  
-     AND ((@ProviderSiteID = -1) or (@ProviderSiteID <> -1 AND tpr.ProviderSiteID = @ProviderSiteID))  
+     AND ((@ProviderSiteID = 0) or (@ProviderSiteID <> -1 AND tpr.ProviderSiteID = @ProviderSiteID))  
      AND ((@VacancyReferenceNumber = -1) or (@VacancyReferenceNumber <> -1 AND vac.VacancyReferenceNumber = @VacancyReferenceNumber))  
      AND ((LTRIM(@VacancyTitle) = '') or (LTRIM(@VacancyTitle) <> '' AND vac.Title = @VacancyTitle))  
      AND ((@EmployerID = -1) or (@EmployerID <> -1 AND vpr.EmployerID = @EmployerID))  
