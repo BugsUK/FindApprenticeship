@@ -457,27 +457,63 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n                    <div");
 
+WriteAttribute("class", Tuple.Create(" class=\"", 4342), Tuple.Create("\"", 4495)
+, Tuple.Create(Tuple.Create("", 4350), Tuple.Create("form-group", 4350), true)
             
             #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                    
+, Tuple.Create(Tuple.Create(" ", 4360), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineApplicationUrl))
+            
+            #line default
+            #line hidden
+, 4361), false)
+);
+
+WriteLiteral(">\r\n                        <a");
+
+WriteAttribute("name", Tuple.Create(" name=\"", 4525), Tuple.Create("\"", 4596)
+            
+            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 4532), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.OfflineApplicationUrl).ToString().ToLower()
+            
+            #line default
+            #line hidden
+, 4532), false)
+);
+
+WriteLiteral("></a>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 71 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+                   Write(Html.LabelFor(m => m.OfflineApplicationUrl));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+                        
             
             #line default
             #line hidden
             
-            #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                     if (Model.IsEmployerLocationMainApprenticeshipLocation != true && Model.LocationAddresses != null && Model.LocationAddresses.Count > 1)
-                    {
+            #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+                         if (Model.IsEmployerLocationMainApprenticeshipLocation != true && Model.LocationAddresses != null && Model.LocationAddresses.Count > 1)
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <span");
+WriteLiteral("                            <p");
 
 WriteLiteral(" class=\"inline-text\"");
 
-WriteLiteral("><br />Alternatively, you can <button");
+WriteLiteral(">Alternatively, you can <button");
 
 WriteLiteral(" id=\"multiple-offline-application-urls-button\"");
 
@@ -489,54 +525,58 @@ WriteLiteral(" name=\"MultipleOfflineApplicationUrlsAction\"");
 
 WriteLiteral(" value=\"MultipleOfflineApplicationUrls\"");
 
-WriteLiteral(">enter a different web address for each vacancy location</button></span>\r\n");
-
-            
-            #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                    }
-                    
-            
-            #line default
-            #line hidden
-            
-            #line 73 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                                                   
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                    ");
-
-            
-            #line 74 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-               Write(Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, id = "apprenticeship-offline-application-url"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral(">enter a different web address for each vacancy location</button></p>\r\n");
 
             
             #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-               Write(Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationUrlComment)));
+                        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        ");
+
+            
+            #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+                   Write(Html.TextBoxFor(m => m.OfflineApplicationUrl, new { @class = "width-all-1-1 form-control", type = "text", size = 12, id = "apprenticeship-offline-application-url" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-               Write(Html.ValidationMessageFor(m => m.OfflineApplicationUrlComment));
+            #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+                   Write(Html.ValidationMessageFor(m => m.OfflineApplicationUrl));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n                <div");
+WriteLiteral("\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 78 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+                   Write(Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationUrlComment)));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+                   Write(Html.ValidationMessageFor(m => m.OfflineApplicationUrlComment));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -547,7 +587,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 80 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium", id = "apprenticheship-offline-application-instructions"}));
 
             
@@ -558,7 +598,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.EditorFor(m => m.OfflineApplicationInstructionsComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationInstructionsComment)));
 
             
@@ -569,7 +609,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 82 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                Write(Html.ValidationMessageFor(m => m.OfflineApplicationInstructionsComment));
 
             
@@ -579,77 +619,77 @@ WriteLiteral("\r\n                    <br/>\r\n                </div>\r\n       
 "</div>\r\n    </div>\r\n");
 
             
-            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 92 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 89 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 93 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 89 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 93 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                           
     
             
             #line default
             #line hidden
             
-            #line 90 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 94 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.Ukprn));
 
             
             #line default
             #line hidden
             
-            #line 90 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 94 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                          
     
             
             #line default
             #line hidden
             
-            #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.VacancyOwnerRelationship.VacancyOwnerRelationshipId));
 
             
             #line default
             #line hidden
             
-            #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                                                        
     
             
             #line default
             #line hidden
             
-            #line 92 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 96 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.VacancyGuid));
 
             
             #line default
             #line hidden
             
-            #line 92 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 96 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                
     
             
             #line default
             #line hidden
             
-            #line 93 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 97 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.Status));
 
             
             #line default
             #line hidden
             
-            #line 93 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 97 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                           
 
             
