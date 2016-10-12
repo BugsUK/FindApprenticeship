@@ -9,7 +9,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Constants.Pages;
     using FluentValidation.Mvc;
     using Mediators.Home;
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
     using System;
     using System.Threading.Tasks;
     using System.Web;
