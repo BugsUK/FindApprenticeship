@@ -20,6 +20,9 @@
 
         public ActionResult ViewAnonymisedApprenticeship(string application)
         {
+            //TODO: Hotfix ra-447. Introduced on 12/10/16. The next line can be removed 15 days after this hotfix is released.
+            application = application.Replace(' ', '+');
+
             var response = _apprenticeshipApplicationMediator.View(application);
 
             switch (response.Code)
@@ -35,6 +38,9 @@
 
         public ActionResult ViewAnonymisedTraineeship(string application)
         {
+            //TODO: Hotfix ra-447. Introduced on 12/10/16. The next line can be removed 15 days after this hotfix is released.
+            application = application.Replace(' ', '+');
+
             var response = _traineeshipApplicationMediator.View(application);
 
             switch (response.Code)
