@@ -2,28 +2,25 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Common.Framework;
     using Constants.Pages;
-    using SFA.Infrastructure.Interfaces;
     using FluentValidation.Mvc;
     using Mediators.Home;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
     using ViewModels.Home;
 
     public class HomeController : CandidateControllerBase
     {
         private readonly IHomeMediator _homeMediator;
 
-        public HomeController(IHomeMediator homeMediator, 
+        public HomeController(IHomeMediator homeMediator,
             IConfigurationService configurationService,
             ILogService logService)
             : base(configurationService, logService)
@@ -52,7 +49,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var webTrendsOptOutCookie = new HttpCookie("WTLOPTOUT", "yes") {Expires = DateTime.UtcNow.AddYears(5)};
+                var webTrendsOptOutCookie = new HttpCookie("WTLOPTOUT", "yes") { Expires = DateTime.UtcNow.AddYears(5) };
                 HttpContext.Response.Cookies.Add(webTrendsOptOutCookie);
                 SetUserMessage(PrivacyPageMessages.WebTrendsOptOutSuccessful);
                 return View("Privacy");

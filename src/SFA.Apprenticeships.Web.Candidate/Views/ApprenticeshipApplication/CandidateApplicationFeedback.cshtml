@@ -4,27 +4,28 @@
     ViewBag.Title = "Candidate Application Feedback";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge med-btm-margin">Your feedback</h1>
-</div>
 <div class="grid-wrapper">
     <div class="grid-wrapper controls-3-4">
-        <section class="grid grid-2-3">
+        <section class="grid grid-2-3">            
+                <h1 class="heading-xlarge">Your feedback</h1>            
             @{
                 var reason = string.IsNullOrWhiteSpace(Model.UnsuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnsuccessfulReason;
             }
-
-            <span id="application-status-description">@reason</span>
-            <p class="text">Sent @Model.DateUpdated</p>
+            <div class="form-group">
+                <div class="detail-content qa-comment">
+                    <div class="blocklabel-single-container">@reason</div>
+                    <p class="bold-small">Sent @Model.DateUpdated.ToString("dd MMM yyyy")</p>
+                </div>
+            </div>
             <h2 class="heading-medium">Next steps</h2>
             <p>If you require further information please contact the training provider.</p>
             <p>
                 For advice on how to ensure your application has a better chance of being
                 successful @Html.RouteLink("see the next steps page", @CandidateRouteNames.NextSteps).
             </p>
-            <br />
-            <br />
-            @Html.RouteLink("Return to my applications", CandidateRouteNames.MyApplications, new { @class = "button" })
+            <br/>
+            <br/>
+            @Html.RouteLink("Return to my applications", CandidateRouteNames.MyApplications, null,new {@class = "button"})
         </section>
         <aside class="grid grid-1-3">
             <div class="inner-block">
