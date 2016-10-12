@@ -33,5 +33,15 @@
         {
             return _vacancySummaryRepository.GetRegionalTeamMetrics(query);
         }
+
+        public VacancySummary GetById(int vacancyId)
+        {
+            return _vacancySummaryRepository.GetById(vacancyId);
+        }
+
+        public IList<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
+        {
+            return _vacancySummaryRepository.GetByIds(vacancyIds);
+        }
     }
 }

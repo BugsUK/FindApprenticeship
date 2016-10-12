@@ -15,18 +15,18 @@ namespace SFA.Apprenticeships.Application.UnitTests.Vacancy
         {
             // Arrange
             var mockDeleteVacancyStrategy = new Mock<IDeleteVacancyStrategy>();
-            var mockVacancyReadRepository = new Mock<IVacancyReadRepository>();
+            var mockVacancySummaryService = new Mock<IVacancySummaryService>();
 
-            mockVacancyReadRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(new VacancySummary());
+            mockVacancySummaryService.Setup(x => x.GetById(It.IsAny<int>())).Returns(new VacancySummary());
             mockDeleteVacancyStrategy.Setup(x => x.Execute(It.IsAny<VacancySummary>())).Returns(new StrategyResult("code"));
 
-            var sut = new VacancyManagementService(mockVacancyReadRepository.Object, mockDeleteVacancyStrategy.Object);
+            var sut = new VacancyManagementService(null, mockDeleteVacancyStrategy.Object, mockVacancySummaryService.Object);
              
             // Act
             sut.Delete(1);
 
             // Assert
-            mockVacancyReadRepository.VerifyAll();
+            mockVacancySummaryService.VerifyAll();
             mockDeleteVacancyStrategy.VerifyAll();
         }
 
@@ -34,11 +34,11 @@ namespace SFA.Apprenticeships.Application.UnitTests.Vacancy
         public void ShouldFindASummary()
         {
             // Arrange
-            var mockVacancyReadRepository = new Mock<IVacancyReadRepository>();
+            var mockVacancySummaryService = new Mock<IVacancySummaryService>();
 
-            mockVacancyReadRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(new VacancySummary());
+            mockVacancySummaryService.Setup(x => x.GetById(It.IsAny<int>())).Returns(new VacancySummary());
 
-            var sut = new VacancyManagementService(mockVacancyReadRepository.Object, null);
+            var sut = new VacancyManagementService(null, null, mockVacancySummaryService.Object);
 
             // Act
             var result = sut.FindSummary(1);
@@ -47,18 +47,18 @@ namespace SFA.Apprenticeships.Application.UnitTests.Vacancy
             Assert.IsNotNull(result.Result);
             Assert.AreEqual(VacancyManagementServiceCodes.FindSummary.Ok, result.Code);
 
-            mockVacancyReadRepository.VerifyAll();
+            mockVacancySummaryService.VerifyAll();
         }
 
         [Test]
         public void ShouldntFindASummaryAndShouldReturnAnErrorCode()
         {
             // Arrange
-            var mockVacancyReadRepository = new Mock<IVacancyReadRepository>();
+            var mockVacancySummaryService = new Mock<IVacancySummaryService>();
 
-            mockVacancyReadRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(null as VacancySummary);
+            mockVacancySummaryService.Setup(x => x.GetById(It.IsAny<int>())).Returns(null as VacancySummary);
 
-            var sut = new VacancyManagementService(mockVacancyReadRepository.Object, null);
+            var sut = new VacancyManagementService(null, null, mockVacancySummaryService.Object);
 
             // Act
             var result = sut.FindSummary(1);
@@ -66,7 +66,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Vacancy
             // Assert
             Assert.AreEqual(VacancyManagementServiceCodes.FindSummary.NotFound, result.Code);
 
-            mockVacancyReadRepository.VerifyAll();
+            mockVacancySummaryService.VerifyAll();
         }
     }
 }
