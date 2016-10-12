@@ -1,5 +1,6 @@
 ﻿@model NewVacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
@@ -62,9 +63,13 @@
                 </label>
                 @Html.ValidationMessageFor(m => m.OfflineVacancy)
             </div>
-            <div class="hide-js">Only answer if the vacancy applications will be managed through an extedsErnal website:</div>
+            <div class="hide-js">Only answer if the vacancy applications will be managed through an external website:</div>
             <div id="offline-panel" class="toggle-content panel-indent blocklabel-content">
                 <div class="form-group">
+                    @if (Model.IsEmployerLocationMainApprenticeshipLocation != true && Model.LocationAddresses != null && Model.LocationAddresses.Count > 1)
+                    {
+                        <span class="inline-text"><br />Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="MultipleOfflineApplicationUrlsAction" value="MultipleOfflineApplicationUrls">enter a different web address for each vacancy location</button></span>
+                    }
                     @* ReSharper disable once Html.IdNotResolved *@
                     @Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, id = "apprenticeship-offline-application-url"})
                     @Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationUrlComment))

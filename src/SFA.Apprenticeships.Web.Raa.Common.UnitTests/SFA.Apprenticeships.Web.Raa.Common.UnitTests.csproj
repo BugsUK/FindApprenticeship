@@ -207,6 +207,7 @@
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelServerValidatorTests.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetailsOfflineTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\RequirementsProspectsTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetailsTests.cs" />
