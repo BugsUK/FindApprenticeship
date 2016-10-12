@@ -1,16 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Application.Interfaces.Communications;
     using Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using Newtonsoft.Json;
     using SendGrid;
-
     using SFA.Apprenticeships.Application.Interfaces;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
     public class EmailDailyDigestMessageFormatter : EmailMessageFormatter
     {
@@ -66,7 +65,8 @@
             {
                 stringBuilder.AppendFormat("<b><a href=\"https://{0}/myapplications#dashSuccessful\">Successful applications</a></b>", _siteDomainName);
                 stringBuilder.AppendLine();
-                var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful).Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
+                var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful)
+                    .Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", successfulLineItems)));
             }
 
@@ -78,7 +78,8 @@
                 var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(
                     d =>
                         !string.IsNullOrWhiteSpace(d.UnsuccessfulReason)
-                            ? $"<li>{d.Title} with {d.EmployerName}<br/><b>Reason: </b>{d.UnsuccessfulReason}</li>"
+                            ? $"<li>{d.Title} with {d.EmployerName}<br/>" +
+                              $"<a href=\"https://{_siteDomainName}/myapplications#dashFeedback\">Read feedback</a></li>"
                             : $"<li>{d.Title} with {d.EmployerName}</li>");
 
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join(string.Empty, unsuccessfulLineItems)));
@@ -101,7 +102,7 @@
             PopulateVacanciesDataSubstitution(drafts, stringBuilder);
 
             var sendgridToken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ExpiringDrafts);
-            
+
             var substitutionText = stringBuilder.ToString();
 
             AddSubstitutionTo(message, sendgridToken, substitutionText);
@@ -162,7 +163,7 @@
 
         private static void AddSubstitutionTo(ISendGrid message, string sendgridtoken, string substitutionText)
         {
-            message.AddSubstitution(sendgridtoken, new List<string> {substitutionText});
+            message.AddSubstitution(sendgridtoken, new List<string> { substitutionText });
         }
 
         #endregion

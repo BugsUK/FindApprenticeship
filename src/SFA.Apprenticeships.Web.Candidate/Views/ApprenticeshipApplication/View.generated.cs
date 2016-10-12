@@ -355,6 +355,8 @@ WriteAttribute("href", Tuple.Create(" href=\"", 2836), Tuple.Create("\"", 2892)
 , 2843), false)
 );
 
+WriteLiteral(" class=\"button\"");
+
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");
 
         }

@@ -1,0 +1,54 @@
+﻿@using System.Diagnostics
+@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
+
+@{
+    ViewBag.Title = "Candidate Application Feedback";
+}
+
+<div class="grid-wrapper">
+    <div class="grid-wrapper controls-3-4">
+        <section class="grid grid-2-3">
+            <h1 class="heading-xlarge">Your feedback (@Model.ApplicantDetails.Name)</h1>           
+            @if (!string.IsNullOrWhiteSpace(Model.CandidateApplicationFeedback))
+            {
+                <div class="form-group">
+                    <div class="detail-content qa-comment">
+                        <div class="blocklabel-single-container">@Model.CandidateApplicationFeedback</div>
+                        <p class="bold-small">
+                            Sent
+                            @{
+                                Debug.Assert(Model.UnsuccessfulDateTime != null, "Model.UnsuccessfulDateTime != null");
+                            }
+                            @Model.UnsuccessfulDateTime.Value.ToString("dd MMM yyyy")
+                        </p>
+                    </div>
+                </div>
+            }            
+            <h2 class="heading-medium">Next steps</h2>
+            <p>If you require further information please contact the training provider.</p>
+            <p>
+                For advice on how to ensure your application has a better chance of being
+                successful @Html.ActionLink("see the next steps page", @Model.NextSteps).
+            </p>
+            <br />
+            <br />
+            @Html.RouteLink("Return to my applications", ManagementRouteNames.ViewCandidate, null, new { @class = "button" })
+        </section>
+        <aside class="grid grid-1-3">
+            <div class="inner-block">
+                <div class="gov-border">
+                    <div class="hgroup-small">
+                        <h2 class="heading-small">@Model.Vacancy.Title</h2>
+                        <p class="subtitle">@Model.Vacancy.EmployerName</p>
+                        <br />
+                        <p>
+                            @Html.RouteLink("View my application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { id = Model.Vacancy.VacancyId })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>

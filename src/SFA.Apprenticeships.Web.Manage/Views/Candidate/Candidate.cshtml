@@ -158,11 +158,7 @@ else
                             if (Model.UnsuccessfulApplications.Any(a => a.ApplicationStatus == ApplicationStatuses.Unsuccessful))
                             {
                                 <div class="panel-indent font-xxsmall" id="candidate-support-message">
-                                    <p>Some of your applications have been unsuccessful. Please contact the training provider for further information.</p>
-                                    <p>
-                                        For advice on how to ensure your application has a better chance
-                                        of being successful <a href="@Model.NextStepUrl">see the next steps page</a>.
-                                    </p>
+                                    <p>Some of your applications have been unsuccessful. Please contact the training provider for further information.</p>                                    
                                 </div>
                             }
                             <table class="vert-middle">
@@ -179,26 +175,20 @@ else
                                             <td>
                                                 @if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                                 {
-                                                    @application.Title @:with @application.EmployerName
+                                                    @application.Title
+                                                    @:with @application.EmployerName
                                                 }
                                                 else
                                                 {
-                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
+                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new {vacancyId = application.VacancyId, applicationId = application.ApplicationId}, new {@class = "link-unimp"})
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
+                                            @if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
+                                            {
+                                                <td class="ta-center">@Html.RouteLink("Read feedback", @ManagementRouteNames.ViewCandidateApprenticeshipApplicationFeedback, new {applicationId = application.ApplicationId})</td>
+                                            }
                                             <td class="ta-center"></td>
-                                        </tr>
-
-                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
-                                        {
-                                            var reason = string.IsNullOrWhiteSpace(application.UnsuccessfulReason) ? application.ApplicationStatusDescription : application.UnsuccessfulReason;
-                                            <tr>
-                                                <td colspan="3">
-                                                    <b>Reason:</b> <span id="application-status-description">@reason</span>
-                                                </td>
-                                            </tr>
-                                        }
+                                        </tr>                                        
                                     }
                                 </tbody>
                                 <tbody class="tbody-expandrows">

@@ -6,5 +6,6 @@
     [Validator(typeof(ApprenticeshipApplicationViewModelClientValidator))]
     public class ApprenticeshipApplicationViewModel : ApplicationViewModel
     {
+        public string NextSteps { get; set; }
     }
 }
