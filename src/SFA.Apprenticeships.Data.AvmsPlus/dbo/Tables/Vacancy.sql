@@ -137,6 +137,10 @@ CREATE NONCLUSTERED INDEX [idx_Vacancy_LocalAuthorityId]
 	ON [dbo].[Vacancy] ([LocalAuthorityId]) 
 	INCLUDE ([PostCode]) 
 
+GO
+CREATE NONCLUSTERED INDEX [idx_Vacancy_VacancyStatusId_ApplicationClosingDate] 
+ON [dbo].[Vacancy] ([VacancyStatusId] ASC,[ApplicationClosingDate] ASC)
+INCLUDE ([VacancyId], [VacancyLocationTypeId], [VacancyReferenceNumber])
 
 GO
 

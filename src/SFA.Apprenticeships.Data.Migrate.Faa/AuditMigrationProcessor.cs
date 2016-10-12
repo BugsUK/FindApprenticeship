@@ -60,7 +60,7 @@
             _logService.Info($"ExecutePartialSync on candidates collection with LastAuditEventDate: {syncParams.LastAuditEventDate}");
 
             var expectedCreatedCount = _auditRepository.GetAuditItemsCreatedSinceCount(syncParams.LastAuditEventDate, cancellationToken).Result;
-            var createdCursor = _auditRepository.GetAllAuditItemsCreatedSince(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
+            var createdCursor = _auditRepository.GetAllAuditItemsCreatedSince(syncParams.LastAuditEventDate, cancellationToken).Result;
             ProcessCandidates(createdCursor, expectedCreatedCount, cancellationToken);
         }
 
