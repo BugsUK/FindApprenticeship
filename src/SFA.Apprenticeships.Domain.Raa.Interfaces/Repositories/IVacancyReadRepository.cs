@@ -13,17 +13,11 @@
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
 
-        VacancySummary GetById(int vacancyId);
-
-        List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
-
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
         List<VacancySummary> GetByOwnerPartyId(int ownerPartyId);
 
         int CountWithStatus(params VacancyStatus[] desiredStatuses);
-
-        List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses);
 
         List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
 

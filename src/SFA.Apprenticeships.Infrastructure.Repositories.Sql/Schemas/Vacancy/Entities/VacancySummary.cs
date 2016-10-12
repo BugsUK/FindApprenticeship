@@ -43,5 +43,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public DateTime CreatedDate { get; set; }
 
         public int SubmissionCount { get; set; }
+        public string FrameworkCodeName { get; set; }
     }
 }

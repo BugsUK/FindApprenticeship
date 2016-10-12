@@ -348,6 +348,74 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             return counts.OrderBy(o => o.RegionalTeam).ToList();
         }
 
+        public VacancySummary GetById(int vacancyId)
+        {
+            var summary = GetByIds(new[] {vacancyId});
+
+            return summary.Any() ? summary.Single() : null;
+        }
+
+        public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
+        {
+            var sqlParams = new
+            {
+                vacancyIds
+            };
+
+            var sql = $@"SELECT
+                            v.VacancyId,
+                            v.VacancyOwnerRelationshipId,
+                            v.VacancyReferenceNumber,
+                            v.VacancyGuid,
+                            v.VacancyStatusId,
+                            v.VacancyTypeId,
+                            v.Title,
+                            v.AddressLine1,
+                            v.AddressLine2,
+                            v.AddressLine3,
+                            v.AddressLine4,
+                            v.AddressLine5,
+                            v.Town,
+                            v.CountyId,
+                            v.PostCode,
+                            v.ApplyOutsideNAVMS,
+                            v.ApplicationClosingDate,
+                            v.NoOfOfflineApplicants,
+                            CASE v.ApplyOutsideNAVMS
+ 			                    WHEN 1 THEN 0
+                                ELSE dbo.GetApplicantCount(v.VacancyId) 
+                            END
+                            AS ApplicantCount,
+		                    CASE v.ApplyOutsideNAVMS
+ 			                    WHEN 1 THEN 0
+			                    ELSE dbo.GetNewApplicantCount(v.VacancyId)
+		                    END
+		                    AS NewApplicantCount,
+                            dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
+		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
+		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
+                            e.FullName AS EmployerName
+                    FROM	Vacancy v
+                    JOIN	VacancyOwnerRelationship o
+                    ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                    JOIN	Employer e
+                    ON		o.EmployerId = e.EmployerId
+                    JOIN	ProviderSiteRelationship r
+					ON		r.ProviderSiteId = o.ProviderSiteId
+                    WHERE	o.ProviderSiteID = @ProviderSiteId
+                    AND		(v.VacancyManagerId = @ProviderSiteId
+                            OR v.DeliveryOrganisationId = @ProviderSiteId)
+                    AND		r.ProviderId = @providerId
+					AND		r.ProviderSiteRelationshipTypeId = 1
+                    WHERE	v.VacancyID IN @vacancyIds";
+
+            var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
+            
+            var mapped = Mapper.Map<IList<DbVacancySummary>, List<VacancySummary>>(vacancies);
+
+            return mapped;
+        }
+
 
         private static string GetFilterSql(VacanciesSummaryFilterTypes filter, string sqlFilterKeyword = "AND")
         {

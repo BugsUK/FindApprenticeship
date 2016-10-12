@@ -108,42 +108,6 @@
             return dbVacancy;
         }
 
-        public VacancySummary GetById(int vacancyId)
-        {
-            return GetByIds(new[] { vacancyId }).FirstOrDefault();
-        }
-
-        public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
-        {
-            var vacancyIdsArray
-                = vacancyIds as int[] ?? vacancyIds.ToArray();
-            _logger.Debug("Calling database to get apprenticeship vacancy with Ids={0}", string.Join(", ", vacancyIdsArray));
-
-            var vacancies =
-                _getOpenConnection.Query<VacancyPlus>($@"
-SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)},
-       (SELECT TOP 1 HistoryDate
-        FROM   dbo.VacancyHistory h
-        WHERE  h.VacancyId                    = v.VacancyId
-        AND    h.VacancyHistoryEventSubTypeId = @VacancyStatusId_Submitted
-        ORDER BY HistoryDate ASC) AS DateFirstSubmitted,
-       (SELECT TOP 1 HistoryDate
-        FROM   dbo.VacancyHistory h
-        WHERE  h.VacancyId                    = v.VacancyId
-        AND    h.VacancyHistoryEventSubTypeId = @VacancyStatusId_Submitted
-        ORDER BY HistoryDate DESC) AS DateSubmitted,
-       (SELECT TOP 1 HistoryDate
-        FROM   dbo.VacancyHistory h
-        WHERE  h.VacancyId                    = v.VacancyId
-        AND    h.VacancyHistoryEventSubTypeId = @VacancyStatusId_Live
-        ORDER BY HistoryDate DESC) AS DateQAApproved
-FROM   dbo.Vacancy v
-WHERE  v.VacancyId IN @VacancyIds",
-                    new { VacancyIds = vacancyIdsArray, VacancyStatusId_Live = VacancyStatus.Live, VacancyStatusId_Submitted = VacancyStatus.Submitted });
-
-            return MapVacancySummaries((IReadOnlyList<VacancyPlus>)vacancies);
-        }
-
         public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
         {
             var ownerPartyIdsArray = ownerPartyIds as int[] ?? ownerPartyIds.ToArray();
@@ -190,57 +154,6 @@ WHERE  v.VacancyId IN @VacancyIds",
                 $"Found {count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
 
             return count;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pageSize"></param>
-        /// <param name="page">Expects page starting from 0 rather than 1</param>
-        /// <param name="filterByProviderBeenMigrated"></param>
-        /// <param name="desiredStatuses"></param>
-        /// <returns></returns>
-        public List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses)
-        {
-            _logger.Debug("Called database to get page {1} of apprenticeship vacancies in status {0}. Page size {2}", string.Join(",", desiredStatuses), page, pageSize);
-
-
-            var sql = $@"
-            SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)}
-            FROM dbo.Vacancy";
-
-            if (filterByProviderBeenMigrated)
-            {
-                sql += " inner join Provider on ContractOwnerId = ProviderId";
-            }
-
-            sql += " WHERE VacancyStatusId IN @VacancyStatusCodeIds";
-
-            if (filterByProviderBeenMigrated)
-            {
-                sql += " AND ( ProviderToUseFAA = 2 OR EditedInRaa = 1)";
-            }
-
-            if (pageSize > 0)
-            {
-                var offset = pageSize * page;
-                sql += @"
-                ORDER BY VacancyId
-                OFFSET " + offset + @" ROWS
-                FETCH NEXT " + pageSize + @" ROWS ONLY";
-            }
-            //TODO: adding a timeout of 10 mins. This value needs to change and come from a config file in the future.
-            var dbVacancies = _getOpenConnection.Query<Vacancy>(
-            sql, new
-            {
-                VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s)
-            }, 600);
-
-
-            _logger.Debug(
-                $"Found {dbVacancies.Count} apprenticeship vacancies in page {page} with statuses in {string.Join(",", desiredStatuses)}. Page size {pageSize}");
-
-            return MapVacancySummaries(dbVacancies.ToList());
         }
 
         public List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
@@ -350,41 +263,6 @@ FETCH NEXT @PageSize ROWS ONLY
             }
 
             return results;
-        }
-
-        private void GetFrameworkId(Vacancy dbVacancy, VacancySummary result)
-        {
-            if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
-            {
-                result.FrameworkCodeName =
-                    _getOpenConnection.QueryCached<string>(_cacheDuration, @"
-SELECT CodeName
-FROM   dbo.ApprenticeshipFramework
-WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
-                        new
-                        {
-                            ApprenticeshipFrameworkId = dbVacancy.ApprenticeshipFrameworkId.Value
-                        }).Single();
-            }
-        }
-
-        private void GetFrameworkIds(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
-        {
-            var ids = dbVacancies.Select(v => v.ApprenticeshipFrameworkId).Distinct().Where(id => id.HasValue);
-            var map = _getOpenConnection.QueryCached<PropertyMapItem>(_cacheDuration, @"
-SELECT ApprenticeshipFrameworkId as Map, CodeName as Value
-FROM   dbo.ApprenticeshipFramework
-WHERE  ApprenticeshipFrameworkId IN @Ids",
-                        new
-                        {
-                            Ids = ids
-                        }).ToDictionary(t => t.Map.ToString(), t => t.Value);
-
-            foreach (var vacancySummary in results.Where(v => v.FrameworkCodeName != null))
-            {
-                var value = map[vacancySummary.FrameworkCodeName];
-                vacancySummary.FrameworkCodeName = value;
-            }
         }
 
         private void GetApprenticeshipType(Vacancy dbVacancy, VacancySummary result)

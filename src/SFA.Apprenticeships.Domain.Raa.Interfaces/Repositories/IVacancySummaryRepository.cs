@@ -15,5 +15,7 @@ namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
         VacancyCounts GetLotteryCounts(VacancySummaryQuery query);
         IList<VacancySummary> GetByStatus(VacancySummaryByStatusQuery query, out int totalRecords);
         IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query);
+        VacancySummary GetById(int vacancyId);
+        List<VacancySummary> GetByIds(IEnumerable<int> vacancyId);
     }
 }
