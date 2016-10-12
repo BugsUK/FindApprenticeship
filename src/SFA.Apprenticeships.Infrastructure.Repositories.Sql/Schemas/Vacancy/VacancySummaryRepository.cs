@@ -254,7 +254,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
                             e.FullName AS EmployerName,
                             p.TradingName as ProviderTradingName,
-                            v.SubmissionCount
+                            v.SubmissionCount,
+                            v.StartedToQADateTime,
+                            v.QAUserName
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
