@@ -30,11 +30,11 @@
             <p>If you require further information please contact the training provider.</p>
             <p>
                 For advice on how to ensure your application has a better chance of being
-                successful @Html.ActionLink("see the next steps page", @Model.NextSteps).
+                successful <a href="@Model.NextSteps">see the next steps page</a>.
             </p>
             <br />
-            <br />
-            @Html.RouteLink("Return to my applications", ManagementRouteNames.ViewCandidate, null, new { @class = "button" })
+            <br />            
+            @Html.RouteLink("Return to my applications", ManagementRouteNames.ViewCandidate, new { id = Model.ApplicantDetails.CandidateId }, new { @class = "button" })
         </section>
         <aside class="grid grid-1-3">
             <div class="inner-block">
@@ -44,7 +44,7 @@
                         <p class="subtitle">@Model.Vacancy.EmployerName</p>
                         <br />
                         <p>
-                            @Html.RouteLink("View my application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { id = Model.Vacancy.VacancyId })
+                            @Html.RouteLink("View my application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = Model.ApplicationSelection.ApplicationId })
                         </p>
                     </div>
                 </div>
