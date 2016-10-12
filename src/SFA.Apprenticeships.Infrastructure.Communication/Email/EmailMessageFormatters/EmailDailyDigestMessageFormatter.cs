@@ -79,7 +79,7 @@
                     d =>
                         !string.IsNullOrWhiteSpace(d.UnsuccessfulReason)
                             ? $"<li>{d.Title} with {d.EmployerName}<br/>" +
-                              $"<a href=\"https://{_siteDomainName}/myapplications#dashFeedback\">Read feedback</a></li>"
+                              $"<a href=\"https://{_siteDomainName}/apprenticeship/candidateapplicationfeedback/{d.VacancyId}\">Read feedback</a></li>"
                             : $"<li>{d.Title} with {d.EmployerName}</li>");
 
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join(string.Empty, unsuccessfulLineItems)));
