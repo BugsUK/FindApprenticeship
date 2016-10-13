@@ -4,7 +4,7 @@
     ViewBag.Title = "Candidate Application Feedback";
 }
 
-<div class="grid-wrapper">    
+<div class="grid-wrapper">
     <section class="grid grid-2-3">
         <div class="inner-block-padr">
             <h1 class="heading-xlarge">Your feedback</h1>
@@ -14,7 +14,10 @@
             <div class="form-group">
                 <div class="detail-content qa-comment">
                     <div class="blocklabel-single-container">@reason</div>
-                    <p class="bold-small">Sent @Model.DateUpdated.ToString("dd MMM yyyy")</p>
+                    <br />
+                    <span class="form-prepopped font-xsmall">
+                        Sent @Model.DateUpdated.ToString("dd MMM yyyy")
+                    </span>
                 </div>
             </div>
             <h2 class="heading-large">Next steps</h2>

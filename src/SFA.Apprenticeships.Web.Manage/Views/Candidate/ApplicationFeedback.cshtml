@@ -16,16 +16,17 @@
                 <div class="form-group">
                     <div class="detail-content qa-comment">
                         <div class="blocklabel-single-container">@Model.CandidateApplicationFeedback</div>
-                        <p class="bold-small">
+                        <br />
+                        <span class="form-prepopped font-xsmall">
                             Sent
                             @{
                                 Debug.Assert(Model.UnsuccessfulDateTime != null, "Model.UnsuccessfulDateTime != null");
                             }
                             @Model.UnsuccessfulDateTime.Value.ToString("dd MMM yyyy")
-                        </p>
+                        </span>
                     </div>
                 </div>
-                                }
+            }
             <h2 class="heading-large">Next steps</h2>
             <p>If you require further information please contact the training provider.</p>
             <p>
