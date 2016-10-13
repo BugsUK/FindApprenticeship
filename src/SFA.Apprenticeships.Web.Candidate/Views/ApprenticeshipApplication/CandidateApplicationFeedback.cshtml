@@ -4,9 +4,9 @@
     ViewBag.Title = "Candidate Application Feedback";
 }
 
-<div class="grid-wrapper">
-    <div class="grid-wrapper controls-3-4">
-        <section class="grid grid-2-3">
+<div class="grid-wrapper">    
+    <section class="grid grid-2-3">
+        <div class="inner-block-padr">
             <h1 class="heading-xlarge">Your feedback</h1>
             @{
                 var reason = string.IsNullOrWhiteSpace(Model.UnsuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnsuccessfulReason;
@@ -17,7 +17,7 @@
                     <p class="bold-small">Sent @Model.DateUpdated.ToString("dd MMM yyyy")</p>
                 </div>
             </div>
-            <h2 class="heading-medium">Next steps</h2>
+            <h2 class="heading-large">Next steps</h2>
             <p>If you require further information please contact the training provider.</p>
             <p>
                 For advice on how to ensure your application has a better chance of being
@@ -26,20 +26,20 @@
             <br />
             <br />
             @Html.RouteLink("Return to my applications", CandidateRouteNames.MyApplications, null, new { @class = "button" })
-        </section>
-        <aside class="grid grid-1-3">
-            <div class="inner-block">
-                <div class="gov-border">
-                    <div class="hgroup-small">
-                        <h2 class="heading-small">@Model.Title</h2>
-                        <p class="subtitle">@Model.EmployerName</p>
-                        <br />
-                        <p>
-                            @Html.RouteLink("View my application", CandidateRouteNames.ApprenticeshipView, new { id = Model.VacancyId })
-                        </p>
-                    </div>
-                </div>
+        </div>
+    </section>
+    <section class="grid grid-1-3 gov-border grey-background">
+        <br />
+        <div class="inner-block">
+            <div class="hgroup-small">
+                <h2 class="heading-medium">@Model.Title</h2>
+                <p class="subtitle">@Model.EmployerName</p>
+                <br />
+                <p class="font-xsmall">
+                    @Html.RouteLink("View my application", CandidateRouteNames.ApprenticeshipView, new { id = Model.VacancyId }, new { @class = "account-link" })
+                </p>
+                <br />
             </div>
-        </aside>
-    </div>
+        </div>
+    </section>
 </div>

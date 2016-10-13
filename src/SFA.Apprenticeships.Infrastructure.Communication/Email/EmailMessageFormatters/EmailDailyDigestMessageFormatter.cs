@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
 {
+    using Application.Interfaces;
     using Application.Interfaces.Communications;
     using Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using Newtonsoft.Json;
     using SendGrid;
-    using SFA.Apprenticeships.Application.Interfaces;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -66,8 +66,8 @@
                 stringBuilder.AppendFormat("<b><a href=\"https://{0}/myapplications#dashSuccessful\">Successful applications</a></b>", _siteDomainName);
                 stringBuilder.AppendLine();
                 var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful)
-                    .Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
-                stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", successfulLineItems)));
+                    .Select(d => $"<li>{d.Title} with {d.EmployerName}</li>");
+                stringBuilder.AppendLine($"<ul>{string.Join("", successfulLineItems)}</ul>");
             }
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Unsuccessful))
@@ -82,7 +82,7 @@
                               $"<a href=\"https://{_siteDomainName}/apprenticeship/candidateapplicationfeedback/{d.VacancyId}\">Read feedback</a></li>"
                             : $"<li>{d.Title} with {d.EmployerName}</li>");
 
-                stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join(string.Empty, unsuccessfulLineItems)));
+                stringBuilder.AppendLine($"<ul>{string.Join(string.Empty, unsuccessfulLineItems)}</ul>");
                 stringBuilder.Append("<p>If your application's unsuccessful ask your college or training provider for feedback.</p>");
                 stringBuilder.AppendFormat("<p>For advice on writing better applications visit the <a href=\"https://{0}/nextsteps\">next steps page</a>.</p>", _siteDomainName);
             }
@@ -116,7 +116,8 @@
             if (itemCount > 0)
             {
                 var itemCountSubstitution = itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire;
-                substitutionText = string.Format("<p><b><a href=\"https://{0}/myapplications#dashDrafts\">Saved applications due to expire</a></b></p>{1}", _siteDomainName, itemCountSubstitution);
+                substitutionText =
+                    $"<p><b><a href=\"https://{_siteDomainName}/myapplications#dashDrafts\">Saved applications due to expire</a></b></p>{itemCountSubstitution}";
             }
 
             return substitutionText;
