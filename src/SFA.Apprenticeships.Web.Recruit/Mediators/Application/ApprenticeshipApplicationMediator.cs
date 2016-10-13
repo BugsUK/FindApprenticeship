@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
     using System;
+    using System.Web;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Security;
     using Common.Constants;
@@ -47,6 +48,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> View(string applicationCipherText)
         {
+            applicationCipherText = HttpUtility.UrlDecode(applicationCipherText);
+            applicationCipherText = applicationCipherText?.Replace(' ', '+');
+
             var anomymisedApplicationLink = _decryptionService.Decrypt(applicationCipherText);
 
             var applicationSelectionViewModel = new ApplicationSelectionViewModel
