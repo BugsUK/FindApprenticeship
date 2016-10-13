@@ -402,6 +402,7 @@
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
+            vacancy.OfflineVacancyType = newVacancyViewModel.OfflineVacancyType;
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
             //vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;

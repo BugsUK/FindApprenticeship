@@ -523,7 +523,7 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button-link no-autosave\"");
 
-WriteLiteral(" name=\"SingleOfflineApplicationUrlAction\"");
+WriteLiteral(" name=\"CreateVacancy\"");
 
 WriteLiteral(" value=\"SingleOfflineApplicationUrl\"");
 
@@ -550,7 +550,7 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button-link no-autosave\"");
 
-WriteLiteral(" name=\"MultipleOfflineApplicationUrlsAction\"");
+WriteLiteral(" name=\"CreateVacancy\"");
 
 WriteLiteral(" value=\"MultipleOfflineApplicationUrls\"");
 

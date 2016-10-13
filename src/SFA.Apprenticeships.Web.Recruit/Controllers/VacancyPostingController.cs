@@ -300,6 +300,52 @@
             }
         }
 
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        public ActionResult SingleOfflineApplicationUrl(NewVacancyViewModel viewModel)
+        {
+            var comeFromPreview = viewModel.ComeFromPreview;
+
+            viewModel.OfflineVacancyType = OfflineVacancyType.SingleUrl;
+            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
+
+            Func<ActionResult> okAction = () =>
+            {
+                if (comeFromPreview)
+                {
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
+                        new {response.ViewModel.VacancyReferenceNumber, comeFromPreview = true});
+                }
+                return RedirectToRoute(RecruitmentRouteNames.CreateVacancy,
+                    new {response.ViewModel.VacancyReferenceNumber});
+            };
+
+            return HandleCreateVacancy(response, okAction);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        public ActionResult MultipleOfflineApplicationUrls(NewVacancyViewModel viewModel)
+        {
+            var comeFromPreview = viewModel.ComeFromPreview;
+
+            viewModel.OfflineVacancyType = OfflineVacancyType.MultiUrl;
+            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
+
+            Func<ActionResult> okAction = () =>
+            {
+                if (comeFromPreview)
+                {
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
+                        new {response.ViewModel.VacancyReferenceNumber, comeFromPreview = true});
+                }
+                return RedirectToRoute(RecruitmentRouteNames.CreateVacancy,
+                    new {response.ViewModel.VacancyReferenceNumber});
+            };
+
+            return HandleCreateVacancy(response, okAction);
+        }
+
         private ActionResult HandleCreateVacancy(MediatorResponse<NewVacancyViewModel> response, Func<ActionResult> okAction)
         {
             ModelState.Clear();

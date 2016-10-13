@@ -73,11 +73,11 @@
                         {
                             if (Model.OfflineVacancyType == OfflineVacancyType.MultiUrl)
                             {
-                                <p class="inline-text">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button-link no-autosave" name="SingleOfflineApplicationUrlAction" value="SingleOfflineApplicationUrl">use the same web address for all vacancy locations</button></p>
+                                <p class="inline-text">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="SingleOfflineApplicationUrl">use the same web address for all vacancy locations</button></p>
                             }
                             else
                             {
-                                <p class="inline-text">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="MultipleOfflineApplicationUrlsAction" value="MultipleOfflineApplicationUrls">enter a different web address for each vacancy location</button></p>
+                                <p class="inline-text">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="MultipleOfflineApplicationUrls">enter a different web address for each vacancy location</button></p>
                             }
                         }
                         @if (Model.OfflineVacancyType == OfflineVacancyType.MultiUrl && Model.LocationAddresses != null)
