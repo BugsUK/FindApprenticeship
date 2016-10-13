@@ -1,0 +1,43 @@
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Manage.Constants
+@model List<SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne>
+@{
+    ViewBag.Title = "Standards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 id="heading" class="heading-xlarge">Standards</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>SSAT1</th>
+        <th>Standard Sector</th>
+        <th>Standard</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        foreach (var sectorItems in item.Sectors)
+        {
+            foreach (var standardItems in sectorItems.Standards)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => standardItems.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => sectorItems.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => standardItems.Name)
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>

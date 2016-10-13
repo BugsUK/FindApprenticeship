@@ -20,18 +20,20 @@
             Mapper.CreateMap<DomainFramework, Entities.ApprenticeshipFramework>()
                 .ForMember(dest => dest.ApprenticeshipFrameworkId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.ClosedDate, opt => opt.Ignore())
-                .ForMember(dest => dest.ApprenticeshipFrameworkStatusTypeId, opt => opt.Ignore())
+                .ForMember(dest => dest.ApprenticeshipFrameworkStatusTypeId, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.PreviousApprenticeshipOccupationId, opt => opt.Ignore())
                 .ForMember(dest => dest.ApprenticeshipOccupationId, opt => opt.Ignore());
             Mapper.CreateMap<Entities.ApprenticeshipFramework, DomainFramework>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ApprenticeshipFrameworkId))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.ApprenticeshipFrameworkStatusTypeId))
                 .ForMember(dest => dest.ParentCategoryCodeName, opt => opt.Ignore());
             Mapper.CreateMap<DomainOccupation, Entities.ApprenticeshipOccupation>()
                 .ForMember(dest => dest.ApprenticeshipOccupationId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.ApprenticeshipOccupationStatusTypeId, opt => opt.Ignore())
+                .ForMember(dest => dest.ApprenticeshipOccupationStatusTypeId, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.ClosedDate, opt => opt.Ignore());
             Mapper.CreateMap<Entities.ApprenticeshipOccupation, DomainOccupation>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ApprenticeshipOccupationId))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.ApprenticeshipOccupationStatusTypeId))
                 .ForMember(dest => dest.Frameworks, opt => opt.Ignore());
         }
     }

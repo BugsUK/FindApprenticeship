@@ -337,6 +337,18 @@
                defaults: new { controller = "Admin", action = "EditApiUser" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminStandards,
+               url: "admin/standards",
+               defaults: new { controller = "Admin", action = "Standards" }
+               );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.AdminFrameworks,
+                url: "admin/frameoworks",
+                defaults: new {controller = "Admin", action = "Frameworks"}
+                );
+
             routes.LowercaseUrls = true;
         }
     }

@@ -75,10 +75,10 @@
 
             var categories = new List<Category>
             {
-                new Category(17, category, categoryFullName, CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(17, category, categoryFullName, CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                     {
-                        new Category(255, "513", "Surveying", CategoryType.Framework),
-                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework)
+                        new Category(255, "513", "Surveying", CategoryType.Framework, CategoryStatus.Active),
+                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework, CategoryStatus.Active)
                     }
                 )
             };
@@ -143,15 +143,15 @@
 
             var categories = new List<Category>
             {
-                new Category(17, category, category, CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(17, category, category, CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                     {
-                        new Category(255, "513", "Surveying", CategoryType.Framework),
-                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework)
+                        new Category(255, "513", "Surveying", CategoryType.Framework, CategoryStatus.Active),
+                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework, CategoryStatus.Active)
                     }
                 ),
-                new Category(0, "OTHER", "OTHER", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(0, "OTHER", "OTHER", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                     {
-                        new Category(329, "600", "Should not be included", CategoryType.Framework)
+                        new Category(329, "600", "Should not be included", CategoryType.Framework, CategoryStatus.Active)
                     }
                 )
             };
@@ -236,10 +236,10 @@
 
             var categories = new List<Category>
             {
-                new Category(17, category, categoryFullName, CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(17, category, categoryFullName, CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                     {
-                        new Category(255, "513", "Surveying", CategoryType.Framework),
-                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework)
+                        new Category(255, "513", "Surveying", CategoryType.Framework, CategoryStatus.Active),
+                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework, CategoryStatus.Active)
                     }
                 )
             };

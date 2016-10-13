@@ -1,15 +1,27 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Admin
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Data.Entity.ModelConfiguration.Configuration;
+    using System.Linq;
     using Application.Interfaces;
+    using Application.Interfaces.ReferenceData;
+    using Application.ReferenceData;
     using Common.Constants;
     using Common.Mediators;
+    using Domain.Entities.Raa.Reference;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories;
+    using Glimpse.Core.Extensions;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Api;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
 
     public class AdminMediator : MediatorBase, IAdminMediator
     {
@@ -24,12 +36,14 @@
         private readonly IProviderProvider _providerProvider;
         private readonly IApiUserProvider _apiUserProvider;
         private readonly ILogService _logService;
+        private readonly IReferenceDataProvider _referenceDataProvider;
 
-        public AdminMediator(IProviderProvider providerProvider, IApiUserProvider apiUserProvider, ILogService logService)
+        public AdminMediator(IProviderProvider providerProvider, IApiUserProvider apiUserProvider, ILogService logService, IReferenceDataProvider referenceDataProvider)
         {
             _providerProvider = providerProvider;
             _apiUserProvider = apiUserProvider;
             _logService = logService;
+            _referenceDataProvider = referenceDataProvider;
         }
 
         public MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel)
@@ -252,6 +266,19 @@
                 viewModel = _apiUserProvider.GetApiUserViewModel(viewModel.ExternalSystemId);
                 return GetMediatorResponse(AdminMediatorCodes.SaveApiUser.Error, viewModel, ApiUserViewModelMessages.ApiUserSaveError, UserMessageLevel.Error);
             }
+        }
+
+        public MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandard()
+        {
+            var viewModel = _referenceDataProvider.GetStandardSubjectAreaTierOnes().ToList();
+
+            return GetMediatorResponse(AdminMediatorCodes.GetStandard.Ok, viewModel);
+        }
+
+        public MediatorResponse<List<Category>> GetFrameworks()
+        {
+            var viewModel = _referenceDataProvider.GetFrameworks().ToList();
+            return GetMediatorResponse(AdminMediatorCodes.GetFrameworks.Ok, viewModel);
         }
     }
 }

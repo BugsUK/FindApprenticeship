@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
@@ -8,6 +9,7 @@
     using Common.Mediators;
     using Constants;
     using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
     using Mediators.Admin;
     using Raa.Common.ViewModels.Api;
@@ -354,6 +356,27 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpGet]
+        public ActionResult Standards()
+        {
+            //Create a mediator method*
+            //Reference a reference data provider or use the reference data service directly*
+            //Get a list of standards
+            //Map to a veiw model
+            //Display in view
+            
+            var response = _adminMediator.GetStandard();
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Frameworks()
+        {
+            var response = _adminMediator.GetFrameworks();
+            return View(response.ViewModel);
         }
     }
 }

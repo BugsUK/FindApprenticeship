@@ -86,5 +86,15 @@
             public const string Error = "AdminMediatorCodes.SaveApiUser.Error";
             public const string Ok = "AdminMediatorCodes.SaveApiUser.Ok";
         }
+
+        public class GetStandard
+        {
+            public const string Ok = "AdminMediatorCodes.GetStandard.Ok";
+        }
+
+        public class GetFrameworks
+        {
+            public const string Ok = "AdminMediatorCodes.GetFrameworks.Ok";
+        }
     }
 }

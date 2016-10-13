@@ -20,6 +20,8 @@
 
         IEnumerable<Sector> GetSectors();
 
+        IEnumerable<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes();
+
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
     }
 }

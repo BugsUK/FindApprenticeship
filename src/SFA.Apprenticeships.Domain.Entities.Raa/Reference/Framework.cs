@@ -14,13 +14,15 @@
 
         public string ParentCategoryCodeName { get; set; }
 
+        public FrameworkStatusType Status { get; set; }
+
         /// <summary>
         /// TODO: Do this a better way
         /// </summary>
         /// <returns></returns>
         public Category ToCategory()
         {
-            return new Category(Id, CategoryPrefixes.GetFrameworkCode(CodeName), FullName, CategoryPrefixes.GetSectorSubjectAreaTier1Code(ParentCategoryCodeName), CategoryType.Framework);
+            return new Category(Id, CategoryPrefixes.GetFrameworkCode(CodeName), FullName, CategoryPrefixes.GetSectorSubjectAreaTier1Code(ParentCategoryCodeName), CategoryType.Framework, (CategoryStatus)(int)Status);
         }
     }
 }

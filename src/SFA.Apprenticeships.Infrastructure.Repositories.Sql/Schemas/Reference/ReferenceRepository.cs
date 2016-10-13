@@ -9,6 +9,7 @@
     using Entities;
     using Application.Interfaces;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Users;
     using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceRepository : IReferenceRepository
@@ -133,11 +134,39 @@
             return releaseNotes;
         }
 
+        public IList<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes()
+        {
+            _logger.Debug("Getting all SSAT1s");
+
+            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation;";
+
+            var sqlParams = new
+            {
+            };
+
+            var dbStandardSubjectAreaTierOnes = _getOpenConnection
+                .Query<ApprenticeshipOccupation>(sectorSql, sqlParams);
+
+            var standardSubjectAreaTierOnes = dbStandardSubjectAreaTierOnes.Select(x =>
+            {
+                var appOcc = new StandardSubjectAreaTierOne()
+                {
+                    Id = x.ApprenticeshipOccupationId,
+                    Name = x.FullName,
+                };
+                return appOcc;
+            }).ToList();
+
+            _logger.Debug("Got all SSAT1s");
+
+            return standardSubjectAreaTierOnes;
+        }
+
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()
         {
             _logger.Debug("Getting all apprenticeship occupations");
 
-            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationStatusTypeId = 1 ORDER BY FullName;";
+            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
 
             var sqlParams = new
             {
@@ -155,7 +184,7 @@
         {
             _logger.Debug("Getting all frameworks");
 
-            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkStatusTypeId = 1 ORDER BY FullName;";
+            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
 
             var sqlParams = new
             {

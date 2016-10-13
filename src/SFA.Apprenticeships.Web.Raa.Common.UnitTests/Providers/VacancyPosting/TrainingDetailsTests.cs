@@ -40,21 +40,21 @@
         // NOTE: cannot use Fixture here as Category data structure is recursive.
         private readonly Category[] _categories =
         {
-            new Category(0, "00", "Blacklisted Sector - 00", CategoryType.SectorSubjectAreaTier1),
-            new Category(2, "02", "Sector - 02", CategoryType.SectorSubjectAreaTier1, new List<Category>
+            new Category(0, "00", "Blacklisted Sector - 00", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active),
+            new Category(2, "02", "Sector - 02", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "02.01", "Framework - 02.01", CategoryType.Framework),
-                    new Category(2, "02.02", "Framework - 02.02", CategoryType.Framework)
+                    new Category(1, "02.01", "Framework - 02.01", CategoryType.Framework, CategoryStatus.Active),
+                    new Category(2, "02.02", "Framework - 02.02", CategoryType.Framework, CategoryStatus.Active)
                 }
             ),
-            new Category(3, "03", "Sector - 03", CategoryType.SectorSubjectAreaTier1, new List<Category>
+            new Category(3, "03", "Sector - 03", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "03.01", "Framework - 03.01", CategoryType.Framework)
+                    new Category(1, "03.01", "Framework - 03.01", CategoryType.Framework, CategoryStatus.Active)
                 }
             ),
-            new Category(42, "42", "Sector with no frameworks - 99", CategoryType.SectorSubjectAreaTier1
+            new Category(42, "42", "Sector with no frameworks - 99", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active
             ),
-            new Category(99, "99", "Blacklisted Sector - 99", CategoryType.SectorSubjectAreaTier1, new List<Category>
+            new Category(99, "99", "Blacklisted Sector - 99", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
                     Category.EmptyFramework
                 }
