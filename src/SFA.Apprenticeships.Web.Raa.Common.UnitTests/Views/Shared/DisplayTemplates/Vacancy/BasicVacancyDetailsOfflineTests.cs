@@ -80,6 +80,33 @@
             multipleUrlLink.InnerText.Should().Be("enter a different web address for each vacancy location");
         }
 
+        [Test]
+        public void MultiLocationOfflineVacancyMultiUrls()
+        {
+            //Arrange
+            var viewModel = new Fixture().Build<NewVacancyViewModel>()
+                .With(vm => vm.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(vm => vm.OfflineVacancy, true)
+                .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>
+                {
+                    new VacancyLocationAddressViewModel(),
+                    new VacancyLocationAddressViewModel(),
+                    new VacancyLocationAddressViewModel()
+                })
+                .Create();
+            var details = new BasicVacancyDetails();
+
+            //Act
+            var view = details.RenderAsHtml(viewModel);
+
+            //Assert
+            AssertOfflineSelected(view);
+
+            var multipleUrlLink = view.GetElementbyId("multiple-offline-application-urls-button");
+            multipleUrlLink.Should().NotBeNull();
+            multipleUrlLink.InnerText.Should().Be("enter a different web address for each vacancy location");
+        }
+
         private static void AssertOfflineSelected(HtmlDocument view)
         {
             var onlineInput = view.GetElementbyId("apprenticeship-online-vacancy");
