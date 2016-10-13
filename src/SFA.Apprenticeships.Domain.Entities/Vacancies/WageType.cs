@@ -7,6 +7,8 @@
         LegacyWeekly = 1,
         ApprenticeshipMinimum = 2,
         NationalMinimum = 3,
-        Custom = 4
+        Custom = 4,
+        CustomRange = 5,
+        PresetText = 6
     }
 }

@@ -28,6 +28,14 @@
         [TestCase(WageType.NationalMinimum, WageUnit.Weekly, WageUnit.Weekly)]
         [TestCase(WageType.NationalMinimum, WageUnit.Monthly, WageUnit.Weekly)]
         [TestCase(WageType.NationalMinimum, WageUnit.Annually, WageUnit.Weekly)]
+        [TestCase(WageType.CustomRange, WageUnit.NotApplicable, WageUnit.Weekly)]
+        [TestCase(WageType.CustomRange, WageUnit.Annually, WageUnit.Annually)]
+        [TestCase(WageType.CustomRange, WageUnit.Monthly, WageUnit.Monthly)]
+        [TestCase(WageType.CustomRange, WageUnit.Weekly, WageUnit.Weekly)]
+        [TestCase(WageType.PresetText, WageUnit.Weekly, WageUnit.NotApplicable)]
+        [TestCase(WageType.PresetText, WageUnit.Monthly, WageUnit.NotApplicable)]
+        [TestCase(WageType.PresetText, WageUnit.Annually, WageUnit.NotApplicable)]
+        [TestCase(WageType.PresetText, WageUnit.NotApplicable, WageUnit.NotApplicable)]
         public void ShouldSetCorrectWageUnit(WageType type, WageUnit suppliedUnit, WageUnit expectedUnit)
         {
             //Arrange

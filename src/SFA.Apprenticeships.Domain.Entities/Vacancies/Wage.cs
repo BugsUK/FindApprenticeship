@@ -31,7 +31,21 @@
             {
                 return WageUnit.Weekly;
             }
+
             if (type == WageType.LegacyText)
+            {
+                return WageUnit.NotApplicable;
+            }
+
+            if (type == WageType.CustomRange)
+            {
+                if (unit == WageUnit.NotApplicable)
+                    return WageUnit.Weekly;
+
+                return unit;
+            }
+
+            if (type == WageType.PresetText)
             {
                 return WageUnit.NotApplicable;
             }
