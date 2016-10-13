@@ -71,10 +71,60 @@
                         @Html.LabelFor(m => m.OfflineApplicationUrl)
                         @if (Model.IsEmployerLocationMainApprenticeshipLocation != true && Model.LocationAddresses != null && Model.LocationAddresses.Count > 1)
                         {
-                            <p class="inline-text">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="MultipleOfflineApplicationUrlsAction" value="MultipleOfflineApplicationUrls">enter a different web address for each vacancy location</button></p>
+                            if (Model.OfflineVacancyType == OfflineVacancyType.MultiUrl)
+                            {
+                                <p class="inline-text">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button-link no-autosave" name="SingleOfflineApplicationUrlAction" value="SingleOfflineApplicationUrl">use the same web address for all vacancy locations</button></p>
+                            }
+                            else
+                            {
+                                <p class="inline-text">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="MultipleOfflineApplicationUrlsAction" value="MultipleOfflineApplicationUrls">enter a different web address for each vacancy location</button></p>
+                            }
                         }
-                        @Html.TextBoxFor(m => m.OfflineApplicationUrl, new { @class = "width-all-1-1 form-control", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
-                        @Html.ValidationMessageFor(m => m.OfflineApplicationUrl)
+                        @if (Model.OfflineVacancyType == OfflineVacancyType.MultiUrl && Model.LocationAddresses != null)
+                        {
+                            <table id="multiple-apprenticeship-offline-application-urls-table">
+                                <colgroup>
+                                    <col>
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>Location</th>
+                                        <th>Number of positions</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="location-addresses">
+                                    @for (var i=0; i<Model.LocationAddresses.Count; i++)
+                                    {
+                                        var locationAddress = Model.LocationAddresses[i];
+                                        <tr>
+                                            <td class="location-address">
+                                                @locationAddress.Address.AddressLine1
+                                                @if (!string.IsNullOrWhiteSpace(@locationAddress.Address.AddressLine2))
+                                                {
+                                                    <br />@locationAddress.Address.AddressLine2
+                                                }
+                                                <br />@locationAddress.Address.AddressLine4 @locationAddress.Address.Postcode
+                                            </td>
+                                            <td class="location-positions">
+                                                @locationAddress.NumberOfPositions
+                                            </td>
+                                            <td class="location-offline-urls">
+                                                @Html.Hidden("LocationAddresses[" + i + "].VacancyLocationId", locationAddress.VacancyLocationId)
+                                                @Html.TextBox("LocationAddresses[" + i + "].OfflineApplicationUrl"))
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(m => m.OfflineApplicationUrl, new { @class = "width-all-1-1 form-control", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
+                            @Html.ValidationMessageFor(m => m.OfflineApplicationUrl)
+                        }
                         @Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationUrlComment))
                         @Html.ValidationMessageFor(m => m.OfflineApplicationUrlComment)
                     </div>

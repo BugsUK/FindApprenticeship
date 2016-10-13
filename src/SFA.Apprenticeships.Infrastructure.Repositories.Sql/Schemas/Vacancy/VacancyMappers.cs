@@ -249,7 +249,7 @@
                 .IgnoreMember(av => av.LocalAuthorityCode)
                 .MapMemberFrom(av => av.EditedInRaa, v => v.EditedInRaa)
                 .MapMemberFrom(av => av.VacancySource, v => v.VacancySourceId)
-                .MapMemberFrom(av => av.OfflineVacancyType, v => v.OfflineVacancyTypeId)
+                .MapMemberFrom(av => av.OfflineVacancyType, v => (OfflineVacancyType?)v.OfflineVacancyTypeId)
                 .IgnoreMember(av => av.EmployerName)
                 .IgnoreMember(av => av.NewApplicationCount)
                 .IgnoreMember(av => av.ProviderTradingName)

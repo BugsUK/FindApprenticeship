@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.Views.Shared.DisplayTemplates.Vacancy;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using HtmlAgilityPack;
     using NUnit.Framework;
@@ -31,6 +32,8 @@
             AssertOfflineSelected(view);
 
             view.GetElementbyId("multiple-offline-application-urls-button").Should().BeNull();
+            view.GetElementbyId("single-offline-application-url-button").Should().BeNull();
+            view.GetElementbyId("apprenticeship-offline-application-url").Should().NotBeNull();
         }
 
         [Test]
@@ -51,15 +54,20 @@
             AssertOfflineSelected(view);
 
             view.GetElementbyId("multiple-offline-application-urls-button").Should().BeNull();
+            view.GetElementbyId("single-offline-application-url-button").Should().BeNull();
+            view.GetElementbyId("apprenticeship-offline-application-url").Should().NotBeNull();
         }
 
-        [Test]
-        public void MultiLocationOfflineVacancy()
+        [TestCase(null)]
+        [TestCase(OfflineVacancyType.Unknown)]
+        [TestCase(OfflineVacancyType.SingleUrl)]
+        public void MultiLocationOfflineVacancy(OfflineVacancyType offlineVacancyType)
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
                 .With(vm => vm.IsEmployerLocationMainApprenticeshipLocation, false)
                 .With(vm => vm.OfflineVacancy, true)
+                .With(vm => vm.OfflineVacancyType, offlineVacancyType)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>
                 {
                     new VacancyLocationAddressViewModel(),
@@ -75,9 +83,11 @@
             //Assert
             AssertOfflineSelected(view);
 
-            var multipleUrlLink = view.GetElementbyId("multiple-offline-application-urls-button");
-            multipleUrlLink.Should().NotBeNull();
-            multipleUrlLink.InnerText.Should().Be("enter a different web address for each vacancy location");
+            var multipleUrlsButton = view.GetElementbyId("multiple-offline-application-urls-button");
+            multipleUrlsButton.Should().NotBeNull();
+            multipleUrlsButton.InnerText.Should().Be("enter a different web address for each vacancy location");
+            view.GetElementbyId("single-offline-application-url-button").Should().BeNull();
+            view.GetElementbyId("apprenticeship-offline-application-url").Should().NotBeNull();
         }
 
         [Test]
@@ -87,6 +97,7 @@
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
                 .With(vm => vm.IsEmployerLocationMainApprenticeshipLocation, false)
                 .With(vm => vm.OfflineVacancy, true)
+                .With(vm => vm.OfflineVacancyType, OfflineVacancyType.MultiUrl)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>
                 {
                     new VacancyLocationAddressViewModel(),
@@ -102,9 +113,16 @@
             //Assert
             AssertOfflineSelected(view);
 
-            var multipleUrlLink = view.GetElementbyId("multiple-offline-application-urls-button");
-            multipleUrlLink.Should().NotBeNull();
-            multipleUrlLink.InnerText.Should().Be("enter a different web address for each vacancy location");
+            view.GetElementbyId("multiple-offline-application-urls-button").Should().BeNull();
+            var singleUrlButton = view.GetElementbyId("single-offline-application-url-button");
+            singleUrlButton.Should().NotBeNull();
+            singleUrlButton.InnerText.Should().Be("use the same web address for all vacancy locations");
+
+            //Single offline application url input should not be visible
+            view.GetElementbyId("apprenticeship-offline-application-url").Should().BeNull();
+            //Instead url table should be visible
+            var multipleUrlsTable = view.GetElementbyId("multiple-apprenticeship-offline-application-urls-table");
+            multipleUrlsTable.Should().NotBeNull();
         }
 
         private static void AssertOfflineSelected(HtmlDocument view)
