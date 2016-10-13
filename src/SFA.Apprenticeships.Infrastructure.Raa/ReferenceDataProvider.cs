@@ -118,7 +118,6 @@
         {
             var occupations = _referenceRepository.GetOccupations().ToList();
 
-            //TODO: We may be unnecessarily doing this twice (once in the repo and then again here)
             occupations.ForEach(o =>
             {
                 o.Frameworks.ToList().ForEach(f => f.ParentCategoryCodeName = o.CodeName);
@@ -130,28 +129,13 @@
         public IEnumerable<Sector> GetSectors()
         {
             var sectors = _referenceRepository.GetSectors();
-            var standards = _referenceRepository.GetStandards();
-
-
-            foreach (var sector in sectors)
-            {
-                sector.Standards = standards.Where(s => s.ApprenticeshipSectorId == sector.Id).ToList();
-            }
 
             return sectors;
         }
 
         public IEnumerable<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes()
         {
-            var standardSectors = GetSectors().ToList();
             var standardSubjectAreaTierOnes = _referenceRepository.GetStandardSubjectAreaTierOnes();
-
-            foreach (var standardSubjectAreaTierOne in standardSubjectAreaTierOnes)
-            {
-                standardSubjectAreaTierOne.Sectors =
-                    standardSectors.Where(s => s.ApprenticeshipOccupationId == standardSubjectAreaTierOne.Id).ToList();
-                //build SSAT1, add to list and return
-            }
 
             return standardSubjectAreaTierOnes;
         }

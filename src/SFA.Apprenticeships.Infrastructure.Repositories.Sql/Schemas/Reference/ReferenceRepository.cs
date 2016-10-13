@@ -45,6 +45,7 @@
                         Id = x.ApprenticeshipOccupationId,
                         FullName = x.FullName,
                         ShortName = x.ShortName,
+                        Status = (OccupationStatusType)x.ApprenticeshipOccupationStatusTypeId,
                         Frameworks =
                             dbFrameworks.Where(af => af.ApprenticeshipOccupationId == x.ApprenticeshipOccupationId)
                                 .Select(_mapper.Map<ApprenticeshipFramework, Framework>).ToList()
@@ -147,12 +148,15 @@
             var dbStandardSubjectAreaTierOnes = _getOpenConnection
                 .Query<ApprenticeshipOccupation>(sectorSql, sqlParams);
 
+            var sector = GetSectors();
+
             var standardSubjectAreaTierOnes = dbStandardSubjectAreaTierOnes.Select(x =>
             {
-                var appOcc = new StandardSubjectAreaTierOne()
+                var appOcc = new StandardSubjectAreaTierOne
                 {
                     Id = x.ApprenticeshipOccupationId,
                     Name = x.FullName,
+                    Sectors = sector.Where(s => s.ApprenticeshipOccupationId == x.ApprenticeshipOccupationId),
                 };
                 return appOcc;
             }).ToList();

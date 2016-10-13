@@ -17,27 +17,26 @@
         <th>Standard</th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var standardSector in Model.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
     {
-        foreach (var sectorItems in item.Sectors)
+        var ssat1 = Model.Single(s => s.Id == standardSector.ApprenticeshipOccupationId);
+
+        foreach (var standard in standardSector.Standards.OrderBy(s => s.Name))
         {
-            foreach (var standardItems in sectorItems.Standards)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => standardItems.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => sectorItems.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => standardItems.Name)
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => ssat1.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => standardSector.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.Name)
+                </td>
+            </tr>
         }
     }
 </table>

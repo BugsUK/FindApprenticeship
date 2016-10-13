@@ -345,7 +345,7 @@
 
             routes.MapRoute(
                 name: ManagementRouteNames.AdminFrameworks,
-                url: "admin/frameoworks",
+                url: "admin/frameworks",
                 defaults: new {controller = "Admin", action = "Frameworks"}
                 );
 
