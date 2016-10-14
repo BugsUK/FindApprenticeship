@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mappers
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
@@ -13,6 +11,8 @@
     using Infrastructure.Common.Mappers;
     using Infrastructure.Presentation;
     using Resolvers;
+    using System;
+    using System.Collections.Generic;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -138,6 +138,7 @@
                 .ForMember(v => v.Qualifications, opt => opt.MapFrom(src => Map<IList<Qualification>, IList<QualificationViewModel>>(src.CandidateInformation.Qualifications)))
                 .ForMember(v => v.WorkExperience, opt => opt.MapFrom(src => Map<IList<WorkExperience>, IList<WorkExperienceViewModel>>(src.CandidateInformation.WorkExperience)))
                 .ForMember(v => v.TrainingCourses, opt => opt.MapFrom(src => Map<IList<TrainingCourse>, IList<TrainingCourseViewModel>>(src.CandidateInformation.TrainingCourses)))
+                .ForMember(v => v.NextStepsUrl, opt => opt.Ignore())
                 .ForMember(v => v.VacancyQuestionAnswers, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, VacancyQuestionAnswersViewModel>(src)));
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>()

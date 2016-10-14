@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
-    using System.Linq;
     using Domain.Entities.Applications;
     using FluentAssertions;
     using NUnit.Framework;
+    using System.Linq;
 
     [TestFixture]
     public class Us636ViewSubmittedApplicationsTests
@@ -69,7 +69,7 @@
         [Test]
         public void UnsuccessfulApplications()
         {
-            var viewModel = new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1, ApplicationStatuses.Unsuccessful)).Build();
+            var viewModel = new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1, ApplicationStatuses.Unsuccessful, "Not eligible for working in UK")).Build();
 
             var result = new MyApplicationsViewBuilder().With(viewModel).Render();
 
@@ -91,8 +91,8 @@
             submittedDate.Should().NotBeNull();
 
             var href = viewApplication.Attributes.First(a => a.Name == "href");
-            href.Value.Should().Be("/apprenticeship/view/" + viewModel.UnsuccessfulApplications.First().VacancyId);
-            viewApplication.InnerText.Should().Be("View application");
+            href.Value.Should().Be("/apprenticeship/candidateapplicationfeedback/" + viewModel.UnsuccessfulApplications.First().VacancyId);
+            viewApplication.InnerText.Should().Be("Read feedback");
         }
     }
 }

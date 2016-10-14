@@ -68,7 +68,7 @@
                 { vacancy.Id, expectedCounts.Object }
             };
 
-            var vacancies = new int[] { vacancy.Id };
+            var vacancies = new[] { vacancy.Id };
 
             _mockApprenticeshipApplicationStatsRepository.Setup(mock =>
                 mock.GetCountsForVacancyIds(vacancies)).Returns(expected);
@@ -101,7 +101,7 @@
                 { vacancy.Id, expectedCounts.Object }
             };
 
-            var vacancies = new int[] { vacancy.Id };
+            var vacancies = new[] { vacancy.Id };
 
             _mockApprenticeshipApplicationStatsRepository.Setup(mock =>
                 mock.GetCountsForVacancyIds(vacancies)).Returns(expected);
@@ -165,17 +165,35 @@
 
             actualApplicationStatusSummary.Should().NotBeNull();
 
-            actualApplicationStatusSummary.ShouldBeEquivalentTo(new ApplicationStatusSummary
+            if (applicationStatus == ApplicationStatuses.Unsuccessful)
             {
-                ApplicationId = Guid.Empty,
-                ApplicationStatus = applicationStatus,
-                LegacyApplicationId = nextLegacyApplicationId,
-                LegacyCandidateId = 0,
-                LegacyVacancyId = 0,
-                VacancyStatus = apprenticeshipApplicationDetail.VacancyStatus,
-                ClosingDate = apprenticeshipApplicationDetail.Vacancy.ClosingDate,
-                UpdateSource = ApplicationStatusSummary.Source.Raa
-            });
+                actualApplicationStatusSummary.ShouldBeEquivalentTo(new ApplicationStatusSummary
+                {
+                    ApplicationId = Guid.Empty,
+                    ApplicationStatus = applicationStatus,
+                    LegacyApplicationId = nextLegacyApplicationId,
+                    LegacyCandidateId = 0,
+                    LegacyVacancyId = 0,
+                    VacancyStatus = apprenticeshipApplicationDetail.VacancyStatus,
+                    ClosingDate = apprenticeshipApplicationDetail.Vacancy.ClosingDate,
+                    UpdateSource = ApplicationStatusSummary.Source.Raa,
+                    UnsuccessfulReason = feedback
+                });
+            }
+            else
+            {
+                actualApplicationStatusSummary.ShouldBeEquivalentTo(new ApplicationStatusSummary
+                {
+                    ApplicationId = Guid.Empty,
+                    ApplicationStatus = applicationStatus,
+                    LegacyApplicationId = nextLegacyApplicationId,
+                    LegacyCandidateId = 0,
+                    LegacyVacancyId = 0,
+                    VacancyStatus = apprenticeshipApplicationDetail.VacancyStatus,
+                    ClosingDate = apprenticeshipApplicationDetail.Vacancy.ClosingDate,
+                    UpdateSource = ApplicationStatusSummary.Source.Raa
+                });
+            }
         }
     }
 }
