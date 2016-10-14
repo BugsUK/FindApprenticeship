@@ -18,6 +18,7 @@
 
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation)
+    @Html.HiddenFor(m => m.OfflineVacancyType)
     @Html.HiddenFor(m => m.NumberOfPositions)
     @Html.HiddenFor(m => m.ComeFromPreview)
     @Html.HiddenFor(m => m.VacancySource)
@@ -112,9 +113,10 @@
                                                 @locationAddress.NumberOfPositions
                                             </td>
                                             <td class="location-offline-urls">
-                                                <div class="@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType("LocationAddresses[" + i + "].OfflineApplicationUrl")))">
+                                                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType("LocationAddresses[" + i + "].OfflineApplicationUrl")))" style="margin-bottom: 0">
                                                     @Html.Hidden("LocationAddresses[" + i + "].VacancyLocationId", locationAddress.VacancyLocationId)
-                                                    @Html.TextBox("LocationAddresses[" + i + "].OfflineApplicationUrl", locationAddress.OfflineApplicationUrl, new {@class = "width-all-1-1 form-control", type = "text", size = 12})
+                                                    @Html.Hidden("LocationAddresses[" + i + "].NumberOfPositions", locationAddress.NumberOfPositions)
+                                                    @Html.TextBoxFor(m => Model.LocationAddresses[i].OfflineApplicationUrl, new {@id = "locationaddresses_" + i + "__offlineapplicationurl", @class = "width-all-1-1 form-control", type = "text", size = 12})
                                                     @Html.ValidationMessage("LocationAddresses[" + i + "].OfflineApplicationUrl")
                                                 </div>
                                             </td>

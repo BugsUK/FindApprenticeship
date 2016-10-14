@@ -68,10 +68,6 @@
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText)
                 .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
 
-            validator.RuleFor(x => x.LocationAddresses)
-                .SetCollectionValidator(new VacancyLocationAddressViewModelValidator())
-                .When(x => x.OfflineVacancyType == OfflineVacancyType.MultiUrl);
-
             validator.RuleFor(m => m.OfflineApplicationUrlComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
@@ -95,7 +91,8 @@
 
         internal static void AddClientRules(this AbstractValidator<NewVacancyViewModel> validator)
         {
-
+            validator.RuleFor(x => x.LocationAddresses)
+                .SetCollectionValidator(new VacancyLocationAddressViewModelClientValidator());
         }
 
         internal static void AddServerRules(this AbstractValidator<NewVacancyViewModel> validator)
@@ -118,7 +115,7 @@
                 .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value && viewModel.OfflineVacancyType != OfflineVacancyType.MultiUrl);
 
             validator.RuleFor(x => x.LocationAddresses)
-                .SetCollectionValidator(new VacancyLocationAddressViewModelUrlValidator())
+                .SetCollectionValidator(new VacancyLocationAddressViewModelServerValidator())
                 .When(x => x.OfflineVacancyType == OfflineVacancyType.MultiUrl);
 
             validator.RuleFor(viewModel => (int)viewModel.VacancyType)

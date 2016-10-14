@@ -123,6 +123,11 @@
             //Instead url table should be visible
             var multipleUrlsTable = view.GetElementbyId("multiple-apprenticeship-offline-application-urls-table");
             multipleUrlsTable.Should().NotBeNull();
+            for (int i = 0; i < viewModel.LocationAddresses.Count; i++)
+            {
+                var locationAddress = view.GetElementbyId($"locationaddresses_{i}__offlineapplicationurl");
+                locationAddress.Should().NotBeNull();
+            }
         }
 
         private static void AssertOfflineSelected(HtmlDocument view)

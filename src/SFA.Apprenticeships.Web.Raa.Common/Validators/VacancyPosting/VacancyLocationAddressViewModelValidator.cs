@@ -6,26 +6,23 @@
     using Web.Common.Validators;
     using Common = Common;
 
-    public class VacancyLocationAddressViewModelValidator : AbstractValidator<VacancyLocationAddressViewModel>
+    public class VacancyLocationAddressViewModelClientValidator : AbstractValidator<VacancyLocationAddressViewModel>
     {
-        public VacancyLocationAddressViewModelValidator()
+        public VacancyLocationAddressViewModelClientValidator()
         {
-            RuleFor(x => x.NumberOfPositions)
-                .NotEmpty()
-                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.RequiredErrorText)
-                .GreaterThanOrEqualTo(1)
-                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.AtLeastOnePositionErrorText);
+            this.AddCommonRules();
+            this.AddClientRules();
         }
     }
 
-    public class VacancyLocationAddressViewModelUrlValidator : AbstractValidator<VacancyLocationAddressViewModel>
+    public class VacancyLocationAddressViewModelServerValidator : AbstractValidator<VacancyLocationAddressViewModel>
     {
-        public VacancyLocationAddressViewModelUrlValidator()
+        public VacancyLocationAddressViewModelServerValidator()
         {
             this.AddCommonRules();
-            this.AddUrlRules();
+            this.AddServerRules();
             RuleSet(RuleSets.Errors, this.AddCommonRules);
-            RuleSet(RuleSets.Errors, this.AddUrlRules);
+            RuleSet(RuleSets.Errors, this.AddServerRules);
         }
     }
 
@@ -33,6 +30,12 @@
     {
         internal static void AddCommonRules(this AbstractValidator<VacancyLocationAddressViewModel> validator)
         {
+            validator.RuleFor(x => x.NumberOfPositions)
+                .NotEmpty()
+                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.RequiredErrorText)
+                .GreaterThanOrEqualTo(1)
+                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.AtLeastOnePositionErrorText);
+
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Length(0, 256)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.TooLongErrorText);
@@ -42,7 +45,12 @@
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText);
         }
 
-        internal static void AddUrlRules(this AbstractValidator<VacancyLocationAddressViewModel> validator)
+        internal static void AddClientRules(this AbstractValidator<VacancyLocationAddressViewModel> validator)
+        {
+            
+        }
+
+        internal static void AddServerRules(this AbstractValidator<VacancyLocationAddressViewModel> validator)
         {
             validator.RuleFor(x => x.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)

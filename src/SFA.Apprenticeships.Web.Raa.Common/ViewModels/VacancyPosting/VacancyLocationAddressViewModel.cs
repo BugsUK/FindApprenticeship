@@ -4,7 +4,7 @@
     using Validators.VacancyPosting;
     using Web.Common.ViewModels.Locations;
 
-    [Validator(typeof(VacancyLocationAddressViewModelValidator))]
+    [Validator(typeof(VacancyLocationAddressViewModelClientValidator))]
     public class VacancyLocationAddressViewModel
     {
         public VacancyLocationAddressViewModel()

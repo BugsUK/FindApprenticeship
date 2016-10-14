@@ -291,7 +291,7 @@
         {
             public const string LabelText = "Enter the web address candidates should use to apply for this vacancy";
             public const string RequiredErrorText = "Enter a valid website address";
-            public const string TooLongErrorText = "The website address must not be more than 100 characters";
+            public const string TooLongErrorText = "The website address must not be more than 256 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The website address " + Whitelists.FreetextWhitelist.ErrorText;
             public const string ErrorUriText = "Enter a valid website address";
