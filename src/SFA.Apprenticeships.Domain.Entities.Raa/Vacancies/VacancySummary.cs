@@ -48,6 +48,7 @@
         public int OriginalContractOwnerId { get; set; }
         public RegionalTeam RegionalTeam { get; set; }
         public VacancyLocationType VacancyLocationType { get; set; }
+        public int EmployerId { get; set; }
 
         public DateTime LiveClosingDate
         {
@@ -70,6 +71,7 @@
         }
 
         public string EmployerName { get; set; }
+        public string EmployerLocation { get; set; }
 
         public int NewApplicationCount { get; set; }
 		public int ApplicantCount { get; set; }

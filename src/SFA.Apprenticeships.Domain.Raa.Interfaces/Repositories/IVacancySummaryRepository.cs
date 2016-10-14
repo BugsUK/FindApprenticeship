@@ -8,6 +8,7 @@ namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
 {
     using Entities.Raa.Vacancies;
     using Models;
+    using Queries;
 
     public interface IVacancySummaryRepository
     {
@@ -17,5 +18,6 @@ namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
         IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query);
         VacancySummary GetById(int vacancyId);
         List<VacancySummary> GetByIds(IEnumerable<int> vacancyId);
+        IList<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int resultCount);
     }
 }

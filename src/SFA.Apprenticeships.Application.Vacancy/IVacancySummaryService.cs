@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SFA.Apprenticeships.Application.Vacancy
 {
+    using System.Collections;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories.Models;
 
     public interface IVacancySummaryService
@@ -17,5 +19,6 @@ namespace SFA.Apprenticeships.Application.Vacancy
         IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query);
         VacancySummary GetById(int vacancyId);
         IList<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
+        IList<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int resultCount);
     }
 }

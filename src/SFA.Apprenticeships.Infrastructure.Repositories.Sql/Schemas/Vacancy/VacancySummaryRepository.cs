@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
     using Common;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
 
@@ -412,26 +413,58 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
 		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
-                            e.FullName AS EmployerName
+                            e.FullName AS EmployerName,
+                            e.EmployerId,
+                            e.Town AS EmployerLocation,
+
+		                    af.CodeName AS FrameworkCodeName,
+		                    el.CodeName AS ApprenticeshipLevel,
+		                    ao.CodeName AS SectorCodeName,
+		                    rs.StandardId,
+		                    dbo.GetCreatedByProviderUsername(v.VacancyId) AS CreatedByProviderUsername,
+		                    dbo.GetDateQAApproved(v.VacancyId) AS DateQAApproved,
+		                    rt.TeamName AS RegionalTeam
+
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
                     JOIN	Employer e
                     ON		o.EmployerId = e.EmployerId
                     JOIN	ProviderSiteRelationship r
-					ON		r.ProviderSiteId = o.ProviderSiteId
-                    WHERE	o.ProviderSiteID = @ProviderSiteId
-                    AND		(v.VacancyManagerId = @ProviderSiteId
-                            OR v.DeliveryOrganisationId = @ProviderSiteId)
-                    AND		r.ProviderId = @providerId
-					AND		r.ProviderSiteRelationshipTypeId = 1
-                    WHERE	v.VacancyID IN @vacancyIds";
+                    ON		r.ProviderSiteId = o.ProviderSiteId
+
+                    JOIN	ProviderSite s
+                    ON      s.ProviderSiteId = v.VacancyManagerId
+
+                    LEFT OUTER JOIN	ApprenticeshipFramework af
+                    ON		af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
+                    LEFT OUTER JOIN	ApprenticeshipType AS at
+                    ON		at.ApprenticeshipTypeId = v.ApprenticeshipType
+                    LEFT OUTER JOIN	Reference.EducationLevel el
+                    ON		el.EducationLevelId = at.EducationLevelId
+                    LEFT OUTER JOIN	ApprenticeshipOccupation ao
+                    ON		v.SectorId = ao.ApprenticeshipOccupationId
+                    LEFT OUTER JOIN Reference.[Standard] rs
+                    ON		rs.FullName = af.FullName
+                    LEFT OUTER JOIN	RegionalTeamMappings t
+                    ON		s.PostCode LIKE t.PostcodeStart + '[0-9]%'
+                    LEFT OUTER JOIN	RegionalTeams rt
+                    ON		rt.Id = t.RegionalTeam_Id
+
+                    WHERE	v.VacancyID IN @vacancyIds
+                    AND     r.ProviderSiteRelationshipTypeId = 1
+";
 
             var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
             
             var mapped = Mapper.Map<IList<DbVacancySummary>, List<VacancySummary>>(vacancies);
 
             return mapped;
+        }
+
+        public IList<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int resultCount)
+        {
+            throw new NotImplementedException();
         }
 
 

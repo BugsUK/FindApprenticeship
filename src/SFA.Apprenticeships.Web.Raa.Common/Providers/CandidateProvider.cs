@@ -168,8 +168,6 @@
         public CandidateApplicationSummariesViewModel GetCandidateApplicationSummaries(CandidateApplicationsSearchViewModel searchViewModel, string ukprn)
         {
             var candidateId = searchViewModel.CandidateGuid;
-            var provider = _providerService.GetProvider(ukprn);
-            var ownedProviderSites = _providerService.GetOwnedProviderSites(provider.ProviderId).Select(ps => ps.ProviderSiteId).ToList();
 
             var candidate = _candidateApplicationService.GetCandidate(candidateId);
 
@@ -178,9 +176,10 @@
 
             var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
 
-            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).Where(v => (v.VacancyManagerId != null && ownedProviderSites.Contains(v.VacancyManagerId.Value)) || (v.DeliveryOrganisationId != null && ownedProviderSites.Contains(v.DeliveryOrganisationId.Value))).ToDictionary(v => v.VacancyId, v => v);
-            var vacancyOwnerRelationships = _providerService.GetVacancyOwnerRelationships(vacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
-            var employers = _employerService.GetEmployers(vacancyOwnerRelationships.Values.Select(vor => vor.EmployerId)).ToDictionary(e => e.EmployerId, e => e);
+            var vacancySummaries =
+                _vacancyPostingService.GetVacancySummariesByIds(
+                        candidateApplicationSummaries.Select(a => a.VacancyId).Distinct())
+                    .ToDictionary(v => v.VacancyId, v => v);
 
             //Restrict to only the applications for vacancies owned by the logged in user
             candidateApplicationSummaries = candidateApplicationSummaries.Where(a => vacancySummaries.ContainsKey(a.VacancyId)).ToList();
@@ -189,9 +188,8 @@
             foreach (var application in page)
             {
                 var vacancy = vacancySummaries[application.VacancyId];
-                var employer = employers[vacancyOwnerRelationships[vacancy.VacancyOwnerRelationshipId].EmployerId];
                 application.VacancyReferenceNumber = vacancy.VacancyReferenceNumber;
-                application.EmployerLocation = employer.Address.Town;
+                application.EmployerLocation = vacancy.EmployerLocation;
                 application.AnonymousLinkData = _encryptionService.Encrypt(new AnonymisedApplicationLink(application.ApplicationId, _dateTimeService.TwoWeeksFromUtcNow));
             }
 
