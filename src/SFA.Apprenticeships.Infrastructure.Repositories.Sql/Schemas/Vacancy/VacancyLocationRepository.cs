@@ -6,11 +6,8 @@
     using Common;
     using dbo;
     using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
 
     public class VacancyLocationRepository : IVacancyLocationReadRepository, IVacancyLocationWriteRepository
     {
@@ -64,7 +61,7 @@
             return vacancyLocations;
         }
 
-        public List<VacancyLocation> Save(List<VacancyLocation> locationAddresses)
+        public List<VacancyLocation> Create(List<VacancyLocation> locationAddresses)
         {
             foreach (var vacancyLocationAddress in locationAddresses)
             {
@@ -73,6 +70,20 @@
                 PopulateCountyId(vacancyLocationAddress, vacancyLocation);
 
                 _getOpenConnection.Insert(vacancyLocation);
+            }
+
+            return locationAddresses;
+        }
+
+        public List<VacancyLocation> Update(List<VacancyLocation> locationAddresses)
+        {
+            foreach (var vacancyLocationAddress in locationAddresses)
+            {
+                var vacancyLocation = _mapper.Map<VacancyLocation, Entities.VacancyLocation>(vacancyLocationAddress);
+                PopulateLocalAuthorityId(vacancyLocationAddress, vacancyLocation);
+                PopulateCountyId(vacancyLocationAddress, vacancyLocation);
+
+                _getOpenConnection.UpdateSingle(vacancyLocation);
             }
 
             return locationAddresses;

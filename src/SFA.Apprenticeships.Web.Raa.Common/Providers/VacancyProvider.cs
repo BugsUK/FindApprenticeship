@@ -388,13 +388,6 @@
             if (vacancyOwnerRelationship == null)
                 throw new Exception($"Vacancy Party {newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId} not found / no longer current");
 
-            //var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
-
-            //if (!employer.Address.GeoPoint.IsValid())
-            //{
-            //    employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
-            //}
-
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
@@ -405,14 +398,21 @@
             vacancy.OfflineVacancyType = newVacancyViewModel.OfflineVacancyType;
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
-            //vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
-            //vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
-            //vacancy.Address = (newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-            //                   newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
-            //                    ? employer.Address
-            //                    : null;
-            //vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
+
+            if (newVacancyViewModel.LocationAddresses != null)
+            {
+                var vacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+                foreach (var locationAddress in newVacancyViewModel.LocationAddresses)
+                {
+                    var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
+                    if (vacancyLocation != null)
+                    {
+                        vacancyLocation.EmployersWebsite = locationAddress.OfflineApplicationUrl;
+                    }
+                }
+                _vacancyPostingService.UpdateVacancyLocations(vacancyLocations);
+            }
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
@@ -1507,7 +1507,7 @@
                     _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
-                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
+                _vacancyPostingService.CreateVacancyLocations(vacancyLocations);
             }
 
             viewModel.AutoSaveTimeoutInSeconds =

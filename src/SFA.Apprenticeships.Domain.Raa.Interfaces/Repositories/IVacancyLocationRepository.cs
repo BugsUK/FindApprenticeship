@@ -12,7 +12,8 @@
 
     public interface IVacancyLocationWriteRepository
     {
-        List<VacancyLocation> Save(List<VacancyLocation> locationAddresses);
+        List<VacancyLocation> Create(List<VacancyLocation> locationAddresses);
+        List<VacancyLocation> Update(List<VacancyLocation> locationAddresses);
         void DeleteFor(int vacancyId);
     }
 }

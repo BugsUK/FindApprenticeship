@@ -105,9 +105,14 @@
             return _vacancyLocationsStrategies.GetVacancyLocations(vacancyId);
         }
 
-        public List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations)
+        public List<VacancyLocation> CreateVacancyLocations(List<VacancyLocation> vacancyLocations)
         {
-            return _vacancyLocationsStrategies.SaveVacancyLocations(vacancyLocations);
+            return _vacancyLocationsStrategies.CreateVacancyLocations(vacancyLocations);
+        }
+
+        public List<VacancyLocation> UpdateVacancyLocations(List<VacancyLocation> vacancyLocations)
+        {
+            return _vacancyLocationsStrategies.UpdateVacancyLocations(vacancyLocations);
         }
 
         public void DeleteVacancyLocationsFor(int vacancyId)

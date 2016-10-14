@@ -7,7 +7,9 @@
     {
         List<VacancyLocation> GetVacancyLocations(int vacancyId);
 
-        List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations);
+        List<VacancyLocation> CreateVacancyLocations(List<VacancyLocation> vacancyLocations);
+
+        List<VacancyLocation> UpdateVacancyLocations(List<VacancyLocation> vacancyLocations);
 
         void DeleteVacancyLocationsFor(int vacancyId);
 
