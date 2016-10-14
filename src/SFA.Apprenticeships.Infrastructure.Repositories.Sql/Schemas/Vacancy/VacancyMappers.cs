@@ -252,6 +252,8 @@
                 .IgnoreMember(av => av.NewApplicationCount)
                 .IgnoreMember(av => av.ProviderTradingName)
                 .IgnoreMember(av => av.CreatedDate)
+                .IgnoreMember(av => av.EmployerId)
+                .IgnoreMember(av => av.EmployerLocation)
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
@@ -344,6 +346,8 @@
                 .IgnoreMember(av => av.NewApplicationCount)
                 .IgnoreMember(av => av.ProviderTradingName)
                 .IgnoreMember(av => av.CreatedDate)
+                .IgnoreMember(av => av.EmployerLocation)
+                .IgnoreMember(av => av.EmployerId)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
@@ -395,8 +399,8 @@
                 .IgnoreMember(av => av.VacancyManagerId)
                 .IgnoreMember(av => av.DeliveryOrganisationId)
                 .IgnoreMember(av => av.TrainingType)
-                .IgnoreMember(av => av.ApprenticeshipLevel)
-                .IgnoreMember(av => av.FrameworkCodeName)
+                .MapMemberFrom(av => av.ApprenticeshipLevel, v => v.ApprenticeshipLevel)
+                .MapMemberFrom(av => av.FrameworkCodeName, v => v.FrameworkCodeName)
                 .IgnoreMember(av => av.StandardId)
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .IgnoreMember(av => av.IsEmployerLocationMainApprenticeshipLocation)
@@ -412,7 +416,7 @@
                 .IgnoreMember(av => av.QAUserName)
                 .IgnoreMember(av => av.TrainingType)
                 .IgnoreMember(av => av.UpdatedDateTime)
-                .IgnoreMember(av => av.SectorCodeName)
+                .MapMemberFrom(av => av.SectorCodeName, v => v.SectorCodeName)
                 .IgnoreMember(dvl => dvl.Address)
                 .IgnoreMember(av => av.DateFirstSubmitted)
                 .IgnoreMember(av => av.ParentVacancyId)
@@ -428,6 +432,8 @@
                 .MapMemberFrom(av => av.DateSubmitted, v => v.DateSubmitted)
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.DateFirstSubmitted)
                 .MapMemberFrom(av => av.CreatedDate, v => v.CreatedDate)
+                .MapMemberFrom(av => av.EmployerId, v => v.EmployerId)
+                .MapMemberFrom(av => av.EmployerLocation, v => v.EmployerLocation)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress

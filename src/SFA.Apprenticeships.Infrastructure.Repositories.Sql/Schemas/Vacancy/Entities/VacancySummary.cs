@@ -32,6 +32,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public DateTime? ApplicationClosingDate { get; set; }
         
         public string EmployerName { get; set; }
+        public string EmployerLocation { get; set; }
 
         public int? NewApplicantCount { get; set; }
         public int? ApplicantCount { get; set; }
@@ -43,6 +44,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public DateTime CreatedDate { get; set; }
 
         public int SubmissionCount { get; set; }
+
         public string FrameworkCodeName { get; set; }
+        public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
+        public string SectorCodeName { get; set; }
+
+        public int EmployerId { get; set; }
     }
 }
