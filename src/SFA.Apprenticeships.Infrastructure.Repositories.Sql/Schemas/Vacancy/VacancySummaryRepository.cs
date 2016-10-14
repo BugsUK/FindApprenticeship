@@ -420,10 +420,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                    af.CodeName AS FrameworkCodeName,
 		                    el.CodeName AS ApprenticeshipLevel,
 		                    ao.CodeName AS SectorCodeName,
-		                    rs.StandardId,
 		                    dbo.GetCreatedByProviderUsername(v.VacancyId) AS CreatedByProviderUsername,
 		                    dbo.GetDateQAApproved(v.VacancyId) AS DateQAApproved,
-		                    rt.TeamName AS RegionalTeam
+		                    rt.TeamName AS RegionalTeam,
+		                    af.StandardId
 
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
