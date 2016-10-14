@@ -202,6 +202,7 @@
     <Compile Include="Providers\VacancyStatusChange\ArchiveVacancyTests.cs" />
     <Compile Include="Validators\Samples.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelClientValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\NewVacancyViewModelOfflineServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelClientValidatorTests.cs" />

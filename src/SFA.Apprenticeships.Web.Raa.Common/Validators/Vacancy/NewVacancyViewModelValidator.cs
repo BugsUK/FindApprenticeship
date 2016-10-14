@@ -3,6 +3,7 @@
     using FluentValidation;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using VacancyPosting;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Common;
@@ -67,6 +68,10 @@
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText)
                 .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
 
+            validator.RuleFor(x => x.LocationAddresses)
+                .SetCollectionValidator(new VacancyLocationAddressViewModelValidator())
+                .When(x => x.OfflineVacancyType == OfflineVacancyType.MultiUrl);
+
             validator.RuleFor(m => m.OfflineApplicationUrlComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
@@ -110,7 +115,11 @@
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ErrorUriText)
-                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value && viewModel.OfflineVacancyType != OfflineVacancyType.MultiUrl);
+
+            validator.RuleFor(x => x.LocationAddresses)
+                .SetCollectionValidator(new VacancyLocationAddressViewModelUrlValidator())
+                .When(x => x.OfflineVacancyType == OfflineVacancyType.MultiUrl);
 
             validator.RuleFor(viewModel => (int)viewModel.VacancyType)
                 .InclusiveBetween((int)VacancyType.Apprenticeship, (int)VacancyType.Traineeship)
