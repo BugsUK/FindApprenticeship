@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mappers
 {
     using Domain.Entities.Applications;
+    using Domain.Entities.Communication;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
     using Infrastructure.Presentation;
     using Raa.Common.Mappers;
     using Raa.Common.ViewModels.Application;
-
-    using Domain.Entities.Communication;
     using ViewModels.Home;
 
     public class RecruitMappers : RaaCommonWebMappers

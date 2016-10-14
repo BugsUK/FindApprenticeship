@@ -139,6 +139,7 @@
                 .ForMember(v => v.WorkExperience, opt => opt.MapFrom(src => Map<IList<WorkExperience>, IList<WorkExperienceViewModel>>(src.CandidateInformation.WorkExperience)))
                 .ForMember(v => v.TrainingCourses, opt => opt.MapFrom(src => Map<IList<TrainingCourse>, IList<TrainingCourseViewModel>>(src.CandidateInformation.TrainingCourses)))
                 .ForMember(v => v.NextStepsUrl, opt => opt.Ignore())
+                .ForMember(v => v.ConfirmationStatusSentMessage, opt => opt.Ignore())
                 .ForMember(v => v.VacancyQuestionAnswers, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, VacancyQuestionAnswersViewModel>(src)));
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>()
@@ -184,6 +185,8 @@
                 .ForMember(v => v.WorkExperience, opt => opt.MapFrom(src => Map<IList<WorkExperience>, IList<WorkExperienceViewModel>>(src.CandidateInformation.WorkExperience)))
                 .ForMember(v => v.TrainingCourses, opt => opt.MapFrom(src => Map<IList<TrainingCourse>, IList<TrainingCourseViewModel>>(src.CandidateInformation.TrainingCourses)))
                 .ForMember(v => v.VacancyQuestionAnswers, opt => opt.MapFrom(src => Map<TraineeshipApplicationDetail, VacancyQuestionAnswersViewModel>(src)))
+                .ForMember(v => v.ConfirmationStatusSentMessage, opt => opt.Ignore())
+                .ForMember(v => v.UnSuccessfulReason, opt => opt.Ignore())
                 .ForMember(v => v.SuccessfulDateTime, opt => opt.Ignore())
                 .ForMember(v => v.UnsuccessfulDateTime, opt => opt.Ignore());
 
