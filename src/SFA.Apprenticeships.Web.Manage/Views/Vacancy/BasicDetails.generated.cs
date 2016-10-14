@@ -119,7 +119,19 @@ WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 18 "..\..\Views\Vacancy\BasicDetails.cshtml"
+Write(Scripts.Render("~/bundles/basicVacancyDetails"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral(@"
+
     <script>
         $(""input[name='OfflineVacancy']"").change(function () {
             var selectedValue = $(""input[name='OfflineVacancy']:checked"").val();
@@ -128,8 +140,17 @@ WriteLiteral(@"
                 $(""#apprenticheship-offline-application-instructions"").val("""");
             }
         });
-    </script>
-");
+
+        var searchUrl = '");
+
+            
+            #line 29 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                    Write(Url.RouteUrl(ManagementRouteNames.BasicDetails));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n    </script>\r\n");
 
 });
 

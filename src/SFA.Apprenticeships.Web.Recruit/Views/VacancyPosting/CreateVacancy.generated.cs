@@ -214,6 +214,17 @@ Write(Scripts.Render("~/bundles/autosave"));
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 34 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+Write(Scripts.Render("~/bundles/basicVacancyDetails"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral(@"
 
     <script>
@@ -228,7 +239,7 @@ WriteLiteral(@"
         var autoSaveTimeout = ");
 
             
-            #line 44 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 45 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                          Write(Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)));
 
             
@@ -239,13 +250,22 @@ WriteLiteral(" * 1000;\r\n\r\n        $(window).on(\'load\', function() {\r\n   
 "eTimeout,\r\n                postUrl: \'");
 
             
-            #line 50 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 51 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                      Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy));
 
             
             #line default
             #line hidden
-WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n");
+WriteLiteral("\'\r\n            });\r\n        });\r\n\r\n        var searchUrl = \'");
+
+            
+            #line 55 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                    Write(Url.RouteUrl(RecruitmentRouteNames.CreateVacancy));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n    </script>\r\n");
 
 });
 

@@ -31,6 +31,7 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/autosave")
+    @Scripts.Render("~/bundles/basicVacancyDetails")
 
     <script>
         $("input[name='OfflineVacancy']").change(function() {
@@ -50,6 +51,8 @@
                 postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy)'
             });
         });
+
+        var searchUrl = '@Url.RouteUrl(RecruitmentRouteNames.CreateVacancy)';
     </script>
 }
 

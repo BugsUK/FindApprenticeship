@@ -15,6 +15,8 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/basicVacancyDetails")
+
     <script>
         $("input[name='OfflineVacancy']").change(function () {
             var selectedValue = $("input[name='OfflineVacancy']:checked").val();
@@ -23,5 +25,7 @@
                 $("#apprenticheship-offline-application-instructions").val("");
             }
         });
+
+        var searchUrl = '@Url.RouteUrl(ManagementRouteNames.BasicDetails)';
     </script>
 }
