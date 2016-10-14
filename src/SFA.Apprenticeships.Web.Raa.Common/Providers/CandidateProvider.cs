@@ -257,8 +257,9 @@
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
             viewModel.Vacancy.EmployerName = employer.Name;
-            viewModel.NextSteps = string.Format($"https://{domainUrl}/nextsteps");
-            viewModel.CandidateApplicationFeedback = application.UnsuccessfulReason;
+            viewModel.NextStepsUrl = string.Format($"https://{domainUrl}/nextsteps");
+            viewModel.UnSuccessfulReason = application.UnsuccessfulReason;
+            viewModel.UnsuccessfulDateTime = application.UnsuccessfulDateTime;
             return viewModel;
         }
 

@@ -42,8 +42,8 @@
         [Display(Name = ApplicationViewModelMessages.Notes.LabelText)]
         public string Notes { get; set; }
 
-        [Display(Name = ApplicationViewModelMessages.CandidateApplicationFeedback.LabelText)]
-        [Required(ErrorMessage = ApplicationViewModelMessages.CandidateApplicationFeedback.RequiredErrorText)]
-        public string CandidateApplicationFeedback { get; set; }
+        [Display(Name = ApplicationViewModelMessages.UnSuccessfulReason.LabelText)]
+        [Required(ErrorMessage = ApplicationViewModelMessages.UnSuccessfulReason.RequiredErrorText)]
+        public string UnSuccessfulReason { get; set; }
     }
 }

@@ -30,9 +30,9 @@
                 .Matches(ApplicationViewModelMessages.Notes.WhiteListRegularExpression)
                 .WithMessage(ApplicationViewModelMessages.Notes.WhiteListErrorText);
 
-            validator.RuleFor(x => x.CandidateApplicationFeedback)
-                .Matches(ApplicationViewModelMessages.CandidateApplicationFeedback.WhiteListRegularExpression)
-                .WithMessage(ApplicationViewModelMessages.CandidateApplicationFeedback.WhiteListErrorText);
+            validator.RuleFor(x => x.UnSuccessfulReason)
+                .Matches(ApplicationViewModelMessages.UnSuccessfulReason.WhiteListRegularExpression)
+                .WithMessage(ApplicationViewModelMessages.UnSuccessfulReason.WhiteListErrorText);
         }
 
         internal static void AddClientRules(this AbstractValidator<ApprenticeshipApplicationViewModel> validator)

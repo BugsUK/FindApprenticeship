@@ -11,11 +11,11 @@
     <section class="grid grid-2-3">
         <div class="inner-block-padr">
             <h1 class="heading-xlarge">Your feedback (@Model.ApplicantDetails.Name)</h1>
-            @if (!string.IsNullOrWhiteSpace(Model.CandidateApplicationFeedback))
+            @if (!string.IsNullOrWhiteSpace(Model.UnSuccessfulReason))
             {
                 <div class="form-group">
                     <div class="detail-content qa-comment">
-                        <div class="blocklabel-single-container">@Model.CandidateApplicationFeedback</div>
+                        <div class="blocklabel-single-container">@Model.UnSuccessfulReason</div>
                         <br />
                         <span class="form-prepopped font-xsmall">
                             Sent
@@ -31,7 +31,7 @@
             <p>If you require further information please contact the training provider.</p>
             <p>
                 For advice on how to ensure your application has a better chance of being
-                successful <a href="@Model.NextSteps">see the next steps page</a>.
+                successful <a href="@Model.NextStepsUrl">see the next steps page</a>.
             </p>
             <br />
             <br />

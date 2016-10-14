@@ -16,7 +16,7 @@
             public const string WhiteListErrorText = "The vacancy manager notes " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
-        public class CandidateApplicationFeedback
+        public class UnSuccessfulReason
         {
             public const string RequiredErrorText = "You must provide feedback explaining why the candidate\'s application was not successful";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;

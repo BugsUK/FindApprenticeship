@@ -63,7 +63,7 @@
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Successful))
             {
-                stringBuilder.AppendFormat("<b><a href=\"https://{0}/myapplications#dashSuccessful\">Successful applications</a></b>", _siteDomainName);
+                stringBuilder.AppendFormat($"<b><a href=\"https://{_siteDomainName}/myapplications#dashSuccessful\">Successful applications</a></b>");
                 stringBuilder.AppendLine();
                 var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful)
                     .Select(d => $"<li>{d.Title} with {d.EmployerName}</li>");
@@ -72,7 +72,7 @@
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Unsuccessful))
             {
-                stringBuilder.AppendFormat("<b><a href=\"https://{0}/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>", _siteDomainName);
+                stringBuilder.AppendFormat($"<b><a href=\"https://{_siteDomainName}/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>");
                 stringBuilder.AppendLine();
 
                 var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(
@@ -84,7 +84,7 @@
 
                 stringBuilder.AppendLine($"<ul>{string.Join(string.Empty, unsuccessfulLineItems)}</ul>");
                 stringBuilder.Append("<p>If your application's unsuccessful ask your college or training provider for feedback.</p>");
-                stringBuilder.AppendFormat("<p>For advice on writing better applications visit the <a href=\"https://{0}/nextsteps\">next steps page</a>.</p>", _siteDomainName);
+                stringBuilder.AppendFormat($"<p>For advice on writing better applications visit the <a href=\"https://{_siteDomainName}/nextsteps\">next steps page</a>.</p>");
             }
 
             return stringBuilder.ToString();

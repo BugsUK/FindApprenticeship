@@ -221,7 +221,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel applicationViewModel)
         {
-            var selectionViewModel = _applicationProvider.SendUnsuccessfulDecision(applicationViewModel.ApplicationSelection, applicationViewModel.CandidateApplicationFeedback);
+            var selectionViewModel = _applicationProvider.SendUnsuccessfulDecision(applicationViewModel.ApplicationSelection, applicationViewModel.UnSuccessfulReason);
             var updatedApplicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(selectionViewModel);
             updatedApplicationViewModel.ConfirmationStatusSentMessage =
                 ApplicationViewModelMessages.UnsuccessfulDecisionFormat;
