@@ -235,25 +235,25 @@ WriteLiteral(">This apprenticeship expired or was withdrawn.</span>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        </p>\r\n        <p");
+WriteLiteral("        </p>        \r\n        <p");
 
 WriteLiteral(" class=\"hide-print\"");
 
 WriteLiteral(">\r\n            <a");
 
-WriteLiteral(" id=\"return-to-my-applications\"");
+WriteLiteral(" id=\"return-to-my-feedback\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1950), Tuple.Create("\"", 2006)
+WriteAttribute("href", Tuple.Create(" href=\"", 1954), Tuple.Create("\"", 2024)
             
             #line 48 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1957), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 1961), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback)
             
             #line default
             #line hidden
-, 1957), false)
+, 1961), false)
 );
 
-WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
+WriteLiteral(">Return to your feedback</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
             #line 53 "..\..\Views\ApprenticeshipApplication\View.cshtml"
@@ -345,15 +345,17 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2820), Tuple.Create("\"", 2876)
+WriteAttribute("href", Tuple.Create(" href=\"", 2836), Tuple.Create("\"", 2892)
             
             #line 70 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2827), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2843), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2827), false)
+, 2843), false)
 );
+
+WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");
 
