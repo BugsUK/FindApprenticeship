@@ -105,6 +105,11 @@
             return _vacancyLocationsStrategies.GetVacancyLocations(vacancyId);
         }
 
+        public List<VacancyLocation> GetVacancyLocationsByReferenceNumber(int vacancyReferenceNumber)
+        {
+            return _vacancyLocationsStrategies.GetVacancyLocationsByReferenceNumber(vacancyReferenceNumber);
+        }
+
         public List<VacancyLocation> CreateVacancyLocations(List<VacancyLocation> vacancyLocations)
         {
             return _vacancyLocationsStrategies.CreateVacancyLocations(vacancyLocations);

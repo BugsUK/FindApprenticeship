@@ -39,6 +39,10 @@
 
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
 
+        List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(int vacancyReferenceNumber);
+
+        List<VacancyLocationAddressViewModel> GetLocationsAddressViewModels(int vacancyId);
+
         VacancyViewModel SubmitVacancy(int vacancyReferenceNumber);
 
         List<SelectListItem> GetSectorsAndFrameworks();

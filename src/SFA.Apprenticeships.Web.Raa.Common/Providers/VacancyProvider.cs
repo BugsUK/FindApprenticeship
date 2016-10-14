@@ -113,28 +113,49 @@
             };
         }
 
-        private List<VacancyLocationAddressViewModel> GetLocationsAddressViewModel(Vacancy vacancy)
+        public List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(
+            int vacancyReferenceNumber)
         {
-            var locationAddressesVm = new List<VacancyLocationAddressViewModel>();
-            var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+            var locationAddresses = _vacancyPostingService.GetVacancyLocationsByReferenceNumber(vacancyReferenceNumber);
+            return GetVacancyLocationAddressViewModels(locationAddresses);
+        }
+
+        public List<VacancyLocationAddressViewModel> GetLocationsAddressViewModels(int vacancyId)
+        {
+            var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancyId);
+            return GetVacancyLocationAddressViewModels(locationAddresses);
+        }
+
+        private List<VacancyLocationAddressViewModel> GetVacancyLocationAddressViewModels(List<VacancyLocation> locationAddresses)
+        {
             if (locationAddresses != null && locationAddresses.Any())
             {
-                return
-                    _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);
+                return _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);
             }
+            return new List<VacancyLocationAddressViewModel>();
+        }
+
+        private List<VacancyLocationAddressViewModel> GetLocationsAddressViewModel(Vacancy vacancy)
+        {
+            var locationAddresses = GetLocationsAddressViewModels(vacancy.VacancyId);
+            if (locationAddresses.Any())
+            {
+                return locationAddresses;
+            }
+
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                 vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
                 vacancy.Address != null)
             {
 
-                locationAddressesVm.Add(
+                locationAddresses.Add(
                     new VacancyLocationAddressViewModel
                     {
                         Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
                         NumberOfPositions = vacancy.NumberOfPositions
                     });
             }
-            return locationAddressesVm;
+            return locationAddresses;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
@@ -381,7 +402,7 @@
 
         private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
         {
-            var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
+            var comesFromPreview = newVacancyViewModel.ComeFromPreview;
 
             var vacancyOwnerRelationship =
                 _providerService.GetVacancyOwnerRelationship(newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId, true);
@@ -391,12 +412,21 @@
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
+            var currentOfflineVacancyType = vacancy.OfflineVacancyType;
 
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
             vacancy.OfflineVacancyType = newVacancyViewModel.OfflineVacancyType;
-            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+
+            if (currentOfflineVacancyType != OfflineVacancyType.MultiUrl)
+            {
+                var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl)
+                    ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString()
+                    : newVacancyViewModel.OfflineApplicationUrl;
+                vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            }
+
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
 
@@ -417,6 +447,7 @@
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
+            newVacancyViewModel.ComeFromPreview = comesFromPreview;
 
             return newVacancyViewModel;
         }

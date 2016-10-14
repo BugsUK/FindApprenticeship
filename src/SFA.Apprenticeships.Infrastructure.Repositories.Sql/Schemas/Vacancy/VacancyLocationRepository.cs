@@ -41,6 +41,24 @@
             }).ToList();
         }
 
+        public List<VacancyLocation> GetForVacancyReferenceNumber(int vacancyReferenceNumber)
+        {
+            _logger.Debug("Calling database to get vacancy with locations for vacancy with reference number={0}", vacancyReferenceNumber);
+
+            var vacancyLocations =
+                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT vl.* FROM dbo.Vacancy v JOIN dbo.VacancyLocation vl on v.VacancyId = vl.VacancyId WHERE VacancyReferenceNumber = @vacancyReferenceNumber ORDER BY VacancyLocationId DESC",
+                    new { vacancyReferenceNumber });
+
+            return vacancyLocations.Select(vl =>
+            {
+                var vacancyLocation = _mapper.Map<Entities.VacancyLocation, VacancyLocation>(vl);
+                MapLocalAuthorityCode(vl, vacancyLocation);
+                MapCountyId(vl, vacancyLocation);
+
+                return vacancyLocation;
+            }).ToList();
+        }
+
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
         {
             var vacancyLocations = new Dictionary<int, IEnumerable<VacancyLocation>>();

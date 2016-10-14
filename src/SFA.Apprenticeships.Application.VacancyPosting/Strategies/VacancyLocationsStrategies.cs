@@ -20,6 +20,11 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
             return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);
         }
 
+        public List<VacancyLocation> GetVacancyLocationsByReferenceNumber(int vacancyReferenceNumber)
+        {
+            return _vacancyLocationReadRepository.GetForVacancyReferenceNumber(vacancyReferenceNumber);
+        }
+
         public List<VacancyLocation> CreateVacancyLocations(List<VacancyLocation> vacancyLocations)
         {
             return _vacancyLocationWriteRepository.Create(vacancyLocations);

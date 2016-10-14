@@ -337,8 +337,8 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                    return View(response.ViewModel);
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
+                        new {response.ViewModel.VacancyReferenceNumber, response.ViewModel.ComeFromPreview});
 
                 case VacancyPostingMediatorCodes.CreateVacancy.Ok:
                     return okAction();

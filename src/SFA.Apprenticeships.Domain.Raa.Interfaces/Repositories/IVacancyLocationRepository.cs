@@ -7,6 +7,8 @@
     {
         List<VacancyLocation> GetForVacancyId(int vacancyId);
 
+        List<VacancyLocation> GetForVacancyReferenceNumber(int vacancyReferenceNumber);
+
         IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds);
     }
 
