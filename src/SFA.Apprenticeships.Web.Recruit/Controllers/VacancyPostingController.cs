@@ -309,16 +309,8 @@
             viewModel.OfflineVacancyType = OfflineVacancyType.SingleUrl;
             var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
 
-            Func<ActionResult> okAction = () =>
-            {
-                if (comeFromPreview)
-                {
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
-                        new {response.ViewModel.VacancyReferenceNumber, comeFromPreview = true});
-                }
-                return RedirectToRoute(RecruitmentRouteNames.CreateVacancy,
-                    new {response.ViewModel.VacancyReferenceNumber});
-            };
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
+                new { response.ViewModel.VacancyReferenceNumber, comeFromPreview });
 
             return HandleCreateVacancy(response, okAction);
         }
@@ -332,16 +324,8 @@
             viewModel.OfflineVacancyType = OfflineVacancyType.MultiUrl;
             var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
 
-            Func<ActionResult> okAction = () =>
-            {
-                if (comeFromPreview)
-                {
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
-                        new {response.ViewModel.VacancyReferenceNumber, comeFromPreview = true});
-                }
-                return RedirectToRoute(RecruitmentRouteNames.CreateVacancy,
-                    new {response.ViewModel.VacancyReferenceNumber});
-            };
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
+                new { response.ViewModel.VacancyReferenceNumber, comeFromPreview });
 
             return HandleCreateVacancy(response, okAction);
         }

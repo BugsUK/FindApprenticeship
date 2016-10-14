@@ -84,9 +84,9 @@
                         {
                             <table id="multiple-apprenticeship-offline-application-urls-table">
                                 <colgroup>
-                                    <col>
-                                    <col>
-                                    <col>
+                                    <col class="t30">
+                                    <col class="t20">
+                                    <col class="t50">
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -113,7 +113,7 @@
                                             </td>
                                             <td class="location-offline-urls">
                                                 @Html.Hidden("LocationAddresses[" + i + "].VacancyLocationId", locationAddress.VacancyLocationId)
-                                                @Html.TextBox("LocationAddresses[" + i + "].OfflineApplicationUrl"))
+                                                @Html.TextBox("LocationAddresses[" + i + "].OfflineApplicationUrl", locationAddress.OfflineApplicationUrl, new { @class = "width-all-1-1 form-control", type = "text", size = 12 })
                                             </td>
                                         </tr>
                                     }

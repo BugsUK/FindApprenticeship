@@ -578,11 +578,20 @@ WriteLiteral("                            <table");
 
 WriteLiteral(" id=\"multiple-apprenticeship-offline-application-urls-table\"");
 
+WriteLiteral(">\r\n                                <colgroup>\r\n                                  " +
+"  <col");
+
+WriteLiteral(" class=\"t30\"");
+
+WriteLiteral(">\r\n                                    <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(">\r\n                                    <col");
+
+WriteLiteral(" class=\"t50\"");
+
 WriteLiteral(@">
-                                <colgroup>
-                                    <col>
-                                    <col>
-                                    <col>
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -723,13 +732,13 @@ WriteLiteral("                                                ");
 
             
             #line 116 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                           Write(Html.TextBox("LocationAddresses[" + i + "].OfflineApplicationUrl"));
+                                           Write(Html.TextBox("LocationAddresses[" + i + "].OfflineApplicationUrl", locationAddress.OfflineApplicationUrl, new { @class = "width-all-1-1 form-control", type = "text", size = 12 }));
 
             
             #line default
             #line hidden
-WriteLiteral(")\r\n                                            </td>\r\n                           " +
-"             </tr>\r\n");
+WriteLiteral("\r\n                                            </td>\r\n                            " +
+"            </tr>\r\n");
 
             
             #line 119 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
