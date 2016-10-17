@@ -122,6 +122,7 @@
     <Compile Include="Vacancies\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\Duration.cs" />
     <Compile Include="Vacancies\DurationType.cs" />
+    <Compile Include="Vacancies\OfflineVacancyType.cs" />
     <Compile Include="Vacancies\VacancyLocationType.cs" />
     <Compile Include="Vacancies\VacancySource.cs" />
     <Compile Include="Vacancies\VacancyStatus.cs" />

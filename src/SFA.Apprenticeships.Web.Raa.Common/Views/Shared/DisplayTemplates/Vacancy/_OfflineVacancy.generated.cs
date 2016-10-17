@@ -27,19 +27,25 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    
+    #line 1 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Raa.Common;
     
-    #line 1 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+    #line 2 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.Extensions;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+    #line 3 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
     
     #line default
@@ -55,7 +61,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
         public override void Execute()
         {
             
-            #line 5 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            #line 6 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
   
     var editableItemClass = ViewData["editableItemClass"];
 
@@ -65,7 +71,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
 WriteLiteral("\r\n\r\n");
 
             
-            #line 9 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            #line 10 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
  if (Model.NewVacancyViewModel.OfflineVacancy.Value)
 {
 
@@ -82,14 +88,14 @@ WriteLiteral(" style=\"\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 349), Tuple.Create("\"", 375)
+WriteAttribute("class", Tuple.Create(" class=\"", 407), Tuple.Create("\"", 433)
             
-            #line 12 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 357), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 13 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 415), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 357), false)
+, 415), false)
 );
 
 WriteLiteral(">\r\n            <h2");
@@ -101,7 +107,7 @@ WriteLiteral(">\r\n                Employer\'s application instructions\r\n");
 WriteLiteral("                ");
 
             
-            #line 15 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            #line 16 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
            Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment, Model.BasicDetailsLink)));
 
             
@@ -111,20 +117,20 @@ WriteLiteral("\r\n            </h2>\r\n            <p");
 
 WriteLiteral(" id=\"application-instructions\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 781), Tuple.Create("\"", 878)
+WriteAttribute("class", Tuple.Create(" class=\"", 839), Tuple.Create("\"", 936)
             
-            #line 17 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 789), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationInstructions.GetPreserveFormattingCssClass()
+            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 847), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationInstructions.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 789), false)
+, 847), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
                                                                                                                                           Write(Model.NewVacancyViewModel.OfflineApplicationInstructions);
 
             
@@ -135,7 +141,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("            ");
 
             
-            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.BasicDetailsLink, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment)));
 
             
@@ -143,35 +149,161 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1211), Tuple.Create("\"", 1237)
+WriteAttribute("class", Tuple.Create(" class=\"", 1269), Tuple.Create("\"", 1308)
             
-            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1219), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 1277), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1219), false)
+, 1277), false)
+, Tuple.Create(Tuple.Create(" ", 1295), Tuple.Create("grid-wrapper", 1296), true)
 );
 
 WriteLiteral(">\r\n            <p");
 
 WriteLiteral(" class=\"no-btm-margin\"");
 
-WriteLiteral(">This apprenticeship requires you to apply through the employer\'s website.</p>\r\n " +
-"           <a");
+WriteLiteral(">This apprenticeship requires you to apply through the employer\'s website.</p>\r\n");
+
+            
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+             if (Model.NewVacancyViewModel.OfflineVacancyType == OfflineVacancyType.MultiUrl && Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count > 1)
+            {
+                var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1) / 2;
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
+
+WriteLiteral(" class=\"grid grid-1-2\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"inner-block-padr\"");
+
+WriteLiteral(">\r\n                        <table>\r\n                            <thead>\r\n        " +
+"                        <tr>\r\n                                    <th>\r\n        " +
+"                                <span");
+
+WriteLiteral(" class=\"heading-span\"");
+
+WriteLiteral(">Location</span>\r\n                                    </th>\r\n                    " +
+"            </tr>\r\n                            </thead>\r\n                       " +
+"     <tbody>\r\n");
+
+            
+            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                 for (var i = 0; i < midIndex; i++)
+                                {
+                                    var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <tr>\r\n                                       " +
+" <td");
+
+WriteLiteral(" class=\"location-address\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                            ");
+
+            
+            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                       Write(locationAddress.Address.AddressLine1);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                            
+            
+            #line default
+            #line hidden
+            
+            #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                             if (!string.IsNullOrWhiteSpace(@locationAddress.Address.AddressLine2))
+                                            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                                <br />\r\n");
+
+            
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                           Write(locationAddress.Address.AddressLine2);
+
+            
+            #line default
+            #line hidden
+            
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                                                     
+                                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                            <br />\r\n");
+
+WriteLiteral("                                            ");
+
+            
+            #line 49 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                       Write(locationAddress.Address.AddressLine4);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" ");
+
+            
+            #line 49 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                                             Write(locationAddress.Address.Postcode);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                            <br/>\r\n                            " +
+"                <a");
 
 WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1417), Tuple.Create("\"", 1472)
+WriteAttribute("href", Tuple.Create(" href=\"", 3304), Tuple.Create("\"", 3349)
             
-            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1424), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                   , Tuple.Create(Tuple.Create("", 3311), Tuple.Create<System.Object, System.Int32>(locationAddress.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 1424), false)
+, 3311), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -179,18 +311,224 @@ WriteLiteral(" target=\"_blank\"");
 WriteLiteral(">");
 
             
-            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-                                                                                                                                Write(Model.NewVacancyViewModel.OfflineApplicationUrl);
+            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                                                                                                                      Write(locationAddress.OfflineApplicationUrl);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n");
+WriteLiteral("</a>\r\n                                        </td>\r\n                            " +
+"        </tr>\r\n");
 
+            
+            #line 54 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            </tbody>\r\n                        </table>\r\n         " +
+"           </div>\r\n                </div>\r\n");
+
+            
+            #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
+
+WriteLiteral(" class=\"grid grid-1-2\"");
+
+WriteLiteral(">\r\n                    <table>\r\n                        <thead>\r\n                " +
+"            <tr>\r\n                                <th>\r\n                        " +
+"            <span");
+
+WriteLiteral(" class=\"heading-span\"");
+
+WriteLiteral(">Location</span>\r\n                                </th>\r\n                        " +
+"    </tr>\r\n                        </thead>\r\n                        <tbody>\r\n");
+
+            
+            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                            
+            
+            #line default
+            #line hidden
+            
+            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                             for (var i = midIndex; i < Model.NewVacancyViewModel.LocationAddresses.Count; i++)
+                            {
+                                var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <tr>\r\n                                    <td");
+
+WriteLiteral(" class=\"location-address\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                        ");
+
+            
+            #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                   Write(locationAddress.Address.AddressLine1);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                        
+            
+            #line default
+            #line hidden
+            
+            #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                         if (!string.IsNullOrWhiteSpace(@locationAddress.Address.AddressLine2))
+                                        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                            <br />\r\n");
+
+            
+            #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                           Write(locationAddress.Address.AddressLine2);
+
+            
+            #line default
+            #line hidden
+            
+            #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                                                     
+                                        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <br />\r\n");
+
+WriteLiteral("                                        ");
+
+            
+            #line 82 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                   Write(locationAddress.Address.AddressLine4);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" ");
+
+            
+            #line 82 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                                         Write(locationAddress.Address.Postcode);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                        <br />\r\n                               " +
+"         <a");
+
+WriteLiteral(" id=\"external-employer-website\"");
+
+WriteLiteral(" rel=\"external\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 5128), Tuple.Create("\"", 5173)
+            
+            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+               , Tuple.Create(Tuple.Create("", 5135), Tuple.Create<System.Object, System.Int32>(locationAddress.OfflineApplicationUrl
+            
+            #line default
+            #line hidden
+, 5135), false)
+);
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(">");
+
+            
+            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                                                                                                                  Write(locationAddress.OfflineApplicationUrl);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n                                    </td>\r\n                                " +
+"</tr>\r\n");
+
+            
+            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        </tbody>\r\n                    </table>\r\n                <" +
+"/div>\r\n");
+
+            
+            #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            }
+            else
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <p>\r\n                    <a");
+
+WriteLiteral(" id=\"external-employer-website\"");
+
+WriteLiteral(" rel=\"external\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 5573), Tuple.Create("\"", 5628)
+            
+            #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 5580), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+            
+            #line default
+            #line hidden
+, 5580), false)
+);
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(">");
+
+            
+            #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                                                                                                        Write(Model.NewVacancyViewModel.OfflineApplicationUrl);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n                </p>\r\n");
+
+            
+            #line 97 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
 WriteLiteral("            ");
 
             
-            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            #line 98 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
        Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationUrl, Model.NewVacancyViewModel.OfflineApplicationUrlComment, Model.BasicDetailsLink)));
 
             
@@ -201,7 +539,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            #line 99 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationUrl, Model.BasicDetailsLink, Model.NewVacancyViewModel.OfflineApplicationUrlComment)));
 
             
@@ -210,7 +548,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n    </section>\r\n");
 
             
-            #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+            #line 102 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
 }
             
             #line default

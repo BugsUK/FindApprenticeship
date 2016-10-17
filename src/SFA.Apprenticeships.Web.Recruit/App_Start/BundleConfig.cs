@@ -45,6 +45,9 @@ namespace SFA.Apprenticeships.Web.Recruit
 
             bundles.Add(new ScriptBundle("~/bundles/candidates").Include(
                 "~/Content/_assets/js/nas/candidates.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/basicVacancyDetails").Include(
+                "~/Content/_assets/js/nas/basicVacancyDetails.js"));
         }
     }
 }

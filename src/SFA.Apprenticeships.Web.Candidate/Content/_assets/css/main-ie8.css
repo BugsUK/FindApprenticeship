@@ -3459,6 +3459,10 @@ select:focus {
       line-height: 1.25; } }
   .inline-button .button-link {
     margin-bottom: 0; }
+  .inline-text .button-link {
+    margin: 0;
+    padding: 0;
+    line-height: 1.3; }
 
 .button-link:hover {
   color: #2e8aca; }

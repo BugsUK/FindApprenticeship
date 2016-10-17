@@ -18,6 +18,8 @@
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
     using Application.Interfaces;
+    using Common.Extensions;
+    using Domain.Entities.Raa.Vacancies;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
@@ -150,6 +152,31 @@
         {
             var response = _vacancyMediator.UpdateVacancy(viewModel);
 
+            return HandleBasicDetails(response);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        public ActionResult SingleOfflineApplicationUrl(NewVacancyViewModel viewModel)
+        {
+            viewModel.OfflineVacancyType = OfflineVacancyType.SingleUrl;
+            var response = _vacancyMediator.UpdateOfflineVacancyType(viewModel);
+
+            return HandleBasicDetails(response);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        public ActionResult MultipleOfflineApplicationUrls(NewVacancyViewModel viewModel)
+        {
+            viewModel.OfflineVacancyType = OfflineVacancyType.MultiUrl;
+            var response = _vacancyMediator.UpdateOfflineVacancyType(viewModel);
+
+            return HandleBasicDetails(response);
+        }
+
+        private ActionResult HandleBasicDetails(MediatorResponse<NewVacancyViewModel> response)
+        {
             ModelState.Clear();
 
             switch (response.Code)

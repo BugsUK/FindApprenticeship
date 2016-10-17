@@ -113,28 +113,49 @@
             };
         }
 
-        private List<VacancyLocationAddressViewModel> GetLocationsAddressViewModel(Vacancy vacancy)
+        public List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(
+            int vacancyReferenceNumber)
         {
-            var locationAddressesVm = new List<VacancyLocationAddressViewModel>();
-            var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+            var locationAddresses = _vacancyPostingService.GetVacancyLocationsByReferenceNumber(vacancyReferenceNumber);
+            return GetVacancyLocationAddressViewModels(locationAddresses);
+        }
+
+        public List<VacancyLocationAddressViewModel> GetLocationsAddressViewModels(int vacancyId)
+        {
+            var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancyId);
+            return GetVacancyLocationAddressViewModels(locationAddresses);
+        }
+
+        private List<VacancyLocationAddressViewModel> GetVacancyLocationAddressViewModels(List<VacancyLocation> locationAddresses)
+        {
             if (locationAddresses != null && locationAddresses.Any())
             {
-                return
-                    _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);
+                return _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);
             }
+            return new List<VacancyLocationAddressViewModel>();
+        }
+
+        private List<VacancyLocationAddressViewModel> GetLocationsAddressViewModel(Vacancy vacancy)
+        {
+            var locationAddresses = GetLocationsAddressViewModels(vacancy.VacancyId);
+            if (locationAddresses.Any())
+            {
+                return locationAddresses;
+            }
+
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                 vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
                 vacancy.Address != null)
             {
 
-                locationAddressesVm.Add(
+                locationAddresses.Add(
                     new VacancyLocationAddressViewModel
                     {
                         Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
                         NumberOfPositions = vacancy.NumberOfPositions
                     });
             }
-            return locationAddressesVm;
+            return locationAddresses;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
@@ -381,41 +402,55 @@
 
         private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
         {
-            var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
+            var comesFromPreview = newVacancyViewModel.ComeFromPreview;
 
             var vacancyOwnerRelationship =
                 _providerService.GetVacancyOwnerRelationship(newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId, true);
             if (vacancyOwnerRelationship == null)
                 throw new Exception($"Vacancy Party {newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId} not found / no longer current");
 
-            //var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
-
-            //if (!employer.Address.GeoPoint.IsValid())
-            //{
-            //    employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
-            //}
-
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
+            var currentOfflineVacancyType = vacancy.OfflineVacancyType;
 
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
-            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            vacancy.OfflineVacancyType = newVacancyViewModel.OfflineVacancyType;
+
+            if (currentOfflineVacancyType != OfflineVacancyType.MultiUrl)
+            {
+                var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl)
+                    ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString()
+                    : newVacancyViewModel.OfflineApplicationUrl;
+                vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            }
+
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
-            //vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
-            //vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
-            //vacancy.Address = (newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-            //                   newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
-            //                    ? employer.Address
-            //                    : null;
-            //vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
+
+            if (newVacancyViewModel.LocationAddresses != null)
+            {
+                var vacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+                if (vacancyLocations != null)
+                {
+                    foreach (var locationAddress in newVacancyViewModel.LocationAddresses)
+                    {
+                        var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
+                        if (vacancyLocation != null)
+                        {
+                            vacancyLocation.EmployersWebsite = locationAddress.OfflineApplicationUrl;
+                        }
+                    }
+                }
+                _vacancyPostingService.UpdateVacancyLocations(vacancyLocations);
+            }
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
+            newVacancyViewModel.ComeFromPreview = comesFromPreview;
 
             return newVacancyViewModel;
         }
@@ -1121,6 +1156,11 @@
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+            if (newVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
+            {
+                newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
+            }
+            newVacancy.OfflineVacancyType = null;
 
             return _vacancyPostingService.CreateVacancy(newVacancy);
         }
@@ -1161,6 +1201,8 @@
                         {
                             CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                         }
+
+                        submittedVacancy.OfflineVacancyType = null;
 
                         _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
                     }
@@ -1275,13 +1317,20 @@
                 return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.InvalidVacancy);
             }
 
-            var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl) ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString() : viewModel.OfflineApplicationUrl;
+            var currentOfflineVacancyType = vacancy.OfflineVacancyType;
 
             //update properties
             vacancy.Title = viewModel.Title;
             vacancy.ShortDescription = viewModel.ShortDescription;
             vacancy.OfflineVacancy = viewModel.OfflineVacancy.Value; // At this point we'll always have a value
-            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            vacancy.OfflineVacancyType = viewModel.OfflineVacancyType;
+            if (currentOfflineVacancyType != OfflineVacancyType.MultiUrl)
+            {
+                var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl)
+                    ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString()
+                    : viewModel.OfflineApplicationUrl;
+                vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            }
             vacancy.OfflineApplicationInstructions = viewModel.OfflineApplicationInstructions;
             vacancy.OfflineApplicationInstructionsComment = viewModel.OfflineApplicationInstructionsComment;
             vacancy.OfflineApplicationUrlComment = viewModel.OfflineApplicationUrlComment;
@@ -1290,6 +1339,23 @@
             vacancy.VacancyType = viewModel.VacancyType;
             // TODO: not sure if do this or call reserveForQA in the service
             AddQAInformation(vacancy);
+
+            if (viewModel.LocationAddresses != null)
+            {
+                var vacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+                if (vacancyLocations != null)
+                {
+                    foreach (var locationAddress in viewModel.LocationAddresses)
+                    {
+                        var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
+                        if (vacancyLocation != null)
+                        {
+                            vacancyLocation.EmployersWebsite = locationAddress.OfflineApplicationUrl;
+                        }
+                    }
+                }
+                _vacancyPostingService.UpdateVacancyLocations(vacancyLocations);
+            }
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
@@ -1506,7 +1572,7 @@
                     _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
-                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
+                _vacancyPostingService.CreateVacancyLocations(vacancyLocations);
             }
 
             viewModel.AutoSaveTimeoutInSeconds =
