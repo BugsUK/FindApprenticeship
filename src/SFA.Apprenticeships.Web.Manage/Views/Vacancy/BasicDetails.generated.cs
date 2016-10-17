@@ -78,14 +78,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 9 "..\..\Views\Vacancy\BasicDetails.cshtml"
-Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView));
+Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new {OfflineUrlButtonName = "BasicDetails"}));
 
             
             #line default
             #line hidden
             
             #line 9 "..\..\Views\Vacancy\BasicDetails.cshtml"
-                                                             
+                                                                                                          
 
 
             

@@ -8,7 +8,7 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
-    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView)
+    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new { OfflineUrlButtonName = "CreateVacancy" })
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "CreateVacancy";

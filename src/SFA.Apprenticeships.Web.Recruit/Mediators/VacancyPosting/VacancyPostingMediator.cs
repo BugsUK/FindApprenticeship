@@ -499,15 +499,15 @@
             {
                 UpdateReferenceDataFor(newVacancyViewModel);
                 UpdateCommentsFor(newVacancyViewModel);
-                if (newVacancyViewModel.OfflineVacancyType == OfflineVacancyType.MultiUrl)
+                var locationAddresses = _vacancyPostingProvider.GetLocationsAddressViewModels(newVacancyViewModel.VacancyReferenceNumber.Value);
+                if (newVacancyViewModel.LocationAddresses != null)
                 {
-                    var locationAddresses = _vacancyPostingProvider.GetLocationsAddressViewModels(newVacancyViewModel.VacancyReferenceNumber.Value);
                     foreach (var locationAddress in locationAddresses)
                     {
                         locationAddress.OfflineApplicationUrl = newVacancyViewModel.LocationAddresses.SingleOrDefault(la => la.VacancyLocationId == locationAddress.VacancyLocationId)?.OfflineApplicationUrl;
                     }
-                    newVacancyViewModel.LocationAddresses = locationAddresses;
                 }
+                newVacancyViewModel.LocationAddresses = locationAddresses;
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }

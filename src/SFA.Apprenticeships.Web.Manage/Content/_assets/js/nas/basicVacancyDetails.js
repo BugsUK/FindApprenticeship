@@ -4,7 +4,7 @@
         e.preventDefault();
         $('#OfflineVacancyType').val('SingleUrl');
         var form = $('form');
-        var input = $("<input>").attr("type", "hidden").attr("name", "CreateVacancy").attr("id", "multiple-offline-application-urls-hidden").val("SingleOfflineApplicationUrl");
+        var input = $("<input>").attr("type", "hidden").attr("name", "BasicDetails").attr("id", "multiple-offline-application-urls-hidden").val("SingleOfflineApplicationUrl");
         form.append(input);
         postForm(form.serialize(), true);
     });
@@ -13,7 +13,7 @@
         e.preventDefault();
         $('#OfflineVacancyType').val('MultiUrl');
         var form = $('form');
-        var input = $("<input>").attr("type", "hidden").attr("name", "CreateVacancy").attr("id", "single-offline-application-url-hidden").val("MultipleOfflineApplicationUrls");
+        var input = $("<input>").attr("type", "hidden").attr("name", "BasicDetails").attr("id", "single-offline-application-url-hidden").val("MultipleOfflineApplicationUrls");
         form.append(input);
         postForm(form.serialize(), false);
     });
@@ -77,8 +77,8 @@
                 $('#multiple-offline-application-urls-hidden').remove();
                 $('#multiple-offline-application-urls-button').text(multipleOfflineUrlsButtonText).removeClass('disabled');
             }
-        }).always(function () {
-
+        }).always(function() {
+            
         });
     }
 });

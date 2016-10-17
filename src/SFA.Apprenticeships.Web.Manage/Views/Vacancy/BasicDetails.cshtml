@@ -6,7 +6,7 @@
 
 @using (Html.BeginRouteForm(ManagementRouteNames.BasicDetails, FormMethod.Post))
 {
-    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView)
+    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new {OfflineUrlButtonName = "BasicDetails"})
 
     <div class="form-group">
         <button type="submit" class="button">Save</button>

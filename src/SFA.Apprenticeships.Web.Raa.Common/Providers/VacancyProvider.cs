@@ -433,12 +433,15 @@
             if (newVacancyViewModel.LocationAddresses != null)
             {
                 var vacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
-                foreach (var locationAddress in newVacancyViewModel.LocationAddresses)
+                if (vacancyLocations != null)
                 {
-                    var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
-                    if (vacancyLocation != null)
+                    foreach (var locationAddress in newVacancyViewModel.LocationAddresses)
                     {
-                        vacancyLocation.EmployersWebsite = locationAddress.OfflineApplicationUrl;
+                        var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
+                        if (vacancyLocation != null)
+                        {
+                            vacancyLocation.EmployersWebsite = locationAddress.OfflineApplicationUrl;
+                        }
                     }
                 }
                 _vacancyPostingService.UpdateVacancyLocations(vacancyLocations);
@@ -1307,13 +1310,20 @@
                 return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.InvalidVacancy);
             }
 
-            var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl) ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString() : viewModel.OfflineApplicationUrl;
+            var currentOfflineVacancyType = vacancy.OfflineVacancyType;
 
             //update properties
             vacancy.Title = viewModel.Title;
             vacancy.ShortDescription = viewModel.ShortDescription;
             vacancy.OfflineVacancy = viewModel.OfflineVacancy.Value; // At this point we'll always have a value
-            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            vacancy.OfflineVacancyType = viewModel.OfflineVacancyType;
+            if (currentOfflineVacancyType != OfflineVacancyType.MultiUrl)
+            {
+                var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl)
+                    ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString()
+                    : viewModel.OfflineApplicationUrl;
+                vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            }
             vacancy.OfflineApplicationInstructions = viewModel.OfflineApplicationInstructions;
             vacancy.OfflineApplicationInstructionsComment = viewModel.OfflineApplicationInstructionsComment;
             vacancy.OfflineApplicationUrlComment = viewModel.OfflineApplicationUrlComment;
@@ -1322,6 +1332,23 @@
             vacancy.VacancyType = viewModel.VacancyType;
             // TODO: not sure if do this or call reserveForQA in the service
             AddQAInformation(vacancy);
+
+            if (viewModel.LocationAddresses != null)
+            {
+                var vacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+                if (vacancyLocations != null)
+                {
+                    foreach (var locationAddress in viewModel.LocationAddresses)
+                    {
+                        var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
+                        if (vacancyLocation != null)
+                        {
+                            vacancyLocation.EmployersWebsite = locationAddress.OfflineApplicationUrl;
+                        }
+                    }
+                }
+                _vacancyPostingService.UpdateVacancyLocations(vacancyLocations);
+            }
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 

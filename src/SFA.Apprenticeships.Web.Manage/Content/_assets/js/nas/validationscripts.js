@@ -101,6 +101,9 @@ $(document).ready(function () {
         }
 
         setTimeout(function () {
+            if ($this.hasClass('no-validation')) {
+                return;
+            }
             if($('.form-group.input-validation-error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
             } else if($('.block-label.input-validation-error').length > 0) {
