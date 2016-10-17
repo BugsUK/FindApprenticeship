@@ -168,13 +168,17 @@
         {
             var multipleUrlsTable = view.GetElementbyId("multiple-offline-application-urls-table");
             multipleUrlsTable.Should().NotBeNull();
+            var multipleUrlsDiv = view.GetElementbyId("multiple-offline-application-urls-div");
+            multipleUrlsDiv.Should().NotBeNull();
             if (multipleUrlsVisible)
             {
-                multipleUrlsTable.Attributes["style"].Should().BeNull();
+                multipleUrlsTable.ParentNode.Attributes["style"].Should().BeNull();
+                multipleUrlsDiv.Attributes["style"].Should().BeNull();
             }
             else
             {
-                multipleUrlsTable.Attributes["style"].Value.Should().Be("display: none;");
+                multipleUrlsTable.ParentNode.Attributes["style"].Value.Should().Be("display: none;");
+                multipleUrlsDiv.Attributes["style"].Value.Should().Be("display: none;");
             }
             var singleUrlInput = view.GetElementbyId("apprenticeship-offline-application-url");
             singleUrlInput.Should().NotBeNull();

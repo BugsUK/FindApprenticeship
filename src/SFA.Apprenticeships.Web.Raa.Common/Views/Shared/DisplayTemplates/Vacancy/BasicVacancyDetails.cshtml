@@ -67,20 +67,18 @@
             <div class="hide-js">Only answer if the vacancy applications will be managed through an external website:</div>
             <div id="offline-panel" class="toggle-content panel-indent blocklabel-content">
                 <div class="form-group">
-                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineApplicationUrl)))">
-                        @{
-                            var hideOfflineLinks = Model.IsEmployerLocationMainApprenticeshipLocation == true || Model.LocationAddresses == null || Model.LocationAddresses.Count <= 1;
-                            var offlineMultiUrlParaStyle = hideOfflineLinks || Model.OfflineVacancyType == OfflineVacancyType.MultiUrl ? "display: none;" : null;
-                            var offlineSingleUrlParaStyle = hideOfflineLinks || Model.OfflineVacancyType != OfflineVacancyType.MultiUrl ? "display: none;" : null;
-                            var offlineMultiUrlTableStyle = Model.OfflineVacancyType == OfflineVacancyType.MultiUrl ? null : "display: none;";
-                            var offlineSingleUrlDivStyle = hideOfflineLinks || Model.OfflineVacancyType != OfflineVacancyType.MultiUrl ? null: "display: none;";
-                        }
-                        <a name="@Html.NameFor(m => m.OfflineApplicationUrl).ToString().ToLower()"></a>
+                    @{
+                        var hideOfflineLinks = Model.IsEmployerLocationMainApprenticeshipLocation == true || Model.LocationAddresses == null || Model.LocationAddresses.Count <= 1;
+                        var offlineMultiUrlParaStyle = hideOfflineLinks || Model.OfflineVacancyType == OfflineVacancyType.MultiUrl ? "display: none;" : null;
+                        var offlineSingleUrlParaStyle = hideOfflineLinks || Model.OfflineVacancyType != OfflineVacancyType.MultiUrl ? "display: none;" : null;
+                        var offlineMultiUrlDivStyle = Model.OfflineVacancyType == OfflineVacancyType.MultiUrl ? null : "display: none;";
+                        var offlineSingleUrlDivStyle = hideOfflineLinks || Model.OfflineVacancyType != OfflineVacancyType.MultiUrl ? null: "display: none;";
+                    }
+
+                    <div id="multiple-offline-application-urls-div" style="@offlineMultiUrlDivStyle">
                         @Html.LabelFor(m => m.OfflineApplicationUrl)
-                        <p id="multiple-offline-application-urls-para" class="inline-text" style="@offlineMultiUrlParaStyle">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="MultipleOfflineApplicationUrls">enter a different web address for each vacancy location</button></p>
-                        <p id="single-offline-application-url-para" class="inline-text" style="@offlineSingleUrlParaStyle">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="SingleOfflineApplicationUrl">use the same web address for all vacancy locations</button></p>
-                        
-                        <table id="multiple-offline-application-urls-table" style="@offlineMultiUrlTableStyle">
+                        <p id="single-offline-application-url-para" class="inline-text" style="@offlineSingleUrlParaStyle">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="SingleOfflineApplicationUrl">@NewVacancyViewModelMessages.SingleOfflineUrlButtonText</button></p>
+                        <table id="multiple-offline-application-urls-table">
                             <colgroup>
                                 <col class="t30">
                                 <col class="t20">
@@ -94,46 +92,49 @@
                                 </tr>
                             </thead>
                             <tbody id="location-addresses">
-                            @if (Model.LocationAddresses != null)
-                            {
-                                for (var i = 0; i < Model.LocationAddresses.Count; i++)
+                                @if (Model.LocationAddresses != null)
                                 {
-                                    var locationAddress = Model.LocationAddresses[i];
-                                    <tr>
-                                        <td class="location-address">
-                                            @locationAddress.Address.AddressLine1
-                                            @if (!string.IsNullOrWhiteSpace(@locationAddress.Address.AddressLine2))
-                                            {
-                                                <br/>
-                                                @locationAddress.Address.AddressLine2
-                                            }
-                                            <br/>@locationAddress.Address.AddressLine4 @locationAddress.Address.Postcode
-                                        </td>
-                                        <td class="location-positions">
-                                            @locationAddress.NumberOfPositions
-                                        </td>
-                                        <td class="location-offline-urls">
-                                            <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType("LocationAddresses[" + i + "].OfflineApplicationUrl")))" style="margin-bottom: 0">
-                                                @Html.Hidden("LocationAddresses[" + i + "].VacancyLocationId", locationAddress.VacancyLocationId)
-                                                @Html.Hidden("LocationAddresses[" + i + "].NumberOfPositions", locationAddress.NumberOfPositions)
-                                                @Html.TextBoxFor(m => Model.LocationAddresses[i].OfflineApplicationUrl, new {@id = "locationaddresses_" + i + "__offlineapplicationurl", @class = "width-all-1-1 form-control", type = "text", size = 12})
-                                                @Html.ValidationMessage("LocationAddresses[" + i + "].OfflineApplicationUrl")
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    for (var i = 0; i < Model.LocationAddresses.Count; i++)
+                                    {
+                                        var locationAddress = Model.LocationAddresses[i];
+                                        <tr>
+                                            <td class="location-address">
+                                                @locationAddress.Address.AddressLine1
+                                                @if (!string.IsNullOrWhiteSpace(@locationAddress.Address.AddressLine2))
+                                                {
+                                                    <br />
+                                                    @locationAddress.Address.AddressLine2
+                                                }
+                                                <br />@locationAddress.Address.AddressLine4 @locationAddress.Address.Postcode
+                                            </td>
+                                            <td class="location-positions">
+                                                @locationAddress.NumberOfPositions
+                                            </td>
+                                            <td class="location-offline-urls">
+                                                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType("LocationAddresses[" + i + "].OfflineApplicationUrl")))" style="margin-bottom: 0">
+                                                    @Html.Hidden("LocationAddresses[" + i + "].VacancyLocationId", locationAddress.VacancyLocationId)
+                                                    @Html.Hidden("LocationAddresses[" + i + "].NumberOfPositions", locationAddress.NumberOfPositions)
+                                                    @Html.TextBoxFor(m => Model.LocationAddresses[i].OfflineApplicationUrl, new { @id = "locationaddresses_" + i + "__offlineapplicationurl", @class = "width-all-1-1 form-control", type = "text", size = 12 })
+                                                    @Html.ValidationMessage("LocationAddresses[" + i + "].OfflineApplicationUrl")
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
                                 }
-                            }
                             </tbody>
                         </table>
-
-                        <div id="single-offline-application-url-div" style="@offlineSingleUrlDivStyle">
-                            @Html.TextBoxFor(m => m.OfflineApplicationUrl, new { @class = "width-all-1-1 form-control", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
-                            @Html.ValidationMessageFor(m => m.OfflineApplicationUrl)
-                        </div>
-
-                        @Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationUrlComment))
-                        @Html.ValidationMessageFor(m => m.OfflineApplicationUrlComment)
                     </div>
+
+                    <div id="single-offline-application-url-div" style="@offlineSingleUrlDivStyle" class="@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineApplicationUrl)))">
+                        @Html.LabelFor(m => m.OfflineApplicationUrl)
+                        <p id="multiple-offline-application-urls-para" class="inline-text" style="@offlineMultiUrlParaStyle">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="MultipleOfflineApplicationUrls">@NewVacancyViewModelMessages.MultiOfflineUrlsButtonText</button></p>
+                        <a name="@Html.NameFor(m => m.OfflineApplicationUrl).ToString().ToLower()"></a>
+                        @Html.TextBoxFor(m => m.OfflineApplicationUrl, new {@class = "width-all-1-1 form-control", type = "text", size = 12, id = "apprenticeship-offline-application-url"})
+                        @Html.ValidationMessageFor(m => m.OfflineApplicationUrl)
+                    </div>
+
+                    @Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationUrlComment))
+                    @Html.ValidationMessageFor(m => m.OfflineApplicationUrlComment)
                 </div>
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@

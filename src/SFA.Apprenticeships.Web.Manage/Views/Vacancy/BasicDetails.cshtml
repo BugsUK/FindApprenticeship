@@ -1,6 +1,7 @@
 ﻿@model NewVacancyViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @using (Html.BeginRouteForm(ManagementRouteNames.BasicDetails, FormMethod.Post))
@@ -26,6 +27,8 @@
             }
         });
 
-        var searchUrl = '@Url.RouteUrl(ManagementRouteNames.BasicDetails)';
+        var postUrl = '@Url.RouteUrl(ManagementRouteNames.BasicDetails)';
+        var multipleOfflineUrlsButtonText = '@NewVacancyViewModelMessages.MultiOfflineUrlsButtonText';
+        var singleOfflineUrlButtonText = '@NewVacancyViewModelMessages.SingleOfflineUrlButtonText';
     </script>
 }

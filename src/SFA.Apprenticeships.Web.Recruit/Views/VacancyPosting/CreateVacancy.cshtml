@@ -1,6 +1,7 @@
 ﻿@model NewVacancyViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
@@ -52,7 +53,9 @@
             });
         });
 
-        var searchUrl = '@Url.RouteUrl(RecruitmentRouteNames.CreateVacancy)';
+        var postUrl = '@Url.RouteUrl(RecruitmentRouteNames.CreateVacancy)';
+        var multipleOfflineUrlsButtonText = '@NewVacancyViewModelMessages.MultiOfflineUrlsButtonText';
+        var singleOfflineUrlButtonText = '@NewVacancyViewModelMessages.SingleOfflineUrlButtonText';
     </script>
 }
 
