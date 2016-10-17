@@ -20,7 +20,7 @@
         </div>
         <div class="@editableItemClass grid-wrapper">
             <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
-            @if (Model.NewVacancyViewModel.OfflineVacancyType == OfflineVacancyType.MultiUrl)
+            @if (Model.NewVacancyViewModel.OfflineVacancyType == OfflineVacancyType.MultiUrl && Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count > 1)
             {
                 var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1) / 2;
                 <div class="grid grid-1-2">
@@ -91,7 +91,9 @@
             }
             else
             {
-                <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
+                <p>
+                    <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
+                </p>
             }
             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationUrl, Model.NewVacancyViewModel.OfflineApplicationUrlComment, Model.BasicDetailsLink))
             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationUrl, Model.BasicDetailsLink, Model.NewVacancyViewModel.OfflineApplicationUrlComment))

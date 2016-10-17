@@ -1156,6 +1156,11 @@
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+            if (newVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
+            {
+                newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
+            }
+            newVacancy.OfflineVacancyType = null;
 
             return _vacancyPostingService.CreateVacancy(newVacancy);
         }
@@ -1196,6 +1201,8 @@
                         {
                             CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                         }
+
+                        submittedVacancy.OfflineVacancyType = null;
 
                         _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
                     }
