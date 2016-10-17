@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
     using System;
     using ViewModels.Applications;
+    using ViewModels.MyApplications;
     using ViewModels.VacancySearch;
 
     public interface IApprenticeshipApplicationMediator
@@ -31,6 +32,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
         MediatorResponse<WhatHappensNextApprenticeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle, string searchReturnUrl);
 
         MediatorResponse<ApprenticeshipApplicationViewModel> View(Guid candidateId, int vacancyId);
+
+        MediatorResponse<MyApprenticeshipApplicationViewModel> CandidateApplicationFeedback(Guid candidateId,
+            int vacancyId);
 
         MediatorResponse<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId);
 

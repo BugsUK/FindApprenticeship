@@ -35,11 +35,11 @@
             public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.Error";
         }
 
-        public class ReviewSaveAndExit
+        public class ReviewSaveAndContinue
         {
-            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok";
-            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation";
-            public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Error";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok";
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation";
+            public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error";
         }
 
         public class PromoteToInProgress
@@ -69,6 +69,7 @@
         public class SendUnsuccessfulDecision
         {
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok";
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.FailedValidation";
         }
 
         public class ConfirmRevertToInProgress

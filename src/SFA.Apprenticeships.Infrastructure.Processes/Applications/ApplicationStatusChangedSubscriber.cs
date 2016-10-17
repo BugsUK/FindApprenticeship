@@ -51,7 +51,8 @@
                     EmployerName = application.Vacancy.EmployerName,
                     Status = application.Status,
                     UnsuccessfulReason = application.UnsuccessfulReason,
-                    DateApplied = application.DateApplied ?? new DateTime()
+                    DateApplied = application.DateApplied ?? new DateTime(),
+                    UnSuccessfulDateTime = application.UnsuccessfulDateTime ?? new DateTime()
                 };
             }
 

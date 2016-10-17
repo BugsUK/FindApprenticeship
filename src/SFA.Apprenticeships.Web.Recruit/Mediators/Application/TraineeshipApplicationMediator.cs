@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
     using System;
+    using System.Web;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Security;
     using Common.Constants;
@@ -34,29 +35,32 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Review.Ok, viewModel);
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        public MediatorResponse<TraineeshipApplicationViewModel> ReviewSaveAndContinue(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             var validationResult = _traineeshipApplicationViewModelServerValidator.Validate(traineeshipApplicationViewModel);
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation, traineeshipApplicationViewModel, validationResult);
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation, traineeshipApplicationViewModel, validationResult);
             }
 
             try
             {
                 _applicationProvider.UpdateTraineeshipApplicationViewModelNotes(traineeshipApplicationViewModel.ApplicationSelection.ApplicationId, traineeshipApplicationViewModel.Notes);
-                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok, traineeshipApplicationViewModel);
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok, traineeshipApplicationViewModel);
             }
             catch (Exception)
             {
                 var viewModel = GetFailedUpdateTraineeshipApplicationViewModel(traineeshipApplicationViewModel.ApplicationSelection);
-                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Error, viewModel, ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error, viewModel, ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
             }
         }
 
         public MediatorResponse<TraineeshipApplicationViewModel> View(string applicationCipherText)
         {
+            applicationCipherText = HttpUtility.UrlDecode(applicationCipherText);
+            applicationCipherText = applicationCipherText?.Replace(' ', '+');
+
             var anomymisedApplicationLink = _decryptionService.Decrypt(applicationCipherText);
 
             var applicationSelectionViewModel = new ApplicationSelectionViewModel

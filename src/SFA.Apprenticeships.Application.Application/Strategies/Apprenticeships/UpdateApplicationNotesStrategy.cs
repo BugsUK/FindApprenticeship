@@ -1,8 +1,7 @@
 namespace SFA.Apprenticeships.Application.Application.Strategies.Apprenticeships
 {
-    using System;
-    using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
+    using System;
 
     public class UpdateApplicationNotesStrategy : IUpdateApplicationNotesStrategy
     {

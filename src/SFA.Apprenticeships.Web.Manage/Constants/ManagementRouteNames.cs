@@ -65,5 +65,7 @@
         public const string AdminCreateApiUser = "AdminCreateApiUser";
         public const string AdminEditApiUser = "AdminEditApiUser";
         public const string AdminResetApiUserPassword = "AdminResetApiUserPassword";
+        public const string ViewCandidateApprenticeshipApplicationFeedback =
+            "ViewCandidateApprenticeshipApplicationFeedback";
     }
 }
