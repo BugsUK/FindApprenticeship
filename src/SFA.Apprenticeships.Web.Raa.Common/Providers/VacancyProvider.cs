@@ -1197,6 +1197,11 @@
                         submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
                         submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
+                        if (submittedVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
+                        {
+                            submittedVacancy.OfflineApplicationUrl = vacancyLocation.EmployersWebsite;
+                        }
+
                         foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
                         {
                             CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
