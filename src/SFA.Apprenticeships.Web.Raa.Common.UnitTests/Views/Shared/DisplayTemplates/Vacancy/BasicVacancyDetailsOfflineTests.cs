@@ -30,9 +30,7 @@
 
             //Assert
             AssertOfflineSelected(view);
-
-            view.GetElementbyId("multiple-offline-application-urls-button").Should().BeNull();
-            view.GetElementbyId("single-offline-application-url-button").Should().BeNull();
+            AssertOfflineUrls(view, false, false);
             view.GetElementbyId("apprenticeship-offline-application-url").Should().NotBeNull();
         }
 
@@ -52,9 +50,7 @@
 
             //Assert
             AssertOfflineSelected(view);
-
-            view.GetElementbyId("multiple-offline-application-urls-button").Should().BeNull();
-            view.GetElementbyId("single-offline-application-url-button").Should().BeNull();
+            AssertOfflineUrls(view, false, false);
             view.GetElementbyId("apprenticeship-offline-application-url").Should().NotBeNull();
         }
 
@@ -82,11 +78,7 @@
 
             //Assert
             AssertOfflineSelected(view);
-
-            var multipleUrlsButton = view.GetElementbyId("multiple-offline-application-urls-button");
-            multipleUrlsButton.Should().NotBeNull();
-            multipleUrlsButton.InnerText.Should().Be("enter a different web address for each vacancy location");
-            view.GetElementbyId("single-offline-application-url-button").Should().BeNull();
+            AssertOfflineUrls(view, true, false);
             view.GetElementbyId("apprenticeship-offline-application-url").Should().NotBeNull();
         }
 
@@ -112,11 +104,7 @@
 
             //Assert
             AssertOfflineSelected(view);
-
-            view.GetElementbyId("multiple-offline-application-urls-button").Should().BeNull();
-            var singleUrlButton = view.GetElementbyId("single-offline-application-url-button");
-            singleUrlButton.Should().NotBeNull();
-            singleUrlButton.InnerText.Should().Be("use the same web address for all vacancy locations");
+            AssertOfflineUrls(view, false, true);
 
             //Single offline application url input should not be visible
             view.GetElementbyId("apprenticeship-offline-application-url").Should().BeNull();
@@ -138,6 +126,32 @@
             var offlineInput = view.GetElementbyId("apprenticeship-offline-vacancy");
             offlineInput.Attributes["checked"].Value.Should().Be("checked");
             offlineInput.Attributes["value"].Value.Should().Be("True");
+        }
+
+        private static void AssertOfflineUrls(HtmlDocument view, bool multipleUrlsVisible, bool singleUrlVisible)
+        {
+            var multipleUrlsButton = view.GetElementbyId("multiple-offline-application-urls-button");
+            multipleUrlsButton.Should().NotBeNull();
+            multipleUrlsButton.InnerText.Should().Be("enter a different web address for each vacancy location");
+            if (multipleUrlsVisible)
+            {
+                multipleUrlsButton.ParentNode.Attributes["style"].Should().BeNull();
+            }
+            else
+            {
+                multipleUrlsButton.ParentNode.Attributes["style"].Value.Should().Be("display: none;");
+            }
+            var singleUrlButton = view.GetElementbyId("single-offline-application-url-button");
+            singleUrlButton.Should().NotBeNull();
+            singleUrlButton.InnerText.Should().Be("use the same web address for all vacancy locations");
+            if (singleUrlVisible)
+            {
+                singleUrlButton.ParentNode.Attributes["style"].Should().BeNull();
+            }
+            else
+            {
+                singleUrlButton.ParentNode.Attributes["style"].Value.Should().Be("display: none;");
+            }
         }
     }
 }

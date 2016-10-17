@@ -70,17 +70,13 @@
                     <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineApplicationUrl)))">
                         <a name="@Html.NameFor(m => m.OfflineApplicationUrl).ToString().ToLower()"></a>
                         @Html.LabelFor(m => m.OfflineApplicationUrl)
-                        @if (Model.IsEmployerLocationMainApprenticeshipLocation != true && Model.LocationAddresses != null && Model.LocationAddresses.Count > 1)
-                        {
-                            if (Model.OfflineVacancyType == OfflineVacancyType.MultiUrl)
-                            {
-                                <p class="inline-text">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="SingleOfflineApplicationUrl">use the same web address for all vacancy locations</button></p>
-                            }
-                            else
-                            {
-                                <p class="inline-text">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="MultipleOfflineApplicationUrls">enter a different web address for each vacancy location</button></p>
-                            }
+                        @{
+                            var hideOfflineLinks = Model.IsEmployerLocationMainApprenticeshipLocation == true || Model.LocationAddresses == null || Model.LocationAddresses.Count <= 1;
+                            var offlineMultiUrlStyle = hideOfflineLinks || Model.OfflineVacancyType == OfflineVacancyType.MultiUrl ? "display: none;" : null;
+                            var offlineSingleUrlStyle = hideOfflineLinks || Model.OfflineVacancyType != OfflineVacancyType.MultiUrl ? "display: none;" : null;
                         }
+                        <p id="multiple-offline-application-urls-para" class="inline-text" style="@offlineMultiUrlStyle">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="MultipleOfflineApplicationUrls">enter a different web address for each vacancy location</button></p>
+                        <p id="single-offline-application-url-para" class="inline-text" style="@offlineSingleUrlStyle">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button-link no-autosave" name="CreateVacancy" value="SingleOfflineApplicationUrl">use the same web address for all vacancy locations</button></p>
                         @if (Model.OfflineVacancyType == OfflineVacancyType.MultiUrl && Model.LocationAddresses != null)
                         {
                             <table id="multiple-apprenticeship-offline-application-urls-table">
