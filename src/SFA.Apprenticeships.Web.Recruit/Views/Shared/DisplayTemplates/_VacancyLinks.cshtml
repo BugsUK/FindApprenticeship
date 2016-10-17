@@ -21,3 +21,9 @@
         @Html.RouteLink("Archive vacancy", RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
     </p>
 }
+@if (Model.Status.CanBulkDecline(Model.TotalNumberOfApplications))
+{
+    <p class="small-btm-margin">
+        @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+    </p>
+}

@@ -64,5 +64,10 @@
         {
             return status == VacancyStatus.Closed;
         }
+
+        public static bool CanBulkDecline(this VacancyStatus status, int totalNumberOfApplications)
+        {
+            return totalNumberOfApplications > 0 && (status == VacancyStatus.Live || status == VacancyStatus.Closed || status == VacancyStatus.Completed);
+        }
     }
 }
