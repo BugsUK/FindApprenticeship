@@ -11,7 +11,7 @@
     <p>
         If all the positions have been filled this vacancy cab be archived, once a reposnse has been
         sent to all candidates currently set as 'In-progess' or 'New'.</p>
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Respond to remaining candidates</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Respond to remaining candidates</a>
         <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Return to applications</a>
 }
 else

@@ -332,6 +332,7 @@
     <Compile Include="ViewModels\Provider\ProviderSiteRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
+    <Compile Include="ViewModels\VacancyStatus\BulkDeclineCandidatesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DeleteVacancyViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />

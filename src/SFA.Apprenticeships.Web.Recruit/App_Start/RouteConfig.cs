@@ -338,6 +338,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.BulkDeclineCandidates,
+               url: "vacancy/bulkdeclinecandidates",
+               defaults: new { controller = "VacancyStatus", action = "BulkDeclineCandidates" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmArchiveVacancy,
                url: "vacancy/confirmarchive",
                defaults: new { controller = "VacancyStatus", action = "ConfirmArchive" }

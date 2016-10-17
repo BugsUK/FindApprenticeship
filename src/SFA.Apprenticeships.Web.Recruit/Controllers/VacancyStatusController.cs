@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
-    using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
     using Constants;
@@ -9,7 +7,8 @@
     using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
     using Raa.Common.ViewModels.VacancyStatus;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -29,6 +28,13 @@
             return View(response.ViewModel);
         }
 
+        [HttpGet]
+        public ActionResult BulkDeclineCandidates(int vacancyReferenceNumber)
+        {
+            var response = _vacancyStatusMediator.GetArchiveVacancyViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
+            return View();
+        }
+
         [HttpPost]
         public ActionResult ConfirmArchive(ArchiveVacancyViewModel viewModel)
         {
@@ -45,4 +51,4 @@
             }
         }
     }
-}   
+}

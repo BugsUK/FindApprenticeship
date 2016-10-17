@@ -24,6 +24,6 @@
 @if (Model.Status.CanBulkDecline(Model.TotalNumberOfApplications))
 {
     <p class="small-btm-margin">
-        @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
     </p>
 }
