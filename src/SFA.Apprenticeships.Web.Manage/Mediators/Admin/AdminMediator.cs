@@ -5,16 +5,21 @@
     using System.ComponentModel.DataAnnotations;
     using System.Data.Entity.ModelConfiguration.Configuration;
     using System.Linq;
+    using System.Text;
     using Application.Interfaces;
     using Application.Interfaces.ReferenceData;
     using Application.ReferenceData;
     using Common.Constants;
     using Common.Mediators;
+    using CsvClassMaps;
+    using CsvHelper.Configuration;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Reporting.Models;
     using Domain.Raa.Interfaces.Repositories;
     using Glimpse.Core.Extensions;
+    using Infrastructure.Presentation;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Api;
@@ -22,6 +27,9 @@
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
+    using Reporting;
+    using ViewModels;
+    using ViewModels.Admin;
 
     public class AdminMediator : MediatorBase, IAdminMediator
     {
@@ -279,6 +287,75 @@
         {
             var viewModel = _referenceDataProvider.GetFrameworks().ToList();
             return GetMediatorResponse(AdminMediatorCodes.GetFrameworks.Ok, viewModel);
+        }
+
+        public MediatorResponse<byte[]> GetFrameworksBytes()
+        {
+            try
+            {
+                var result = _referenceDataProvider.GetFrameworks().ToList();
+
+                var frameworkResult =
+                    result.SelectMany(
+                        r =>
+                            r.SubCategories.Select(
+                                s =>
+                                    new FrameworkViewModel()
+                                    {
+                                        SSAT1Name = r.FullName,
+                                        FrameworkStatus = s.Status,
+                                        FrameworkId = s.Id,
+                                        FrameworkFullName = s.FullName
+                                    }));
+
+                //Convert to list ofFrameworkData
+                //Pass that list into function
+                var bytes = GetCsvBytes<FrameworkViewModel, FrameworkDataClassMap>(frameworkResult, "");
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+            }
+        }
+
+        public MediatorResponse<byte[]> GetStandardsBytes()
+        {
+            try
+            {
+                var result = _referenceDataProvider.GetStandardSubjectAreaTierOnes();
+
+                var standardSubjectAreaTierOneResult =
+                    result.SelectMany(
+                        r =>
+                            r.Sectors.SelectMany(
+                                ss =>
+                                    ss.Standards.Select(
+                                        s =>
+                                            new StandardSubjectAreaTierOneViewModel()
+                                            {
+                                                SSAT1Name = r.Name,
+                                                StandardId = s.Id,
+                                                StandardSectorName = ss.Name,
+                                                StandardName = s.Name
+                                            })));
+
+                var bytes = GetCsvBytes<StandardSubjectAreaTierOneViewModel, StandardSubjectAreaTierOneClassMap>(standardSubjectAreaTierOneResult, "");
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+            }
+        }
+
+        private static byte[] GetCsvBytes<T, TClassMap>(IEnumerable<T> items, string header) where T : class where TClassMap : CsvClassMap<T>
+        {
+            var csvString = header + CsvPresenter.ToCsv<T, TClassMap>(items);
+            var bytes = Encoding.UTF8.GetBytes(csvString);
+            return bytes;
         }
     }
 }

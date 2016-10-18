@@ -1,5 +1,6 @@
 ﻿@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Manage.Constants
 @model List<SFA.Apprenticeships.Domain.Entities.ReferenceData.Category>
 @{
     ViewBag.Title = "Frameworks";
@@ -7,6 +8,8 @@
 }
 
 <h1 id="heading" class="heading-xlarge">Frameworks</h1>
+
+@Html.RouteLink("Download Frameworks", ManagementRouteNames.AdminFrameworksCsv)
 
 <table>
     <tr>
@@ -16,22 +19,22 @@
         <th>Status</th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var ssat1 in Model)
     {
-        foreach (var subCategorys in item.SubCategories)
+        foreach (var subCategory in ssat1.SubCategories)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => subCategorys.Id)
+                    @Html.DisplayFor(modelItem => subCategory.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
+                    @Html.DisplayFor(modelItem => ssat1.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => subCategorys.FullName)
+                    @Html.DisplayFor(modelItem => subCategory.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => subCategorys.Status)
+                    @Html.DisplayFor(modelItem => subCategory.Status)
                 </td>
             </tr>
         }

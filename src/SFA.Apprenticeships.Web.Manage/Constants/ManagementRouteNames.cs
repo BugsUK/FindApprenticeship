@@ -65,6 +65,8 @@
         public const string AdminCreateApiUser = "AdminCreateApiUser";
         public const string AdminEditApiUser = "AdminEditApiUser";
         public const string AdminStandards = "AdminStandards";
+        public const string AdminStandardsCsv = "AdminStandardsCsv";
         public const string AdminFrameworks = "AdminFrameworks";
+        public const string AdminFrameworksCsv = "AdminFrameworksCsv";
     }
 }

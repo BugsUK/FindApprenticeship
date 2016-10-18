@@ -28,5 +28,7 @@
         MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel);
         MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandard();
         MediatorResponse<List<Category>> GetFrameworks();
+        MediatorResponse<byte[]> GetFrameworksBytes();
+        MediatorResponse<byte[]> GetStandardsBytes();
     }
 }

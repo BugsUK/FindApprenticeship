@@ -361,14 +361,7 @@
         [HttpGet]
         public ActionResult Standards()
         {
-            //Create a mediator method*
-            //Reference a reference data provider or use the reference data service directly*
-            //Get a list of standards
-            //Map to a veiw model
-            //Display in view
-            
             var response = _adminMediator.GetStandard();
-
             return View(response.ViewModel);
         }
 
@@ -377,6 +370,20 @@
         {
             var response = _adminMediator.GetFrameworks();
             return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult DownloadFrameworksCsv()
+        {
+            var response = _adminMediator.GetFrameworksBytes();
+            return File(response.ViewModel, "text/csv", "FrameworkList.csv");
+        }
+
+        [HttpGet]
+        public ActionResult DownloadStandardsCsv()
+        {
+            var response = _adminMediator.GetStandardsBytes();
+            return File(response.ViewModel, "text/csv", "StandardsList.csv");
         }
     }
 }
