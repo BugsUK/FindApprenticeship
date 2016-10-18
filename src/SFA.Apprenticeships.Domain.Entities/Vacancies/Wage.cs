@@ -7,9 +7,17 @@
     {
         [JsonConstructor]
         public Wage(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
+            : this(type, amount, null, null, text, unit, hoursPerWeek)
+        {
+        }
+
+        [JsonConstructor]
+        public Wage(WageType type, decimal? amount, decimal? lowerBound, decimal? upperBound, string text, WageUnit unit, decimal? hoursPerWeek)
         {
             Type = type;
             Amount = amount;
+            AmountLowerBound = lowerBound;
+            AmountUpperBound = upperBound;
             Text = text;
             HoursPerWeek = hoursPerWeek;
             Unit = CorrectWageUnit(type, unit);
@@ -18,6 +26,10 @@
         public WageType Type { get; private set; }
 
         public decimal? Amount { get; private set; }
+
+        public decimal? AmountLowerBound { get; private set; }
+
+        public decimal? AmountUpperBound { get; private set; }
 
         public string Text { get; private set; }
 
