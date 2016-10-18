@@ -162,6 +162,9 @@
                     </a>
                 </th>
                 <th>
+
+                    <input type="checkbox" id="toggleAll"/>
+                    <label for="toggleAll">Select All</label>
                 </th>
             </tr>
         </thead>
@@ -192,8 +195,11 @@
                     <td>
                         @Html.Partial("_applicationStatus", applicationSummary.Status)
                     </td>
+                    <td>
+                        @Html.CheckBox("isSelected")
+                    </td>
                 </tr>
-                            }
+            }
         </tbody>
     </table>
     <div class="form-group">
@@ -236,3 +242,14 @@
     </div>
 
 </div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('#toggleAll').on('change', function () {                
+                $("input:checkbox").prop('checked', $(this).prop("checked"));
+                    });
+            });
+    </script>
+}
