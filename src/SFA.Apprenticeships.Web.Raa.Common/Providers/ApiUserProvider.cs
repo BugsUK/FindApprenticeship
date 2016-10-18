@@ -21,6 +21,12 @@
             _apiUserRepository = apiUserRepository;
         }
 
+        public IEnumerable<ApiUserViewModel> GetApiUserViewModels()
+        {
+            var apiUsers = _apiUserRepository.GetApiUsers();
+            return ApiUserMappers.Map<IEnumerable<ApiUser>, IEnumerable<ApiUserViewModel>>(apiUsers);
+        }
+
         public ApiUserSearchResultsViewModel SearchApiUsers(ApiUserSearchViewModel searchViewModel)
         {
             var viewModel = new ApiUserSearchResultsViewModel

@@ -390,5 +390,12 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
+
+        [HttpGet]
+        public ActionResult ExportApiUsers()
+        {
+            var response = _adminMediator.GetApiUsersBytes();
+            return File(response.ViewModel, "text/csv", "ApiUsers.csv");
+        }
     }
 }

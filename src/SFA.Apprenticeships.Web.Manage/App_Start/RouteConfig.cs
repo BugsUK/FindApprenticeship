@@ -349,6 +349,12 @@
                defaults: new { controller = "Admin", action = "ResetApiUserPassword" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminExportApiUsers,
+               url: "admin/apiusers/csv",
+               defaults: new { controller = "Admin", action = "ExportApiUsers" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

@@ -7,6 +7,7 @@
 
     public interface IApiUserRepository
     {
+        IEnumerable<ApiUser> GetApiUsers();
         IEnumerable<ApiUser> SearchApiUsers(ApiUserSearchParameters searchParameters);
         ApiUser GetApiUser(Guid externalSystemId);
         ApiUser GetApiUser(string companyId);
