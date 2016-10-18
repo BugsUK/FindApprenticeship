@@ -2,14 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.InteropServices.ComTypes;
     using ViewModels.Admin;
-    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using ViewModels.Api;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
+    using Web.Common.Mediators;
 
     public interface IAdminMediator
     {

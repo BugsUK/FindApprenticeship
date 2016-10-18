@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeships.Web.Manage.ViewModels.Admin
+namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin
 {
     using Domain.Entities.ReferenceData;
 

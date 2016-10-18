@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SFA.Apprenticeships.Web.Manage.ViewModels.Admin
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin
 {
     public class StandardSubjectAreaTierOneViewModel
     {

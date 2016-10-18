@@ -1,7 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.CsvClassMaps
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.CsvClassMaps
 {
     using CsvHelper.Configuration;
-    using Domain.Entities.ReferenceData;
     using ViewModels.Admin;
 
     public sealed class FrameworkDataClassMap : CsvClassMap<FrameworkViewModel>

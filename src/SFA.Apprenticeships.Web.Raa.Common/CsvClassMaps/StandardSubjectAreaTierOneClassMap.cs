@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.CsvClassMaps
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.CsvClassMaps
 {
     using CsvHelper.Configuration;
     using ViewModels.Admin;

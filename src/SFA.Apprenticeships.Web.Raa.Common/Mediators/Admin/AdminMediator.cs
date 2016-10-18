@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mediators.Admin
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Data.Entity.ModelConfiguration.Configuration;
     using System.Linq;
     using System.Text;
     using Application.Interfaces;
@@ -11,29 +9,24 @@
     using Domain.Entities.Vacancies;
     using Providers;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces.Providers;
+    using Application.Interfaces.VacancyPosting;
+    using Application.ReferenceData;
     using CsvClassMaps;
     using CsvHelper.Configuration;
-    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Domain.Raa.Interfaces.Reporting.Models;
-    using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Presentation;
     using Constants.Pages;
-    using CsvClassMaps;
-    using CsvHelper.Configuration;
-    using Infrastructure.Presentation;
     using Validators.Api;
     using Validators.Provider;
     using Validators.ProviderUser;
     using ViewModels.Admin;
     using ViewModels.Api;
     using ViewModels.Provider;
-    using Raa.Common.ViewModels.Vacancy;
-    using Reporting;
+    using ViewModels.ProviderUser;
     using Web.Common.Constants;
+    using Web.Common.Mediators;
 
     public class AdminMediator : MediatorBase, IAdminMediator
     {
@@ -504,12 +497,12 @@
                 //Convert to list ofFrameworkData
                 //Pass that list into function
                 var bytes = GetCsvBytes<FrameworkViewModel, FrameworkDataClassMap>(frameworkResult, "");
-                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
+                return GetMediatorResponse(AdminMediatorCodes.GetFrameworksBytes.Ok, bytes);
             }
             catch (Exception ex)
             {
                 _logService.Warn(ex);
-                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+                return GetMediatorResponse(AdminMediatorCodes.GetFrameworksBytes.Error, new byte[0]);
             }
         }
 
@@ -535,12 +528,12 @@
                                             })));
 
                 var bytes = GetCsvBytes<StandardSubjectAreaTierOneViewModel, StandardSubjectAreaTierOneClassMap>(standardSubjectAreaTierOneResult, "");
-                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
+                return GetMediatorResponse(AdminMediatorCodes.GetStandardsBytes.Ok, bytes);
             }
             catch (Exception ex)
             {
                 _logService.Warn(ex);
-                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+                return GetMediatorResponse(AdminMediatorCodes.GetStandardsBytes.Error, new byte[0]);
             }
         }
 		
