@@ -9,6 +9,8 @@
         NationalMinimum = 3,
         Custom = 4,
         CustomRange = 5,
-        PresetText = 6
+        CompetitiveSalary = 6//,
+        //ToBeAgreedUponAppointment =7,
+        //Unwaged = 8
     }
 }

@@ -27,44 +27,33 @@
 
         private static WageUnit CorrectWageUnit(WageType type, WageUnit unit)
         {
-            if (type == WageType.LegacyWeekly)
+            switch (type)
             {
-                return WageUnit.Weekly;
-            }
-
-            if (type == WageType.LegacyText)
-            {
-                return WageUnit.NotApplicable;
-            }
-
-            if (type == WageType.CustomRange)
-            {
-                if (unit == WageUnit.NotApplicable)
-                    return WageUnit.Weekly;
-
-                return unit;
-            }
-
-            if (type == WageType.PresetText)
-            {
-                return WageUnit.NotApplicable;
-            }
-
-            if (type != WageType.Custom)
-            {
-                return WageUnit.Weekly;
-            }
-
-            switch (unit)
-            {
-                case WageUnit.Weekly:
-                case WageUnit.Monthly:
-                case WageUnit.Annually:
-                case WageUnit.NotApplicable:
+                case WageType.CustomRange:
+                    if (unit == WageUnit.NotApplicable)
+                        return WageUnit.Weekly;
                     return unit;
 
+                case WageType.LegacyText:
+                case WageType.CompetitiveSalary:
+                    return WageUnit.NotApplicable;
+
+                case WageType.Custom:
+                    switch (unit)
+                    {
+                        case WageUnit.Weekly:
+                        case WageUnit.Monthly:
+                        case WageUnit.Annually:
+                        case WageUnit.NotApplicable:
+                            return unit;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(Unit), $"Invalid Wage Unit: {unit}");
+                    }
+
+                case WageType.LegacyWeekly:
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(Unit), $"Invalid Wage Unit: {unit}");
+                    return WageUnit.Weekly;
             }
         }
     }
