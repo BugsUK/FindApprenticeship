@@ -2663,6 +2663,9 @@ input[type="search"]::-webkit-search-decoration {
 @-o-viewport {
   width: device-width; }
 
+.grey-background {
+  background: #F8F8F8; }
+
 html {
   font-size: 62.5%;
   /* 1 */ }
