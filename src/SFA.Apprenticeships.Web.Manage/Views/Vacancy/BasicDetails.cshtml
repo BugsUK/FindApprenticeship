@@ -1,11 +1,12 @@
 ﻿@model NewVacancyViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @using (Html.BeginRouteForm(ManagementRouteNames.BasicDetails, FormMethod.Post))
 {
-    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView)
+    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new {OfflineUrlButtonName = "BasicDetails"})
 
     <div class="form-group">
         <button type="submit" class="button">Save</button>
@@ -15,6 +16,8 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/basicVacancyDetails")
+
     <script>
         $("input[name='OfflineVacancy']").change(function () {
             var selectedValue = $("input[name='OfflineVacancy']:checked").val();
@@ -23,5 +26,9 @@
                 $("#apprenticheship-offline-application-instructions").val("");
             }
         });
+
+        var postUrl = '@Url.RouteUrl(ManagementRouteNames.BasicDetails)';
+        var multipleOfflineUrlsButtonText = '@NewVacancyViewModelMessages.MultiOfflineUrlsButtonText';
+        var singleOfflineUrlButtonText = '@NewVacancyViewModelMessages.SingleOfflineUrlButtonText';
     </script>
 }

@@ -1,12 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyPosting
 {
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
+    using Interfaces.VacancyPosting;
+    using Strategies;
     //TODO: rename project to SFA.Management.Application.VacancyPosting?
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Vacancies;
-    using Interfaces.VacancyPosting;
-    using Strategies;
 
     public class VacancyPostingService : IVacancyPostingService
     {
@@ -74,9 +75,9 @@
             return _getVacancyStrategies.GetVacancyById(vacancyId);
         }
 
-        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
+        public IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords)
         {
-            return _getVacancySummaryStrategies.GetWithStatus(desiredStatuses);
+            return _getVacancySummaryStrategies.GetWithStatus(query, out totalRecords);
         }
 
         public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)
@@ -104,9 +105,19 @@
             return _vacancyLocationsStrategies.GetVacancyLocations(vacancyId);
         }
 
-        public List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations)
+        public List<VacancyLocation> GetVacancyLocationsByReferenceNumber(int vacancyReferenceNumber)
         {
-            return _vacancyLocationsStrategies.SaveVacancyLocations(vacancyLocations);
+            return _vacancyLocationsStrategies.GetVacancyLocationsByReferenceNumber(vacancyReferenceNumber);
+        }
+
+        public List<VacancyLocation> CreateVacancyLocations(List<VacancyLocation> vacancyLocations)
+        {
+            return _vacancyLocationsStrategies.CreateVacancyLocations(vacancyLocations);
+        }
+
+        public List<VacancyLocation> UpdateVacancyLocations(List<VacancyLocation> vacancyLocations)
+        {
+            return _vacancyLocationsStrategies.UpdateVacancyLocations(vacancyLocations);
         }
 
         public void DeleteVacancyLocationsFor(int vacancyId)
@@ -114,14 +125,24 @@
             _vacancyLocationsStrategies.DeleteVacancyLocationsFor(vacancyId);
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
         {
-            return _getVacancySummaryStrategies.GetMinimalVacancyDetails(vacancyPartyIds, providerId, providerSiteIds);
+            return _getVacancySummaryStrategies.GetMinimalVacancyDetails(vacancyOwnerRelationshipIds, providerId, providerSiteIds);
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyOwnerRelationshipIds)
         {
-            return _vacancyLocationsStrategies.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+            return _vacancyLocationsStrategies.GetVacancyLocationsByVacancyIds(vacancyOwnerRelationshipIds);
+        }
+
+        public Vacancy UpdateVacanciesWithNewProvider(Vacancy vacancy)
+        {
+            return _updateVacancyStrategy.UpdateVacancyWithNewProvider(vacancy);
+        }
+		
+		public IList<RegionalTeamMetrics> GetRegionalTeamsMetrics(VacancySummaryByStatusQuery query)
+        {
+            return _getVacancySummaryStrategies.GetRegionalTeamMetrics(query);
         }
     }
 }

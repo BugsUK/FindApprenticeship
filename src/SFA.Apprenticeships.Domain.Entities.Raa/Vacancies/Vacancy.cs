@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
             return new Vacancy
             {
                 VacancyReferenceNumber = VacancyReferenceNumber,
+                VacancyOwnerRelationshipId = VacancyOwnerRelationshipId,
                 VacancyGuid = VacancyGuid,
                 Title = Title,
                 TitleComment = TitleComment,
@@ -35,15 +36,15 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 DesiredQualificationsComment = DesiredQualificationsComment,
                 FirstQuestion = FirstQuestion,
                 SecondQuestion = SecondQuestion,
-                OwnerPartyId = OwnerPartyId,
                 EmployerDescription = EmployerDescription,
                 EmployerWebsiteUrl = EmployerWebsiteUrl,
                 OfflineVacancy = OfflineVacancy,
+                OfflineVacancyType = OfflineVacancyType,
                 OfflineApplicationUrl = OfflineApplicationUrl,
                 OfflineApplicationUrlComment = OfflineApplicationUrlComment,
                 OfflineApplicationInstructions = OfflineApplicationInstructions,
                 OfflineApplicationInstructionsComment = OfflineApplicationInstructionsComment,
-                OfflineApplicationClickThroughCount = OfflineApplicationClickThroughCount,
+                NoOfOfflineApplicants = NoOfOfflineApplicants,
                 DateSubmitted = DateSubmitted,
                 DateFirstSubmitted = DateFirstSubmitted,
                 DateStartedToQA = DateStartedToQA,
@@ -87,7 +88,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 ContactDetailsComment = ContactDetailsComment,
                 VacancyType = VacancyType,
                 Address = Address,
-                ProviderId = ProviderId,
+                ContractOwnerId = ContractOwnerId,
+                OriginalContractOwnerId = OriginalContractOwnerId,
                 EditedInRaa = EditedInRaa
             };
         }
@@ -110,6 +112,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string SecondQuestion { get; set; }
         public string EmployerDescription { get; set; }
         public string EmployerWebsiteUrl { get; set; }
+        public OfflineVacancyType? OfflineVacancyType { get; set; }
         public string OfflineApplicationUrl { get; set; }
         public string OfflineApplicationUrlComment { get; set; }
         public string OfflineApplicationInstructions { get; set; }

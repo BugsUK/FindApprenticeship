@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
     using Common;
     using dbo;
     using Domain.Entities.Feature;
@@ -11,9 +9,11 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-    using Application.Interfaces;
     using Newtonsoft.Json;
     using Reference.Entities;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
@@ -65,7 +65,7 @@
 
             var dbVacancy = _getOpenConnection.Query<Vacancy>(
                 "SELECT * FROM dbo.Vacancy WHERE VacancyId = @VacancyId",
-                new { VacancyId = vacancyId}).SingleOrDefault();
+                new { VacancyId = vacancyId }).SingleOrDefault();
 
             return MapVacancy(dbVacancy);
         }
@@ -96,7 +96,7 @@
         {
             var dbVacancy = _getOpenConnection.Query<Vacancy>(
                 "SELECT * FROM dbo.Vacancy WHERE VacancyGuid = @VacancyGuid",
-                new {VacancyGuid = vacancyGuid}).SingleOrDefault();
+                new { VacancyGuid = vacancyGuid }).SingleOrDefault();
             return dbVacancy;
         }
 
@@ -110,7 +110,7 @@
 
         public VacancySummary GetById(int vacancyId)
         {
-            return GetByIds(new[] {vacancyId}).FirstOrDefault();
+            return GetByIds(new[] { vacancyId }).FirstOrDefault();
         }
 
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
@@ -151,10 +151,24 @@ WHERE  v.VacancyId IN @VacancyIds",
 
             var vacancies =
                 _getOpenConnection.Query<Vacancy>($@"
-SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)}
-FROM   dbo.Vacancy 
-WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
+                        SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)}
+                        FROM   dbo.Vacancy 
+                        WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
                     new { VacancyOwnerRelationshipIds = ownerPartyIdsArray });
+
+            return MapVacancySummaries(vacancies.ToList());
+        }
+
+        public List<VacancySummary> GetByOwnerPartyId(int ownerPartyId)
+        {
+            _logger.Debug($"Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={ownerPartyId}");
+
+            var vacancies =
+                _getOpenConnection.Query<Vacancy>($@"
+                        SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)}
+                        FROM   dbo.Vacancy 
+                        WHERE  VacancyOwnerRelationshipId = @VacancyOwnerRelationshipId",
+                    new { VacancyOwnerRelationshipId = ownerPartyId });
 
             return MapVacancySummaries(vacancies.ToList());
         }
@@ -288,7 +302,7 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             if (dbVacancy == null)
                 return null;
-            
+
             var result = _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
 
             GetAdditionalQuestions(dbVacancy, result);
@@ -310,7 +324,7 @@ FETCH NEXT @PageSize ROWS ONLY
             GetCountyId(dbVacancy, result);
 
             PatchTrainingType(result);
-            GetAndTryToMapStandards(new List<Vacancy> {dbVacancy}, new List<VacancySummary> {result});
+            GetAndTryToMapStandards(new List<Vacancy> { dbVacancy }, new List<VacancySummary> { result });
 
             return result;
         }
@@ -376,7 +390,7 @@ WHERE  ApprenticeshipFrameworkId IN @Ids",
         private void GetApprenticeshipType(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipType.HasValue)
-            {   
+            {
                 var educationLevelCodeName =
                     _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT el.CodeName
@@ -438,7 +452,7 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
         {
             // Not all the vacancies have CountyId (before being accepted by QA).
             // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
-            
+
             if (result.Address != null && dbVacancy.CountyId > 0)
             {
                 result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
@@ -502,7 +516,7 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             return additionalQuestions.ContainsKey(questionId) ? additionalQuestions[questionId] : null;
         }
 
-        private IReadOnlyDictionary<int,string> GetAdditionalQuestions(Vacancy dbVacancy)
+        private IReadOnlyDictionary<int, string> GetAdditionalQuestions(Vacancy dbVacancy)
         {
             var results = _getOpenConnection.Query<dynamic>(@"
                             SELECT QuestionId, Question
@@ -510,8 +524,8 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
                             WHERE  VacancyId = @VacancyId
                             ORDER BY QuestionId ASC
                             ", new { dbVacancy.VacancyId }).ToDictionary(q => (int)q.QuestionId, q => (string)q.Question);
-            return results;         
-        }             
+            return results;
+        }
 
         private void GetAndMapTextFields(Vacancy dbVacancy, DomainVacancy result)
         {
@@ -637,21 +651,22 @@ WHERE  FullName = @FrameworkFullName",
         }
 
         private string GetTextField(IReadOnlyDictionary<string, string> textFields, string codeName)
-        {            
+        {
             return textFields.ContainsKey(codeName) ? textFields[codeName] : null;
         }
 
         private IReadOnlyDictionary<string, string> GetTextFields(int vacancyId)
-        {            
+        {
             var textFields = _getOpenConnection.Query<dynamic>(@"
                                             SELECT CodeName, Value
                                             FROM   dbo.VacancyTextField VTF
                                             JOIN   dbo.VacancyTextFieldValue VTFV
                                             ON VTF.Field = VTFV.VacancyTextFieldValueId
                                             WHERE  VacancyId = @VacancyId
-                                            ", new{
-                                                        VacancyId = vacancyId                                                        
-                                                    }).ToDictionary(tf => (string)tf.CodeName,tf => (string)tf.Value);
+                                            ", new
+            {
+                VacancyId = vacancyId
+            }).ToDictionary(tf => (string)tf.CodeName, tf => (string)tf.Value);
             return textFields;
         }
 
@@ -869,18 +884,18 @@ GROUP BY VacancyId", new
             }
             else
             {
-            result.DateQAApproved = _getOpenConnection.Query<DateTime?>(@"
+                result.DateQAApproved = _getOpenConnection.Query<DateTime?>(@"
 select top 1 HistoryDate
 from dbo.VacancyHistory
 where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
 order by HistoryDate desc
 ",
-                new
-                {
-                    VacancyId = dbVacancy.VacancyId,
-                    VacancyStatus = VacancyStatus.Live
-                }
-                ).SingleOrDefault();
+                    new
+                    {
+                        VacancyId = dbVacancy.VacancyId,
+                        VacancyStatus = VacancyStatus.Live
+                    }
+                    ).SingleOrDefault();
             }
         }
 
@@ -931,8 +946,7 @@ WHERE VacancyId IN @Ids", new
 
             var sqlParams = new
             {
-                vacancySummary.VacancyId,
-                vacancySummary.OwnerPartyId
+                vacancySummary.VacancyId
             };
 
             var postcode = _getOpenConnection.Query<string>(sql, sqlParams).FirstOrDefault();
@@ -951,7 +965,7 @@ WHERE VacancyId IN @Ids", new
             _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.VacancyId);
 
             _logger.Info(
-                $"[{entity.VacancyGuid}] Calling database to create the following domain vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new ExcludeLiveClosingDateResolver()})}");
+                $"[{entity.VacancyGuid}] Calling database to create the following domain vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
 
             UpdateEntityTimestamps(entity);
 
@@ -961,8 +975,8 @@ WHERE VacancyId IN @Ids", new
 
             _logger.Info(
                 $"[{entity.VacancyGuid}] Calling database to create the following database vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
-            
-            dbVacancy.VacancyId = (int) _getOpenConnection.Insert(dbVacancy);
+
+            dbVacancy.VacancyId = (int)_getOpenConnection.Insert(dbVacancy);
 
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
             SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity);
@@ -981,7 +995,7 @@ WHERE VacancyId IN @Ids", new
 
             _logger.Info(
                 $"[{entity.VacancyGuid}] Calling database to update the following vacancy: {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
-            
+
             UpdateEntityTimestamps(entity); // Do we need this?
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
@@ -1031,7 +1045,7 @@ WHERE VacancyId IN @Ids", new
 
         private static bool ClosingDateHasBeenUpdated(Vacancy previousVacancy, Vacancy actualVacancy)
         {
-            return previousVacancy.VacancyStatusId == (int)VacancyStatus.Live && 
+            return previousVacancy.VacancyStatusId == (int)VacancyStatus.Live &&
                 actualVacancy.VacancyStatusId == (int)VacancyStatus.Live &&
                 previousVacancy.ApplicationClosingDate != actualVacancy.ApplicationClosingDate;
         }
@@ -1044,7 +1058,7 @@ WHERE VacancyId IN @Ids", new
                 VacancyId = vacancyId,
                 Comment = comment,
                 UserName = userName,
-                VacancyHistoryEventTypeId = (int) vacancyHistoryEventType,
+                VacancyHistoryEventTypeId = (int)vacancyHistoryEventType,
                 VacancyHistoryEventSubTypeId = vacancyStatus,
                 HistoryDate = _dateTimeService.UtcNow
             };
@@ -1164,7 +1178,7 @@ WHERE  FullName = @CountyFullName",
                     new
                     {
                         CountyFullName = entity.Address.County
-                    }).SingleOrDefault(); 
+                    }).SingleOrDefault();
             }
         }
 
@@ -1229,7 +1243,7 @@ WHERE  el.CodeName = @EducationLevel",
 
         private void UpsertAdditionalQuestion(int vacancyId, short questionId, string question)
         {
-            
+
             var sql = @"
 merge dbo.AdditionalQuestion as target
 using (values (@Question))
@@ -1494,7 +1508,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
         {
             var sql = @"SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
                         FROM   dbo.Vacancy
@@ -1505,23 +1519,23 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 sql += " AND (VacancyManagerId IN @providerSiteIds OR DeliveryOrganisationId IN @providerSiteIds)";
             }
 
-            var vacancyCollections = new List<dynamic>();                               
-            var partyIds = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
-            var splitVacancyPartyIds = DbHelpers.SplitIds(partyIds);            
-            foreach (var splitVacancyPartyId in splitVacancyPartyIds)
+            var vacancyCollections = new List<dynamic>();
+            var relationshipIds = vacancyOwnerRelationshipIds as int[] ?? vacancyOwnerRelationshipIds.ToArray();
+            var splitVacancyOwnerRelationshipIds = DbHelpers.SplitIds(relationshipIds);
+            foreach (var splitVacancyOwnerRelationshipId in splitVacancyOwnerRelationshipIds)
             {
                 IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(sql,
                     new
                     {
-                        Ids = splitVacancyPartyId,
+                        Ids = splitVacancyOwnerRelationshipId,
                         providerId,
                         providerSiteIds
-                    });                                                                                                      
-                vacancyCollections.AddRange(singleCollection);                
+                    });
+                vacancyCollections.AddRange(singleCollection);
             }
             return vacancyCollections
-                .GroupBy(x => (int) x.VacancyOwnerRelationshipId)
-                .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));               
+                .GroupBy(x => (int)x.VacancyOwnerRelationshipId)
+                .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));
         }
 
         public int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber)
@@ -1542,7 +1556,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             {
                 VacancyId = record.VacancyId;
                 VacancyReferenceNumber = record.VacancyReferenceNumber;
-                OwnerPartyId = record.VacancyOwnerRelationshipId;
+                VacancyOwnerRelationshipId = record.VacancyOwnerRelationshipId;
                 Status = (VacancyStatus)record.VacancyStatusId;
                 _closingDate = record.ApplicationClosingDate;
 
@@ -1553,14 +1567,13 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 VacancyType = (VacancyType)record.VacancyTypeId;
                 EmployerName = record.EmployerName;
                 Title = record.Title;
-                ApplicationOrClickThroughCount = record.NoOfOfflineApplicants;
                 OfflineVacancy = record.ApplyOutsideNAVMS;
             }
 
             public int VacancyId { get; private set; }
             public int VacancyReferenceNumber { get; }
 
-            public int OwnerPartyId { get; private set; }
+            public int VacancyOwnerRelationshipId { get; private set; }
 
             private DateTime? _closingDate;
             public DateTime LiveClosingDate
@@ -1584,8 +1597,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             public string EmployerName { get; set; }
 
             public string Title { get; private set; }
-
-            public int? ApplicationOrClickThroughCount { get; set; }
 
             public bool? OfflineVacancy { get; private set; }
         }

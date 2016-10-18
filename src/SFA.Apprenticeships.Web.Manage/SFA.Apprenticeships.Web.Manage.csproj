@@ -383,10 +383,7 @@
     <Compile Include="CsvClassMaps\StandardSubjectAreaTierOneClassMap.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
-    <Compile Include="Mediators\Admin\AdminMediator.cs" />
-    <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="ViewModels\Admin\FrameworkViewModel.cs" />
-    <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
     <Compile Include="Mediators\AgencyUser\IAgencyUserMediator.cs" />
@@ -530,6 +527,7 @@
     <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\basicVacancyDetails.js" />
     <Content Include="Content\_assets\js\nas\candidates.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
@@ -876,6 +874,8 @@
     <Content Include="Views\Admin\ApiUsers.cshtml" />
     <Content Include="Views\Admin\ApiUser.cshtml" />
     <Content Include="Views\Admin\CreateApiUser.cshtml" />
+    <Content Include="Views\Admin\ResetApiUserPassword.cshtml" />
+    <Content Include="Views\Candidate\ApplicationFeedback.cshtml" />
     <Content Include="Views\Admin\Standards.cshtml" />
     <Content Include="Views\Admin\Frameworks.cshtml" />
     <None Include="Web.Demo.config">

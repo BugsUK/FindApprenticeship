@@ -96,8 +96,13 @@
 
         //Admin
         public const string AdminList = "AdminList";
+        public const string AdminProviderUsers = "AdminProviderUsers";
+        public const string AdminViewProviderUser = "AdminViewProviderUser";
         public const string AdminChangeUkprn = "AdminChangeUkprn";
         public const string AdminResetUkprn = "AdminResetUkprn";
+        public const string TransferVacancies = "TransferVacancies";
+        public const string GetVacancies = "GetVacancies";
+        public const string TransferToProvider = "TransferToProvider";
 
         //Candidates
         public const string CandidateSearch = "CandidateSearch";
@@ -107,5 +112,14 @@
 
         //Service status
         public static string InformationRadiator = "InformationRadiator";
+        public static string ChooseProvider = "ChooseProvider";
+        public static string AdminViewProvider = "AdminViewProvider";
+        public static string ConfirmVacancies = "ConfirmVacancies";
+        public static string SearchProvider = "SearchProvider";
+        public static string AdminProviders = "AdminProviders";
+        public static string AdminViewProviderSite = "AdminViewProviderSite";
+        public static string AdminProviderSites = "AdminProviderSites";
+        public static string AdminEditProviderSite = "AdminEditProviderSite";
+        public static string ManageVacanciesTransfers = "ManageVacanciesTransfers";
     }
 }

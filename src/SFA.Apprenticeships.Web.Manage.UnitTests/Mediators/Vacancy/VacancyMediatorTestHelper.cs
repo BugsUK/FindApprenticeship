@@ -70,6 +70,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
+                    VacancyReferenceNumber = vacancyReferenceNumber,
                     Title = "title",
                     ShortDescription = "vacancy summary",
                     OfflineVacancy = false,

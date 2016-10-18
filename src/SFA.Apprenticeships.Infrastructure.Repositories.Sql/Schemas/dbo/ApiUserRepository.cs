@@ -14,6 +14,23 @@
 
     public class ApiUserRepository : IApiUserRepository
     {
+        private const string SelectApiUsersSql = @"SELECT 
+es.*, 
+esp.*, 
+COALESCE(p.FullName, e.FullName, tp.ThirdPartyName) AS FullName, 
+COALESCE(p.TradingName, e.TradingName, tp.ThirdPartyName) AS TradingName 
+FROM ExternalSystemPermission esp
+LEFT JOIN Provider p ON esp.Company = p.UKPRN
+LEFT JOIN Employer e ON esp.Company = e.EDSURN
+LEFT JOIN ThirdParty tp ON esp.Company = tp.EDSURN
+LEFT JOIN ExternalSystem es ON esp.Username = es.SystemCode";
+
+        private const string SetPasswordSql = @"DECLARE @DbPassword [varchar](64)
+SET @DbPassword = @password
+UPDATE ExternalSystemPermission 
+SET Password = CONVERT(VARBINARY(25), HASHBYTES('SHA1', @DbPassword), 1)
+WHERE Username = @Username";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IConfigurationService _configurationService;
 
@@ -50,15 +67,22 @@
             _configurationService = configurationService;
         }
 
+        public IEnumerable<ApiUser> GetApiUsers()
+        {
+            var sql = SelectApiUsersSql + " ORDER BY FullName";
+            var externalSystemPermissions = _getOpenConnection.Query<ExternalSystem, ExternalSystemPermission, ExternalSystem>(sql,
+                (es, esp) =>
+                {
+                    es.ExternalSystemPermission = esp;
+                    return es;
+                }, splitOn: "Username");
+
+            return externalSystemPermissions.Select(MapApiUser);
+        }
+
         public IEnumerable<ApiUser> SearchApiUsers(ApiUserSearchParameters searchParameters)
         {
-            var sql = @"SELECT esp.*, 
-  COALESCE(p.FullName, e.FullName, tp.ThirdPartyName) AS FullName, 
-  COALESCE(p.TradingName, e.TradingName, tp.ThirdPartyName) AS TradingName 
-  FROM ExternalSystemPermission esp
-  LEFT JOIN Provider p ON esp.Company = p.UKPRN
-  LEFT JOIN Employer e ON esp.Company = e.EDSURN
-  LEFT JOIN ThirdParty tp ON esp.Company = tp.EDSURN WHERE ";
+            var sql = SelectApiUsersSql + " WHERE ";
             if (!string.IsNullOrEmpty(searchParameters.ExternalSystemId))
             {
                 sql += "Username = @ExternalSystemId ";
@@ -75,23 +99,26 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
             }
             sql += "ORDER BY FullName";
 
-            var externalSystemPermissions = _getOpenConnection.Query<ExternalSystemPermission>(sql, searchParameters);
+            var externalSystemPermissions = _getOpenConnection.Query<ExternalSystem, ExternalSystemPermission, ExternalSystem>(sql,
+                (es, esp) =>
+                {
+                    es.ExternalSystemPermission = esp;
+                    return es;
+                }, searchParameters, "Username");
 
             return externalSystemPermissions.Select(MapApiUser);
         }
 
         public ApiUser GetApiUser(Guid externalSystemId)
         {
-            var sql = @"SELECT esp.*, 
-  COALESCE(p.FullName, e.FullName, tp.ThirdPartyName) AS FullName, 
-  COALESCE(p.TradingName, e.TradingName, tp.ThirdPartyName) AS TradingName 
-  FROM ExternalSystemPermission esp
-  LEFT JOIN Provider p ON esp.Company = p.UKPRN
-  LEFT JOIN Employer e ON esp.Company = e.EDSURN
-  LEFT JOIN ThirdParty tp ON esp.Company = tp.EDSURN 
-  WHERE Username = @ExternalSystemId";
+            var sql = SelectApiUsersSql + " WHERE Username = @ExternalSystemId";
 
-            var externalSystemPermission = _getOpenConnection.Query<ExternalSystemPermission>(sql, new { externalSystemId }).Single();
+            var externalSystemPermission = _getOpenConnection.Query<ExternalSystem, ExternalSystemPermission, ExternalSystem>(sql,
+                (es, esp) =>
+                {
+                    es.ExternalSystemPermission = esp;
+                    return es;
+                }, new { externalSystemId }, "Username").Single();
 
             return MapApiUser(externalSystemPermission);
         }
@@ -102,7 +129,7 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
             return externalSystemPermission != null ? MapApiUser(externalSystemPermission) : null;
         }
 
-        private ExternalSystemPermission GetExternalSystemPermission(string companyId)
+        private ExternalSystem GetExternalSystemPermission(string companyId)
         {
             var sqls = new[]
             {
@@ -113,7 +140,12 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
             foreach (var sql in sqls)
             {
-                var externalSystemPermission = _getOpenConnection.Query<ExternalSystemPermission>(sql, new { companyId }).SingleOrDefault();
+                var externalSystemPermission = _getOpenConnection.Query<ExternalSystem, ExternalSystemPermission, ExternalSystem>(sql,
+                (es, esp) =>
+                {
+                    es.ExternalSystemPermission = esp;
+                    return es;
+                }, new { companyId }, "Username").SingleOrDefault();
                 if (externalSystemPermission != null)
                 {
                     return externalSystemPermission;
@@ -127,7 +159,8 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
         {
             var apiConfiguration = _configurationService.Get<ApiConfiguration>();
 
-            var externalSystemPermission = GetExternalSystemPermission(apiUser.CompanyId);
+            var externalSystem = GetExternalSystemPermission(apiUser.CompanyId);
+            var externalSystemPermission = externalSystem.ExternalSystemPermission;
 
             externalSystemPermission.Username = apiUser.ExternalSystemId == Guid.Empty ? Guid.NewGuid() : apiUser.ExternalSystemId;
             externalSystemPermission.Password = new byte[64];
@@ -138,12 +171,7 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
             var password = string.IsNullOrEmpty(apiUser.Password) ? GetApiPassword() : apiUser.Password;
 
-            var sql = @"DECLARE @DbPassword [varchar](64)
-SET @DbPassword = @password
-UPDATE ExternalSystemPermission 
-SET Password = CONVERT(VARBINARY(25), HASHBYTES('SHA1', @DbPassword), 1)
-WHERE Username = @Username";
-            _getOpenConnection.MutatingQuery<ExternalSystemPermission>(sql, new { password, externalSystemPermission.Username });
+            _getOpenConnection.MutatingQuery<ExternalSystemPermission>(SetPasswordSql, new { password, externalSystemPermission.Username });
 
             var createdApiUser = GetApiUser(externalSystemPermission.Username);
             createdApiUser.Password = password;
@@ -164,8 +192,22 @@ WHERE Username = @Username";
             return GetApiUser(apiUser.ExternalSystemId);
         }
 
-        private static ApiUser MapApiUser(ExternalSystemPermission externalSystemPermission)
+        public ApiUser ResetApiUserPassword(Guid externalSystemId)
         {
+            var password = GetApiPassword();
+
+            _getOpenConnection.MutatingQuery<ExternalSystemPermission>(SetPasswordSql, new { password, Username = externalSystemId });
+
+            var apiUser = GetApiUser(externalSystemId);
+            apiUser.Password = password;
+
+            return apiUser;
+        }
+
+        private static ApiUser MapApiUser(ExternalSystem externalSystem)
+        {
+            var externalSystemPermission = externalSystem.ExternalSystemPermission;
+
             var apiUser = new ApiUser
             {
                 ExternalSystemId = externalSystemPermission.Username,
@@ -174,7 +216,10 @@ WHERE Username = @Username";
                 EmployeeType = (ApiEmployeeType)Enum.Parse(typeof(ApiEmployeeType), externalSystemPermission.Employeetype),
                 AuthorisedApiEndpoints = externalSystemPermission.UserParameters.Split(',').Where(s => ApiEndpointsMap.ContainsKey(s)).Select(s => ApiEndpointsMap[s]).ToList(),
                 FullName = externalSystemPermission.FullName,
-                TradingName = externalSystemPermission.TradingName
+                TradingName = externalSystemPermission.TradingName,
+                ContactName = externalSystem.ContactName,
+                ContactEmail = externalSystem.ContactEmail,
+                ContactNumber = externalSystem.ContactNumber,
             };
 
             return apiUser;

@@ -1,0 +1,76 @@
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSearchResultsViewModel
+@{
+    ViewBag.Title = "Choose Provider";
+}
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.SearchProvider))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)               
+        if (Model.VacancyReferenceNumbers != null)
+        {
+        <h2>Vacancy Reference Numbers:</h2>
+        <ul>
+            @foreach (var number in Model.VacancyReferenceNumbers)
+            {
+                <li>@number</li>
+                @Html.Hidden("VacancyReferenceNumbers", number)
+            }
+        </ul>
+        <hr />
+        <br />
+    }
+    <h1 id="heading" class="heading-xlarge">Choose Provider</h1>
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.SearchViewModel.Id, controlHtmlAttributes: new { type = "tel", size = 8 })
+        @Html.FormTextFor(m => m.SearchViewModel.Ukprn, controlHtmlAttributes: new { type = "tel", size = 8, autofocus = "autofocus" })
+        @Html.FormTextFor(m => m.SearchViewModel.Name, controlHtmlAttributes: new { type = "text" })
+
+        <div class="form-group">
+            <button id="search-providers-button" type="submit" class="button" name="SearchProvidersAction" value="SearchProviders">Search Providers</button>
+        </div>
+    </div>  
+    if (Model != null && Model.Providers != null && Model.Providers.Count > 0)
+    {        
+        <div class="grid-wrapper">
+        <div class="grid grid-1-1">
+            <table>
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>UKPRN</th>
+                        <th>Full Name</th>
+                        <th>Trading Name</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var provider in Model.Providers)
+                    {                        
+                        <tr>
+                            <td>@provider.ProviderId</td>
+                            <td>@provider.Ukprn</td>
+                            <td>@provider.FullName</td>
+                            <td>@provider.TradingName</td>
+                            <td>@provider.ProviderStatusType</td>
+                            <td>@Html.RouteLink("Select Provider", RecruitmentRouteNames.AdminViewProvider, new { provider.ProviderId,Model.SearchViewModel.VacancyReferenceNumbers })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+}

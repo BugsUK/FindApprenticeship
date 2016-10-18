@@ -16,6 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public Guid VacancyGuid { get; set; }
         public string Title { get; set; }
         public bool? ApplyOutsideNAVMS { get; set; }
+        public int NoOfOfflineApplicants { get; set; }
         public VacancyStatus VacancyStatusId { get; set; }
         public VacancyType VacancyTypeId { get; set; }
         
@@ -34,5 +35,15 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public int? NewApplicantCount { get; set; }
         public int? ApplicantCount { get; set; }
+
+        public string ProviderTradingName { get; set; }
+
+        public DateTime DateSubmitted { get; set; }
+        public DateTime DateFirstSubmitted { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public int SubmissionCount { get; set; }
+        public DateTime? StartedToQADateTime { get; set; }
+        public string QAUserName { get; set; }
     }
 }

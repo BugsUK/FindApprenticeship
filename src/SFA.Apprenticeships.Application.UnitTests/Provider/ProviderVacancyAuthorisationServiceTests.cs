@@ -29,7 +29,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = provider.ProviderId,
+                ContractOwnerId = provider.ProviderId,
                 VacancyManagerId = providerSiteId
             };
 
@@ -70,7 +70,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = otherProviderId,
+                ContractOwnerId = otherProviderId,
                 VacancyManagerId = providerSiteId
             };
 
@@ -116,7 +116,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = subContractorProviderId,
+                ContractOwnerId = subContractorProviderId,
                 VacancyManagerId = providerSiteId
             };
 
@@ -168,7 +168,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = otherProviderId,
+                ContractOwnerId = otherProviderId,
                 VacancyManagerId = providerSiteId
             };
 
@@ -216,7 +216,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = 1,
+                ContractOwnerId = 1,
                 VacancyManagerId = 2
             };
 
@@ -255,7 +255,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = providerId,
+                ContractOwnerId = providerId,
                 VacancyManagerId = providerSiteId
             };
 

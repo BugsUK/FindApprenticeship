@@ -31,10 +31,10 @@
         <div class="grid grid-2-3" style="clear: left">
             <div class="hgroup text @editableItemClass">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
-                    @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title)))
+                    @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title)))
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, Model.BasicDetailsLink))
                 </h1>
-                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.OwnerParty.Employer.Name</p>
+                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.Name</p>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.Title, Model.BasicDetailsLink, Model.NewVacancyViewModel.TitleComment))
             </div>
         </div>
@@ -58,7 +58,7 @@
                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, Model.BasicDetailsLink))
                     </h3>
                     <div class="text" itemprop="description">
-                        <p id="vacancy-description" class="@Model.NewVacancyViewModel.ShortDescription.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.NewVacancyViewModel.ShortDescription))</p>
+                        <p id="vacancy-description" class="@Model.NewVacancyViewModel.ShortDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.ShortDescription))</p>
                         @Html.Partial(ApplicationsLinkViewModel.PartialView, new ApplicationsLinkViewModel(Model.VacancyType, Model.VacancyReferenceNumber, Model.ApplicationCount))
                     </div>
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.BasicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))

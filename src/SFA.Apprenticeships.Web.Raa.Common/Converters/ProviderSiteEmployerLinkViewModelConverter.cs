@@ -5,15 +5,15 @@
 
     public static class ProviderSiteEmployerLinkViewModelConverter
     {
-        public static VacancyPartyViewModel Convert(
-            this VacancyParty vacancyParty, Employer employer, string anonymousEmployerName = null)
+        public static VacancyOwnerRelationshipViewModel Convert(
+            this VacancyOwnerRelationship vacancyOwnerRelationship, Employer employer, string anonymousEmployerName = null)
         {
-            var viewModel = new VacancyPartyViewModel
+            var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                VacancyPartyId = vacancyParty.VacancyPartyId,
-                ProviderSiteId = vacancyParty.ProviderSiteId,
-                EmployerDescription = vacancyParty.EmployerDescription,
-                EmployerWebsiteUrl = vacancyParty.EmployerWebsiteUrl,
+                VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId,
+                ProviderSiteId = vacancyOwnerRelationship.ProviderSiteId,
+                EmployerDescription = vacancyOwnerRelationship.EmployerDescription,
+                EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl,
                 Employer = employer.Convert(),
                 IsEmployerAddressValid = true
             };

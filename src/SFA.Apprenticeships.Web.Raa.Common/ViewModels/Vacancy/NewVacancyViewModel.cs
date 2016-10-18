@@ -32,9 +32,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.ShortDescriptionComment.LabelText)]
         public string ShortDescriptionComment { get; set; }
 
-        public VacancyPartyViewModel OwnerParty { get; set; }
+        public VacancyOwnerRelationshipViewModel VacancyOwnerRelationship { get; set; }
 
         public bool? OfflineVacancy { get; set; }
+
+        public OfflineVacancyType? OfflineVacancyType { get; set; }
 
         [Display(Name = VacancyViewModelMessages.OfflineApplicationUrl.LabelText)]
         public string OfflineApplicationUrl { get; set; }

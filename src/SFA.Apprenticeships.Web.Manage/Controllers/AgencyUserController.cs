@@ -18,6 +18,7 @@
     using Microsoft.Owin.Security.WsFederation;
     using Raa.Common.ViewModels.Vacancy;
     using Application.Interfaces;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using ViewModels;
 
     public class AgencyUserController : ManagementControllerBase
@@ -142,7 +143,7 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult ChangeTeam(RegionalTeam regionalTeam, DashboardVacancySummaryFilterTypes filterType, string provider)
+        public ActionResult ChangeTeam(RegionalTeam regionalTeam, VacanciesSummaryFilterTypes filterType, string provider)
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
             _agencyUserMediator.SaveAgencyUser(claimsPrincipal, new AgencyUserViewModel {RegionalTeam = regionalTeam});

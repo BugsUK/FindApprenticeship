@@ -4,7 +4,7 @@
     {
         public static class GetVacancyParties
         {
-            public const string Ok = "VacancyPosting.GetVacancyParties.Ok";
+            public const string Ok = "VacancyPosting.GetVacancyOwnerRelationships.Ok";
         }
 
         public static class GetProviderEmployers

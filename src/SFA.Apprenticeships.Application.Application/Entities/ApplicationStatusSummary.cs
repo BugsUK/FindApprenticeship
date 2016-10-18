@@ -28,6 +28,8 @@
 
         public string UnsuccessfulReason { get; set; } // note: this relates to the vacancy manager rejecting a candidate's application
 
+        public DateTime UnsuccessfulDateTime { get; set; }
+
         public Source UpdateSource { get; set; }
     }
 }

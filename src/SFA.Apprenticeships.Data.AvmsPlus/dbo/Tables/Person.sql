@@ -14,3 +14,9 @@
     CONSTRAINT [FK_Person_PersonType] FOREIGN KEY ([PersonTypeId]) REFERENCES [dbo].[PersonType] ([PersonTypeId])
 );
 
+GO
+CREATE NONCLUSTERED INDEX [idx_Person_FirstName] 
+ON [dbo].[Person]([FirstName] ASC)
+INCLUDE ([MiddleNames], [PersonId], [Surname]) 
+
+GO

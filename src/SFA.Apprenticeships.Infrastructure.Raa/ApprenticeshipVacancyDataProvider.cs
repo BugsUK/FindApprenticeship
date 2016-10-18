@@ -46,14 +46,14 @@
                 return null;
             }
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false); // Some current vacancies have non-current vacancy parties
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false); // Some current vacancies have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
 
-            var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
+            var providerSite = _providerService.GetProviderSite(vacancyOwnerRelationship.ProviderSiteId);
             if (providerSite == null)
-                throw new System.Exception($"Could not find VacancyParty for ProviderSiteId={vacancyParty.ProviderSiteId}");
+                throw new System.Exception($"Could not find VacancyOwnerRelationship for ProviderSiteId={vacancyOwnerRelationship.ProviderSiteId}");
 
-            var provider = _providerService.GetProvider(vacancy.ProviderId);
+            var provider = _providerService.GetProvider(vacancy.ContractOwnerId);
             var categories = _referenceDataProvider.GetCategories().ToList();
 
             return ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(vacancy, employer, provider, providerSite, categories, _logService);

@@ -44,12 +44,49 @@
             public const string WhiteListErrorText = "Trading name " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
+        public static class EmployerDescription
+        {
+            public const string LabelText = "Employer description";
+            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Employer description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Employer description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class CandidateDescription
+        {
+            public const string LabelText = "Candidate description";
+            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Candidate description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Candidate description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class ContactDetailsForEmployer
+        {
+            public const string LabelText = "Contact details for employer";
+            public const string TooLongErrorText = "Contact details for employer must not be more than 255 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Contact details for employer " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
+        public static class ContactDetailsForCandidate
+        {
+            public const string LabelText = "Contact details for candidate";
+            public const string TooLongErrorText = "Contact details for candidate must not be more than 255 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Contact details for candidate " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
         public static class WebPage
         {
             public const string LabelText = "Web page";
             public const string RequiredErrorText = "Enter the provider sites's web site";
             public const string TooLongErrorText = "Web site must not be more than 100 characters";
             public const string ErrorUriText = "Enter a valid website url";
+        }
+
+        public static class TrainingProviderStatus
+        {
+            public const string LabelText = "Status";
         }
 
         public static class ProviderUkprn

@@ -1,9 +1,9 @@
 namespace SFA.Apprenticeships.Application.Application.Strategies
 {
-    using System;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Entities;
+    using System;
 
     public class SetApplicationStatusStrategy : ISetApplicationStatusStrategy
     {
@@ -25,9 +25,9 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
             SetDecision(applicationId, ApplicationStatuses.Successful);
         }
 
-        public void SetUnsuccessfulDecision(Guid applicationId)
+        public void SetUnsuccessfulDecision(Guid applicationId, string candidateApplicationFeedback)
         {
-            SetDecision(applicationId, ApplicationStatuses.Unsuccessful);
+            SetDecision(applicationId, ApplicationStatuses.Unsuccessful, candidateApplicationFeedback);
         }
 
         public void SetStateInProgress(Guid applicationId)
@@ -44,7 +44,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
             _apprenticeshipApplicationWriteRepository.Save(application);
         }
 
-        private void SetDecision(Guid applicationId, ApplicationStatuses applicationStatus)
+        private void SetDecision(Guid applicationId, ApplicationStatuses applicationStatus, string candidateApplicationFeedback = null)
         {
             var apprenticeshipApplication = _apprenticeshipApplicationReadRepository.Get(applicationId);
             var legacyApplicationId = apprenticeshipApplication.LegacyApplicationId;
@@ -63,9 +63,12 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
                 LegacyVacancyId = 0, // not required
                 VacancyStatus = apprenticeshipApplication.VacancyStatus,
                 ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate,
-                UpdateSource = ApplicationStatusSummary.Source.Raa //Ensure this update is from RAA so ownership of the application is verified
+                UpdateSource = ApplicationStatusSummary.Source.Raa //Ensure this update is from RAA so ownership of the application is verified                
             };
-
+            if (candidateApplicationFeedback != null)
+            {
+                applicationStatusSummary.UnsuccessfulReason = candidateApplicationFeedback;
+            }
             _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
         }
     }

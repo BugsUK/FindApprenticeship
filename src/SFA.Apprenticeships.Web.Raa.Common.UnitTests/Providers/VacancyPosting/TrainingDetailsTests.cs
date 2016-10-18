@@ -22,10 +22,10 @@
 
         private readonly Vacancy _existingVacancy = new Vacancy()
         {
-            OwnerPartyId = 42
+            VacancyOwnerRelationshipId = 42
         };
 
-        private readonly VacancyParty _vacancyParty = new VacancyParty
+        private readonly VacancyOwnerRelationship _vacancyOwnerRelationship = new VacancyOwnerRelationship
         {
             ProviderSiteId = ProviderSiteId,
             EmployerDescription = "description",
@@ -86,8 +86,8 @@
                             }
                     }
                 });
-            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
-                .Returns(_vacancyParty);
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(ProviderSiteId, EdsUrn))
+                .Returns(_vacancyOwnerRelationship);
 
             MockConfigurationService
                 .Setup(mock => mock.Get<CommonWebConfiguration>())

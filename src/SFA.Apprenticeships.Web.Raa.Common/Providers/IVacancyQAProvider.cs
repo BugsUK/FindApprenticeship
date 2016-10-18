@@ -60,6 +60,10 @@
 
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
 
+        List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(int vacancyReferenceNumber);
+
+        List<VacancyLocationAddressViewModel> GetLocationsAddressViewModels(int vacancyId);
+
         DashboardVacancySummaryViewModel GetNextAvailableVacancy();
 
         void UnReserveVacancyForQA(int vacancyReferenceNumber);

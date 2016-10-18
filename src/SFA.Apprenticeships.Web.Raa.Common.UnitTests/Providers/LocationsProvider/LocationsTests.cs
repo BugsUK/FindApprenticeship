@@ -53,15 +53,6 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
                 .Returns(vacancyWithLocationAddresses.LocationAddresses);
-            MockMapper.Setup(
-                m =>
-                    m.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
-                        It.Is<List<VacancyLocation>>(
-                            l => l.Count == vacancyWithLocationAddresses.LocationAddresses.Count)))
-                .Returns(
-                    Enumerable.Range(1, vacancyWithLocationAddresses.LocationAddresses.Count)
-                        .Select(i => new VacancyLocationAddressViewModel())
-                        .ToList());
 
             var provider = GetVacancyPostingProvider();
 
@@ -105,13 +96,8 @@
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancyWithLocationAddresses.Vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
-            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), It.IsAny<string>()))
-                .Returns(new VacancyParty());
-
-            MockMapper.Setup(
-                m =>
-                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(new VacancyOwnerRelationship());
 
             var provider = GetVacancyPostingProvider();
 
@@ -204,22 +190,8 @@
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(new List<VacancyLocation>());
-            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), It.IsAny<string>()))
-                .Returns(new VacancyParty());
-
-            MockMapper.Setup(
-                m =>
-                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
-
-            MockMapper.Setup(
-                m =>
-                    m.Map<VacancyLocationAddressViewModel, VacancyLocation>(It.IsAny<VacancyLocationAddressViewModel>()))
-                .Returns(new VacancyLocation
-                {
-                    Address = new Fixture().Create<PostalAddress>(),
-                    NumberOfPositions = numberOfPositions
-                });
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(new VacancyOwnerRelationship());
 
             var provider = GetVacancyPostingProvider();
 

@@ -1,13 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
+    using Constants.ViewModels;
+    using Domain.Entities.Applications;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Constants.ViewModels;
-    using Domain.Entities.Applications;
 
     public class ApplicationViewModel
     {
+        public string ConfirmationStatusSentMessage { get; set; }
         public ApplicationStatuses Status { get; set; }
 
         public DateTime DateCreated { get; set; }
@@ -40,5 +41,9 @@
 
         [Display(Name = ApplicationViewModelMessages.Notes.LabelText)]
         public string Notes { get; set; }
+
+        [Display(Name = ApplicationViewModelMessages.UnSuccessfulReason.LabelText)]
+        [Required(ErrorMessage = ApplicationViewModelMessages.UnSuccessfulReason.RequiredErrorText)]
+        public string UnSuccessfulReason { get; set; }
     }
 }

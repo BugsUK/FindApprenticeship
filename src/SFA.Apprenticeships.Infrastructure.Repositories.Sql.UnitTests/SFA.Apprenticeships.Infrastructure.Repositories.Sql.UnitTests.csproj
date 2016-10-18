@@ -115,7 +115,7 @@
     <Compile Include="Provider\ProviderUserMappersTests.cs" />
     <Compile Include="Reference\ReferenceMappersTests.cs" />
     <Compile Include="UserProfile\AgencyUserMappersTests.cs" />
-    <Compile Include="VacancyParty\VacancyPartyMappersTests.cs" />
+    <Compile Include="VacancyOwnerRelationship\VacancyOwnerRelationshipMappersTests.cs" />
     <Compile Include="Vacancy\ApprenticeshipVacancyLocationMappersUnitTests.cs" />
     <Compile Include="Vacancy\ApprenticeshipVacancyMappersUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

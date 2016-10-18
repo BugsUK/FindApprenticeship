@@ -1,12 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using Application.Interfaces;
     using Common;
     using Common.Configuration;
+    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
@@ -14,7 +11,10 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
-    using Domain.Entities.Raa.Locations;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
 
     public class VacancyRepository : GenericMongoClient2<MongoVacancy>, IVacancyReadRepository, IVacancyWriteRepository
     {
@@ -75,9 +75,16 @@
 
         public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
         {
-            var mongoEntities = Collection.Find(Query.In("OwnerPartyId", new BsonArray(ownerPartyIds)));
+            var mongoEntities = Collection.Find(Query.In("VacancyOwnerRelationshipId", new BsonArray(ownerPartyIds)));
 
             return mongoEntities.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
+        }
+
+        public List<VacancySummary> GetByOwnerPartyId(int ownerPartyId)
+        {
+            var mongoEntity = Collection.Find(Query<VacancySummary>.EQ(v => v.VacancyOwnerRelationshipId, ownerPartyId));
+
+            return mongoEntity.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
 
         public int CountWithStatus(params VacancyStatus[] desiredStatuses)
@@ -94,7 +101,7 @@
         public List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
-            
+
             var mongoEntities = Collection.Find(Query<Vacancy>.In(v => v.Status, desiredStatuses))
                 .Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e))
                 .ToList();
@@ -162,12 +169,12 @@
 
         public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
-            _logger.Debug("Calling Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
+            _logger.Debug("Calling Mongodb to increment the NoOfOfflineApplicants property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
 
             var args = new FindAndModifyArgs
             {
                 Query = new QueryBuilder<Vacancy>().And(Query<Vacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber), Query<Vacancy>.EQ(d => d.OfflineVacancy, true)),
-                Update = MongoDB.Driver.Builders.Update.Inc("OfflineApplicationClickThroughCount", 1),
+                Update = MongoDB.Driver.Builders.Update.Inc("NoOfOfflineApplicants", 1),
                 VersionReturned = FindAndModifyDocumentVersion.Modified
             };
 
@@ -176,13 +183,13 @@
             if (result.Ok)
             {
                 _logger.Debug(
-                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} successfully",
+                    "Call to Mongodb to increment the NoOfOfflineApplicants property by one for vacancy with reference number: {0} successfully",
                     vacancyReferenceNumber);
             }
             else
             {
                 _logger.Warn(
-                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} failed: {1}, {2}",
+                    "Call to Mongodb to increment the NoOfOfflineApplicants property by one for vacancy with reference number: {0} failed: {1}, {2}",
                     vacancyReferenceNumber, result.Code, result.ErrorMessage);
             }
         }
@@ -233,7 +240,7 @@
             Collection.Save(mongoEntity);
             return mongoEntity;
         }
-        
+
         public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
@@ -269,7 +276,7 @@
             return null;
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
         {
             throw new NotImplementedException();
         }

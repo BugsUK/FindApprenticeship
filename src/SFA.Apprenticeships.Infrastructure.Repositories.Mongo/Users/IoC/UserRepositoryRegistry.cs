@@ -9,7 +9,7 @@
     {
         public UserRepositoryRegistry()
         {
-            For<IMapper>().Use<UserMappers>().Name = "UserMapper";
+            For<IMapper>().Singleton().Use<UserMappers>().Name = "UserMapper";
             For<IUserReadRepository>().Use<UserRepository>().Ctor<IMapper>().Named("UserMapper");
             For<IUserWriteRepository>().Use<UserRepository>().Ctor<IMapper>().Named("UserMapper");
         }

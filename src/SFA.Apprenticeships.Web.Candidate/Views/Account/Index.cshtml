@@ -1,10 +1,8 @@
 ﻿@using System.Web.Mvc.Html
-@using SFA.Apprenticeships.Application.Application.Extensions
 @using SFA.Apprenticeships.Domain.Entities.Applications
-@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications
 
-@model SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApplicationsViewModel
+@model MyApplicationsViewModel
 
 @{
     ViewBag.Title = "My applications - Find an apprenticeship";
@@ -50,13 +48,17 @@
             @foreach (var applicationNotification in Model.ApplicationStatusNotifications)
             {
                 var successOrUnsuccessful = applicationNotification.ApplicationStatus == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
-
                 <p>
-                    Your application for <a href="#dashInProgress">@applicationNotification.Title</a> has been @successOrUnsuccessful.
+                    Your application for @applicationNotification.Title has been @successOrUnsuccessful.
+                    @if (applicationNotification.UnsuccessfulReason != null)
+                    {
+                        <a>Read feedback</a>
+                    }                        
                 </p>
             }
             <p>
-                <a href="@Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
+                <a href="@Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, 
+                        new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
             </p>
         </div>
     </div>

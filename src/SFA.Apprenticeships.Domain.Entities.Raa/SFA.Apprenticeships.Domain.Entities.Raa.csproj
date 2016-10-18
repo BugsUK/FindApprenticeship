@@ -97,9 +97,10 @@
     <Compile Include="Parties\ProviderSite.cs" />
     <Compile Include="Parties\ProviderSiteRelationship.cs" />
     <Compile Include="Parties\ProviderSiteRelationshipTypes.cs" />
-    <Compile Include="Parties\VacancyParty.cs" />
+    <Compile Include="Parties\EmployerTrainingProviderStatuses.cs" />
+    <Compile Include="Parties\VacancyOwnerRelationship.cs" />
     <Compile Include="Parties\EmployerEqualityComparer.cs" />
-    <Compile Include="Parties\VacancyPartyEqualityComparer.cs" />
+    <Compile Include="Parties\VacancyOwnerRelationshipEqualityComparer.cs" />
     <Compile Include="Parties\VerifiedOrganisationSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reference\County.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Vacancies\Duration.cs" />
     <Compile Include="Vacancies\DurationType.cs" />
     <Compile Include="Vacancies\StandardSubjectAreaTierOne.cs" />
+    <Compile Include="Vacancies\OfflineVacancyType.cs" />
     <Compile Include="Vacancies\VacancyLocationType.cs" />
     <Compile Include="Vacancies\VacancySource.cs" />
     <Compile Include="Vacancies\VacancyStatus.cs" />

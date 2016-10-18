@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
 {
-    using System;
-    using System.Collections.Generic;
     using Entities.Raa.Vacancies;
     using Queries;
+    using System;
+    using System.Collections.Generic;
 
     public interface IVacancyReadRepository
     {
@@ -19,13 +19,15 @@
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
+        List<VacancySummary> GetByOwnerPartyId(int ownerPartyId);
+
         int CountWithStatus(params VacancyStatus[] desiredStatuses);
 
         List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses);
 
         List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
 
-        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds, int providerId, IEnumerable<int> providerSiteIds);
+        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds);
 
         int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber);
     }

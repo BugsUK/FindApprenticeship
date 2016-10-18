@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit
 {
+    using Constants;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Constants;
 
     public class RouteConfig
     {
@@ -208,7 +208,7 @@
             routes.MapRoute(
                 name: RecruitmentRouteNames.SelectExistingEmployer,
                 url: "vacancy/employer/select",
-                defaults: new {controller = "VacancyPosting", action = "SelectEmployer" }
+                defaults: new { controller = "VacancyPosting", action = "SelectEmployer" }
                 );
 
             routes.MapRoute(
@@ -222,7 +222,7 @@
                 url: "vacancy/employer/searchexisting",
                 defaults: new { controller = "VacancyPosting", action = "SearchExistingEmployer" }
                 );
-            
+
             routes.MapRoute(
                 name: RecruitmentRouteNames.AddEmployer,
                 url: "vacancy/employer/add",
@@ -232,7 +232,7 @@
             routes.MapRoute(
                 name: RecruitmentRouteNames.ConfirmEmployer,
                 url: "vacancy/employer/confirm",
-                defaults: new {controller = "VacancyPosting", action = "ConfirmEmployer"}
+                defaults: new { controller = "VacancyPosting", action = "ConfirmEmployer" }
                 );
 
             routes.MapRoute(
@@ -422,6 +422,18 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AdminProviderUsers,
+               url: "admin/providerusers",
+               defaults: new { controller = "Admin", action = "ProviderUsers" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminViewProviderUser,
+               url: "admin/provideruser",
+               defaults: new { controller = "Admin", action = "ProviderUser" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.AdminChangeUkprn,
                url: "admin/changeukprn",
                defaults: new { controller = "Admin", action = "ChangeUkprn" }
@@ -430,7 +442,49 @@
             routes.MapRoute(
                name: RecruitmentRouteNames.AdminResetUkprn,
                url: "admin/resetukprn",
-               defaults: new { controller = "Admin", action = "AdminResetUkprn" }
+               defaults: new { controller = "Admin", action = "ResetUkprn" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.TransferVacancies,
+               url: "admin/transfervacancies",
+               defaults: new { controller = "Admin", action = "TransferVacancies" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.SearchProvider,
+               url: "admin/transfervacancies/searchprovider",
+               defaults: new { controller = "Admin", action = "SearchProvider" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ConfirmVacancies,
+               url: "admin/transfervacancies/confirmvacancies",
+               defaults: new { controller = "Admin", action = "ChooseProvider" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminProviders,
+               url: "admin/providers",
+               defaults: new { controller = "Admin", action = "Providers" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminViewProvider,
+               url: "admin/provider",
+               defaults: new { controller = "Admin", action = "Provider" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ManageVacanciesTransfers,
+               url: "admin/managevacanciestransfers",
+               defaults: new { controller = "Admin", action = "ManageVacanciesTransfers" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AdminViewProviderSite,
+               url: "admin/providersite",
+               defaults: new { controller = "Admin", action = "ProviderSite" }
                );
 
             routes.MapRoute(
@@ -460,7 +514,7 @@
             routes.MapRoute(
                 name: RecruitmentRouteNames.InformationRadiator,
                 url: "informationradiator",
-                defaults: new {controller = "InformationRadiator", action = "Index"}
+                defaults: new { controller = "InformationRadiator", action = "Index" }
             );
 
             routes.LowercaseUrls = true;

@@ -47,5 +47,6 @@
         public const string LocationSearch = "LocationSearch";
         public const string RedirectToExternalWebsite = "RedirectToExternalWebsite";
         public const string DeleteAccountSettings = "DeleteAccountSettings";
+        public const string CandidateApplicationFeedback = "CandidateApplicationFeedback";
     }
 }

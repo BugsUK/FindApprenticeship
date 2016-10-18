@@ -1,0 +1,42 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin.ManageVacancyTransferViewModel
+@{
+    ViewBag.Title = "ManageVacanciesTransfers";
+}
+<h1 id="heading" class="heading-xlarge">Manage Vacancies Transfers</h1>
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageVacanciesTransfers))
+{
+    <p>
+        Transferring Vacancies With Vacancy Reference Numbers:
+    </p>
+    if (Model != null && Model.VacancyReferenceNumbers != null)
+    {
+        <ul>
+            @foreach (var vacancyReferenceNumber in Model.VacancyReferenceNumbers)
+            {
+                <li>@vacancyReferenceNumber</li>
+                @Html.Hidden("VacancyReferenceNumbers", vacancyReferenceNumber)
+            }
+        </ul>
+    }
+    <p>To</p>
+    <div class="form-group">
+        @if (Model != null)
+        {
+            @Html.Hidden("ProviderId", Model.ProviderId)
+            @Html.Hidden("ProviderSiteId", Model.ProviderSiteId)
+        }
+        
+        @Html.LabelFor(m => m.ProviderName)
+        <div class="form-control">
+            @Html.DisplayTextFor(m => m.ProviderName)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProviderSiteName)
+        <div class="form-control">
+            @Html.DisplayTextFor(m => m.ProviderSiteName)            
+        </div>
+    </div>
+    <button type="submit" class="button">Confirm Transfer</button>
+}

@@ -51,9 +51,9 @@
         {
             //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
             var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber - 1, false, _desiredStatuses);
-            var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct(), false);
+            var vacancyParties = _providerService.GetVacancyOwnerRelationships(vacancies.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
-            var providers = _providerService.GetProviders(vacancies.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
+            var providers = _providerService.GetProviders(vacancies.Select(v => v.ContractOwnerId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
             var categories = _referenceDataProvider.GetCategories().ToList();
             //TODO: workaround to have the indexing partially working. Should be done properly
             var apprenticeshipSummaries =
@@ -63,8 +63,8 @@
                         try
                         {
                             return ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
-                                employers[vacancyParties[v.OwnerPartyId].EmployerId],
-                                providers[v.ProviderId],
+                                employers[vacancyParties[v.VacancyOwnerRelationshipId].EmployerId],
+                                providers[v.ContractOwnerId],
                                 categories, _logService);
                         }
                         catch (Exception ex)
@@ -81,8 +81,8 @@
                         try
                         {
                             return TraineeshipSummaryMapper.GetTraineeshipSummary(v,
-                                employers[vacancyParties[v.OwnerPartyId].EmployerId],
-                                providers[v.ProviderId],
+                                employers[vacancyParties[v.VacancyOwnerRelationshipId].EmployerId],
+                                providers[v.ContractOwnerId],
                                 categories, _logService);
                         }
                         catch (Exception ex)

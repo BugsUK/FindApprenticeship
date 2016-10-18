@@ -15,6 +15,7 @@
             Mapper.CreateMap<DatabaseProviderSite, DomainProviderSite>()
                 .IgnoreMember(dest => dest.Address)
                 .IgnoreMember(dest => dest.ProviderSiteRelationships)
+                .MapMemberFrom(dest => dest.TrainingProviderStatus, source => source.TrainingProviderStatusTypeId)
                 .AfterMap((source, dest) =>
                 {
                     dest.Address = new DomainPostalAddress
@@ -52,7 +53,7 @@
                 .MapMemberFrom(dest => dest.Latitude, source => (decimal)source.Address.GeoPoint.Latitude) // use a converter?
                 .MapMemberFrom(dest => dest.Longitude, source => (decimal)source.Address.GeoPoint.Longitude) // use a converter?
                 .ForMember(dest => dest.OutofDate, opt => opt.UseValue(false))
-                .ForMember(dest => dest.TrainingProviderStatusTypeId, opt => opt.UseValue(1))
+                .MapMemberFrom(dest => dest.TrainingProviderStatusTypeId, source => (int)source.TrainingProviderStatus)
                 .ForMember(dest => dest.HideFromSearch, opt => opt.UseValue(false))
                 .ForMember(dest => dest.IsRecruitmentAgency, opt => opt.UseValue(false));
 

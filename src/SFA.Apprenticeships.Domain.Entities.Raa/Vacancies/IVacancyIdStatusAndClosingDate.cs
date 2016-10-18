@@ -8,7 +8,7 @@
 
         int VacancyReferenceNumber { get; }
 
-        int OwnerPartyId { get; }
+        int VacancyOwnerRelationshipId { get; }
 
         VacancyStatus Status { get; }
 
@@ -23,8 +23,6 @@
         string EmployerName { get; set; }
 
         string Title { get; }
-
-        int? ApplicationOrClickThroughCount { get; set; }
 
         bool? OfflineVacancy { get; }
     }

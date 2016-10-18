@@ -10,6 +10,10 @@
 
         public int ProviderId { get; set; }
 
+        public string Ukprn { get; set; }
+
+        public string ProviderName { get; set; }
+
         public ProviderUserStatus Status { get; set; }
 
         public string Username { get; set; }

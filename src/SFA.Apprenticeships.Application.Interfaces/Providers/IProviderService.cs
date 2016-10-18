@@ -3,9 +3,9 @@ using SFA.Apprenticeships.Application.Interfaces.Generic;
 
 namespace SFA.Apprenticeships.Application.Interfaces.Providers
 {
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// For maintaining provider profiles, sites, etc.
@@ -34,21 +34,23 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         IEnumerable<ProviderSite> SearchProviderSites(ProviderSiteSearchParameters searchParameters);
 
-        VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly);
+        VacancyOwnerRelationship GetVacancyOwnerRelationship(int vacancyOwnerRelationshipId, bool currentOnly);
 
-        IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);
+        VacancyOwnerRelationship GetVacancyOwnerRelationship(int employerId, int providerSiteId);
 
-        VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
+        IReadOnlyDictionary<int, VacancyOwnerRelationship> GetVacancyOwnerRelationships(IEnumerable<int> vacancyOwnerRelationshipIds, bool currentOnly);
 
-        bool IsADeletedVacancyParty(int providerSiteId, string edsUrn);
+        VacancyOwnerRelationship GetVacancyOwnerRelationship(int providerSiteId, string edsUrn);
 
-        void ResurrectVacancyParty(int providerSiteId, string edsUrn);
+        bool IsADeletedVacancyOwnerRelationship(int providerSiteId, string edsUrn);
 
-        VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
-        
-        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
+        void ResurrectVacancyOwnerRelationship(int providerSiteId, string edsUrn);
 
-        Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);
+        VacancyOwnerRelationship SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship);
+
+        IEnumerable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(int providerSiteId);
+
+        Pageable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(EmployerSearchRequest request, int currentPage, int pageSize);
 
         Provider CreateProvider(Provider provider);
 

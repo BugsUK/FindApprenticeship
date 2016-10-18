@@ -11,7 +11,7 @@
     {
         public CandidateRepositoryRegistry()
         {
-            For<IMapper>().Use<CandidateMappers>().Name = "CandidateMapper";
+            For<IMapper>().Singleton().Use<CandidateMappers>().Name = "CandidateMapper";
 
             For<ICandidateReadRepository>().Use<CandidateRepository>().Ctor<IMapper>().Named("CandidateMapper");
             For<ICandidateWriteRepository>().Use<CandidateRepository>().Ctor<IMapper>().Named("CandidateMapper");

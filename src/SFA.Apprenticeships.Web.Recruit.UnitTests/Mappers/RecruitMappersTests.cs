@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mappers
 {
-    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using Domain.Entities.Raa.Vacancies;
@@ -82,5 +81,5 @@
             viewModel.Name.Should().Be(source.Name);
 
         }
-   }
+    }
 }

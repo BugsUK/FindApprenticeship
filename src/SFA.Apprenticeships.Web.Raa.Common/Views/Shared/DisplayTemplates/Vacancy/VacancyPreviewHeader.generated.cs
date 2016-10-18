@@ -193,7 +193,7 @@ WriteLiteral("                    ");
 
             
             #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-               Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title))));
+                Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title)));
 
             
             #line default
@@ -221,7 +221,7 @@ WriteLiteral(">");
 
             
             #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-                                                                                                 Write(Model.NewVacancyViewModel.OwnerParty.Employer.Name);
+                                                                                                 Write(Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.Name);
 
             
             #line default
@@ -252,14 +252,14 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2451), Tuple.Create("\"", 2477)
+WriteAttribute("class", Tuple.Create(" class=\"", 2453), Tuple.Create("\"", 2479)
             
             #line 48 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 2459), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 2461), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 2459), false)
+, 2461), false)
 );
 
 WriteLiteral(">\r\n                    <h3");
@@ -321,21 +321,21 @@ WriteLiteral(">\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-description\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3226), Tuple.Create("\"", 3309)
+WriteAttribute("class", Tuple.Create(" class=\"", 3228), Tuple.Create("\"", 3311)
             
             #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 3234), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ShortDescription.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 3236), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ShortDescription.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 3234), false)
+, 3236), false)
 );
 
 WriteLiteral(">");
 
             
             #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-                                                                                                                                   Write(HtmlExtensions.EscapeHtmlEncoding(Html.Raw(Model.NewVacancyViewModel.ShortDescription)));
+                                                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.ShortDescription));
 
             
             #line default
@@ -368,14 +368,14 @@ WriteLiteral(" class=\"grid grid-1-3\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3944), Tuple.Create("\"", 3970)
+WriteAttribute("class", Tuple.Create(" class=\"", 3989), Tuple.Create("\"", 4015)
             
             #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 3952), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 3997), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 3952), false)
+, 3997), false)
 );
 
 WriteLiteral(">\r\n                <h3");

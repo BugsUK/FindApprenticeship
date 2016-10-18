@@ -1,9 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Provider
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
@@ -12,6 +8,10 @@
     using Interfaces.Employers;
     using Interfaces.Generic;
     using Interfaces.Providers;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
     public class ProviderService : IProviderService
     {
@@ -21,19 +21,20 @@
         private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
         private readonly IProviderSiteWriteRepository _providerSiteWriteRepository;
-        private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
-        private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
+        private readonly IVacancyOwnerRelationshipReadRepository _vacancyOwnerRelationshipReadRepository;
+        private readonly IVacancyOwnerRelationshipWriteRepository _vacancyOwnerRelationshipWriteRepository;
 
         public ProviderService(IProviderReadRepository providerReadRepository,
             IProviderSiteReadRepository providerSiteReadRepository,
-            IVacancyPartyReadRepository vacancyPartyReadRepository,
-            IVacancyPartyWriteRepository vacancyPartyWriteRepository,
-            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository, IProviderSiteWriteRepository providerSiteWriteRepository)
+            IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository,
+            IVacancyOwnerRelationshipWriteRepository vacancyOwnerRelationshipWriteRepository,
+            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository,
+            IProviderSiteWriteRepository providerSiteWriteRepository)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
-            _vacancyPartyReadRepository = vacancyPartyReadRepository;
-            _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
+            _vacancyOwnerRelationshipReadRepository = vacancyOwnerRelationshipReadRepository;
+            _vacancyOwnerRelationshipWriteRepository = vacancyOwnerRelationshipWriteRepository;
             _logService = logService;
             _employerService = employerService;
             _providerWriteRepository = providerWriteRepository;
@@ -115,19 +116,19 @@
             return _providerSiteReadRepository.Search(searchParameters);
         }
 
-        public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
+        public VacancyOwnerRelationship GetVacancyOwnerRelationship(int vacancyOwnerRelationshipId, bool currentOnly = true)
         {
-            return _vacancyPartyReadRepository.GetByIds(new[] {vacancyPartyId}, currentOnly).FirstOrDefault();
+            return _vacancyOwnerRelationshipReadRepository.GetByIds(new[] { vacancyOwnerRelationshipId }, currentOnly).FirstOrDefault();
         }
 
-        public IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds,
+        public IReadOnlyDictionary<int, VacancyOwnerRelationship> GetVacancyOwnerRelationships(IEnumerable<int> vacancyOwnerRelationshipIds,
             bool currentOnly = true)
         {
             return
-                _vacancyPartyReadRepository.GetByIds(vacancyPartyIds, currentOnly).ToDictionary(vp => vp.VacancyPartyId);
+                _vacancyOwnerRelationshipReadRepository.GetByIds(vacancyOwnerRelationshipIds, currentOnly).ToDictionary(vp => vp.VacancyOwnerRelationshipId);
         }
 
-        public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
+        public VacancyOwnerRelationship GetVacancyOwnerRelationship(int providerSiteId, string edsUrn)
         {
             Condition.Requires(providerSiteId);
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
@@ -137,17 +138,32 @@
             var employer = _employerService.GetEmployer(edsUrn);
 
             _logService.Debug(
-                "Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
+                "Calling VacancyOwnerRelationshipReadRepository to get vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
                 providerSiteId, employer.EmployerId);
 
-            var vacancyParty =
-                _vacancyPartyReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employer.EmployerId) ??
-                new VacancyParty {ProviderSiteId = providerSiteId, EmployerId = employer.EmployerId};
+            var vacancyOwnerRelationship =
+                _vacancyOwnerRelationshipReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employer.EmployerId) ??
+                new VacancyOwnerRelationship { ProviderSiteId = providerSiteId, EmployerId = employer.EmployerId };
 
-            return vacancyParty;
+            return vacancyOwnerRelationship;
         }
 
-        public bool IsADeletedVacancyParty(int providerSiteId, string edsUrn)
+        public VacancyOwnerRelationship GetVacancyOwnerRelationship(int employerId, int providerSiteId)
+        {
+            Condition.Requires(providerSiteId);
+            Condition.Requires(employerId);
+
+            _logService.Debug(
+                $"Calling VacancyOwnerRelationshipReadRepository to get vacancy party for provider site with Id='{providerSiteId}' and employer with Id='{employerId}'.");
+
+            var vacancyOwnerRelationship =
+                _vacancyOwnerRelationshipReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employerId) ??
+                new VacancyOwnerRelationship { ProviderSiteId = providerSiteId, EmployerId = employerId };
+
+            return vacancyOwnerRelationship;
+        }
+
+        public bool IsADeletedVacancyOwnerRelationship(int providerSiteId, string edsUrn)
         {
             Condition.Requires(providerSiteId);
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
@@ -157,13 +173,13 @@
             var employer = _employerService.GetEmployer(edsUrn);
 
             _logService.Debug(
-                "Calling VacancyPartyReadRepository to check if the vacancy party has been deleted for provider site with Id='{0}' and employer with Id='{1}'.",
+                "Calling VacancyOwnerRelationshipReadRepository to check if the vacancy party has been deleted for provider site with Id='{0}' and employer with Id='{1}'.",
                 providerSiteId, employer.EmployerId);
 
-            return _vacancyPartyReadRepository.IsADeletedVacancyParty(providerSiteId, employer.EmployerId);
+            return _vacancyOwnerRelationshipReadRepository.IsADeletedVacancyOwnerRelationship(providerSiteId, employer.EmployerId);
         }
 
-        public void ResurrectVacancyParty(int providerSiteId, string edsUrn)
+        public void ResurrectVacancyOwnerRelationship(int providerSiteId, string edsUrn)
         {
             Condition.Requires(providerSiteId);
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
@@ -173,36 +189,36 @@
             var employer = _employerService.GetEmployer(edsUrn);
 
             _logService.Debug(
-                "Calling VacancyPartyWriteRepository to resurrect the vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
+                "Calling VacancyOwnerRelationshipWriteRepository to resurrect the vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
                 providerSiteId, employer.EmployerId);
 
-            _vacancyPartyWriteRepository.ResurrectVacancyParty(providerSiteId, employer.EmployerId);
+            _vacancyOwnerRelationshipWriteRepository.ResurrectVacancyOwnerRelationship(providerSiteId, employer.EmployerId);
         }
 
-        public VacancyParty SaveVacancyParty(VacancyParty vacancyParty)
+        public VacancyOwnerRelationship SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship)
         {
-            return _vacancyPartyWriteRepository.Save(vacancyParty);
+            return _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship);
         }
 
-        public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
+        public IEnumerable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(int providerSiteId)
         {
-            return _vacancyPartyReadRepository.GetByProviderSiteId(providerSiteId);
+            return _vacancyOwnerRelationshipReadRepository.GetByProviderSiteId(providerSiteId);
         }
 
-        public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)
+        public Pageable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(EmployerSearchRequest request, int currentPage, int pageSize)
         {
             var results = GetVacancyParties(request);
 
-            var pageable = new Pageable<VacancyParty>
+            var pageable = new Pageable<VacancyOwnerRelationship>
             {
                 CurrentPage = currentPage
             };
 
             var resultCount = results.Count;
 
-            pageable.Page = results.Skip((currentPage - 1)*pageSize).Take(pageSize).ToList();
+            pageable.Page = results.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             pageable.ResultsCount = resultCount;
-            pageable.TotalNumberOfPages = resultCount/pageSize + 1;
+            pageable.TotalNumberOfPages = resultCount / pageSize + 1;
 
             return pageable;
         }
@@ -232,15 +248,15 @@
             return _providerSiteWriteRepository.Create(providerSiteRelationship);
         }
 
-        private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
+        private List<VacancyOwnerRelationship> GetVacancyParties(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();
 
             _logService.Debug(
-                "Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{0}'.",
+                "Calling VacancyOwnerRelationshipReadRepository to get vacancy party for provider site with Id='{0}'.",
                 request.ProviderSiteId);
 
-            var vacancyParties = _vacancyPartyReadRepository.GetByProviderSiteId(request.ProviderSiteId).ToList();
+            var vacancyParties = _vacancyOwnerRelationshipReadRepository.GetByProviderSiteId(request.ProviderSiteId).ToList();
 
             if (request.IsQuery)
             {

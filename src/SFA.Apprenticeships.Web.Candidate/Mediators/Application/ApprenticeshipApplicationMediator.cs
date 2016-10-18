@@ -2,24 +2,22 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
-    using System;
-    using System.Globalization;
-    using System.Linq;
-    using System.Web.Security;
+    using Apprenticeships.Application.Interfaces;
     using Common.Constants;
     using Common.Models.Application;
     using Common.Providers;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Helpers;
     using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Web.Security;
     using Validators;
     using ViewModels.Applications;
+    using ViewModels.MyApplications;
     using ViewModels.VacancySearch;
 
     public class ApprenticeshipApplicationMediator : ApplicationMediatorBase, IApprenticeshipApplicationMediator
@@ -376,7 +374,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             {
                 return GetMediatorResponse<WhatHappensNextApprenticeshipViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
             }
-            
+
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 
@@ -395,6 +393,24 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             }
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, model);
+        }
+
+        public MediatorResponse<MyApprenticeshipApplicationViewModel> CandidateApplicationFeedback(Guid candidateId, int vacancyId)
+        {
+            ApprenticeshipApplicationViewModel model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            MyApplicationsViewModel myApplicationsViewModel = _apprenticeshipApplicationProvider.GetMyApplications(candidateId);
+            MyApprenticeshipApplicationViewModel apprenticeshipApplication = myApplicationsViewModel.AllApprenticeshipApplications.FirstOrDefault(
+                vm => vm.VacancyId == vacancyId);
+            if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationNotFound)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.CandidateApplicationFeedback.ApplicationNotFound, apprenticeshipApplication, ApplicationPageMessages.ViewApplicationFailed, UserMessageLevel.Warning);
+            }
+
+            if (model.HasError())
+            {
+                return GetMediatorResponse<MyApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.CandidateApplicationFeedback.Error, null, ApplicationPageMessages.ViewApplicationFailed, UserMessageLevel.Warning);
+            }
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.CandidateApplicationFeedback.Ok, apprenticeshipApplication);
         }
 
         public MediatorResponse<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId)

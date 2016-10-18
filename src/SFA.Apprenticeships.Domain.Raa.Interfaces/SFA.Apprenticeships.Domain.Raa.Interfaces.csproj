@@ -95,7 +95,7 @@
     <Compile Include="Repositories\IApiUserRepository.cs" />
     <Compile Include="Repositories\IProviderRepository.cs" />
     <Compile Include="Repositories\IVacancyLocationRepository.cs" />
-    <Compile Include="Repositories\IVacancyPartyRepository.cs" />
+    <Compile Include="Repositories\IVacancyOwnerRelationshipRepository.cs" />
     <Compile Include="Repositories\IVacancyReadRepository.cs" />
     <Compile Include="Repositories\IEmployerRepository.cs" />
     <Compile Include="Repositories\IProviderUserRepository.cs" />
@@ -104,7 +104,10 @@
     <Compile Include="Repositories\IVacancySummaryRepository.cs" />
     <Compile Include="Repositories\IVacancyWriteRepository.cs" />
     <Compile Include="Repositories\Models\ApiUserSearchParameters.cs" />
+    <Compile Include="Repositories\Models\RegionalTeamMetrics.cs" />
+    <Compile Include="Repositories\Models\ProviderUserSearchParameters.cs" />
     <Compile Include="Repositories\Models\VacancyCounts.cs" />
+    <Compile Include="Repositories\Models\VacancySummaryByStatusQuery.cs" />
     <Compile Include="Repositories\Models\VacancySummaryOrderByColumn.cs" />
     <Compile Include="Repositories\Models\Order.cs" />
     <Compile Include="Repositories\Models\VacanciesSummaryFilterTypes.cs" />

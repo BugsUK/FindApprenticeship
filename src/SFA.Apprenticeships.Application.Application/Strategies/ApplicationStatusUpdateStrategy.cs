@@ -38,7 +38,7 @@
             var originalVacancyStatus = apprenticeshipApplication.VacancyStatus;
             var originalClosingDate = apprenticeshipApplication.Vacancy.ClosingDate;
             var originalUnsuccessfulReason = apprenticeshipApplication.UnsuccessfulReason;
-
+            var originalUnSuccessfulDateTime = apprenticeshipApplication.UnsuccessfulDateTime;
             // invoked because the status of the apprenticeshipApplication / vacancy *may* have changed
             if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary, _apprenticeshipApplicationReadRepository, _apprenticeshipApplicationWriteRepository))
             {
@@ -69,7 +69,10 @@
                     applicationStatusSummary.ClosingDate, // 10
 
                     originalUnsuccessfulReason, // 11
-                    applicationStatusSummary.UnsuccessfulReason); // 12
+                    applicationStatusSummary.UnsuccessfulReason, //12
+
+                    originalUnSuccessfulDateTime,   //13
+                    applicationStatusSummary.UnsuccessfulDateTime); // 14
 
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
                 _applicationStatusAlertStrategy.Send(originalStatus, applicationStatusSummary);

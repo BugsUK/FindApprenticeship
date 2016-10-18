@@ -129,6 +129,7 @@
                                     }
                                     <br/>@Model.Addresses.ToList()[i].Address.AddressLine4 @Model.Addresses.ToList()[i].Address.Postcode
 
+                                    @Html.HiddenFor(m => Model.Addresses.ToList()[i].VacancyLocationId, new { @id = "addresses_" + i + "__VacancyLocationId", Name = "Addresses[" + i + "].VacancyLocationId" })
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Postcode, new {@id = "addresses_" + i + "address__Postcode", Name = "Addresses[" + i + "].Address.Postcode"})
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine1, new {@id = "addresses_" + i + "address__AddressLine1", Name = "Addresses[" + i + "].Address.AddressLine1"})
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new {@id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2"})
@@ -211,6 +212,7 @@
                         <span style="width: 20%; display: inline-block"></span>
                         <input class="form-control-small qual-input-edit qual-year" maxlength="5" type="text" data-bind="value: itemNumberOfPositions, attr:{'name':'Addresses[' + $index() +'].NumberOfPositions', 'id':'addresses_'+ $index() + '__numberofpositions'}">
                         <span class="field-validation-valid" aria-live="polite" data-valmsg-replace="true" data-bind="attr:{'id': 'Addresses[' + $index() +'].NumberOfPositions_Error', 'data-valmsg-for': 'Addresses[' + $index() +'].NumberOfPositions'}"></span>
+                        <input type="hidden" data-bind="value: itemVacancyLocationId, attr:{'name':'Addresses[' + $index() +'].VacancyLocationId', 'id':'addresses_'+ $index() + '__VacancyLocationId' }">
                         <input type="hidden" data-bind="value: itemAddressLine1, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine1', 'id':'addresses_'+ $index() + 'address__AddressLine1' }">
                         <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
                         <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
