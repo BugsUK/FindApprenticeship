@@ -300,6 +300,36 @@
             }
         }
 
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        public ActionResult SingleOfflineApplicationUrl(NewVacancyViewModel viewModel)
+        {
+            var comeFromPreview = viewModel.ComeFromPreview;
+
+            viewModel.OfflineVacancyType = OfflineVacancyType.SingleUrl;
+            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
+
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
+                new { response.ViewModel.VacancyReferenceNumber, comeFromPreview });
+
+            return HandleCreateVacancy(response, okAction);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        public ActionResult MultipleOfflineApplicationUrls(NewVacancyViewModel viewModel)
+        {
+            var comeFromPreview = viewModel.ComeFromPreview;
+
+            viewModel.OfflineVacancyType = OfflineVacancyType.MultiUrl;
+            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
+
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
+                new { response.ViewModel.VacancyReferenceNumber, comeFromPreview });
+
+            return HandleCreateVacancy(response, okAction);
+        }
+
         private ActionResult HandleCreateVacancy(MediatorResponse<NewVacancyViewModel> response, Func<ActionResult> okAction)
         {
             ModelState.Clear();
@@ -307,8 +337,8 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                    return View(response.ViewModel);
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
+                        new {response.ViewModel.VacancyReferenceNumber, response.ViewModel.ComeFromPreview});
 
                 case VacancyPostingMediatorCodes.CreateVacancy.Ok:
                     return okAction();

@@ -43,7 +43,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
-    #line 5 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+    #line 4 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+    using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
+    
+    #line default
+    #line hidden
+    
+    #line 6 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
     
     #line default
@@ -51,7 +57,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 4 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+    #line 5 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
@@ -69,7 +75,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
 WriteLiteral("\r\n");
 
             
-            #line 7 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 8 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
  using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
 {
     
@@ -77,29 +83,29 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 10 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
 Write(Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds));
 
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 10 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                                                     
     
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView));
+            #line 11 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new { OfflineUrlButtonName = "CreateVacancy" }));
 
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                                                             
+            #line 11 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                                                                                                             
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "CreateVacancy";
@@ -128,20 +134,20 @@ WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 859), Tuple.Create("\"", 883)
+WriteAttribute("value", Tuple.Create(" value=\"", 971), Tuple.Create("\"", 995)
             
-            #line 22 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                               , Tuple.Create(Tuple.Create("", 867), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+            #line 23 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                               , Tuple.Create(Tuple.Create("", 979), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 867), false)
+, 979), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 22 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 23 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                                                                                                                            Write(saveButtonText);
 
             
@@ -162,13 +168,13 @@ WriteLiteral(" value=\"CreateVacancyAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n");
 
             
-            #line 24 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 25 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 25 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
          if (Model.ComeFromPreview)
         {
             
@@ -176,14 +182,14 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 27 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
        Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" }));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 27 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                                                                                                                                                                          
         }
 
@@ -193,7 +199,7 @@ WriteLiteral(">Save and exit</button>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 29 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 30 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
 }
 
             
@@ -208,8 +214,19 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 33 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 34 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
 Write(Scripts.Render("~/bundles/autosave"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 35 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+Write(Scripts.Render("~/bundles/basicVacancyDetails"));
 
             
             #line default
@@ -228,7 +245,7 @@ WriteLiteral(@"
         var autoSaveTimeout = ");
 
             
-            #line 44 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 46 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                          Write(Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)));
 
             
@@ -239,13 +256,40 @@ WriteLiteral(" * 1000;\r\n\r\n        $(window).on(\'load\', function() {\r\n   
 "eTimeout,\r\n                postUrl: \'");
 
             
-            #line 50 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 52 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                      Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy));
 
             
             #line default
             #line hidden
-WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n");
+WriteLiteral("\'\r\n            });\r\n        });\r\n\r\n        var postUrl = \'");
+
+            
+            #line 56 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                  Write(Url.RouteUrl(RecruitmentRouteNames.CreateVacancy));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n        var multipleOfflineUrlsButtonText = \'");
+
+            
+            #line 57 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                                        Write(NewVacancyViewModelMessages.MultiOfflineUrlsButtonText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n        var singleOfflineUrlButtonText = \'");
+
+            
+            #line 58 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                                     Write(NewVacancyViewModelMessages.SingleOfflineUrlButtonText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n    </script>\r\n");
 
 });
 

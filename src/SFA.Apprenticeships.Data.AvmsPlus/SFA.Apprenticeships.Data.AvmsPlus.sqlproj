@@ -1274,6 +1274,7 @@
     <Build Include="dbo\Tables\RegionalTeams.sql" />
     <None Include="Scripts\Data\dbo.RegionalTeams.Upsert.sql" />
     <None Include="Scripts\Data\dbo.RegionalTeamMappings.Upsert.sql" />
+    <Build Include="dbo\Tables\RegionalTeamMappings.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

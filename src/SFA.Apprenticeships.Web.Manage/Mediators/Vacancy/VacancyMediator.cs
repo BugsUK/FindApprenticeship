@@ -28,6 +28,7 @@
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
+        private readonly NewVacancyViewModelClientValidator _newVacancyViewModelClientValidator = new NewVacancyViewModelClientValidator();
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly TrainingDetailsViewModelServerValidator _trainingDetailsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
@@ -369,10 +370,29 @@
 
         public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)
         {
-            var validationResult = _newVacancyViewModelServerValidator.Validate(viewModel);
+            return UpdateVacancy(viewModel, _newVacancyViewModelServerValidator);
+        }
+
+        public MediatorResponse<NewVacancyViewModel> UpdateOfflineVacancyType(NewVacancyViewModel viewModel)
+        {
+            return UpdateVacancy(viewModel, _newVacancyViewModelClientValidator);
+        }
+
+        public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel, AbstractValidator<NewVacancyViewModel> validator)
+        {
+            var validationResult = validator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {
+                var locationAddresses = _vacancyQaProvider.GetLocationsAddressViewModelsByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
+                if (viewModel.LocationAddresses != null)
+                {
+                    foreach (var locationAddress in locationAddresses)
+                    {
+                        locationAddress.OfflineApplicationUrl = viewModel.LocationAddresses.SingleOrDefault(la => la.VacancyLocationId == locationAddress.VacancyLocationId)?.OfflineApplicationUrl;
+                    }
+                }
+                viewModel.LocationAddresses = locationAddresses;
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 

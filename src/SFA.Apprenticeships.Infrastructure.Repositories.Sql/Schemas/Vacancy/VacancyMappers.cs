@@ -153,6 +153,7 @@
                 .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.OriginalContractOwnerId)
                 .IgnoreMember(v => v.LocalAuthorityId)
                 .MapMemberFrom(v => v.VacancySourceId, av => av.VacancySource)
+                .MapMemberFrom(v => v.OfflineVacancyTypeId, av => av.OfflineVacancyType)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -248,6 +249,7 @@
                 .IgnoreMember(av => av.LocalAuthorityCode)
                 .MapMemberFrom(av => av.EditedInRaa, v => v.EditedInRaa)
                 .MapMemberFrom(av => av.VacancySource, v => v.VacancySourceId)
+                .MapMemberFrom(av => av.OfflineVacancyType, v => (OfflineVacancyType?)v.OfflineVacancyTypeId)
                 .IgnoreMember(av => av.EmployerName)
                 .IgnoreMember(av => av.NewApplicationCount)
                 .IgnoreMember(av => av.ProviderTradingName)
@@ -490,7 +492,7 @@
                 ;
 
             Mapper.CreateMap<DomainVacancyLocation, DbVacancyLocation>()
-                .IgnoreMember(dbvl => dbvl.EmployersWebsite)
+                .MapMemberFrom(dbvl => dbvl.EmployersWebsite, dvl => dvl.EmployersWebsite)
                 .MapMemberFrom(dbvl => dbvl.AddressLine1, dvl => dvl.Address.AddressLine1)
                 .MapMemberFrom(dbvl => dbvl.AddressLine2, dvl => dvl.Address.AddressLine2)
                 .MapMemberFrom(dbvl => dbvl.AddressLine3, dvl => dvl.Address.AddressLine3)

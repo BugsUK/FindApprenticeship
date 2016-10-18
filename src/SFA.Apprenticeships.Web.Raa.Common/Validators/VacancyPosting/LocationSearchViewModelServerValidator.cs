@@ -23,7 +23,7 @@
                 .WithMessage(LocationSearchViewModelMessages.Addresses.NoAddressesErrorText);
 
             RuleFor(m => m.Addresses)
-                .SetCollectionValidator(new VacancyLocationAddressViewModelValidator());
+                .SetCollectionValidator(new VacancyLocationAddressViewModelClientValidator());
         }
     }
 

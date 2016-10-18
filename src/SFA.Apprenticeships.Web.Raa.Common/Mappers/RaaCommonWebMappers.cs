@@ -54,11 +54,13 @@
                 .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore())
                 .ForMember(dest => dest.Employer, opt => opt.Ignore())
                 .ForMember(dest => dest.IsEmployerAddressValid, opt => opt.Ignore());
-            Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>();
+            Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>()
+                .ForMember(dest => dest.OfflineApplicationUrl, opt => opt.MapFrom(src => src.EmployersWebsite));
             Mapper.CreateMap<VacancyLocationAddressViewModel, VacancyLocation>()
                 .ForMember(dest => dest.VacancyId, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyLocationId, opt => opt.Ignore())
-                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore());
+                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployersWebsite, opt => opt.MapFrom(src => src.OfflineApplicationUrl));
 
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
             Mapper.CreateMap<DateTime, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();

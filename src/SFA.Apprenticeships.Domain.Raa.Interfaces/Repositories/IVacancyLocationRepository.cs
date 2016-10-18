@@ -7,12 +7,15 @@
     {
         List<VacancyLocation> GetForVacancyId(int vacancyId);
 
+        List<VacancyLocation> GetForVacancyReferenceNumber(int vacancyReferenceNumber);
+
         IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds);
     }
 
     public interface IVacancyLocationWriteRepository
     {
-        List<VacancyLocation> Save(List<VacancyLocation> locationAddresses);
+        List<VacancyLocation> Create(List<VacancyLocation> locationAddresses);
+        List<VacancyLocation> Update(List<VacancyLocation> locationAddresses);
         void DeleteFor(int vacancyId);
     }
 }
