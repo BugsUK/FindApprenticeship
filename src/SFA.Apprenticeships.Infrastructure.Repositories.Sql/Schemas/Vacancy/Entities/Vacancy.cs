@@ -64,6 +64,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Column(TypeName = "money")]
         public decimal? WeeklyWage { get; set; }
 
+        [Column(TypeName = "money")]
+        public decimal? WageLowerBound { get; set; }
+
+        [Column(TypeName = "money")]
+        public decimal? WageUpperBound { get; set; }
+
         public int WageType { get; set; }
 
         public string WageText { get; set; }

@@ -23,6 +23,8 @@
     [ShortDescription]                 NVARCHAR (MAX)   NULL,
     [Description]                      NVARCHAR (MAX)   NULL,
     [WeeklyWage]                       MONEY            NULL,
+    [WageLowerBound]                   MONEY            NULL,
+    [WageUpperBound]                   MONEY            NULL,
     [WageType]                         INT              CONSTRAINT [DFT_WageType] DEFAULT ((1)) NOT NULL,
     [WageText]                         NVARCHAR (MAX)    NULL,
     [NumberofPositions]                SMALLINT         NULL,
