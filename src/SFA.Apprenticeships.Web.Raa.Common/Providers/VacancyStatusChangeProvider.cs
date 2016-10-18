@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Application.Interfaces.Applications;
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
-    using ViewModels.Vacancy;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using ViewModels.VacancyStatus;
 
     public class VacancyStatusChangeProvider : IVacancyStatusChangeProvider
@@ -32,6 +31,12 @@
             return new ArchiveVacancyViewModel(HasOutstandingActions(vacancy), vacancy.VacancyId, vacancyReferenceNumber);
         }
 
+        public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber);
+            return new BulkDeclineCandidatesViewModel(GetCandidatesToDecline(vacancy), vacancy.VacancyId, vacancyReferenceNumber);
+        }
+
         private bool HasOutstandingActions(Vacancy vacancy)
         {
             //TODO: Put this somewhwere more common
@@ -45,6 +50,20 @@
             var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
 
             return (apprenticeshipApplicationSummaries.Any(a => statusesRequiringAction.Contains(a.Status)));
+        }
+
+        private IEnumerable<ApprenticeshipApplicationSummary> GetCandidatesToDecline(Vacancy vacancy)
+        {
+            //TODO: Put this somewhwere more common
+            var statusesRequiringAction = new List<ApplicationStatuses>()
+            {
+                ApplicationStatuses.InProgress,
+                ApplicationStatuses.Submitted
+            };
+
+            var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
+
+            return (apprenticeshipApplicationSummaries.Where(a => statusesRequiringAction.Contains(a.Status)));
         }
 
         public ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel)
@@ -64,6 +83,11 @@
             }
 
             return new ArchiveVacancyViewModel(hasOustandingActions, vacancy.VacancyId, vacancy.VacancyReferenceNumber);
+        }
+
+        public BulkDeclineCandidatesViewModel BulkDeclineCandidates(BulkDeclineCandidatesViewModel viewModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }

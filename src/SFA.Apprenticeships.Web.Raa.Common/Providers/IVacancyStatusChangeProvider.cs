@@ -7,5 +7,7 @@
         ArchiveVacancyViewModel GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber);
 
         ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel);
+        BulkDeclineCandidatesViewModel BulkDeclineCandidates(BulkDeclineCandidatesViewModel viewModel);
+        BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(int vacancyReferenceNumber);
     }
 }

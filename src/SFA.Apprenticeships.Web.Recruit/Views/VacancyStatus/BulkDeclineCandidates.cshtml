@@ -1,10 +1,13 @@
-﻿
-@{
-    ViewBag.Title = "Bulk decline candidates";    
-}
-
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyStatus.BulkDeclineCandidatesViewModel
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Bulk decline candidates";    
+}
 
 <div class="grid-wrapper">
     <section class="grid grid-2-3">
@@ -12,30 +15,225 @@
             <h1 id="heading" class="heading-xlarge">Select the candidates you would like to make unsucessful</h1>
             <h2 class="heading-large">Candidates</h2>
             <hr/>
+        <section class="no-btm-margin" id="applicationsSection">
+        @*@{
+            var filterType = Model.VacancyApplicationsSearch.FilterType;
+        }
+        <div class="hgroup-large">
+            <h2 class="heading-large">
+                Applications
+                @if (filterType != VacancyApplicationsFilterTypes.All)
+                {
+                    <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
+                }
+            </h2>
+        </div>
+
+        <section class="grid-wrapper">
+            <ul class="applications-summary">
+                <li>
+                    @if (filterType == VacancyApplicationsFilterTypes.New)
+                    {
+                        <figure class="data">
+                            <p class="count">@Model.NewApplicationsCount</p>
+                            <figcaption>
+                                <h2>New</h2></figcaption>
+                        </figure>
+                    }
+                    else
+                    {
+                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New).RouteValues)" class="vacancy-filter">
+                            <figure class="data">
+                                <p class="count">@Model.NewApplicationsCount</p>
+                                <figcaption>
+                                    <h2>New</h2></figcaption>
+                            </figure>
+                        </a>
+                    }
+                </li>
+                <li>
+                    @if (filterType == VacancyApplicationsFilterTypes.InProgress)
+                    {
+                        <figure class="data">
+                            <p class="count">@Model.InProgressApplicationsCount</p>
+                            <figcaption>
+                                <h2>In progress</h2></figcaption>
+                        </figure>
+                    }
+                    else
+                    {
+                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.InProgress).RouteValues)" class="vacancy-filter">
+                            <figure class="data">
+                                <p class="count">@Model.InProgressApplicationsCount</p>
+                                <figcaption>
+                                    <h2>In progress</h2></figcaption>
+                            </figure>
+                        </a>
+                    }
+                </li>                                  
+                }
+            </ul>
+        </section>*@        
+
+        <table class="vert-top" id="applicationTable">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>
+                    @{
+                        var newOrder = Model.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                        var surnameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ?
+                            Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                    }
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldLastName, newOrder).RouteValues)" class="vacancy-filter">
+                        <span class="font-black">Surname <i class="fa @surnameSortClass" aria-hidden="true"></i></span>
+                    </a>
+                </th>
+                <th>
+                    @{
+                        var firstNameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldFirstName ?
+                            Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                    }
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldFirstName, newOrder).RouteValues)" class="vacancy-filter">
+                        <span class="font-black">First name <i class="fa @firstNameSortClass" aria-hidden="true"></i></span>
+                    </a>
+                </th>
+                <th>
+                    <span class="font-black">Applicant ID</span>
+                </th>
+                <th>
+                    @{
+                        var managerNotesSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ?
+                            Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                    }
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes, newOrder).RouteValues)" class="vacancy-filter">
+                        <span class="font-black">Vacancy manager notes <i class="fa @managerNotesSortClass" aria-hidden="true"></i></span>
+                    </a>
+                </th>
+                <th>
+                    @{
+                        var submittedSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldSubmitted ?
+                            Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                    }
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldSubmitted, newOrder).RouteValues)" class="vacancy-filter">
+                        <span class="font-black">Submitted <i class="fa @submittedSortClass" aria-hidden="true"></i></span>
+                    </a>
+                </th>
+                <th>
+                    @{
+                        var statusSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldStatus ?
+                            Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                    }
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldStatus, newOrder).RouteValues)" class="vacancy-filter">
+                        <span class="font-black">Status <i class="fa @statusSortClass" aria-hidden="true"></i></span>
+                    </a>
+                </th>
+                <th>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var applicationSummary in Model.ApplicationSummariesViewModel)
+            {
+                <tr class="applicant">
+                    <td>
+                        <h4 class="applicant-name">@applicationSummary.LastName</h4>
+                    </td>
+                    <td>
+                        <h4 class="applicant-name">@applicationSummary.FirstName</h4>
+                    </td>
+                    <td>
+                        @applicationSummary.ApplicantID
+                    </td>
+                    <td>
+                        @{
+                            var notes = applicationSummary.Notes;
+                            if (notes != null && notes.Length > 20)
+                            {
+                                notes = notes.Substring(0, 20) + "...";
+                            }
+                        }
+                        @notes
+                    </td>
+                    <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
+                    <td>
+                        @Html.Partial("_applicationStatus", applicationSummary.Status)
+                    </td>
+                    <td>
+                        <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId).RouteValues)" title="View @applicationSummary.ApplicantName application">View application</a><br/>
+                        <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new {application = applicationSummary.AnonymousLinkData})" title="View anonymous application">Anonymous view</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        </section>
+            @*<div class="page-navigation">
+
+                @{
+                    var currentPage = Model.ApplicationSummaries.CurrentPage;
+                    var totalNumberOfPages = Model.ApplicationSummaries.TotalNumberOfPages;
+                    var prevLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage - 1).RouteValues);
+                    var nextLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage + 1).RouteValues);
+                }
+
+                <a href="@prevLink"
+                   style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
+                   class="page-navigation__btn previous grid grid-1-3">
+                    <i class="arrow-button fa fa-angle-left"></i>
+                    <span class="description">Previous <span class="hide-mob">page</span></span>
+                    <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
+                </a>
+
+                <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
+                    <label for="page-size" class="heading-small inline">Display results</label>
+                    @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new { id = "page-size" })
+                    <noscript>
+                        <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
+                    </noscript>
+                </div>
+
+                <a href="@nextLink"
+                   style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
+                   class="page-navigation__btn next grid grid-1-3">
+                    <i class="arrow-button fa fa-angle-right"></i>
+                    <span class="description">Next <span class="hide-mob">page</span></span>
+                    <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
+                </a>
+
+            </div>*@
             <div class="form-group">
                 <button type="submit" class="button">Confirm and continue</button>
-                @*<a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Cancel</a>*@
+                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Cancel</a>
             </div>
         </div>
     </section>
-    <section class="grid grid-1-3 gov-border grey-background">
+    @*<section class="grid grid-1-3 gov-border grey-background">
         <br />
         <div class="inner-block">
             <div class="hgroup-small">
                 <h2 class="heading-medium">
-                    @*@Model.VacancyTitle*@
+                    @Model.VacancyTitle
                     TEst
                 </h2>
                 <p class="subtitle">
-                    @*@Model.EmployerName*@
+                    @Model.EmployerName
                     Test
                 </p>
                 <br />
                 <p class="font-xsmall">
-                    @*@Html.RouteLink("View my application", RecruitmentRouteNames.PreviewVacancy, new { id = Model.VacancyReferenceNumber }, new { @class = "account-link" })*@
+                    @Html.RouteLink("View my application", RecruitmentRouteNames.PreviewVacancy, new { id = Model.VacancyReferenceNumber }, new { @class = "account-link" })
                 </p>
                 <br />
             </div>
         </div>
-    </section>
+    </section>*@
 </div>

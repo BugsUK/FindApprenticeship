@@ -31,8 +31,8 @@
         [HttpGet]
         public ActionResult BulkDeclineCandidates(int vacancyReferenceNumber)
         {
-            var response = _vacancyStatusMediator.GetArchiveVacancyViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
-            return View();
+            var response = _vacancyStatusMediator.GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
+            return View(response.ViewModel);
         }
 
         [HttpPost]

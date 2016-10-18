@@ -1,6 +1,5 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
@@ -207,7 +206,9 @@
                 </ul>
             </section>
 
-            @{ var open = Model.VacancyApplicationsSearch.IsCandidateSearch() ? "open" : ""; }
+            @{
+                var open = Model.VacancyApplicationsSearch.IsCandidateSearch() ? "open" : "";
+            }
             <details class="@open" @open>
                 <summary>Search candidates</summary>
                 <div class="detail-content">
