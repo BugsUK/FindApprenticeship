@@ -930,6 +930,7 @@
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
             vacancy.EmployerAnonymousName = null;
+            vacancy.OfflineVacancyType = null;
 
             //Comments
             vacancy.TitleComment = null;
@@ -1161,7 +1162,6 @@
             {
                 newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
             }
-            newVacancy.OfflineVacancyType = null;
 
             return _vacancyPostingService.CreateVacancy(newVacancy);
         }
