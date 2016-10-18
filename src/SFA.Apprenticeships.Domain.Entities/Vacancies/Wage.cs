@@ -36,6 +36,8 @@
 
                 case WageType.LegacyText:
                 case WageType.CompetitiveSalary:
+                case WageType.ToBeAgreedUponAppointment:
+                case WageType.Unwaged:
                     return WageUnit.NotApplicable;
 
                 case WageType.Custom:
