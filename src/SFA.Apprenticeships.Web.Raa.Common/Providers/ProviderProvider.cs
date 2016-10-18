@@ -301,12 +301,15 @@
             providerSite.ContactDetailsForEmployer = viewModel.ContactDetailsForEmployer;
             providerSite.ContactDetailsForCandidate = viewModel.ContactDetailsForCandidate;
             providerSite.TrainingProviderStatus = viewModel.TrainingProviderStatus;
-            foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
+            if(viewModel.ProviderSiteRelationships != null)
             {
-                var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);
-                if (providerSiteRelationship != null)
+                foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
                 {
-                    providerSiteRelationship.ProviderSiteRelationShipTypeId = providerSiteRelationshipViewModel.ProviderSiteRelationshipType;
+                    var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);
+                    if (providerSiteRelationship != null)
+                    {
+                        providerSiteRelationship.ProviderSiteRelationShipTypeId = providerSiteRelationshipViewModel.ProviderSiteRelationshipType;
+                    }
                 }
             }
 

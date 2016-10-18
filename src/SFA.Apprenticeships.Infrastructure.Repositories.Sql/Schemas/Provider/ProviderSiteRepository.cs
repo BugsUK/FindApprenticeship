@@ -256,7 +256,7 @@
             }
 
             var providerSite = _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
-            if (providerSiteRelationships.Count > 0)
+            if (providerSiteRelationships.Count > 0 && providerSiteRelationships.ContainsKey(providerSite.ProviderSiteId))
             {
                 providerSite.ProviderSiteRelationships = _mapper.Map<List<Entities.ProviderSiteRelationship>, List<ProviderSiteRelationship>>(providerSiteRelationships[providerSite.ProviderSiteId]);
             }
