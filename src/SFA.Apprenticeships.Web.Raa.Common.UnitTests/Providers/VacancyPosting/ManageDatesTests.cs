@@ -34,7 +34,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
@@ -71,7 +71,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
@@ -108,7 +108,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, "Legacy text", WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, "Legacy text", WageUnit.Weekly, 30)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
@@ -151,7 +151,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
@@ -193,7 +193,7 @@
             {
                 VacancyId = vacancyId,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30)
             };
 
             MockVacancyPostingService.Setup(mock => mock
@@ -246,7 +246,7 @@
             {
                 VacancyId = vacancyId,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30)
             };
 
             MockVacancyPostingService.Setup(mock => mock

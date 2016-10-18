@@ -107,9 +107,12 @@
         [TestCase(WageType.LegacyText, WageUnit.NotApplicable)]
         [TestCase(WageType.ApprenticeshipMinimum, WageUnit.Weekly)]
         [TestCase(WageType.NationalMinimum, WageUnit.Weekly)]
+        [TestCase(WageType.CompetitiveSalary, WageUnit.NotApplicable)]
+        [TestCase(WageType.ToBeAgreedUponAppointment, WageUnit.NotApplicable)]
+        [TestCase(WageType.Unwaged, WageUnit.NotApplicable)]
         public void ShouldGetTheCorrectWageUnitForNonCustomWages(WageType wageType, WageUnit expected)
         {
-            var wage = new Wage(wageType, null, string.Empty, WageUnit.NotApplicable, null);
+            var wage = new Wage(wageType, null, null, null, string.Empty, WageUnit.NotApplicable, null);
             // Act.
             var actual = wage.Unit;
 
@@ -123,7 +126,7 @@
         [TestCase(WageUnit.NotApplicable, WageUnit.NotApplicable)]
         public void ShouldGetTheCorrectWageUnitForCustomWages(WageUnit wageUnit, WageUnit expected)
         {
-            var wage = new Wage(WageType.Custom, null, string.Empty, wageUnit, null);
+            var wage = new Wage(WageType.Custom, null, null, null, string.Empty, wageUnit, null);
 
             var actual = wage.Unit;
 

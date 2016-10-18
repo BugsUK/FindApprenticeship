@@ -36,7 +36,7 @@
 
                 var vacancy = fixture
                     .Build<Domain.Entities.Raa.Vacancies.Vacancy>()
-                    .With(each => each.Wage, new Wage(WageType.NationalMinimum, 0, string.Empty, WageUnit.NotApplicable, 0))
+                    .With(each => each.Wage, new Wage(WageType.NationalMinimum, 0, null, null, string.Empty, WageUnit.NotApplicable, 0))
                     .Create();
 
                 var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();

@@ -6,12 +6,6 @@
     public class Wage
     {
         [JsonConstructor]
-        public Wage(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
-            : this(type, amount, null, null, text, unit, hoursPerWeek)
-        {
-        }
-
-        [JsonConstructor]
         public Wage(WageType type, decimal? amount, decimal? lowerBound, decimal? upperBound, string text, WageUnit unit, decimal? hoursPerWeek)
         {
             Type = type;

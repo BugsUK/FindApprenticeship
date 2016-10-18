@@ -665,7 +665,7 @@
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
-                Wage = new Wage(WageType.Custom, 0, null, WageUnit.NotApplicable, 40)
+                Wage = new Wage(WageType.Custom, 0, null, null, null, WageUnit.NotApplicable, 40)
                 // Ukprn = "10003816"
             };
         }
