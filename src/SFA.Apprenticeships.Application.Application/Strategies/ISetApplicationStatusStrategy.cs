@@ -9,7 +9,7 @@
     {
         void SetSuccessfulDecision(Guid applicationId);
 
-        void SetUnsuccessfulDecision(Guid applicationId);
+        void SetUnsuccessfulDecision(Guid applicationId, string candidateApplicationFeedback);
 
         void SetStateInProgress(Guid applicationId);
 

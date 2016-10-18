@@ -4,7 +4,7 @@
     using Validators.VacancyPosting;
     using Web.Common.ViewModels.Locations;
 
-    [Validator(typeof(VacancyLocationAddressViewModelValidator))]
+    [Validator(typeof(VacancyLocationAddressViewModelClientValidator))]
     public class VacancyLocationAddressViewModel
     {
         public VacancyLocationAddressViewModel()
@@ -12,9 +12,13 @@
             Address = new AddressViewModel();
         }
 
-        public AddressViewModel Address { get; set; } 
+        public int VacancyLocationId { get; set; }
+
+        public AddressViewModel Address { get; set; }
 
         public int? NumberOfPositions { get; set; }
+
+        public string OfflineApplicationUrl { get; set; }
 
         public override bool Equals(object obj)
         {

@@ -3456,6 +3456,10 @@ select:focus {
       line-height: 1.25; } }
   .inline-button .button-link {
     margin-bottom: 0; }
+  .inline-text .button-link {
+    margin: 0;
+    padding: 0;
+    line-height: 1.3; }
 
 .button-link:hover {
   color: #2e8aca; }
@@ -5045,12 +5049,9 @@ video {
     @media (max-width: 640px) {
       .panel-success li, .panel-warning li, .panel-danger li, .panel-info li, .panel-success p, .panel-warning p, .panel-danger p, .panel-info p {
         font-size: 14px; } }
-.panel-success p, .panel-warning p, .panel-danger p, .panel-info p {
+  .panel-success p, .panel-warning p, .panel-danger p, .panel-info p {
     margin-top: 15px;
-    margin-bottom: 5px;
-    -ms-word-break: break-word;
-    word-break: break-word;
-}
+    margin-bottom: 5px; }
   .panel-success .heading-small, .panel-warning .heading-small, .panel-danger .heading-small, .panel-info .heading-small {
     color: #28a197;
     margin-top: 15px; }

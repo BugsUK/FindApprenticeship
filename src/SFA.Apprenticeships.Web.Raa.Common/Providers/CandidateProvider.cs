@@ -1,30 +1,28 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text.RegularExpressions;
+    using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
+    using Application.Interfaces.Security;
     using Application.Interfaces.VacancyPosting;
+    using Common.Extensions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
     using ViewModels.Candidate;
-    using Application.Interfaces;
-    using Application.Interfaces.Security;
-    using Common.Extensions;
-    using Domain.Raa.Interfaces.Repositories.Models;
-    using ViewModels;
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
 
@@ -85,7 +83,7 @@
                             .ThenBy(c => c.FirstName)
                             .ThenBy(c => c.Address.Postcode)
                             .ThenBy(c => c.Address.AddressLine1)
-                            .Skip((searchViewModel.CurrentPage - 1)*searchViewModel.PageSize)
+                            .Skip((searchViewModel.CurrentPage - 1) * searchViewModel.PageSize)
                             .Take(searchViewModel.PageSize)
                             .Select(c => _mapper.Map<CandidateSummary, CandidateSummaryViewModel>(c))
                             .ToList(),
@@ -94,7 +92,7 @@
                     TotalNumberOfPages =
                         candidates.Count == 0
                             ? 1
-                            : (int) Math.Ceiling((double) candidates.Count/searchViewModel.PageSize)
+                            : (int)Math.Ceiling((double)candidates.Count / searchViewModel.PageSize)
                 }
             };
 
@@ -104,7 +102,7 @@
         public CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId)
         {
             var webSettings = _configurationService.Get<CommonWebConfiguration>();
-            var domainUrl = webSettings.SiteDomainName;            
+            var domainUrl = webSettings.SiteDomainName;
             _logService.Debug("Calling CandidateApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
                 candidateId);
 
@@ -157,7 +155,6 @@
         {
             var application = _apprenticeshipApplicationService.GetApplication(applicationId);
             var viewModel = ConvertToApprenticeshipApplicationViewModel(application);
-
             return viewModel;
         }
 
@@ -165,7 +162,6 @@
         {
             var application = _traineeshipApplicationService.GetApplication(applicationId);
             var viewModel = ConvertToTraineeshipApplicationViewModel(application);
-
             return viewModel;
         }
 
@@ -253,13 +249,17 @@
 
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application)
         {
+            var webSettings = _configurationService.Get<CommonWebConfiguration>();
+            var domainUrl = webSettings.SiteDomainName;
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
             viewModel.Vacancy.EmployerName = employer.Name;
-
+            viewModel.NextStepsUrl = string.Format($"https://{domainUrl}/nextsteps");
+            viewModel.UnSuccessfulReason = application.UnsuccessfulReason;
+            viewModel.UnsuccessfulDateTime = application.UnsuccessfulDateTime;
             return viewModel;
         }
 

@@ -104,5 +104,12 @@
             public const string ApplicationNotFound = "ApprenticeshipApplication.View.ApplicationNotFound";
             public const string Error = "ApprenticeshipApplication.View.Error";
         }
+
+        public class CandidateApplicationFeedback
+        {
+            public const string Ok = "ApprenticeshipApplication.View.Ok";
+            public const string ApplicationNotFound = "ApprenticeshipApplication.View.ApplicationNotFound";
+            public const string Error = "ApprenticeshipApplication.View.Error";
+        }
     }
 }

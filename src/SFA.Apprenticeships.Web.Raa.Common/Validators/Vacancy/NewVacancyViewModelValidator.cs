@@ -3,6 +3,7 @@
     using FluentValidation;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using VacancyPosting;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Common;
@@ -90,7 +91,8 @@
 
         internal static void AddClientRules(this AbstractValidator<NewVacancyViewModel> validator)
         {
-
+            validator.RuleFor(x => x.LocationAddresses)
+                .SetCollectionValidator(new VacancyLocationAddressViewModelClientValidator());
         }
 
         internal static void AddServerRules(this AbstractValidator<NewVacancyViewModel> validator)
@@ -110,7 +112,11 @@
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ErrorUriText)
-                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value && viewModel.OfflineVacancyType != OfflineVacancyType.MultiUrl);
+
+            validator.RuleFor(x => x.LocationAddresses)
+                .SetCollectionValidator(new VacancyLocationAddressViewModelServerValidator())
+                .When(x => x.OfflineVacancyType == OfflineVacancyType.MultiUrl);
 
             validator.RuleFor(viewModel => (int)viewModel.VacancyType)
                 .InclusiveBetween((int)VacancyType.Apprenticeship, (int)VacancyType.Traineeship)

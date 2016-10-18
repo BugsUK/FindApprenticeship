@@ -98,7 +98,7 @@ WriteLiteral(">");
 
             
             #line 12 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                            Write(Html.RouteLink("Find an apprenticeship", @CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "find-apprenticeship-button", @class = "button" }));
+                            Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-button", @class = "button" }));
 
             
             #line default
@@ -334,50 +334,47 @@ WriteLiteral(">\r\n");
 
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-    
+        
             
             #line default
             #line hidden
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-     if (
-            Model.SuccessfulApprenticeshipApplications.Any() ||
-            Model.UnsuccessfulApplications.Any() ||
-            Model.SubmittedApprenticeshipApplications.Any())
+         if (Model.SuccessfulApprenticeshipApplications.Any() || Model.UnsuccessfulApplications.Any() || Model.SubmittedApprenticeshipApplications.Any())
         {
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("            <div");
 
 WriteLiteral(" class=\"grid grid-1-2\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"inner-block-padr\"");
 
-WriteLiteral(">\r\n                <section");
+WriteLiteral(">\r\n                    <section");
 
 WriteLiteral(" class=\"clearfix\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 58 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                    
+            #line 55 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                        
             
             #line default
             #line hidden
             
-            #line 58 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                     if (Model.SuccessfulApprenticeshipApplications.Any())
+            #line 55 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                         if (Model.SuccessfulApprenticeshipApplications.Any())
                         {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <h2");
+WriteLiteral("                            <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -385,478 +382,6 @@ WriteLiteral(" id=\"dashSuccessful\"");
 
 WriteLiteral(">Successful</h2>\r\n");
 
-WriteLiteral("                        <table");
-
-WriteLiteral(" class=\"vert-middle\"");
-
-WriteLiteral(">\r\n                            <colgroup>\r\n                                <col");
-
-WriteLiteral(" class=\"t50\"");
-
-WriteLiteral(">\r\n                                <col");
-
-WriteLiteral(" class=\"t25\"");
-
-WriteLiteral(">\r\n                                <col");
-
-WriteLiteral(" class=\"t25\"");
-
-WriteLiteral(">\r\n                                <col>\r\n                            </colgroup>" +
-"\r\n                            <tbody");
-
-WriteLiteral(" class=\"tbody-3rows\"");
-
-WriteLiteral(">\r\n");
-
-            
-            #line 69 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                
-            
-            #line default
-            #line hidden
-            
-            #line 69 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                 foreach (var application in @Model.SuccessfulApprenticeshipApplications)
-                                {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                    <tr>\r\n                                       " +
-" <td>\r\n");
-
-            
-            #line 73 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                            
-            
-            #line default
-            #line hidden
-            
-            #line 73 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                             if (application.VacancyStatus == VacancyStatuses.Unavailable)
-                                            {
-                                                
-            
-            #line default
-            #line hidden
-            
-            #line 75 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                           Write(application.Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" ");
-
-WriteLiteral("with ");
-
-            
-            #line 75 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                     Write(application.EmployerName);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 76 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                            }
-                                            else
-                                            {
-                                                
-            
-            #line default
-            #line hidden
-            
-            #line 79 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                           Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 79 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                                                                                                                                        
-                                            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                        </td>\r\n                                  " +
-"      <td");
-
-WriteLiteral(" class=\"ta-center\"");
-
-WriteLiteral(">");
-
-            
-            #line 82 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                         Write(Html.RouteLink("View application", @CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</td>\r\n                                        <td");
-
-WriteLiteral(" class=\"ta-center\"");
-
-WriteLiteral(">\r\n                                            <a");
-
-WriteLiteral(" title=\"Remove from my applications\"");
-
-WriteLiteral(" class=\"icon-black archive-successful\"");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 4682), Tuple.Create("\"", 4782)
-            
-            #line 84 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                               , Tuple.Create(Tuple.Create("", 4689), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })
-            
-            #line default
-            #line hidden
-, 4689), false)
-);
-
-WriteLiteral("><i");
-
-WriteLiteral(" class=\"copy-16 fa fa-times-circle\"");
-
-WriteLiteral("></i><span");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Remove from my applications</span></a>\r\n                                        " +
-"</td>\r\n                                    </tr>\r\n");
-
-            
-            #line 87 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                            </tbody>\r\n                            <tbody");
-
-WriteLiteral(" class=\"tbody-expandrows\"");
-
-WriteLiteral(">\r\n                                <tr");
-
-WriteLiteral(" class=\"no-btm-border\"");
-
-WriteLiteral(">\r\n                                    <td");
-
-WriteLiteral(" colspan=\"2\"");
-
-WriteLiteral("></td>\r\n                                    <td");
-
-WriteLiteral(" class=\"no-wrap ta-center\"");
-
-WriteLiteral(">\r\n                                        <a");
-
-WriteLiteral(" class=\"btnExpandRows fake-link\"");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(" aria-expanded=\"false\"");
-
-WriteLiteral("><i");
-
-WriteLiteral(" class=\"fa fa-angle-down\"");
-
-WriteLiteral("></i>More</a>\r\n                                    </td>\r\n                       " +
-"         </tr>\r\n                            </tbody>\r\n                        </" +
-"table>\r\n");
-
-            
-            #line 98 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 100 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                    
-            
-            #line default
-            #line hidden
-            
-            #line 100 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                     if (Model.SubmittedApprenticeshipApplications.Any())
-                        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <h2");
-
-WriteLiteral(" class=\"heading-medium\"");
-
-WriteLiteral(" id=\"dashSubmitted\"");
-
-WriteLiteral(">Submitted</h2>\r\n");
-
-WriteLiteral("                        <table");
-
-WriteLiteral(" class=\"vert-middle\"");
-
-WriteLiteral(">\r\n                            <colgroup>\r\n                                <col");
-
-WriteLiteral(" class=\"t50\"");
-
-WriteLiteral(">\r\n                                <col");
-
-WriteLiteral(" class=\"t25\"");
-
-WriteLiteral(">\r\n                                <col");
-
-WriteLiteral(" class=\"t25\"");
-
-WriteLiteral(">\r\n                                <col>\r\n                            </colgroup>" +
-"\r\n                            <tbody");
-
-WriteLiteral(" class=\"tbody-3rows\"");
-
-WriteLiteral(">\r\n");
-
-            
-            #line 111 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                
-            
-            #line default
-            #line hidden
-            
-            #line 111 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                 foreach (var application in @Model.SubmittedApprenticeshipApplications)
-                                {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                    <tr>\r\n                                       " +
-" <td>\r\n");
-
-            
-            #line 115 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                            
-            
-            #line default
-            #line hidden
-            
-            #line 115 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                             if (application.VacancyStatus == VacancyStatuses.Unavailable)
-                                            {
-                                                
-            
-            #line default
-            #line hidden
-            
-            #line 117 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                           Write(application.Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" ");
-
-WriteLiteral("with ");
-
-            
-            #line 117 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                     Write(application.EmployerName);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 118 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                            }
-                                            else
-                                            {
-                                                
-            
-            #line default
-            #line hidden
-            
-            #line 121 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                           Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 121 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                                                                                                                                        
-                                            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                        </td>\r\n                                  " +
-"      <td");
-
-WriteLiteral(" class=\"ta-center\"");
-
-WriteLiteral(">");
-
-            
-            #line 124 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                         Write(Html.RouteLink("View application", @CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</td>\r\n                                        <td");
-
-WriteLiteral(" class=\"ta-center\"");
-
-WriteLiteral(">\r\n                                            Applied<br/>\r\n");
-
-            
-            #line 127 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                            
-            
-            #line default
-            #line hidden
-            
-            #line 127 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                              
-                                                if (application.DateApplied.HasValue)
-                                                {
-                                                    var submittedApplication = application;
-                                                    
-            
-            #line default
-            #line hidden
-            
-            #line 131 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                               Write(Html.DisplayFor(m => submittedApplication.DateApplied));
-
-            
-            #line default
-            #line hidden
-            
-            #line 131 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                           
-                                                }
-                                            
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                        </td>\r\n                                " +
-"    </tr>\r\n");
-
-            
-            #line 136 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                            </tbody>\r\n                            <tbody");
-
-WriteLiteral(" class=\"tbody-expandrows\"");
-
-WriteLiteral(">\r\n                                <tr");
-
-WriteLiteral(" class=\"no-btm-border\"");
-
-WriteLiteral(">\r\n                                    <td");
-
-WriteLiteral(" colspan=\"2\"");
-
-WriteLiteral("></td>\r\n                                    <td");
-
-WriteLiteral(" class=\"no-wrap ta-center\"");
-
-WriteLiteral(">\r\n                                        <a");
-
-WriteLiteral(" class=\"btnExpandRows fake-link\"");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(" aria-expanded=\"false\"");
-
-WriteLiteral("><i");
-
-WriteLiteral(" class=\"fa fa-angle-down\"");
-
-WriteLiteral("></i>More</a>\r\n                                    </td>\r\n                       " +
-"         </tr>\r\n                            </tbody>\r\n                        </" +
-"table>\r\n");
-
-            
-            #line 147 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 149 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                    
-            
-            #line default
-            #line hidden
-            
-            #line 149 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                     if (Model.UnsuccessfulApplications.Any())
-                    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <h2");
-
-WriteLiteral(" class=\"heading-medium\"");
-
-WriteLiteral(" id=\"dashUnsuccessful\"");
-
-WriteLiteral(">Unsuccessful</h2>\r\n");
-
-            
-            #line 152 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                            if (Model.UnsuccessfulApplications.Any(a => a.ApplicationStatus == ApplicationStatuses.Unsuccessful))
-                            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                <div");
-
-WriteLiteral(" class=\"panel-indent font-xxsmall\"");
-
-WriteLiteral(" id=\"candidate-support-message\"");
-
-WriteLiteral(@">
-                                    <p>Some of your applications have been unsuccessful. Please contact the training provider for further information.</p>
-                                    <p>
-                                        For advice on how to ensure your application has a better chance
-                                        of being successful ");
-
-            
-            #line 158 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                       Write(Html.RouteLink("see the next steps page", @CandidateRouteNames.NextSteps));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(".\r\n                                    </p>\r\n                                </di" +
-"v>\r\n");
-
-            
-            #line 161 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                            }
-
-            
-            #line default
-            #line hidden
 WriteLiteral("                            <table");
 
 WriteLiteral(" class=\"vert-middle\"");
@@ -877,38 +402,35 @@ WriteLiteral(" class=\"t25\"");
 WriteLiteral(">\r\n                                    <col>\r\n                                </c" +
 "olgroup>\r\n                                <tbody");
 
-WriteLiteral(" class=\"tbody-3rows tbody-withReasons\"");
+WriteLiteral(" class=\"tbody-3rows\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 170 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 66 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
                                     
             
             #line default
             #line hidden
             
-            #line 170 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                     foreach (var application in @Model.UnsuccessfulApplications)
+            #line 66 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                     foreach (var application in Model.SuccessfulApprenticeshipApplications)
                                     {
 
             
             #line default
             #line hidden
-WriteLiteral("                                        <tr");
-
-WriteLiteral(" class=\"no-btm-border\"");
-
-WriteLiteral(">\r\n                                            <td>\r\n");
+WriteLiteral("                                        <tr>\r\n                                   " +
+"         <td>                                                \r\n");
 
             
-            #line 174 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 70 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
                                                 
             
             #line default
             #line hidden
             
-            #line 174 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 70 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
                                                  if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                                 {
                                                     
@@ -916,19 +438,26 @@ WriteLiteral(">\r\n                                            <td>\r\n");
             #line default
             #line hidden
             
-            #line 176 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 72 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
                                                Write(application.Title);
 
             
             #line default
             #line hidden
-WriteLiteral(" ");
+            
+            #line 72 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                      
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                                    ");
 
 WriteLiteral("with ");
 
             
-            #line 176 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                         Write(application.EmployerName);
+            #line 73 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                      Write(application.EmployerName);
 
             
             #line default
@@ -936,7 +465,7 @@ WriteLiteral("with ");
 WriteLiteral("\r\n");
 
             
-            #line 177 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 74 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
                                                 }
                                                 else
                                                 {
@@ -945,15 +474,15 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 180 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                               Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+            #line 77 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(Html.ActionLink(application.Title + " with " + application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new {id = application.VacancyId}, new {@class = "link-unimp"}));
 
             
             #line default
             #line hidden
             
-            #line 180 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                                                                                                                                            
+            #line 77 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                                                                                                                                                       
                                                 }
 
             
@@ -967,8 +496,8 @@ WriteLiteral(" class=\"ta-center\"");
 WriteLiteral(">");
 
             
-            #line 183 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                             Write(Html.RouteLink("View application", @CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId }));
+            #line 80 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                             Write(Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId }));
 
             
             #line default
@@ -981,16 +510,16 @@ WriteLiteral(">\r\n                                                <a");
 
 WriteLiteral(" title=\"Remove from my applications\"");
 
-WriteLiteral(" class=\"icon-black archive-unsuccessful\"");
+WriteLiteral(" class=\"icon-black archive-successful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11528), Tuple.Create("\"", 11628)
+WriteAttribute("href", Tuple.Create(" href=\"", 4854), Tuple.Create("\"", 4953)
             
-            #line 185 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 11535), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })
+            #line 82 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                   , Tuple.Create(Tuple.Create("", 4861), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 11535), false)
+, 4861), false)
 );
 
 WriteLiteral("><i");
@@ -1005,39 +534,7 @@ WriteLiteral(">Remove from my applications</span></a>\r\n                       
 "    </td>\r\n                                        </tr>\r\n");
 
             
-            #line 188 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-
-                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
-                                        {
-                                            var reason = string.IsNullOrWhiteSpace(application.UnsuccessfulReason) ? application.ApplicationStatusDescription : application.UnsuccessfulReason;
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                            <tr>\r\n                               " +
-"                 <td");
-
-WriteLiteral(" colspan=\"3\"");
-
-WriteLiteral(">\r\n                                                    <b>Reason:</b> <span");
-
-WriteLiteral(" id=\"application-status-description\"");
-
-WriteLiteral(">");
-
-            
-            #line 194 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                        Write(reason);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</span>\r\n                                                </td>\r\n                 " +
-"                           </tr>\r\n");
-
-            
-            #line 197 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                        }
+            #line 85 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
                                     }
 
             
@@ -1076,423 +573,94 @@ WriteLiteral("></i>More</a>\r\n                                        </td>\r\n
 "              </table>\r\n");
 
             
-            #line 209 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 96 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
                         }
 
             
             #line default
             #line hidden
-WriteLiteral("                </section>\r\n            </div>\r\n        </div>\r\n");
-
-            
-            #line 213 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-        }
-
-            
-            #line default
-            #line hidden
 WriteLiteral("\r\n");
 
             
-            #line 215 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 215 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-     if (
-            Model.DraftApprenticeshipApplications.Any() ||
-            Model.TraineeshipApplications.Any())
-        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"grid grid-1-2\"");
-
-WriteLiteral(">\r\n            <section");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral(">\r\n");
-
-            
-            #line 221 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                
-            
-            #line default
-            #line hidden
-            
-            #line 221 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                 if (Model.DraftApprenticeshipApplications.Any())
-                {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                    <h2");
-
-WriteLiteral(" class=\"heading-medium\"");
-
-WriteLiteral(" id=\"dashDrafts\"");
-
-WriteLiteral(">Saved</h2>\r\n");
-
-WriteLiteral("                    <table");
-
-WriteLiteral(" class=\"vert-middle\"");
-
-WriteLiteral(">\r\n                        <colgroup>\r\n                            <col");
-
-WriteLiteral(" class=\"t70\"");
-
-WriteLiteral(">\r\n                            <col");
-
-WriteLiteral(" class=\"t20\"");
-
-WriteLiteral(">\r\n                            <col");
-
-WriteLiteral(" class=\"t10\"");
-
-WriteLiteral(">\r\n                            <col>\r\n                        </colgroup>\r\n      " +
-"                  <tbody>\r\n");
-
-            
-            #line 232 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 98 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 232 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                          
-                            var index = 0;
-                            foreach (var application in @Model.DraftApprenticeshipApplications)
-                            {
+            #line 98 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                         if (Model.SubmittedApprenticeshipApplications.Any())
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                                <tr>\r\n                                    <td>\r\n");
-
-            
-            #line 238 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                        
-            
-            #line default
-            #line hidden
-            
-            #line 238 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                         if (application.VacancyStatus == VacancyStatuses.Unavailable)
-                                        {
-                                            
-            
-            #line default
-            #line hidden
-            
-            #line 240 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                       Write(application.Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" ");
-
-WriteLiteral("with ");
-
-            
-            #line 240 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                 Write(application.EmployerName);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 241 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                        }
-                                        else
-                                        {
-                                            
-            
-            #line default
-            #line hidden
-            
-            #line 244 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                       Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 244 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                                                                                                                                    
-
-                                            if (application.VacancyStatus == VacancyStatuses.Live)
-                                            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                                <br />\r\n");
-
-WriteLiteral("                                                <strong>Closing date:</strong> ");
-
-            
-            #line 249 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                               
-            
-            #line default
-            #line hidden
-            
-            #line 249 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                          Write(application.ClosingDate.ToFriendlyClosingWeek());
-
-            
-            #line default
-            #line hidden
-            
-            #line 249 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                               
-                                            }
-                                        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                    </td>\r\n                                    <t" +
-"d");
-
-WriteLiteral(" class=\"ta-center\"");
-
-WriteLiteral(">\r\n");
-
-            
-            #line 254 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                        
-            
-            #line default
-            #line hidden
-            
-            #line 254 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                         if (application.ApplicationStatus == ApplicationStatuses.Draft && application.VacancyStatus == VacancyStatuses.Live)
-                                        {
-                                            
-            
-            #line default
-            #line hidden
-            
-            #line 256 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                       Write(Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 256 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                                                                                 
-                                        }
-                                        else if (application.ApplicationStatus == ApplicationStatuses.Saved && application.VacancyStatus == VacancyStatuses.Live)
-                                        {
-                                            
-            
-            #line default
-            #line hidden
-            
-            #line 260 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                       Write(Html.RouteLink("Apply", @CandidateRouteNames.ApprenticeshipApply, new { id = application.VacancyId }, new { @class = "resume-link" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 260 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                                                                                  
-                                        }
-                                        else
-                                        {
-                                            switch (application.VacancyStatus)
-                                            {
-                                                case VacancyStatuses.Expired:
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                                    ");
-
-WriteLiteral("Apprenticeship closed\r\n");
-
-            
-            #line 268 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                    break;
-                                                case VacancyStatuses.Unavailable:
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                                    ");
-
-WriteLiteral("Apprenticeship no longer available\r\n");
-
-            
-            #line 271 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                    break;
-                                            }
-                                        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                    </td>\r\n                                    <t" +
-"d");
-
-WriteLiteral(" class=\"ta-center\"");
-
-WriteLiteral(">\r\n                                        <a");
-
-WriteAttribute("id", Tuple.Create(" id=\"", 17286), Tuple.Create("\"", 17310)
-, Tuple.Create(Tuple.Create("", 17291), Tuple.Create("delete-draft-", 17291), true)
-            
-            #line 276 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-, Tuple.Create(Tuple.Create("", 17304), Tuple.Create<System.Object, System.Int32>(index
-            
-            #line default
-            #line hidden
-, 17304), false)
-);
-
-WriteLiteral(" title=\"Remove from my applications\"");
-
-WriteLiteral(" class=\"icon-black delete-draft\"");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 17379), Tuple.Create("\"", 17478)
-            
-            #line 276 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                             , Tuple.Create(Tuple.Create("", 17386), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
-            
-            #line default
-            #line hidden
-, 17386), false)
-);
-
-WriteLiteral("><i");
-
-WriteLiteral(" class=\"copy-16 fa fa-times-circle\"");
-
-WriteLiteral("></i><span");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Remove from my applications</span></a>\r\n                                    </td" +
-">\r\n                                </tr>\r\n");
-
-            
-            #line 279 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                index++;
-                            }
-                        
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        </tbody>\r\n                    </table>\r\n");
-
-            
-            #line 284 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 286 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                
-            
-            #line default
-            #line hidden
-            
-            #line 286 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                 if (Model.TraineeshipApplications.Any())
-                {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                    <h2");
+WriteLiteral("                            <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(" id=\"dashTraineeships\"");
+WriteLiteral(" id=\"dashSubmitted\"");
 
-WriteLiteral(">Traineeships</h2>\r\n");
+WriteLiteral(">Submitted</h2>\r\n");
 
-WriteLiteral("                    <table");
-
-WriteLiteral(" id=\"traineeships-table\"");
+WriteLiteral("                            <table");
 
 WriteLiteral(" class=\"vert-middle\"");
 
-WriteLiteral(">\r\n                        <colgroup>\r\n                            <col");
+WriteLiteral(">\r\n                                <colgroup>\r\n                                  " +
+"  <col");
 
-WriteLiteral(" class=\"t60\"");
+WriteLiteral(" class=\"t50\"");
 
-WriteLiteral(">\r\n                            <col");
+WriteLiteral(">\r\n                                    <col");
 
-WriteLiteral(" class=\"t20\"");
+WriteLiteral(" class=\"t25\"");
 
-WriteLiteral(">\r\n                            <col");
+WriteLiteral(">\r\n                                    <col");
 
-WriteLiteral(" class=\"t20\"");
+WriteLiteral(" class=\"t25\"");
 
-WriteLiteral(">\r\n                            <col>\r\n                        </colgroup>\r\n      " +
-"                  <tbody");
+WriteLiteral(">\r\n                                    <col>\r\n                                </c" +
+"olgroup>\r\n                                <tbody");
 
 WriteLiteral(" class=\"tbody-3rows\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 297 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                            
+            #line 109 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                    
             
             #line default
             #line hidden
             
-            #line 297 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                             foreach (var application in @Model.TraineeshipApplications)
-                            {
+            #line 109 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                     foreach (var application in Model.SubmittedApprenticeshipApplications)
+                                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                                <tr");
-
-WriteLiteral(" class=\"traineeship-table-row\"");
-
-WriteLiteral(">\r\n                                    <td>\r\n");
+WriteLiteral("                                        <tr>\r\n                                   " +
+"         <td>\r\n");
 
             
-            #line 301 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                        
+            #line 113 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                
             
             #line default
             #line hidden
             
-            #line 301 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                         if (application.VacancyStatus == VacancyStatuses.Unavailable)
-                                        {
-                                            
+            #line 113 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                 if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                                {
+                                                    
             
             #line default
             #line hidden
             
-            #line 303 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                       Write(application.Title);
+            #line 115 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(application.Title);
 
             
             #line default
@@ -1502,8 +670,8 @@ WriteLiteral(" ");
 WriteLiteral("with ");
 
             
-            #line 303 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                 Write(application.EmployerName);
+            #line 115 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                         Write(application.EmployerName);
 
             
             #line default
@@ -1511,85 +679,107 @@ WriteLiteral("with ");
 WriteLiteral("\r\n");
 
             
-            #line 304 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                        }
-                                        else
-                                        {
-                                            
+            #line 116 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                            }
+                                                else
+                                                {
+                                                    
             
             #line default
             #line hidden
             
-            #line 307 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                       Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "TraineeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+            #line 119 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(Html.ActionLink(application.Title + " with " + application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
-            #line 307 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                                                                                                                                 
-                                        }
+            #line 119 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                                                                                                                                                           
+                                                }
 
             
             #line default
             #line hidden
-WriteLiteral("                                    </td>\r\n                                    <t" +
-"d");
+WriteLiteral("                                            </td>\r\n                              " +
+"              <td");
 
 WriteLiteral(" class=\"ta-center\"");
 
 WriteLiteral(">");
 
             
-            #line 310 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                     Write(Html.RouteLink("View application", @CandidateRouteNames.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId }));
+            #line 122 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                             Write(Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId }));
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                                    <td");
+WriteLiteral("</td>\r\n                                            <td");
 
 WriteLiteral(" class=\"ta-center\"");
 
-WriteLiteral(">\r\n                                        Applied<br />\r\n");
-
-WriteLiteral("                                        ");
+WriteLiteral(">\r\n                                                Applied<br />\r\n");
 
             
-            #line 313 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                   Write(Html.DisplayFor(m => application.DateApplied));
+            #line 125 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 125 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                  
+                                                    if (application.DateApplied.HasValue)
+                                                    {
+                                                        var submittedApplication = application;
+                                                        
+            
+            #line default
+            #line hidden
+            
+            #line 129 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                   Write(Html.DisplayFor(m => submittedApplication.DateApplied));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                    </td>\r\n                                </tr" +
-">\r\n");
+            
+            #line 129 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                               
+                                                    }
+                                                
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                            </td>\r\n                            " +
+"            </tr>\r\n");
 
             
-            #line 316 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                            }
+            #line 134 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                    }
 
             
             #line default
             #line hidden
-WriteLiteral("                        </tbody>\r\n                        <tbody");
+WriteLiteral("                                </tbody>\r\n                                <tbody");
 
 WriteLiteral(" class=\"tbody-expandrows\"");
 
-WriteLiteral(">\r\n                            <tr");
+WriteLiteral(">\r\n                                    <tr");
 
 WriteLiteral(" class=\"no-btm-border\"");
 
-WriteLiteral(">\r\n                                <td");
+WriteLiteral(">\r\n                                        <td");
 
 WriteLiteral(" colspan=\"2\"");
 
-WriteLiteral("></td>\r\n                                <td");
+WriteLiteral("></td>\r\n                                        <td");
 
 WriteLiteral(" class=\"no-wrap ta-center\"");
 
-WriteLiteral(">\r\n                                    <a");
+WriteLiteral(">\r\n                                            <a");
 
 WriteLiteral(" class=\"btnExpandRows fake-link\"");
 
@@ -1601,21 +791,815 @@ WriteLiteral("><i");
 
 WriteLiteral(" class=\"fa fa-angle-down\"");
 
-WriteLiteral("></i>More</a>\r\n                                </td>\r\n                           " +
-" </tr>\r\n                        </tbody>\r\n                    </table>\r\n");
+WriteLiteral("></i>More</a>\r\n                                        </td>\r\n                   " +
+"                 </tr>\r\n                                </tbody>\r\n              " +
+"              </table>\r\n");
 
             
-            #line 327 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                }
+            #line 145 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                    }
 
             
             #line default
             #line hidden
-WriteLiteral("            </section>\r\n        </div>\r\n");
+WriteLiteral("\r\n");
 
             
-            #line 330 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 147 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 147 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                         if (Model.UnsuccessfulApplications.Any())
+                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(" id=\"dashUnsuccessful\"");
+
+WriteLiteral(">Unsuccessful</h2>\r\n");
+
+            
+            #line 150 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                            if (Model.UnsuccessfulApplications.Any(a => a.ApplicationStatus == ApplicationStatuses.Unsuccessful))
+                            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <div");
+
+WriteLiteral(" class=\"panel-indent font-xxsmall\"");
+
+WriteLiteral(" id=\"candidate-support-message\"");
+
+WriteLiteral(">\r\n                                    <p>Some of your applications have been uns" +
+"uccessful. Please contact the training provider for further information.</p>\r\n  " +
+"                              </div>\r\n");
+
+            
+            #line 155 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            <table");
+
+WriteLiteral(" class=\"vert-middle\"");
+
+WriteLiteral(">\r\n                                <colgroup>\r\n                                  " +
+"  <col");
+
+WriteLiteral(" class=\"t50\"");
+
+WriteLiteral(">\r\n                                    <col");
+
+WriteLiteral(" class=\"t25\"");
+
+WriteLiteral(">\r\n                                    <col");
+
+WriteLiteral(" class=\"t25\"");
+
+WriteLiteral(">\r\n                                    <col>\r\n                                </c" +
+"olgroup>\r\n                                <tbody");
+
+WriteLiteral(" class=\"tbody-3rows tbody-withReasons\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 164 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                    
+            
+            #line default
+            #line hidden
+            
+            #line 164 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                     foreach (var application in Model.UnsuccessfulApplications)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <tr>\r\n                                   " +
+"         <td>\r\n");
+
+            
+            #line 168 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 168 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                 if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                                {
+                                                    
+            
+            #line default
+            #line hidden
+            
+            #line 170 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(application.Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" ");
+
+WriteLiteral("with ");
+
+            
+            #line 170 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                         Write(application.EmployerName);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 171 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                }
+                                                else
+                                                {
+                                                    
+            
+            #line default
+            #line hidden
+            
+            #line 174 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(Html.ActionLink(application.Title + " with " +
+                                                   application.EmployerName, "ApprenticeshipVacancyDetails", "Account",
+                                                   new { id = application.VacancyId }, new { @class = "link-unimp" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 176 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                                     
+                                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                            </td>\r\n");
+
+            
+            #line 179 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                            
+            
+            #line default
+            #line hidden
+            
+            #line 179 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                             if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
+                                            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                                <td");
+
+WriteLiteral(" class=\"ta-center\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                                    ");
+
+            
+            #line 182 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(Html.RouteLink("Read feedback",
+                                                                 CandidateRouteNames.CandidateApplicationFeedback, new { id = application.VacancyId }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                                </td>\r\n");
+
+            
+            #line 185 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                            <td");
+
+WriteLiteral(" class=\"ta-center\"");
+
+WriteLiteral(">\r\n                                                <a");
+
+WriteLiteral(" title=\"Remove from my applications\"");
+
+WriteLiteral(" class=\"icon-black archive-unsuccessful\"");
+
+WriteAttribute("href", Tuple.Create("\r\n                                                   href=\"", 12194), Tuple.Create("\"", 12343)
+            
+            #line 188 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+, Tuple.Create(Tuple.Create("", 12253), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new {id = application.VacancyId})
+            
+            #line default
+            #line hidden
+, 12253), false)
+);
+
+WriteLiteral(">\r\n                                                    <i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle\"");
+
+WriteLiteral("></i><span");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove from my applications</span>\r\n                                            " +
+"    </a>\r\n                                            </td>\r\n                   " +
+"                     </tr>\r\n");
+
+            
+            #line 193 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                </tbody>\r\n                                <tbody");
+
+WriteLiteral(" class=\"tbody-expandrows\"");
+
+WriteLiteral(">\r\n                                    <tr");
+
+WriteLiteral(" class=\"no-btm-border\"");
+
+WriteLiteral(">\r\n                                        <td");
+
+WriteLiteral(" colspan=\"2\"");
+
+WriteLiteral("></td>\r\n                                        <td");
+
+WriteLiteral(" class=\"no-wrap ta-center\"");
+
+WriteLiteral(">\r\n                                            <a");
+
+WriteLiteral(" class=\"btnExpandRows fake-link\"");
+
+WriteLiteral(" href=\"#\"");
+
+WriteLiteral(" aria-expanded=\"false\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-angle-down\"");
+
+WriteLiteral("></i>More</a>\r\n                                        </td>\r\n                   " +
+"                 </tr>\r\n                                </tbody>\r\n              " +
+"              </table>\r\n");
+
+            
+            #line 204 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    </section>\r\n                </div>\r\n            </div>\r\n");
+
+            
+            #line 208 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
         }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        ");
+
+            
+            #line 209 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+         if (Model.DraftApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
+
+WriteLiteral(" class=\"grid grid-1-2\"");
+
+WriteLiteral(">\r\n                <section");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 213 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 213 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                     if (Model.DraftApprenticeshipApplications.Any())
+                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(" id=\"dashDrafts\"");
+
+WriteLiteral(">Saved</h2>\r\n");
+
+WriteLiteral("                        <table");
+
+WriteLiteral(" class=\"vert-middle\"");
+
+WriteLiteral(">\r\n                            <colgroup>\r\n                                <col");
+
+WriteLiteral(" class=\"t70\"");
+
+WriteLiteral(">\r\n                                <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(">\r\n                                <col");
+
+WriteLiteral(" class=\"t10\"");
+
+WriteLiteral(">\r\n                                <col>\r\n                            </colgroup>" +
+"\r\n                            <tbody>\r\n");
+
+            
+            #line 224 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 224 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                  
+                                    var index = 0;
+                                    foreach (var application in Model.DraftApprenticeshipApplications)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <tr>\r\n                                   " +
+"         <td>\r\n");
+
+            
+            #line 230 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 230 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                 if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                                {
+                                                    
+            
+            #line default
+            #line hidden
+            
+            #line 232 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(application.Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" ");
+
+WriteLiteral("with ");
+
+            
+            #line 232 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                         Write(application.EmployerName);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 233 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                        }
+                                                else
+                                                {
+                                                    
+            
+            #line default
+            #line hidden
+            
+            #line 236 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(Html.ActionLink(application.Title + " with " + application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 236 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                                                                                                                                                           
+
+                                                    if (application.VacancyStatus == VacancyStatuses.Live)
+                                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                                        <br />\r\n");
+
+WriteLiteral("                                                        <strong>Closing date:</st" +
+"rong> ");
+
+            
+            #line 241 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                       
+            
+            #line default
+            #line hidden
+            
+            #line 241 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                  Write(application.ClosingDate.ToFriendlyClosingWeek());
+
+            
+            #line default
+            #line hidden
+            
+            #line 241 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                                                       
+                                                    }
+                                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                            </td>\r\n                              " +
+"              <td");
+
+WriteLiteral(" class=\"ta-center\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 246 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 246 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                 if (application.ApplicationStatus == ApplicationStatuses.Draft && application.VacancyStatus == VacancyStatuses.Live)
+                                                {
+                                                    
+            
+            #line default
+            #line hidden
+            
+            #line 248 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 248 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                                                                                                         
+                                                }
+                                                else if (application.ApplicationStatus == ApplicationStatuses.Saved && application.VacancyStatus == VacancyStatuses.Live)
+                                                {
+                                                    
+            
+            #line default
+            #line hidden
+            
+            #line 252 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                               Write(Html.RouteLink("Apply", @CandidateRouteNames.ApprenticeshipApply, new { id = application.VacancyId }, new { @class = "resume-link" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 252 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                                                                                                          
+                                                }
+                                                else
+                                                {
+                                                    switch (application.VacancyStatus)
+                                                    {
+                                                        case VacancyStatuses.Expired:
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                                            ");
+
+WriteLiteral("Apprenticeship closed\r\n");
+
+            
+            #line 260 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                    break;
+                                                        case VacancyStatuses.Unavailable:
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                                            ");
+
+WriteLiteral("Apprenticeship no longer available\r\n");
+
+            
+            #line 263 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                    break;
+                                                    }
+                                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                            </td>\r\n                              " +
+"              <td");
+
+WriteLiteral(" class=\"ta-center\"");
+
+WriteLiteral(">\r\n                                                <a");
+
+WriteAttribute("id", Tuple.Create(" id=\"", 17662), Tuple.Create("\"", 17686)
+, Tuple.Create(Tuple.Create("", 17667), Tuple.Create("delete-draft-", 17667), true)
+            
+            #line 268 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+, Tuple.Create(Tuple.Create("", 17680), Tuple.Create<System.Object, System.Int32>(index
+            
+            #line default
+            #line hidden
+, 17680), false)
+);
+
+WriteLiteral(" title=\"Remove from my applications\"");
+
+WriteLiteral(" class=\"icon-black delete-draft\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 17755), Tuple.Create("\"", 17853)
+            
+            #line 268 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                     , Tuple.Create(Tuple.Create("", 17762), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
+            
+            #line default
+            #line hidden
+, 17762), false)
+);
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle\"");
+
+WriteLiteral("></i><span");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove from my applications</span></a>\r\n                                        " +
+"    </td>\r\n                                        </tr>\r\n");
+
+            
+            #line 271 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                        index++;
+                                    }
+                                
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            </tbody>\r\n                        </table>\r\n");
+
+            
+            #line 276 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 278 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 278 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                     if (Model.TraineeshipApplications.Any())
+                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(" id=\"dashTraineeships\"");
+
+WriteLiteral(">Traineeships</h2>\r\n");
+
+WriteLiteral("                        <table");
+
+WriteLiteral(" id=\"traineeships-table\"");
+
+WriteLiteral(" class=\"vert-middle\"");
+
+WriteLiteral(">\r\n                            <colgroup>\r\n                                <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(">\r\n                                <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(">\r\n                                <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(">\r\n                                <col>\r\n                            </colgroup>" +
+"\r\n                            <tbody");
+
+WriteLiteral(" class=\"tbody-3rows\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 289 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 289 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                 foreach (var application in Model.TraineeshipApplications)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <tr");
+
+WriteLiteral(" class=\"traineeship-table-row\"");
+
+WriteLiteral(">\r\n                                        <td>\r\n");
+
+            
+            #line 293 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                            
+            
+            #line default
+            #line hidden
+            
+            #line 293 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                             if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                            {
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 295 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                           Write(application.Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" ");
+
+WriteLiteral("with ");
+
+            
+            #line 295 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                     Write(application.EmployerName);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 296 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                        }
+                                            else
+                                            {
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 299 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                           Write(Html.ActionLink(application.Title + " with " + application.EmployerName, "TraineeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 299 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                                                                                                                                                                                                    
+                                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        </td>\r\n                                  " +
+"      <td");
+
+WriteLiteral(" class=\"ta-center\"");
+
+WriteLiteral(">");
+
+            
+            #line 302 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                                         Write(Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</td>\r\n                                        <td");
+
+WriteLiteral(" class=\"ta-center\"");
+
+WriteLiteral(">\r\n                                            Applied<br />\r\n");
+
+WriteLiteral("                                            ");
+
+            
+            #line 305 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                       Write(Html.DisplayFor(m => application.DateApplied));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                        </td>\r\n                                " +
+"    </tr>\r\n");
+
+            
+            #line 308 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            </tbody>\r\n                            <tbody");
+
+WriteLiteral(" class=\"tbody-expandrows\"");
+
+WriteLiteral(">\r\n                                <tr");
+
+WriteLiteral(" class=\"no-btm-border\"");
+
+WriteLiteral(">\r\n                                    <td");
+
+WriteLiteral(" colspan=\"2\"");
+
+WriteLiteral("></td>\r\n                                    <td");
+
+WriteLiteral(" class=\"no-wrap ta-center\"");
+
+WriteLiteral(">\r\n                                        <a");
+
+WriteLiteral(" class=\"btnExpandRows fake-link\"");
+
+WriteLiteral(" href=\"#\"");
+
+WriteLiteral(" aria-expanded=\"false\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-angle-down\"");
+
+WriteLiteral("></i>More</a>\r\n                                    </td>\r\n                       " +
+"         </tr>\r\n                            </tbody>\r\n                        </" +
+"table>\r\n");
+
+            
+            #line 319 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                </section>\r\n            </div>\r\n");
+
+            
+            #line 322 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+    }
 
             
             #line default
@@ -1623,7 +1607,7 @@ WriteLiteral("            </section>\r\n        </div>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 332 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
+            #line 324 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
 }
 
             

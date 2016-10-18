@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage
 {
+    using Constants;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Constants;
 
     public class RouteConfig
     {
@@ -76,13 +76,13 @@
             routes.MapRoute(
                 name: ManagementRouteNames.Dashboard,
                 url: "dashboard",
-                defaults: new {controller = "AgencyUser", action = "Dashboard"}
+                defaults: new { controller = "AgencyUser", action = "Dashboard" }
                 );
 
             routes.MapRoute(
                 name: ManagementRouteNames.ChangeTeam,
                 url: "changeteam",
-                defaults: new {controller = "AgencyUser", action = "ChangeTeam" }
+                defaults: new { controller = "AgencyUser", action = "ChangeTeam" }
                 );
 
             routes.MapRoute(
@@ -185,6 +185,12 @@
                name: ManagementRouteNames.ViewCandidateApprenticeshipApplication,
                url: "candidate/apprenticeship",
                defaults: new { controller = "Candidate", action = "Apprenticeship" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateApprenticeshipApplicationFeedback,
+               url: "candidate/applicationfeedback",
+               defaults: new { controller = "Candidate", action = "ApplicationFeedback" }
                );
 
             routes.MapRoute(

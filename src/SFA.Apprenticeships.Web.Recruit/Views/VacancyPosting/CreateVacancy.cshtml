@@ -1,13 +1,14 @@
 ﻿@model NewVacancyViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
-    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView)
+    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new { OfflineUrlButtonName = "CreateVacancy" })
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "CreateVacancy";
@@ -31,6 +32,7 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/autosave")
+    @Scripts.Render("~/bundles/basicVacancyDetails")
 
     <script>
         $("input[name='OfflineVacancy']").change(function() {
@@ -50,6 +52,10 @@
                 postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy)'
             });
         });
+
+        var postUrl = '@Url.RouteUrl(RecruitmentRouteNames.CreateVacancy)';
+        var multipleOfflineUrlsButtonText = '@NewVacancyViewModelMessages.MultiOfflineUrlsButtonText';
+        var singleOfflineUrlButtonText = '@NewVacancyViewModelMessages.SingleOfflineUrlButtonText';
     </script>
 }
 
