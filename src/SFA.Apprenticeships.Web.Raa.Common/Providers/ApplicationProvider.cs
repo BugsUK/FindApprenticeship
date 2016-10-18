@@ -18,6 +18,7 @@
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
+    using ViewModels.VacancyStatus;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
     using Order = Domain.Raa.Interfaces.Repositories.Models.Order;
@@ -71,7 +72,7 @@
             viewModel.VacancyType = vacancy.VacancyType;
             viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
 
-            var applications = vacancy.VacancyType == VacancyType.Traineeship
+            List<ApplicationSummary> applications = vacancy.VacancyType == VacancyType.Traineeship
                 ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
                 : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList();
 
@@ -86,6 +87,39 @@
             viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
             viewModel.ApplicationSummaries = _mapper.Map<List<ApplicationSummary>, List<ApplicationSummaryViewModel>>(applications.OrderBy(a => a.CandidateDetails.LastName).ToList());
 
+            return viewModel;
+        }
+
+        public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(int vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
+            var viewModel = new BulkDeclineCandidatesViewModel
+            {
+                EmployerName = employer.Name,
+                VacancyType = vacancy.VacancyType,
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                VacancyTitle = vacancy.Title,
+                VacancyId = vacancy.VacancyId
+            };
+            List<ApplicationSummary> applications = vacancy.VacancyType == VacancyType.Traineeship
+                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
+                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList();
+
+            var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
+            var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
+            viewModel.NewApplicationsCount = @new.Count;
+            viewModel.InProgressApplicationsCount = viewed.Count;
+            var vacancyApplicationsSearch = new VacancyApplicationsSearchViewModel(vacancyReferenceNumber);
+            viewModel.ApplicationSummariesViewModel = new PageableViewModel<ApplicationSummaryViewModel>
+            {
+                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications).Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
+                ResultsCount = applications.Count,
+                CurrentPage = vacancyApplicationsSearch.CurrentPage,
+                TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
+            };
+            viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;
             return viewModel;
         }
 

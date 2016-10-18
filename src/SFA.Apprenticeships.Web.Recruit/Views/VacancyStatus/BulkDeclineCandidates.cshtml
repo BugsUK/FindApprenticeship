@@ -1,5 +1,5 @@
 ﻿@using System.Web.Mvc.Html
-@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
 @using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 @using SFA.Apprenticeships.Web.Recruit.Constants
@@ -91,12 +91,14 @@
                     @{
                         var newOrder = Model.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
                         var surnameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ?
-                            Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                        Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                     }
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldLastName, newOrder).RouteValues)" class="vacancy-filter">
                         <span class="font-black">Surname <i class="fa @surnameSortClass" aria-hidden="true"></i></span>
                     </a>
                 </th>
+
+
                 <th>
                     @{
                         var firstNameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldFirstName ?
@@ -141,7 +143,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var applicationSummary in Model.ApplicationSummariesViewModel)
+            @foreach (var applicationSummary in Model.ApplicationSummariesViewModel.Page)
             {
                 <tr class="applicant">
                     <td>
@@ -176,11 +178,11 @@
             </tbody>
         </table>
         </section>
-            @*<div class="page-navigation">
+            <div class="page-navigation">
 
                 @{
-                    var currentPage = Model.ApplicationSummaries.CurrentPage;
-                    var totalNumberOfPages = Model.ApplicationSummaries.TotalNumberOfPages;
+                    var currentPage = Model.ApplicationSummariesViewModel.CurrentPage;
+                    var totalNumberOfPages = Model.ApplicationSummariesViewModel.TotalNumberOfPages;
                     var prevLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage - 1).RouteValues);
                     var nextLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage + 1).RouteValues);
                 }
@@ -209,24 +211,22 @@
                     <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
                 </a>
 
-            </div>*@
+            </div>
             <div class="form-group">
                 <button type="submit" class="button">Confirm and continue</button>
                 <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Cancel</a>
             </div>
         </div>
     </section>
-    @*<section class="grid grid-1-3 gov-border grey-background">
+    <section class="grid grid-1-3 gov-border grey-background">
         <br />
         <div class="inner-block">
             <div class="hgroup-small">
                 <h2 class="heading-medium">
-                    @Model.VacancyTitle
-                    TEst
+                    @Model.VacancyTitle                    
                 </h2>
                 <p class="subtitle">
-                    @Model.EmployerName
-                    Test
+                    @Model.EmployerName                    
                 </p>
                 <br />
                 <p class="font-xsmall">
@@ -235,5 +235,5 @@
                 <br />
             </div>
         </div>
-    </section>*@
+    </section>
 </div>

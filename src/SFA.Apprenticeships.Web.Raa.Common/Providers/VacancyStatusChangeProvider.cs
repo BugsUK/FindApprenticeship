@@ -31,12 +31,6 @@
             return new ArchiveVacancyViewModel(HasOutstandingActions(vacancy), vacancy.VacancyId, vacancyReferenceNumber);
         }
 
-        public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
-        {
-            var vacancy = _vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber);
-            return new BulkDeclineCandidatesViewModel(GetCandidatesToDecline(vacancy), vacancy.VacancyId, vacancyReferenceNumber);
-        }
-
         private bool HasOutstandingActions(Vacancy vacancy)
         {
             //TODO: Put this somewhwere more common
@@ -50,21 +44,7 @@
             var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
 
             return (apprenticeshipApplicationSummaries.Any(a => statusesRequiringAction.Contains(a.Status)));
-        }
-
-        private IEnumerable<ApprenticeshipApplicationSummary> GetCandidatesToDecline(Vacancy vacancy)
-        {
-            //TODO: Put this somewhwere more common
-            var statusesRequiringAction = new List<ApplicationStatuses>()
-            {
-                ApplicationStatuses.InProgress,
-                ApplicationStatuses.Submitted
-            };
-
-            var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
-
-            return (apprenticeshipApplicationSummaries.Where(a => statusesRequiringAction.Contains(a.Status)));
-        }
+        }        
 
         public ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel)
         {

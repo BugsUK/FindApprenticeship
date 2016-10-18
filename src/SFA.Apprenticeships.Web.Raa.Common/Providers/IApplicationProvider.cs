@@ -5,6 +5,7 @@
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
+    using ViewModels.VacancyStatus;
 
     public interface IApplicationProvider
     {
@@ -32,5 +33,6 @@
 
         void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
         ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelection);
+        BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(int vacancyReferenceNumber);
     }
 }

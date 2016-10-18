@@ -2,23 +2,21 @@
 {
     using Apprenticeships.Application.Interfaces;
     using Common.Mediators;
-    using Domain.Entities.Applications;
     using Raa.Common.Providers;
-    using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.VacancyStatus;
-    using System.Collections.Generic;
-    using System.Linq;
     using VacancyPosting;
 
     public class VacancyStatusMediator : IVacancyStatusMediator
     {
         private readonly IVacancyStatusChangeProvider _vacancyStatusChangeProvider;
+        private readonly IApplicationProvider _applicationProvider;
         private readonly IMapper _mapper;
 
-        public VacancyStatusMediator(IVacancyStatusChangeProvider vacancyStatusChangeProvider, IMapper mapper)
+        public VacancyStatusMediator(IVacancyStatusChangeProvider vacancyStatusChangeProvider, IMapper mapper, IApplicationProvider applicationProvider)
         {
             _vacancyStatusChangeProvider = vacancyStatusChangeProvider;
             _mapper = mapper;
+            _applicationProvider = applicationProvider;
         }
 
         public MediatorResponse<ArchiveVacancyViewModel> GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
@@ -44,7 +42,7 @@
                 };
             }
 
-            return new MediatorResponse<ArchiveVacancyViewModel>()
+            return new MediatorResponse<ArchiveVacancyViewModel>
             {
                 ViewModel = model,
                 Code = VacancyStatusMediatorCodes.ArchiveVacancy.Ok
@@ -53,9 +51,8 @@
 
         public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
         {
-            var model = _vacancyStatusChangeProvider.GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
-            model.ApplicationSummariesViewModel = _mapper.Map<List<ApplicationSummary>, List<ApplicationSummaryViewModel>>(model.ApplicationSummaries.OrderBy(a => a.CandidateDetails.LastName).ToList());
-            return new MediatorResponse<BulkDeclineCandidatesViewModel>()
+            var model = _applicationProvider.GetBulkDeclineCandidatesViewModel(vacancyReferenceNumber);
+            return new MediatorResponse<BulkDeclineCandidatesViewModel>
             {
                 ViewModel = model,
                 Code = VacancyStatusMediatorCodes.BulkDeclineCandidatesViewModel.Ok,
