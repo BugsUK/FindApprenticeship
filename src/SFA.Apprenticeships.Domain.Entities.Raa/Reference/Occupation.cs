@@ -10,6 +10,11 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
 
     public class Occupation
     {
+        public Occupation()
+        {
+            Status = OccupationStatusType.Active;
+        }
+
         public int Id { get; set; }
 
         public string CodeName { get; set; }

@@ -4,6 +4,11 @@
 
     public class Framework
     {
+        public Framework()
+        {
+            Status = FrameworkStatusType.Active;
+        }
+
         public int Id { get; set; }
 
         public string CodeName { get; set; }
