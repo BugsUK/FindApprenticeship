@@ -58,7 +58,6 @@
                 .ForMember(dest => dest.OfflineApplicationUrl, opt => opt.MapFrom(src => src.EmployersWebsite));
             Mapper.CreateMap<VacancyLocationAddressViewModel, VacancyLocation>()
                 .ForMember(dest => dest.VacancyId, opt => opt.Ignore())
-                .ForMember(dest => dest.VacancyLocationId, opt => opt.Ignore())
                 .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore())
                 .ForMember(dest => dest.EmployersWebsite, opt => opt.MapFrom(src => src.OfflineApplicationUrl));
 

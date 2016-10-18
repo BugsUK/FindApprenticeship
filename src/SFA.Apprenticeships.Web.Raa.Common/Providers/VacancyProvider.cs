@@ -440,7 +440,8 @@
                         var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
                         if (vacancyLocation != null)
                         {
-                            vacancyLocation.EmployersWebsite = locationAddress.OfflineApplicationUrl;
+                            var offlineApplicationUrl = !string.IsNullOrEmpty(locationAddress.OfflineApplicationUrl) ? new UriBuilder(locationAddress.OfflineApplicationUrl).Uri.ToString() : locationAddress.OfflineApplicationUrl;
+                            vacancyLocation.EmployersWebsite = offlineApplicationUrl;
                         }
                     }
                 }
@@ -1355,7 +1356,8 @@
                         var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
                         if (vacancyLocation != null)
                         {
-                            vacancyLocation.EmployersWebsite = locationAddress.OfflineApplicationUrl;
+                            var offlineApplicationUrl = !string.IsNullOrEmpty(locationAddress.OfflineApplicationUrl) ? new UriBuilder(locationAddress.OfflineApplicationUrl).Uri.ToString() : locationAddress.OfflineApplicationUrl;
+                            vacancyLocation.EmployersWebsite = offlineApplicationUrl;
                         }
                     }
                 }
@@ -1531,7 +1533,7 @@
 
         public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
         {
-            var addresses = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>);
+            var vacancyLocations = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>).ToList();
 
             var vacancyOwnerRelationship =
                 _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
@@ -1553,11 +1555,24 @@
 
             GeoCodeVacancyLocations(viewModel);
 
-            if (addresses.Count() == 1)
+            var existingVacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+            if (existingVacancyLocations != null && existingVacancyLocations.Count > 0)
+            {
+                foreach (var vacancyLocation in vacancyLocations.Where(a => a.VacancyLocationId != 0))
+                {
+                    var existingVacancyLocation = existingVacancyLocations.SingleOrDefault(l => l.VacancyLocationId == vacancyLocation.VacancyLocationId);
+                    if (existingVacancyLocation != null)
+                    {
+                        vacancyLocation.EmployersWebsite = existingVacancyLocation.EmployersWebsite;
+                    }
+                }
+            }
+
+            if (vacancyLocations.Count == 1)
             {
                 //Set address
-                vacancy.Address = addresses.Single().Address;
-                vacancy.NumberOfPositions = addresses.Single().NumberOfPositions;
+                vacancy.Address = vacancyLocations.Single().Address;
+                vacancy.NumberOfPositions = vacancyLocations.Single().NumberOfPositions;
                 vacancy.LocalAuthorityCode =
                     _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
@@ -1567,9 +1582,6 @@
             else
             {
                 _vacancyPostingService.UpdateVacancy(vacancy);
-                var vacancyLocations =
-                    _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        viewModel.Addresses);
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;

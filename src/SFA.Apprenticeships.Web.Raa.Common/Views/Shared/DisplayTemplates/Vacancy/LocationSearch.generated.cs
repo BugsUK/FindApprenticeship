@@ -662,7 +662,7 @@ WriteLiteral("                                    ");
 
             
             #line 132 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Postcode, new {@id = "addresses_" + i + "address__Postcode", Name = "Addresses[" + i + "].Address.Postcode"}));
+                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].VacancyLocationId, new { @id = "addresses_" + i + "__VacancyLocationId", Name = "Addresses[" + i + "].VacancyLocationId" }));
 
             
             #line default
@@ -673,7 +673,7 @@ WriteLiteral("                                    ");
 
             
             #line 133 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine1, new {@id = "addresses_" + i + "address__AddressLine1", Name = "Addresses[" + i + "].Address.AddressLine1"}));
+                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Postcode, new {@id = "addresses_" + i + "address__Postcode", Name = "Addresses[" + i + "].Address.Postcode"}));
 
             
             #line default
@@ -684,7 +684,7 @@ WriteLiteral("                                    ");
 
             
             #line 134 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new {@id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2"}));
+                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine1, new {@id = "addresses_" + i + "address__AddressLine1", Name = "Addresses[" + i + "].Address.AddressLine1"}));
 
             
             #line default
@@ -695,7 +695,7 @@ WriteLiteral("                                    ");
 
             
             #line 135 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine3, new {@id = "addresses_" + i + "address__AddressLine3", Name = "Addresses[" + i + "].Address.AddressLine3"}));
+                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new {@id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2"}));
 
             
             #line default
@@ -706,7 +706,7 @@ WriteLiteral("                                    ");
 
             
             #line 136 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine4, new {@id = "addresses_" + i + "address__AddressLine4", Name = "Addresses[" + i + "].Address.AddressLine4"}));
+                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine3, new {@id = "addresses_" + i + "address__AddressLine3", Name = "Addresses[" + i + "].Address.AddressLine3"}));
 
             
             #line default
@@ -717,7 +717,7 @@ WriteLiteral("                                    ");
 
             
             #line 137 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Town, new {@id = "addresses_" + i + "address__Town", Name = "Addresses[" + i + "].Address.Town"}));
+                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine4, new {@id = "addresses_" + i + "address__AddressLine4", Name = "Addresses[" + i + "].Address.AddressLine4"}));
 
             
             #line default
@@ -728,6 +728,17 @@ WriteLiteral("                                    ");
 
             
             #line 138 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+                               Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Town, new {@id = "addresses_" + i + "address__Town", Name = "Addresses[" + i + "].Address.Town"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 139 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
                                Write(Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Uprn, new {@id = "addresses_" + i + "address__Uprn", Name = "Addresses[" + i + "].Address.Uprn"}));
 
             
@@ -738,7 +749,7 @@ WriteLiteral("\r\n                                </td>\r\n                     
 WriteLiteral("                                    ");
 
             
-            #line 141 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 142 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
                                Write(Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@class = "form-control-small", @maxlength = "5", @id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"}));
 
             
@@ -749,7 +760,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 142 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 143 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
                                Write(Html.ValidationMessage("Addresses[" + i + "].NumberOfPositions"));
 
             
@@ -762,13 +773,13 @@ WriteLiteral(" class=\"ta-center\"");
 WriteLiteral(">\r\n");
 
             
-            #line 145 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 146 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
                                     
             
             #line default
             #line hidden
             
-            #line 145 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 146 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
                                       
                                         var buttonName = "RemoveLocation-" + i;
                                     
@@ -785,21 +796,21 @@ WriteLiteral(" class=\"button-link remove-button-link\"");
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8461), Tuple.Create("\"", 8480)
+WriteAttribute("value", Tuple.Create(" value=\"", 8671), Tuple.Create("\"", 8690)
             
-            #line 148 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 8469), Tuple.Create<System.Object, System.Int32>(buttonName
+            #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+                                                                , Tuple.Create(Tuple.Create("", 8679), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 8469), false)
+, 8679), false)
 );
 
 WriteLiteral(">remove location</button>\r\n                                </td>\r\n               " +
 "             </tr>\r\n");
 
             
-            #line 151 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 152 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
                         }
 
             
@@ -809,21 +820,21 @@ WriteLiteral("                        </tbody>\r\n                    </table>\r
 "/div>\r\n            </div>\r\n");
 
             
-            #line 156 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 157 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 157 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 158 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment)));
 
             
             #line default
             #line hidden
             
-            #line 157 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 158 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
                                                                                                                           
 
 
@@ -839,7 +850,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 160 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 161 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
            Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
 
             
@@ -850,7 +861,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 161 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 162 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
            Write(Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment)));
 
             
@@ -859,7 +870,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 163 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 164 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
         }
 
             
@@ -1041,6 +1052,13 @@ WriteLiteral("></span>\r\n                        <input");
 
 WriteLiteral(" type=\"hidden\"");
 
+WriteLiteral(" data-bind=\"value: itemVacancyLocationId, attr:{\'name\':\'Addresses[\' + $index() +\'" +
+"].VacancyLocationId\', \'id\':\'addresses_\'+ $index() + \'__VacancyLocationId\' }\"");
+
+WriteLiteral(">\r\n                        <input");
+
+WriteLiteral(" type=\"hidden\"");
+
 WriteLiteral(" data-bind=\"value: itemAddressLine1, attr:{\'name\':\'Addresses[\' + $index() +\'].Add" +
 "ress.AddressLine1\', \'id\':\'addresses_\'+ $index() + \'address__AddressLine1\' }\"");
 
@@ -1109,7 +1127,7 @@ WriteLiteral(">remove location</a>\r\n                    </td>\r\n             
 WriteLiteral("            ");
 
             
-            #line 229 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 231 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment)));
 
             
@@ -1126,7 +1144,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 233 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 235 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
@@ -1137,7 +1155,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 234 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 236 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment)));
 
             

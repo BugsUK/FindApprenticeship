@@ -48,7 +48,7 @@
                                             <br />
                                             @locationAddress.Address.AddressLine4 @locationAddress.Address.Postcode
                                             <br/>
-                                            <a id="external-employer-website" rel="external" href="@locationAddress.OfflineApplicationUrl" target="_blank">@locationAddress.OfflineApplicationUrl</a>
+                                            <a id=@("newvacancyviewmodel_locationaddresses_" + i + "__offlineapplicationurl") rel="external" href="@locationAddress.OfflineApplicationUrl" target="_blank">@locationAddress.OfflineApplicationUrl</a>
                                         </td>
                                     </tr>
                                 }
@@ -81,7 +81,7 @@
                                         <br />
                                         @locationAddress.Address.AddressLine4 @locationAddress.Address.Postcode
                                         <br />
-                                        <a id="external-employer-website" rel="external" href="@locationAddress.OfflineApplicationUrl" target="_blank">@locationAddress.OfflineApplicationUrl</a>
+                                        <a id=@("newvacancyviewmodel_locationaddresses_" + i + "__offlineapplicationurl") rel="external" href="@locationAddress.OfflineApplicationUrl" target="_blank">@locationAddress.OfflineApplicationUrl</a>
                                     </td>
                                 </tr>
                             }
