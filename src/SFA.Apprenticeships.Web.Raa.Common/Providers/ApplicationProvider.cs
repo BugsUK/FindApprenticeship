@@ -270,9 +270,9 @@
             return _apprenticeshipApplicationService.GetApplication(new Guid(applicationId));
         }
 
-        public void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes)
+        public void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate)
         {
-            _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
+            _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes, publishUpdate);
         }
 
         public ApplicationSelectionViewModel SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
@@ -317,9 +317,9 @@
             return viewModel;
         }
 
-        public void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes)
+        public void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate)
         {
-            _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
+            _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes, publishUpdate);
         }
 
         public void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress)

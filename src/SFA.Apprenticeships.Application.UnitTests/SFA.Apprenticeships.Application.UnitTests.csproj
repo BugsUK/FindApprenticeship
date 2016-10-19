@@ -135,6 +135,9 @@
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
     <Compile Include="Applications\Strategies\ApplicationStatusUpdateStrategyTests.cs" />
     <Compile Include="Application\ApprenticeshipApplicationServiceTests.cs" />
+    <Compile Include="Application\Strategies\Apprenticeships\UpdateApplicationNotesStrategyTests.cs" />
+    <Compile Include="Application\Strategies\SetApplicationStatusStrategyTests.cs" />
+    <Compile Include="Application\Strategies\Traineeships\UpdateApplicationNotesStrategyTests.cs" />
     <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSearchResultsBuilder.cs" />
     <Compile Include="Candidates\Configuration\HousekeepingConfigurationBuilder.cs" />

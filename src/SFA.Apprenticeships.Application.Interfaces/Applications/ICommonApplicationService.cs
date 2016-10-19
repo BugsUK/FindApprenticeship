@@ -8,7 +8,7 @@
     {
         int GetApplicationCount(int vacancyId);
 
-        void UpdateApplicationNotes(Guid applicationId, string notes);
+        void UpdateApplicationNotes(Guid applicationId, string notes, bool publishUpdate);
         
         IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds);
     }
