@@ -17,17 +17,12 @@
         private readonly ILogService _logService;
         private readonly IApplicationMappers _applicationMappers;
         private readonly IGetOpenConnection _targetDatabase;
-        private readonly IGenericSyncRespository _genericSyncRespository;
 
         private readonly VacancyApplicationsRepository _vacancyApplicationsRepository;
         private readonly CandidateRepository _candidateRepository;
         private readonly ApplicationRepository _destinationApplicationRepository;
         private readonly ApplicationHistoryRepository _destinationApplicationHistoryRepository;
         private readonly SchoolAttendedRepository _schoolAttendedRepository;
-
-        private readonly ITableSpec _applicationTable = new ApplicationTable();
-        private readonly ITableSpec _applicationHistoryTable = new ApplicationHistoryTable();
-        private readonly ITableSpec _schoolsAttendedTable = new SchoolAttendedTable();
 
         public ApplicationUpdater(string collectionName, IConfigurationService configurationService, ILogService logService)
         {
@@ -38,7 +33,6 @@
             _targetDatabase = new GetOpenConnectionFromConnectionString(configuration.TargetConnectionString);
 
             _applicationMappers = new ApplicationMappers(_logService);
-            _genericSyncRespository = new GenericSyncRespository(_logService, sourceDatabase, _targetDatabase);
 
             _vacancyApplicationsRepository = new VacancyApplicationsRepository(collectionName, configurationService, logService);
             _candidateRepository = new CandidateRepository(_targetDatabase);
@@ -74,16 +68,20 @@
         public void Update(ApplicationWithHistory applicationWithHistory)
         {
             //update existing application
-            _genericSyncRespository.BulkUpdate(_applicationTable, new[] {_applicationMappers.MapApplicationDictionary(applicationWithHistory.ApplicationWithSubVacancy.Application)});
+            _targetDatabase.UpdateSingle(applicationWithHistory.ApplicationWithSubVacancy.Application);
             
             //TODO: Likely that this creates multiple history records when the status is changed from new to inprogress and back again
             //Insert new application history records
-            var newApplicationHistories = applicationWithHistory.ApplicationHistory.Where(a => a.ApplicationHistoryId == 0);
-            _genericSyncRespository.BulkInsert(_applicationHistoryTable, newApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
+            foreach (var applicationHistory in applicationWithHistory.ApplicationHistory.Where(a => a.ApplicationHistoryId == 0))
+            {
+                _targetDatabase.Insert(applicationHistory);
+            }
 
             //Update existing application history records
-            var existingApplicationHistories = applicationWithHistory.ApplicationHistory.Where(a => a.ApplicationHistoryId != 0);
-            _genericSyncRespository.BulkUpdate(_applicationHistoryTable, existingApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
+            foreach (var applicationHistory in applicationWithHistory.ApplicationHistory.Where(a => a.ApplicationHistoryId != 0))
+            {
+                _targetDatabase.UpdateSingle(applicationHistory);
+            }
         }
     }
 }
