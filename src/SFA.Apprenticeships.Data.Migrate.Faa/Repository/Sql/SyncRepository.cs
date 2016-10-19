@@ -24,7 +24,7 @@
             };
 
             //Take off some time from the last values to ensure there's a slight overlap to prevent data being missed
-            const int overlapSeconds = 30;
+            const int overlapSeconds = 5;
 
             //SQL doesn't store the "kind" property for DateTime and this is required for correct comparison to MongoDB DateTimes
             if (databaseSyncParams.ApprenticeshipLastCreatedDate.HasValue)

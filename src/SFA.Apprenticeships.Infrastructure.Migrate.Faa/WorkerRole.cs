@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
 
             try
             {
-                //processor.Execute(_cancelSource.Token);
+                processor.Execute(_cancelSource.Token);
             }
             catch (Exception ex)
             {
