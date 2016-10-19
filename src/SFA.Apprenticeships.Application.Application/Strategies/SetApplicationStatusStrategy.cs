@@ -2,6 +2,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
 {
     using System;
     using Domain.Entities.Applications;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
 
@@ -11,13 +12,15 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly IReferenceNumberRepository _referenceNumberRepository;
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
+        private readonly IServiceBus _serviceBus;
 
-        public SetApplicationStatusStrategy(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, IReferenceNumberRepository referenceNumberRepository, IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy)
+        public SetApplicationStatusStrategy(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, IReferenceNumberRepository referenceNumberRepository, IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy, IServiceBus serviceBus)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _referenceNumberRepository = referenceNumberRepository;
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
+            _serviceBus = serviceBus;
         }
 
         public void SetSuccessfulDecision(Guid applicationId)
