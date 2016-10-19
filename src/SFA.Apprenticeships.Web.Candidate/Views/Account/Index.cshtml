@@ -52,7 +52,7 @@
                     Your application for @applicationNotification.Title has been @successOrUnsuccessful.
                     @if (applicationNotification.UnsuccessfulReason != null)
                     {
-                        <a>Read feedback</a>
+                        <a href="@Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback, new { id = applicationNotification.VacancyId })">Read feedback</a>
                     }                        
                 </p>
             }

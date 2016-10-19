@@ -281,7 +281,19 @@ WriteLiteral(".\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                        <a>Read feedback</a>\r\n");
+WriteLiteral("                        <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 2867), Tuple.Create("\"", 2985)
+            
+            #line 55 "..\..\Views\Account\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 2874), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback, new { id = applicationNotification.VacancyId })
+            
+            #line default
+            #line hidden
+, 2874), false)
+);
+
+WriteLiteral(">Read feedback</a>\r\n");
 
             
             #line 56 "..\..\Views\Account\Index.cshtml"
@@ -301,15 +313,15 @@ WriteLiteral("                </p>\r\n");
             #line hidden
 WriteLiteral("            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3006), Tuple.Create("\"", 3189)
+WriteAttribute("href", Tuple.Create(" href=\"", 3125), Tuple.Create("\"", 3308)
             
             #line 60 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 3013), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, 
+, Tuple.Create(Tuple.Create("", 3132), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, 
                         new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
-, 3013), false)
+, 3132), false)
 );
 
 WriteLiteral(" class=\"notInterested link-unimp icon-black\"");
