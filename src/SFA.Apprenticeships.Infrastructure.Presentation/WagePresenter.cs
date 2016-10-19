@@ -86,17 +86,17 @@
 
                     return displayText;
 
-                //case WageType.CustomRange:
-                //    return $"£{amountLowerBound?.ToString(WageAmountFormat)} - £{amountUpperBound?.ToString(WageAmountFormat)}";
+                case WageType.CustomRange:
+                    return $"£{amountLowerBound?.ToString(WageAmountFormat) ?? UnknownText} - £{amountUpperBound?.ToString(WageAmountFormat) ?? UnknownText}";
 
-                //case WageType.CompetitiveSalary:
-                //    return CompetitiveSalaryText;
+                case WageType.CompetitiveSalary:
+                    return CompetitiveSalaryText;
 
-                //case WageType.ToBeAgreedUponAppointment:
-                //        return ToBeAGreedUponAppointmentText;
+                case WageType.ToBeAgreedUponAppointment:
+                    return ToBeAGreedUponAppointmentText;
 
-                //case WageType.Unwaged:
-                //    return UnwagedText;
+                case WageType.Unwaged:
+                    return UnwagedText;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type,
