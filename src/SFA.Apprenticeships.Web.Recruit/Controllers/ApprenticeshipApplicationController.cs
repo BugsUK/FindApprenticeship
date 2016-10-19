@@ -232,7 +232,7 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendSuccessfulDecision")]
-        public ActionResult SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public ActionResult SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel, string applicationIds)
         {
             var response = _apprenticeshipApplicationMediator.SendSuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
 
@@ -246,7 +246,7 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel, string applicationIds)
         {
             var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
 

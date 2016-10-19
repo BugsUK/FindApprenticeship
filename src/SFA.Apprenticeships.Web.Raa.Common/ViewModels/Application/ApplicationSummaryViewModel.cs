@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
-    using System;
     using Domain.Entities.Applications;
+    using System;
 
     public class ApplicationSummaryViewModel
     {
@@ -15,5 +15,6 @@
         public DateTime DateApplied { get; set; }
         public ApplicationStatuses Status { get; set; }
         public string AnonymousLinkData { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

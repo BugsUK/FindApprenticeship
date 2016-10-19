@@ -2,12 +2,16 @@
 {
     using Application.Interfaces;
     using Attributes;
+    using Common.Constants;
     using Constants;
     using Domain.Entities.Raa;
     using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
+    using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.VacancyStatus;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -36,6 +40,18 @@
         {
             var response = _vacancyStatusMediator.GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
             return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmBulkDeclineCandidates(IList<Guid> applicationIds)
+        {
+            ApplicationSelectionViewModel viewModel = new ApplicationSelectionViewModel();
+            viewModel.ApplicationId = applicationIds.FirstOrDefault();
+            if (applicationIds.Any())
+                return RedirectToAction("ConfirmUnsuccessfulDecision", "ApprenticeshipApplication",
+                    routeValues: new { applicationIds = String.Join(",", applicationIds) });
+            SetUserMessage("Please select the candidates", UserMessageLevel.Warning);
+            return View("BulkDeclineCandidates");
         }
 
         [HttpPost]
