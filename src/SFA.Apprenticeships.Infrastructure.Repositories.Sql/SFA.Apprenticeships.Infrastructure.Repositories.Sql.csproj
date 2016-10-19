@@ -138,6 +138,7 @@
     <Compile Include="Schemas\dbo\DbHelpers.cs" />
     <Compile Include="Schemas\dbo\Entities\CandidateSummary.cs" />
     <Compile Include="Schemas\dbo\Entities\Employer.cs" />
+    <Compile Include="Schemas\dbo\Entities\ExternalSystem.cs" />
     <Compile Include="Schemas\dbo\Entities\ExternalSystemPermission.cs" />
     <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
     <Compile Include="Schemas\dbo\ReferenceNumberRepository.cs" />
