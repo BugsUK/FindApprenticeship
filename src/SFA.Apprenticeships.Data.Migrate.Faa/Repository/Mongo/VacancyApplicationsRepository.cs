@@ -86,6 +86,17 @@
             return await cursor;
         }
 
+        public VacancyApplication GetVacancyApplication(Guid applicationGuid)
+        {
+            var options = new FindOptions<VacancyApplication>
+            {
+                Projection = GetVacancyApplicationProjection()
+            };
+            var filter = Builders<VacancyApplication>.Filter.Eq(a => a.Id, applicationGuid);
+            var cursor = _database.GetCollection<VacancyApplication>(_collectionName).FindSync(filter, options);
+            return cursor.Single();
+        }
+
         private static ProjectionDefinition<VacancyApplication> GetVacancyApplicationProjection()
         {
             return Builders<VacancyApplication>.Projection

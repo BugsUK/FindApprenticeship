@@ -46,7 +46,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
             try
             {
-                _applicationProvider.UpdateTraineeshipApplicationViewModelNotes(traineeshipApplicationViewModel.ApplicationSelection.ApplicationId, traineeshipApplicationViewModel.Notes);
+                _applicationProvider.UpdateTraineeshipApplicationViewModelNotes(traineeshipApplicationViewModel.ApplicationSelection.ApplicationId, traineeshipApplicationViewModel.Notes, true);
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok, traineeshipApplicationViewModel);
             }
             catch (Exception)

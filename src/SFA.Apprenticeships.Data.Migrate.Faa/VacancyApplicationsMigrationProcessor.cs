@@ -75,10 +75,6 @@
         {
             _logService.Warn($"ExecuteFullSync on {_vacancyApplicationsUpdater.CollectionName} collection with LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
 
-            //TODO: These deletes would have to be done outside of this class as it affects traineeships and apprenticeships at the same time
-            //_genericSyncRespository.DeleteAll(_applicationHistoryTable);
-            //_genericSyncRespository.DeleteAll(_applicationTable);
-
             _logService.Info("Loading Vacancy Ids");
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");
@@ -109,12 +105,13 @@
             ProcessApplications(createdCursor, expectedCreatedCount, vacancyIds, candidates, SyncType.PartialByDateCreated, cancellationToken);
             _logService.Info($"Completed processing new {_vacancyApplicationsUpdater.CollectionName}");
 
+            //No longer updating here due to updates being handled by subscribers
             //Updates
-            _logService.Info($"Processing updated {_vacancyApplicationsUpdater.CollectionName}");
-            var expectedUpdatedCount = _vacancyApplicationsRepository.GetVacancyApplicationsUpdatedSinceCount(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
-            var updatedCursor = _vacancyApplicationsRepository.GetAllVacancyApplicationsUpdatedSince(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
-            ProcessApplications(updatedCursor, expectedUpdatedCount, vacancyIds, candidates, SyncType.PartialByDateUpdated, cancellationToken);
-            _logService.Info($"Completed processing updated {_vacancyApplicationsUpdater.CollectionName}");
+            //_logService.Info($"Processing updated {_vacancyApplicationsUpdater.CollectionName}");
+            //var expectedUpdatedCount = _vacancyApplicationsRepository.GetVacancyApplicationsUpdatedSinceCount(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
+            //var updatedCursor = _vacancyApplicationsRepository.GetAllVacancyApplicationsUpdatedSince(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
+            //ProcessApplications(updatedCursor, expectedUpdatedCount, vacancyIds, candidates, SyncType.PartialByDateUpdated, cancellationToken);
+            //_logService.Info($"Completed processing updated {_vacancyApplicationsUpdater.CollectionName}");
         }
 
         public void BulkUpsert(IList<ApplicationWithHistory> applicationsWithHistory, IDictionary<Guid, int> applicationIds)
