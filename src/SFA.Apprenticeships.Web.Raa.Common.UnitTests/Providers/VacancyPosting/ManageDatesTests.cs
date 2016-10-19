@@ -22,7 +22,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -59,7 +59,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -96,7 +96,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, 450, null, WageUnit.Monthly, 37.5m),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = 450, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.Monthly, HoursPerWeek = 37.5m },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -139,7 +139,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -180,7 +180,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -233,7 +233,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),

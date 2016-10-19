@@ -27,7 +27,7 @@
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
                 },
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel() { Type = WageType.ApprenticeshipMinimum, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
             });
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
@@ -49,7 +49,7 @@
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
                 },
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel() { Type = WageType.ApprenticeshipMinimum, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
             });
 
             var mediator = new VacancyMediatorBuilder().With(vacancyPostingProvider).Build();
@@ -87,7 +87,7 @@
                     ClosingDate = new DateViewModel(DateTime.UtcNow),
                     PossibleStartDate = new DateViewModel(DateTime.UtcNow)
                 },
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel() { Type = WageType.ApprenticeshipMinimum, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
             };
 
             var result = mediator.UpdateVacancy(viewModel);
@@ -160,7 +160,7 @@
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "A description",
-                Wage = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, 30),
+                Wage = new WageViewModel() { Type = WageType.ApprenticeshipMinimum, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = 30 },
                 WorkingWeek = "A working week"
             };
         }

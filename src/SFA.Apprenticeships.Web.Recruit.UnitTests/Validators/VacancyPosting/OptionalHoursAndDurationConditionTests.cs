@@ -54,7 +54,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 Duration = expectedDuration,
                 DurationType = durationType
             };
@@ -93,7 +93,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 Duration = expectedDuration,
                 DurationType = durationType
             };
@@ -137,7 +137,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 Duration = expectedDuration,
                 DurationType = durationType,
                 VacancyType = VacancyType.Traineeship
@@ -172,7 +172,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 Duration = expectedDuration,
                 DurationType = durationType
             };

@@ -228,7 +228,7 @@
             {
                 Duration = duration,
                 VacancySource = vacancySource,
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, 40)
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = 40 }
             };
 
             _aggregateValidator.Validate(vacancyViewModel);
@@ -276,7 +276,7 @@
             var vacancyViewModel = BuildValidVacancy(vacancySource);
             vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 VacancySource = vacancySource
             };
 
@@ -453,7 +453,7 @@
             var vacancyViewModel = BuildValidVacancy(vacancySource);
             vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 VacancySource = vacancySource,
                 Duration = (decimal?) duration
             };
@@ -504,7 +504,7 @@
             var vacancyViewModel = BuildValidVacancy(vacancySource);
             vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 VacancySource = vacancySource,
                 Duration = (decimal?)duration
             };
@@ -608,7 +608,7 @@
             vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancySource = vacancySource,
-                Wage = new WageViewModel(wageType, null, null, WageUnit.NotApplicable, hoursPerWeek)
+                Wage = new WageViewModel() { Type = wageType, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek }
             };
 
             _aggregateValidator.Validate(vacancyViewModel);
@@ -681,7 +681,7 @@
             viewModel.FurtherVacancyDetailsViewModel.VacancyType = VacancyType.Apprenticeship;
             viewModel.FurtherVacancyDetailsViewModel.Duration = 12;
             viewModel.FurtherVacancyDetailsViewModel.DurationType = DurationType.Months;
-            viewModel.FurtherVacancyDetailsViewModel.Wage = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, 30);
+            viewModel.FurtherVacancyDetailsViewModel.Wage = new WageViewModel() { Type = WageType.NationalMinimum, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = 30 };
             viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
             {
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),

@@ -48,7 +48,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek},
                 Duration = expectedDuration,
                 DurationType = durationType
             };
@@ -76,7 +76,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 Duration = expectedDuration,
                 DurationType = durationType,
                 VacancySource = VacancySource.Raa
@@ -126,7 +126,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 Duration = expectedDuration,
                 DurationType = durationType
             };
@@ -175,7 +175,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
                 Duration = expectedDuration,
                 DurationType = durationType
             };
@@ -225,7 +225,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek},
                 Duration = expectedDuration,
                 DurationType = durationType,
                 VacancySource = VacancySource.Raa
@@ -251,7 +251,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, hoursPerWeek)
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -280,7 +280,7 @@
                 DurationType = durationType,
                 VacancyType = VacancyType.Traineeship,
                 VacancySource = VacancySource.Raa,
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

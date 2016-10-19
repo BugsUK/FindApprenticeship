@@ -24,7 +24,7 @@
         {
             _validator = new VacancyQuestionsViewModelServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
-            _furtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel() {Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)};
+            _furtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel() {Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null } };
         }
 
         [TestCase(null, true)]

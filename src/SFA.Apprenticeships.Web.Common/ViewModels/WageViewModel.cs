@@ -7,15 +7,9 @@
     public class WageViewModel
     {
         public WageViewModel()
-        : this(WageType.Custom, null, null, WageUnit.NotApplicable, null){ }
-
-        public WageViewModel(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
         {
-            Type = type;
-            Amount = amount;
-            Text = text;
-            Unit = unit;
-            HoursPerWeek = hoursPerWeek;
+            Type = WageType.Custom;
+            Unit = WageUnit.NotApplicable;
         }
 
         public WageViewModel(Wage wage)
@@ -23,6 +17,8 @@
             HoursPerWeek = wage.HoursPerWeek;
             Type = wage.Type;
             Amount = wage.Amount;
+            AmountLowerBound = wage.AmountLowerBound;
+            AmountUpperBound= wage.AmountUpperBound;
             Text = wage.Text;
             Unit = wage.Unit;
         }
@@ -31,6 +27,10 @@
 
         [Display(Name = WageViewModelMessages.LabelText)]
         public decimal? Amount { get; set; }
+
+        public decimal? AmountLowerBound { get; set; }
+
+        public decimal? AmountUpperBound { get; set; }
 
         public string Text { get; set; }
 

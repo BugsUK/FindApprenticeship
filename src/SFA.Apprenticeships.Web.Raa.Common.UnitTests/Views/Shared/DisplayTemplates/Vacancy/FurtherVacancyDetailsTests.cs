@@ -14,6 +14,17 @@
     [TestFixture]
     public class FurtherVacancyDetailsTests : ViewUnitTest
     {
+        private WageViewModel dummyWageViewModel = new WageViewModel()
+        {
+            Type = WageType.Custom,
+            Amount = null,
+            AmountLowerBound = null,
+            AmountUpperBound = null,
+            Text = null,
+            Unit = WageUnit.NotApplicable,
+            HoursPerWeek = null
+        };
+
         [Test]
         public void ApprenticeshipHeading()
         {
@@ -93,7 +104,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -112,7 +123,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -131,7 +142,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -156,7 +167,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -181,7 +192,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -226,7 +237,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, 37.5m))
+                .With(vm => vm.Wage, new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = 37.5m })
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -245,7 +256,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, 123.45m, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, new WageViewModel() { Type = WageType.Custom, Amount = 123.45m, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null })
                 .Create();
             var details = new FurtherVacancyDetails();
 

@@ -45,7 +45,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = wage, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = wageUnit, HoursPerWeek = hoursPerWeek },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     PossibleStartDate = new DateViewModel(new DateTime(2016, 9, 30))
@@ -92,7 +92,7 @@
             //After 1st of october 2016 the National Minimum Wage for Apprentices increases to £3.40/hour
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-				Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek),
+				Wage = new WageViewModel() { Type = WageType.Custom, Amount = wage, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = wageUnit, HoursPerWeek = hoursPerWeek },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     PossibleStartDate = new DateViewModel(new DateTime(2016, 10, 1))
@@ -131,7 +131,7 @@
             //After 1st of october 2016 the National Minimum Wage for Apprentices increases to £3.40/hour
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, 123.45m, null, WageUnit.Weekly, 0),
+                Wage = new WageViewModel() { Type = WageType.Custom, Amount = 123.45m, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.Weekly, HoursPerWeek = 0 },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     PossibleStartDate = new DateViewModel(new DateTime(2016, 10, 1))

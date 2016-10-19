@@ -98,7 +98,7 @@
                         ClosingDate = new DateViewModel(new DateTime(2016, 09, 01)),
                         PossibleStartDate = new DateViewModel(new DateTime(2016, 09, 08))
                     },
-                    Wage = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, hoursPerWeek)
+                    Wage = new WageViewModel() { Type = wagetype, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -143,7 +143,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, null)
+                    Wage = new WageViewModel() { Type = WageType.Custom, Amount = wage, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = wageUnit, HoursPerWeek = null }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
