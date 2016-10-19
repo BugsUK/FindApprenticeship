@@ -1,15 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Application.Strategies
 {
     using System;
-    using Apprenticeships.Application.Application;
-    using Apprenticeships.Application.Application.Entities;
-    using Apprenticeships.Application.Application.Strategies;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using SFA.Apprenticeships.Application.Application.Entities;
+    using SFA.Apprenticeships.Application.Application.Strategies;
 
     [TestFixture]
     public class SetApplicationStatusStrategyTests

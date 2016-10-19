@@ -4,6 +4,11 @@
 
     public class TraineeshipApplicationUpdate
     {
-        public Guid ApplicationGuid { get; set; }
+        public TraineeshipApplicationUpdate(Guid applicationGuid)
+        {
+            ApplicationGuid = applicationGuid;
+        }
+
+        public Guid ApplicationGuid { get; private set; }
     }
 }

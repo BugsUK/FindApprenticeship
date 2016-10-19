@@ -38,6 +38,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
             var application = _apprenticeshipApplicationReadRepository.Get(applicationId);
             application.SetStateInProgress();
             _apprenticeshipApplicationWriteRepository.Save(application);
+            _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationId));
         }
 
         public void SetStateSubmitted(Guid applicationId)
@@ -45,6 +46,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
             var application = _apprenticeshipApplicationReadRepository.Get(applicationId);
             application.SetStateSubmitted();
             _apprenticeshipApplicationWriteRepository.Save(application);
+            _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationId));
         }
 
         private void SetDecision(Guid applicationId, ApplicationStatuses applicationStatus)
@@ -70,6 +72,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies
             };
 
             _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
+            _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationId));
         }
     }
 }
