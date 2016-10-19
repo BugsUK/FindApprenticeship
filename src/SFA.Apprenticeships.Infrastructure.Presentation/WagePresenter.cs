@@ -134,17 +134,12 @@
                 case WageUnit.Weekly:
                     return PerWeekText;
 
-                // TODO: HOTFIX: should revert this change.
-                default:
+                case WageUnit.NotApplicable:
                     return string.Empty;
 
-                    /*
-                    case WageUnit.NotApplicable:
-                        return string.Empty;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
-                    */
             }
         }
         
