@@ -79,7 +79,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
             try
             {
-                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes, true);
 
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewAppointCandidate.Ok, apprenticeshipApplicationViewModel);
             }
@@ -101,7 +101,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
             try
             {
-                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes, true);
 
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.Ok, apprenticeshipApplicationViewModel);
             }
@@ -123,7 +123,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
             try
             {
-                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes, true);
 
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.Ok, apprenticeshipApplicationViewModel);
             }
@@ -145,7 +145,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
             try
             {
-                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes, false);
                 _applicationProvider.SetStateSubmitted(apprenticeshipApplicationViewModel.ApplicationSelection);
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok, apprenticeshipApplicationViewModel);
             }
@@ -167,7 +167,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
             try
             {
-                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+                _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes, false);
                 _applicationProvider.SetStateInProgress(apprenticeshipApplicationViewModel.ApplicationSelection);
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok, apprenticeshipApplicationViewModel);
             }

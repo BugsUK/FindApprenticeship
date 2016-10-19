@@ -16,10 +16,13 @@ namespace SFA.Apprenticeships.Application.Application.Strategies.Apprenticeships
             _serviceBus = serviceBus;
         }
 
-        public void UpdateApplicationNotes(Guid applicationId, string notes)
+        public void UpdateApplicationNotes(Guid applicationId, string notes, bool publishUpdate)
         {
             _apprenticeshipApplicationWriteRepository.UpdateApplicationNotes(applicationId, notes);
-            _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationId));
+            if (publishUpdate)
+            {
+                _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationId));
+            }
         }
     }
 }

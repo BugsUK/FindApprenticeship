@@ -25,14 +25,26 @@
             _updateApplicationNotesStrategy = new UpdateApplicationNotesStrategy(_mockApprenticeshipApplicationWriteRepository.Object, _mockServiceBus.Object);
         }
 
-        [Test]
-        public void UpdateApplicationNotes_PostMessage()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UpdateApplicationNotes_PostMessage(bool publishUpdate)
         {
             var applicationId = Guid.NewGuid();
 
-            _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, "Note");
+            _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, "Note", publishUpdate);
 
-            _mockServiceBus.Verify(sb => sb.PublishMessage(It.Is<ApprenticeshipApplicationUpdate>(m => m.ApplicationGuid == applicationId)));
+            if (publishUpdate)
+            {
+                _mockServiceBus.Verify(
+                    sb =>
+                        sb.PublishMessage(It.Is<ApprenticeshipApplicationUpdate>(m => m.ApplicationGuid == applicationId)), Times.Once);
+            }
+            else
+            {
+                _mockServiceBus.Verify(
+                    sb =>
+                        sb.PublishMessage(It.Is<ApprenticeshipApplicationUpdate>(m => m.ApplicationGuid == applicationId)), Times.Never);
+            }
         }
     }
 }

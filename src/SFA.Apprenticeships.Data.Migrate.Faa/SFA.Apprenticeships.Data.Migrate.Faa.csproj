@@ -103,6 +103,14 @@
       <HintPath>..\packages\MongoDB.Driver.Core.2.2.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -144,6 +152,7 @@
     <Compile Include="Entities\Sql\CandidateSummary.cs" />
     <Compile Include="Entities\Sql\SubVacancy.cs" />
     <Compile Include="IMigrationProcessor.cs" />
+    <Compile Include="IoC\FaaMigrationRegistry.cs" />
     <Compile Include="IVacancyApplicationsUpdater.cs" />
     <Compile Include="Mappers\CandidateHistoryMappers.cs" />
     <Compile Include="Mappers\ApplicationHistoryMappers.cs" />
@@ -169,6 +178,8 @@
     <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
     <Compile Include="Repository\Sql\SchoolAttendedTable.cs" />
     <Compile Include="Repository\Sql\SubVacancyTable.cs" />
+    <Compile Include="Subscribers\TraineeshipApplicationUpdateSubscriber.cs" />
+    <Compile Include="Subscribers\ApprenticeshipApplicationUpdateSubscriber.cs" />
     <Compile Include="SyncType.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MigrateFromFaaToAvmsPlusConfiguration.cs" />
@@ -194,6 +205,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7d29ed20-ff3d-4fbb-b253-a44de1e42bcc}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
@@ -201,6 +216,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Data.Migrate\SFA.Apprenticeships.Data.Migrate.csproj">
       <Project>{73c8a0c0-3b18-4ed6-8d14-15f3e009c26c}</Project>
       <Name>SFA.Apprenticeships.Data.Migrate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
+      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
+      <Project>{bb161a54-ef1a-4611-8296-9a0be69b4587}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
       <Project>{a4de4af3-f06d-4d0f-af2e-e72a11bab49b}</Project>
