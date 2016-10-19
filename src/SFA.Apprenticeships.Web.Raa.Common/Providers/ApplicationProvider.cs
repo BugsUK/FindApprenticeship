@@ -265,11 +265,9 @@
             return viewModel;
         }
 
-        public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ApprenticeshipApplicationDetail GetApprenticeshipApplicationDetails(string applicationId)
         {
-            var application = _apprenticeshipApplicationService.GetApplicationForReview(applicationSelectionViewModel.ApplicationId);
-            var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
-            return viewModel;
+            return _apprenticeshipApplicationService.GetApplication(new Guid(applicationId));
         }
 
         public void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes)

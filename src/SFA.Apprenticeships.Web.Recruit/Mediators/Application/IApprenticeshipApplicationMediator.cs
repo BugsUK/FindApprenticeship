@@ -3,6 +3,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Common.Mediators;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
+    using System.Collections.Generic;
 
     public interface IApprenticeshipApplicationMediator
     {
@@ -19,5 +20,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
         MediatorResponse<ApplicationSelectionViewModel> RevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> View(string application);
+        IList<ApprenticeshipApplicationViewModel> GetApplicationDetails(List<string> applicationIds);
     }
 }

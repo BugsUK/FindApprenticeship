@@ -12,6 +12,8 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -248,8 +250,14 @@
         [HttpGet]
         public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel, string applicationIds)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
-
+            if (!string.IsNullOrWhiteSpace(applicationIds))
+            {
+                var applicationDetails = _apprenticeshipApplicationMediator.GetApplicationDetails(applicationIds.Split(',').ToList());
+                //if (applicationDetails.Any())
+                //    applicationSelectionViewModel.BulkDeclineApplications = applicationDetails;
+                return View();
+            }
+            var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);            
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:

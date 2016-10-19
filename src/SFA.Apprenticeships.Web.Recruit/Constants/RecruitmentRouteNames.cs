@@ -122,5 +122,6 @@
         public static string AdminEditProviderSite = "AdminEditProviderSite";
         public static string ManageVacanciesTransfers = "ManageVacanciesTransfers";
         public static string BulkDeclineCandidates = "BulkDeclineCandidates";
+        public static string ConfirmBulkDeclineCandidates = "ConfirmBulkDeclineCandidates";
     }
 }
