@@ -10,6 +10,9 @@
     {
         public FaaMigrationRegistry()
         {
+            For<IApprenticeshipApplicationUpdater>().Use<ApprenticeshipApplicationUpdater>();
+            For<ITraineeshipApplicationUpdater>().Use<TraineeshipApplicationUpdater>();
+
             // service bus
             RegisterServiceBusMessageBrokers();
         }

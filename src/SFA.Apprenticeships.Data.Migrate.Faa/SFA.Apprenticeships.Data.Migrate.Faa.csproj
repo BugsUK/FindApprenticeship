@@ -124,6 +124,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApplicationUpdater.cs" />
+    <Compile Include="ApprenticeshipApplicationsUpdater.cs" />
+    <Compile Include="ApprenticeshipApplicationUpdater.cs" />
     <Compile Include="AuditMigrationProcessor.cs" />
     <Compile Include="CandidateMigrationProcessor.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
@@ -151,6 +154,8 @@
     <Compile Include="Entities\Sql\CandidateHistory.cs" />
     <Compile Include="Entities\Sql\CandidateSummary.cs" />
     <Compile Include="Entities\Sql\SubVacancy.cs" />
+    <Compile Include="IApprenticeshipApplicationUpdater.cs" />
+    <Compile Include="ITraineeshipApplicationUpdater.cs" />
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IoC\FaaMigrationRegistry.cs" />
     <Compile Include="IVacancyApplicationsUpdater.cs" />
@@ -181,6 +186,8 @@
     <Compile Include="Subscribers\TraineeshipApplicationUpdateSubscriber.cs" />
     <Compile Include="Subscribers\ApprenticeshipApplicationUpdateSubscriber.cs" />
     <Compile Include="SyncType.cs" />
+    <Compile Include="TraineeshipApplicationsUpdater.cs" />
+    <Compile Include="TraineeshipApplicationUpdater.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MigrateFromFaaToAvmsPlusConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />
