@@ -30,7 +30,7 @@
                 </p>
                 <br/>
                 <p class="font-xsmall">
-                    @Html.RouteLink("View my application", RecruitmentRouteNames.PreviewVacancy, new {id = Model.VacancyReferenceNumber}, new {@class = "account-link"})
+                    @Html.RouteLink("See full vacancydetails", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber, mode="bulkUpload"}, new {@class = "account-link"})
                 </p>
                 <br/>
             </div>

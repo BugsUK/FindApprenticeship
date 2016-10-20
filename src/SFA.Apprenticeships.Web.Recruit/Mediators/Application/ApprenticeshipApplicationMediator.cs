@@ -5,16 +5,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Common.Constants;
     using Common.Mediators;
     using Constants.Messages;
-    using Domain.Entities.Applications;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using System;
-    using System.Collections.Generic;
     using System.Web;
-    using Domain.Raa.Interfaces.Repositories;
 
     public class ApprenticeshipApplicationMediator : MediatorBase, IApprenticeshipApplicationMediator
     {
@@ -23,7 +20,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelServerValidator;
         private readonly IDecryptionService<AnonymisedApplicationLink> _decryptionService;
         private readonly IDateTimeService _dateTimeService;
-        private readonly ILogService _logService;        
+        private readonly ILogService _logService;
 
         public ApprenticeshipApplicationMediator(IApplicationProvider applicationProvider,
             ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelServerValidator,
@@ -34,7 +31,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             _apprenticeshipApplicationViewModelServerValidator = apprenticeshipApplicationViewModelServerValidator;
             _decryptionService = decryptionService;
             _dateTimeService = dateTimeService;
-            _logService = logService;            
+            _logService = logService;
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
@@ -74,9 +71,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
         public MediatorResponse<BulkApplicationsRejectViewModel> GetApprenticeshipApplicationViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
         {
-            
             var bulkRejectApplications =
-                _applicationProvider.GetBulkApplicationsRejectViewModel(bulkApplicationsRejectViewModel);            
+                _applicationProvider.GetBulkApplicationsRejectViewModel(bulkApplicationsRejectViewModel);
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok, bulkApplicationsRejectViewModel);
         }
 
@@ -238,6 +234,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             updatedApplicationViewModel.ConfirmationStatusSentMessage =
                 ApplicationViewModelMessages.UnsuccessfulDecisionFormat;
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, updatedApplicationViewModel);
+        }
+
+        public MediatorResponse<BulkApplicationsRejectViewModel> SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
+        {
+            var bulkApplicationsViewModel = _applicationProvider.SendBulkUnsuccessfulDecision(bulkApplicationsRejectViewModel);
+            bulkApplicationsViewModel.ConfirmationStatusSentMessage = ApplicationViewModelMessages.BulkUnsuccessfulDecisionFormat;
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, bulkApplicationsViewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)

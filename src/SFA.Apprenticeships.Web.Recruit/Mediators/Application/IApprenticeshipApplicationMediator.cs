@@ -20,5 +20,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         MediatorResponse<ApplicationSelectionViewModel> RevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> View(string application);
         MediatorResponse<BulkApplicationsRejectViewModel> GetApprenticeshipApplicationViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
+        MediatorResponse<BulkApplicationsRejectViewModel> SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
     }
 }

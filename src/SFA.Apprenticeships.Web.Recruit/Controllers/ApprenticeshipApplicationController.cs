@@ -12,6 +12,7 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using System;
+    using System.Linq;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -283,14 +284,39 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendUnsuccessfulDecision")]
-        public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel, string bulkRejectApplications)
+        public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel);
-
+            ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
+            {
+                CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + response.ViewModel.ApplicantDetails.Name,
+                VacancyReferenceNumber = response.ViewModel.Vacancy.VacancyReferenceNumber
+            };
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
-                    return View("SentDecisionConfirmation", response.ViewModel);
+                    return View("SentDecisionConfirmation", confirmationStatusViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SendBulkUnsuccessfulDecision")]
+        public ActionResult SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.SendBulkUnsuccessfulDecision(bulkApplicationsRejectViewModel);
+            var appCount = response.ViewModel.ApplicationIds.First().Split(',').Length;
+            ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
+            {
+                CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + appCount + " candidates",
+                VacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+            };
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
+                    return View("SentDecisionConfirmation", confirmationStatusViewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

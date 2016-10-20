@@ -317,6 +317,16 @@
             return applicationSelectionViewModel;
         }
 
+        public BulkApplicationsRejectViewModel SendBulkUnsuccessfulDecision(
+            BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
+        {
+            foreach (var application in bulkApplicationsRejectViewModel.ApplicationIds.First().Split(','))
+            {
+                _apprenticeshipApplicationService.SetUnsuccessfulDecision(new Guid(application), bulkApplicationsRejectViewModel.UnSuccessfulReason);
+            }
+            return bulkApplicationsRejectViewModel;
+        }
+
         public ApplicationSelectionViewModel SetStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;

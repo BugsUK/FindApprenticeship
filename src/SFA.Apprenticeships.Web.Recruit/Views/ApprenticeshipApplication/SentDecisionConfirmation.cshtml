@@ -1,5 +1,5 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
-@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ConfirmationStatusViewModel
 
 @{
     ViewBag.Title = "Sent Decision Confirmation";
@@ -8,8 +8,9 @@
 <div class="success-banner" role="alert" aria-live="assertive">
     <h1 class="heading-large no-btm-margin">
         <i class="fa fa-check"></i>
-        @Model.ConfirmationStatusSentMessage message has been sent to @Model.ApplicantDetails.Name
+        @*@Model.ConfirmationStatusSentMessage message has been sent to @Model.ApplicantDetails.Name*@
+        @Model.CustomMessage
     </h1>
 </div>
 
-@Html.RouteLink("Return to vacancy applications", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber }, new { @class = "button" })
+@Html.RouteLink("Return to vacancy applications", RecruitmentRouteNames.VacancyApplications, new { Model.VacancyReferenceNumber }, new { @class = "button" })

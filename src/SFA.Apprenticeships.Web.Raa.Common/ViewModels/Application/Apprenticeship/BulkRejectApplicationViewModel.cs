@@ -21,5 +21,6 @@
         [Display(Name = ApplicationViewModelMessages.UnSuccessfulReason.LabelText)]
         [Required(ErrorMessage = ApplicationViewModelMessages.UnSuccessfulReason.BulkRequiredErrorText)]
         public string UnSuccessfulReason { get; set; }
+        public string ConfirmationStatusSentMessage { get; set; }
     }
 }

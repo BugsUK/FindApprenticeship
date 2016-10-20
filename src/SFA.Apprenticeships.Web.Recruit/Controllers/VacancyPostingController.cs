@@ -822,7 +822,7 @@
 
         [HttpGet]
         [OutputCache(Duration = 0)]
-        public ActionResult PreviewVacancy(int vacancyReferenceNumber)
+        public ActionResult PreviewVacancy(int vacancyReferenceNumber, string mode)
         {
             var response = _vacancyPostingMediator.GetPreviewVacancyViewModel(vacancyReferenceNumber);
 
@@ -835,7 +835,7 @@
             vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, edsUrn = vacancyViewModel.NewVacancyViewModel.VacancyOwnerRelationship.Employer.EdsUrn, vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
             vacancyViewModel.LocationsLink = Url.RouteUrl(RecruitmentRouteNames.AddLocations, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, employerId = vacancyViewModel.NewVacancyViewModel.VacancyOwnerRelationship.Employer.EmployerId, vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
-
+            vacancyViewModel.Mode = mode;
             ModelState.Clear();
 
             if (response.Message != null)

@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Constants.ViewModels;
+    using Domain.Entities.Raa.Vacancies;
     using Provider;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using Domain.Entities.Raa.Vacancies;
+    using System.Web.Mvc;
     using VacancyPosting;
     using Web.Common.ViewModels.Locations;
 
@@ -54,7 +54,7 @@
         public string QuestionsLink { get; set; }
 
         public string EmployerLink { get; set; }
-        
+
         public string LocationsLink { get; set; }
 
         public int ApplicationCount { get; set; }
@@ -85,5 +85,7 @@
         public bool IsCandidateView { get; set; }
 
         public VacancySource VacancySource { get; set; }
+
+        public string Mode { get; set; }
     }
 }

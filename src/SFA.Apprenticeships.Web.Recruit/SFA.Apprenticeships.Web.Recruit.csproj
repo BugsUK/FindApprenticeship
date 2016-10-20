@@ -901,6 +901,7 @@
     <Content Include="Views\ApprenticeshipApplication\SentDecisionConfirmation.cshtml" />
     <Content Include="Views\VacancyStatus\BulkDeclineCandidates.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\ConfirmBulkUnsuccessfulDecision.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\_BulkUploadVacancyLinks.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

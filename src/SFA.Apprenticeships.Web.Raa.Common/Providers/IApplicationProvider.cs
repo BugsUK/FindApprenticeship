@@ -33,5 +33,6 @@
         BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(int vacancyReferenceNumber);
         ApprenticeshipApplicationDetail GetApprenticeshipApplicationDetails(string applicationId);
         BulkApplicationsRejectViewModel GetBulkApplicationsRejectViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
+        BulkApplicationsRejectViewModel SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
     }
 }
