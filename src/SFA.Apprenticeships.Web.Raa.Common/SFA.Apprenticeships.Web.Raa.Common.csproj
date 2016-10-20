@@ -351,9 +351,8 @@
     <Compile Include="ViewModels\Provider\VacancyOwnerRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerResultViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerSearchViewModel.cs" />
+    <Compile Include="ViewModels\Employer\EmployerResultViewModel.cs" />
+    <Compile Include="ViewModels\Employer\EmployerSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\LocationSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyLocationAddressViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryViewModel.cs" />

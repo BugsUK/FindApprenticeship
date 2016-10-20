@@ -9,6 +9,7 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using SFA.Apprenticeships.Application.Interfaces;
+    using ViewModels.Employer;
 
     public class EmployerProvider : IEmployerProvider
     {

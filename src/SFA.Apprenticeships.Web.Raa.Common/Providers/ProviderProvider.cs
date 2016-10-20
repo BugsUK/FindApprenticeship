@@ -13,6 +13,7 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Mappers;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.VacancyPosting;
     using Web.Common.Converters;

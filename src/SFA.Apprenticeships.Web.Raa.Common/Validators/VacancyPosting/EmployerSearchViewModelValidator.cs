@@ -2,6 +2,7 @@
 {
     using FluentValidation;
     using Constants.ViewModels;
+    using ViewModels.Employer;
     using ViewModels.VacancyPosting;
 
     public class EmployerSearchViewModelClientValidator : AbstractValidator<EmployerSearchViewModel>

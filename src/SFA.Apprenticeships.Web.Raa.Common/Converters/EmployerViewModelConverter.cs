@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
     using Domain.Entities.Raa.Parties;
+    using ViewModels.Employer;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 

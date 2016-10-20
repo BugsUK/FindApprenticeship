@@ -12,6 +12,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using ViewModels.Employer;
     using ViewModels.VacancyPosting;
     using Web.Common.ViewModels;
 

@@ -1,7 +1,8 @@
-﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer
+@using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 
-@model EmployerSearchViewModel
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer.EmployerSearchViewModel
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Create New Vacancy - Link to a new employer";
@@ -11,7 +12,7 @@
     var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
     var ernSearchSelected = Model.FilterType == EmployerFilterType.EdsUrn ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
-    var noResults = (Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0);
+    var noResults = Model.NoResults;
     var searchPerformed = ViewData.ModelState.IsValid && ( !string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected));
 }
 

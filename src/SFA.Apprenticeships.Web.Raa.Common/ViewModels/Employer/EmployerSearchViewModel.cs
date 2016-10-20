@@ -1,10 +1,10 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using Constants.ViewModels;
     using Web.Common.ViewModels;
 
     public enum EmployerFilterType
@@ -50,10 +50,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
         [Display(Name = EmployerSearchViewModelMessages.Location.LabelText)]
         public string Location { get; set; }
 
-        //TODO: Merge these properties
-        public IEnumerable<EmployerResultViewModel> EmployerResults { get; set; }
-
         public PageableViewModel<EmployerResultViewModel> EmployerResultsPage { get; set; }
+
+        public bool NoResults => EmployerResultsPage == null || EmployerResultsPage.ResultsCount == 0;
 
         public object RouteValues => new
         {

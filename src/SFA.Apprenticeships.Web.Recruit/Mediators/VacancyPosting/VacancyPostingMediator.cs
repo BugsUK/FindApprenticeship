@@ -23,6 +23,7 @@
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Providers;
     using Raa.Common.Validators.VacancyPosting;
+    using Raa.Common.ViewModels.Employer;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
@@ -104,7 +105,7 @@
 
             viewModel.VacancyGuid = vacancyGuid;
 
-            if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
+            if (viewModel.NoResults)
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel);
             }
@@ -142,7 +143,7 @@
 
             var viewModel = _providerProvider.GetVacancyOwnerRelationshipViewModels(employerFilterViewModel);
 
-            if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
+            if (viewModel.NoResults)
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel);
             }
@@ -1010,7 +1011,7 @@
             {
                 result = new EmployerSearchViewModel
                 {
-                    ProviderSiteId = viewModel.ProviderSiteId, FilterType = EmployerFilterType.Undefined, EmployerResults = Enumerable.Empty<EmployerResultViewModel>(), EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>(), VacancyGuid = viewModel.VacancyGuid, ComeFromPreview = viewModel.ComeFromPreview
+                    ProviderSiteId = viewModel.ProviderSiteId, FilterType = EmployerFilterType.Undefined, EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>(), VacancyGuid = viewModel.VacancyGuid, ComeFromPreview = viewModel.ComeFromPreview
                 };
             }
             else
@@ -1027,7 +1028,7 @@
                 result = _employerProvider.GetEmployerViewModels(viewModel);
                 result.ComeFromPreview = viewModel.ComeFromPreview;
 
-                if ((result.EmployerResults == null || !result.EmployerResults.Any()) && (result.EmployerResultsPage == null || result.EmployerResultsPage.ResultsCount == 0))
+                if (viewModel.NoResults)
                 {
                     return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.NoResults, result);
                 }
