@@ -202,8 +202,7 @@
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
-            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+            IVacancySummaryRepository summaryRepository = new VacancySummaryRepository(_connection);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -227,9 +226,9 @@
             writeRepository.Create(vacancy);
 
             int totalResultsCount;
-            var findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            var findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 1,
+                RequestedPage = 1,
                 LatestClosingDate = DateTime.UtcNow.AddDays(3),
                 LiveDate = DateTime.UtcNow.AddHours(-2),
                 PageSize = 10,
@@ -239,9 +238,9 @@
             findResults.Should().HaveCount(1);
             totalResultsCount.Should().Be(1);
 
-            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 1,
+                RequestedPage = 1,
                 LatestClosingDate = DateTime.UtcNow.AddDays(3),
                 LiveDate = DateTime.UtcNow.AddHours(-2),
                 PageSize = 10,
@@ -251,9 +250,9 @@
             findResults.Should().HaveCount(0);
             totalResultsCount.Should().Be(0);
 
-            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 2,
+                RequestedPage = 2,
                 LatestClosingDate = DateTime.UtcNow.AddDays(3),
                 LiveDate = DateTime.UtcNow.AddHours(-2),
                 PageSize = 10,
@@ -263,9 +262,9 @@
             findResults.Should().HaveCount(0);
             totalResultsCount.Should().Be(1);
 
-            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 2,
+                RequestedPage = 2,
                 LatestClosingDate = DateTime.UtcNow.AddDays(1),
                 LiveDate = DateTime.UtcNow.AddHours(-2),
                 PageSize = 10,
@@ -275,9 +274,9 @@
             findResults.Should().HaveCount(0);
             totalResultsCount.Should().Be(0);
 
-            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 2,
+                RequestedPage = 2,
                 LatestClosingDate = DateTime.UtcNow.AddDays(3),
                 LiveDate = DateTime.UtcNow.AddHours(2),
                 PageSize = 10,

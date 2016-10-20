@@ -85,11 +85,6 @@
             return _getVacancySummaryStrategies.GetVacancySummariesByIds(vacancyIds);
         }
 
-        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
-        {
-            return _getVacancySummaryStrategies.GetByOwnerPartyIds(ownerPartyIds);
-        }
-
         public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             return _qaVacancyStrategies.ReserveVacancyForQa(vacancyReferenceNumber);

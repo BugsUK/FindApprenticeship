@@ -113,14 +113,20 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
 		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
-                            e.FullName AS EmployerName
+                            e.FullName AS EmployerName,
+                            p.TradingName as ProviderTradingName,
+                            v.SubmissionCount,
+                            v.StartedToQADateTime,
+                            v.QAUserName
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
                     JOIN	Employer e
                     ON		o.EmployerId = e.EmployerId
-                    JOIN	ProviderSiteRelationship r
-					ON		r.ProviderSiteId = o.ProviderSiteId
+                    JOIN	Provider p
+                    ON		p.ProviderID = v.ContractOwnerID
+                    JOIN	ProviderSite s
+                    ON      s.ProviderSiteId = v.VacancyManagerId
                     WHERE	o.ProviderSiteID = @ProviderSiteId
                     AND		(v.VacancyManagerId = @ProviderSiteId
                             OR v.DeliveryOrganisationId = @ProviderSiteId)
@@ -446,9 +452,107 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             return mapped;
         }
 
-        public IList<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int resultCount)
+        public IList<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalRecords)
         {
-            throw new NotImplementedException();
+            var sqlParams = new
+            {
+                Skip = query.PageSize * (query.RequestedPage - 1),
+                Take = query.PageSize,
+                VacancyStatuses = query.DesiredStatuses.Select(s => (int)s),
+                query.FrameworkCodeName,
+                query.LatestClosingDate,
+                query.LiveDate
+            };
+
+            var sql = $@"SELECT COUNT(*) OVER () AS TotalResultCount,
+                            v.VacancyId,
+                            v.VacancyOwnerRelationshipId,
+                            v.VacancyReferenceNumber,
+                            v.VacancyGuid,
+                            v.VacancyStatusId,
+                            v.VacancyTypeId,
+                            v.Title,
+                            v.AddressLine1,
+                            v.AddressLine2,
+                            v.AddressLine3,
+                            v.AddressLine4,
+                            v.AddressLine5,
+                            v.Town,
+                            v.CountyId,
+                            v.PostCode,
+                            v.ApplyOutsideNAVMS,
+                            v.ApplicationClosingDate,
+                            v.NoOfOfflineApplicants,
+                            CASE v.ApplyOutsideNAVMS
+ 			                    WHEN 1 THEN 0
+                                ELSE dbo.GetApplicantCount(v.VacancyId) 
+                            END
+                            AS ApplicantCount,
+		                    CASE v.ApplyOutsideNAVMS
+ 			                    WHEN 1 THEN 0
+			                    ELSE dbo.GetNewApplicantCount(v.VacancyId)
+		                    END
+		                    AS NewApplicantCount,
+                            dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
+		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
+		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
+                            e.FullName AS EmployerName,
+                            e.EmployerId,
+                            e.Town AS EmployerLocation,
+
+		                    af.CodeName AS FrameworkCodeName,
+		                    el.CodeName AS ApprenticeshipLevel,
+		                    ao.CodeName AS SectorCodeName,
+		                    dbo.GetCreatedByProviderUsername(v.VacancyId) AS CreatedByProviderUsername,
+		                    dbo.GetDateQAApproved(v.VacancyId) AS DateQAApproved,
+		                    rt.TeamName AS RegionalTeam,
+		                    af.StandardId
+
+                    FROM	Vacancy v
+                    JOIN	VacancyOwnerRelationship o
+                    ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                    JOIN	Employer e
+                    ON		o.EmployerId = e.EmployerId
+                    JOIN	ProviderSiteRelationship r
+                    ON		r.ProviderSiteId = o.ProviderSiteId
+
+                    JOIN	ProviderSite s
+                    ON      s.ProviderSiteId = v.VacancyManagerId
+
+                    LEFT OUTER JOIN	ApprenticeshipFramework af
+                    ON		af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
+                    LEFT OUTER JOIN	ApprenticeshipType AS at
+                    ON		at.ApprenticeshipTypeId = v.ApprenticeshipType
+                    LEFT OUTER JOIN	Reference.EducationLevel el
+                    ON		el.EducationLevelId = at.EducationLevelId
+                    LEFT OUTER JOIN	ApprenticeshipOccupation ao
+                    ON		v.SectorId = ao.ApprenticeshipOccupationId
+                    LEFT OUTER JOIN Reference.[Standard] rs
+                    ON		rs.FullName = af.FullName
+                    LEFT OUTER JOIN	RegionalTeamMappings t
+                    ON		s.PostCode LIKE t.PostcodeStart + '[0-9]%'
+                    LEFT OUTER JOIN	RegionalTeams rt
+                    ON		rt.Id = t.RegionalTeam_Id
+
+                    WHERE	v.VacancyID IN @vacancyIds
+                    AND     r.ProviderSiteRelationshipTypeId = 1
+                    AND     v.VacancyStatusId IN @VacancyStatuses
+                    AND     af.CodeName = @FrameworkCodeName
+                    {(query.EditedInRaa ? "AND     v.EditedInRaa = 1" : "")}
+                    {(query.LiveDate.HasValue ? "AND     dbo.GetLiveDate(v.VacancyId) >= @LiveDate" : "")}
+                    {(query.LatestClosingDate.HasValue ? "AND       v.ApplicationClosingDate <= @LatestClosingDate" : "")}
+                    ORDER BY v.VacancyReferenceNumber
+                    {(query.PageSize > 0 ? "OFFSET (@skip) ROWS FETCH NEXT (@take) ROWS ONLY" : "")}
+            ";
+
+            var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
+
+            // return the total record count as well
+            totalRecords = vacancies.Any() ? vacancies.First().TotalResultCount : 0;
+
+            var mapped = Mapper.Map<IList<DbVacancySummary>, List<VacancySummary>>(vacancies);
+
+            return mapped;
         }
 
 

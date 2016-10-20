@@ -22,8 +22,6 @@
 
         IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds);
 
-        List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
-
         Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 
         void UnReserveVacancyForQa(int vacancyReferenceNumber);

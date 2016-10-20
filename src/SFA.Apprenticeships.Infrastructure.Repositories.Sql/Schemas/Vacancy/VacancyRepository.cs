@@ -108,35 +108,6 @@
             return dbVacancy;
         }
 
-        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
-        {
-            var ownerPartyIdsArray = ownerPartyIds as int[] ?? ownerPartyIds.ToArray();
-            _logger.Debug("Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={0}", string.Join(", ", ownerPartyIdsArray));
-
-            var vacancies =
-                _getOpenConnection.Query<Vacancy>($@"
-                        SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)}
-                        FROM   dbo.Vacancy 
-                        WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
-                    new { VacancyOwnerRelationshipIds = ownerPartyIdsArray });
-
-            return MapVacancySummaries(vacancies.ToList());
-        }
-
-        public List<VacancySummary> GetByOwnerPartyId(int ownerPartyId)
-        {
-            _logger.Debug($"Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={ownerPartyId}");
-
-            var vacancies =
-                _getOpenConnection.Query<Vacancy>($@"
-                        SELECT {string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns)}
-                        FROM   dbo.Vacancy 
-                        WHERE  VacancyOwnerRelationshipId = @VacancyOwnerRelationshipId",
-                    new { VacancyOwnerRelationshipId = ownerPartyId });
-
-            return MapVacancySummaries(vacancies.ToList());
-        }
-
         public int CountWithStatus(params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called database to count apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
@@ -154,61 +125,6 @@
                 $"Found {count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
 
             return count;
-        }
-
-        public List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
-        {
-            _logger.Debug("Calling database to find apprenticeship vacancies");
-
-            var paramObject =
-                new
-                {
-                    query.FrameworkCodeName,
-                    query.LiveDate,
-                    query.LatestClosingDate,
-                    VacancyStatusCodeIds = query.DesiredStatuses.Select(s => (int)s),
-                    LiveStatusId = (int)VacancyStatus.Live,
-                    query.CurrentPage,
-                    query.PageSize
-                };
-
-            var coreQuery = @"
-FROM   dbo.Vacancy as vac
-WHERE  VacancyStatusId IN @VacancyStatusCodeIds
-" +
-                            (string.IsNullOrWhiteSpace(query.FrameworkCodeName)
-                                ? ""
-                                : "AND FrameworkId = (SELECT ApprenticeshipFrameworkId FROM dbo.ApprenticeshipFramework where CodeName = @FrameworkCodeName) ") +
-                            (query.EditedInRaa
-                                ? "AND vac.EditedInRaa = 1"
-                                : "") +
-                            @"
-" + (query.LiveDate.HasValue ? @"AND (select top 1 HistoryDate
-from dbo.VacancyHistory as vh
-where vh.VacancyId = vac.VacancyId and VacancyHistoryEventSubTypeId = @LiveStatusId
-order by HistoryDate desc) >= @LiveDate" : "") + @"  
-" + (query.LatestClosingDate.HasValue ? "AND ApplicationClosingDate <= @LatestClosingDate" : ""); // check these dates
-                                                                                                  // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
-
-            // TODO: Vacancy.DateSubmitted should be DateLive (or DatePublished)???
-            var data = _getOpenConnection.QueryMultiple<int, Vacancy>(@"
-SELECT COUNT(*)
-" + coreQuery + @"
-
-SELECT " + string.Join(", ", VacancyRepositoryResources.VacancySummaryColumns) + @"
-" + coreQuery + @"
-ORDER BY VacancyReferenceNumber
-OFFSET ((@CurrentPage - 1) * @PageSize) ROWS
-FETCH NEXT @PageSize ROWS ONLY
-", paramObject);
-
-            totalResultsCount = data.Item1.Single();
-
-            var dbVacancies = data.Item2;
-
-            _logger.Debug("Found {0} apprenticeship vacanc(ies)", dbVacancies.Count);
-
-            return MapVacancySummaries(dbVacancies.ToList());
         }
 
         private DomainVacancy MapVacancy(Vacancy dbVacancy)

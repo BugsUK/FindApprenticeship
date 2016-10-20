@@ -149,7 +149,7 @@
 
             var vacancies = Collection.Find(queryBuilder.And(mongoQueryConditions))
                 .SetSortOrder(SortBy.Ascending("VacancyReferenceNumber"))
-                .SetSkip(query.PageSize * (query.CurrentPage - 1))
+                .SetSkip(query.PageSize * (query.RequestedPage - 1))
                 .SetLimit(query.PageSize)
                 .Select(vacancy => _mapper.Map<MongoVacancy, VacancySummary>(vacancy))
                 .ToList();
