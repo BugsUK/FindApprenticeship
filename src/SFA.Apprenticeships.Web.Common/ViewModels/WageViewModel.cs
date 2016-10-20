@@ -25,6 +25,10 @@
 
         public WageType Type { get; set; }
 
+        public WageType CustomType { get; set; }
+
+        public WageType PresetText { get; set; }
+
         [Display(Name = WageViewModelMessages.LabelText)]
         public decimal? Amount { get; set; }
 
