@@ -1,32 +1,28 @@
 ﻿@using SFA.Apprenticeships.Web.Manage.Constants
-@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.EmployerSearchResultsViewModel
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer.EmployerSearchViewModel
 @{
-    ViewBag.Title = "Providers";
+    ViewBag.Title = "Employers";
 }
 
-<h1 id="heading" class="heading-xlarge">Providers</h1>
+<h1 id="heading" class="heading-xlarge">Employers</h1>
 
-<p>
-    @Html.RouteLink("New Provider", ManagementRouteNames.AdminCreateProvider)
-</p>
-
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminProviders))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEmployers))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <div class="form-group">
 
-        @Html.FormTextFor(m => m.SearchViewModel.Id, controlHtmlAttributes: new {type = "tel", size = 8})
-        @Html.FormTextFor(m => m.SearchViewModel.Ukprn, controlHtmlAttributes: new {type = "tel", size = 8, autofocus = "autofocus"})
-        @Html.FormTextFor(m => m.SearchViewModel.Name, controlHtmlAttributes: new {type = "text"})
+        @Html.FormTextFor(m => m.EdsUrn, controlHtmlAttributes: new {type = "tel", size = 9, autofocus = "autofocus"})
+        @Html.FormTextFor(m => m.Name, controlHtmlAttributes: new {type = "text"})
+        @Html.FormTextFor(m => m.Location, hintText: "Enter town or postcode", controlHtmlAttributes: new {type = "text"})
 
         <div class="form-group">
-            <button id="search-providers-button" type="submit" class="button" name="SearchProvidersAction" value="SearchProviders">Search Providers</button>
+            <button id="search-employers-button" type="submit" class="button" name="SearchEmployersAction" value="SearchEmployers">Search Employers</button>
         </div>
     </div>
 
-    if (Model.Providers != null && Model.Providers.Count > 0)
+    if (!Model.NoResults)
     {
         <div class="grid-wrapper">
             <div class="grid grid-1-1">
@@ -42,23 +38,23 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>UKPRN</th>
+                            <th>EDSURN</th>
                             <th>Full Name</th>
                             <th>Trading Name</th>
-                            <th>Status</th>
+                            <th>Address</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var provider in Model.Providers)
+                        @foreach (var employer in Model.Employers.Page)
                         {
                             <tr>
-                                <td>@provider.ProviderId</td>
-                                <td>@provider.Ukprn</td>
-                                <td>@provider.FullName</td>
-                                <td>@provider.TradingName</td>
-                                <td>@provider.ProviderStatusType</td>
-                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewProvider, new { provider.ProviderId })</td>
+                                <td>@employer.EmployerId</td>
+                                <td>@employer.EdsUrn</td>
+                                <td>@employer.FullName</td>
+                                <td>@employer.TradingName</td>
+                                <td>@employer.Address</td>
+                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewEmployer, new { employer.EmployerId })</td>
                             </tr>
                         }
                     </tbody>

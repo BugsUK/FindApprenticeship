@@ -25,9 +25,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel)
         {
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
-            var resultsPage = _employerService.GetEmployers(searchViewModel.EdsUrn, searchViewModel.Name, searchViewModel.Location, searchViewModel.EmployerResultsPage.CurrentPage, pageSize);
+            var resultsPage = _employerService.GetEmployers(searchViewModel.EdsUrn, searchViewModel.Name, searchViewModel.Location, searchViewModel.Employers.CurrentPage, pageSize);
             var resultsViewModelPage = resultsPage.ToViewModel(resultsPage.Page.Select(e => e.ConvertToResult()).ToList());
-            searchViewModel.EmployerResultsPage = resultsViewModelPage;
+            searchViewModel.Employers = resultsViewModelPage;
             return searchViewModel;
         }
     }

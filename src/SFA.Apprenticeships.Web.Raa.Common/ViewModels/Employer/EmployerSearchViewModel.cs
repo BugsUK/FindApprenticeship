@@ -19,7 +19,7 @@
     {
         public EmployerSearchViewModel()
         {
-            EmployerResultsPage = new PageableViewModel<EmployerResultViewModel> { CurrentPage = 1 };
+            Employers = new PageableViewModel<EmployerResultViewModel> { CurrentPage = 1 };
         }
 
         public EmployerSearchViewModel(EmployerSearchViewModel viewModel) : this()
@@ -29,9 +29,9 @@
             EdsUrn = viewModel.EdsUrn;
             Name = viewModel.Name;
             Location = viewModel.Location;
-            if (viewModel.EmployerResultsPage != null)
+            if (viewModel.Employers != null)
             {
-                EmployerResultsPage.CurrentPage = viewModel.EmployerResultsPage.CurrentPage;
+                Employers.CurrentPage = viewModel.Employers.CurrentPage;
             }
             VacancyGuid = viewModel.VacancyGuid;
             ComeFromPreview = viewModel.ComeFromPreview;
@@ -50,9 +50,9 @@
         [Display(Name = EmployerSearchViewModelMessages.Location.LabelText)]
         public string Location { get; set; }
 
-        public PageableViewModel<EmployerResultViewModel> EmployerResultsPage { get; set; }
+        public PageableViewModel<EmployerResultViewModel> Employers { get; set; }
 
-        public bool NoResults => EmployerResultsPage == null || EmployerResultsPage.ResultsCount == 0;
+        public bool NoResults => Employers == null || Employers.ResultsCount == 0;
 
         public object RouteValues => new
         {

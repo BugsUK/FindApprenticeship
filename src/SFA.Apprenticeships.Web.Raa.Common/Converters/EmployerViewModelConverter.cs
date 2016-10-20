@@ -13,7 +13,8 @@
             {
                 EmployerId = employer.EmployerId,
                 EdsUrn = employer.EdsUrn,
-                EmployerName = employer.Name,
+                FullName = employer.FullName,
+                TradingName = employer.TradingName,
                 Address = employer.Address
             };
 
@@ -26,7 +27,8 @@
             {
                 EmployerId = employer.EmployerId,
                 EdsUrn = employer.EdsUrn,
-                EmployerName = employer.Name,
+                FullName = employer.FullName,
+                TradingName = employer.TradingName,
                 Address = employer.Address.Convert()
             };
 
@@ -39,7 +41,8 @@
             {
                 EmployerId = employer.EmployerId,
                 EdsUrn = employer.EdsUrn,
-                Name = employer.Name,
+                FullName = employer.FullName,
+                TradingName = employer.TradingName,
                 Address = employer.Address.Convert()
             };
 

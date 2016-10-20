@@ -1,7 +1,6 @@
 ﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer.EmployerSearchViewModel
+@model EmployerSearchViewModel
 @{
     ViewBag.Title = "Recruit an Apprentice - Select an employer for your vacancy";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -101,9 +100,9 @@
             </div>
         </details>
 
-        @if (Model.EmployerResultsPage.ResultsCount > 0)
+        @if (Model.Employers.ResultsCount > 0)
         {
-            var resultsMessage = Model.EmployerResultsPage.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.EmployerResultsPage.ResultsCount) : "Found one employer";
+            var resultsMessage = Model.Employers.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.Employers.ResultsCount) : "Found one employer";
 
             <h2 class="heading-small">@resultsMessage</h2>
 
@@ -123,11 +122,11 @@
                             <th>ERN</th>
                             <th></th>
                         </tr>
-                        @foreach (var employerResultsViewModel in @Model.EmployerResultsPage.Page)
+                        @foreach (var employerResultsViewModel in @Model.Employers.Page)
                         {
                             <tr>
                                 <th>
-                                    <h4 class="bold-small">@employerResultsViewModel.EmployerName</h4>
+                                    <h4 class="bold-small">@employerResultsViewModel.FullName</h4>
                                 </th>
                                 <td>
                                     @employerResultsViewModel.Address.AddressLine1
@@ -152,33 +151,33 @@
     <div class="page-navigation">
 
         @{
-            var prevLink = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&EmployerResultsPage.CurrentPage=" + (Model.EmployerResultsPage.CurrentPage - 1);
-            var nextLink = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&EmployerResultsPage.CurrentPage=" + (Model.EmployerResultsPage.CurrentPage + 1);
+            var prevLink = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&Employers.CurrentPage=" + (Model.Employers.CurrentPage - 1);
+            var nextLink = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&Employers.CurrentPage=" + (Model.Employers.CurrentPage + 1);
         }
 
         <a href="@prevLink"
-           style="visibility: @(Model.EmployerResultsPage.CurrentPage == 1 ? "hidden" : "visible")"
+           style="visibility: @(Model.Employers.CurrentPage == 1 ? "hidden" : "visible")"
            class="page-navigation__btn previous">
             <i class="arrow-button fa fa-angle-left"></i>
             <span class="description">Previous <span class="hide-mob">page</span></span>
-            <span class="counter">@(Model.EmployerResultsPage.CurrentPage - 1) of @Model.EmployerResultsPage.TotalNumberOfPages</span>
+            <span class="counter">@(Model.Employers.CurrentPage - 1) of @Model.Employers.TotalNumberOfPages</span>
         </a>
         <a href="@nextLink"
-           style="visibility: @(Model.EmployerResultsPage.CurrentPage == Model.EmployerResultsPage.TotalNumberOfPages ? "hidden" : "visible")"
+           style="visibility: @(Model.Employers.CurrentPage == Model.Employers.TotalNumberOfPages ? "hidden" : "visible")"
            class="page-navigation__btn next">
             <i class="arrow-button fa fa-angle-right"></i>
             <span class="description">Next <span class="hide-mob">page</span></span>
-            <span class="counter">@(Model.EmployerResultsPage.CurrentPage + 1) of @Model.EmployerResultsPage.TotalNumberOfPages</span>
+            <span class="counter">@(Model.Employers.CurrentPage + 1) of @Model.Employers.TotalNumberOfPages</span>
         </a>
 
     </div>
     <div class="page-navigation" style="display: none">
 
-        @for (var i = 1; i < Model.EmployerResultsPage.TotalNumberOfPages; i++)
+        @for (var i = 1; i < Model.Employers.TotalNumberOfPages; i++)
             {
-                var pageLink = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&EmployerResultsPage.CurrentPage=" + (i + 1);
+                var pageLink = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&Employers.CurrentPage=" + (i + 1);
 
-            <a href="@pageLink" style="font-weight: @(Model.EmployerResultsPage.CurrentPage == i ? "bold" : "normal")">@i</a>
+            <a href="@pageLink" style="font-weight: @(Model.Employers.CurrentPage == i ? "bold" : "normal")">@i</a>
             <span>&nbsp;</span>
         }
 

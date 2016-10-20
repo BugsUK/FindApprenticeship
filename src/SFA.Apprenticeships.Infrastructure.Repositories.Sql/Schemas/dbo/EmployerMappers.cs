@@ -15,7 +15,8 @@
         {
             Mapper.CreateMap<Employer, DomainEmployer>()
                 .ForMember(v => v.EmployerGuid, opt => opt.Ignore())
-                .ForMember(v => v.Name, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(v => v.FullName, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(v => v.TradingName, opt => opt.MapFrom(src => src.TradingName))
                 .ForMember(v => v.Address, opt => opt.Ignore())
                 .ForMember(v => v.IsPositiveAboutDisability, opt => opt.MapFrom(src => src.DisableAllowed))
                 .AfterMap((v, av) =>
@@ -43,7 +44,8 @@
 
             Mapper.CreateMap<DomainEmployer, Employer>()
                 .ForMember(v => v.EdsUrn, opt => opt.MapFrom(src => Convert.ToInt32(src.EdsUrn)))
-                .ForMember(v => v.FullName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(v => v.FullName, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(v => v.TradingName, opt => opt.MapFrom(src => src.TradingName))
                 .ForMember(v => v.AddressLine1, opt => opt.MapFrom(src => src.Address.AddressLine1))
                 .ForMember(v => v.AddressLine2, opt => opt.MapFrom(src => src.Address.AddressLine2))
                 .ForMember(v => v.AddressLine3, opt => opt.MapFrom(src => src.Address.AddressLine3))

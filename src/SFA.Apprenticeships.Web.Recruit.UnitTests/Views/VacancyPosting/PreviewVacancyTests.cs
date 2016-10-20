@@ -12,6 +12,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using Moq;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;

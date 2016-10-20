@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer
 {
     using Web.Common.ViewModels.Locations;
 
@@ -6,7 +6,8 @@
     {
         public int EmployerId { get; set; }
         public string EdsUrn { get; set; }
-        public string Name { get; set; }
+        public string FullName { get; set; }
+        public string TradingName { get; set; }
         public AddressViewModel Address { get; set; }
     }
 }

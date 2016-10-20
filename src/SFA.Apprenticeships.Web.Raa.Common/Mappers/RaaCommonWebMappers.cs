@@ -16,6 +16,7 @@
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;

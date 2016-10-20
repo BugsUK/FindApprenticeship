@@ -199,7 +199,7 @@
             return new EmployerSearchViewModel
             {
                 ProviderSiteId = providerSiteId,
-                EmployerResultsPage = resultsPage
+                Employers = resultsPage
             };
         }
 
@@ -224,7 +224,7 @@
             }
 
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
-            var vacancyParties = _providerService.GetVacancyOwnerRelationships(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
+            var vacancyParties = _providerService.GetVacancyOwnerRelationships(parameters, viewModel.Employers.CurrentPage, pageSize);
 
             var employerIds = vacancyParties.Page
                 .Select(vp => vp.EmployerId)
@@ -240,7 +240,7 @@
                     .Employer
                     .ConvertToResult()));
 
-            viewModel.EmployerResultsPage = resultsPage;
+            viewModel.Employers = resultsPage;
 
             return viewModel;
         }
