@@ -44,7 +44,7 @@
             stopwatch.Start();
 
             var query = new ApprenticeshipVacancyQuery() {
-                CurrentPage = 1,
+                RequestedPage = 1,
                 DesiredStatuses = new List<VacancyStatus>() { VacancyStatus.Live },
                 LatestClosingDate = deadline,
                 EditedInRaa = false,

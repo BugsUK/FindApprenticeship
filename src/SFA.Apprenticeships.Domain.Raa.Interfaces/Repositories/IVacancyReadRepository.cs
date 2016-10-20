@@ -13,13 +13,7 @@
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
 
-        List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
-
-        List<VacancySummary> GetByOwnerPartyId(int ownerPartyId);
-
         int CountWithStatus(params VacancyStatus[] desiredStatuses);
-
-        List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
 
         IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds);
 
