@@ -23,37 +23,34 @@
                 LastSyncVersion = databaseSyncParams.LastSyncVersion
             };
 
-            //Take off some time from the last values to ensure there's a slight overlap to prevent data being missed
-            const int overlapSeconds = 5;
-
             //SQL doesn't store the "kind" property for DateTime and this is required for correct comparison to MongoDB DateTimes
             if (databaseSyncParams.ApprenticeshipLastCreatedDate.HasValue)
             {
-                syncParams.ApprenticeshipLastCreatedDate = new DateTime(databaseSyncParams.ApprenticeshipLastCreatedDate.Value.Ticks, DateTimeKind.Utc).AddSeconds(-overlapSeconds);
+                syncParams.ApprenticeshipLastCreatedDate = new DateTime(databaseSyncParams.ApprenticeshipLastCreatedDate.Value.Ticks, DateTimeKind.Utc);
             }
             if (databaseSyncParams.ApprenticeshipLastUpdatedDate.HasValue)
             {
-                syncParams.ApprenticeshipLastUpdatedDate = new DateTime(databaseSyncParams.ApprenticeshipLastUpdatedDate.Value.Ticks, DateTimeKind.Utc).AddSeconds(-overlapSeconds);
+                syncParams.ApprenticeshipLastUpdatedDate = new DateTime(databaseSyncParams.ApprenticeshipLastUpdatedDate.Value.Ticks, DateTimeKind.Utc);
             }
             if (databaseSyncParams.TraineeshipLastCreatedDate.HasValue)
             {
-                syncParams.TraineeshipLastCreatedDate = new DateTime(databaseSyncParams.TraineeshipLastCreatedDate.Value.Ticks, DateTimeKind.Utc).AddSeconds(-overlapSeconds);
+                syncParams.TraineeshipLastCreatedDate = new DateTime(databaseSyncParams.TraineeshipLastCreatedDate.Value.Ticks, DateTimeKind.Utc);
             }
             if (databaseSyncParams.TraineeshipLastUpdatedDate.HasValue)
             {
-                syncParams.TraineeshipLastUpdatedDate = new DateTime(databaseSyncParams.TraineeshipLastUpdatedDate.Value.Ticks, DateTimeKind.Utc).AddSeconds(-overlapSeconds);
+                syncParams.TraineeshipLastUpdatedDate = new DateTime(databaseSyncParams.TraineeshipLastUpdatedDate.Value.Ticks, DateTimeKind.Utc);
             }
             if (databaseSyncParams.CandidateLastCreatedDate.HasValue)
             {
-                syncParams.CandidateLastCreatedDate = new DateTime(databaseSyncParams.CandidateLastCreatedDate.Value.Ticks, DateTimeKind.Utc).AddSeconds(-overlapSeconds);
+                syncParams.CandidateLastCreatedDate = new DateTime(databaseSyncParams.CandidateLastCreatedDate.Value.Ticks, DateTimeKind.Utc);
             }
             if (databaseSyncParams.CandidateLastUpdatedDate.HasValue)
             {
-                syncParams.CandidateLastUpdatedDate = new DateTime(databaseSyncParams.CandidateLastUpdatedDate.Value.Ticks, DateTimeKind.Utc).AddSeconds(-overlapSeconds);
+                syncParams.CandidateLastUpdatedDate = new DateTime(databaseSyncParams.CandidateLastUpdatedDate.Value.Ticks, DateTimeKind.Utc);
             }
             if (databaseSyncParams.LastAuditEventDate.HasValue)
             {
-                syncParams.LastAuditEventDate = new DateTime(databaseSyncParams.LastAuditEventDate.Value.Ticks, DateTimeKind.Utc).AddSeconds(-overlapSeconds);
+                syncParams.LastAuditEventDate = new DateTime(databaseSyncParams.LastAuditEventDate.Value.Ticks, DateTimeKind.Utc);
             }
 
             return syncParams;
