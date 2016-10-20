@@ -54,8 +54,10 @@
             if (alerts.Any(a => a.Status == ApplicationStatuses.Successful))
             {
                 stringBuilder.AppendLine("<b><a href=\"https://" + SiteDomainName + "/myapplications#dashSuccessful\">Successful applications</a></b>");
-                var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful).Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
-                stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", successfulLineItems)));
+                var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful)
+                    .Select(d => $"<li>{d.Title} with {d.EmployerName}<br/>" +
+                    $"<a href=\"https://{SiteDomainName}/apprenticeship/view/{d.VacancyId}\">View application</a></li>");
+                stringBuilder.AppendLine($"<ul>{string.Join("", successfulLineItems)}</ul>");
             }
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Unsuccessful))
