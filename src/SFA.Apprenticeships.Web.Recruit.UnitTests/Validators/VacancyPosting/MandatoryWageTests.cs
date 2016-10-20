@@ -22,13 +22,13 @@
     {
         private const string RuleSet = RuleSets.Errors;
 
-        private VacancySummaryViewModelServerValidator _validator;
+        private VacancySummaryViewModelDatesServerValidator _validator;
         private VacancyViewModelValidator _aggregateValidator;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new VacancySummaryViewModelServerValidator();
+            _validator = new VacancySummaryViewModelDatesServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
         }
 

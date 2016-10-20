@@ -34,6 +34,7 @@
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly NewVacancyViewModelClientValidator _newVacancyViewModelClientValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
+        private readonly VacancySummaryViewModelDatesServerValidator _vacancySummaryViewModelDatesServerValidator;
         private readonly VacancySummaryViewModelClientValidator _vacancySummaryViewModelClientValidator;
         private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator;
         private readonly VacancyRequirementsProspectsViewModelClientValidator _vacancyRequirementsProspectsViewModelClientValidator;
@@ -80,6 +81,7 @@
             _trainingDetailsViewModelServerValidator = trainingDetailsViewModelServerValidator;
             _trainingDetailsViewModelClientValidator = trainingDetailsViewModelClientValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
+            _vacancySummaryViewModelDatesServerValidator = new VacancySummaryViewModelDatesServerValidator();
             _vacancySummaryViewModelClientValidator = vacancySummaryViewModelClientValidator;
             _vacancyRequirementsProspectsViewModelServerValidator = vacancyRequirementsProspectsViewModelServerValidator;
             _vacancyRequirementsProspectsViewModelClientValidator = vacancyRequirementsProspectsViewModelClientValidator;
@@ -675,7 +677,7 @@
         {
             viewModel = MergeVacancyDates(viewModel);
 
-            var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+            var validationResult = _vacancySummaryViewModelDatesServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             var warningsAccepted = validationResult.HasWarningsOnly() && validationResult.IsWarningsHashMatch(viewModel.WarningsHash) && acceptWarnings;
 
