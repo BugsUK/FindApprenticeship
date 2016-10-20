@@ -45,6 +45,12 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     #line hidden
     
     #line 4 "..\..\Views\Vacancy\BasicDetails.cshtml"
+    using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
+    
+    #line default
+    #line hidden
+    
+    #line 5 "..\..\Views\Vacancy\BasicDetails.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
     
     #line default
@@ -63,7 +69,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
 WriteLiteral("\r\n");
 
             
-            #line 6 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 7 "..\..\Views\Vacancy\BasicDetails.cshtml"
  using (Html.BeginRouteForm(ManagementRouteNames.BasicDetails, FormMethod.Post))
 {
     
@@ -71,15 +77,15 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Vacancy\BasicDetails.cshtml"
-Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView));
+            #line 9 "..\..\Views\Vacancy\BasicDetails.cshtml"
+Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new {OfflineUrlButtonName = "BasicDetails"}));
 
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Vacancy\BasicDetails.cshtml"
-                                                             
+            #line 9 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                                                                                                          
 
 
             
@@ -100,7 +106,7 @@ WriteLiteral(">Save</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 12 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 13 "..\..\Views\Vacancy\BasicDetails.cshtml"
    Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
@@ -109,7 +115,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 14 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 15 "..\..\Views\Vacancy\BasicDetails.cshtml"
 }
 
             
@@ -119,7 +125,19 @@ WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 19 "..\..\Views\Vacancy\BasicDetails.cshtml"
+Write(Scripts.Render("~/bundles/basicVacancyDetails"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral(@"
+
     <script>
         $(""input[name='OfflineVacancy']"").change(function () {
             var selectedValue = $(""input[name='OfflineVacancy']:checked"").val();
@@ -128,8 +146,35 @@ WriteLiteral(@"
                 $(""#apprenticheship-offline-application-instructions"").val("""");
             }
         });
-    </script>
-");
+
+        var postUrl = '");
+
+            
+            #line 30 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                  Write(Url.RouteUrl(ManagementRouteNames.BasicDetails));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n        var multipleOfflineUrlsButtonText = \'");
+
+            
+            #line 31 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                                        Write(NewVacancyViewModelMessages.MultiOfflineUrlsButtonText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n        var singleOfflineUrlButtonText = \'");
+
+            
+            #line 32 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                                     Write(NewVacancyViewModelMessages.SingleOfflineUrlButtonText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n    </script>\r\n");
 
 });
 

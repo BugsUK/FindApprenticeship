@@ -21,6 +21,12 @@
             _apiUserRepository = apiUserRepository;
         }
 
+        public IEnumerable<ApiUserViewModel> GetApiUserViewModels()
+        {
+            var apiUsers = _apiUserRepository.GetApiUsers();
+            return ApiUserMappers.Map<IEnumerable<ApiUser>, IEnumerable<ApiUserViewModel>>(apiUsers);
+        }
+
         public ApiUserSearchResultsViewModel SearchApiUsers(ApiUserSearchViewModel searchViewModel)
         {
             var viewModel = new ApiUserSearchResultsViewModel
@@ -71,6 +77,13 @@
             var updatedApiUser = _apiUserRepository.Update(apiUser);
 
             return ApiUserMappers.Map<ApiUser, ApiUserViewModel>(updatedApiUser);
+        }
+
+        public ApiUserViewModel ResetApiUserPassword(ApiUserViewModel viewModel)
+        {
+            var apiUser = _apiUserRepository.ResetApiUserPassword(viewModel.ExternalSystemId);
+
+            return ApiUserMappers.Map<ApiUser, ApiUserViewModel>(apiUser);
         }
     }
 }

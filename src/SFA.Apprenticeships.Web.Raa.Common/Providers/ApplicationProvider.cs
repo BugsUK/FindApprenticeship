@@ -7,14 +7,14 @@
     using Application.Interfaces.Providers;
     using Application.Interfaces.Security;
     using Application.Interfaces.VacancyPosting;
+    using Common.Extensions;
     using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Common.Extensions;
-    using Domain.Entities.Candidates;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -168,8 +168,8 @@
             if (applicantId.HasValue)
             {
                 var candidate = _candidateApplicationService.GetCandidate(applicantId.Value);
-                if(candidate != null)
-                return applications.Where(a => a.CandidateId == candidate.EntityId).ToList();
+                if (candidate != null)
+                    return applications.Where(a => a.CandidateId == candidate.EntityId).ToList();
             }
 
             var candidateGuidPrefix = CandidateSearchExtensions.GetCandidateGuidPrefix(vacancyApplicationsSearch.ApplicantId);
@@ -228,7 +228,6 @@
         {
             var application = _apprenticeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);
             var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
-
             return viewModel;
         }
 
@@ -236,48 +235,39 @@
         {
             var application = _apprenticeshipApplicationService.GetApplicationForReview(applicationSelectionViewModel.ApplicationId);
             var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
-
             return viewModel;
         }
 
-        public void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes)
+        public void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate)
         {
-            _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
+            _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes, publishUpdate);
         }
 
         public ApplicationSelectionViewModel SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
-
             _apprenticeshipApplicationService.SetSuccessfulDecision(applicationId);
-
             return applicationSelectionViewModel;
         }
 
-        public ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel, string candidateApplicationFeedback)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
-
-            _apprenticeshipApplicationService.SetUnsuccessfulDecision(applicationId);
-
+            _apprenticeshipApplicationService.SetUnsuccessfulDecision(applicationId, candidateApplicationFeedback);
             return applicationSelectionViewModel;
         }
 
         public ApplicationSelectionViewModel SetStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
-
             _apprenticeshipApplicationService.SetStateInProgress(applicationId);
-
             return applicationSelectionViewModel;
         }
 
         public ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
-
             _apprenticeshipApplicationService.SetStateSubmitted(applicationId);
-
             return applicationSelectionViewModel;
         }
 
@@ -285,7 +275,6 @@
         {
             var application = _traineeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);
             var viewModel = ConvertToTraineeshipApplicationViewModel(application, applicationSelectionViewModel);
-
             return viewModel;
         }
 
@@ -293,19 +282,17 @@
         {
             var application = _traineeshipApplicationService.GetApplicationForReview(applicationSelectionViewModel.ApplicationId);
             var viewModel = ConvertToTraineeshipApplicationViewModel(application, applicationSelectionViewModel);
-
             return viewModel;
         }
 
-        public void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes)
+        public void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate)
         {
-            _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
+            _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes, publishUpdate);
         }
 
         public void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-
             _employerService.SendApplicationLinks(vacancy.Title, providerName, applicationLinks, linkExpiryDateTime, recipientEmailAddress);
         }
 
@@ -317,11 +304,9 @@
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
-
             viewModel.ApplicationSelection = applicationSelectionViewModel;
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
             viewModel.Vacancy.EmployerName = employer.Name;
-
             return viewModel;
         }
 
@@ -331,11 +316,9 @@
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
-
             viewModel.ApplicationSelection = applicationSelectionViewModel;
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
             viewModel.Vacancy.EmployerName = employer.Name;
-
             return viewModel;
         }
 

@@ -10,7 +10,7 @@
 
 @using (Html.BeginRouteForm(ManagementRouteNames.AdminEditApiUser))
 {
-    @Html.HiddenFor(m => m.ExternalSystemId);
+    @Html.HiddenFor(m => m.ExternalSystemId)
 
     <p>
         <ul>
@@ -23,6 +23,9 @@
             <li>Company Name: @Model.CompanyName</li>
             <li>Business Category: @Model.BusinessCategory</li>
             <li>Employee Type: @Model.EmployeeType</li>
+            <li>Contact Name: @Model.ContactName</li>
+            <li>Contact Email: <a href=@("mailto:" + Model.ContactEmail)>@Model.ContactEmail</a></li>
+            <li>Contact Number: @Model.ContactNumber</li>
         </ul>
     </p>
 

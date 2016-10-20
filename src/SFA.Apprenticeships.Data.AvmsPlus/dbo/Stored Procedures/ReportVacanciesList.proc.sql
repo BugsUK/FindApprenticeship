@@ -203,7 +203,7 @@ where
 	and (@sector = -1 or aoc.ApprenticeshipOccupationId = @sector)    
 	and (@framework = -1 or apf.ApprenticeshipFrameworkId = @framework )
 	and (@managedBy = '-1' or tpr.ManagingAreaID in (select LocalAuthorityGroupID from @managingAreas))
-	and (@ProviderSiteID = -1 or tpr.ProviderSiteId=@ProviderSiteID) 
+	and (@ProviderSiteID = 0 or tpr.ProviderSiteId=@ProviderSiteID) 
 	and (@RecAgentID = -1 or vac.VacancyManagerID = @RecAgentID) 
 	and (@VacancyStatus = -1 or vac.VacancyStatusId = @VacancyStatus) 
 	and (@EmployerID = -1 or vpr.EmployerId = @EmployerID) 		

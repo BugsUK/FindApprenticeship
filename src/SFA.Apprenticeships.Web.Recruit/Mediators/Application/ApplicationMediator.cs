@@ -10,7 +10,9 @@
     using Raa.Common.ViewModels.Application;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
+    using System.Web.Routing;
 
     public class ApplicationMediator : MediatorBase, IApplicationMediator
     {
@@ -57,10 +59,13 @@
             foreach (var selectedApplicationId in viewModel.SelectedApplicationIds)
             {
                 var application = newViewModel.ApplicationSummaries.Single(a => a.ApplicationId == selectedApplicationId);
-                var anonymisedApplicationLink = new AnonymisedApplicationLink(application.ApplicationId, _dateTimeService.TwoWeeksFromUtcNow);
-                var encryptedLink = _encryptionService.Encrypt(anonymisedApplicationLink);
+                var anonymisedApplicationLinkData = new AnonymisedApplicationLink(application.ApplicationId, _dateTimeService.TwoWeeksFromUtcNow);
+                var encryptedLinkData = _encryptionService.Encrypt(anonymisedApplicationLinkData);
+                var urlEncodedLinkData = HttpUtility.UrlEncode(encryptedLinkData);
                 var routeName = newViewModel.VacancyType == VacancyType.Apprenticeship ? RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication : RecruitmentRouteNames.ViewAnonymousTraineeshipApplication;
-                var link = urlHelper.RouteUrl(routeName, new { application = encryptedLink });
+                var routeValues = new RouteValueDictionary();
+                routeValues["application"] = urlEncodedLinkData;
+                var link = urlHelper.RouteUrl(routeName, routeValues);
                 applicationLinks[application.ApplicantID] = link;
             }
 

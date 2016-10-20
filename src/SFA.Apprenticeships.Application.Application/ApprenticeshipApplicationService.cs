@@ -55,9 +55,9 @@
             return _getApplicationForReviewStrategy.GetApplicationForReview(applicationId);
         }
 
-        public void UpdateApplicationNotes(Guid applicationId, string notes)
+        public void UpdateApplicationNotes(Guid applicationId, string notes, bool publishUpdate)
         {
-            _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
+            _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes, publishUpdate);
         }
 
         public void SetSuccessfulDecision(Guid applicationId)
@@ -65,9 +65,9 @@
             _setApplicationStatusStrategy.SetSuccessfulDecision(applicationId);
         }
 
-        public void SetUnsuccessfulDecision(Guid applicationId)
+        public void SetUnsuccessfulDecision(Guid applicationId, string candidateApplicationFeedback)
         {
-            _setApplicationStatusStrategy.SetUnsuccessfulDecision(applicationId);
+            _setApplicationStatusStrategy.SetUnsuccessfulDecision(applicationId, candidateApplicationFeedback);
         }
 
         public void SetStateInProgress(Guid applicationId)

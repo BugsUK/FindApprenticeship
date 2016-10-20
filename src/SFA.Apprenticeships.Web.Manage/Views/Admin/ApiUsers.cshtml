@@ -7,7 +7,10 @@
 <h1 id="heading" class="heading-xlarge">API Users</h1>
 
 <p>
-    @Html.RouteLink("New API User", ManagementRouteNames.AdminCreateApiUser)
+    <ul>
+        <li>@Html.RouteLink("New API User", ManagementRouteNames.AdminCreateApiUser)</li>
+        <li>@Html.RouteLink("Export API Users", ManagementRouteNames.AdminExportApiUsers)</li>
+    </ul>
 </p>
 
 @using (Html.BeginRouteForm(ManagementRouteNames.AdminApiUsers))
@@ -45,7 +48,7 @@
                             <th>Company ID</th>
                             <th>Company Name</th>
                             <th>Business Category</th>
-                            <th>Employee Type</th>
+                            <th>Contact Name</th>
                             <th>Authorised API Endpoints</th>
                             <th></th>
                         </tr>
@@ -58,9 +61,12 @@
                                 <td>@apiUser.CompanyId</td>
                                 <td>@apiUser.CompanyName</td>
                                 <td>@apiUser.BusinessCategory</td>
-                                <td>@apiUser.EmployeeType</td>
+                                <td>@apiUser.ContactName</td>
                                 <td>@apiUser.AuthorisedApiEndpoints</td>
-                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewApiUser, new { apiUser.ExternalSystemId })</td>
+                                <td>
+                                    @Html.RouteLink("View", ManagementRouteNames.AdminViewApiUser, new { apiUser.ExternalSystemId })<br/>
+                                    @Html.RouteLink("Reset password", ManagementRouteNames.AdminResetApiUserPassword, new { apiUser.ExternalSystemId })<br />
+                                </td>
                             </tr>
                         }
                     </tbody>

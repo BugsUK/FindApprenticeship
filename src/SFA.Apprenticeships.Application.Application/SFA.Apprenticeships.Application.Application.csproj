@@ -87,6 +87,8 @@
   <ItemGroup>
     <Compile Include="Entities\ApplicationStatusChanged.cs" />
     <Compile Include="Entities\ApplicationStatusSummary.cs" />
+    <Compile Include="Entities\ApprenticeshipApplicationUpdate.cs" />
+    <Compile Include="Entities\TraineeshipApplicationUpdate.cs" />
     <Compile Include="Entities\VacancyStatusSummary.cs" />
     <Compile Include="Extensions\ApplicationStatusSummaryExtensions.cs" />
     <Compile Include="Extensions\ApprenticeshipApplicationDetailExtension.cs" />

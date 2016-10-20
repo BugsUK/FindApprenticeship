@@ -10,7 +10,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Constants.Pages;
+    using CsvClassMaps;
+    using CsvHelper.Configuration;
+    using Infrastructure.Presentation;
     using Validators.Api;
     using Validators.Provider;
     using Validators.ProviderUser;
@@ -274,6 +278,37 @@
             }
         }
 
+        public MediatorResponse<ApiUserViewModel> ResetApiUserPassword(ApiUserViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _apiUserProvider.ResetApiUserPassword(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.ResetApiUserPassword.Ok, viewModel, ApiUserViewModelMessages.ResetApiUserPasswordSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save api user with external system id={viewModel.ExternalSystemId}", ex);
+                viewModel = _apiUserProvider.GetApiUserViewModel(viewModel.ExternalSystemId);
+                return GetMediatorResponse(AdminMediatorCodes.ResetApiUserPassword.Error, viewModel, ApiUserViewModelMessages.ResetApiUserPasswordError, UserMessageLevel.Error);
+            }
+        }
+
+        public MediatorResponse<byte[]> GetApiUsersBytes()
+        {
+            try
+            {
+                var apiUsers = _apiUserProvider.GetApiUserViewModels().OrderBy(a => a.CompanyName);
+                var bytes = GetCsvBytes<ApiUserViewModel, ApiUserViewModelClassMap>(apiUsers, "");
+                return GetMediatorResponse(AdminMediatorCodes.GetApiUsersBytes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(AdminMediatorCodes.GetApiUsersBytes.Error, new byte[0]);
+            }
+        }
+
         public MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel)
         {
             try
@@ -420,6 +455,12 @@
             };
 
             return viewModel;
+        }
+        private static byte[] GetCsvBytes<T, TClassMap>(IEnumerable<T> items, string header) where T : class where TClassMap : CsvClassMap<T>
+        {
+            var csvString = header + CsvPresenter.ToCsv<T, TClassMap>(items);
+            var bytes = Encoding.UTF8.GetBytes(csvString);
+            return bytes;
         }
     }
 }

@@ -39,6 +39,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 EmployerDescription = EmployerDescription,
                 EmployerWebsiteUrl = EmployerWebsiteUrl,
                 OfflineVacancy = OfflineVacancy,
+                OfflineVacancyType = OfflineVacancyType,
                 OfflineApplicationUrl = OfflineApplicationUrl,
                 OfflineApplicationUrlComment = OfflineApplicationUrlComment,
                 OfflineApplicationInstructions = OfflineApplicationInstructions,
@@ -111,6 +112,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string SecondQuestion { get; set; }
         public string EmployerDescription { get; set; }
         public string EmployerWebsiteUrl { get; set; }
+        public OfflineVacancyType? OfflineVacancyType { get; set; }
         public string OfflineApplicationUrl { get; set; }
         public string OfflineApplicationUrlComment { get; set; }
         public string OfflineApplicationInstructions { get; set; }

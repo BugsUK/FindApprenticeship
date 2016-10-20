@@ -87,6 +87,20 @@
             public const string Ok = "AdminMediatorCodes.SaveApiUser.Ok";
         }
 
+        public class ResetApiUserPassword
+        {
+            public const string FailedValidation = "AdminMediatorCodes.ResetApiUserPassword.FailedValidation";
+            public const string Error = "AdminMediatorCodes.ResetApiUserPassword.Error";
+            public const string Ok = "AdminMediatorCodes.ResetApiUserPassword.Ok";
+        }
+
+        public class GetApiUsersBytes
+        {
+            public const string FailedValidation = "AdminMediatorCodes.GetApiUsersBytes.FailedValidation";
+            public const string Error = "AdminMediatorCodes.GetApiUsersBytes.Error";
+            public const string Ok = "AdminMediatorCodes.GetApiUsersBytes.Ok";
+        }
+
         public class GetVacancyDetails
         {
             public const string NoRecordsFound = "AdminMediatorCodes.GetVacancyDetails.NoRecordsFound";

@@ -444,14 +444,19 @@
         {
             var expressionText = ExpressionHelper.GetExpressionText(expression);
             var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
-            var fullyQualifiedName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
-            if (!helper.ViewData.ModelState.IsValidField(fullyQualifiedName) && helper.ViewData.ModelState.ContainsKey(fullyQualifiedName))
+            var propertyName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
+            return GetValidationType(helper, propertyName);
+        }
+
+        public static ValidationType GetValidationType<TModel>(this HtmlHelper<TModel> helper, string propertyName)
+        {
+            if (!helper.ViewData.ModelState.IsValidField(propertyName) && helper.ViewData.ModelState.ContainsKey(propertyName))
             {
-                if (helper.ViewData.ModelState[fullyQualifiedName].Errors.Any(e => e.GetType() == typeof(ModelError)))
+                if (helper.ViewData.ModelState[propertyName].Errors.Any(e => e.GetType() == typeof(ModelError)))
                 {
                     return ValidationType.Error;
                 }
-                if (helper.ViewData.ModelState[fullyQualifiedName].Errors.Any(e => e.GetType() == typeof(ModelWarning)))
+                if (helper.ViewData.ModelState[propertyName].Errors.Any(e => e.GetType() == typeof(ModelWarning)))
                 {
                     return ValidationType.Warning;
                 }

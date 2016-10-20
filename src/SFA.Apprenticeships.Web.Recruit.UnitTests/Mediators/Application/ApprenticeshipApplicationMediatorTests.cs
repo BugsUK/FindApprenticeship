@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Application
 {
-    using System;
     using Apprenticeships.Application.Interfaces;
     using Common.UnitTests.Mediators;
     using Domain.Entities.Applications;
@@ -14,6 +13,7 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Recruit.Mediators.Application;
+    using System;
 
     [TestFixture]
     public class ApprenticeshipApplicationMediatorTests
@@ -22,7 +22,7 @@
         public void ShouldReturnNoVacancyIdIfNoVacancyGuidIsSuppliedOnReview()
         {
             var logService = new Mock<ILogService>();
-            var mediator = new ApprenticeshipApplicationMediator(null,null, null, null, logService.Object);
+            var mediator = new ApprenticeshipApplicationMediator(null, null, null, null, logService.Object);
 
             var viewModel = new ApplicationSelectionViewModel(new VacancyApplicationsSearchViewModel(), Guid.Empty);
 
@@ -80,7 +80,7 @@
             response.ViewModel.Status.Should().Be(ApplicationStatuses.InProgress);
             response.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok, false, false);
             mockApplicationProvider.Verify(m => m.SetStateInProgress(viewModel.ApplicationSelection), Times.Once);
-            mockApplicationProvider.Verify(m => m.UpdateApprenticeshipApplicationViewModelNotes(viewModel.ApplicationSelection.ApplicationId, viewModel.Notes), Times.Once);
+            mockApplicationProvider.Verify(m => m.UpdateApprenticeshipApplicationViewModelNotes(viewModel.ApplicationSelection.ApplicationId, viewModel.Notes, false), Times.Once);
         }
 
         [Test]
@@ -101,9 +101,9 @@
 
             //Assert
             response.ViewModel.Status.Should().Be(ApplicationStatuses.Submitted);
-            response.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok, false, false);
+            response.AssertCodeAndMessage(ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok, false, false);
             mockApplicationProvider.Verify(m => m.SetStateSubmitted(viewModel.ApplicationSelection), Times.Once);
-            mockApplicationProvider.Verify(m => m.UpdateApprenticeshipApplicationViewModelNotes(viewModel.ApplicationSelection.ApplicationId, viewModel.Notes), Times.Once);
+            mockApplicationProvider.Verify(m => m.UpdateApprenticeshipApplicationViewModelNotes(viewModel.ApplicationSelection.ApplicationId, viewModel.Notes, false), Times.Once);
         }
     }
 }

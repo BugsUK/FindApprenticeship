@@ -41,6 +41,7 @@
         public const string ViewCandidateTraineeshipApplication = "ViewCandidateTraineeshipApplication";
         public const string ViewCandidateApprenticeshipVacancy = "ViewCandidateApprenticeshipVacancy";
         public const string ViewCandidateTraineeshipVacancy = "ViewCandidateTraineeshipVacancy";
+        public const string ViewCandidateApprenticeshipApplicationFeedback = "ViewCandidateApprenticeshipApplicationFeedback";
 
         //Reports
         public const string ReportList = "ReportList";
@@ -64,5 +65,7 @@
         public const string AdminViewApiUser = "AdminViewApiUser";
         public const string AdminCreateApiUser = "AdminCreateApiUser";
         public const string AdminEditApiUser = "AdminEditApiUser";
+        public const string AdminResetApiUserPassword = "AdminResetApiUserPassword";
+        public const string AdminExportApiUsers = "AdminExportApiUsers";
     }
 }

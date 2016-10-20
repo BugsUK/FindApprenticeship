@@ -62,7 +62,7 @@
 
         public static bool CanArchiveVacancy(this VacancyStatus status)
         {
-            return status == VacancyStatus.Live || status == VacancyStatus.Closed;
+            return status == VacancyStatus.Closed;
         }
     }
 }

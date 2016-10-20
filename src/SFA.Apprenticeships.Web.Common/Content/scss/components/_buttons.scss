@@ -36,6 +36,11 @@
   .inline-button & {
     margin-bottom: 0;
   }
+  .inline-text & {
+    margin: 0;
+    padding: 0;
+    line-height: 1.3;
+  }
 }
 .button-link:hover {
   color: $link-hover-colour;

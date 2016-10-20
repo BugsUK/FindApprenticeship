@@ -355,5 +355,47 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
+
+        [HttpGet]
+        public ActionResult ResetApiUserPassword(Guid externalSystemId)
+        {
+            var response = _adminMediator.GetApiUser(externalSystemId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ResetApiUserPasswordAction")]
+        public ActionResult ResetApiUserPassword(ApiUserViewModel viewModel)
+        {
+            var response = _adminMediator.ResetApiUserPassword(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.ResetApiUserPassword.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("ResetApiUserPassword", response.ViewModel);
+
+                case AdminMediatorCodes.ResetApiUserPassword.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminResetApiUserPassword, new { viewModel.ExternalSystemId });
+
+                case AdminMediatorCodes.ResetApiUserPassword.Ok:
+                    return View("ApiUser", response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExportApiUsers()
+        {
+            var response = _adminMediator.GetApiUsersBytes();
+            return File(response.ViewModel, "text/csv", "ApiUsers.csv");
+        }
     }
 }
