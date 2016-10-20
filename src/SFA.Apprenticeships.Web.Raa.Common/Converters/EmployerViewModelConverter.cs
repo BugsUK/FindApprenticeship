@@ -13,7 +13,8 @@
                 EdsUrn = employer.EdsUrn,
                 FullName = employer.FullName,
                 TradingName = employer.TradingName,
-                Address = employer.Address.Convert()
+                Address = employer.Address.Convert(),
+                Status = employer.EmployerStatus
             };
 
             return viewModel;
