@@ -154,7 +154,7 @@
 
         public MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel)
         {
-            var viewModel = _employerProvider.GetEmployerViewModels(employerFilterViewModel);
+            var viewModel = _employerProvider.SearchEdrsEmployers(employerFilterViewModel);
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
@@ -1026,7 +1026,7 @@
                     return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.FailedValidation, result, validationResult);
                 }
 
-                result = _employerProvider.GetEmployerViewModels(viewModel);
+                result = _employerProvider.SearchEdrsEmployers(viewModel);
                 result.ComeFromPreview = viewModel.ComeFromPreview;
 
                 if (viewModel.NoResults)

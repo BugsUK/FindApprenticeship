@@ -69,5 +69,6 @@
         public const string AdminExportApiUsers = "AdminExportApiUsers";
         public const string AdminEmployers = "AdminEmployers";
         public const string AdminViewEmployer = "AdminViewEmployer";
+        public const string AdminEditEmployer = "AdminEditEmployer";
     }
 }

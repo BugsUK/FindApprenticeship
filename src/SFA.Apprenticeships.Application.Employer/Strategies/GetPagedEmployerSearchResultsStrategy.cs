@@ -5,8 +5,7 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
     using Domain.Entities.Raa.Parties;
     using Interfaces.Generic;
     using Interfaces.Organisations;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class GetPagedEmployerSearchResultsStrategy : IGetPagedEmployerSearchResultsStrategy
     {

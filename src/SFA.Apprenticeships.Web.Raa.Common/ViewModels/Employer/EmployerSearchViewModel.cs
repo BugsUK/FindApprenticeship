@@ -33,6 +33,7 @@
             }
             VacancyGuid = viewModel.VacancyGuid;
             ComeFromPreview = viewModel.ComeFromPreview;
+            PerformSearch = viewModel.PerformSearch;
         }
 
         public int ProviderSiteId { get; set; }
@@ -60,11 +61,14 @@
             Name,
             Location,
             VacancyGuid,
-            ComeFromPreview
+            ComeFromPreview,
+            PerformSearch
         };
 
         public Guid? VacancyGuid { get; set; }
 
         public bool ComeFromPreview { get; set; }
+
+        public bool PerformSearch { get; set; }
     }
 }

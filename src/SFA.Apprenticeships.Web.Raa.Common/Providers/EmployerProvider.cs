@@ -19,7 +19,12 @@
             _configurationService = configurationService;
         }
 
-        public EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel)
+        public EmployerSearchViewModel SearchEmployers(EmployerSearchViewModel searchViewModel)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public EmployerSearchViewModel SearchEdrsEmployers(EmployerSearchViewModel searchViewModel)
         {
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
             var resultsPage = _employerService.GetEmployers(searchViewModel.EdsUrn, searchViewModel.Name, searchViewModel.Location, searchViewModel.Employers.CurrentPage, pageSize);
