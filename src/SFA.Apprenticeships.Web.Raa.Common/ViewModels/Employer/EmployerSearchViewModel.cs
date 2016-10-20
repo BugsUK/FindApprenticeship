@@ -1,10 +1,8 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Constants.ViewModels;
     using Web.Common.ViewModels;
 
     public enum EmployerFilterType
@@ -19,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
     {
         public EmployerSearchViewModel()
         {
-            EmployerResultsPage = new PageableViewModel<EmployerResultViewModel> { CurrentPage = 1 };
+            Employers = new PageableViewModel<EmployerViewModel> { CurrentPage = 1 };
         }
 
         public EmployerSearchViewModel(EmployerSearchViewModel viewModel) : this()
@@ -29,17 +27,21 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
             EdsUrn = viewModel.EdsUrn;
             Name = viewModel.Name;
             Location = viewModel.Location;
-            if (viewModel.EmployerResultsPage != null)
+            if (viewModel.Employers != null)
             {
-                EmployerResultsPage.CurrentPage = viewModel.EmployerResultsPage.CurrentPage;
+                Employers.CurrentPage = viewModel.Employers.CurrentPage;
             }
             VacancyGuid = viewModel.VacancyGuid;
             ComeFromPreview = viewModel.ComeFromPreview;
+            PerformSearch = viewModel.PerformSearch;
         }
 
         public int ProviderSiteId { get; set; }
 
         public EmployerFilterType FilterType { get; set; }
+
+        [Display(Name = EmployerSearchViewModelMessages.Id.LabelText)]
+        public string Id { get; set; }
 
         [Display(Name = EmployerSearchViewModelMessages.EdsUrn.LabelText)]
         public string EdsUrn { get; set; }
@@ -50,10 +52,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
         [Display(Name = EmployerSearchViewModelMessages.Location.LabelText)]
         public string Location { get; set; }
 
-        //TODO: Merge these properties
-        public IEnumerable<EmployerResultViewModel> EmployerResults { get; set; }
+        public PageableViewModel<EmployerViewModel> Employers { get; set; }
 
-        public PageableViewModel<EmployerResultViewModel> EmployerResultsPage { get; set; }
+        public bool NoResults => Employers == null || Employers.ResultsCount == 0;
 
         public object RouteValues => new
         {
@@ -63,11 +64,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
             Name,
             Location,
             VacancyGuid,
-            ComeFromPreview
+            ComeFromPreview,
+            PerformSearch
         };
 
         public Guid? VacancyGuid { get; set; }
 
         public bool ComeFromPreview { get; set; }
+
+        public bool PerformSearch { get; set; }
     }
 }

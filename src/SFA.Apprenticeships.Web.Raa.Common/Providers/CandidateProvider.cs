@@ -256,7 +256,7 @@
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
-            viewModel.Vacancy.EmployerName = employer.Name;
+            viewModel.Vacancy.EmployerName = employer.FullName;
             viewModel.NextStepsUrl = string.Format($"https://{domainUrl}/nextsteps");
             viewModel.UnSuccessfulReason = application.UnsuccessfulReason;
             viewModel.UnsuccessfulDateTime = application.UnsuccessfulDateTime;
@@ -270,7 +270,7 @@
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
-            viewModel.Vacancy.EmployerName = employer.Name;
+            viewModel.Vacancy.EmployerName = employer.FullName;
 
             return viewModel;
         }
