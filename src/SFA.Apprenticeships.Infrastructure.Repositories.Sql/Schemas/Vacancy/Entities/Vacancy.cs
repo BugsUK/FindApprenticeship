@@ -72,6 +72,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public int WageType { get; set; }
 
+        public string WageTypeReason { get; set; }
+
         public string WageText { get; set; }
 
         public int? WageUnitId { get; set; }

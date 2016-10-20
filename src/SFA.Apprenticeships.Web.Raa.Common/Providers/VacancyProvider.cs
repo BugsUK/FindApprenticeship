@@ -517,7 +517,7 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, null, null, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
+            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, null, null, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek, viewModel.Wage.WageTypeReason);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -602,7 +602,7 @@
 
             vacancy.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate.Date;
             vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate.Date;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, null, null, vacancy.Wage.Text, viewModel.Wage.Unit, vacancy.Wage.HoursPerWeek);
+            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.AmountLowerBound, viewModel.Wage.AmountUpperBound, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek, viewModel.Wage.WageTypeReason);
             vacancy.Status = VacancyStatus.Live;
 
             FurtherVacancyDetailsViewModel result;
@@ -1275,7 +1275,7 @@
             }
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, null, null, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
+            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.AmountLowerBound, viewModel.Wage.AmountUpperBound, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek, viewModel.Wage.WageTypeReason);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 

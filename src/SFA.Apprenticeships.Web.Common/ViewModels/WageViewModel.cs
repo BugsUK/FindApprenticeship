@@ -32,6 +32,8 @@
 
         public decimal? AmountUpperBound { get; set; }
 
+        public string WageTypeReason { get; set; }
+
         public string Text { get; set; }
 
         public WageUnit Unit { get; set; }

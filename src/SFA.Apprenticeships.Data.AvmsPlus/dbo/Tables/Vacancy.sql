@@ -26,6 +26,7 @@
     [WageLowerBound]                   MONEY            NULL,
     [WageUpperBound]                   MONEY            NULL,
     [WageType]                         INT              CONSTRAINT [DFT_WageType] DEFAULT ((1)) NOT NULL,
+    [WageTypeReason]                   NVARCHAR (MAX)    NULL,
     [WageText]                         NVARCHAR (MAX)    NULL,
     [NumberofPositions]                SMALLINT         NULL,
     [ApplicationClosingDate]           DATETIME         NULL,

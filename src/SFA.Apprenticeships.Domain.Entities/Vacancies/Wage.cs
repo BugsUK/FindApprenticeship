@@ -6,18 +6,21 @@
     public class Wage
     {
         [JsonConstructor]
-        public Wage(WageType type, decimal? amount, decimal? lowerBound, decimal? upperBound, string text, WageUnit unit, decimal? hoursPerWeek)
+        public Wage(WageType type, decimal? amount, decimal? lowerBound, decimal? upperBound, string text, WageUnit unit, decimal? hoursPerWeek, string reasonForType)
         {
             Type = type;
             Amount = amount;
             AmountLowerBound = lowerBound;
             AmountUpperBound = upperBound;
+            ReasonForType = reasonForType;
             Text = text;
             HoursPerWeek = hoursPerWeek;
             Unit = CorrectWageUnit(type, unit);
         }
 
         public WageType Type { get; private set; }
+
+        public string ReasonForType { get; private set; }
 
         public decimal? Amount { get; private set; }
 

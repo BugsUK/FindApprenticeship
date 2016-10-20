@@ -119,7 +119,8 @@
                     new ApprenticeshipSearchResponse
                     {
                         VacancyLocationType = locationType,
-                        Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.Weekly, 0)
+                        //TODO: So many unit tests with so much setup. It's a smell that we're testing a unit and requiring a completely unrelated stub.
+                        Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.Weekly, 0, null)
                     }
                 }, new List<AggregationResult>(0), asp));
 
@@ -130,7 +131,7 @@
                     new ApprenticeshipSearchResponse
                     {
                         VacancyLocationType = locationType,
-                        Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.Weekly, 0)
+                        Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.Weekly, 0, null)
                     }
                 }, new List<AggregationResult>(0), asp));
         }

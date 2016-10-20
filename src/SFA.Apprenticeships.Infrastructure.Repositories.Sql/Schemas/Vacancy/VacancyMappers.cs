@@ -74,7 +74,7 @@
             var wageAmount = RoundMoney(vacancy.WeeklyWage);
             var wageLowerBound = RoundMoney(vacancy.WageLowerBound);
             var wageUpperBound = RoundMoney(vacancy.WageUpperBound);
-            return new Wage(wageType, wageAmount, wageLowerBound, wageUpperBound, vacancy.WageText, wageUnit, vacancy.HoursPerWeek);
+            return new Wage(wageType, wageAmount, wageLowerBound, wageUpperBound, vacancy.WageText, wageUnit, vacancy.HoursPerWeek, vacancy.WageTypeReason);
         }
 
         public override void Initialise()
@@ -116,6 +116,7 @@
                 .ForMember(v => v.WeeklyWage, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.Amount))
                 .ForMember(v => v.WageLowerBound, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.AmountLowerBound))
                 .ForMember(v => v.WageUpperBound, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.AmountUpperBound))
+                .ForMember(v => v.WageTypeReason, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.ReasonForType))
                 .ForMember(v => v.WageType, opt => opt.MapFrom(av => av.Wage == null ? 0 : av.Wage.Type))
                 .ForMember(v => v.WageText, opt => opt.MapFrom(av => av.Wage == null ? null : WagePresenter.GetDisplayAmount(av.Wage.Type, av.Wage.Amount, av.Wage.AmountLowerBound, av.Wage.AmountUpperBound, av.Wage.Text, av.Wage.HoursPerWeek, av.PossibleStartDate)))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
