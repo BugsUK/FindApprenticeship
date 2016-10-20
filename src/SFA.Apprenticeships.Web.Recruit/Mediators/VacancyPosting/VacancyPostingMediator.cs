@@ -22,6 +22,7 @@
     using Raa.Common.Converters;
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.Employer;
     using Raa.Common.Validators.VacancyPosting;
     using Raa.Common.ViewModels.Employer;
 

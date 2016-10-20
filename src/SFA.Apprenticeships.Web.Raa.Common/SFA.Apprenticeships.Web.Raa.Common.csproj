@@ -293,7 +293,7 @@
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\Report\ReportParametersDateRangeValidator.cs" />
-    <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
+    <Compile Include="Validators\Employer\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelServerValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\TrainingDetailsViewModelValidator.cs" />

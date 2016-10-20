@@ -3,6 +3,7 @@
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.Employer;
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Validators.VacancyPosting;
