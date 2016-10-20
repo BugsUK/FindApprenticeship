@@ -6,5 +6,7 @@
     {
         EmployerSearchViewModel SearchEmployers(EmployerSearchViewModel searchViewModel);
         EmployerSearchViewModel SearchEdrsEmployers(EmployerSearchViewModel searchViewModel);
+        EmployerViewModel GetEmployer(int employerId);
+        EmployerViewModel SaveEmployer(EmployerViewModel viewModel);
     }
 }

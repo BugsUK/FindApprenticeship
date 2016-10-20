@@ -106,7 +106,6 @@
 
                 var existingEmployer = _getOpenConnection.Query<Employer>(sql, sqlParams).Single();
 
-                dbEmployer.TradingName = existingEmployer.TradingName;
                 dbEmployer.CountyId = existingEmployer.CountyId;
                 dbEmployer.LocalAuthorityId = existingEmployer.LocalAuthorityId;
                 dbEmployer.GeocodeEasting = existingEmployer.GeocodeEasting;
@@ -119,7 +118,6 @@
                 dbEmployer.TotalVacanciesPosted = existingEmployer.TotalVacanciesPosted;
                 dbEmployer.BeingSupportedBy = existingEmployer.BeingSupportedBy;
                 dbEmployer.LockedForSupportUntil = existingEmployer.LockedForSupportUntil;
-                dbEmployer.EmployerStatusTypeId = existingEmployer.EmployerStatusTypeId;
                 dbEmployer.DisableAllowed = existingEmployer.DisableAllowed;
                 dbEmployer.TrackingAllowed = existingEmployer.TrackingAllowed;
 

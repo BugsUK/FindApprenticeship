@@ -469,12 +469,25 @@
 
         public MediatorResponse<EmployerViewModel> GetEmployer(int employerId)
         {
-            throw new NotImplementedException();
+            var viewModel = _employerProvider.GetEmployer(employerId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
         public MediatorResponse<EmployerViewModel> SaveEmployer(EmployerViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                viewModel = _employerProvider.SaveEmployer(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveEmployer.Ok, viewModel, EmployerViewModelMessages.EmployerSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save employer with id={viewModel.EmployerId}", ex);
+                viewModel = _employerProvider.GetEmployer(viewModel.EmployerId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveEmployer.Error, viewModel, EmployerViewModelMessages.EmployerSaveError, UserMessageLevel.Error);
+            }
         }
 
         private ProviderUserSearchResultsViewModel GetProviderUsers(string ukprn)

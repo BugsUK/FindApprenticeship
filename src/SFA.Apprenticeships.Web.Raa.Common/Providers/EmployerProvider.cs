@@ -5,12 +5,16 @@
     using Application.Interfaces.Employers;
     using Configuration;
     using Converters;
+    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
+    using Mappers;
     using ViewModels.Employer;
     using Web.Common.Converters;
 
     public class EmployerProvider : IEmployerProvider
     {
+        private static readonly IMapper Mapper = new RaaCommonWebMappers();
+
         private readonly IEmployerService _employerService;
         private readonly IConfigurationService _configurationService;
 
@@ -43,6 +47,19 @@
             var resultsViewModelPage = resultsPage.ToViewModel(resultsPage.Page.Select(e => e.Convert()).ToList());
             searchViewModel.Employers = resultsViewModelPage;
             return searchViewModel;
+        }
+
+        public EmployerViewModel GetEmployer(int employerId)
+        {
+            var employer = _employerService.GetEmployer(employerId, false);
+            return employer.Convert();
+        }
+
+        public EmployerViewModel SaveEmployer(EmployerViewModel viewModel)
+        {
+            var employer = Mapper.Map<EmployerViewModel, Employer>(viewModel);
+            employer = _employerService.SaveEmployer(employer);
+            return Mapper.Map<Employer, EmployerViewModel>(employer);
         }
     }
 }

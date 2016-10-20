@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Manage.Constants
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Parties
+@using SFA.Apprenticeships.Web.Manage.Constants
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer.EmployerViewModel
 @{
     ViewBag.Title = "Employer";
@@ -14,6 +15,7 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.EmployerId)
+    @Html.HiddenFor(m => m.EdsUrn)
 
     <p>
         <ul>
@@ -24,8 +26,18 @@
 
     <div class="form-group">
 
-        @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
-        @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new {type = "text", autofocus = "autofocus"})
+        @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new {type = "text"})
+
+        @Html.FormTextFor(m => m.Address.AddressLine1, controlHtmlAttributes: new {type = "text"})
+        @Html.FormTextFor(m => m.Address.AddressLine2, controlHtmlAttributes: new {type = "text"})
+        @Html.FormTextFor(m => m.Address.AddressLine3, controlHtmlAttributes: new {type = "text"})
+        @Html.FormTextFor(m => m.Address.AddressLine4, controlHtmlAttributes: new {type = "text"})
+        @Html.FormTextFor(m => m.Address.Town, controlHtmlAttributes: new {type = "text"})
+        @Html.FormTextFor(m => m.Address.Postcode, controlHtmlAttributes: new {type = "text"})
+
+        @Html.LabelFor(m => m.Status, new {@class = "form-label"})
+        @Html.DropDownListFor(m => m.Status, EnumHelper.GetSelectList(typeof(EmployerTrainingProviderStatuses), Model.Status))
 
     </div>
 
