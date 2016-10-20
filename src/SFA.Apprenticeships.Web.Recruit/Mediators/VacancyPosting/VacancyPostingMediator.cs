@@ -1012,12 +1012,12 @@
             {
                 result = new EmployerSearchViewModel
                 {
-                    ProviderSiteId = viewModel.ProviderSiteId, FilterType = EmployerFilterType.Undefined, Employers = new PageableViewModel<EmployerResultViewModel>(), VacancyGuid = viewModel.VacancyGuid, ComeFromPreview = viewModel.ComeFromPreview
+                    ProviderSiteId = viewModel.ProviderSiteId, FilterType = EmployerFilterType.Undefined, Employers = new PageableViewModel<EmployerViewModel>(), VacancyGuid = viewModel.VacancyGuid, ComeFromPreview = viewModel.ComeFromPreview
                 };
             }
             else
             {
-                result.Employers = result.Employers ?? new PageableViewModel<EmployerResultViewModel>();
+                result.Employers = result.Employers ?? new PageableViewModel<EmployerViewModel>();
 
                 var validationResult = _employerSearchViewModelServerValidator.Validate(result);
 

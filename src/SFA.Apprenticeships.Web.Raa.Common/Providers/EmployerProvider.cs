@@ -1,15 +1,12 @@
-﻿using System.Linq;
-using SFA.Apprenticeships.Application.Interfaces.Employers;
-using SFA.Infrastructure.Interfaces;
-using SFA.Apprenticeships.Web.Common.Converters;
-using SFA.Apprenticeships.Web.Raa.Common.Configuration;
-using SFA.Apprenticeships.Web.Raa.Common.Converters;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System.Linq;
+    using Application.Interfaces;
+    using Application.Interfaces.Employers;
+    using Configuration;
+    using Converters;
     using ViewModels.Employer;
+    using Web.Common.Converters;
 
     public class EmployerProvider : IEmployerProvider
     {
@@ -26,7 +23,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
             var resultsPage = _employerService.GetEmployers(searchViewModel.EdsUrn, searchViewModel.Name, searchViewModel.Location, searchViewModel.Employers.CurrentPage, pageSize);
-            var resultsViewModelPage = resultsPage.ToViewModel(resultsPage.Page.Select(e => e.ConvertToResult()).ToList());
+            var resultsViewModelPage = resultsPage.ToViewModel(resultsPage.Page.Select(e => e.Convert()).ToList());
             searchViewModel.Employers = resultsViewModelPage;
             return searchViewModel;
         }

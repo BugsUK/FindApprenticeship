@@ -193,8 +193,7 @@
                 .Where(vacancyOwnerRelationship => employers
                     .Any(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
                 .Select(vacancyOwnerRelationship => vacancyOwnerRelationship.Convert(employers.Single(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
-                    .Employer
-                    .ConvertToResult()));
+                    .Employer));
 
             return new EmployerSearchViewModel
             {
@@ -237,8 +236,7 @@
                 .Where(vacancyOwnerRelationship => employers
                     .Any(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
                 .Select(vacancyOwnerRelationship => vacancyOwnerRelationship.Convert(employers.Single(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
-                    .Employer
-                    .ConvertToResult()));
+                    .Employer));
 
             viewModel.Employers = resultsPage;
 

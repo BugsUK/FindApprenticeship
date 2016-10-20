@@ -351,7 +351,6 @@
     <Compile Include="ViewModels\Provider\VacancyOwnerRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
-    <Compile Include="ViewModels\Employer\EmployerResultViewModel.cs" />
     <Compile Include="ViewModels\Employer\EmployerSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\LocationSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyLocationAddressViewModel.cs" />
@@ -692,7 +691,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Strategies\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

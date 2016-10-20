@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
     using Constants.ViewModels;
     using Web.Common.ViewModels;
 
@@ -19,7 +17,7 @@
     {
         public EmployerSearchViewModel()
         {
-            Employers = new PageableViewModel<EmployerResultViewModel> { CurrentPage = 1 };
+            Employers = new PageableViewModel<EmployerViewModel> { CurrentPage = 1 };
         }
 
         public EmployerSearchViewModel(EmployerSearchViewModel viewModel) : this()
@@ -50,7 +48,7 @@
         [Display(Name = EmployerSearchViewModelMessages.Location.LabelText)]
         public string Location { get; set; }
 
-        public PageableViewModel<EmployerResultViewModel> Employers { get; set; }
+        public PageableViewModel<EmployerViewModel> Employers { get; set; }
 
         public bool NoResults => Employers == null || Employers.ResultsCount == 0;
 

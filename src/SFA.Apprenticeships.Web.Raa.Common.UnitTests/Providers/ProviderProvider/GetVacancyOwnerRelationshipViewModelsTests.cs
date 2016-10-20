@@ -89,7 +89,7 @@
             {
                 FilterType = EmployerFilterType.Undefined,
                 ProviderSiteId = 42,
-                Employers = new PageableViewModel<EmployerResultViewModel>
+                Employers = new PageableViewModel<EmployerViewModel>
                 {
                     CurrentPage = 3
                 }
@@ -143,7 +143,7 @@
                 FilterType = EmployerFilterType.NameOrLocation,
                 ProviderSiteId = 42,
                 Name = "a",
-                Employers = new PageableViewModel<EmployerResultViewModel>
+                Employers = new PageableViewModel<EmployerViewModel>
                 {
                     CurrentPage = 3
                 }
@@ -202,7 +202,7 @@
                 ProviderSiteId = 42,
                 Name = "a",
                 Location = "b",
-                Employers = new PageableViewModel<EmployerResultViewModel>
+                Employers = new PageableViewModel<EmployerViewModel>
                 {
                     CurrentPage = 3
                 }
