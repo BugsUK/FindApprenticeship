@@ -105,7 +105,9 @@
             };
             List<ApplicationSummary> applications = vacancy.VacancyType == VacancyType.Traineeship
                 ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
-                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList();
+                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
+                .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
+                .Select(a => (ApplicationSummary)a).ToList();
 
             var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
             var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();

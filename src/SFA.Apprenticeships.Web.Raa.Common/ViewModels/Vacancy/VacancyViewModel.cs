@@ -58,6 +58,7 @@
         public string LocationsLink { get; set; }
 
         public int ApplicationCount { get; set; }
+        public int ApplicationPendingDecisionCount { get; set; }
 
         public int OfflineApplicationClickThroughCount { get; set; }
 
