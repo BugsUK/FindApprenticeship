@@ -246,14 +246,8 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel, string applicationIds)
+        public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            if (!string.IsNullOrWhiteSpace(applicationIds))
-            {
-                var bulkResponse = _apprenticeshipApplicationMediator.GetApprenticeshipApplicationViewModel(applicationIds);
-                if (bulkResponse.Code == ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok)
-                    return View(bulkResponse.ViewModel);
-            }
             var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
             switch (response.Code)
             {
@@ -267,6 +261,24 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmBulkUnsuccessfulDecision(string applicationIds, int vacancyReferenceNumber)
+        {
+            if (!string.IsNullOrWhiteSpace(applicationIds) && vacancyReferenceNumber != 0)
+            {
+                var bulkRejectViewModel = new BulkApplicationsRejectViewModel
+                {
+                    ApplicationIds = applicationIds.Split(','),
+                    VacancyReferenceNumber = vacancyReferenceNumber
+                };
+                var bulkResponse = _apprenticeshipApplicationMediator.GetApprenticeshipApplicationViewModel(bulkRejectViewModel);
+
+                if (bulkResponse.Code == ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok)
+                    return View(bulkResponse.ViewModel);
+            }
+            return View();
         }
 
         [HttpPost]

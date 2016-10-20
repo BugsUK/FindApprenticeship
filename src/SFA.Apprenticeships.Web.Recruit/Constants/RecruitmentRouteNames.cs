@@ -123,5 +123,6 @@
         public static string ManageVacanciesTransfers = "ManageVacanciesTransfers";
         public static string BulkDeclineCandidates = "BulkDeclineCandidates";
         public static string ConfirmBulkDeclineCandidates = "ConfirmBulkDeclineCandidates";
+        public static string ConfirmBulkUnsuccessfulApprenticeshipApplication = "ConfirmBulkUnsuccessfulApprenticeshipApplication";
     }
 }

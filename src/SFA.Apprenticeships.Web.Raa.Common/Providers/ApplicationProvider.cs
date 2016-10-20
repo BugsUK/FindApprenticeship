@@ -123,6 +123,34 @@
             return viewModel;
         }
 
+        public BulkApplicationsRejectViewModel GetBulkApplicationsRejectViewModel(
+            BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
+        {
+            IList<BulkRejectApplicationViewModel> bulkRejectApplications = new List<BulkRejectApplicationViewModel>();
+
+            var vacancy =
+                _vacancyPostingService.GetVacancyByReferenceNumber(
+                    bulkApplicationsRejectViewModel.VacancyReferenceNumber);
+
+            foreach (string applicationId in bulkApplicationsRejectViewModel.ApplicationIds)
+            {
+                ApprenticeshipApplicationDetail applicationDetail = _apprenticeshipApplicationService.GetApplicationForReview(new Guid(applicationId));
+                if (applicationDetail != null)
+                {
+                    BulkRejectApplicationViewModel bulkRejectApplicationViewModel = new BulkRejectApplicationViewModel
+                    {
+                        ApplicationId = applicationId,
+                        FirstName = applicationDetail.CandidateDetails.FirstName,
+                        LastName = applicationDetail.CandidateDetails.LastName
+                    };
+                    bulkRejectApplications.Add(bulkRejectApplicationViewModel);
+                }
+            }
+            bulkApplicationsRejectViewModel.BulkRejectApplications = bulkRejectApplications;
+            bulkApplicationsRejectViewModel.VacancyTitle = vacancy.Title;
+            return bulkApplicationsRejectViewModel;
+        }
+
         public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyApplicationsSearch.VacancyReferenceNumber);
@@ -263,7 +291,7 @@
             var application = _apprenticeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);
             var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
             return viewModel;
-        }        
+        }
 
         public ApprenticeshipApplicationDetail GetApprenticeshipApplicationDetails(string applicationId)
         {

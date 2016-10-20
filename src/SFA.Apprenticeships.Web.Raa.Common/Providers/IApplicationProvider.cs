@@ -32,5 +32,6 @@
         ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelection);
         BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(int vacancyReferenceNumber);
         ApprenticeshipApplicationDetail GetApprenticeshipApplicationDetails(string applicationId);
+        BulkApplicationsRejectViewModel GetBulkApplicationsRejectViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
     }
 }

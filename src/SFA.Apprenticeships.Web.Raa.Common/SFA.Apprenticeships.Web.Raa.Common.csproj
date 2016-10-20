@@ -271,6 +271,7 @@
     <Compile Include="ViewModels\Api\ApiUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserSearchViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserViewModel.cs" />
+    <Compile Include="ViewModels\Application\Apprenticeship\BulkRejectApplicationViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserSearchViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSearchResultsViewModel.cs" />

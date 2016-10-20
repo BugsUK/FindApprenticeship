@@ -13,16 +13,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web;
+    using Domain.Raa.Interfaces.Repositories;
 
     public class ApprenticeshipApplicationMediator : MediatorBase, IApprenticeshipApplicationMediator
     {
         private readonly IApplicationProvider _applicationProvider;
+
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelServerValidator;
         private readonly IDecryptionService<AnonymisedApplicationLink> _decryptionService;
         private readonly IDateTimeService _dateTimeService;
-        private readonly ILogService _logService;
+        private readonly ILogService _logService;        
 
         public ApprenticeshipApplicationMediator(IApplicationProvider applicationProvider,
             ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelServerValidator,
@@ -33,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             _apprenticeshipApplicationViewModelServerValidator = apprenticeshipApplicationViewModelServerValidator;
             _decryptionService = decryptionService;
             _dateTimeService = dateTimeService;
-            _logService = logService;
+            _logService = logService;            
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
@@ -71,26 +72,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> GetApprenticeshipApplicationViewModel(string applicationIds)
+        public MediatorResponse<BulkApplicationsRejectViewModel> GetApprenticeshipApplicationViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
         {
-            var apprenticeshipApplicationViewModel = new ApprenticeshipApplicationViewModel();
-            foreach (string applicationId in applicationIds.Split(','))
-            {
-                IList<BulkRejectApplication> bulkRejectApplications = new List<BulkRejectApplication>();
-                ApprenticeshipApplicationDetail applicationDetail = _applicationProvider.GetApprenticeshipApplicationDetails(applicationId);
-                if (applicationDetail != null)
-                {
-                    BulkRejectApplication bulkRejectApplication = new BulkRejectApplication()
-                    {
-                        ApplicationId = applicationId,
-                        FirstName = applicationDetail.CandidateDetails.FirstName,
-                        LastName = applicationDetail.CandidateDetails.LastName
-                    };
-                    bulkRejectApplications.Add(bulkRejectApplication);
-                    apprenticeshipApplicationViewModel.BulkRejectApplications = bulkRejectApplications;
-                }
-            }
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, apprenticeshipApplicationViewModel);
+            
+            var bulkRejectApplications =
+                _applicationProvider.GetBulkApplicationsRejectViewModel(bulkApplicationsRejectViewModel);            
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok, bulkApplicationsRejectViewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
@@ -233,7 +220,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            if (applicationSelectionViewModel.ApplicationId == Guid.Empty && !applicationSelectionViewModel.BulkDeclineApplications.Any())
+            if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
             {
                 _logService.Error("Confirm unsuccessful decision failed: VacancyGuid is empty.");
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);

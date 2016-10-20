@@ -1,0 +1,38 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.BulkApplicationsRejectViewModel
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Send Bulk Unsuccessful decision";
+}
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmBulkUnsuccessfulApprenticeshipApplication, FormMethod.Post))
+{
+    <div>
+        <h1 class="heading-xlarge med-btm-margin">Make selected candidates unsuccessful</h1>
+        <div class="hgroup grey-background">            
+            <ul>
+                @foreach (var application in Model.BulkRejectApplications)
+                {
+                    @Html.Hidden("bulkRejectApplications", application.ApplicationId)
+                    <li>@application.FirstName @application.LastName</li>
+                }
+            </ul>
+            @Html.RouteLink("Edit list", RecruitmentRouteNames.BulkDeclineCandidates, new {vacancyReferenceNumber = @Model.VacancyReferenceNumber})
+        </div>
+        <h2 class="heading-medium">Candidate feedback</h2>
+        @Html.FormTextAreaFor(
+            m => m.UnSuccessfulReason,
+            containerHtmlAttributes: new {@class = "form-group-compound heading-small"},
+            controlHtmlAttributes: new {@class = "form-control form-textarea-medium", type = "text", autofocus = "autofocus", spellcheck = "true"})
+        <section>
+            <div class="form-group">
+                <br/>
+                <button type="submit" class="button" name="SendUnsuccessfulDecision" value="SendUnsuccessfulDecision">
+                    Send feedback
+                </button>
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.BulkDeclineCandidates, new {vacancyReferenceNumber = @Model.VacancyReferenceNumber})
+            </div>
+        </section>
+    </div>
+}

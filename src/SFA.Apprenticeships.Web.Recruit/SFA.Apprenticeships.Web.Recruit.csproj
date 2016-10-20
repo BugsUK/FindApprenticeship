@@ -900,6 +900,7 @@
     <Content Include="Views\Admin\ProviderUser.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\SentDecisionConfirmation.cshtml" />
     <Content Include="Views\VacancyStatus\BulkDeclineCandidates.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmBulkUnsuccessfulDecision.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

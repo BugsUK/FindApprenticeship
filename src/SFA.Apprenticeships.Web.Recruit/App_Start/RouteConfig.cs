@@ -385,6 +385,12 @@
                );
 
             routes.MapRoute(
+              name: RecruitmentRouteNames.ConfirmBulkUnsuccessfulApprenticeshipApplication,
+              url: "apprenticeshipapplication/confirmbulkunsuccessfuldecision",
+              defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmBulkUnsuccessfulDecision" }
+              );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmRevertToInProgress,
                url: "apprenticeshipapplication/confirmreverttoinprogress",
                defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmRevertToInProgress" }
