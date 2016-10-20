@@ -6,15 +6,11 @@
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Application.Interfaces;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     public class TraineeshipVacancyDetailMapper
