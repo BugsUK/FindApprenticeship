@@ -236,11 +236,15 @@
         public ActionResult SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel, string applicationIds)
         {
             var response = _apprenticeshipApplicationMediator.SendSuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
-
+            ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
+            {
+                CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + response.ViewModel.ApplicantDetails.Name,
+                VacancyReferenceNumber = response.ViewModel.Vacancy.VacancyReferenceNumber
+            };
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok:
-                    return View("SentDecisionConfirmation", response.ViewModel);
+                    return View("SentDecisionConfirmation", confirmationStatusViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

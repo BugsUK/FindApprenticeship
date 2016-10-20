@@ -20,8 +20,7 @@
         </div>
 
         <p> You are about to inform this candidate that they have not been selected for the role of @Model.Vacancy.Title</p>
-        <h2 class="heading-medium">What feedback would you like to share with the candidate?</h2>
-        }
+        <h2 class="heading-medium">What feedback would you like to share with the candidate?</h2>        
         @Html.FormTextAreaFor(
             m => m.UnSuccessfulReason,
             containerHtmlAttributes: new { @class = "form-group-compound heading-small" },
