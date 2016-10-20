@@ -199,8 +199,6 @@
                     @Html.Partial("_applicationStatus", applicationSummary.Status)
                 </td>
                 <td>
-                    @*@Html.CheckBoxFor(m => applicationSummary.ApplicationId,)                    
-                    @Html.Hidden("ApplicationSummaries", applicationSummary)*@
                     <input type="checkbox" name="applicationIds" value="@applicationSummary.ApplicationId">
                 </td>
             </tr>

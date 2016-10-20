@@ -74,29 +74,26 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, viewModel);
         }
 
-        public IList<ApprenticeshipApplicationViewModel> GetApplicationDetails(List<string> applicationIds)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> GetApprenticeshipApplicationViewModel(string applicationIds)
         {
-            IList<ApprenticeshipApplicationViewModel> apprenticeshipApplicationDetails = new List<ApprenticeshipApplicationViewModel>();
-            foreach (string applicationId in applicationIds)
+            var apprenticeshipApplicationViewModel = new ApprenticeshipApplicationViewModel();
+            foreach (string applicationId in applicationIds.Split(','))
             {
-                ApprenticeshipApplicationDetail application = _applicationProvider.GetApprenticeshipApplicationDetails(applicationId);
-                if (application != null)
+                IList<BulkRejectApplication> bulkRejectApplications = new List<BulkRejectApplication>();
+                ApprenticeshipApplicationDetail applicationDetail = _applicationProvider.GetApprenticeshipApplicationDetails(applicationId);
+                if (applicationDetail != null)
                 {
-                    ApplicantDetailsViewModel applicantDetailsViewModel = new ApplicantDetailsViewModel()
+                    BulkRejectApplication bulkRejectApplication = new BulkRejectApplication()
                     {
-                        Name = application.CandidateDetails.FirstName + " " + application.CandidateDetails.LastName,
-                        CandidateId = application.CandidateId,
-                        EmailAddress = application.CandidateDetails.EmailAddress
+                        ApplicationId = applicationId,
+                        FirstName = applicationDetail.CandidateDetails.FirstName,
+                        LastName = applicationDetail.CandidateDetails.LastName
                     };
-                    var applicationSelectionViewModel = new ApprenticeshipApplicationViewModel
-                    {
-                        ApplicantDetails = applicantDetailsViewModel
-                    };
-                    apprenticeshipApplicationDetails.Add(applicationSelectionViewModel);
+                    bulkRejectApplications.Add(bulkRejectApplication);
+                    apprenticeshipApplicationViewModel.BulkRejectApplications = bulkRejectApplications;
                 }
-
             }
-            return apprenticeshipApplicationDetails;
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, apprenticeshipApplicationViewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)

@@ -12,8 +12,6 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -252,12 +250,11 @@
         {
             if (!string.IsNullOrWhiteSpace(applicationIds))
             {
-                var applicationDetails = _apprenticeshipApplicationMediator.GetApplicationDetails(applicationIds.Split(',').ToList());
-                //if (applicationDetails.Any())
-                //    applicationSelectionViewModel.BulkDeclineApplications = applicationDetails;
-                return View();
+                var bulkResponse = _apprenticeshipApplicationMediator.GetApprenticeshipApplicationViewModel(applicationIds);
+                if (bulkResponse.Code == ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok)
+                    return View(bulkResponse.ViewModel);
             }
-            var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);            
+            var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
@@ -274,7 +271,7 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendUnsuccessfulDecision")]
-        public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel, string bulkRejectApplications)
         {
             var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel);
 

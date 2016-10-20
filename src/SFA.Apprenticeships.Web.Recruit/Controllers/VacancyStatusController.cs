@@ -7,7 +7,6 @@
     using Domain.Entities.Raa;
     using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
-    using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.VacancyStatus;
     using System;
     using System.Collections.Generic;
@@ -45,8 +44,6 @@
         [HttpPost]
         public ActionResult ConfirmBulkDeclineCandidates(IList<Guid> applicationIds)
         {
-            ApplicationSelectionViewModel viewModel = new ApplicationSelectionViewModel();
-            viewModel.ApplicationId = applicationIds.FirstOrDefault();
             if (applicationIds.Any())
                 return RedirectToAction("ConfirmUnsuccessfulDecision", "ApprenticeshipApplication",
                     routeValues: new { applicationIds = String.Join(",", applicationIds) });
