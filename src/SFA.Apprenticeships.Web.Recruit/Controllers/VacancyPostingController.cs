@@ -1140,7 +1140,7 @@
         [HttpGet]
         public ActionResult ManageDates(int vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
+            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
             SetUserMessage(response.Message);
 
             switch (response.Code)
