@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
     using System;
     using System.Collections.Generic;
     using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Generic;
 
     public interface IEmployerService
@@ -13,7 +14,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
         Employer GetEmployer(int employerId, bool currentOnly);
         Employer GetEmployer(string edsUrn);
         IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds, bool currentOnly = true);
-        IEnumerable<MinimalEmployerDetails> GetMinimalEmployerDetails(IEnumerable<int> employerIds, bool currentOnly = true);
+        IEnumerable<Employer> SearchEmployers(EmployerSearchParameters searchParameters);
         Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
         Employer SaveEmployer(Employer employer);
         void SendApplicationLinks(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);

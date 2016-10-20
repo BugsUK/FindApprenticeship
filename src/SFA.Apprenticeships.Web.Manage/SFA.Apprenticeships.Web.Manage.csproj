@@ -872,6 +872,8 @@
     <Content Include="Views\Admin\CreateApiUser.cshtml" />
     <Content Include="Views\Admin\ResetApiUserPassword.cshtml" />
     <Content Include="Views\Candidate\ApplicationFeedback.cshtml" />
+    <Content Include="Views\Admin\Employers.cshtml" />
+    <Content Include="Views\Admin\Employer.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -903,7 +905,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

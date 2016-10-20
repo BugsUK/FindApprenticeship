@@ -269,12 +269,12 @@
                 else if (request.IsNameAndLocationQuery)
                 {
                     employers = employers.Where(employer =>
-                        employer.Name.ToLower().Contains(request.Name.ToLower()) &&
+                        employer.FullName.ToLower().Contains(request.Name.ToLower()) &&
                         IsMatchingAddress(request, employer));
                 }
                 else if (request.IsNameQuery)
                 {
-                    employers = employers.Where(e => e.Name.ToLower().Contains(request.Name.ToLower()));
+                    employers = employers.Where(e => e.FullName.ToLower().Contains(request.Name.ToLower()));
                 }
                 else if (request.IsLocationQuery)
                 {

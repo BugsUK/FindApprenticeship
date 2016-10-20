@@ -7,13 +7,12 @@
     using Common.Configuration;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Entities;
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
 
     public class EmployerRepository : GenericMongoClient2<MongoEmployer>, IEmployerReadRepository, IEmployerWriteRepository
     {
@@ -53,7 +52,7 @@
             return mongoEntities.Select(e => _mapper.Map<MongoEmployer, Employer>(e)).ToList();
         }
 
-        public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds, bool currentOnly = true)
+        public IEnumerable<Employer> Search(EmployerSearchParameters searchParameters)
         {
             throw new NotImplementedException();
         }

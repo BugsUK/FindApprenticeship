@@ -53,7 +53,7 @@
                 RealityCheck = vacancy.ThingsToConsider,
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
-                EmployerName = employer.Name,
+                EmployerName = employer.FullName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = vacancy.EmployerDescription,

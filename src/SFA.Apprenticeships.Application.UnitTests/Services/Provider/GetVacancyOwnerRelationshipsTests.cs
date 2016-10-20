@@ -123,7 +123,7 @@
             var fromRepository = new List<VacancyOwnerRelationship> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
             _vacancyOwnerRelationshipReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyOwnerRelationshipReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer3.Name.Substring(0, 10), null);
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer3.FullName.Substring(0, 10), null);
 
             var linksPage = service.GetVacancyOwnerRelationships(employerSearchRequest, CurrentPage, PageSize);
 
@@ -141,7 +141,7 @@
             var fromRepository = new List<VacancyOwnerRelationship> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
             _vacancyOwnerRelationshipReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyOwnerRelationshipReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer1.Name.Substring(0, 10), _employer1.Address.Postcode.Substring(0, 10));
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer1.FullName.Substring(0, 10), _employer1.Address.Postcode.Substring(0, 10));
 
             var linksPage = service.GetVacancyOwnerRelationships(employerSearchRequest, CurrentPage, PageSize);
 
@@ -177,7 +177,7 @@
             _employer1.Address.AddressLine4 = addressLine4;
             _employer1.Address.Town = town;
 
-            var employerName = _employer1.Name.Substring(0, 10);
+            var employerName = _employer1.FullName.Substring(0, 10);
             var location = (addressLine4 ?? town).Substring(0, 15);
 
             var employerSearchRequest = new EmployerSearchRequest(

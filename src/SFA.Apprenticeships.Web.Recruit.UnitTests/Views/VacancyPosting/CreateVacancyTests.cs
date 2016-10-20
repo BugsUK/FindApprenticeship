@@ -6,6 +6,7 @@
     using RazorGenerator.Testing;
     using Common.ViewModels.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Recruit.Views.VacancyPosting;

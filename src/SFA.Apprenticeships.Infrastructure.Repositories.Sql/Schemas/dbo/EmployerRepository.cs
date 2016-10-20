@@ -4,11 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common;
-    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-
     using Application.Interfaces;
     using Domain.Entities.Raa.Reference;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using DomainEmployer = Domain.Entities.Raa.Parties.Employer;
     using Employer = Entities.Employer;
 
@@ -55,19 +54,36 @@
             return MapEmployers(employers);
         }
 
-        public IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds, bool currentOnly = true)
+        public IEnumerable<DomainEmployer> Search(EmployerSearchParameters searchParameters)
         {
-            var employers = new List<MinimalEmployerDetails>();
-            var splitEmployerIds = DbHelpers.SplitIds(employerIds);
-            foreach (var employersIds in splitEmployerIds)
-            {
-                var splitEmployer = _getOpenConnection.Query<MinimalEmployerDetails>("SELECT EmployerId, FullName FROM dbo.Employer WHERE EmployerId IN @EmployerIds" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
-                    new { EmployerIds = employersIds }).ToList();
-                employers.AddRange(splitEmployer);
-            }
+            var sql = "SELECT * FROM dbo.Employer WHERE ";
+            var and = "";
 
-            return employers;
-        } 
+            if (!string.IsNullOrEmpty(searchParameters.Id))
+            {
+                sql += "ProviderId = @Id ";
+                and = "AND ";
+            }
+            if (!string.IsNullOrEmpty(searchParameters.EdsUrn))
+            {
+                sql += and + "EDSURN = @EdsUrn ";
+                and = "AND ";
+            }
+            if (!string.IsNullOrEmpty(searchParameters.Name))
+            {
+                sql += and + "(FullName LIKE '%' + @Name + '%' OR TradingName LIKE '%' + @Name + '%') ";
+                and = "AND ";
+            }
+            if (!string.IsNullOrEmpty(searchParameters.Location))
+            {
+                sql += and + "(Town LIKE '%' + @Location + '%' OR PostCode LIKE '%' + @Location + '%') ";
+            }
+            sql += "ORDER BY FullName";
+
+            var employers = _getOpenConnection.Query<Employer>(sql, searchParameters).ToList();
+
+            return MapEmployers(employers);
+        }
 
         public DomainEmployer Save(DomainEmployer employer)
         {
@@ -90,7 +106,6 @@
 
                 var existingEmployer = _getOpenConnection.Query<Employer>(sql, sqlParams).Single();
 
-                dbEmployer.TradingName = existingEmployer.TradingName;
                 dbEmployer.CountyId = existingEmployer.CountyId;
                 dbEmployer.LocalAuthorityId = existingEmployer.LocalAuthorityId;
                 dbEmployer.GeocodeEasting = existingEmployer.GeocodeEasting;
@@ -103,7 +118,6 @@
                 dbEmployer.TotalVacanciesPosted = existingEmployer.TotalVacanciesPosted;
                 dbEmployer.BeingSupportedBy = existingEmployer.BeingSupportedBy;
                 dbEmployer.LockedForSupportUntil = existingEmployer.LockedForSupportUntil;
-                dbEmployer.EmployerStatusTypeId = existingEmployer.EmployerStatusTypeId;
                 dbEmployer.DisableAllowed = existingEmployer.DisableAllowed;
                 dbEmployer.TrackingAllowed = existingEmployer.TrackingAllowed;
 
