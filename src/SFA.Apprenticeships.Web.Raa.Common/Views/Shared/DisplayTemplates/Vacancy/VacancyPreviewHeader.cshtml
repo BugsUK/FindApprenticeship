@@ -38,7 +38,7 @@
         <div class="grid grid-2-3" style="clear: left">
             <div class="hgroup text @editableItemClass">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
-                    @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title)))
+                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title))
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, Model.BasicDetailsLink))
                 </h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
