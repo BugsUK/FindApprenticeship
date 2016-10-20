@@ -30,7 +30,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
         public MediatorResponse<TraineeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var viewModel = _applicationProvider.GetTraineeshipApplicationViewModelForReview(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.GetTraineeshipApplicationViewModel(applicationSelectionViewModel);
 
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Review.Ok, viewModel);
         }

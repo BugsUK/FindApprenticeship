@@ -263,7 +263,7 @@
             var application = _apprenticeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);
             var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
             return viewModel;
-        }
+        }        
 
         public ApprenticeshipApplicationDetail GetApprenticeshipApplicationDetails(string applicationId)
         {

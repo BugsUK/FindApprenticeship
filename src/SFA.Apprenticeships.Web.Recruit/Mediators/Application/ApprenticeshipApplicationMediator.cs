@@ -23,20 +23,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         private readonly IDecryptionService<AnonymisedApplicationLink> _decryptionService;
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logService;
-        private readonly IMapper _mapper;
 
         public ApprenticeshipApplicationMediator(IApplicationProvider applicationProvider,
             ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelServerValidator,
             IDecryptionService<AnonymisedApplicationLink> decryptionService, IDateTimeService dateTimeService,
-            ILogService logService,
-            IMapper mapper)
+            ILogService logService)
         {
             _applicationProvider = applicationProvider;
             _apprenticeshipApplicationViewModelServerValidator = apprenticeshipApplicationViewModelServerValidator;
             _decryptionService = decryptionService;
             _dateTimeService = dateTimeService;
             _logService = logService;
-            _mapper = mapper;
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
