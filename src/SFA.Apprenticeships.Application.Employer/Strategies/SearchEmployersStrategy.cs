@@ -3,22 +3,31 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Interfaces.Generic;
     using Interfaces.Organisations;
     using Interfaces;
 
-    public class GetPagedEmployerSearchResultsStrategy : IGetPagedEmployerSearchResultsStrategy
+    public class SearchEmployersStrategy : ISearchEmployersStrategy
     {
+        private readonly IEmployerReadRepository _employerReadRepository;
         private readonly IOrganisationService _organisationService;
         private readonly IMapper _mapper;
 
-        public GetPagedEmployerSearchResultsStrategy(IOrganisationService organisationService, IMapper mapper)
+        public SearchEmployersStrategy(IEmployerReadRepository employerReadRepository, IOrganisationService organisationService, IMapper mapper)
         {
+            _employerReadRepository = employerReadRepository;
             _organisationService = organisationService;
             _mapper = mapper;
         }
 
-        public Pageable<Employer> Get(string edsUrn, string name, string location, int currentPage, int pageSize)
+        public IEnumerable<Employer> SearchEmployers(EmployerSearchParameters searchParameters)
+        {
+            return _employerReadRepository.Search(searchParameters);
+        }
+
+        public Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize)
         {
             var pageable = new Pageable<Employer>
             {

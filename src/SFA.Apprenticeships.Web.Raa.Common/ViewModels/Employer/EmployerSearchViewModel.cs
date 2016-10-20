@@ -40,6 +40,9 @@
 
         public EmployerFilterType FilterType { get; set; }
 
+        [Display(Name = EmployerSearchViewModelMessages.Id.LabelText)]
+        public string Id { get; set; }
+
         [Display(Name = EmployerSearchViewModelMessages.EdsUrn.LabelText)]
         public string EdsUrn { get; set; }
 

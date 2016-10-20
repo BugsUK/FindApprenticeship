@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Entities.Raa.Parties;
+    using Models;
 
     public interface IEmployerReadRepository
     {
@@ -11,7 +12,7 @@
 
         List<Employer> GetByIds(IEnumerable<int> employerIds, bool currentOnly = true);
 
-        IEnumerable<MinimalEmployerDetails> GetMinimalDetailsByIds(IEnumerable<int> employerIds, bool currentOnly = true);
+        IEnumerable<Employer> Search(EmployerSearchParameters searchParameters);
     }
 
     public interface IEmployerWriteRepository

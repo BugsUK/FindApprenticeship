@@ -13,6 +13,7 @@
 
     <div class="form-group">
 
+        @Html.FormTextFor(m => m.Id, controlHtmlAttributes: new {type = "tel", size = 9})
         @Html.FormTextFor(m => m.EdsUrn, controlHtmlAttributes: new {type = "tel", size = 9, autofocus = "autofocus"})
         @Html.FormTextFor(m => m.Name, controlHtmlAttributes: new {type = "text"})
         @Html.FormTextFor(m => m.Location, hintText: "Enter town or postcode", controlHtmlAttributes: new {type = "text"})

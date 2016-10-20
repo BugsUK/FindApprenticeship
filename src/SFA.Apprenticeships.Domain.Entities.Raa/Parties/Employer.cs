@@ -6,7 +6,6 @@
     public class Employer
     {
         public int EmployerId { get; set; }
-        //TODO: Remove once mongo repos have been retired
         public Guid EmployerGuid { get; set; }
         public string EdsUrn { get; set; }
         public string FullName { get; set; }
@@ -14,5 +13,6 @@
         public int PrimaryContact { get; set; }
         public PostalAddress Address { get; set; }
         public bool IsPositiveAboutDisability { get; set; }
+        public EmployerTrainingProviderStatuses EmployerStatus { get; set; }
     }
 }

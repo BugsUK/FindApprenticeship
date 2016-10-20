@@ -159,7 +159,7 @@
                 dbEmployer.BeingSupportedBy.Should().BeNull(); // TODO: US1259: ?
                 dbEmployer.LockedForSupportUntil.Should().Be(default(DateTime?)); // TODO: US1259: ?
 
-                dbEmployer.EmployerStatusTypeId.Should().Be(default(int?)); // TODO: US1259: ?
+                dbEmployer.EmployerStatusTypeId.Should().Be((int)employer.EmployerStatus);
 
                 dbEmployer.DisableAllowed.Should().Be(employer.IsPositiveAboutDisability);
                 dbEmployer.TrackingAllowed.Should().Be(false); // TODO: US1259: ?
