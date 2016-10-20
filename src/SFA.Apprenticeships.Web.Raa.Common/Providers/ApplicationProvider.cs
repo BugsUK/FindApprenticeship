@@ -97,14 +97,16 @@
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = new BulkDeclineCandidatesViewModel
             {
-                EmployerName = employer.Name,
+                EmployerName = employer.FullName,
                 VacancyType = vacancy.VacancyType,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyTitle = vacancy.Title,
                 VacancyId = vacancy.VacancyId
             };
             List<ApplicationSummary> applications = vacancy.VacancyType == VacancyType.Traineeship
-                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
+                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
+                .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
+                .Select(a => (ApplicationSummary)a).ToList()
                 : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
                 .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
                 .Select(a => (ApplicationSummary)a).ToList();
