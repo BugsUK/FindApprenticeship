@@ -1,0 +1,76 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer.EmployerSearchViewModel
+@{
+    ViewBag.Title = "Employers";
+}
+
+<h1 id="heading" class="heading-xlarge">Employers</h1>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEmployers))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.Id, controlHtmlAttributes: new {type = "tel", size = 9})
+        @Html.FormTextFor(m => m.EdsUrn, controlHtmlAttributes: new {type = "tel", size = 9, autofocus = "autofocus"})
+        @Html.FormTextFor(m => m.Name, controlHtmlAttributes: new {type = "text"})
+        @Html.FormTextFor(m => m.Location, hintText: "Enter town or postcode", controlHtmlAttributes: new {type = "text"})
+
+        <div class="form-group">
+            <button id="search-employers-button" type="submit" class="button" name="SearchEmployersAction" value="SearchEmployers">Search Employers</button>
+        </div>
+    </div>
+
+    if (!Model.NoResults)
+    {
+        <div class="grid-wrapper">
+            <div class="grid grid-1-1">
+                <table>
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>EDSURN</th>
+                            <th>Full Name</th>
+                            <th>Trading Name</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var employer in Model.Employers.Page)
+                        {
+                            <tr>
+                                <td>@employer.EmployerId</td>
+                                <td>@employer.EdsUrn</td>
+                                <td>@employer.FullName</td>
+                                <td>@employer.TradingName</td>
+                                <td>
+                                    @employer.Address.AddressLine1
+                                    @if (!string.IsNullOrWhiteSpace(@employer.Address.AddressLine2))
+                                    {
+                                        <br />@employer.Address.AddressLine2
+
+                                    }
+                                    <br />@employer.Address.Town @employer.Address.Postcode
+                                </td>
+                                <td>@employer.Status</td>
+                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewEmployer, new { employer.EmployerId })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}

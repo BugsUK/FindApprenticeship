@@ -17,6 +17,7 @@
     using Domain.Entities.Raa.Parties;
     using FluentAssertions;
     using Ploeh.AutoFixture;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
 

@@ -6,6 +6,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels.Locations;

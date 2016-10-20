@@ -295,7 +295,7 @@
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\Report\ReportParametersDateRangeValidator.cs" />
-    <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
+    <Compile Include="Validators\Employer\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelServerValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\TrainingDetailsViewModelValidator.cs" />
@@ -354,13 +354,11 @@
     <Compile Include="ViewModels\Provider\VacancyOwnerRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerResultViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerSearchViewModel.cs" />
+    <Compile Include="ViewModels\Employer\EmployerSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\LocationSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyLocationAddressViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
+    <Compile Include="ViewModels\Employer\EmployerViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\IPartialVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\QAActionResult.cs" />
@@ -696,7 +694,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Strategies\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

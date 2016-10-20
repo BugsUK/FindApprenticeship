@@ -15,9 +15,11 @@
         {
             Mapper.CreateMap<Employer, DomainEmployer>()
                 .ForMember(v => v.EmployerGuid, opt => opt.Ignore())
-                .ForMember(v => v.Name, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(v => v.FullName, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(v => v.TradingName, opt => opt.MapFrom(src => src.TradingName))
                 .ForMember(v => v.Address, opt => opt.Ignore())
                 .ForMember(v => v.IsPositiveAboutDisability, opt => opt.MapFrom(src => src.DisableAllowed))
+                .ForMember(v => v.EmployerStatus, opt => opt.MapFrom(src => (EmployerTrainingProviderStatuses)src.EmployerStatusTypeId))
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
@@ -43,7 +45,8 @@
 
             Mapper.CreateMap<DomainEmployer, Employer>()
                 .ForMember(v => v.EdsUrn, opt => opt.MapFrom(src => Convert.ToInt32(src.EdsUrn)))
-                .ForMember(v => v.FullName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(v => v.FullName, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(v => v.TradingName, opt => opt.MapFrom(src => src.TradingName))
                 .ForMember(v => v.AddressLine1, opt => opt.MapFrom(src => src.Address.AddressLine1))
                 .ForMember(v => v.AddressLine2, opt => opt.MapFrom(src => src.Address.AddressLine2))
                 .ForMember(v => v.AddressLine3, opt => opt.MapFrom(src => src.Address.AddressLine3))
@@ -64,8 +67,8 @@
                 .ForMember(v => v.TotalVacanciesPosted, opt => opt.Ignore())
                 .ForMember(v => v.BeingSupportedBy, opt => opt.Ignore())
                 .ForMember(v => v.LockedForSupportUntil, opt => opt.Ignore())
-                .ForMember(v => v.EmployerStatusTypeId, opt => opt.Ignore())
-                .ForMember(v => v.DisableAllowed, opt => opt.MapFrom((src => src.IsPositiveAboutDisability)))
+                .ForMember(v => v.EmployerStatusTypeId, opt => opt.MapFrom(src => (int)src.EmployerStatus))
+                .ForMember(v => v.DisableAllowed, opt => opt.MapFrom(src => src.IsPositiveAboutDisability))
                 .ForMember(v => v.TrackingAllowed, opt => opt.Ignore());
 
             Mapper.CreateMap<VerifiedOrganisationSummary, DomainEmployer>()
@@ -73,7 +76,8 @@
                 .ForMember(dest => dest.EmployerGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.EdsUrn, opt => opt.MapFrom(src => src.ReferenceNumber))
                 .ForMember(dest => dest.PrimaryContact, opt => opt.UseValue(Constants.UnspecifiedEmployerContact))
-                .ForMember(dest => dest.IsPositiveAboutDisability, opt => opt.Ignore());
+                .ForMember(dest => dest.IsPositiveAboutDisability, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployerStatus, opt => opt.Ignore());
         }
     }
 

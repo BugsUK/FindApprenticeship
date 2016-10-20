@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Employer.Strategies
 {
     using Apprenticeships.Application.Employer.Strategies;
+    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Organisations;
     using Moq;
     using NUnit.Framework;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Interfaces;
 
     [TestFixture]
     public class GetPagedEmployerSearchResultsStrategyTests
@@ -20,18 +19,18 @@
             const string name = "name";
             const string location = "Location";
 
-            strategy.Get(edsUrn, name, location, 1, 25);
+            strategy.GetEmployers(edsUrn, name, location, 1, 25);
 
             int resultCount;
             organisationService.Verify(s => s.GetVerifiedOrganisationSummaries(edsUrn, name, location, out resultCount));
         }
 
-        private IGetPagedEmployerSearchResultsStrategy GetStrategy(Mock<IOrganisationService> orgService = null)
+        private ISearchEmployersStrategy GetStrategy(Mock<IOrganisationService> orgService = null)
         {
             var organisationService = orgService ?? new Mock<IOrganisationService>();
             var mappers = new Mock<IMapper>();
 
-            return new GetPagedEmployerSearchResultsStrategy(organisationService.Object, mappers.Object);
+            return new SearchEmployersStrategy(new Mock<IEmployerReadRepository>().Object, organisationService.Object, mappers.Object);
         }
     }
 }

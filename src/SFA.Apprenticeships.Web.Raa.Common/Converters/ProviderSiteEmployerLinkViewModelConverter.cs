@@ -19,7 +19,7 @@
             };
             if (!string.IsNullOrWhiteSpace(anonymousEmployerName))
             {
-                viewModel.Employer.Name = anonymousEmployerName;
+                viewModel.Employer.FullName = anonymousEmployerName;
             }
 
             return viewModel;
