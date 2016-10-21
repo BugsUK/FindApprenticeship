@@ -24,11 +24,15 @@
             PageSize = viewModel.PageSize;
         }
 
-        public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacanciesSummaryFilterTypes filterType, string searchString) : this(viewModel)
+        public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacanciesSummaryFilterTypes filterType) : this(viewModel)
         {
             FilterType = filterType;
-            SearchString = searchString;
             CurrentPage = 1;
+        }
+
+        public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacanciesSummaryFilterTypes filterType, string searchString) : this(viewModel, filterType)
+        {
+            SearchString = searchString;
         }
 
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, bool showAllLotteryNumbers) : this(viewModel)

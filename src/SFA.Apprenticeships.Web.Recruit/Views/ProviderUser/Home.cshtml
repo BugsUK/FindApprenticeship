@@ -114,7 +114,7 @@
             }
             else
             {
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live, searchString).RouteValues)" class="vacancy-filter">
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live).RouteValues)" class="vacancy-filter">
                     <figure class="data">
                         <p class="count">@Model.VacanciesSummary.LiveCount</p>
                         <figcaption>
@@ -149,7 +149,7 @@
             {
                 if (newApplicationsCount == 1)
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications, searchString).RouteValues)" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications).RouteValues)" class="vacancy-filter">
                         <figure class="data">
                             <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                             <figcaption>
@@ -160,7 +160,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications, searchString).RouteValues)" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications).RouteValues)" class="vacancy-filter">
                         <figure class="data">
                             <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                             <figcaption>
@@ -182,7 +182,7 @@
             }
             else
             {
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected, searchString).RouteValues)" class="vacancy-filter">
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected).RouteValues)" class="vacancy-filter">
                     <figure class="data">
                         <p class="count">@Model.VacanciesSummary.RejectedCount</p>
                         <figcaption>
@@ -202,7 +202,7 @@
             }
             else
             {
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon, searchString).RouteValues)" class="vacancy-filter">
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon).RouteValues)" class="vacancy-filter">
                     <figure class="data">
                         <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
                         <figcaption>
@@ -242,7 +242,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft, searchString).RouteValues)" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft).RouteValues)" class="vacancy-filter">
                         <figure class="data">
                             <p class="count">@Model.VacanciesSummary.DraftCount</p>
                             <figcaption>
@@ -264,7 +264,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted, searchString).RouteValues)" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted).RouteValues)" class="vacancy-filter">
                         <figure class="data">
                             <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
                             <figcaption>
@@ -286,7 +286,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed, searchString).RouteValues)" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed).RouteValues)" class="vacancy-filter">
                         <figure class="data">
                             <p class="count">@Model.VacanciesSummary.ClosedCount</p>
                             <figcaption>
@@ -308,7 +308,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Completed, searchString).RouteValues)" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Completed).RouteValues)" class="vacancy-filter">
                         <figure class="data">
                             <p class="count">@Model.VacanciesSummary.CompletedCount</p>
                             <figcaption>
