@@ -44,7 +44,7 @@
             var apprenticeshipApplicationSummaries = _apprenticeshipApplicationService.GetApplicationSummaries(vacancy.VacancyId);
 
             return (apprenticeshipApplicationSummaries.Any(a => statusesRequiringAction.Contains(a.Status)));
-        }        
+        }
 
         public ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel)
         {
@@ -63,11 +63,6 @@
             }
 
             return new ArchiveVacancyViewModel(hasOustandingActions, vacancy.VacancyId, vacancy.VacancyReferenceNumber);
-        }
-
-        public BulkDeclineCandidatesViewModel BulkDeclineCandidates(BulkDeclineCandidatesViewModel viewModel)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -18,5 +18,11 @@
             public const string Ok = "VacancyPosting.BulkDeclineCandidatesViewModel.Ok";
             public const string OutstandingActions = "VacancyPosting.BulkDeclineCandidatesViewModel.OutstandingActions";
         }
+
+        public static class BulkApplicationsReject
+        {
+            public const string Ok = "VacancyPosting.BulkApplicationsReject.Ok";
+            public const string FailedValidation = "VacancyPosting.BulkApplicationsReject.FailedValidation";
+        }
     }
 }

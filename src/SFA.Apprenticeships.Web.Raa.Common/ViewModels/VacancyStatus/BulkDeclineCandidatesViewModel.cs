@@ -15,7 +15,6 @@
         public VacancyApplicationsSearchViewModel VacancyApplicationsSearch { get; set; }
         public int NewApplicationsCount { get; set; }
         public int InProgressApplicationsCount { get; set; }
-        public bool CanBulkDeclineCandidates { get; set; }
         public bool IsSelected { get; set; }
     }
 }

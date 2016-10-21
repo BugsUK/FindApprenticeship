@@ -222,6 +222,8 @@
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
+    <Compile Include="Validators\VacancyStatus\BulkApplicationsRejectViewModelMessages.cs" />
+    <Compile Include="Validators\VacancyStatus\BulkApplicationsRejectViewModelServerValidator.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />
     <Compile Include="Constants\Pages\TransferVacanciesMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

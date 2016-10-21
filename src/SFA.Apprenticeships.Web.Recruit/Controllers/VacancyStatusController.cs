@@ -2,15 +2,15 @@
 {
     using Application.Interfaces;
     using Attributes;
-    using Common.Constants;
     using Constants;
     using Domain.Entities.Raa;
+    using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.VacancyStatus;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -42,14 +42,25 @@
         }
 
         [HttpPost]
-        public ActionResult ConfirmBulkDeclineCandidates(IList<Guid> applicationIds, int vacancyReferencenumber)
+        public ActionResult ConfirmBulkDeclineCandidates(IList<string> applicationIds, int vacancyReferencenumber)
         {
-            if (applicationIds != null && applicationIds.Any())
-                return RedirectToAction("ConfirmBulkUnsuccessfulDecision", "ApprenticeshipApplication",
+            BulkApplicationsRejectViewModel bulkDeclineCandidatesViewModel = new BulkApplicationsRejectViewModel
+            {
+                ApplicationIds = applicationIds,
+                VacancyReferenceNumber = vacancyReferencenumber
+            };
+            var response = _vacancyStatusMediator.BulkResponseApplications(bulkDeclineCandidatesViewModel);
+            switch (response.Code)
+            {
+                case VacancyStatusMediatorCodes.BulkApplicationsReject.Ok:
+                    return RedirectToAction("ConfirmBulkUnsuccessfulDecision", "ApprenticeshipApplication",
                     routeValues: new { applicationIds = String.Join(",", applicationIds), vacancyReferencenumber = vacancyReferencenumber });
-            SetUserMessage("You must select a candidate", UserMessageLevel.Error);
-            return RedirectToAction("BulkDeclineCandidates",
-                    routeValues: new { vacancyReferencenumber = vacancyReferencenumber });
+                case VacancyStatusMediatorCodes.BulkApplicationsReject.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("BulkDeclineCandidates", response.ViewModel);
+                default:
+                    throw new InvalidOperationException();
+            }
         }
 
         [HttpPost]

@@ -1,28 +1,33 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyStatus
 {
-    using Apprenticeships.Application.Interfaces;
+    using Common.Constants;
     using Common.Mediators;
+    using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.VacancyStatus;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.VacancyStatus;
     using VacancyPosting;
 
-    public class VacancyStatusMediator : IVacancyStatusMediator
+    public class VacancyStatusMediator : MediatorBase, IVacancyStatusMediator
     {
         private readonly IVacancyStatusChangeProvider _vacancyStatusChangeProvider;
         private readonly IApplicationProvider _applicationProvider;
-        private readonly IMapper _mapper;
+        private readonly BulkApplicationsRejectViewModelServerValidator _bulkApplicationsRejectViewModelServerValidator;
 
-        public VacancyStatusMediator(IVacancyStatusChangeProvider vacancyStatusChangeProvider, IMapper mapper, IApplicationProvider applicationProvider)
+        public VacancyStatusMediator(IVacancyStatusChangeProvider vacancyStatusChangeProvider,
+            IApplicationProvider applicationProvider,
+            BulkApplicationsRejectViewModelServerValidator bulkApplicationsRejectViewModelServerValidator)
         {
             _vacancyStatusChangeProvider = vacancyStatusChangeProvider;
-            _mapper = mapper;
             _applicationProvider = applicationProvider;
+            _bulkApplicationsRejectViewModelServerValidator = bulkApplicationsRejectViewModelServerValidator;
         }
 
         public MediatorResponse<ArchiveVacancyViewModel> GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
         {
             var model = _vacancyStatusChangeProvider.GetArchiveVacancyViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
-            return new MediatorResponse<ArchiveVacancyViewModel>()
+            return new MediatorResponse<ArchiveVacancyViewModel>
             {
                 ViewModel = model,
                 Code = VacancyStatusMediatorCodes.GetArchiveVacancyViewModel.Ok
@@ -59,24 +64,16 @@
             };
         }
 
-        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(BulkDeclineCandidatesViewModel viewModel)
+        public MediatorResponse<BulkDeclineCandidatesViewModel> BulkResponseApplications(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
         {
-            var model = _vacancyStatusChangeProvider.BulkDeclineCandidates(viewModel);
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkApplicationsRejectViewModel.VacancyReferenceNumber);
+            var validationResult = _bulkApplicationsRejectViewModelServerValidator.Validate(bulkApplicationsRejectViewModel);
 
-            if (model.CanBulkDeclineCandidates)
+            if (!validationResult.IsValid)
             {
-                return new MediatorResponse<BulkDeclineCandidatesViewModel>()
-                {
-                    ViewModel = model,
-                    Code = VacancyStatusMediatorCodes.BulkDeclineCandidatesViewModel.OutstandingActions
-                };
+                return GetMediatorResponse(VacancyStatusMediatorCodes.BulkApplicationsReject.FailedValidation, viewModel, validationResult);
             }
-
-            return new MediatorResponse<BulkDeclineCandidatesViewModel>()
-            {
-                ViewModel = model,
-                Code = VacancyStatusMediatorCodes.BulkDeclineCandidatesViewModel.Ok
-            };
+            return GetMediatorResponse(VacancyStatusMediatorCodes.BulkApplicationsReject.Ok, viewModel, EmployerSearchViewModelMessages.ErnAdviceText, UserMessageLevel.Info);
         }
     }
 }

@@ -7,6 +7,7 @@
 @{
     ViewBag.Title = "Recruit an Apprentice - Bulk decline candidates";
 }
+@Html.Partial("ValidationSummary", ViewData.ModelState)
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmBulkDeclineCandidates, FormMethod.Post))
 {    
     <div class="grid-wrapper">

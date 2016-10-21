@@ -6,7 +6,6 @@
     {
         ArchiveVacancyViewModel GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber);
 
-        ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel);
-        BulkDeclineCandidatesViewModel BulkDeclineCandidates(BulkDeclineCandidatesViewModel viewModel);
+        ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel);        
     }
 }
