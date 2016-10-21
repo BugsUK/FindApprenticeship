@@ -862,7 +862,7 @@
                 Page = mapped,
                 ResultsCount = totalRecords,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = (int)Math.Ceiling((double)totalRecords / (double)vacanciesSummarySearch.PageSize)
+                TotalNumberOfPages = totalRecords == 0 ? 1 : (int)Math.Ceiling((double)totalRecords / (double)vacanciesSummarySearch.PageSize)
             };
 
             var viewModel = new VacanciesSummaryViewModel()
