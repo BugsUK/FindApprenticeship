@@ -121,6 +121,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                    JOIN	ProviderSiteRelationship r
+					ON		r.ProviderSiteId = o.ProviderSiteId
                     JOIN	Employer e
                     ON		o.EmployerId = e.EmployerId
                     JOIN	Provider p
