@@ -38,35 +38,35 @@
             else if (Model.Status == ApplicationStatuses.Unsuccessful)
             {
                 <span class="inl-block">This application was unsuccessful.</span>
+            <p class="hide-print">
+                <a id="return-to-my-feedback" href="@Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback)">Return to your feedback</a>
+            </p>
             }
             else if (Model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
                 <span class="inl-block">This apprenticeship expired or was withdrawn.</span>
             }
-        </p>        
-        <p class="hide-print">
-            <a id="return-to-my-feedback" href="@Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback)">Return to your feedback</a>
+            </p>
+        </div>
+    </div>
+
+    @Html.DisplayFor(m => m.Candidate)
+    @Html.DisplayFor(m => m.Candidate.Education)
+    @Html.DisplayFor(m => m.Candidate.Qualifications, "Application/Qualifications")
+    @Html.DisplayFor(m => m.Candidate.WorkExperience, "Application/WorkExperience")
+    @Html.DisplayFor(m => m.Candidate.TrainingCourses, "Application/TrainingCourses")
+    @Html.DisplayFor(m => m.Candidate.AboutYou)
+
+    <section class="section-border">
+        <h2 class="heading-large">
+            Additional questions
+        </h2>
+        @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
+        @Html.DisplayFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability")
+    </section>
+
+    <div class="form-group hide-print">
+        <p>
+            <a id="return-to-my-applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" class="button">Return to my applications</a>
         </p>
     </div>
-</div>
-
-@Html.DisplayFor(m => m.Candidate)
-@Html.DisplayFor(m => m.Candidate.Education)
-@Html.DisplayFor(m => m.Candidate.Qualifications, "Application/Qualifications")
-@Html.DisplayFor(m => m.Candidate.WorkExperience, "Application/WorkExperience")
-@Html.DisplayFor(m => m.Candidate.TrainingCourses, "Application/TrainingCourses")
-@Html.DisplayFor(m => m.Candidate.AboutYou)
-
-<section class="section-border">
-    <h2 class="heading-large">
-        Additional questions
-    </h2>
-    @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
-    @Html.DisplayFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability")
-</section>
-
-<div class="form-group hide-print">
-    <p>
-        <a id="return-to-my-applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" class="button">Return to my applications</a>
-    </p>
-</div>

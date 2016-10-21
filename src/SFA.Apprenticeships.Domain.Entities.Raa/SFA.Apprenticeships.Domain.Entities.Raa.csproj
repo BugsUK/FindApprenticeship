@@ -92,7 +92,6 @@
     <Compile Include="Locations\PostalAddress.cs" />
     <Compile Include="Locations\VacancyLocation.cs" />
     <Compile Include="Parties\Employer.cs" />
-    <Compile Include="Parties\MinimalEmployerDetails.cs" />
     <Compile Include="Parties\Provider.cs" />
     <Compile Include="Parties\ProviderSite.cs" />
     <Compile Include="Parties\ProviderSiteRelationship.cs" />

@@ -66,7 +66,8 @@
                 stringBuilder.AppendFormat($"<b><a href=\"https://{_siteDomainName}/myapplications#dashSuccessful\">Successful applications</a></b>");
                 stringBuilder.AppendLine();
                 var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful)
-                    .Select(d => $"<li>{d.Title} with {d.EmployerName}</li>");
+                    .Select(d => $"<li>{d.Title} with {d.EmployerName}<br/>" +
+                    $"<a href=\"https://{_siteDomainName}/apprenticeship/view/{d.VacancyId}\">View application</a></li>");
                 stringBuilder.AppendLine($"<ul>{string.Join("", successfulLineItems)}</ul>");
             }
 

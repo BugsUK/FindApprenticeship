@@ -6,6 +6,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using ViewModels.Api;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using Web.Common.Mediators;
@@ -33,6 +34,9 @@
         MediatorResponse<ProviderUserViewModel> GetProviderUser(int providerUserId);
         MediatorResponse<ProviderUserViewModel> SaveProviderUser(ProviderUserViewModel viewModel);
         MediatorResponse<ProviderUserViewModel> VerifyProviderUserEmail(ProviderUserViewModel viewModel);
+        MediatorResponse<EmployerSearchViewModel> SearchEmployers(EmployerSearchViewModel searchViewModel);
+        MediatorResponse<EmployerViewModel> GetEmployer(int employerId);
+        MediatorResponse<EmployerViewModel> SaveEmployer(EmployerViewModel viewModel);
         MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandard();
         MediatorResponse<List<Category>> GetFrameworks();
         MediatorResponse<byte[]> GetFrameworksBytes();

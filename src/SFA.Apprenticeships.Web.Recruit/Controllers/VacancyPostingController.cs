@@ -19,6 +19,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Web.Mvc;
+    using Raa.Common.ViewModels.Employer;
 
     //TODO: Split this class by code region
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -1140,7 +1141,7 @@
         [HttpGet]
         public ActionResult ManageDates(int vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, false);
+            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
             SetUserMessage(response.Message);
 
             switch (response.Code)

@@ -240,7 +240,7 @@ Declare @CandidateInactiveDays int
     ((@AgeRange = -1 ) or (@AgeRange <> -1 and c.DateofBirth between @MINDT and @MAXDT))   
     AND ((@GenderID = -1) or (@GenderID <> -1 and c.Gender=@GenderID))  
     AND ((@EthnicityID = '-1') OR (@EthnicityID <> '-1' AND eth.id IS NOT null))  
-    AND ((@ProviderSiteID <>-1 and tp.ProviderSiteID=@ProviderSiteID ) or (@ProviderSiteID  = -1))    
+    AND ((@ProviderSiteID <> 0 and tp.ProviderSiteID=@ProviderSiteID ) or (@ProviderSiteID = 0))    
      and ch.EventDate BETWEEN @FromDate AND @ToDate AND--Common Application form   
      ((@type = -1) or  
      ((@Type = 1) AND (lscr.GeographicRegionID = @LSCRegion)) OR  

@@ -144,6 +144,24 @@
             public const string Ok = "AdminMediatorCodes.VerifyProviderUserEmail.Ok";
         }
 
+        public class SearchEmployers
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SearchEmployers.FailedValidation";
+            public const string Ok = "AdminMediatorCodes.SearchEmployers.Ok";
+        }
+
+        public class GetEmployer
+        {
+            public const string Ok = "AdminMediatorCodes.GetEmployer.Ok";
+        }
+
+        public class SaveEmployer
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveEmployer.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveEmployer.Error";
+            public const string Ok = "AdminMediatorCodes.SaveEmployer.Ok";
+        }
+
         public class GetStandard
         {
             public const string Ok = "AdminMediatorCodes.GetStandard.Ok";

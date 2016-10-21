@@ -54,7 +54,7 @@ namespace SFA.Apprenticeship.Web.Api.DependencyResolution {
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
 
-            For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<ISearchEmployersStrategy>().Use<SearchEmployersStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
             For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
