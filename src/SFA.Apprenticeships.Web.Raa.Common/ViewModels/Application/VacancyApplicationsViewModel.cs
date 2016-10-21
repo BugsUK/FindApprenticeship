@@ -35,5 +35,7 @@
                                                 UnsuccessfulApplicationsCount;
 
         public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
+
+        public bool HasApplications => TotalNumberOfApplications > 0;
     }
 }
