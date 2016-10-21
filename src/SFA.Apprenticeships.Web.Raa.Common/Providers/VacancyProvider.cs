@@ -813,13 +813,6 @@
             return standard.Convert(sector);
         }
 
-        /// <summary>
-        /// TODO: OO: Refactor/clean up this code.  Not a priority for now, as it works, but this is horrendous.
-        /// </summary>
-        /// <param name="providerId"></param>
-        /// <param name="providerSiteId"></param>
-        /// <param name="vacanciesSummarySearch"></param>
-        /// <returns></returns>
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
@@ -839,11 +832,6 @@
             {
                 searchString = vacanciesSummarySearch.SearchString;
             }
-
-            // reset filter on search
-            vacanciesSummarySearch.FilterType = string.IsNullOrEmpty(searchString)
-                ? vacanciesSummarySearch.FilterType
-                : VacanciesSummaryFilterTypes.All;
 
             var query = new VacancySummaryQuery()
             {

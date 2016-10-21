@@ -153,7 +153,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             var sqlParams = new
             {
                 query.ProviderId,
-                query.ProviderSiteId
+                query.ProviderSiteId,
+                Query = query.SearchString
             };
 
             var sql = $@"SELECT
@@ -168,12 +169,20 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         FROM	Vacancy v
                         JOIN	VacancyOwnerRelationship o
                         ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                        JOIN	Employer e
+                        ON		o.EmployerId = e.EmployerId
                         JOIN	ProviderSiteRelationship r
 					    ON		r.ProviderSiteId = o.ProviderSiteId
                         WHERE	o.ProviderSiteID = @ProviderSiteId
                         AND		(v.VacancyManagerId = @ProviderSiteId
                         OR		v.DeliveryOrganisationId = @ProviderSiteId)
                         AND     (v.VacancyTypeId = {(int)query.VacancyType} OR v.VacancyTypeId = {(int)VacancyType.Unknown})
+                        --Text search
+                        AND		((@query IS NULL OR @query = '')
+		                        OR (CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query
+			                        OR v.Title LIKE '%' + @query + '%'
+			                        OR e.FullName LIKe '%' + @query + '%')
+		                        )
                         AND		r.ProviderId = @providerId
 					    AND		r.ProviderSiteRelationshipTypeId = 1
                     ";

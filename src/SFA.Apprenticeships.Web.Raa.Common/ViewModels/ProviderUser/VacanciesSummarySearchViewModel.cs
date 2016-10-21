@@ -24,10 +24,10 @@
             PageSize = viewModel.PageSize;
         }
 
-        public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacanciesSummaryFilterTypes filterType) : this(viewModel)
+        public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacanciesSummaryFilterTypes filterType, string searchString) : this(viewModel)
         {
             FilterType = filterType;
-            SearchString = null;
+            SearchString = searchString;
             CurrentPage = 1;
         }
 
