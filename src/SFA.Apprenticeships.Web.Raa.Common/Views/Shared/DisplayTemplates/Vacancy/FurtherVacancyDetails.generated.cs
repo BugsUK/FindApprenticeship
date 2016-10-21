@@ -558,37 +558,135 @@ WriteLiteral(">\r\n                        <fieldset");
 
 WriteLiteral(" class=\"form-group inline-fixed\"");
 
-WriteLiteral(">\r\n                            £\r\n");
+WriteLiteral(">\r\n                            ");
 
-WriteLiteral("                            ");
+WriteLiteral("\r\n                            <label");
+
+WriteLiteral(" for=\"custom-wage-fixed\"");
+
+WriteLiteral(" class=\"block-label\"");
+
+WriteLiteral(" data-target=\"custom-wage-fixed-panel\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                ");
 
             
-            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12}));
+            #line 89 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.RadioButtonFor(model => model.Wage.CustomType, WageType.Custom, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                Fixed wage\r\n                            </label" +
+">\r\n                            ");
+
+WriteLiteral("\r\n                            <label");
+
+WriteLiteral(" for=\"custom-wage-range\"");
+
+WriteLiteral(" class=\"block-label\"");
+
+WriteLiteral(" data-target=\"custom-wage-range-panel\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 94 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.RadioButtonFor(model => model.Wage.CustomType, WageType.CustomRange, new { id = "custom-wage-range", aria_controls = "custom-wage-panel" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                Wage range\r\n                            </label" +
+">\r\n                        </fieldset>\r\n                        <div");
+
+WriteLiteral(" id=\"custom-wage-fixed-panel\"");
+
+WriteLiteral(" class=\"toggle-content blocklabel-content\"");
+
+WriteLiteral(">\r\n                            <fieldset");
+
+WriteLiteral(" class=\"form-group inline-fixed\"");
+
+WriteLiteral(">\r\n                                £\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 101 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                            ");
+WriteLiteral("                                ");
 
             
-            #line 89 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits));
+            #line 102 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </fieldset>\r\n                    </div>\r\n              " +
-"  </div>\r\n                <div");
+WriteLiteral("\r\n                            </fieldset>\r\n                        </div>\r\n      " +
+"                  <div");
+
+WriteLiteral(" id=\"custom-wage-range-panel\"");
+
+WriteLiteral(" class=\"toggle-content blocklabel-content\"");
+
+WriteLiteral(">\r\n                            <fieldset");
+
+WriteLiteral(" class=\"form-group inline-fixed\"");
+
+WriteLiteral(">\r\n                                £\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 108 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.FormTextFor(m => m.Wage.AmountLowerBound, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                &nbsp;to&nbsp;\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 110 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.FormTextFor(m => m.Wage.AmountUpperBound, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 111 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.DropDownListFor(m => m.Wage.RangeUnit, Model.WageUnits));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            </fieldset>\r\n                        </div>\r\n      " +
+"              </div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">");
 
             
-            #line 93 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 116 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                                    Write(Html.EditorFor(m => m.WageComment, "Comment", Html.GetLabelFor(m => m.WageComment)));
 
             
@@ -597,7 +695,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n            </div>\r\n");
 
             
-            #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 118 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
         }
 
             
@@ -610,7 +708,7 @@ WriteLiteral(" class=\"form-group\"");
 WriteLiteral(" ");
 
             
-            #line 97 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 120 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                                 Write(disabledTag);
 
             
@@ -618,27 +716,27 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6445), Tuple.Create("\"", 6585)
-, Tuple.Create(Tuple.Create("", 6453), Tuple.Create("form-group", 6453), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 8616), Tuple.Create("\"", 8756)
+, Tuple.Create(Tuple.Create("", 8624), Tuple.Create("form-group", 8624), true)
             
-            #line 98 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 6463), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration))
+            #line 121 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 8634), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration))
             
             #line default
             #line hidden
-, 6464), false)
+, 8635), false)
 );
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 6607), Tuple.Create("\"", 6665)
+WriteAttribute("name", Tuple.Create(" name=\"", 8778), Tuple.Create("\"", 8836)
             
-            #line 99 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 6614), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Duration).ToString().ToLower()
+            #line 122 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 8785), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Duration).ToString().ToLower()
             
             #line default
             #line hidden
-, 6614), false)
+, 8785), false)
 );
 
 WriteLiteral("></a>\r\n");
@@ -646,7 +744,7 @@ WriteLiteral("></a>\r\n");
 WriteLiteral("                ");
 
             
-            #line 100 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 123 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
            Write(Html.LabelFor(m => m.Duration, new {@class = "form-label"}));
 
             
@@ -657,7 +755,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 101 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
            Write(Html.TextBoxFor(m => m.Duration, new {@class = "form-control-large form-control", type = "tel", size = 12}));
 
             
@@ -668,7 +766,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 102 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 125 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
            Write(Html.DropDownListFor(m => m.DurationType, Model.DurationTypes));
 
             
@@ -679,7 +777,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 103 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 126 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
            Write(Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration)));
 
             
@@ -688,13 +786,13 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n\r\n");
 
             
-            #line 106 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 129 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 106 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 129 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
              if (Model.VacancySource != VacancySource.Raa )
             {
                 
@@ -702,14 +800,14 @@ WriteLiteral("\r\n            </div>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 108 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
            Write(Html.FormTextAreaFor(model => model.ExpectedDuration, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }));
 
             
             #line default
             #line hidden
             
-            #line 108 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                                                                                                                                                  
             }
 
@@ -725,7 +823,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 112 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 135 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.EditorFor(m => m.DurationComment, "Comment", Html.GetLabelFor(m => m.DurationComment)));
 
             
@@ -733,29 +831,29 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </fieldset>\r\n\r\n        <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7538), Tuple.Create("\"", 7725)
-, Tuple.Create(Tuple.Create("", 7546), Tuple.Create("form-group", 7546), true)
-, Tuple.Create(Tuple.Create(" ", 7556), Tuple.Create("inline-fixed", 7557), true)
-, Tuple.Create(Tuple.Create(" ", 7569), Tuple.Create("date-input", 7570), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9709), Tuple.Create("\"", 9896)
+, Tuple.Create(Tuple.Create("", 9717), Tuple.Create("form-group", 9717), true)
+, Tuple.Create(Tuple.Create(" ", 9727), Tuple.Create("inline-fixed", 9728), true)
+, Tuple.Create(Tuple.Create(" ", 9740), Tuple.Create("date-input", 9741), true)
             
-            #line 115 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 7580), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
+            #line 138 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 9751), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
             
             #line default
             #line hidden
-, 7581), false)
+, 9752), false)
 );
 
 WriteLiteral(">\r\n            <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 7743), Tuple.Create("\"", 7844)
+WriteAttribute("name", Tuple.Create(" name=\"", 9914), Tuple.Create("\"", 10015)
             
-            #line 116 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 7750), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()
+            #line 139 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 9921), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()
             
             #line default
             #line hidden
-, 7750), false)
+, 9921), false)
 );
 
 WriteLiteral("></a>\r\n            <legend");
@@ -765,7 +863,7 @@ WriteLiteral(" class=\"form-label\"");
 WriteLiteral(">");
 
             
-            #line 117 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 140 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                                   Write(Model.GetMetadata(m => m.VacancyDatesViewModel.ClosingDate).DisplayName);
 
             
@@ -776,7 +874,7 @@ WriteLiteral("</legend>\r\n");
 WriteLiteral("            ");
 
             
-            #line 118 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 141 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDate));
 
             
@@ -787,7 +885,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 119 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 142 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.ClosingDate, Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate)));
 
             
@@ -800,7 +898,7 @@ WriteLiteral(" class=\"form-group\"");
 WriteLiteral(">");
 
             
-            #line 121 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 144 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                            Write(Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDateComment, "Comment", Html.GetLabelFor(m => m.VacancyDatesViewModel.ClosingDateComment)));
 
             
@@ -808,29 +906,29 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n\r\n        <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8427), Tuple.Create("\"", 8620)
-, Tuple.Create(Tuple.Create("", 8435), Tuple.Create("form-group", 8435), true)
-, Tuple.Create(Tuple.Create(" ", 8445), Tuple.Create("inline-fixed", 8446), true)
-, Tuple.Create(Tuple.Create(" ", 8458), Tuple.Create("date-input", 8459), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 10598), Tuple.Create("\"", 10791)
+, Tuple.Create(Tuple.Create("", 10606), Tuple.Create("form-group", 10606), true)
+, Tuple.Create(Tuple.Create(" ", 10616), Tuple.Create("inline-fixed", 10617), true)
+, Tuple.Create(Tuple.Create(" ", 10629), Tuple.Create("date-input", 10630), true)
             
-            #line 123 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 8469), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
+            #line 146 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 10640), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
             
             #line default
             #line hidden
-, 8470), false)
+, 10641), false)
 );
 
 WriteLiteral(">\r\n            <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 8638), Tuple.Create("\"", 8745)
+WriteAttribute("name", Tuple.Create(" name=\"", 10809), Tuple.Create("\"", 10916)
             
-            #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8645), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()
+            #line 147 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 10816), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()
             
             #line default
             #line hidden
-, 8645), false)
+, 10816), false)
 );
 
 WriteLiteral("></a>\r\n            <legend");
@@ -840,7 +938,7 @@ WriteLiteral(" class=\"form-label\"");
 WriteLiteral(">");
 
             
-            #line 125 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 148 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                                   Write(Model.GetMetadata(m => m.VacancyDatesViewModel.PossibleStartDate).DisplayName);
 
             
@@ -851,7 +949,7 @@ WriteLiteral("</legend>\r\n");
 WriteLiteral("            ");
 
             
-            #line 126 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate));
 
             
@@ -862,7 +960,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 127 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 150 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate)));
 
             
@@ -875,7 +973,7 @@ WriteLiteral(" class=\"form-group\"");
 WriteLiteral(">");
 
             
-            #line 129 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 152 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                            Write(Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDateComment, "Comment", Html.GetLabelFor(m => m.VacancyDatesViewModel.PossibleStartDateComment)));
 
             
@@ -884,7 +982,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        <fieldset ");
 
             
-            #line 130 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 153 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
              Write(disabledTag);
 
             
@@ -893,13 +991,13 @@ WriteLiteral("</div>\r\n        <fieldset ");
 WriteLiteral(">\r\n");
 
             
-            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 154 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 154 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
               
                 var longDescriptionlabelText = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipLabelText : null;
                 var longDescriptionDataValLength = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipTooLongErrorText : VacancyViewModelMessages.LongDescription.TooLongErrorText;
@@ -913,7 +1011,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 136 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 159 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { id = "LongDescription", @class = "ckeditor", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex }));
 
             
@@ -924,7 +1022,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 137 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 160 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.EditorFor(m => m.LongDescriptionComment, "Comment", Html.GetLabelFor(m => m.LongDescriptionComment, Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescriptionComment.TraineeshipLabelText : null)));
 
             

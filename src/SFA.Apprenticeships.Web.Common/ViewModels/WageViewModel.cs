@@ -42,6 +42,8 @@
 
         public WageUnit Unit { get; set; }
 
+        public WageUnit RangeUnit { get; set; }
+
         [Display(Name = WageViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; set; }
     }
