@@ -12,7 +12,7 @@
             return new VerifiedOrganisationSummary
             {
                 ReferenceNumber = fromEmployer.URN,
-                Name = fromEmployer.Name,
+                FullName = fromEmployer.Name,
                 TradingName = fromEmployer.TradingName,
                 PhoneNumber = fromEmployer.Phone,
                 EmailAddress = fromEmployer.Email,
@@ -28,7 +28,7 @@
             return new VerifiedOrganisationSummary
             {
                 ReferenceNumber = fromEmployer.URN,
-                Name = fromEmployer.Name,
+                FullName = fromEmployer.Name,
                 TradingName = fromEmployer.TradingName,
                 PhoneNumber = fromEmployer.Phone,
                 EmailAddress = fromEmployer.Email,

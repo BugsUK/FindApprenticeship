@@ -101,7 +101,7 @@
 
             // Assert.
             summary.Should().NotBeNull();
-            summary.EmployerName.Should().Be(anonymised ? string.Empty : employer.Name);
+            summary.EmployerName.Should().Be(anonymised ? string.Empty : employer.FullName);
         }
     }
 }

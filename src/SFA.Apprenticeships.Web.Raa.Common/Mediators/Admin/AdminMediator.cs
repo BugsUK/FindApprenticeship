@@ -16,10 +16,12 @@
     using CsvHelper.Configuration;
     using Infrastructure.Presentation;
     using Validators.Api;
+    using Validators.Employer;
     using Validators.Provider;
     using Validators.ProviderUser;
     using ViewModels.Admin;
     using ViewModels.Api;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using Web.Common.Constants;
@@ -35,6 +37,7 @@
         private readonly ApiUserSearchViewModelServerValidator _apiUserSearchViewModelServerValidator = new ApiUserSearchViewModelServerValidator();
         private readonly ApiUserViewModelServerValidator _apiUserViewModelServerValidator = new ApiUserViewModelServerValidator();
         private readonly ProviderUserSearchViewModelServerValidator _providerUserSearchViewModelServerValidator = new ProviderUserSearchViewModelServerValidator();
+        private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator = new EmployerSearchViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
         private readonly IApiUserProvider _apiUserProvider;
@@ -43,9 +46,10 @@
         private readonly IProviderService _providerService;
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
         private readonly IProviderUserProvider _providerUserProvider;
+        private readonly IEmployerProvider _employerProvider;
 
         public AdminMediator(IProviderProvider providerProvider, IApiUserProvider apiUserProvider, ILogService logService, IVacancyPostingService vacancyPostingService,
-            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider, IProviderUserProvider providerUserProvider)
+            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider, IProviderUserProvider providerUserProvider, IEmployerProvider employerProvider)
         {
             _providerProvider = providerProvider;
             _apiUserProvider = apiUserProvider;
@@ -54,6 +58,7 @@
             _providerService = providerService;
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerUserProvider = providerUserProvider;
+            _employerProvider = employerProvider;
         }
 
         public MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel)
@@ -440,6 +445,48 @@
                 _logService.Error($"Failed to verify provider user's email with id={viewModel.ProviderUserId}", ex);
                 viewModel = _providerUserProvider.GetProviderUserViewModel(viewModel.ProviderUserId);
                 return GetMediatorResponse(AdminMediatorCodes.VerifyProviderUserEmail.Error, viewModel, ProviderUserViewModelMessages.VerifyProviderUserEmailError, UserMessageLevel.Error);
+            }
+        }
+
+        public MediatorResponse<EmployerSearchViewModel> SearchEmployers(EmployerSearchViewModel searchViewModel)
+        {
+            var viewModel = searchViewModel;
+
+            if (searchViewModel.PerformSearch)
+            {
+                var validatonResult = _employerSearchViewModelServerValidator.Validate(searchViewModel);
+
+                if (!validatonResult.IsValid)
+                {
+                    return GetMediatorResponse(AdminMediatorCodes.SearchEmployers.FailedValidation, viewModel, validatonResult);
+                }
+
+                viewModel = _employerProvider.SearchEmployers(searchViewModel);
+            }
+
+            return GetMediatorResponse(AdminMediatorCodes.SearchEmployers.Ok, viewModel);
+        }
+
+        public MediatorResponse<EmployerViewModel> GetEmployer(int employerId)
+        {
+            var viewModel = _employerProvider.GetEmployer(employerId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetEmployer.Ok, viewModel);
+        }
+
+        public MediatorResponse<EmployerViewModel> SaveEmployer(EmployerViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _employerProvider.SaveEmployer(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveEmployer.Ok, viewModel, EmployerViewModelMessages.EmployerSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save employer with id={viewModel.EmployerId}", ex);
+                viewModel = _employerProvider.GetEmployer(viewModel.EmployerId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveEmployer.Error, viewModel, EmployerViewModelMessages.EmployerSaveError, UserMessageLevel.Error);
             }
         }
 

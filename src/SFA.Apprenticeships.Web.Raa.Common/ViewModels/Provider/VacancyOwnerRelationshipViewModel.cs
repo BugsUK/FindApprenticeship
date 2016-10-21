@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using Employer;
     using FluentValidation.Attributes;
     using Vacancy;
     using Validators.Provider;

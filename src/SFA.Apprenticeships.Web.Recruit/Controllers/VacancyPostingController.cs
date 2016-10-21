@@ -19,6 +19,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Web.Mvc;
+    using Raa.Common.ViewModels.Employer;
 
     //TODO: Split this class by code region
     [AuthorizeUser(Roles = Roles.Faa)]

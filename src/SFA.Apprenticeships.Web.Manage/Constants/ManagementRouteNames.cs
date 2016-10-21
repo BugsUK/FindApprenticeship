@@ -67,5 +67,8 @@
         public const string AdminEditApiUser = "AdminEditApiUser";
         public const string AdminResetApiUserPassword = "AdminResetApiUserPassword";
         public const string AdminExportApiUsers = "AdminExportApiUsers";
+        public const string AdminEmployers = "AdminEmployers";
+        public const string AdminViewEmployer = "AdminViewEmployer";
+        public const string AdminEditEmployer = "AdminEditEmployer";
     }
 }
