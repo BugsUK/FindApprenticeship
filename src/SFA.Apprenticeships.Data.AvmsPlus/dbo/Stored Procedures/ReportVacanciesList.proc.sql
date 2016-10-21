@@ -30,7 +30,7 @@ create procedure [dbo].[ReportVacanciesList](
 	@dateTo				datetime,
 	@VacancyStatus		INT = -1,
 	
-	@ProviderSiteID		INT = -1,
+	@ProviderSiteID		INT = 0,
 	@RecAgentID		    INT = -1,
 	@EmployerID			INT = -1,
 	@rowcount			int = 0

@@ -5,8 +5,6 @@
 
     public interface IGetByIdsStrategy
     {
-        IEnumerable<Employer> Get(IEnumerable<int> employerIds, bool currentOnly = true);
-
-        IEnumerable<MinimalEmployerDetails> GetMinimalDetails(IEnumerable<int> employerIds, bool currentOnly = true);
+        IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds, bool currentOnly = true);
     }
 }

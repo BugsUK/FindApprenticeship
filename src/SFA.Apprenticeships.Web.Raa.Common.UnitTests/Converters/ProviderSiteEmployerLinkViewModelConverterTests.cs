@@ -25,7 +25,7 @@
 
             // Assert.
             converted.Should().NotBeNull();
-            converted.Employer.Name.Should().Be(anonymousName);
+            converted.Employer.FullName.Should().Be(anonymousName);
         }
 
         [TestCase(null, "Null Corp")]
@@ -39,7 +39,7 @@
 
             var employer = new Fixture()
                 .Build<Employer>()
-                .With(each => each.Name, employerName)
+                .With(each => each.FullName, employerName)
                 .Create();
 
             // Act.
@@ -47,7 +47,7 @@
 
             // Assert.
             converted.Should().NotBeNull();
-            converted.Employer.Name.Should().Be(employerName);
+            converted.Employer.FullName.Should().Be(employerName);
         }
     }
 }

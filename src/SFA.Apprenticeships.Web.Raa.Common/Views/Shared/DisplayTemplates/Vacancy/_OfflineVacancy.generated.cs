@@ -292,18 +292,26 @@ WriteLiteral(" ");
 WriteLiteral("\r\n                                            <br/>\r\n                            " +
 "                <a");
 
-WriteLiteral(" id=\"external-employer-website\"");
-
-WriteLiteral(" rel=\"external\"");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 3304), Tuple.Create("\"", 3349)
+WriteAttribute("id", Tuple.Create(" id=", 3258), Tuple.Create("", 3337)
             
             #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-                   , Tuple.Create(Tuple.Create("", 3311), Tuple.Create<System.Object, System.Int32>(locationAddress.OfflineApplicationUrl
+, Tuple.Create(Tuple.Create("", 3262), Tuple.Create<System.Object, System.Int32>("newvacancyviewmodel_locationaddresses_" + i + "__offlineapplicationurl"
             
             #line default
             #line hidden
-, 3311), false)
+, 3262), false)
+);
+
+WriteLiteral(" rel=\"external\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 3352), Tuple.Create("\"", 3397)
+            
+            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                                   , Tuple.Create(Tuple.Create("", 3359), Tuple.Create<System.Object, System.Int32>(locationAddress.OfflineApplicationUrl
+            
+            #line default
+            #line hidden
+, 3359), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -312,7 +320,7 @@ WriteLiteral(">");
 
             
             #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-                                                                                                                                                      Write(locationAddress.OfflineApplicationUrl);
+                                                                                                                                                                                                      Write(locationAddress.OfflineApplicationUrl);
 
             
             #line default
@@ -442,18 +450,26 @@ WriteLiteral(" ");
 WriteLiteral("\r\n                                        <br />\r\n                               " +
 "         <a");
 
-WriteLiteral(" id=\"external-employer-website\"");
-
-WriteLiteral(" rel=\"external\"");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 5128), Tuple.Create("\"", 5173)
+WriteAttribute("id", Tuple.Create(" id=", 5130), Tuple.Create("", 5209)
             
             #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-               , Tuple.Create(Tuple.Create("", 5135), Tuple.Create<System.Object, System.Int32>(locationAddress.OfflineApplicationUrl
+, Tuple.Create(Tuple.Create("", 5134), Tuple.Create<System.Object, System.Int32>("newvacancyviewmodel_locationaddresses_" + i + "__offlineapplicationurl"
             
             #line default
             #line hidden
-, 5135), false)
+, 5134), false)
+);
+
+WriteLiteral(" rel=\"external\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 5224), Tuple.Create("\"", 5269)
+            
+            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
+                                                               , Tuple.Create(Tuple.Create("", 5231), Tuple.Create<System.Object, System.Int32>(locationAddress.OfflineApplicationUrl
+            
+            #line default
+            #line hidden
+, 5231), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -462,7 +478,7 @@ WriteLiteral(">");
 
             
             #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-                                                                                                                                                  Write(locationAddress.OfflineApplicationUrl);
+                                                                                                                                                                                                  Write(locationAddress.OfflineApplicationUrl);
 
             
             #line default
@@ -495,14 +511,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5573), Tuple.Create("\"", 5628)
+WriteAttribute("href", Tuple.Create(" href=\"", 5669), Tuple.Create("\"", 5724)
             
             #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 5580), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+, Tuple.Create(Tuple.Create("", 5676), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 5580), false)
+, 5676), false)
 );
 
 WriteLiteral(" target=\"_blank\"");

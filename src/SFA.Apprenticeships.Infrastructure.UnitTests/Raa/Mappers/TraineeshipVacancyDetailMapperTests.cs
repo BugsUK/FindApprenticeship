@@ -87,7 +87,7 @@
                 detail.Created.Should().Be(vacancy.CreatedDateTime);
                 detail.VacancyStatus.Should().Be(vacancy.Status.GetVacancyStatuses());
                 detail.TrainingType.Should().Be(vacancy.TrainingType.GetTrainingType());
-                detail.EmployerName.Should().Be(employer.Name);
+                detail.EmployerName.Should().Be(employer.FullName);
                 detail.AnonymousEmployerName.Should().Be(vacancy.EmployerAnonymousName);
                 detail.EmployerDescription.Should().Be(vacancy.EmployerDescription);
                 detail.EmployerWebsite.Should().Be(vacancy.EmployerWebsiteUrl);

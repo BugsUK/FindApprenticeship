@@ -4,10 +4,15 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
     using System.Diagnostics;
     using System.Threading;
     using Application.Interfaces;
+    using Azure.ServiceBus;
+    using Azure.ServiceBus.Configuration;
+    using Azure.ServiceBus.IoC;
+    using Common.Configuration;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using StructureMap;
     using Common.IoC;
     using Data.Migrate.Faa;
+    using Data.Migrate.Faa.IoC;
     using Logging.IoC;
     using Logging;
 
@@ -45,7 +50,8 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
 
         public override void OnStop()
         {
-            Stop();
+            UnsubscribeServiceBusMessageBrokers();
+
             _cancelSource.Cancel();
 
             base.OnStop();
@@ -58,6 +64,8 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
                 VersionLogging.SetVersion();
 
                 InitializeIoC();
+                InitialiseServiceBus();
+                SubscribeServiceBusMessageBrokers();
             }
             catch (Exception e)
             {
@@ -76,27 +84,67 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
 
         private void InitializeIoC()
         {
+            var container = new Container(x =>
+            {
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration()));
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
+
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
+                x.AddRegistry<FaaMigrationRegistry>();
             });
 
             _logService = _container.GetInstance<ILogService>();
         }
 
-        private void Start()
+        private void InitialiseServiceBus()
         {
-            _logService.Info($"Starting {ProcessName}");
+            _logService.Debug("Initialising service bus");
 
-            _logService.Info($"Started {ProcessName}");
+            _container.GetInstance<IServiceBusInitialiser>().Initialise();
+
+            _logService.Debug("Initialised service bus");
         }
 
-        private void Stop()
+        private void SubscribeServiceBusMessageBrokers()
         {
-            _logService.Info($"Stopping {ProcessName}");
+            _logService.Debug("Subscribing service bus message brokers");
 
-            _logService.Info($"Stopped {ProcessName}");
+            var brokers = _container.GetAllInstances<IServiceBusMessageBroker>();
+
+            var count = 0;
+
+            foreach (var broker in brokers)
+            {
+                broker.Subscribe();
+                count++;
+            }
+
+            _logService.Debug("Subscribed {0} service bus message broker(s)", count);
+        }
+
+        private void UnsubscribeServiceBusMessageBrokers()
+        {
+            _logService.Debug("Unsubscribing service bus message brokers");
+
+            var brokers = _container.GetAllInstances<IServiceBusMessageBroker>();
+
+            var count = 0;
+
+            foreach (var broker in brokers)
+            {
+                broker.Unsubscribe();
+                count++;
+            }
+
+            _logService.Debug("Unsubscribed {0} service bus message broker(s)", count);
         }
     }
 }

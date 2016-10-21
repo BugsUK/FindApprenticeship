@@ -3,6 +3,7 @@
     using System;
     using ViewModels.Admin;
     using ViewModels.Api;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using Web.Common.Mediators;
@@ -23,11 +24,15 @@
         MediatorResponse<ApiUserViewModel> CreateApiUser(ApiUserViewModel viewModel);
         MediatorResponse<ApiUserViewModel> SaveApiUser(ApiUserViewModel viewModel);
         MediatorResponse<ApiUserViewModel> ResetApiUserPassword(ApiUserViewModel viewModel);
+        MediatorResponse<byte[]> GetApiUsersBytes();
         MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel);
         MediatorResponse<ManageVacancyTransferResultsViewModel> ManageVacanciesTransfers(ManageVacancyTransferViewModel vacancyTransferViewModel);
         MediatorResponse<ProviderUserSearchResultsViewModel> SearchProviderUsers(ProviderUserSearchViewModel searchViewModel, string ukprn);
         MediatorResponse<ProviderUserViewModel> GetProviderUser(int providerUserId);
         MediatorResponse<ProviderUserViewModel> SaveProviderUser(ProviderUserViewModel viewModel);
         MediatorResponse<ProviderUserViewModel> VerifyProviderUserEmail(ProviderUserViewModel viewModel);
+        MediatorResponse<EmployerSearchViewModel> SearchEmployers(EmployerSearchViewModel searchViewModel);
+        MediatorResponse<EmployerViewModel> GetEmployer(int employerId);
+        MediatorResponse<EmployerViewModel> SaveEmployer(EmployerViewModel viewModel);
     }
 }

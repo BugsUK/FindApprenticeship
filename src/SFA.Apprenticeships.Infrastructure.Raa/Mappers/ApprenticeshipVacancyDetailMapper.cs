@@ -7,9 +7,7 @@
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
@@ -43,6 +41,7 @@
                 InterviewFromDate = DateTime.MinValue,
                 Wage = vacancy.Wage,
                 WorkingWeek = vacancy.WorkingWeek,
+                HoursPerWeek = vacancy.Wage.HoursPerWeek,
                 OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?
@@ -53,7 +52,7 @@
                 RealityCheck = vacancy.ThingsToConsider,
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
-                EmployerName = employer.Name,
+                EmployerName = employer.FullName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = vacancy.EmployerDescription,

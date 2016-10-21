@@ -349,6 +349,30 @@
                defaults: new { controller = "Admin", action = "ResetApiUserPassword" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminExportApiUsers,
+               url: "admin/apiusers/csv",
+               defaults: new { controller = "Admin", action = "ExportApiUsers" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEmployers,
+               url: "admin/employers",
+               defaults: new { controller = "Admin", action = "Employers" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewEmployer,
+               url: "admin/employer",
+               defaults: new { controller = "Admin", action = "Employer" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEditEmployer,
+               url: "admin/employers/edit",
+               defaults: new { controller = "Admin", action = "EditEmployer" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

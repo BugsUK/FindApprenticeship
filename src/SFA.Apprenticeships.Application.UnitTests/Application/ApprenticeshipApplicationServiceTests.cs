@@ -13,6 +13,7 @@
     using NUnit.Framework;
     using System;
     using System.Collections.Generic;
+    using Domain.Interfaces.Messaging;
 
     [TestFixture]
     public class ApprenticeshipApplicationServiceTests
@@ -37,7 +38,7 @@
             _mockGetApplicationForReviewStrategy = new Mock<IGetApplicationForReviewStrategy>();
             _mockUpdateApplicationNotesStrategy = new Mock<IUpdateApplicationNotesStrategy>();
             _mockApplicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
-            var setApplicationStatusStrategy = new SetApplicationStatusStrategy(_mockApprenticeshipApplicationReadRepository.Object, _mockApprenticeshipApplicationWriteRepository.Object, _mockReferenceNumberRepository.Object, _mockApplicationStatusUpdateStrategy.Object);
+            var setApplicationStatusStrategy = new SetApplicationStatusStrategy(_mockApprenticeshipApplicationReadRepository.Object, _mockApprenticeshipApplicationWriteRepository.Object, _mockReferenceNumberRepository.Object, _mockApplicationStatusUpdateStrategy.Object, new Mock<IServiceBus>().Object);
 
             _apprenticeshipApplicationService = new ApprenticeshipApplicationService(
                 _mockApprenticeshipApplicationReadRepository.Object,

@@ -13,6 +13,7 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Mappers;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.VacancyPosting;
     using Web.Common.Converters;
@@ -192,13 +193,12 @@
                 .Where(vacancyOwnerRelationship => employers
                     .Any(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
                 .Select(vacancyOwnerRelationship => vacancyOwnerRelationship.Convert(employers.Single(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
-                    .Employer
-                    .ConvertToResult()));
+                    .Employer));
 
             return new EmployerSearchViewModel
             {
                 ProviderSiteId = providerSiteId,
-                EmployerResultsPage = resultsPage
+                Employers = resultsPage
             };
         }
 
@@ -223,7 +223,7 @@
             }
 
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
-            var vacancyParties = _providerService.GetVacancyOwnerRelationships(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
+            var vacancyParties = _providerService.GetVacancyOwnerRelationships(parameters, viewModel.Employers.CurrentPage, pageSize);
 
             var employerIds = vacancyParties.Page
                 .Select(vp => vp.EmployerId)
@@ -236,10 +236,9 @@
                 .Where(vacancyOwnerRelationship => employers
                     .Any(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
                 .Select(vacancyOwnerRelationship => vacancyOwnerRelationship.Convert(employers.Single(employer => employer.EmployerId == vacancyOwnerRelationship.EmployerId))
-                    .Employer
-                    .ConvertToResult()));
+                    .Employer));
 
-            viewModel.EmployerResultsPage = resultsPage;
+            viewModel.Employers = resultsPage;
 
             return viewModel;
         }
@@ -301,12 +300,15 @@
             providerSite.ContactDetailsForEmployer = viewModel.ContactDetailsForEmployer;
             providerSite.ContactDetailsForCandidate = viewModel.ContactDetailsForCandidate;
             providerSite.TrainingProviderStatus = viewModel.TrainingProviderStatus;
-            foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
+            if(viewModel.ProviderSiteRelationships != null)
             {
-                var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);
-                if (providerSiteRelationship != null)
+                foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
                 {
-                    providerSiteRelationship.ProviderSiteRelationShipTypeId = providerSiteRelationshipViewModel.ProviderSiteRelationshipType;
+                    var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderSiteRelationshipId == providerSiteRelationshipViewModel.ProviderSiteRelationshipId);
+                    if (providerSiteRelationship != null)
+                    {
+                        providerSiteRelationship.ProviderSiteRelationShipTypeId = providerSiteRelationshipViewModel.ProviderSiteRelationshipType;
+                    }
                 }
             }
 

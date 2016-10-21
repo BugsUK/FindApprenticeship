@@ -18,6 +18,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
     using Ploeh.AutoFixture;
 
     using Application.Interfaces;
+    using Common.Mappers;
     using Web.Common.Configuration;
 
     public abstract class TestBase
@@ -29,7 +30,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
         private Mock<IApprenticeshipApplicationService> _mockApprenticeshipApplicationService;
         private Mock<ITraineeshipApplicationService> _mockTraineeshipApplicationService;
         private Mock<IVacancyLockingService> _mockVacancyLockingService;
-        protected Mock<IMapper> MockMapper;
+        //protected Mock<IMapper> MockMapper;
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IEmployerService> MockEmployerService;
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
@@ -44,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
         {
             _mockLogService = new Mock<ILogService>();
             _mockConfigurationService = new Mock<IConfigurationService>();
-            MockMapper = new Mock<IMapper>();
+            //MockMapper = new Mock<IMapper>();
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
             MockEmployerService = new Mock<IEmployerService>();
@@ -78,7 +79,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
                 MockProviderService.Object,
                 MockEmployerService.Object,
                 _mockTimeService.Object,
-                MockMapper.Object,
+                new RaaCommonWebMappers(), 
                 _mockApprenticeshipApplicationService.Object,
                 _mockTraineeshipApplicationService.Object,
                 _mockVacancyLockingService.Object,

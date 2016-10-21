@@ -13,6 +13,7 @@
     using FluentAssertions;
     using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using NUnit.Framework;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -198,7 +199,7 @@
                         Postcode = "postcode",
                         Uprn = "uprn"
                     },
-                    Name = "some employer",
+                    FullName = "some employer",
                     EmployerId = employerId
                 },
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
