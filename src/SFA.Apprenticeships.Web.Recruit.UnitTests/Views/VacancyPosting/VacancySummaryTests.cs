@@ -32,6 +32,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 WageUnits = ApprenticeshipVacancyConverter.GetWageUnits(),
+                WageTextPresets = ApprenticeshipVacancyConverter.GetWageTextPresets(),
                 DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(VacancyType.Apprenticeship)
             };
            

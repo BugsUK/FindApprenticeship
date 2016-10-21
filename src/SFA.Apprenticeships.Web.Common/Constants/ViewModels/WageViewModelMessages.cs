@@ -14,5 +14,11 @@
             public const string RequiredErrorText = "Enter the paid hours per week";
             public const string HoursPerWeekShouldBeGreaterThan16 = "The paid hours per week must be more than 16";
         }
+
+        public static class WageTypeReason
+        {
+            public const string LabelText = "Explain why you need to use a text description";
+            public const string TooLongErrorText = "The working week must not be more than 256 characters";
+        }
     }
 }

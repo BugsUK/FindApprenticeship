@@ -28,6 +28,8 @@
 
         public List<SelectListItem> WageUnits { get; set; }
 
+        public List<SelectListItem> WageTextPresets { get; set; }
+
         [Display(Name = VacancyViewModelMessages.WageComment.LabelText)]
         public string WageComment { get; set; }
 
