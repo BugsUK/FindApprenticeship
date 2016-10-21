@@ -42,7 +42,7 @@
             command.Parameters.Add("dateFrom", SqlDbType.DateTime).Value = fromDate;
             command.Parameters.Add("dateTo", SqlDbType.DateTime).Value = toDate;
             command.Parameters.Add("VacancyStatus", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = 0;
             command.Parameters.Add("RecAgentID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("EmployerID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("rowcount", SqlDbType.Int).Value = 0;
@@ -166,7 +166,7 @@
             command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = region;
             command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
             command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
-            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = 0;
             command.Parameters.Add("LSCInOut", SqlDbType.Int).Value = -1;
             command.Parameters.Add("StartDatePresent", SqlDbType.Int).Value = -1;
             command.Parameters.Add("AgeRange", SqlDbType.Int).Value = ageRange;
@@ -568,7 +568,7 @@
             command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = marketMessagesOnly ? 1 : 0;
             command.Parameters.Add("EthnicityID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("GenderID", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = 0;
             command.Parameters.Add("Rowcount", SqlDbType.Int).Value = 0;
             command.Parameters.Add("ManagedBy", SqlDbType.Int).Value = -1;
 
