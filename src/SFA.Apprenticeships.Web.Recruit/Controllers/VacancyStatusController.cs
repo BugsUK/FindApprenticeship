@@ -7,6 +7,7 @@
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
+    using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.VacancyStatus;
     using System;
@@ -39,6 +40,13 @@
         {
             var response = _vacancyStatusMediator.GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
             return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult BulkDeclineCandidatesSearch(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel)
+        {
+            var response = _vacancyStatusMediator.GetBulkDeclineCandidatesViewModel(vacancyApplicationsSearchViewModel);
+            return View("BulkDeclineCandidates", response.ViewModel);
         }
 
         [HttpPost]

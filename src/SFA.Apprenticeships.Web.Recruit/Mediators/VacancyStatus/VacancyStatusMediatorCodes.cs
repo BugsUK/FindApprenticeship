@@ -24,5 +24,10 @@
             public const string Ok = "VacancyPosting.BulkApplicationsReject.Ok";
             public const string FailedValidation = "VacancyPosting.BulkApplicationsReject.FailedValidation";
         }
+
+        public static class GetBulkDeclineCandidatesViewModel
+        {
+            public const string Ok = "VacancyPosting.BulkApplicationsReject.Ok";
+        }
     }
 }

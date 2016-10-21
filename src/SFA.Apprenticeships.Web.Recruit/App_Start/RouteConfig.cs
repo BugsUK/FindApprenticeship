@@ -342,6 +342,13 @@
                url: "vacancy/bulkdeclinecandidates",
                defaults: new { controller = "VacancyStatus", action = "BulkDeclineCandidates" }
                );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.BulkDeclineCandidatesSearch,
+               url: "vacancy/bulkdeclinecandidatessearch",
+               defaults: new { controller = "VacancyStatus", action = "BulkDeclineCandidatesSearch" }
+               );
+
             routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmBulkDeclineCandidates,
                url: "vacancy/confirmbulkdeclinecandidates",

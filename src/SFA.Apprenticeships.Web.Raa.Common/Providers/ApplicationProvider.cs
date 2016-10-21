@@ -25,7 +25,6 @@
 
     public class ApplicationProvider : IApplicationProvider
     {
-        private readonly IConfigurationService _configurationService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
@@ -33,19 +32,16 @@
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
         private readonly IMapper _mapper;
-        private readonly ILogService _logService;
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
         private readonly ICurrentUserService _currentUserService;
 
-        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService,
+        public ApplicationProvider(IVacancyPostingService vacancyPostingService,
             IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService,
-            ICandidateApplicationService candidateApplicationService, IProviderService providerService,
-            IEmployerService employerService, IMapper mapper, ILogService logService,
-            IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService,
+            ICandidateApplicationService candidateApplicationService, IProviderService providerService, IEmployerService employerService,
+            IMapper mapper, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService,
             ICurrentUserService currentUserService)
         {
-            _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
@@ -53,7 +49,6 @@
             _providerService = providerService;
             _employerService = employerService;
             _mapper = mapper;
-            _logService = logService;
             _encryptionService = encryptionService;
             _dateTimeService = dateTimeService;
             _currentUserService = currentUserService;
@@ -90,6 +85,56 @@
             return viewModel;
         }
 
+        public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyApplicationsSearchViewModel.VacancyReferenceNumber);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
+            var viewModel = new BulkDeclineCandidatesViewModel
+            {
+                EmployerName = employer.FullName,
+                VacancyType = vacancy.VacancyType,
+                VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
+                VacancyTitle = vacancy.Title,
+                VacancyId = vacancy.VacancyId
+            };
+            List<ApplicationSummary> applications = vacancy.VacancyType == VacancyType.Traineeship
+                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
+                .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
+                .Select(a => (ApplicationSummary)a).ToList()
+                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
+                .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
+                .Select(a => (ApplicationSummary)a).ToList();
+
+            var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
+            var inProgress = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
+
+            switch (vacancyApplicationsSearchViewModel.FilterType)
+            {
+                case VacancyApplicationsFilterTypes.New:
+                    applications = @new;
+                    break;
+                case VacancyApplicationsFilterTypes.InProgress:
+                    applications = inProgress;
+                    break;
+            }
+            viewModel.NewApplicationsCount = @new.Count;
+            viewModel.InProgressApplicationsCount = inProgress.Count;
+            viewModel.VacancyApplicationsSearch = vacancyApplicationsSearchViewModel;
+
+            viewModel.ApplicationSummariesViewModel = new PageableViewModel<ApplicationSummaryViewModel>
+            {
+                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearchViewModel.OrderByField, vacancyApplicationsSearchViewModel.Order, applications)
+                .Skip((vacancyApplicationsSearchViewModel.CurrentPage - 1) * vacancyApplicationsSearchViewModel.PageSize)
+                .Take(vacancyApplicationsSearchViewModel.PageSize)
+                .Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
+                ResultsCount = applications.Count,
+                CurrentPage = vacancyApplicationsSearchViewModel.CurrentPage,
+                TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearchViewModel.PageSize)
+            };
+            return viewModel;
+        }
+
         public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -118,7 +163,9 @@
             var vacancyApplicationsSearch = new VacancyApplicationsSearchViewModel(vacancyReferenceNumber);
             viewModel.ApplicationSummariesViewModel = new PageableViewModel<ApplicationSummaryViewModel>
             {
-                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications).Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
+                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications)
+                .Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize)
+                .Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
                 ResultsCount = applications.Count,
                 CurrentPage = vacancyApplicationsSearch.CurrentPage,
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)

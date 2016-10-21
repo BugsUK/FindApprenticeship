@@ -5,6 +5,7 @@
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.VacancyStatus;
+    using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.VacancyStatus;
     using VacancyPosting;
@@ -74,6 +75,12 @@
                 return GetMediatorResponse(VacancyStatusMediatorCodes.BulkApplicationsReject.FailedValidation, viewModel, validationResult);
             }
             return GetMediatorResponse(VacancyStatusMediatorCodes.BulkApplicationsReject.Ok, viewModel, EmployerSearchViewModelMessages.ErnAdviceText, UserMessageLevel.Info);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(vacancyApplicationsSearchViewModel);
+            return GetMediatorResponse(VacancyStatusMediatorCodes.GetBulkDeclineCandidatesViewModel.Ok, viewModel);
         }
     }
 }

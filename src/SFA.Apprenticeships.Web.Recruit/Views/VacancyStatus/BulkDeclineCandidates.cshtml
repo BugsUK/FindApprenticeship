@@ -45,16 +45,16 @@
             <div class="hgroup-large">
                 <h2 class="heading-large">
                     Candidates
-                    <hr/>
                     @if (filterType != VacancyApplicationsFilterTypes.All)
                     {
                         <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
                     }
                 </h2>
+                <hr/>
             </div>
         </section>
 
-        <ul class="applications-summary">
+        <ul class="applications-summary bulk-response">
             <li>
                 @if (filterType == VacancyApplicationsFilterTypes.New)
                 {
@@ -67,7 +67,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New).RouteValues)" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New).RouteValues)" class="vacancy-filter">
                         <figure class="data">
                             <p class="count">@Model.NewApplicationsCount</p>
                             <figcaption>
@@ -76,7 +76,7 @@
                         </figure>
                     </a>
                 }
-            </li>
+            </li>           
             <li>
                 @if (filterType == VacancyApplicationsFilterTypes.InProgress)
                 {
@@ -89,7 +89,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.InProgress).RouteValues)" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.InProgress).RouteValues)" class="vacancy-filter">
                         <figure class="data">
                             <p class="count">@Model.InProgressApplicationsCount</p>
                             <figcaption>
