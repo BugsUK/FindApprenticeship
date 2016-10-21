@@ -9,25 +9,24 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmBulkUnsuccessfulApprenticeshipApplication, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    @Html.HiddenFor(m=>m.ApplicationIds)
+    @Html.HiddenFor(m => m.ApplicationIds)
     <div>
-        <h1 class="heading-xlarge med-btm-margin">Make selected candidates unsuccessful</h1>
+        <h1 class="heading-xlarge med-btm-margin">Inform the selected candidates their applications have been unsuccessful</h1>
         <div class="inner-block hgroup grey-background">
-            <br/>
+            <br />
             <ul>
                 @foreach (var application in Model.BulkRejectApplications)
                 {
-                    @*@Html.Hidden("ApplicationIds", application.ApplicationId)*@
                     <li>@application.FirstName @application.LastName</li>
                 }
             </ul>
-            <br/>
-            @Html.RouteLink("Edit list", RecruitmentRouteNames.BulkDeclineCandidates, new {vacancyReferenceNumber = @Model.VacancyReferenceNumber})
+            <br />
+            @Html.RouteLink("Edit list", RecruitmentRouteNames.BulkDeclineCandidates, new { vacancyReferenceNumber = @Model.VacancyReferenceNumber })
         </div>
         <h2 class="heading-medium">Candidate feedback</h2>
         <p>
-            When contacting the candidates to inform them that they have been <b>unsuccessful</b> you will need to provide feedback
-            on their application, and/or a reason why they have not been selected for the role of <b>@Model.VacancyTitle</b>
+            An automated message will now be sent to these candidates.
+            You must provide feedback explaining why they have not been selected for the role of <b>@Model.VacancyTitle</b>
         </p>
         <h2 class="bold-small">What feedback would you like to share with these candidates?</h2>
         @Html.FormTextAreaFor(

@@ -44,11 +44,12 @@
         [HttpPost]
         public ActionResult ConfirmBulkDeclineCandidates(IList<Guid> applicationIds, int vacancyReferencenumber)
         {
-            if (applicationIds.Any())
+            if (applicationIds != null && applicationIds.Any())
                 return RedirectToAction("ConfirmBulkUnsuccessfulDecision", "ApprenticeshipApplication",
                     routeValues: new { applicationIds = String.Join(",", applicationIds), vacancyReferencenumber = vacancyReferencenumber });
-            SetUserMessage("Please select the candidates", UserMessageLevel.Warning);
-            return View("BulkDeclineCandidates");
+            SetUserMessage("You must select a candidate", UserMessageLevel.Error);
+            return RedirectToAction("BulkDeclineCandidates",
+                    routeValues: new { vacancyReferencenumber = vacancyReferencenumber });
         }
 
         [HttpPost]
