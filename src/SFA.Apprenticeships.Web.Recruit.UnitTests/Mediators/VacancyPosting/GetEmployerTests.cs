@@ -9,6 +9,7 @@
     using NUnit.Framework;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Recruit.Mediators.VacancyPosting;

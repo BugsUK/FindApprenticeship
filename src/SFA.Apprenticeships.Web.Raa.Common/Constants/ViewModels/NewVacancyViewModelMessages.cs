@@ -2,6 +2,9 @@
 {
     public class NewVacancyViewModelMessages
     {
+        public const string MultiOfflineUrlsButtonText = "enter a different web address for each vacancy location";
+        public const string SingleOfflineUrlButtonText = "use the same web address for all vacancy locations";
+
         public static class ApprenticeshipLevel
         {
             public const string RequiredErrorText = "Select an apprenticeship level";

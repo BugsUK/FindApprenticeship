@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage
 {
+    using Constants;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Constants;
 
     public class RouteConfig
     {
@@ -76,13 +76,13 @@
             routes.MapRoute(
                 name: ManagementRouteNames.Dashboard,
                 url: "dashboard",
-                defaults: new {controller = "AgencyUser", action = "Dashboard"}
+                defaults: new { controller = "AgencyUser", action = "Dashboard" }
                 );
 
             routes.MapRoute(
                 name: ManagementRouteNames.ChangeTeam,
                 url: "changeteam",
-                defaults: new {controller = "AgencyUser", action = "ChangeTeam" }
+                defaults: new { controller = "AgencyUser", action = "ChangeTeam" }
                 );
 
             routes.MapRoute(
@@ -185,6 +185,12 @@
                name: ManagementRouteNames.ViewCandidateApprenticeshipApplication,
                url: "candidate/apprenticeship",
                defaults: new { controller = "Candidate", action = "Apprenticeship" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateApprenticeshipApplicationFeedback,
+               url: "candidate/applicationfeedback",
+               defaults: new { controller = "Candidate", action = "ApplicationFeedback" }
                );
 
             routes.MapRoute(
@@ -341,6 +347,54 @@
                name: ManagementRouteNames.AdminResetApiUserPassword,
                url: "admin/apiuser/resetpassword",
                defaults: new { controller = "Admin", action = "ResetApiUserPassword" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminExportApiUsers,
+               url: "admin/apiusers/csv",
+               defaults: new { controller = "Admin", action = "ExportApiUsers" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEmployers,
+               url: "admin/employers",
+               defaults: new { controller = "Admin", action = "Employers" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewEmployer,
+               url: "admin/employer",
+               defaults: new { controller = "Admin", action = "Employer" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEditEmployer,
+               url: "admin/employers/edit",
+               defaults: new { controller = "Admin", action = "EditEmployer" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminStandards,
+               url: "admin/standards",
+               defaults: new { controller = "Admin", action = "Standards" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminStandardsCsv,
+               url: "admin/standards/csv",
+               defaults: new { controller = "Admin", action = "DownloadStandardsCsv" }
+               );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.AdminFrameworks,
+                url: "admin/frameworks",
+                defaults: new {controller = "Admin", action = "Frameworks"}
+                );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminFrameworksCsv,
+               url: "admin/frameworks/csv",
+               defaults: new { controller = "Admin", action = "DownloadFrameworksCsv" }
                );
 
             routes.LowercaseUrls = true;

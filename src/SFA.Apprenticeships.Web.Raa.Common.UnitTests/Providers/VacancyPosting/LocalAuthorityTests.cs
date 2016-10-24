@@ -8,6 +8,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
@@ -191,10 +192,9 @@
                 new VacancyLocation {Address = postalAddress2}
             };
 
-            MockMapper.Setup(
-                m =>
-                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(vacancyLocations);
+            MockMapper.Setup(m => m.Map<VacancyLocationAddressViewModel, VacancyLocation>(locationSearchViewModel.Addresses[0])).Returns(vacancyLocations[0]);
+            MockMapper.Setup(m => m.Map<VacancyLocationAddressViewModel, VacancyLocation>(locationSearchViewModel.Addresses[1])).Returns(vacancyLocations[1]);
+
             MockVacancyPostingService.Setup(v => v.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
 
@@ -213,7 +213,7 @@
             MockVacancyPostingService.Verify(m => m.UpdateVacancy(It.IsAny<Vacancy>()), Times.Once);
             MockLocalAuthorityLookupService.Verify(m => m.GetLocalAuthorityCode(It.IsAny<string>()), Times.Exactly(2));
             MockVacancyPostingService.Verify(m => m.DeleteVacancyLocationsFor(vacancy.VacancyId));
-            MockVacancyPostingService.Verify(m => m.SaveVacancyLocations(vacancyLocations), Times.Once);
+            MockVacancyPostingService.Verify(m => m.CreateVacancyLocations(It.IsAny<List<VacancyLocation>>()), Times.Once);
         }
     }
 }

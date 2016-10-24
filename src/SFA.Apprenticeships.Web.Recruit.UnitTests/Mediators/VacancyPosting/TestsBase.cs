@@ -17,6 +17,7 @@
     using Ploeh.AutoFixture;
     using Raa.Common.Configuration;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.Employer;
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Validators.VacancyPosting;

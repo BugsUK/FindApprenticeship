@@ -69,7 +69,8 @@
 	[SectorId]						   INT				NULL,
 	[UpdatedDateTime]				   DATETIME			NULL,
 	[EditedInRaa]					   BIT				NOT NULL DEFAULT ((0)),
-	[VacancySourceId]			       INT				NOT NULL DEFAULT ((1))
+	[VacancySourceId]			       INT				NOT NULL DEFAULT ((1)),
+	[OfflineVacancyTypeId]		       INT				NULL
 	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
@@ -136,6 +137,18 @@ GO
 CREATE NONCLUSTERED INDEX [idx_Vacancy_LocalAuthorityId] 
 	ON [dbo].[Vacancy] ([LocalAuthorityId]) 
 	INCLUDE ([PostCode]) 
+
+
+GO
+CREATE NONCLUSTERED INDEX [idx_Vacancy_VacancyStatusId_ApplicationClosingDate] 
+ON [dbo].[Vacancy] ([VacancyStatusId] ASC,[ApplicationClosingDate] ASC)
+INCLUDE ([VacancyId], [VacancyLocationTypeId], [VacancyReferenceNumber])
+
+
+GO
+CREATE NONCLUSTERED INDEX [idx_Vacancy_VacancyStatusId_LocalAuthorityId] 
+ON [dbo].[Vacancy] ([VacancyStatusId] ASC,[LocalAuthorityId] ASC)
+INCLUDE ([ApprenticeshipFrameworkId],[CountyId],[DeliveryOrganisationID],[Town],[VacancyLocationTypeId],[VacancyReferenceNumber]) 
 
 
 GO

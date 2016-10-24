@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Communication.Email.EmailMessageFormatters
 {
+    using Domain.Entities.Applications;
+    using Domain.Entities.Communication;
+    using Helpers;
+    using Infrastructure.Communication.Email.EmailMessageFormatters;
+    using Moq;
+    using SendGrid;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Communication;
-    using Infrastructure.Communication.Email.EmailMessageFormatters;
-    using Helpers;
-    using Moq;
-    using SendGrid;
 
     public abstract class EmailDailyDigestMessageFormatterTestsBase
     {
@@ -38,7 +38,7 @@
 
             stringBuilder.Append("<p><b><a href=\"https://" + SiteDomainName + "/myapplications#dashDrafts\">Saved applications due to expire</a></b></p>");
             stringBuilder.Append(expiringDrafts.Count == 1 ? EmailDailyDigestMessageFormatter.OneSavedApplicationAboutToExpire : EmailDailyDigestMessageFormatter.MoreThanOneSaveApplicationAboutToExpire);
-            
+
             var lineItems = expiringDrafts.Select(d => string.Format("<li><a href=\"https://" + SiteDomainName + "/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>", d.VacancyId, d.Title, d.EmployerName, d.ClosingDate.ToLongDateString()));
             stringBuilder.Append(string.Format("<ul>{0}</ul>", string.Join("", lineItems)));
 
@@ -54,19 +54,30 @@
             if (alerts.Any(a => a.Status == ApplicationStatuses.Successful))
             {
                 stringBuilder.AppendLine("<b><a href=\"https://" + SiteDomainName + "/myapplications#dashSuccessful\">Successful applications</a></b>");
-                var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful).Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
-                stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", successfulLineItems)));
+                var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful)
+                    .Select(d => $"<li>{d.Title} with {d.EmployerName}<br/>" +
+                    $"<a href=\"https://{SiteDomainName}/apprenticeship/view/{d.VacancyId}\">View application</a></li>");
+                stringBuilder.AppendLine($"<ul>{string.Join("", successfulLineItems)}</ul>");
             }
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Unsuccessful))
             {
-                stringBuilder.AppendLine("<b><a href=\"https://" + SiteDomainName + "/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>");
+                if (alerts.Any(a => a.Status == ApplicationStatuses.Unsuccessful))
+                {
+                    stringBuilder.AppendFormat($"<b><a href=\"https://{SiteDomainName}/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>");
+                    stringBuilder.AppendLine();
 
-                var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}<br/><b>Reason: </b>{2}</li>", d.Title, d.EmployerName, d.UnsuccessfulReason));
-                
-                stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", unsuccessfulLineItems)));
-                stringBuilder.Append("<p>If your application's unsuccessful ask your college or training provider for feedback.</p>");
-                stringBuilder.AppendFormat("<p>For advice on writing better applications visit the <a href=\"https://{0}/nextsteps\">next steps page</a>.</p>", SiteDomainName);
+                    var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(
+                        d =>
+                            !string.IsNullOrWhiteSpace(d.UnsuccessfulReason)
+                                ? $"<li>{d.Title} with {d.EmployerName}<br/>" +
+                                  $"<a href=\"https://{SiteDomainName}/apprenticeship/candidateapplicationfeedback/{d.VacancyId}\">Read feedback</a></li>"
+                                : $"<li>{d.Title} with {d.EmployerName}</li>");
+
+                    stringBuilder.AppendLine($"<ul>{string.Join(string.Empty, unsuccessfulLineItems)}</ul>");
+                    stringBuilder.Append("<p>If your application's unsuccessful ask your college or training provider for feedback.</p>");
+                    stringBuilder.AppendFormat($"<p>For advice on writing better applications visit the <a href=\"https://{SiteDomainName}/nextsteps\">next steps page</a>.</p>");
+                }
             }
 
             return stringBuilder.ToString();

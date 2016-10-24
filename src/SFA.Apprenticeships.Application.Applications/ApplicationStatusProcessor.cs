@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Applications
 {
-    using Application;
     using Application.Entities;
     using Application.Strategies;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Entities;
     using Interfaces;
     using System;
     using System.Linq;
@@ -80,7 +78,8 @@
                         LegacyVacancyId = applicationSummary.LegacyVacancyId,
                         VacancyStatus = vacancyStatusSummary.VacancyStatus,
                         ClosingDate = vacancyStatusSummary.ClosingDate,
-                        UnsuccessfulReason = applicationSummary.UnsuccessfulReason
+                        UnsuccessfulReason = applicationSummary.UnsuccessfulReason,
+                        UnsuccessfulDateTime = applicationSummary.UnsuccessfulDateTime
                     });
 
             Parallel.ForEach(

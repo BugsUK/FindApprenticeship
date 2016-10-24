@@ -13,6 +13,7 @@
             var writer = new StringWriter();
             var csv = new CsvWriter(writer);
             csv.Configuration.CultureInfo = CultureInfo.GetCultureInfo("en-GB");
+            csv.Configuration.UseExcelLeadingZerosFormatForNumerics = true;
             csv.Configuration.RegisterClassMap<TClassMap>();
             csv.WriteRecords(objectlist);
             return writer.ToString();

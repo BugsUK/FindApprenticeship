@@ -65,9 +65,9 @@
             _setApplicationStatusStrategy.SetSuccessfulDecision(applicationId);
         }
 
-        public void SetUnsuccessfulDecision(Guid applicationId)
+        public void SetUnsuccessfulDecision(Guid applicationId, string candidateApplicationFeedback)
         {
-            _setApplicationStatusStrategy.SetUnsuccessfulDecision(applicationId);
+            _setApplicationStatusStrategy.SetUnsuccessfulDecision(applicationId, candidateApplicationFeedback);
         }
 
         public void SetStateInProgress(Guid applicationId)

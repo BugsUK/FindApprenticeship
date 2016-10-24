@@ -46,9 +46,9 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        public ActionResult ReviewSaveAndContinue(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
-            var response = _traineeshipApplicationMediator.ReviewSaveAndExit(traineeshipApplicationViewModel);
+            var response = _traineeshipApplicationMediator.ReviewSaveAndContinue(traineeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -60,14 +60,14 @@
 
             switch (response.Code)
             {
-                case TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Error:
+                case TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error:
                     return View("Review", response.ViewModel);
 
-                case TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation:
+                case TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return RedirectToRoute(RecruitmentRouteNames.ReviewTraineeshipApplication, viewModel);
 
-                case TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
+                case TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
 
                 default:

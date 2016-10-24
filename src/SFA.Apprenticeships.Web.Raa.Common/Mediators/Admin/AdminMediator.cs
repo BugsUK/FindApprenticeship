@@ -1,21 +1,30 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mediators.Admin
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using Application.Interfaces;
-    using Application.Interfaces.Providers;
-    using Application.Interfaces.VacancyPosting;
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Providers;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces.Providers;
+    using Application.Interfaces.VacancyPosting;
+    using Application.ReferenceData;
+    using CsvClassMaps;
+    using CsvHelper.Configuration;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
+    using Infrastructure.Presentation;
     using Constants.Pages;
     using Validators.Api;
+    using Validators.Employer;
     using Validators.Provider;
     using Validators.ProviderUser;
     using ViewModels.Admin;
     using ViewModels.Api;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using Web.Common.Constants;
@@ -31,6 +40,7 @@
         private readonly ApiUserSearchViewModelServerValidator _apiUserSearchViewModelServerValidator = new ApiUserSearchViewModelServerValidator();
         private readonly ApiUserViewModelServerValidator _apiUserViewModelServerValidator = new ApiUserViewModelServerValidator();
         private readonly ProviderUserSearchViewModelServerValidator _providerUserSearchViewModelServerValidator = new ProviderUserSearchViewModelServerValidator();
+        private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator = new EmployerSearchViewModelServerValidator();
 
         private readonly IProviderProvider _providerProvider;
         private readonly IApiUserProvider _apiUserProvider;
@@ -39,9 +49,11 @@
         private readonly IProviderService _providerService;
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
         private readonly IProviderUserProvider _providerUserProvider;
+        private readonly IEmployerProvider _employerProvider;
+		private readonly IReferenceDataProvider _referenceDataProvider;
 
         public AdminMediator(IProviderProvider providerProvider, IApiUserProvider apiUserProvider, ILogService logService, IVacancyPostingService vacancyPostingService,
-            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider, IProviderUserProvider providerUserProvider)
+            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider, IProviderUserProvider providerUserProvider, IEmployerProvider employerProvider, IReferenceDataProvider referenceDataProvider)
         {
             _providerProvider = providerProvider;
             _apiUserProvider = apiUserProvider;
@@ -50,6 +62,8 @@
             _providerService = providerService;
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerUserProvider = providerUserProvider;
+			_referenceDataProvider = referenceDataProvider;
+            _employerProvider = employerProvider;
         }
 
         public MediatorResponse<ProviderSearchResultsViewModel> SearchProviders(ProviderSearchViewModel searchViewModel)
@@ -290,6 +304,21 @@
             }
         }
 
+        public MediatorResponse<byte[]> GetApiUsersBytes()
+        {
+            try
+            {
+                var apiUsers = _apiUserProvider.GetApiUserViewModels().OrderBy(a => a.CompanyName);
+                var bytes = GetCsvBytes<ApiUserViewModel, ApiUserViewModelClassMap>(apiUsers, "");
+                return GetMediatorResponse(AdminMediatorCodes.GetApiUsersBytes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(AdminMediatorCodes.GetApiUsersBytes.Error, new byte[0]);
+            }
+        }
+
         public MediatorResponse<TransferVacanciesResultsViewModel> GetVacancyDetails(TransferVacanciesViewModel viewModel)
         {
             try
@@ -424,6 +453,48 @@
             }
         }
 
+        public MediatorResponse<EmployerSearchViewModel> SearchEmployers(EmployerSearchViewModel searchViewModel)
+        {
+            var viewModel = searchViewModel;
+
+            if (searchViewModel.PerformSearch)
+            {
+                var validatonResult = _employerSearchViewModelServerValidator.Validate(searchViewModel);
+
+                if (!validatonResult.IsValid)
+                {
+                    return GetMediatorResponse(AdminMediatorCodes.SearchEmployers.FailedValidation, viewModel, validatonResult);
+                }
+
+                viewModel = _employerProvider.SearchEmployers(searchViewModel);
+            }
+
+            return GetMediatorResponse(AdminMediatorCodes.SearchEmployers.Ok, viewModel);
+        }
+
+        public MediatorResponse<EmployerViewModel> GetEmployer(int employerId)
+        {
+            var viewModel = _employerProvider.GetEmployer(employerId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetEmployer.Ok, viewModel);
+        }
+
+        public MediatorResponse<EmployerViewModel> SaveEmployer(EmployerViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _employerProvider.SaveEmployer(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveEmployer.Ok, viewModel, EmployerViewModelMessages.EmployerSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save employer with id={viewModel.EmployerId}", ex);
+                viewModel = _employerProvider.GetEmployer(viewModel.EmployerId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveEmployer.Error, viewModel, EmployerViewModelMessages.EmployerSaveError, UserMessageLevel.Error);
+            }
+        }
+
         private ProviderUserSearchResultsViewModel GetProviderUsers(string ukprn)
         {
             var provider = _providerService.GetProvider(ukprn);
@@ -436,6 +507,88 @@
             };
 
             return viewModel;
+        }		
+
+        public MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandard()
+        {
+            var viewModel = _referenceDataProvider.GetStandardSubjectAreaTierOnes().ToList();
+
+            return GetMediatorResponse(AdminMediatorCodes.GetStandard.Ok, viewModel);
+        }
+
+        public MediatorResponse<List<Category>> GetFrameworks()
+        {
+            var viewModel = _referenceDataProvider.GetFrameworks().ToList();
+            return GetMediatorResponse(AdminMediatorCodes.GetFrameworks.Ok, viewModel);
+        }
+
+        public MediatorResponse<byte[]> GetFrameworksBytes()
+        {
+            try
+            {
+                var result = _referenceDataProvider.GetFrameworks().ToList();
+
+                var frameworkResult =
+                    result.SelectMany(
+                        r =>
+                            r.SubCategories.Select(
+                                s =>
+                                    new FrameworkViewModel()
+                                    {
+                                        SSAT1Name = r.FullName,
+                                        FrameworkStatus = s.Status,
+                                        FrameworkId = s.Id,
+                                        FrameworkFullName = s.FullName
+                                    }));
+
+                //Convert to list ofFrameworkData
+                //Pass that list into function
+                var bytes = GetCsvBytes<FrameworkViewModel, FrameworkDataClassMap>(frameworkResult, "");
+                return GetMediatorResponse(AdminMediatorCodes.GetFrameworksBytes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(AdminMediatorCodes.GetFrameworksBytes.Error, new byte[0]);
+            }
+        }
+
+        public MediatorResponse<byte[]> GetStandardsBytes()
+        {
+            try
+            {
+                var result = _referenceDataProvider.GetStandardSubjectAreaTierOnes();
+
+                var standardSubjectAreaTierOneResult =
+                    result.SelectMany(
+                        r =>
+                            r.Sectors.SelectMany(
+                                ss =>
+                                    ss.Standards.Select(
+                                        s =>
+                                            new StandardSubjectAreaTierOneViewModel()
+                                            {
+                                                SSAT1Name = r.Name,
+                                                StandardId = s.Id,
+                                                StandardSectorName = ss.Name,
+                                                StandardName = s.Name
+                                            })));
+
+                var bytes = GetCsvBytes<StandardSubjectAreaTierOneViewModel, StandardSubjectAreaTierOneClassMap>(standardSubjectAreaTierOneResult, "");
+                return GetMediatorResponse(AdminMediatorCodes.GetStandardsBytes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(AdminMediatorCodes.GetStandardsBytes.Error, new byte[0]);
+            }
+        }
+		
+        private static byte[] GetCsvBytes<T, TClassMap>(IEnumerable<T> items, string header) where T : class where TClassMap : CsvClassMap<T>
+        {
+            var csvString = header + CsvPresenter.ToCsv<T, TClassMap>(items);
+            var bytes = Encoding.UTF8.GetBytes(csvString);
+            return bytes;
         }
     }
 }

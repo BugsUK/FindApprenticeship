@@ -3,6 +3,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Domain.Entities.Raa.Vacancies;
 
     [Table("dbo.Vacancy")]
     public class Vacancy
@@ -152,5 +153,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public DateTime? UpdatedDateTime { get; set; }
 
         public int VacancySourceId { get; set; }
+
+        public int? OfflineVacancyTypeId { get; set; }
     }
 }

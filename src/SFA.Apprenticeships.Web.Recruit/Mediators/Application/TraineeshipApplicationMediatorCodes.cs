@@ -7,11 +7,11 @@
             public const string Ok = "TraineeshipApplicationMediatorCodes.Review.Ok";
         }
         
-        public class ReviewSaveAndExit
+        public class ReviewSaveAndContinue
         {
-            public const string Ok = "TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok";
-            public const string FailedValidation = "TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation";
-            public const string Error = "TraineeshipApplicationMediatorCodes.ReviewSaveAndExit.Error";
+            public const string Ok = "TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok";
+            public const string FailedValidation = "TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation";
+            public const string Error = "TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error";
         }
 
         public class View

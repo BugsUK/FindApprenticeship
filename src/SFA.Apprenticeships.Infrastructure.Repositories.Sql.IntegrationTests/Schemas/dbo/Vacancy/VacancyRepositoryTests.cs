@@ -370,7 +370,7 @@
                 }
             };
 
-            locationWriteRepository.Save(vacancyLocations);
+            locationWriteRepository.Create(vacancyLocations);
 
             var retrievedLocations = locationReadRepository.GetForVacancyId(vacancy.VacancyId);
 

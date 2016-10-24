@@ -43,7 +43,7 @@
             employer.EmployerId.Should().Be(0);
             employer.EmployerGuid.Should().Be(Guid.Empty);
             employer.EdsUrn.Should().Be(summary.ReferenceNumber);
-            employer.Name.Should().Be(summary.Name);
+            employer.FullName.Should().Be(summary.FullName);
 
             employer.Address.Should().NotBeNull();
             employer.Address.AddressLine1.Should().Be(summary.Address.AddressLine1);
@@ -78,7 +78,7 @@
                 employer.EmployerId.Should().Be(dbEmployer.EmployerId);
                 employer.EmployerGuid.Should().Be(Guid.Empty); // TODO: US1259: AG: remove.
                 employer.EdsUrn.Should().Be(Convert.ToString(dbEmployer.EdsUrn));
-                employer.Name.Should().Be(dbEmployer.FullName);
+                employer.FullName.Should().Be(dbEmployer.FullName);
                 employer.TradingName.Should().Be(dbEmployer.TradingName);
                 employer.PrimaryContact.Should().Be(dbEmployer.PrimaryContact);
                 employer.IsPositiveAboutDisability.Should().Be(dbEmployer.DisableAllowed);
@@ -127,7 +127,7 @@
                 dbEmployer.EmployerId.Should().Be(employer.EmployerId);
 
                 dbEmployer.EdsUrn.Should().Be(Convert.ToInt32(employer.EdsUrn));
-                dbEmployer.FullName.Should().Be(employer.Name);
+                dbEmployer.FullName.Should().Be(employer.FullName);
                 dbEmployer.TradingName.Should().Be(employer.TradingName);
 
                 dbEmployer.AddressLine1.Should().Be(employer.Address.AddressLine1);
@@ -159,7 +159,7 @@
                 dbEmployer.BeingSupportedBy.Should().BeNull(); // TODO: US1259: ?
                 dbEmployer.LockedForSupportUntil.Should().Be(default(DateTime?)); // TODO: US1259: ?
 
-                dbEmployer.EmployerStatusTypeId.Should().Be(default(int?)); // TODO: US1259: ?
+                dbEmployer.EmployerStatusTypeId.Should().Be((int)employer.EmployerStatus);
 
                 dbEmployer.DisableAllowed.Should().Be(employer.IsPositiveAboutDisability);
                 dbEmployer.TrackingAllowed.Should().Be(false); // TODO: US1259: ?

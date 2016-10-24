@@ -70,7 +70,7 @@
         {
             var applicationId = Guid.NewGuid();
 
-            _setApplicationStatusStrategy.SetUnsuccessfulDecision(applicationId);
+            _setApplicationStatusStrategy.SetUnsuccessfulDecision(applicationId, "Reason");
 
             _mockServiceBus.Verify(sb => sb.PublishMessage(It.Is<ApprenticeshipApplicationUpdate>(m => m.ApplicationGuid == applicationId)));
         }

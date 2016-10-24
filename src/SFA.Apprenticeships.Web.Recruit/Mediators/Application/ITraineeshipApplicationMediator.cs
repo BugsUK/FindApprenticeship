@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     public interface ITraineeshipApplicationMediator
     {
         MediatorResponse<TraineeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<TraineeshipApplicationViewModel> ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel);
+        MediatorResponse<TraineeshipApplicationViewModel> ReviewSaveAndContinue(TraineeshipApplicationViewModel traineeshipApplicationViewModel);
         MediatorResponse<TraineeshipApplicationViewModel> View(string application);
     }
 }

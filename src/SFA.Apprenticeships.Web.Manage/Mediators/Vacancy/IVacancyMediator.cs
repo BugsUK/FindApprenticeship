@@ -36,6 +36,8 @@
 
         MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel);
 
+        MediatorResponse<NewVacancyViewModel> UpdateOfflineVacancyType(NewVacancyViewModel viewModel);
+
         MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
         MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(
