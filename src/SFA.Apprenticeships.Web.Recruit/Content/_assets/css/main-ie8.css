@@ -2666,8 +2666,17 @@ input[type="search"]::-webkit-search-decoration {
 .grey-background {
   background: #F8F8F8; }
 
-.application-summary .bulk-response li {
-  width: 50%; }
+ul.applications-summary.bulk-response {
+  width: 200%; }
+
+#triple li {
+  width: 33.333%; }
+
+.three-column ul {
+  overflow: hidden; }
+
+.three-column li {
+  float: left; }
 
 html {
   font-size: 62.5%;
