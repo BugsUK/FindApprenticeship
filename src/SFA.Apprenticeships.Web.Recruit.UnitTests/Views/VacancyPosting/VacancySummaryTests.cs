@@ -117,8 +117,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var view = details.RenderAsHtml(viewModel);
 
             view.GetElementbyId("vacancySummaryButton").Should().NotBeNull("Should exists a save button");
-            view.GetElementbyId("vacancySummaryButton").InnerHtml.Should().Be("Save and continue");
-            view.GetElementbyId("vacancySummaryButton").Attributes["value"].Value.Should().Be("VacancySummary");
+            view.GetElementbyId("vacancySummaryButton").InnerHtml.Should().Be("Save and return to Preview");
+            view.GetElementbyId("vacancySummaryButton").Attributes["value"].Value.Should().Be("VacancySummaryAndPreview");
         }
 
 
@@ -136,123 +136,5 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 
             view.GetElementbyId("vacancySummaryButton").Should().BeNull("Should exists a save button");
         }
-
-
-
-        [Test]
-        public void ShouldAlwaysShowChooseTextDescriptionRadio()
-        {
-            var details = new VacancySummary();
-
-            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
-                .With(v => v.Status, VacancyStatus.Referred)
-                .Create();
-
-            var view = details.RenderAsHtml(viewModel);
-
-            view.GetElementbyId("preset-text").Should().NotBeNull();
-        }
-
-        [TestCase(WageType.ToBeAgreedUponAppointment)]
-        [TestCase(WageType.CompetitiveSalary)]
-        [TestCase(WageType.Unwaged)]
-        public void ShouldShowTextDropdownAndReasonBoxWhenChooseTextIsSelected(WageType wageType)
-        {
-            var wage = new Wage(wageType, null, null, null, null, WageUnit.NotApplicable, null, null);
-
-            var details = new VacancySummary();
-
-            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
-                .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel(wage))
-                .Create();
-
-            var view = details.RenderAsHtml(viewModel);
-
-            view.GetElementbyId("preset-text").Attributes["checked"].Should().Be("checked");
-            view.GetElementbyId("Wage_PresetText").Should().NotBeNull();
-            view.GetElementbyId("Wage_PresetText").ChildNodes.Any(x => x.Attributes.Contains("selected") && x.Attributes["selected"].ToString() == "selected");
-            view.GetElementbyId("Wage_PresetText").ChildNodes.First(x => x.Attributes["selected"].ToString() == "selected").Attributes["value"].ToString().Should().Be(wageType.ToString());
-            view.GetElementbyId("Wage_WageTypeReason").Should().NotBeNull();
-        }
-
-        [TestCase(WageType.Custom)]
-        [TestCase(WageType.CustomRange)]
-        public void ShouldShowFixedWageAndWageRangeRadiosWhenCustomWageIsSelected(WageType wageType)
-        {
-            var wage = new Wage(wageType, null, null, null, null, WageUnit.NotApplicable, null, null);
-
-            var details = new VacancySummary();
-
-            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
-                .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel(wage))
-                .Create();
-
-            var view = details.RenderAsHtml(viewModel);
-
-            view.GetElementbyId("custom-wage").Attributes["checked"].Should().Be("checked");
-            view.GetElementbyId("custom-wage-fixed").Should().NotBeNull();
-            view.GetElementbyId("custom-wage-range").Should().NotBeNull();
-
-            if (wageType == WageType.Custom)
-            {
-                view.GetElementbyId("custom-wage-fixed").Attributes["checked"].ToString().Should().Be("checked");
-            }
-            else
-            {
-                view.GetElementbyId("custom-wage-range").Attributes["checked"].ToString().Should().Be("checked");
-            }
-        }
-
-        [Test]
-        public void ShouldShowFixedWageInputWhenFixedWageIsSelected()
-        {
-            var wage = new Wage(WageType.Custom, 300, null, null, null, WageUnit.Weekly, null, null);
-
-            var details = new VacancySummary();
-
-            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
-                .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel(wage))
-                .Create();
-
-            var view = details.RenderAsHtml(viewModel);
-
-            view.GetElementbyId("custom-wage").Attributes["checked"].Should().Be("checked");
-            view.GetElementbyId("custom-wage-fixed").Attributes["checked"].ToString().Should().Be("checked");
-            view.GetElementbyId("custom-wage-range").Attributes["checked"]?.ToString().Should().NotBe("checked");
-            view.GetElementbyId("Wage_Amount").Should().NotBeNull();
-            view.GetElementbyId("Wage_Amount").Attributes["value"].ToString().Should().Be("300");
-            view.GetElementbyId("Wage_Unit").Should().NotBeNull();
-            view.GetElementbyId("Wage_Unit").Attributes["value"].ToString().Should().Be(wage.Unit.ToString());
-        }
-
-
-        [Test]
-        public void ShouldShowWageRangeInputsWhenWageRangeIsSelected()
-        {
-            var wage = new Wage(WageType.CustomRange, null, 200, 500, null, WageUnit.Weekly, null, null);
-
-            var details = new VacancySummary();
-
-            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
-                .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel(wage))
-                .Create();
-
-            var view = details.RenderAsHtml(viewModel);
-
-            view.GetElementbyId("custom-wage").Attributes["checked"].Should().Be("checked");
-            view.GetElementbyId("custom-wage-fixed").Attributes["checked"]?.ToString().Should().NotBe("checked");
-            view.GetElementbyId("custom-wage-range").Attributes["checked"].ToString().Should().Be("checked");
-            view.GetElementbyId("Wage_AmountLower").Should().NotBeNull();
-            view.GetElementbyId("Wage_AmountLower").Attributes["value"].ToString().Should().Be("200");
-            view.GetElementbyId("Wage_AmountUpper").Attributes["value"].ToString().Should().Be("500");
-            view.GetElementbyId("Wage_Unit").Should().NotBeNull();
-            view.GetElementbyId("Wage_Unit").Attributes["value"].ToString().Should().Be(wage.Unit.ToString());
-        }
-
-
     }
 }

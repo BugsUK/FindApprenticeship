@@ -19,6 +19,19 @@
         {
             public const string LabelText = "Explain why you need to use a text description";
             public const string TooLongErrorText = "The working week must not be more than 256 characters";
+
+            public const string HelpText =
+                "This explanation is for our helpdesk advisers and will not be shown on the live vacancy";
+        }
+
+        public static class AmountMessages
+        {
+            public const string HelpText = "The wage shold not be less then the National Minimum Wage for apprentices";
+        }
+
+        public static class AmountRangeMessages
+        {
+            public const string HelpText = "The lowest figure in the wage range should not be less then the National Minimum Wage for apprentices";
         }
     }
 }

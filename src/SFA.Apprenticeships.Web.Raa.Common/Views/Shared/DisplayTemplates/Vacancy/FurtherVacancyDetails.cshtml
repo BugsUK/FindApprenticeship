@@ -102,18 +102,20 @@
                             </label>
                         </fieldset>
                         <div id="custom-wage-fixed-panel" class="toggle-content blocklabel-content">
+                            @Html.Label(WageViewModelMessages.AmountMessages.HelpText)
                             <fieldset class="form-group inline-fixed">
                                 £
-                                @Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
+                                @Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
                                 @Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits)
                             </fieldset>
                         </div>
                         <div id="custom-wage-range-panel" class="toggle-content blocklabel-content">
+                            @Html.Label(WageViewModelMessages.AmountRangeMessages.HelpText)
                             <fieldset class="form-group inline-fixed">
                                 £
-                                @Html.FormTextFor(m => m.Wage.AmountLowerBound, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
-                                &nbsp;to&nbsp;
-                                @Html.FormTextFor(m => m.Wage.AmountUpperBound, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
+                                @Html.FormTextFor(m => m.Wage.AmountLowerBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
+                                &nbsp;to&nbsp;£
+                                @Html.FormTextFor(m => m.Wage.AmountUpperBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
                                 @Html.DropDownListFor(m => m.Wage.RangeUnit, Model.WageUnits)
                             </fieldset>
                         </div>
@@ -123,7 +125,8 @@
                             @Html.DropDownListFor(m => m.Wage.PresetText, Model.WageTextPresets)
                         </fieldset>
                         <fieldset class="form-group inline-fixed">
-                            @Html.FormTextAreaFor(m => m.Wage.WageTypeReason, WageViewModelMessages.WageTypeReason.LabelText, containerHtmlAttributes: new {@baseClassName = "form-group-compound" }, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText, data_val_regex = Whitelists.FreetextWhitelist.RegularExpression })
+                            @Html.Label(WageViewModelMessages.WageTypeReason.HelpText)
+                            @Html.FormTextAreaFor(m => m.Wage.WageTypeReason, WageViewModelMessages.WageTypeReason.LabelText, containerHtmlAttributes: new {@baseClassName = "form-group-compound"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText, data_val_regex = Whitelists.FreetextWhitelist.RegularExpression})
                         </fieldset>
                     </div>
                 </div>

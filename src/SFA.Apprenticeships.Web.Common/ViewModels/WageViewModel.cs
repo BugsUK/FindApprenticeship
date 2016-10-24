@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.ViewModels
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies;
+    using Microsoft.Ajax.Utilities;
 
     public class WageViewModel
     {
@@ -21,6 +23,35 @@
             AmountUpperBound= wage.AmountUpperBound;
             Text = wage.Text;
             Unit = wage.Unit;
+            RangeUnit = wage.Unit;
+            WageTypeReason = wage.ReasonForType;
+
+            switch (wage.Type)
+            {
+                case WageType.Custom:
+                case WageType.CustomRange:
+                    Type = WageType.Custom;
+                    CustomType = wage.Type;
+                    PresetText = wage.Type;
+                    break;
+                case WageType.CompetitiveSalary:
+                case WageType.ToBeAgreedUponAppointment:
+                case WageType.Unwaged:
+                case WageType.LegacyText:
+                    Type = WageType.LegacyText;
+                    CustomType = WageType.LegacyText;
+                    PresetText = wage.Type;
+                    break;
+                case WageType.LegacyWeekly:
+                case WageType.ApprenticeshipMinimum:
+                case WageType.NationalMinimum:
+                    Type = wage.Type;
+                    CustomType = wage.Type;
+                    PresetText = wage.Type;
+                    break;
+                default:
+                    throw new InvalidOperationException("unknown wage type");
+            }
         }
 
         public WageType Type { get; set; }
