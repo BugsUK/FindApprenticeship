@@ -234,16 +234,16 @@
             _logger.Debug("Calling database to get apprenticeship vacancy with Vacancy Reference Number={0}",
                 vacancyReferenceNumber);
 
-            var vacancyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+            var vacancyId = _getOpenConnection.QueryCached<int?>(_cacheDuration, @"
                         SELECT VacancyId
                         FROM   dbo.Vacancy
                         WHERE  VacancyReferenceNumber = @vacancyReferenceNumber",
                     new
                     {
                         vacancyReferenceNumber
-                    }).Single();
+                    }).SingleOrDefault();
 
-            return Get(vacancyId);
+            return vacancyId == null ? null : Get(vacancyId.Value);
         }
 
         public DomainVacancy GetByVacancyGuid(Guid vacancyGuid)
@@ -251,21 +251,16 @@
             _logger.Debug("Calling database to get apprenticeship vacancy with VacancyGuid={0}",
                 vacancyGuid);
 
-            var vacancyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+            var vacancyId = _getOpenConnection.QueryCached<int?>(_cacheDuration, @"
                         SELECT VacancyId
                         FROM   dbo.Vacancy
                         WHERE  VacancyGuid = @vacancyGuid",
                     new
                     {
                         vacancyGuid
-                    }).Single();
+                    }).SingleOrDefault();
 
-            return Get(vacancyId);
-        }
-        
-        private Vacancy GetVacancyByVacancyId(int vacancyId)
-        {
-            return GetBy(vacancyId);
+            return vacancyId == null ? null : Get(vacancyId.Value);
         }
 
         public int CountWithStatus(params VacancyStatus[] desiredStatuses)
@@ -347,7 +342,7 @@
 
             PopulateIds(entity, dbVacancy);
 
-            var previousVacancyState = GetVacancyByVacancyId(entity.VacancyId);
+            var previousVacancyState = GetBy(entity.VacancyId);
 
             _logger.Info(
                 $"[{entity.VacancyGuid}] Calling database to update the following vacancy: {JsonConvert.SerializeObject(dbVacancy, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new ExcludeLiveClosingDateResolver() })}");
