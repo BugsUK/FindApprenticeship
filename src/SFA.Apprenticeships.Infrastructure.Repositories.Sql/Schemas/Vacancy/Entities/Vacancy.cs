@@ -3,11 +3,17 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Dapper.Contrib.Extensions;
+    using Domain.Entities.Raa.Reference;
+    using Domain.Entities.Raa.Vacancies;
 
-    [Table("dbo.Vacancy")]
+    [System.ComponentModel.DataAnnotations.Schema.Table("dbo.Vacancy")]
     public class Vacancy
     {
+        [Write(false)]
         public string AdditionalLocationInformation { get; set; }
+
+        [Write(false)]
         public string AdditionalLocationInformationComment { get; set; }
 
         public string AddressLine1 { get; set; }
@@ -26,12 +32,17 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public bool? ApplyOutsideNAVMS { get; set; }
 
         public int? ApprenticeshipFrameworkId { get; set; }
+        [Write(false)]
         public string ApprenticeshipLevelComment { get; set; }
 
         public int? ApprenticeshipType { get; set; }
 
         public string BeingSupportedBy { get; set; }
+
+        [Write(false)]
         public string ClosingDateComment { get; set; }
+
+        [Write(false)]
         public string ContactDetailsComment { get; set; }
 
         public string ContactEmail { get; set; }
@@ -47,10 +58,18 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public int? DeliveryOrganisationID { get; set; }
 
         public string Description { get; set; }
+
+        [Write(false)]
         public string DesiredQualifications { get; set; }
+        [Write(false)]
         public string DesiredQualificationsComment { get; set; }
+
+        [Write(false)]
         public string DesiredSkills { get; set; }
+        [Write(false)]
         public string DesiredSkillsComment { get; set; }
+
+        [Write(false)]
         public string DurationComment { get; set; }
 
         public int DurationTypeId { get; set; }
@@ -61,7 +80,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string EmployerAnonymousName { get; set; }
 
+        [Write(false)]
         public string EmployerDescription { get; set; }
+        [Write(false)]
         public string EmployerDescriptionComment { get; set; }
 
         public string EmployersApplicationInstructions { get; set; }
@@ -69,6 +90,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string EmployersRecruitmentWebsite { get; set; }
 
         public string EmployersWebsite { get; set; }
+        [Write(false)]
         public string EmployerWebsiteUrlComment { get; set; }
 
         public string ExpectedDuration { get; set; }
@@ -76,11 +98,17 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Column(TypeName = "datetime2")]
         public DateTime? ExpectedStartDate { get; set; }
 
-
+        [Write(false)]
         public string FirstQuestion { get; set; }
+        [Write(false)]
         public string FirstQuestionComment { get; set; }
+
+        [Write(false)]
         public string FrameworkCodeNameComment { get; set; }
+
+        [Write(false)]
         public string FutureProspects { get; set; }
+        [Write(false)]
         public string FutureProspectsComment { get; set; }
 
         public int? GeocodeEasting { get; set; }
@@ -95,9 +123,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public decimal? Latitude { get; set; }
 
         public int? LocalAuthorityId { get; set; }
+        [Write(false)]
         public string LocationAddressesComment { get; set; }
 
         public DateTime? LockedForSupportUntil { get; set; }
+        [Write(false)]
         public string LongDescriptionComment { get; set; }
 
         public decimal? Longitude { get; set; }
@@ -113,50 +143,76 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Column(TypeName = "smallint")]
         public short? NumberOfPositions { get; set; }
 
+        [Write(false)]
         public string NumberOfPositionsComment { get; set; }
 
         public int? NumberOfViews { get; set; }
+
+        [Write(false)]
         public string OfflineApplicationInstructionsComment { get; set; }
+
+        [Write(false)]
         public string OfflineApplicationUrlComment { get; set; }
 
         public int? OfflineVacancyTypeId { get; set; }
 
         public int? OriginalContractOwnerId { get; set; }
+
+        [Write(false)]
         public string OtherInformation { get; set; }
+
+        [Write(false)]
         public string PersonalQualities { get; set; }
+
+        [Write(false)]
         public string PersonalQualitiesComment { get; set; }
+        [Write(false)]
         public string PossibleStartDateComment { get; set; }
 
         public string PostCode { get; set; }
 
         public string QAUserName { get; set; }
+
+        [Write(false)]
         public string SecondQuestion { get; set; }
+
+        [Write(false)]
         public string SecondQuestionComment { get; set; }
+        [Write(false)]
         public string SectorCodeNameComment { get; set; }
 
         public int? SectorId { get; set; }
 
         public string ShortDescription { get; set; }
+        [Write(false)]
         public string ShortDescriptionComment { get; set; }
 
         public bool SmallEmployerWageIncentive { get; set; }
 
         public int? StandardId { get; set; }
+        [Write(false)]
         public string StandardIdComment { get; set; }
 
         public DateTime? StartedToQADateTime { get; set; }
 
         public int SubmissionCount { get; set; }
+
+        [Write(false)]
         public string ThingsToConsider { get; set; }
+        [Write(false)]
         public string ThingsToConsiderComment { get; set; }
 
         [Required]
         public string Title { get; set; }
 
+        [Write(false)]
         public string TitleComment { get; set; }
 
         public string Town { get; set; }
+
+        [Write(false)]
         public string TrainingProvided { get; set; }
+        [Write(false)]
         public string TrainingProvidedComment { get; set; }
 
         public int TrainingTypeId { get; set; }
@@ -181,6 +237,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public int VacancyStatusId { get; set; }
 
         public int VacancyTypeId { get; set; }
+
+        [Write(false)]
         public string WageComment { get; set; }
 
         public string WageText { get; set; }
@@ -192,7 +250,19 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Column(TypeName = "money")]
         public decimal? WeeklyWage { get; set; }
 
+        [Write(false)]
         public string WorkingWeek { get; set; }
+        [Write(false)]
         public string WorkingWeekComment { get; set; }
+        [Write(false)]
+        public string FrameworkCodeName { get; set; }
+        [Write(false)]
+        public RegionalTeam RegionalTeam { get; set; }
+        [Write(false)]
+        public string EmployerName { get; set; }
+        [Write(false)]
+        public string EmployerLocation { get; set; }
+        [Write(false)]
+        public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
     }
 }

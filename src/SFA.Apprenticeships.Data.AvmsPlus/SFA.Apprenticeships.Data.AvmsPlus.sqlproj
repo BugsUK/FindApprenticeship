@@ -1275,6 +1275,10 @@
     <None Include="Scripts\Data\dbo.RegionalTeams.Upsert.sql" />
     <None Include="Scripts\Data\dbo.RegionalTeamMappings.Upsert.sql" />
     <Build Include="dbo\Tables\RegionalTeamMappings.sql" />
+    <Build Include="dbo\Functions\fnGetDateQAApproved.function.sql" />
+    <Build Include="dbo\Functions\fnGetCreatedByProviderUsername.function.sql" />
+    <Build Include="dbo\Functions\fnGetCommentFieldId.function.sql" />
+    <Build Include="dbo\Functions\fnGetTextFieldId.function.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
