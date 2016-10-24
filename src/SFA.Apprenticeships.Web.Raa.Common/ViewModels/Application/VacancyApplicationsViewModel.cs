@@ -36,5 +36,7 @@
         public int TotalNumberOfApplicationsWithPendingDecisions => NewApplicationsCount + InProgressApplicationsCount;
 
         public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
+
+        public bool HasApplications => TotalNumberOfApplications > 0;
     }
 }

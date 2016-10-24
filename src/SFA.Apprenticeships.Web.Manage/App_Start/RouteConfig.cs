@@ -373,6 +373,30 @@
                defaults: new { controller = "Admin", action = "EditEmployer" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminStandards,
+               url: "admin/standards",
+               defaults: new { controller = "Admin", action = "Standards" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminStandardsCsv,
+               url: "admin/standards/csv",
+               defaults: new { controller = "Admin", action = "DownloadStandardsCsv" }
+               );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.AdminFrameworks,
+                url: "admin/frameworks",
+                defaults: new {controller = "Admin", action = "Frameworks"}
+                );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminFrameworksCsv,
+               url: "admin/frameworks/csv",
+               defaults: new { controller = "Admin", action = "DownloadFrameworksCsv" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

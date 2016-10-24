@@ -110,9 +110,9 @@
             <div class="hgroup-large">
                 <h2 class="heading-large">
                     Applications
-                    @if (filterType != VacancyApplicationsFilterTypes.All)
+                    @if (filterType != VacancyApplicationsFilterTypes.All || Model.VacancyApplicationsSearch.IsCandidateSearch())
                     {
-                        <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
+                        <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All, true).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
                     }
                 </h2>
             </div>
@@ -218,7 +218,7 @@
                     @Html.FormTextFor(m => m.VacancyApplicationsSearch.ApplicantId, controlHtmlAttributes: new { type = "text", spellcheck = "false" })
                     <div class="form-group">
                         <button id="search-candidates-button" type="submit" class="button">Search</button>
-                        @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber).RouteValues, new { @class = "vacancy-filter" })
+                        @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, true).RouteValues, new { @class = "vacancy-filter" })
                     </div>
                 </div>
             </details>
@@ -289,77 +289,87 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var applicationSummary in Model.ApplicationSummaries.Page)
+                @if (Model.HasApplications)
                 {
-                    <tr class="applicant">
-                        <td>
-                            <h4 class="applicant-name">@applicationSummary.LastName</h4>
-                        </td>
-                        <td>
-                            <h4 class="applicant-name">@applicationSummary.FirstName</h4>
-                        </td>
-                        <td>
-                            @applicationSummary.ApplicantID
-                        </td>
-                        <td>
-                            @{
-                                var notes = applicationSummary.Notes;
-                                if (notes != null && notes.Length > 20)
-                                {
-                                    notes = notes.Substring(0, 20) + "...";
+                    foreach (var applicationSummary in Model.ApplicationSummaries.Page)
+                    {
+                        <tr class="applicant">
+                            <td>
+                                <h4 class="applicant-name">@applicationSummary.LastName</h4>
+                            </td>
+                            <td>
+                                <h4 class="applicant-name">@applicationSummary.FirstName</h4>
+                            </td>
+                            <td>
+                                @applicationSummary.ApplicantID
+                            </td>
+                            <td>
+                                @{
+                                    var notes = applicationSummary.Notes;
+                                    if (notes != null && notes.Length > 20)
+                                    {
+                                        notes = notes.Substring(0, 20) + "...";
+                                    }
                                 }
-                            }
-                            @notes
-                        </td>
-                        <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
-                        <td>
-                            @Html.Partial("_applicationStatus", applicationSummary.Status)
-                        </td>
-                        <td>
-                            <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId).RouteValues)" title="View @applicationSummary.ApplicantName application">View application</a><br/>
-                            <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new { application = applicationSummary.AnonymousLinkData })" title="View anonymous application">Anonymous view</a>
-                        </td>
-                    </tr>
+                                @notes
+                            </td>
+                            <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
+                            <td>
+                                @Html.Partial("_applicationStatus", applicationSummary.Status)
+                            </td>
+                            <td>
+                                <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId).RouteValues)" title="View @applicationSummary.ApplicantName application">View application</a><br/>
+                                <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new {application = applicationSummary.AnonymousLinkData})" title="View anonymous application">Anonymous view</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="7">No results</td></tr>
                 }
                 </tbody>
             </table>
         </section>
     </div>
 
-    <div class="page-navigation">
+    if (Model.HasApplications)
+    {
+        <div class="page-navigation">
 
-        @{
-            var currentPage = Model.ApplicationSummaries.CurrentPage;
-            var totalNumberOfPages = Model.ApplicationSummaries.TotalNumberOfPages;
-            var prevLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage - 1).RouteValues);
-            var nextLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage + 1).RouteValues);
-        }
+            @{
+                var currentPage = Model.ApplicationSummaries.CurrentPage;
+                var totalNumberOfPages = Model.ApplicationSummaries.TotalNumberOfPages;
+                var prevLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage - 1).RouteValues);
+                var nextLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage + 1).RouteValues);
+            }
 
-        <a href="@prevLink"
-           style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
-           class="page-navigation__btn previous grid grid-1-3">
-            <i class="arrow-button fa fa-angle-left"></i>
-            <span class="description">Previous <span class="hide-mob">page</span></span>
-            <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
-        </a>
+            <a href="@prevLink"
+               style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
+               class="page-navigation__btn previous grid grid-1-3">
+                <i class="arrow-button fa fa-angle-left"></i>
+                <span class="description">Previous <span class="hide-mob">page</span></span>
+                <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
+            </a>
 
-        <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
-            <label for="page-size" class="heading-small inline">Display results</label>
-            @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new {id = "page-size"})
-            <noscript>
-                <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
-            </noscript>
+            <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
+                <label for="page-size" class="heading-small inline">Display results</label>
+                @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new {id = "page-size"})
+                <noscript>
+                    <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
+                </noscript>
+            </div>
+
+            <a href="@nextLink"
+               style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
+               class="page-navigation__btn next grid grid-1-3">
+                <i class="arrow-button fa fa-angle-right"></i>
+                <span class="description">Next <span class="hide-mob">page</span></span>
+                <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
+            </a>
+
         </div>
-
-        <a href="@nextLink"
-           style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
-           class="page-navigation__btn next grid grid-1-3">
-            <i class="arrow-button fa fa-angle-right"></i>
-            <span class="description">Next <span class="hide-mob">page</span></span>
-            <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
-        </a>
-
-    </div>
+    }
 }
 
 <div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">

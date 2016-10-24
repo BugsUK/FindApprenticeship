@@ -203,6 +203,8 @@
     <Compile Include="CsvClassMaps\ApiUserViewModelClassMap.cs" />
     <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\FrameworkDataClassMap.cs" />
+    <Compile Include="CsvClassMaps\StandardSubjectAreaTierOneClassMap.cs" />
     <Compile Include="Extensions\CandidateSearchExtensions.cs" />
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyStatus\BulkApplicationsRejectViewModelMessages.cs" />
     <Compile Include="Validators\VacancyStatus\BulkApplicationsRejectViewModelServerValidator.cs" />
+    <Compile Include="ViewModels\Admin\FrameworkViewModel.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />
     <Compile Include="Constants\Pages\TransferVacanciesMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -266,6 +269,7 @@
     <Compile Include="Validators\Provider\ProviderSiteRelationshipViewModelValidator.cs" />
     <Compile Include="ViewModels\Admin\ChangeUkprnViewModel.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferViewModel.cs" />
+    <Compile Include="ViewModels\Admin\StandardSubjectAreaTierOneViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacanciesResultsViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacanciesViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacancyViewModel.cs" />
@@ -657,6 +661,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
       <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
+      <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
+      <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>

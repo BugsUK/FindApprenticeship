@@ -19,26 +19,26 @@
         {
             _categories = new List<Category>
             {
-                new Category(15, "SSAT1.ICT", "Information and Communication Technology", CategoryType.SectorSubjectAreaTier1,
+                new Category(15, "SSAT1.ICT", "Information and Communication Technology", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active,
                     new List<Category>
                     {
-                        new Category(101, "FW.101", "Software Developer", "SSAT1.ICT", CategoryType.Framework),
-                        new Category(201, "STDSEC.201", "Digital Industries", "SSAT1.ICT", CategoryType.StandardSector, 
+                        new Category(101, "FW.101", "Software Developer", "SSAT1.ICT", CategoryType.Framework, CategoryStatus.Active),
+                        new Category(201, "STDSEC.201", "Digital Industries", "SSAT1.ICT", CategoryType.StandardSector, CategoryStatus.Active, 
                             new List<Category>
                             {
-                                new Category(1, "STD.1", "Network Engineer", "STDSEC.201", CategoryType.Standard),
-                                new Category(2, "STD.2", "Software Developer", "STDSEC.201", CategoryType.Standard)
+                                new Category(1, "STD.1", "Network Engineer", "STDSEC.201", CategoryType.Standard, CategoryStatus.Active),
+                                new Category(2, "STD.2", "Software Developer", "STDSEC.201", CategoryType.Standard, CategoryStatus.Active)
                             }
                         )
                     }
                 ),
-                new Category(15, "SSAT1.AHR", "Business, Administration and Law", CategoryType.SectorSubjectAreaTier1,
+                new Category(15, "SSAT1.AHR", "Business, Administration and Law", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active,
                     new List<Category>
                     {
-                        new Category(0, "FW.589|STDSEC.15", "Insurance", "SSAT1.AHR", CategoryType.Combined,
+                        new Category(0, "FW.589|STDSEC.15", "Insurance", "SSAT1.AHR", CategoryType.Combined, CategoryStatus.Active,
                             new List<Category>
                             {
-                                new Category(41, "STD.41", "Insurance Practitioner", "FW.589|STDSEC.15", CategoryType.Standard)
+                                new Category(41, "STD.41", "Insurance Practitioner", "FW.589|STDSEC.15", CategoryType.Standard, CategoryStatus.Active)
                             }
                         )
                     }
