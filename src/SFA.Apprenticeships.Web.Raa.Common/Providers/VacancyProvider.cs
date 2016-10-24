@@ -761,12 +761,12 @@
 
             var blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(_configurationService);
 
-            foreach (var sector in categories.Where(category => !blacklistedCategoryCodes.Contains(category.CodeName)))
+            foreach (var sector in categories.Where(category => !blacklistedCategoryCodes.Contains(category.CodeName) && category.Status == CategoryStatus.Active))
             {
                 if (sector.SubCategories != null)
                 {
                     var sectorGroup = new SelectListGroup { Name = sector.FullName };
-                    foreach (var framework in sector.SubCategories)
+                    foreach (var framework in sector.SubCategories.Where(subCategory => subCategory.Status == CategoryStatus.Active))
                     {
                         sectorsAndFrameworkItems.Add(new SelectListItem
                         {
