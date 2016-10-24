@@ -338,7 +338,7 @@
             <div class="detail-content">
                 @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {aria_label = "Search your " + vacanciesLabel})
                 <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>
-                @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
+                @if (!string.IsNullOrEmpty(searchString))
                 {
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null).RouteValues)" class="font-small vacancy-filter">Reset search</a>
                 }
