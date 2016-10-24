@@ -123,7 +123,7 @@
                     var surnameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ?
                         Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                 }
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldLastName, newOrder).RouteValues)" class="vacancy-filter">
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldLastName, newOrder).RouteValues)" class="vacancy-filter">
                     <span class="font-black">Surname <i class="fa @surnameSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
@@ -134,7 +134,7 @@
                     var firstNameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldFirstName ?
                         Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                 }
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldFirstName, newOrder).RouteValues)" class="vacancy-filter">
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldFirstName, newOrder).RouteValues)" class="vacancy-filter">
                     <span class="font-black">First name <i class="fa @firstNameSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
@@ -146,7 +146,7 @@
                     var managerNotesSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ?
                         Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                 }
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes, newOrder).RouteValues)" class="vacancy-filter">
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes, newOrder).RouteValues)" class="vacancy-filter">
                     <span class="font-black">Vacancy manager notes <i class="fa @managerNotesSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
@@ -155,7 +155,7 @@
                     var submittedSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldSubmitted ?
                         Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                 }
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldSubmitted, newOrder).RouteValues)" class="vacancy-filter">
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldSubmitted, newOrder).RouteValues)" class="vacancy-filter">
                     <span class="font-black">Submitted <i class="fa @submittedSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
@@ -164,7 +164,7 @@
                     var statusSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldStatus ?
                         Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                 }
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldStatus, newOrder).RouteValues)" class="vacancy-filter">
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldStatus, newOrder).RouteValues)" class="vacancy-filter">
                     <span class="font-black">Status <i class="fa @statusSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
