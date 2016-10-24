@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.VacancyStatus
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Application
 {
     using FluentValidation;
     using ViewModels.Application;
 
-    public class BulkApplicationsRejectViewModelClientValidator : AbstractValidator<BulkApplicationsRejectViewModel>
+    public class BulkApplicationsRejectViewModelClientValidator : AbstractValidator<BulkDeclineCandidatesViewModel>
     {
         public BulkApplicationsRejectViewModelClientValidator()
         {
@@ -11,7 +11,7 @@
         }
     }
 
-    public class BulkApplicationsRejectViewModelServerValidator : AbstractValidator<BulkApplicationsRejectViewModel>
+    public class BulkApplicationsRejectViewModelServerValidator : AbstractValidator<BulkDeclineCandidatesViewModel>
     {
         public BulkApplicationsRejectViewModelServerValidator()
         {
@@ -25,7 +25,7 @@
 
     internal static class BulkApplicationsRejectViewModelValidatorRules
     {
-        internal static void AddCommonRules(this AbstractValidator<BulkApplicationsRejectViewModel> validator)
+        internal static void AddCommonRules(this AbstractValidator<BulkDeclineCandidatesViewModel> validator)
         {
 
         }

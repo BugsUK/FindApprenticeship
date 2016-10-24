@@ -277,7 +277,8 @@
     <Compile Include="ViewModels\Api\ApiUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserSearchViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserViewModel.cs" />
-    <Compile Include="ViewModels\Application\Apprenticeship\BulkRejectApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\BulkApplicationsRejectViewModel.cs" />
+    <Compile Include="ViewModels\Application\BulkRejectApplicationViewModel.cs" />
     <Compile Include="ViewModels\Application\Apprenticeship\ConfirmationStatusViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserSearchViewModel.cs" />
@@ -341,7 +342,7 @@
     <Compile Include="ViewModels\Provider\ProviderSiteRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
-    <Compile Include="ViewModels\VacancyStatus\BulkDeclineCandidatesViewModel.cs" />
+    <Compile Include="ViewModels\Application\BulkDeclineCandidatesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DeleteVacancyViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />

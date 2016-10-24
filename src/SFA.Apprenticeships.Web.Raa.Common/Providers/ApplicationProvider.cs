@@ -18,7 +18,6 @@
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
-    using ViewModels.VacancyStatus;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
     using Order = Domain.Raa.Interfaces.Repositories.Models.Order;
@@ -183,9 +182,9 @@
                 _vacancyPostingService.GetVacancyByReferenceNumber(
                     bulkApplicationsRejectViewModel.VacancyReferenceNumber);
 
-            foreach (string applicationId in bulkApplicationsRejectViewModel.ApplicationIds)
+            foreach (Guid applicationId in bulkApplicationsRejectViewModel.ApplicationIds)
             {
-                ApprenticeshipApplicationDetail applicationDetail = _apprenticeshipApplicationService.GetApplicationForReview(new Guid(applicationId));
+                ApprenticeshipApplicationDetail applicationDetail = _apprenticeshipApplicationService.GetApplicationForReview(applicationId);
                 if (applicationDetail != null)
                 {
                     BulkRejectApplicationViewModel bulkRejectApplicationViewModel = new BulkRejectApplicationViewModel
@@ -371,9 +370,9 @@
         public BulkApplicationsRejectViewModel SendBulkUnsuccessfulDecision(
             BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
         {
-            foreach (var application in bulkApplicationsRejectViewModel.ApplicationIds.First().Split(','))
+            foreach (var application in bulkApplicationsRejectViewModel.ApplicationIds)
             {
-                _apprenticeshipApplicationService.SetUnsuccessfulDecision(new Guid(application), bulkApplicationsRejectViewModel.UnSuccessfulReason);
+                _apprenticeshipApplicationService.SetUnsuccessfulDecision(application, bulkApplicationsRejectViewModel.UnSuccessfulReason);
             }
             return bulkApplicationsRejectViewModel;
         }

@@ -340,19 +340,19 @@
             routes.MapRoute(
                name: RecruitmentRouteNames.BulkDeclineCandidates,
                url: "vacancy/bulkdeclinecandidates",
-               defaults: new { controller = "VacancyStatus", action = "BulkDeclineCandidates" }
+               defaults: new { controller = "Application", action = "BulkDeclineCandidates" }
                );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.BulkDeclineCandidatesSearch,
                url: "vacancy/bulkdeclinecandidatessearch",
-               defaults: new { controller = "VacancyStatus", action = "BulkDeclineCandidatesSearch" }
+               defaults: new { controller = "Application", action = "BulkDeclineCandidatesSearch" }
                );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmBulkDeclineCandidates,
                url: "vacancy/confirmbulkdeclinecandidates",
-               defaults: new { controller = "VacancyStatus", action = "ConfirmBulkDeclineCandidates" }
+               defaults: new { controller = "Application", action = "ConfirmBulkDeclineCandidates" }
                );
 
             routes.MapRoute(

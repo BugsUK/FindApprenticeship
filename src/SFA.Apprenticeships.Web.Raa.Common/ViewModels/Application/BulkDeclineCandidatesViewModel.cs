@@ -1,7 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyStatus
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
-    using Application;
     using Domain.Entities.Raa.Vacancies;
+    using System;
+    using System.Collections.Generic;
     using Web.Common.ViewModels;
 
     public class BulkDeclineCandidatesViewModel
@@ -16,5 +17,6 @@
         public int NewApplicationsCount { get; set; }
         public int InProgressApplicationsCount { get; set; }
         public bool IsSelected { get; set; }
+        public IEnumerable<Guid> SelectedApplicationIds { get; set; }
     }
 }

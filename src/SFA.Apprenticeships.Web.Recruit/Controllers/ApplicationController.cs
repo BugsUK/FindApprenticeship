@@ -1,15 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Attributes;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
     using Domain.Entities.Raa;
+    using FluentValidation.Mvc;
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
-    using Application.Interfaces;
+    using System;
+    using System.Linq;
+    using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -17,7 +19,8 @@
     {
         private readonly IApplicationMediator _applicationMediator;
 
-        public ApplicationController(IApplicationMediator applicationMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
+        public ApplicationController(IApplicationMediator applicationMediator, IConfigurationService configurationService,
+            ILogService logService) : base(configurationService, logService)
         {
             _applicationMediator = applicationMediator;
         }
@@ -74,6 +77,42 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpGet]
+        public ActionResult BulkDeclineCandidates(int vacancyReferenceNumber)
+        {
+            var response = _applicationMediator.GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
+            return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel = new BulkApplicationsRejectViewModel
+            {
+                ApplicationIds = bulkDeclineCandidatesViewModel.SelectedApplicationIds,
+                VacancyReferenceNumber = bulkDeclineCandidatesViewModel.VacancyReferenceNumber
+            };
+            var response = _applicationMediator.BulkResponseApplications(bulkApplicationsRejectViewModel);
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
+                    var bulkResponseViewModel = _applicationMediator.GetApplicationViewModel(bulkApplicationsRejectViewModel);
+                    return View("ConfirmBulkUnsuccessfulDecision", bulkResponseViewModel);
+                case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("BulkDeclineCandidates", response.ViewModel);
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult BulkDeclineCandidatesSearch(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel)
+        {
+            var response = _applicationMediator.GetBulkDeclineCandidatesViewModel(vacancyApplicationsSearchViewModel);
+            return View("BulkDeclineCandidates", response.ViewModel);
         }
     }
 }

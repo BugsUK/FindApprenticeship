@@ -1,9 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Application
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using System.Web.Routing;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Security;
     using Domain.Entities.Raa.Vacancies;
@@ -14,6 +10,10 @@
     using Raa.Common.Validators.ProviderUser;
     using Raa.Common.ViewModels.Application;
     using Recruit.Mediators.Application;
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     [TestFixture]
     public class ApplicationMediatorTests
@@ -30,7 +30,7 @@
             Mock<ValidationResult> mockValidationResult = new Mock<ValidationResult>();
             var applicationGuid = Guid.NewGuid();
             string applicantId = "applicantId";
-            var applicationSummary = new ApplicationSummaryViewModel() {ApplicationId = applicationGuid, ApplicantID = applicantId};
+            var applicationSummary = new ApplicationSummaryViewModel() { ApplicationId = applicationGuid, ApplicantID = applicantId };
 
             mockValidationResult.Setup(m => m.IsValid).Returns(true);
 
@@ -41,7 +41,7 @@
                 .Returns(new ShareApplicationsViewModel()
                 {
                     VacancyType = VacancyType.Apprenticeship,
-                    ApplicationSummaries = {applicationSummary}
+                    ApplicationSummaries = { applicationSummary }
                 });
 
             //this is the unencrypted version, that we should not use
@@ -53,7 +53,7 @@
             parameters.SelectedApplicationIds = new List<Guid>() { applicationGuid };
             parameters.ApplicationSummaries = new List<ApplicationSummaryViewModel>() { applicationSummary };
 
-            var mediator = new ApplicationMediator(mockApplicationProvider.Object, mockShareApplicationsViewModelValidator.Object, mockEncryptionService.Object, mockDateTimeService.Object);
+            var mediator = new ApplicationMediator(mockApplicationProvider.Object, mockShareApplicationsViewModelValidator.Object, mockEncryptionService.Object, mockDateTimeService.Object, null);
 
             //Act
             mediator.ShareApplications(parameters, mockUrlHelper.Object);

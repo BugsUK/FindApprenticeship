@@ -64,6 +64,7 @@
         {
             public const string NoApplicationId = "ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.NoApplicationId";
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok";
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.FailedValidation";
         }
 
         public class SendUnsuccessfulDecision
@@ -81,6 +82,17 @@
         public class RevertToInProgress
         {
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.RevertToInProgress.Ok";
+        }
+
+        public static class BulkDeclineCandidatesViewModel
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.BulkDeclineCandidatesViewModel.Ok";
+            public const string OutstandingActions = "ApprenticeshipApplicationMediatorCodes.BulkDeclineCandidatesViewModel.OutstandingActions";
+        }
+
+        public static class GetBulkDeclineCandidatesViewModel
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.BulkApplicationsReject.Ok";
         }
     }
 }

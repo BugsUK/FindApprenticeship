@@ -7,6 +7,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Providers;
     using Raa.Common.Validators.ProviderUser;
+    using Raa.Common.Validators.VacancyStatus;
     using Raa.Common.ViewModels.Application;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,13 +21,18 @@
         private readonly ShareApplicationsViewModelValidator _shareApplicationsViewModelValidator;
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly BulkApplicationsRejectViewModelServerValidator _bulkApplicationsRejectViewModelServerValidator;
 
-        public ApplicationMediator(IApplicationProvider applicationProvider, ShareApplicationsViewModelValidator shareApplicationsViewModelValidator, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
+        public ApplicationMediator(IApplicationProvider applicationProvider,
+            ShareApplicationsViewModelValidator shareApplicationsViewModelValidator,
+            IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService,
+            BulkApplicationsRejectViewModelServerValidator bulkApplicationsRejectViewModelServerValidator)
         {
             _applicationProvider = applicationProvider;
             _shareApplicationsViewModelValidator = shareApplicationsViewModelValidator;
             _encryptionService = encryptionService;
             _dateTimeService = dateTimeService;
+            _bulkApplicationsRejectViewModelServerValidator = bulkApplicationsRejectViewModelServerValidator;
         }
 
         public MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
@@ -72,6 +78,40 @@
             _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks, _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress);
 
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
+        {
+            var model = _applicationProvider.GetBulkDeclineCandidatesViewModel(vacancyReferenceNumber);
+            return new MediatorResponse<BulkDeclineCandidatesViewModel>
+            {
+                ViewModel = model,
+                Code = ApprenticeshipApplicationMediatorCodes.BulkDeclineCandidatesViewModel.Ok,
+            };
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> BulkResponseApplications(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
+        {
+            BulkDeclineCandidatesViewModel viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkApplicationsRejectViewModel.VacancyReferenceNumber);
+            viewModel.SelectedApplicationIds = bulkApplicationsRejectViewModel.ApplicationIds;
+            var validationResult = _bulkApplicationsRejectViewModelServerValidator.Validate(bulkApplicationsRejectViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.FailedValidation, viewModel, validationResult);
+            }
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok, viewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(vacancyApplicationsSearchViewModel);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.GetBulkDeclineCandidatesViewModel.Ok, viewModel);
+        }
+
+        public BulkApplicationsRejectViewModel GetApplicationViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
+        {
+            return _applicationProvider.GetBulkApplicationsRejectViewModel(bulkApplicationsRejectViewModel);
         }
     }
 }

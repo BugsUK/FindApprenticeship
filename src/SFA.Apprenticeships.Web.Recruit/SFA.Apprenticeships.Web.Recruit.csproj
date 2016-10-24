@@ -899,8 +899,8 @@
     <Content Include="Views\Admin\ProviderUsers.cshtml" />
     <Content Include="Views\Admin\ProviderUser.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\SentDecisionConfirmation.cshtml" />
-    <Content Include="Views\VacancyStatus\BulkDeclineCandidates.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\ConfirmBulkUnsuccessfulDecision.cshtml" />
+    <Content Include="Views\Application\BulkDeclineCandidates.cshtml" />
+    <Content Include="Views\Application\ConfirmBulkUnsuccessfulDecision.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_BulkUploadVacancyLinks.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>

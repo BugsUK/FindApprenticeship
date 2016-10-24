@@ -268,24 +268,6 @@
             }
         }
 
-        [HttpGet]
-        public ActionResult ConfirmBulkUnsuccessfulDecision(string applicationIds, int vacancyReferenceNumber)
-        {
-            if (!string.IsNullOrWhiteSpace(applicationIds) && vacancyReferenceNumber != 0)
-            {
-                var bulkRejectViewModel = new BulkApplicationsRejectViewModel
-                {
-                    ApplicationIds = applicationIds.Split(','),
-                    VacancyReferenceNumber = vacancyReferenceNumber
-                };
-                var bulkResponse = _apprenticeshipApplicationMediator.GetApprenticeshipApplicationViewModel(bulkRejectViewModel);
-
-                if (bulkResponse.Code == ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok)
-                    return View(bulkResponse.ViewModel);
-            }
-            return View();
-        }
-
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendUnsuccessfulDecision")]
         public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
@@ -308,10 +290,10 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendBulkUnsuccessfulDecision")]
-        public ActionResult SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
+        public ActionResult SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkDeclineCandidatesViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.SendBulkUnsuccessfulDecision(bulkApplicationsRejectViewModel);
-            var appCount = response.ViewModel.ApplicationIds.First().Split(',').Length;
+            var response = _apprenticeshipApplicationMediator.SendBulkUnsuccessfulDecision(bulkDeclineCandidatesViewModel);
+            var appCount = response.ViewModel.ApplicationIds.Count();
             ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
             {
                 CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + appCount + " candidates",
