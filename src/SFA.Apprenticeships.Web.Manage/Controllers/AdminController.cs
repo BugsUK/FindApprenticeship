@@ -62,9 +62,9 @@
         }
 
         [HttpGet]
-        public ActionResult Provider(int employerId)
+        public ActionResult Provider(int providerId)
         {
-            var response = _adminMediator.GetProvider(employerId);
+            var response = _adminMediator.GetProvider(providerId);
 
             return View(response.ViewModel);
         }
@@ -159,9 +159,9 @@
         }
 
         [HttpGet]
-        public ActionResult ProviderSite(int employerSiteId)
+        public ActionResult ProviderSite(int providerSiteId)
         {
-            var response = _adminMediator.GetProviderSite(employerSiteId);
+            var response = _adminMediator.GetProviderSite(providerSiteId);
 
             return View(response.ViewModel);
         }
