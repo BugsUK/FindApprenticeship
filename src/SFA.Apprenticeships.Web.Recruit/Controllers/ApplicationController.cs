@@ -2,6 +2,7 @@
 {
     using Application.Interfaces;
     using Attributes;
+    using Common.Attributes;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
@@ -91,7 +92,7 @@
         {
             BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel = new BulkApplicationsRejectViewModel
             {
-                ApplicationIds = bulkDeclineCandidatesViewModel.SelectedApplicationIds,
+                ApplicationIds = bulkDeclineCandidatesViewModel.SelectedApplicationIds.ToList(),
                 VacancyReferenceNumber = bulkDeclineCandidatesViewModel.VacancyReferenceNumber
             };
             var response = _applicationMediator.BulkResponseApplications(bulkApplicationsRejectViewModel);
@@ -113,6 +114,6 @@
         {
             var response = _applicationMediator.GetBulkDeclineCandidatesViewModel(vacancyApplicationsSearchViewModel);
             return View("BulkDeclineCandidates", response.ViewModel);
-        }
+        }        
     }
 }

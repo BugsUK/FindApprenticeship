@@ -10,7 +10,7 @@
         public IList<BulkRejectApplicationViewModel> BulkRejectApplications { get; set; }
         public int VacancyReferenceNumber { get; set; }
         public string VacancyTitle { get; set; }
-        public IEnumerable<Guid> ApplicationIds { get; set; }
+        public IList<Guid> ApplicationIds { get; set; }
 
         [Display(Name = ApplicationViewModelMessages.UnSuccessfulReason.LabelText)]
         [Required(ErrorMessage = ApplicationViewModelMessages.UnSuccessfulReason.BulkRequiredErrorText)]

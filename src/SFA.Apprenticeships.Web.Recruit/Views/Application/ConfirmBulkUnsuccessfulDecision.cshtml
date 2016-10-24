@@ -9,7 +9,6 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmBulkUnsuccessfulApprenticeshipApplication, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    @Html.HiddenFor(m => m.ApplicationIds)
     <div>
         <h1 class="heading-xlarge med-btm-margin">Inform the selected candidates their applications have been unsuccessful</h1>
         <div class="inner-block hgroup grey-background">
@@ -20,6 +19,7 @@
                 {
                     <li>
                         @application.FirstName @application.LastName
+                        @Html.Hidden("ApplicationIds", application.ApplicationId)
                     </li>
                 }
                 </ul>

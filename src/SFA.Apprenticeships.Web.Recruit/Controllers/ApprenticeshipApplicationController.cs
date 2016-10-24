@@ -12,7 +12,6 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using System;
-    using System.Linq;
     using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -293,7 +292,7 @@
         public ActionResult SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkDeclineCandidatesViewModel)
         {
             var response = _apprenticeshipApplicationMediator.SendBulkUnsuccessfulDecision(bulkDeclineCandidatesViewModel);
-            var appCount = response.ViewModel.ApplicationIds.Count();
+            var appCount = response.ViewModel.ApplicationIds.Count;
             ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
             {
                 CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + appCount + " candidates",
