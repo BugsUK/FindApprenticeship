@@ -47,7 +47,7 @@
                     Candidates
                     @if (filterType != VacancyApplicationsFilterTypes.All)
                     {
-                        <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
+                        <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidatesSearch, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
                     }
                 </h2>
                 <hr/>
