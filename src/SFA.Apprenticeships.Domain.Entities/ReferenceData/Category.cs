@@ -9,44 +9,45 @@
             
         }
 
-        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, IList<Category> subCategories, long? count)
+        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, CategoryStatus status, IList<Category> subCategories, long? count)
         {
             Id = id;
             CodeName = codeName;
             FullName = fullName;
             ParentCategoryCodeName = parentCategoryCodeName;
             CategoryType = categoryType;
+            Status = status;
             SubCategories = subCategories ?? new List<Category>();
             Count = count ?? 0;
         }
 
-        public Category(int id, string codeName, string fullName, CategoryType categoryType) : this(id, codeName, fullName, null, categoryType, null, null)
+        public Category(int id, string codeName, string fullName, CategoryType categoryType, CategoryStatus status) : this(id, codeName, fullName, null, categoryType, status, null, null)
         {
             
         }
 
         //TODO: This ctor is only used in unit tests. Consider removing it. Please, oh please: remove it.
-        public Category(int id, string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories) : this(id, codeName, fullName, null, categoryType, subCategories, null)
+        public Category(int id, string codeName, string fullName, CategoryType categoryType, CategoryStatus status, IList<Category> subCategories) : this(id, codeName, fullName, null, categoryType, status, subCategories, null)
         {
             
         }
 
-        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, null, null)
+        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, CategoryStatus status) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, status, null, null)
         {
             
         }
 
-        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, IList<Category> subCategories) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, subCategories, null)
+        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, CategoryStatus status, IList<Category> subCategories) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, status, subCategories, null)
         {
 
         }
 
-        public Category(int id, string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories, long? count) : this(id, codeName, fullName, null, categoryType, subCategories, count)
+        public Category(int id, string codeName, string fullName, CategoryType categoryType, CategoryStatus status, IList<Category> subCategories, long? count) : this(id, codeName, fullName, null, categoryType, status, subCategories, count)
         {
 
         }
 
-        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, long? count) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, null, count)
+        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, CategoryStatus status, long? count) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, status, null, count)
         {
 
         }
@@ -60,6 +61,8 @@
         public string ParentCategoryCodeName { get; set; }
 
         public CategoryType CategoryType { get; private set; }
+
+        public CategoryStatus Status { get; set; }
 
         public IList<Category> SubCategories { get; private set; }
 

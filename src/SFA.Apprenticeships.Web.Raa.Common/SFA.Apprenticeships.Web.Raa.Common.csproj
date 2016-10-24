@@ -203,6 +203,8 @@
     <Compile Include="CsvClassMaps\ApiUserViewModelClassMap.cs" />
     <Compile Include="CsvClassMaps\CandidatesWithApplicationsResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ApplicationsReceivedResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\FrameworkDataClassMap.cs" />
+    <Compile Include="CsvClassMaps\StandardSubjectAreaTierOneClassMap.cs" />
     <Compile Include="Extensions\CandidateSearchExtensions.cs" />
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
+    <Compile Include="ViewModels\Admin\FrameworkViewModel.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />
     <Compile Include="Constants\Pages\TransferVacanciesMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -264,6 +267,7 @@
     <Compile Include="Validators\Provider\ProviderSiteRelationshipViewModelValidator.cs" />
     <Compile Include="ViewModels\Admin\ChangeUkprnViewModel.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferViewModel.cs" />
+    <Compile Include="ViewModels\Admin\StandardSubjectAreaTierOneViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacanciesResultsViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacanciesViewModel.cs" />
     <Compile Include="ViewModels\Admin\TransferVacancyViewModel.cs" />
@@ -293,7 +297,7 @@
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\Report\ReportParametersDateRangeValidator.cs" />
-    <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
+    <Compile Include="Validators\Employer\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelServerValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\TrainingDetailsViewModelValidator.cs" />
@@ -351,13 +355,11 @@
     <Compile Include="ViewModels\Provider\VacancyOwnerRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerResultViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerSearchViewModel.cs" />
+    <Compile Include="ViewModels\Employer\EmployerSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\LocationSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyLocationAddressViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
+    <Compile Include="ViewModels\Employer\EmployerViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\IPartialVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\QAActionResult.cs" />
@@ -655,6 +657,10 @@
       <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
+      <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
+      <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancy</Name>
@@ -693,7 +699,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Strategies\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

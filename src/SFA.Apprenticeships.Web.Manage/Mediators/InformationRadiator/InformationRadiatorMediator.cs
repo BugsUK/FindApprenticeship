@@ -42,6 +42,13 @@
                 viewModel.VacanciesReviewedTwoDaysAgo = data.VacanciesReviewedTwoDaysAgo;
                 viewModel.VacanciesReviewedThreeDaysAgo = data.VacanciesReviewedThreeDaysAgo;
                 viewModel.VacanciesReviewedFourDaysAgo = data.VacanciesReviewedFourDaysAgo;
+
+                viewModel.VacanciesReviewedTodayColour = GetReviewedColour(data.VacanciesSubmittedToday, data.VacanciesReviewedToday);
+                viewModel.VacanciesReviewedYesterdayColour = GetReviewedColour(data.VacanciesSubmittedYesterday, data.VacanciesReviewedYesterday);
+                viewModel.VacanciesReviewedTwoDaysAgoColour = GetReviewedColour(data.VacanciesSubmittedTwoDaysAgo, data.VacanciesReviewedTwoDaysAgo);
+                viewModel.VacanciesReviewedThreeDaysAgoColour = GetReviewedColour(data.VacanciesSubmittedThreeDaysAgo, data.VacanciesReviewedThreeDaysAgo);
+                viewModel.VacanciesReviewedFourDaysAgoColour = GetReviewedColour(data.VacanciesSubmittedFourDaysAgo, data.VacanciesReviewedFourDaysAgo);
+
                 viewModel.TotalApplicationsStartedInPastFourWeeks = data.TotalApplicationsStartedInPastFourWeeks;
                 viewModel.TotalApplicationsSubmittedInPastFourWeeks = data.TotalApplicationsSubmittedInPastFourWeeks;
                 viewModel.TotalUnsuccessfulApplicationsInPastFourWeeks = data.TotalUnsuccessfulApplicationsInPastFourWeeks;
@@ -55,6 +62,25 @@
 
                 return GetMediatorResponse(InformationRadiatorMediatorCodes.IndexCodes.Error, viewModel);
             }
+        }
+
+        private string GetReviewedColour(int vacanciesSubmitted, int vacanciesReviewed)
+        {
+            if (vacanciesSubmitted == 0 || vacanciesReviewed == 0)
+                return "#FFFFFF";
+
+            var reviewPercentage = (double) vacanciesReviewed/vacanciesSubmitted;
+
+            if (reviewPercentage > 1)
+                return "#7FFF7F";
+
+            if (reviewPercentage <= 1 && reviewPercentage > 0.9)
+                return "#FFBF7F";
+
+            if (reviewPercentage <= 0.9)
+                return "#FF7F7F";
+
+            return "#FFFFFF";
         }
     }
 }

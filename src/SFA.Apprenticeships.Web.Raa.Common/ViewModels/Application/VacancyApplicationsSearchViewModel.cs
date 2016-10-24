@@ -27,10 +27,26 @@
             SetProperties(viewModel);
         }
 
+        public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, bool resetSearch) : this(viewModel)
+        {
+            if (resetSearch)
+            {
+                ResetSearch();
+            }
+        }
+
         public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, VacancyApplicationsFilterTypes filterType) : base(viewModel, 1)
         {
             SetProperties(viewModel);
             FilterType = filterType;
+        }
+
+        public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, VacancyApplicationsFilterTypes filterType, bool resetSearch) : this(viewModel, filterType)
+        {
+            if (resetSearch)
+            {
+                ResetSearch();
+            }
         }
 
         public VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel, string orderByField, Order order) : base(viewModel, orderByField, order)
@@ -51,6 +67,14 @@
             FirstName = viewModel.FirstName;
             LastName = viewModel.LastName;
             Postcode = viewModel.Postcode;
+        }
+
+        private void ResetSearch()
+        {
+            ApplicantId = null;
+            FirstName = null;
+            LastName = null;
+            Postcode = null;
         }
 
         public int VacancyReferenceNumber { get; set; }

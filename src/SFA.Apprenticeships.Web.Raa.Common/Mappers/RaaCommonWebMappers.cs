@@ -16,6 +16,7 @@
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
@@ -41,7 +42,13 @@
                 .ForMember(dest => dest.ValidationSourceCode, opt => opt.Ignore())
                 .ForMember(dest => dest.ValidationSourceKeyValue, opt => opt.Ignore())
                 .ForMember(dest => dest.DateValidated, opt => opt.Ignore());
-            Mapper.CreateMap<Employer, EmployerViewModel>();
+            Mapper.CreateMap<Employer, EmployerViewModel>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.EmployerStatus));
+            Mapper.CreateMap<EmployerViewModel, Employer>()
+                .ForMember(dest => dest.EmployerGuid, opt => opt.Ignore())
+                .ForMember(dest => dest.PrimaryContact, opt => opt.Ignore())
+                .ForMember(dest => dest.IsPositiveAboutDisability, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployerStatus, opt => opt.MapFrom(src => src.Status));
             Mapper.CreateMap<VacancyOwnerRelationship, VacancyOwnerRelationshipViewModel>()
                 .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())

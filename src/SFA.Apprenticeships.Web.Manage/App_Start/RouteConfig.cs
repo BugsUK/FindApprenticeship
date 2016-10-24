@@ -355,6 +355,48 @@
                defaults: new { controller = "Admin", action = "ExportApiUsers" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEmployers,
+               url: "admin/employers",
+               defaults: new { controller = "Admin", action = "Employers" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewEmployer,
+               url: "admin/employer",
+               defaults: new { controller = "Admin", action = "Employer" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEditEmployer,
+               url: "admin/employers/edit",
+               defaults: new { controller = "Admin", action = "EditEmployer" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminStandards,
+               url: "admin/standards",
+               defaults: new { controller = "Admin", action = "Standards" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminStandardsCsv,
+               url: "admin/standards/csv",
+               defaults: new { controller = "Admin", action = "DownloadStandardsCsv" }
+               );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.AdminFrameworks,
+                url: "admin/frameworks",
+                defaults: new {controller = "Admin", action = "Frameworks"}
+                );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminFrameworksCsv,
+               url: "admin/frameworks/csv",
+               defaults: new { controller = "Admin", action = "DownloadFrameworksCsv" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

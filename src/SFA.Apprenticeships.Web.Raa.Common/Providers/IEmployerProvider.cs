@@ -1,11 +1,12 @@
-﻿
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using ViewModels.Employer;
+
     public interface IEmployerProvider
     {
-        EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel);
+        EmployerSearchViewModel SearchEmployers(EmployerSearchViewModel searchViewModel);
+        EmployerSearchViewModel SearchEdrsEmployers(EmployerSearchViewModel searchViewModel);
+        EmployerViewModel GetEmployer(int employerId);
+        EmployerViewModel SaveEmployer(EmployerViewModel viewModel);
     }
 }

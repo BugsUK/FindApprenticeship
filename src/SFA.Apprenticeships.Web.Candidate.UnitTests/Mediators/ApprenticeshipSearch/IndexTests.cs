@@ -63,32 +63,32 @@
         {
             return new List<Category>
             {
-                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "1_1", "1_1", CategoryType.Framework),
-                    new Category(1, "1_2", "1_2", CategoryType.Framework)
+                    new Category(1, "1_1", "1_1", CategoryType.Framework, CategoryStatus.Active),
+                    new Category(1, "1_2", "1_2", CategoryType.Framework, CategoryStatus.Active)
                 }
                     ),
-                new Category(2, "2", "2", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(2, "2", "2", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "2_1", "2_1", CategoryType.Framework),
-                    new Category(2, "2_2", "2_2", CategoryType.Framework),
-                    new Category(3, "2_3", "2_3", CategoryType.Framework)
+                    new Category(1, "2_1", "2_1", CategoryType.Framework, CategoryStatus.Active),
+                    new Category(2, "2_2", "2_2", CategoryType.Framework, CategoryStatus.Active),
+                    new Category(3, "2_3", "2_3", CategoryType.Framework, CategoryStatus.Active)
                 }
                     ),
-                new Category(3, string.Empty, "3", "3", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(3, string.Empty, "3", "3", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "3_1", "3_1", CategoryType.Framework)
+                    new Category(1, "3_1", "3_1", CategoryType.Framework, CategoryStatus.Active)
                 }
                     ),
-                new Category(0, "00", "00", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(0, "00", "00", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "00_1", "00_1", CategoryType.Framework)
+                    new Category(1, "00_1", "00_1", CategoryType.Framework, CategoryStatus.Active)
                 }
                     ),
-                new Category(99, "99", "99", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(99, "99", "99", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "99_1", "99_1", CategoryType.Framework)
+                    new Category(1, "99_1", "99_1", CategoryType.Framework, CategoryStatus.Active)
                 }
                     )
             };

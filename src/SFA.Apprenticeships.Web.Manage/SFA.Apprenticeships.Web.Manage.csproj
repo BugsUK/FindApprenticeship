@@ -872,6 +872,10 @@
     <Content Include="Views\Admin\CreateApiUser.cshtml" />
     <Content Include="Views\Admin\ResetApiUserPassword.cshtml" />
     <Content Include="Views\Candidate\ApplicationFeedback.cshtml" />
+    <Content Include="Views\Admin\Employers.cshtml" />
+    <Content Include="Views\Admin\Employer.cshtml" />
+    <Content Include="Views\Admin\Standards.cshtml" />
+    <Content Include="Views\Admin\Frameworks.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -903,7 +907,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -978,7 +981,7 @@
       <Name>SFA.Apprenticeships.Application.Provider</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
-      <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">

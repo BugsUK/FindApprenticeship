@@ -143,5 +143,47 @@
             public const string Error = "AdminMediatorCodes.VerifyProviderUserEmail.Error";
             public const string Ok = "AdminMediatorCodes.VerifyProviderUserEmail.Ok";
         }
+
+        public class SearchEmployers
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SearchEmployers.FailedValidation";
+            public const string Ok = "AdminMediatorCodes.SearchEmployers.Ok";
+        }
+
+        public class GetEmployer
+        {
+            public const string Ok = "AdminMediatorCodes.GetEmployer.Ok";
+        }
+
+        public class SaveEmployer
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveEmployer.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveEmployer.Error";
+            public const string Ok = "AdminMediatorCodes.SaveEmployer.Ok";
+        }
+
+        public class GetStandard
+        {
+            public const string Ok = "AdminMediatorCodes.GetStandard.Ok";
+        }
+
+        public class GetStandardsBytes
+        {
+            public const string FailedValidation = "AdminMediatorCodes.GetStandardsBytes.FailedValidation";
+            public const string Error = "AdminMediatorCodes.GetStandardsBytes.Error";
+            public const string Ok = "AdminMediatorCodes.GetStandardsBytes.Ok";
+        }
+
+        public class GetFrameworks
+        {
+            public const string Ok = "AdminMediatorCodes.GetFrameworks.Ok";
+        }
+
+        public class GetFrameworksBytes
+        {
+            public const string FailedValidation = "AdminMediatorCodes.GetFrameworksBytes.FailedValidation";
+            public const string Error = "AdminMediatorCodes.GetFrameworksBytes.Error";
+            public const string Ok = "AdminMediatorCodes.GetFrameworksBytes.Ok";
+        }
     }
 }

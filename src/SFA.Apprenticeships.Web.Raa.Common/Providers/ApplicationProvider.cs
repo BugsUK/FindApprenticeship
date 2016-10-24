@@ -66,7 +66,7 @@
             var ukprn = _currentUserService.GetClaimValue("ukprn");
             var provider = _providerService.GetProvider(ukprn);
             var viewModel = new ShareApplicationsViewModel();
-            viewModel.EmployerName = employer.Name;
+            viewModel.EmployerName = employer.FullName;
             viewModel.ProviderName = provider.TradingName;
             viewModel.VacancyType = vacancy.VacancyType;
             viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
@@ -95,7 +95,7 @@
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<Vacancy, VacancyApplicationsViewModel>(vacancy);
-            viewModel.EmployerName = employer.Name;
+            viewModel.EmployerName = employer.FullName;
             viewModel.EmployerGeoPoint = _mapper.Map<GeoPoint, GeoPointViewModel>(employer.Address.GeoPoint);
 
             var applications = vacancy.VacancyType == VacancyType.Traineeship
@@ -306,7 +306,7 @@
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
             viewModel.ApplicationSelection = applicationSelectionViewModel;
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
-            viewModel.Vacancy.EmployerName = employer.Name;
+            viewModel.Vacancy.EmployerName = employer.FullName;
             return viewModel;
         }
 
@@ -318,7 +318,7 @@
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
             viewModel.ApplicationSelection = applicationSelectionViewModel;
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
-            viewModel.Vacancy.EmployerName = employer.Name;
+            viewModel.Vacancy.EmployerName = employer.FullName;
             return viewModel;
         }
 

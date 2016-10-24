@@ -5,7 +5,7 @@
     using Domain.Entities.ReferenceData;
 
     public interface IReferenceDataService
-    {
+    { 
         IEnumerable<Category> GetCategories();
 
         Category GetSubCategoryByName(string subCategoryName);

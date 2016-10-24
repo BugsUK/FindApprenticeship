@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
@@ -8,9 +9,11 @@
     using Common.Mediators;
     using Constants;
     using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
     using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Api;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
 
     [AuthorizeUser(Roles = Roles.Raa)]
@@ -59,9 +62,9 @@
         }
 
         [HttpGet]
-        public ActionResult Provider(int providerId)
+        public ActionResult Provider(int employerId)
         {
-            var response = _adminMediator.GetProvider(providerId);
+            var response = _adminMediator.GetProvider(employerId);
 
             return View(response.ViewModel);
         }
@@ -156,17 +159,17 @@
         }
 
         [HttpGet]
-        public ActionResult ProviderSite(int providerSiteId)
+        public ActionResult ProviderSite(int employerSiteId)
         {
-            var response = _adminMediator.GetProviderSite(providerSiteId);
+            var response = _adminMediator.GetProviderSite(employerSiteId);
 
             return View(response.ViewModel);
         }
 
         [HttpGet]
-        public ActionResult CreateProviderSite(int providerId)
+        public ActionResult CreateProviderSite(int employerId)
         {
-            return View(new ProviderSiteViewModel { ProviderId = providerId });
+            return View(new ProviderSiteViewModel { ProviderId = employerId });
         }
 
         [HttpPost]
@@ -396,6 +399,98 @@
         {
             var response = _adminMediator.GetApiUsersBytes();
             return File(response.ViewModel, "text/csv", "ApiUsers.csv");
+        }
+
+        [HttpGet]
+        public ActionResult Employers(EmployerSearchViewModel viewModel)
+        {
+            var response = _adminMediator.SearchEmployers(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SearchEmployers.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.SearchEmployers.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchEmployersAction")]
+        public ActionResult SearchEmployers(EmployerSearchViewModel viewModel)
+        {
+            viewModel.PerformSearch = true;
+            return RedirectToRoute(ManagementRouteNames.AdminEmployers, viewModel.RouteValues);
+        }
+
+        [HttpGet]
+        public ActionResult Employer(int employerId)
+        {
+            var response = _adminMediator.GetEmployer(employerId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SaveEmployerAction")]
+        public ActionResult SaveEmployer(EmployerViewModel viewModel)
+        {
+            var response = _adminMediator.SaveEmployer(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SaveEmployer.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View("Employer", response.ViewModel);
+
+                case AdminMediatorCodes.SaveEmployer.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewEmployer, new { viewModel.EmployerId });
+
+                case AdminMediatorCodes.SaveEmployer.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewEmployer, new { viewModel.EmployerId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Standards()
+        {
+            var response = _adminMediator.GetStandard();
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Frameworks()
+        {
+            var response = _adminMediator.GetFrameworks();
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult DownloadFrameworksCsv()
+        {
+            var response = _adminMediator.GetFrameworksBytes();
+            return File(response.ViewModel, "text/csv", "FrameworkList.csv");
+        }
+
+        [HttpGet]
+        public ActionResult DownloadStandardsCsv()
+        {
+            var response = _adminMediator.GetStandardsBytes();
+            return File(response.ViewModel, "text/csv", "StandardsList.csv");
         }
     }
 }

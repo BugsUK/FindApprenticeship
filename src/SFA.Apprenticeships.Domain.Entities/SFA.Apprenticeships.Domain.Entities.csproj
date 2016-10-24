@@ -126,6 +126,7 @@
     <Compile Include="Feature\FeatureConfigurationExtensions.cs" />
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="ReferenceData\CategoryPrefixes.cs" />
+    <Compile Include="ReferenceData\CategoryStatus.cs" />
     <Compile Include="ReferenceData\CategoryType.cs" />
     <Compile Include="ReferenceData\DasApplication.cs" />
     <Compile Include="ReferenceData\ReleaseNote.cs" />

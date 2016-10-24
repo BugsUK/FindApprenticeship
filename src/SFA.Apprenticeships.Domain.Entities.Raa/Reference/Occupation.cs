@@ -10,6 +10,11 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
 
     public class Occupation
     {
+        public Occupation()
+        {
+            Status = OccupationStatusType.Active;
+        }
+
         public int Id { get; set; }
 
         public string CodeName { get; set; }
@@ -17,6 +22,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
         public string ShortName { get; set; }
 
         public string FullName { get; set; }
+
+        public OccupationStatusType Status { get; set; }
 
         public IEnumerable<Framework> Frameworks { get; set; }
 
@@ -26,7 +33,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
         /// <returns></returns>
         public Category ToCategory()
         {
-            var category = new Category(Id, CategoryPrefixes.GetSectorSubjectAreaTier1Code(CodeName), FullName, CategoryType.SectorSubjectAreaTier1);
+            var category = new Category(Id, CategoryPrefixes.GetSectorSubjectAreaTier1Code(CodeName), FullName, CategoryType.SectorSubjectAreaTier1, (CategoryStatus)(int)Status);
             Frameworks.ToList().ForEach(f => category.SubCategories.Add(f.ToCategory()));
             return category;
         }

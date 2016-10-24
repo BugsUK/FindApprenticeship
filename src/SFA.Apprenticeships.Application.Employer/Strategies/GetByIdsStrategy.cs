@@ -13,14 +13,9 @@
             _employerReadRepository = employerReadRepository;
         }
 
-        public IEnumerable<Employer> Get(IEnumerable<int> employerIds, bool currentOnly = true)
+        public IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds, bool currentOnly = true)
         {
             return _employerReadRepository.GetByIds(employerIds, currentOnly);
-        }
-
-        public IEnumerable<MinimalEmployerDetails> GetMinimalDetails(IEnumerable<int> employerIds, bool currentOnly = true)
-        {
-            return _employerReadRepository.GetMinimalDetailsByIds(employerIds, currentOnly);
         }
     }
 }

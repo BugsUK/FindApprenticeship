@@ -9,7 +9,7 @@
     using Presentation;
     using Strategies;
 
-    public class ReferenceDataProvider  : IReferenceDataProvider
+    public class ReferenceDataProvider : IReferenceDataProvider
     {
         private readonly IReferenceRepository _referenceRepository;
         private readonly IGetReleaseNotesStrategy _getReleaseNotesStrategy;
@@ -22,7 +22,7 @@
 
         public IEnumerable<Category> GetCategories()
         {
-            var categories = GetFrameworks().ToList();
+            var categories = GetFrameworks().Where(c => c.Status == CategoryStatus.Active).ToList();
             var standardSectors = GetSectors();
 
             foreach (var standardSector in standardSectors)
@@ -30,8 +30,8 @@
                 var sectorSubjectAreaTier1Id = standardSector.ApprenticeshipOccupationId;
                 var standardSectorCode = CategoryPrefixes.GetStandardSectorCode(standardSector.Id);
                 var sectorSubjectAreaTier1Category = categories.Single(c => c.Id == sectorSubjectAreaTier1Id);
-                var standards = standardSector.Standards.Select(s => new Category(s.Id, CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard)).ToList();
-                var standardSectorCategory = new Category(standardSector.Id, standardSectorCode, standardSector.Name, CategoryPrefixes.GetSectorSubjectAreaTier1Code(sectorSubjectAreaTier1Category.CodeName), CategoryType.StandardSector, standards);
+                var standards = standardSector.Standards.Select(s => new Category(s.Id, CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard, CategoryStatus.Active)).ToList();
+                var standardSectorCategory = new Category(standardSector.Id, standardSectorCode, standardSector.Name, CategoryPrefixes.GetSectorSubjectAreaTier1Code(sectorSubjectAreaTier1Category.CodeName), CategoryType.StandardSector, CategoryStatus.Active, standards);
                 //TODO: indiscriminate addition here may lead to the subsequent need to de-duplicate subCategories
                 sectorSubjectAreaTier1Category.SubCategories.Add(standardSectorCategory);
             }
@@ -39,7 +39,7 @@
             //Order the new standard sectors correctly
             foreach (var category in categories)
             {
-                var orderedSubCategories = category.SubCategories.OrderBy(c => c.FullName).ThenBy(c => c.CodeName).ToList();
+                var orderedSubCategories = category.SubCategories.Where(c => c.Status == CategoryStatus.Active).OrderBy(c => c.FullName).ThenBy(c => c.CodeName).ToList();
                 category.SubCategories.Clear();
                 foreach (var subCategory in orderedSubCategories)
                 {
@@ -63,7 +63,7 @@
                         {
                             standard.ParentCategoryCodeName = combinedCodeName;
                         }
-                        var combinedCategory = new Category(0, combinedCodeName, duplicateCategory.FullName, duplicateCategory.ParentCategoryCodeName, CategoryType.Combined, combinedSubcategories);
+                        var combinedCategory = new Category(0, combinedCodeName, duplicateCategory.FullName, duplicateCategory.ParentCategoryCodeName, CategoryType.Combined, CategoryStatus.Active, combinedSubcategories);
                         var currentIndex = category.SubCategories.IndexOf(duplicateCategory);
                         category.SubCategories.Insert(currentIndex, combinedCategory);
                         category.SubCategories.Remove(duplicateCategory);
@@ -118,7 +118,6 @@
         {
             var occupations = _referenceRepository.GetOccupations().ToList();
 
-            //TODO: We may be unnecessarily doing this twice (once in the repo and then again here)
             occupations.ForEach(o =>
             {
                 o.Frameworks.ToList().ForEach(f => f.ParentCategoryCodeName = o.CodeName);
@@ -130,14 +129,15 @@
         public IEnumerable<Sector> GetSectors()
         {
             var sectors = _referenceRepository.GetSectors();
-            var standards = _referenceRepository.GetStandards();
-
-            foreach (var sector in sectors)
-            {
-                sector.Standards = standards.Where(s => s.ApprenticeshipSectorId == sector.Id).ToList();
-            }
 
             return sectors;
+        }
+
+        public IEnumerable<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes()
+        {
+            var standardSubjectAreaTierOnes = _referenceRepository.GetStandardSubjectAreaTierOnes();
+
+            return standardSubjectAreaTierOnes;
         }
 
         public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)

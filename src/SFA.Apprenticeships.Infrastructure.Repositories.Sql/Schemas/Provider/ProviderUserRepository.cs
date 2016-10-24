@@ -105,7 +105,7 @@
             }
             if (!string.IsNullOrEmpty(searchParameters.Name))
             {
-                sql += and + "Fullname LIKE '%' + @Name + '%' ";
+                sql += and + "pu.Fullname LIKE '%' + @Name + '%' ";
                 and = "AND ";
             }
             if (!string.IsNullOrEmpty(searchParameters.Email))

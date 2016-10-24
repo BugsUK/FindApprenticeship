@@ -96,9 +96,9 @@
             employer.Should().NotBeNull();
 
             // Arrange.
-            var newName = new string(employer.Name.Reverse().ToArray());
+            var newName = new string(employer.FullName.Reverse().ToArray());
 
-            employer.Name = newName;
+            employer.FullName = newName;
 
             // Act.
             var updatedEmployer = _employerWriteRepository.Save(employer);
@@ -106,7 +106,7 @@
             // Assert.
             updatedEmployer.Should().NotBeNull();
             updatedEmployer.EmployerId.Should().Be(employer.EmployerId);
-            updatedEmployer.Name.Should().Be(newName);
+            updatedEmployer.FullName.Should().Be(newName);
         }
     }
 }

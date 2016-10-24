@@ -16,5 +16,7 @@
         IList<Sector> GetSectors();
 
         IList<ReleaseNote> GetReleaseNotes();
+
+        IList<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes();
     }
 }

@@ -12,6 +12,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using ViewModels.Employer;
     using ViewModels.VacancyPosting;
     using Web.Common.ViewModels;
 
@@ -74,8 +75,8 @@
 
             viewModel.ProviderSiteId.Should().Be(providerSiteId);
 
-            viewModel.EmployerResultsPage.Should().NotBeNull();
-            viewModel.EmployerResultsPage.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
+            viewModel.Employers.Should().NotBeNull();
+            viewModel.Employers.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
         }
 
         [TestCase(0)]
@@ -88,7 +89,7 @@
             {
                 FilterType = EmployerFilterType.Undefined,
                 ProviderSiteId = 42,
-                EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>
+                Employers = new PageableViewModel<EmployerViewModel>
                 {
                     CurrentPage = 3
                 }
@@ -108,7 +109,7 @@
             Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == searchViewModel.ProviderSiteId;
 
             MockProviderService.Setup(mock => mock
-                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
+                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.Employers.CurrentPage, PageSize))
                 .Returns(pageableVacancyParties);
 
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
@@ -127,8 +128,8 @@
 
             viewModel.ProviderSiteId.Should().Be(searchViewModel.ProviderSiteId);
 
-            viewModel.EmployerResultsPage.Should().NotBeNull();
-            viewModel.EmployerResultsPage.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
+            viewModel.Employers.Should().NotBeNull();
+            viewModel.Employers.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
         }
 
         [TestCase(0)]
@@ -142,7 +143,7 @@
                 FilterType = EmployerFilterType.NameOrLocation,
                 ProviderSiteId = 42,
                 Name = "a",
-                EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>
+                Employers = new PageableViewModel<EmployerViewModel>
                 {
                     CurrentPage = 3
                 }
@@ -162,7 +163,7 @@
             Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == searchViewModel.ProviderSiteId;
 
             MockProviderService.Setup(mock => mock
-                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
+                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.Employers.CurrentPage, PageSize))
                 .Returns(pageableVacancyParties);
 
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
@@ -181,8 +182,8 @@
 
             viewModel.ProviderSiteId.Should().Be(searchViewModel.ProviderSiteId);
 
-            viewModel.EmployerResultsPage.Should().NotBeNull();
-            viewModel.EmployerResultsPage.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
+            viewModel.Employers.Should().NotBeNull();
+            viewModel.Employers.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
 
             viewModel.FilterType.Should().Be(EmployerFilterType.NameOrLocation);
 
@@ -201,7 +202,7 @@
                 ProviderSiteId = 42,
                 Name = "a",
                 Location = "b",
-                EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>
+                Employers = new PageableViewModel<EmployerViewModel>
                 {
                     CurrentPage = 3
                 }
@@ -221,7 +222,7 @@
             Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == searchViewModel.ProviderSiteId;
 
             MockProviderService.Setup(mock => mock
-                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.EmployerResultsPage.CurrentPage, PageSize))
+                .GetVacancyOwnerRelationships(It.Is(matchingSearchRequest), searchViewModel.Employers.CurrentPage, PageSize))
                 .Returns(pageableVacancyParties);
 
             Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
@@ -240,8 +241,8 @@
 
             viewModel.ProviderSiteId.Should().Be(searchViewModel.ProviderSiteId);
 
-            viewModel.EmployerResultsPage.Should().NotBeNull();
-            viewModel.EmployerResultsPage.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
+            viewModel.Employers.Should().NotBeNull();
+            viewModel.Employers.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
 
             viewModel.FilterType.Should().Be(EmployerFilterType.NameAndLocation);
             viewModel.Name.Should().NotBeEmpty();
