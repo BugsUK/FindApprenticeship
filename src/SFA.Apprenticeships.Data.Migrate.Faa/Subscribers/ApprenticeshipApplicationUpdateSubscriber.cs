@@ -29,6 +29,10 @@
                         _apprenticeshipApplicationUpdater.Update(request.ApplicationGuid);
                         _logService.Debug($"Updated apprenticeship application with id {request.ApplicationGuid}");
                         break;
+                    case ApplicationUpdateType.Delete:
+                        _apprenticeshipApplicationUpdater.Delete(request.ApplicationGuid);
+                        _logService.Debug($"Deleted apprenticeship application with id {request.ApplicationGuid}");
+                        break;
                     default:
                         _logService.Warn($"Apprenticeship application update with id {request.ApplicationGuid} was of an unknown or unsupported type {request.ApplicationUpdateType}");
                         break;
