@@ -19,7 +19,8 @@
             {
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                 WorkingWeek = vacancy.WorkingWeek,
-                Wage = new WageViewModel(vacancy.Wage),
+                //this is set via automapper
+                //Wage = new WageViewModel(vacancy.Wage),
                 WageUnits = GetWageUnits(),
                 WageTextPresets = GetWageTextPresets(),
                 DurationType = vacancy.DurationType,

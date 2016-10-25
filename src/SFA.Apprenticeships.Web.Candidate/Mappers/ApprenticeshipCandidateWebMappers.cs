@@ -9,6 +9,7 @@
     using Domain.Entities.Communication;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
@@ -18,11 +19,15 @@
     using ViewModels.Home;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
+    using Common.Mappers.Resolvers;
 
     public class ApprenticeshipCandidateWebMappers : MapperEngine
     {
         public override void Initialise()
         {
+            Mapper.CreateMap<Wage, WageViewModel>().ConvertUsing<WageToWageViewModelConverter>();
+            Mapper.CreateMap<WageViewModel, Wage>().ConvertUsing<WageViewModelToWageConverter>();
+
             Mapper.CreateMap<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>()
                 .ConvertUsing<ApprenticeshipSearchResultsResolver>();
 
@@ -38,7 +43,8 @@
                     opt => opt.MapFrom(src => src.VacancyStatus))
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
-                .ForMember(d => d.Wage, opt => opt.MapFrom(src => new WageViewModel(src.Wage)))
+                .ForMember(d => d.Wage,
+                    opt => opt.MapFrom(src => src.Wage))
                 .ForMember(d => d.RealityCheck,
                     opt => opt.MapFrom(src => src.RealityCheck))
                 .ForMember(d => d.OtherInformation,
@@ -83,7 +89,7 @@
             Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>()
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
-                .ForMember(d => d.Wage, opt => opt.MapFrom(src => new WageViewModel(src.Wage)));
+                .ForMember(d => d.Wage, opt => opt.MapFrom(src => src.Wage));
 
             Mapper.CreateMap<Address, AddressViewModel>()
                 .ForMember(a => a.AddressLine1, opt => opt.Ignore())

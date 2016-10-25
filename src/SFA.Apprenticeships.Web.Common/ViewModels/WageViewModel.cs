@@ -4,7 +4,6 @@
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies;
-    using Microsoft.Ajax.Utilities;
 
     public class WageViewModel
     {
@@ -77,5 +76,29 @@
 
         [Display(Name = WageViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; set; }
+    }
+
+    public enum WageClassification
+    {
+        ApprenticeshipMinimum = 1,
+        NationalMinimum = 2,
+        Custom = 3,
+        LegacyText = 4,
+        PresetText = 5
+    }
+
+    public enum CustomWageType
+    {
+        NotApplicable = 0,
+        Fixed = 1,
+        Ranged = 2
+    }
+
+    public enum PresetText
+    {
+        NotApplicable = 0,
+        CompetitiveSalary = 1,
+        ToBeAgreedUponAppointment = 2,
+        Unwaged = 3
     }
 }

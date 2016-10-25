@@ -290,13 +290,11 @@
         [TestCase(WageType.Unwaged)]
         public void ShouldShowTextDropdownAndReasonBoxWhenChooseTextIsSelected(WageType wageType)
         {
-            var wage = new Wage(wageType, null, null, null, null, WageUnit.NotApplicable, null, null);
-
             var details = new FurtherVacancyDetails();
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel(wage))
+                .With(v => v.Wage, new WageViewModel() { Type = WageType.LegacyText, PresetText = wageType })
                 .With(v => v.WageTextPresets, ApprenticeshipVacancyConverter.GetWageTextPresets())
                 .Create();
 
@@ -313,13 +311,11 @@
         [TestCase(WageType.CustomRange)]
         public void ShouldShowFixedWageAndWageRangeRadiosWhenCustomWageIsSelected(WageType wageType)
         {
-            var wage = new Wage(wageType, null, null, null, null, WageUnit.NotApplicable, null, null);
-
             var details = new FurtherVacancyDetails();
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel(wage))
+                .With(v => v.Wage, new WageViewModel() { Type = WageType.Custom,  CustomType = wageType})
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -341,14 +337,12 @@
         [Test]
         public void ShouldShowFixedWageInputWhenFixedWageIsSelected()
         {
-            var wage = new Wage(WageType.Custom, 300, null, null, null, WageUnit.Weekly, null, null);
-
             var details = new FurtherVacancyDetails();
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
                 .With(v => v.WageUnits, ApprenticeshipVacancyConverter.GetWageUnits())
-                .With(v => v.Wage, new WageViewModel(wage))
+                .With(v => v.Wage, new WageViewModel() {Type = WageType.Custom, CustomType = WageType.Custom, Amount = 300, Unit = WageUnit.Weekly})
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -360,20 +354,18 @@
             view.GetElementbyId("Wage_Amount").Attributes["value"].Value.Should().Be("300");
             view.GetElementbyId("Wage_Unit").Should().NotBeNull();
             view.GetElementbyId("Wage_Unit")
-                .ChildNodes.Any(cn => cn.Attributes["value"].Value == wage.Unit.ToString()).Should().BeTrue();
+                .ChildNodes.Any(cn => cn.Attributes["value"].Value == WageUnit.Weekly.ToString()).Should().BeTrue();
         }
 
 
         [Test]
         public void ShouldShowWageRangeInputsWhenWageRangeIsSelected()
         {
-            var wage = new Wage(WageType.CustomRange, null, 200, 500, null, WageUnit.Weekly, null, null);
-
             var details = new FurtherVacancyDetails();
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel(wage))
+                .With(v => v.Wage, new WageViewModel() {Type = WageType.Custom, CustomType = WageType.CustomRange, AmountLowerBound = 200, AmountUpperBound = 500, Unit = WageUnit.Weekly })
                 .With(v => v.WageUnits, ApprenticeshipVacancyConverter.GetWageUnits())
                 .Create();
 
@@ -387,7 +379,7 @@
             view.GetElementbyId("Wage_AmountUpperBound").Attributes["value"].Value.Should().Be("500");
             view.GetElementbyId("Wage_RangeUnit").Should().NotBeNull();
             view.GetElementbyId("Wage_RangeUnit")
-                .ChildNodes.Any(cn => cn.Attributes["value"].Value == wage.Unit.ToString()).Should().BeTrue();
+                .ChildNodes.Any(cn => cn.Attributes["value"].Value == WageUnit.Weekly.ToString()).Should().BeTrue();
         }
     }
 }

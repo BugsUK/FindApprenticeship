@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
@@ -94,26 +95,40 @@
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
+            var wageViewModel = new WageViewModel()
+            {
+                Type = WageType.Custom,
+                Amount = 450,
+                AmountLowerBound = null,
+                AmountUpperBound = null,
+                Text = null,
+                Unit = WageUnit.Monthly,
+                HoursPerWeek = 37.5m
+            };
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = WageType.Custom, Amount = 450, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.Monthly, HoursPerWeek = 37.5m },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
                     PossibleStartDate = new DateViewModel(possibleStartDate)
                 },
-                VacancyReferenceNumber = vacancyReferenceNumber
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                Wage = wageViewModel
             };
 
+            var wage = new Wage(WageType.Custom, 450, null, null, null, WageUnit.Monthly, 37.5m, null);
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Wage = new Wage(WageType.NationalMinimum, null, null, null, "Legacy text", WageUnit.Weekly, 30, null)
             };
+
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
+            MockMapper.Setup(m => m.Map<WageViewModel, Wage>(It.IsAny<WageViewModel>())).Returns(wage);
+            MockMapper.Setup(m => m.Map<Wage, WageViewModel>(It.IsAny<Wage>())).Returns(wageViewModel);
             MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
 

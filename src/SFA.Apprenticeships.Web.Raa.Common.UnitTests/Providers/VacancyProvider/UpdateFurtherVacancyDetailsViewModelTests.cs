@@ -43,6 +43,16 @@
                 new Fixture().Build<Sector>().Create()
             };
 
+            var wage = new WageViewModel()
+            {
+                Type = WageType.Custom,
+                Amount = null,
+                AmountLowerBound = null,
+                AmountUpperBound = null,
+                Text = null,
+                Unit = WageUnit.NotApplicable,
+                HoursPerWeek = null
+            };
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 DurationComment = aString,
@@ -53,7 +63,7 @@
                 },
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 AutoSaveTimeoutInSeconds = autoSaveTimeoutInSeconds,
-                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+                Wage = wage
             };
 
             var vacancy = new Fixture().Build<Vacancy>()
@@ -86,6 +96,7 @@
             vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
 
             var mapper = new Mock<IMapper>();
+            mapper.Setup(m => m.Map<Wage, WageViewModel>(It.IsAny<Wage>())).Returns(wage);
             mapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(It.IsAny<Vacancy>()))
                 .Returns((Vacancy av) => viewModel);
 

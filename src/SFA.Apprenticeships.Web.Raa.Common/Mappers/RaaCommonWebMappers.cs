@@ -13,6 +13,7 @@
     using Resolvers;
     using System;
     using System.Collections.Generic;
+    using Domain.Entities.Vacancies;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -20,8 +21,10 @@
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
+    using Web.Common.Mappers.Resolvers;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class RaaCommonWebMappers : MapperEngine
     {
@@ -89,6 +92,9 @@
                 .ForMember(dest => dest.Sectors, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
                 .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
+
+            Mapper.CreateMap<Wage, WageViewModel>().ConvertUsing<WageToWageViewModelConverter>();
+            Mapper.CreateMap<WageViewModel, Wage>().ConvertUsing<WageViewModelToWageConverter>();
 
             Mapper.CreateMap<Vacancy, FurtherVacancyDetailsViewModel>().ConvertUsing<VacancyToFurtherVacancyDetailsViewModelConverter>();
 
