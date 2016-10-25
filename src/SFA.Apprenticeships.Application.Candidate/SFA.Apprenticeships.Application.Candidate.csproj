@@ -167,8 +167,6 @@
     <Compile Include="Strategies\UnsubscribeStrategy.cs" />
     <Compile Include="Strategies\UpdateUsernameStrategy.cs" />
     <Compile Include="Strategies\VerifyMobileStrategy.cs" />
-    <Compile Include="SubmitApprenticeshipApplicationRequest.cs" />
-    <Compile Include="SubmitTraineeshipApplicationRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
