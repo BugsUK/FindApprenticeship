@@ -42,6 +42,12 @@ WHERE AllocatedApplicationId IN
 (SELECT ApplicationId FROM Application WHERE CandidateId IN @CandidateIds)";
             connection.Execute(subVacancySql, new {candidateIds});
 
+            const string schoolAttendedSql =
+@"DELETE FROM SchoolAttended 
+WHERE CandidateId IN 
+(SELECT ApplicationId FROM Application WHERE CandidateGuid IN @CandidateIds)";
+            connection.Execute(schoolAttendedSql, new { candidateIds });
+
             const string applicationHistorySql = 
 @"DELETE FROM ApplicationHistory 
 WHERE ApplicationId IN 
