@@ -15,7 +15,7 @@
 );
 
 GO
-CREATE NONCLUSTERED INDEX [idx_Person_FirstName] 
+CREATE NONCLUSTERED INDEX [nci_wi_Person_D958DE5AC11A2A5D45EC53330A964D4D] 
 ON [dbo].[Person]([FirstName] ASC)
 INCLUDE ([MiddleNames], [PersonId], [Surname]) 
 
