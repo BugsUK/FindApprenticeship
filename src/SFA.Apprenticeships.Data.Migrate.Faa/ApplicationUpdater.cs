@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces;
@@ -40,11 +41,42 @@
             _schoolAttendedRepository = new SchoolAttendedRepository(_targetDatabase);
         }
 
+        public void Create(Guid applicationGuid)
+        {
+            var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
+            var candidateGuid = application.CandidateId;
+            var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] { candidateGuid });
+            if (!candidateIds.ContainsKey(candidateGuid))
+            {
+                _logService.Warn($"Candidate {candidateGuid} for application {applicationGuid} could not be found");
+                return;
+            }
+
+            var destinationCandidateId = candidateIds[candidateGuid];
+
+            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(application, destinationCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>(), new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
+
+            Create(applicationWithHistory);
+        }
+
+        private void Create(ApplicationWithHistory applicationWithHistory)
+        {
+            //Insert existing application
+            _targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.Application);
+
+            //Insert new application history records
+            foreach (var applicationHistory in applicationWithHistory.ApplicationHistory)
+            {
+                _targetDatabase.Insert(applicationHistory);
+            }
+
+            //Insert school attended
+            _targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.SchoolAttended);
+        }
+
         public void Update(Guid applicationGuid)
         {
             var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
-
-            _logService.Debug($"Updating application {application.Id} to status {application.Status} with notes {application.Notes}");
 
             var candidateGuid = application.CandidateId;
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] {candidateGuid});
@@ -69,8 +101,6 @@
 
         private void Update(ApplicationWithHistory applicationWithHistory)
         {
-            _logService.Debug($"Updating database application {applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationGuid} to status {applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationStatusTypeId} with notes {applicationWithHistory.ApplicationWithSubVacancy.Application.NextActionOther}");
-
             //update existing application
             _targetDatabase.UpdateSingle(applicationWithHistory.ApplicationWithSubVacancy.Application);
             
@@ -87,6 +117,7 @@
                 _targetDatabase.UpdateSingle(applicationHistory);
             }
         }
+
         public void Delete(Guid applicationGuid)
         {
             var destinationApplicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(new[] {applicationGuid});
