@@ -206,7 +206,7 @@
                     LEFT OUTER JOIN VacancyReferralComments PER ON PER.VacancyId = v.VacancyId AND PER.FieldTypeId = dbo.GetCommentFieldId('PER')
                     LEFT OUTER JOIN VacancyReferralComments PSD ON PSD.VacancyId = v.VacancyId AND PSD.FieldTypeId = dbo.GetCommentFieldId('PSD')
                     LEFT OUTER JOIN VacancyReferralComments APO ON APO.VacancyId = v.VacancyId AND APO.FieldTypeId = dbo.GetCommentFieldId('APO')
-                    LEFT OUTER JOIN VacancyReferralComments SDE ON APO.VacancyId = v.VacancyId AND APO.FieldTypeId = dbo.GetCommentFieldId('SDE')
+                    LEFT OUTER JOIN VacancyReferralComments SDE ON SDE.VacancyId = v.VacancyId AND SDE.FieldTypeId = dbo.GetCommentFieldId('SDE')
                     LEFT OUTER JOIN VacancyReferralComments [SID] ON [SID].VacancyId = v.VacancyId AND [SID].FieldTypeId = dbo.GetCommentFieldId('SID')
                     LEFT OUTER JOIN VacancyReferralComments IOI ON IOI.VacancyId = v.VacancyId AND IOI.FieldTypeId = dbo.GetCommentFieldId('IOI')
                     LEFT OUTER JOIN VacancyReferralComments TRP ON TRP.VacancyId = v.VacancyId AND TRP.FieldTypeId = dbo.GetCommentFieldId('TRP')
@@ -939,13 +939,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             public string Title { get; private set; }
 
             public bool? OfflineVacancy { get; private set; }
-        }
-
-        private class VacancyPlus : Vacancy
-        {
-            public DateTime? DateFirstSubmitted { get; set; }
-            public DateTime? DateSubmitted { get; set; }
-            public DateTime? DateQAApproved { get; set; }
         }
     }
 }
