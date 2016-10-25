@@ -545,10 +545,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     LEFT OUTER JOIN	RegionalTeams rt
                     ON		rt.Id = t.RegionalTeam_Id
 
-                    WHERE	v.VacancyID IN @vacancyIds
-                    AND     r.ProviderSiteRelationshipTypeId = 1
+                    WHERE	r.ProviderSiteRelationshipTypeId = 1
                     AND     v.VacancyStatusId IN @VacancyStatuses
-                    AND     af.CodeName = @FrameworkCodeName
+                    {(!string.IsNullOrEmpty(query.FrameworkCodeName) ? "AND     af.CodeName = @FrameworkCodeName" : "")}
                     {(query.EditedInRaa ? "AND     v.EditedInRaa = 1" : "")}
                     {(query.LiveDate.HasValue ? "AND     dbo.GetLiveDate(v.VacancyId) >= @LiveDate" : "")}
                     {(query.LatestClosingDate.HasValue ? "AND       v.ApplicationClosingDate <= @LatestClosingDate" : "")}
