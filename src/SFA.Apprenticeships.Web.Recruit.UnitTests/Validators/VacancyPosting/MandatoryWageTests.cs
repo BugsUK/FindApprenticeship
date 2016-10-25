@@ -145,5 +145,58 @@
             validate.ShouldNotThrow();
             aggregateValidate.ShouldNotThrow();
         }
+
+
+        //[TestCase(WageType.Custom, WageType.Custom, true)]
+        //[TestCase(WageType.Custom, WageType.CustomRange, true)]
+        //[TestCase(WageType.Custom, WageType.ApprenticeshipMinimum, false)]
+        //[TestCase(WageType.Custom, WageType.CompetitiveSalary, false)]
+        //[TestCase(WageType.Custom, WageType.LegacyText, false)]
+        //[TestCase(WageType.Custom, WageType.LegacyWeekly, false)]
+        //[TestCase(WageType.Custom, WageType.NationalMinimum, false)]
+        //[TestCase(WageType.Custom, WageType.ToBeAgreedUponAppointment, false)]
+        //[TestCase(WageType.Custom, WageType.Unwaged, false)]
+        public void CustomTypeMustBeSetWhenCustomWageTypeIsSelected(WageType selectedType, WageType selectedCustomType, bool expectValid)
+        {
+            //var viewModel = new FurtherVacancyDetailsViewModel
+            //{
+            //    Wage = new WageViewModel() { Type = selectedType, CustomType = selectedCustomType, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+            //};
+            //var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            //var response = _validator.Validate(viewModel, ruleSet: RuleSet);
+            //_aggregateValidator.Validate(vacancyViewModel);
+            //var aggregateResponse = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+
+            //if (expectValid)
+            //{
+            //    _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.CustomType, viewModel, RuleSet);
+            //    _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.CustomType, vacancyViewModel);
+            //    _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.CustomType, vacancyViewModel, RuleSet);
+            //}
+            //else
+            //{
+            //    _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.CustomType, viewModel, RuleSet);
+            //    _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.CustomType, vacancyViewModel);
+            //    _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.CustomType, vacancyViewModel, RuleSet);
+
+            //    var error = response.Errors.SingleOrDefault(e => e.PropertyName == "Wage.CustomType");
+            //    error.Should().NotBeNull();
+            //    error?.ErrorMessage.Should().Be("You must select a wage type");
+            //    var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.Wage.CustomType");
+            //    aggregateError.Should().NotBeNull();
+            //    aggregateError?.ErrorMessage.Should().Be("You must select a wage type");
+            //}
+        }
+
+        public void AmountMustBeSetWhenFixedWageTypeIsSelected() {}
+        
+        public void AmountRangeMustBeSetWhenWageRangeTypeIsSelected() { }
+        
+        public void AmountLowerMustBeGreaterThanMinimumWage() { }
+        
+        public void PresetTextMustBeSetWhenLegacyTextTypeIsSelected() { }
+        
+        public void ReasonForTypeMustBeSetWhenPresetTextTypeIsSelected() { }
     }
 }
