@@ -44,6 +44,9 @@
         public void Update(Guid applicationGuid)
         {
             var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
+
+            _logService.Debug($"Updating application {application.Id} to status {application.Status} with notes {application.Notes}");
+
             var candidateGuid = application.CandidateId;
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] {candidateGuid});
             if (!candidateIds.ContainsKey(candidateGuid))
@@ -67,6 +70,8 @@
 
         public void Update(ApplicationWithHistory applicationWithHistory)
         {
+            _logService.Debug($"Updating database application {applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationGuid} to status {applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationStatusTypeId} with notes {applicationWithHistory.ApplicationWithSubVacancy.Application.NextActionOther}");
+
             //update existing application
             _targetDatabase.UpdateSingle(applicationWithHistory.ApplicationWithSubVacancy.Application);
             
