@@ -29,7 +29,6 @@
             _logService = logService;
 
             var configuration = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
-            var sourceDatabase = new GetOpenConnectionFromConnectionString(configuration.SourceConnectionString);
             _targetDatabase = new GetOpenConnectionFromConnectionString(configuration.TargetConnectionString);
 
             _applicationMappers = new ApplicationMappers(_logService);
@@ -68,7 +67,7 @@
             Update(applicationWithHistory);
         }
 
-        public void Update(ApplicationWithHistory applicationWithHistory)
+        private void Update(ApplicationWithHistory applicationWithHistory)
         {
             _logService.Debug($"Updating database application {applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationGuid} to status {applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationStatusTypeId} with notes {applicationWithHistory.ApplicationWithSubVacancy.Application.NextActionOther}");
 
@@ -86,6 +85,19 @@
             foreach (var applicationHistory in applicationWithHistory.ApplicationHistory.Where(a => a.ApplicationHistoryId != 0))
             {
                 _targetDatabase.UpdateSingle(applicationHistory);
+            }
+        }
+        public void Delete(Guid applicationGuid)
+        {
+            var destinationApplicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(new[] {applicationGuid});
+            if (destinationApplicationIds.ContainsKey(applicationGuid))
+            {
+                var applicationId = destinationApplicationIds[applicationGuid].ApplicationId;
+
+                _targetDatabase.MutatingQuery<object>("DELETE FROM SubVacancy WHERE ApplicationId = @applicationId", new { applicationId });
+                _targetDatabase.MutatingQuery<object>("DELETE FROM SchoolAttended WHERE ApplicationId = @applicationId", new { applicationId });
+                _targetDatabase.MutatingQuery<object>("DELETE FROM ApplicationHistory WHERE ApplicationId = @applicationId", new { applicationId });
+                _targetDatabase.MutatingQuery<object>("DELETE FROM Application WHERE ApplicationId = @applicationId", new { applicationId });
             }
         }
     }

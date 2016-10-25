@@ -5,5 +5,6 @@
     public interface IApprenticeshipApplicationUpdater
     {
         void Update(Guid applicationGuid);
+        void Delete(Guid applicationGuid);
     }
 }
