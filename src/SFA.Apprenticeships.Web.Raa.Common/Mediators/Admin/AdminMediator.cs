@@ -572,7 +572,7 @@
                                                 StandardId = s.Id,
                                                 StandardSectorName = ss.Name,
                                                 StandardName = s.Name
-                                            })));
+                                            }))).OrderBy(ss => ss.StandardName);
 
                 var bytes = GetCsvBytes<StandardSubjectAreaTierOneViewModel, StandardSubjectAreaTierOneClassMap>(standardSubjectAreaTierOneResult, "");
                 return GetMediatorResponse(AdminMediatorCodes.GetStandardsBytes.Ok, bytes);

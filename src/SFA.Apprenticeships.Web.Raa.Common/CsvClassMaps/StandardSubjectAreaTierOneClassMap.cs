@@ -7,10 +7,10 @@
     {
         public StandardSubjectAreaTierOneClassMap()
         {
-            Map(m => m.StandardId);
+            Map(m => m.StandardId).Name("ID");
             Map(m => m.SSAT1Name).Name("SSAT1");
-            Map(m => m.StandardSectorName).Name("StandardSectorName");
-            Map(m => m.StandardName).Name("StandardName");
+            Map(m => m.StandardSectorName).Name("Standard Sector");
+            Map(m => m.StandardName).Name("Standard");
         }
     }
 }
