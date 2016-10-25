@@ -19,17 +19,32 @@
         [ServiceBusTopicSubscription(TopicName = "TraineeshipApplicationUpdate")]
         public ServiceBusMessageStates Consume(TraineeshipApplicationUpdate request)
         {
-            _logService.Debug($"Updating traineeship application with id {request.ApplicationGuid}");
+            _logService.Debug($"Processing traineeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}");
 
             try
             {
-                _traineeshipApplicationUpdater.Update(request.ApplicationGuid);
-
-                _logService.Debug($"Updated traineeship application with id {request.ApplicationGuid}");
+                switch (request.ApplicationUpdateType)
+                {
+                    case ApplicationUpdateType.Create:
+                        _traineeshipApplicationUpdater.Create(request.ApplicationGuid);
+                        _logService.Debug($"Created traineeship application with id {request.ApplicationGuid}");
+                        break;
+                    case ApplicationUpdateType.Update:
+                        _traineeshipApplicationUpdater.Update(request.ApplicationGuid);
+                        _logService.Debug($"Updated traineeship application with id {request.ApplicationGuid}");
+                        break;
+                    case ApplicationUpdateType.Delete:
+                        _traineeshipApplicationUpdater.Delete(request.ApplicationGuid);
+                        _logService.Debug($"Deleted traineeship application with id {request.ApplicationGuid}");
+                        break;
+                    default:
+                        _logService.Warn($"Traineeship application update with id {request.ApplicationGuid} was of an unknown or unsupported type {request.ApplicationUpdateType}");
+                        break;
+                }
             }
             catch (Exception ex)
             {
-                _logService.Error($"Failed to update traineeship application with id {request.ApplicationGuid}", ex);
+                _logService.Error($"Failed to process traineeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}", ex);
             }
 
             return ServiceBusMessageStates.Complete;
