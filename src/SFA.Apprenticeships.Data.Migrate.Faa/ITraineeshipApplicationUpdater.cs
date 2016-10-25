@@ -4,6 +4,8 @@
 
     public interface ITraineeshipApplicationUpdater
     {
+        void Create(Guid applicationGuid);
         void Update(Guid applicationGuid);
+        void Delete(Guid applicationGuid);
     }
 }
