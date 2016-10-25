@@ -10,6 +10,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     [System.ComponentModel.DataAnnotations.Schema.Table("dbo.Vacancy")]
     public class Vacancy
     {
+        public DateTime DateQAApproved;
+        public DateTime? DateFirstSubmitted { get; set; }
+        public DateTime? DateSubmitted { get; set; }
+
         [Write(false)]
         public string AdditionalLocationInformation { get; set; }
 
@@ -250,7 +254,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Column(TypeName = "money")]
         public decimal? WeeklyWage { get; set; }
 
-        [Write(false)]
+        
         public string WorkingWeek { get; set; }
         [Write(false)]
         public string WorkingWeekComment { get; set; }
