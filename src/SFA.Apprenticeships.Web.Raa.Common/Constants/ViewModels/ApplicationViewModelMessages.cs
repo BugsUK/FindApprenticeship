@@ -23,8 +23,7 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The candidate application feedback " + Whitelists.FreetextWhitelist.ErrorText;
             public const string LabelText = " ";
-            public const string BulkRequiredErrorText =
-                "Please provide feedback to the candidates for why they were unsuccessful";
+            public const string BulkRequiredErrorText = "Please provide feedback to the candidates for why they were unsuccessful";
         }
     }
 }

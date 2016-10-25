@@ -15,6 +15,5 @@
         public DateTime DateApplied { get; set; }
         public ApplicationStatuses Status { get; set; }
         public string AnonymousLinkData { get; set; }
-        public bool IsSelected { get; set; }
     }
 }

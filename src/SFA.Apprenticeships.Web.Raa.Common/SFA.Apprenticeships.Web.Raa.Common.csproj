@@ -224,8 +224,8 @@
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
-    <Compile Include="Validators\VacancyStatus\BulkApplicationsRejectViewModelMessages.cs" />
-    <Compile Include="Validators\VacancyStatus\BulkApplicationsRejectViewModelServerValidator.cs" />
+    <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelMessages.cs" />
+    <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelValidator.cs" />
     <Compile Include="ViewModels\Admin\FrameworkViewModel.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />
     <Compile Include="Constants\Pages\TransferVacanciesMessages.cs" />
@@ -277,8 +277,6 @@
     <Compile Include="ViewModels\Api\ApiUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserSearchViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserViewModel.cs" />
-    <Compile Include="ViewModels\Application\BulkApplicationsRejectViewModel.cs" />
-    <Compile Include="ViewModels\Application\BulkRejectApplicationViewModel.cs" />
     <Compile Include="ViewModels\Application\Apprenticeship\ConfirmationStatusViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserSearchViewModel.cs" />

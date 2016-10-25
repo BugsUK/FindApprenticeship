@@ -84,15 +84,21 @@
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.RevertToInProgress.Ok";
         }
 
-        public static class BulkDeclineCandidatesViewModel
-        {
-            public const string Ok = "ApprenticeshipApplicationMediatorCodes.BulkDeclineCandidatesViewModel.Ok";
-            public const string OutstandingActions = "ApprenticeshipApplicationMediatorCodes.BulkDeclineCandidatesViewModel.OutstandingActions";
-        }
-
         public static class GetBulkDeclineCandidatesViewModel
         {
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.BulkApplicationsReject.Ok";
+        }
+
+        public static class ConfirmBulkDeclineCandidates
+        {
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.FailedValidation";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.Ok";
+        }
+
+        public static class SendBulkUnsuccessfulDecision
+        {
+            public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.FailedValidation";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.Ok";
         }
     }
 }

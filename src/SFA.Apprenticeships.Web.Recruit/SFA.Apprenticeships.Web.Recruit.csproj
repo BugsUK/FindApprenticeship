@@ -902,6 +902,7 @@
     <Content Include="Views\Application\BulkDeclineCandidates.cshtml" />
     <Content Include="Views\Application\ConfirmBulkUnsuccessfulDecision.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_BulkUploadVacancyLinks.cshtml" />
+    <Content Include="Views\Application\SentDecisionConfirmation.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -933,7 +934,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

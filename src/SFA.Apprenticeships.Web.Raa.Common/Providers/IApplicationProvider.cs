@@ -30,13 +30,7 @@
 
         void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
         ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelection);
-        BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(int vacancyReferenceNumber);
-
-        BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel);
-
-        ApprenticeshipApplicationDetail GetApprenticeshipApplicationDetails(string applicationId);
-        BulkApplicationsRejectViewModel GetBulkApplicationsRejectViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
-        BulkApplicationsRejectViewModel SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
-
+        BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
+        BulkDeclineCandidatesViewModel  SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
     }
 }

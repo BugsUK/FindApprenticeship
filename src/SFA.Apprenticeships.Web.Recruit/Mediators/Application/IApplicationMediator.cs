@@ -9,11 +9,8 @@
         MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch);
         MediatorResponse<ShareApplicationsViewModel> ShareApplications(int vacancyReferenceNumber);
         MediatorResponse<ShareApplicationsViewModel> ShareApplications(ShareApplicationsViewModel vacancyReferenceNumber, UrlHelper urlHelper);
-
-        MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(int vacancyReferenceNumber);
-        MediatorResponse<BulkDeclineCandidatesViewModel> BulkResponseApplications(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
-        MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel);
-        BulkApplicationsRejectViewModel GetApplicationViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel);
+        MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
+        MediatorResponse<BulkDeclineCandidatesViewModel> ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
+        MediatorResponse<BulkDeclineCandidatesViewModel> SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
     }
-
 }

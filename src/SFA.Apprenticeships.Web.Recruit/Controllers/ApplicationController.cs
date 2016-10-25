@@ -12,6 +12,8 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using Common.Attributes;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -80,28 +82,55 @@
         }
 
         [HttpGet]
-        public ActionResult BulkDeclineCandidates(int vacancyReferenceNumber)
+        public ActionResult BulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var response = _applicationMediator.GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
+            var response = _applicationMediator.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
             return View(response.ViewModel);
         }
 
         [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "BulkSearchApplicationsAction")]
+        public ActionResult BulkFilterApplicationsAll(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.FilterType = VacancyApplicationsFilterTypes.All;
+            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "BulkSearchApplicationsAction")]
+        public ActionResult BulkFilterApplicationsNew(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.FilterType = VacancyApplicationsFilterTypes.New;
+            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "BulkSearchApplicationsAction")]
+        public ActionResult BulkFilterApplicationsInProgress(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.FilterType = VacancyApplicationsFilterTypes.InProgress;
+            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "BulkOrderApplicationsAction")]
+        public ActionResult BulkOrderApplicationsLastName(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldLastName;
+            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending; ;
+            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmBulkDeclineCandidatesAction")]
         public ActionResult ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var selectedApplications = bulkDeclineCandidatesViewModel.SelectedApplicationIds?.ToList();
-            BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel = new BulkApplicationsRejectViewModel
-            {
-                ApplicationIds = selectedApplications,
-                VacancyReferenceNumber = bulkDeclineCandidatesViewModel.VacancyReferenceNumber
-            };
-            var response = _applicationMediator.BulkResponseApplications(bulkApplicationsRejectViewModel);
+            var response = _applicationMediator.ConfirmBulkDeclineCandidates(bulkDeclineCandidatesViewModel);
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
-                    var bulkResponseViewModel = _applicationMediator.GetApplicationViewModel(bulkApplicationsRejectViewModel);
-                    return View("ConfirmBulkUnsuccessfulDecision", bulkResponseViewModel);
-                case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.FailedValidation:
+                case ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.Ok:
+                    return View("ConfirmBulkUnsuccessfulDecision", response.ViewModel);
+                case ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View("BulkDeclineCandidates", response.ViewModel);
                 default:
@@ -109,11 +138,31 @@
             }
         }
 
-        [HttpGet]
-        public ActionResult BulkDeclineCandidatesSearch(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel)
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "EditBulkDeclineCandidatesAction")]
+        public ActionResult EditBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var response = _applicationMediator.GetBulkDeclineCandidatesViewModel(vacancyApplicationsSearchViewModel);
-            return View("BulkDeclineCandidates", response.ViewModel);
+            return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SendBulkUnsuccessfulDecisionAction")]
+        public ActionResult SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            bulkDeclineCandidatesViewModel.UnSuccessfulReasonRequired = true;
+            var response = _applicationMediator.SendBulkUnsuccessfulDecision(bulkDeclineCandidatesViewModel);
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.Ok:
+                {
+                    return View("SentDecisionConfirmation", response.ViewModel);
+                }
+                case ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("ConfirmBulkUnsuccessfulDecision", response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
     }
 }

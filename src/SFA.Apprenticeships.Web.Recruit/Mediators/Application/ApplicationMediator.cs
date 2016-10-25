@@ -21,18 +21,16 @@
         private readonly ShareApplicationsViewModelValidator _shareApplicationsViewModelValidator;
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
-        private readonly BulkApplicationsRejectViewModelServerValidator _bulkApplicationsRejectViewModelServerValidator;
+        private readonly BulkDeclineCandidatesViewModelServerValidator _bulkDeclineCandidatesViewModelServerValidator = new BulkDeclineCandidatesViewModelServerValidator();
 
         public ApplicationMediator(IApplicationProvider applicationProvider,
             ShareApplicationsViewModelValidator shareApplicationsViewModelValidator,
-            IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService,
-            BulkApplicationsRejectViewModelServerValidator bulkApplicationsRejectViewModelServerValidator)
+            IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
         {
             _applicationProvider = applicationProvider;
             _shareApplicationsViewModelValidator = shareApplicationsViewModelValidator;
             _encryptionService = encryptionService;
             _dateTimeService = dateTimeService;
-            _bulkApplicationsRejectViewModelServerValidator = bulkApplicationsRejectViewModelServerValidator;
         }
 
         public MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
@@ -80,38 +78,40 @@
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
         }
 
-        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
+        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var model = _applicationProvider.GetBulkDeclineCandidatesViewModel(vacancyReferenceNumber);
-            return new MediatorResponse<BulkDeclineCandidatesViewModel>
-            {
-                ViewModel = model,
-                Code = ApprenticeshipApplicationMediatorCodes.BulkDeclineCandidatesViewModel.Ok,
-            };
-        }
-
-        public MediatorResponse<BulkDeclineCandidatesViewModel> BulkResponseApplications(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
-        {
-            BulkDeclineCandidatesViewModel viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkApplicationsRejectViewModel.VacancyReferenceNumber);
-            viewModel.SelectedApplicationIds = bulkApplicationsRejectViewModel.ApplicationIds;
-            var validationResult = _bulkApplicationsRejectViewModelServerValidator.Validate(bulkApplicationsRejectViewModel);
-
-            if (!validationResult.IsValid)
-            {
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.FailedValidation, viewModel, validationResult);
-            }
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok, viewModel);
-        }
-
-        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel)
-        {
-            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(vacancyApplicationsSearchViewModel);
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.GetBulkDeclineCandidatesViewModel.Ok, viewModel);
         }
 
-        public BulkApplicationsRejectViewModel GetApplicationViewModel(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
+        public MediatorResponse<BulkDeclineCandidatesViewModel> ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            return _applicationProvider.GetBulkApplicationsRejectViewModel(bulkApplicationsRejectViewModel);
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+
+            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(bulkDeclineCandidatesViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.FailedValidation, viewModel, validationResult);
+            }
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.Ok, viewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+
+            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(bulkDeclineCandidatesViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.FailedValidation, viewModel, validationResult);
+            }
+
+            viewModel = _applicationProvider.SendBulkUnsuccessfulDecision(viewModel);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.Ok, viewModel);
         }
     }
 }

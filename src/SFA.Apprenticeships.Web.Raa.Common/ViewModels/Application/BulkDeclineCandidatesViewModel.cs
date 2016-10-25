@@ -3,20 +3,33 @@
     using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
-    using Web.Common.ViewModels;
+    using System.ComponentModel.DataAnnotations;
+    using Constants.ViewModels;
+    using Validators.VacancyStatus;
+    using FluentValidation.Attributes;
 
+    [Validator(typeof(BulkDeclineCandidatesViewModelClientValidator))]
     public class BulkDeclineCandidatesViewModel
     {
-        public int VacancyId;
-        public string VacancyTitle { get; set; }
-        public string EmployerName { get; set; }
-        public int VacancyReferenceNumber { get; set; }
-        public VacancyType VacancyType { get; set; }
-        public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummariesViewModel { get; set; }
         public VacancyApplicationsSearchViewModel VacancyApplicationsSearch { get; set; }
+
+        public VacancyType VacancyType { get; set; }
+
+        public string Title { get; set; }
+
+        public string EmployerName { get; set; }
+
         public int NewApplicationsCount { get; set; }
+
         public int InProgressApplicationsCount { get; set; }
-        public bool IsSelected { get; set; }
+
+        public IEnumerable<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
+
         public IEnumerable<Guid> SelectedApplicationIds { get; set; }
+
+        [Display(Name = ApplicationViewModelMessages.UnSuccessfulReason.LabelText)]
+        public string UnSuccessfulReason { get; set; }
+
+        public bool UnSuccessfulReasonRequired { get; set; }
     }
 }

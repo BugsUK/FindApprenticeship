@@ -287,27 +287,6 @@
             }
         }
 
-        [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "SendBulkUnsuccessfulDecision")]
-        public ActionResult SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkDeclineCandidatesViewModel)
-        {
-            var response = _apprenticeshipApplicationMediator.SendBulkUnsuccessfulDecision(bulkDeclineCandidatesViewModel);
-            var appCount = response.ViewModel.ApplicationIds.Count;
-            ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
-            {
-                CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + appCount + " candidates",
-                VacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
-            };
-            switch (response.Code)
-            {
-                case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
-                    return View("SentDecisionConfirmation", confirmationStatusViewModel);
-
-                default:
-                    throw new InvalidMediatorCodeException(response.Code);
-            }
-        }
-
         [HttpGet]
         public ActionResult ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {

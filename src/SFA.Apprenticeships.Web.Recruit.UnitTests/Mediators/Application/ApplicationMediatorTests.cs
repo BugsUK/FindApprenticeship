@@ -53,7 +53,7 @@
             parameters.SelectedApplicationIds = new List<Guid>() { applicationGuid };
             parameters.ApplicationSummaries = new List<ApplicationSummaryViewModel>() { applicationSummary };
 
-            var mediator = new ApplicationMediator(mockApplicationProvider.Object, mockShareApplicationsViewModelValidator.Object, mockEncryptionService.Object, mockDateTimeService.Object, null);
+            var mediator = new ApplicationMediator(mockApplicationProvider.Object, mockShareApplicationsViewModelValidator.Object, mockEncryptionService.Object, mockDateTimeService.Object);
 
             //Act
             mediator.ShareApplications(parameters, mockUrlHelper.Object);

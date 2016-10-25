@@ -84,124 +84,40 @@
             return viewModel;
         }
 
-        public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearchViewModel)
+        public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyApplicationsSearchViewModel.VacancyReferenceNumber);
-            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
-            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
+            var vacancyApplicationsViewModel = GetVacancyApplicationsViewModel(bulkDeclineCandidatesViewModel.VacancyApplicationsSearch, false);
+
             var viewModel = new BulkDeclineCandidatesViewModel
             {
-                EmployerName = employer.FullName,
-                VacancyType = vacancy.VacancyType,
-                VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
-                VacancyTitle = vacancy.Title,
-                VacancyId = vacancy.VacancyId
+                VacancyApplicationsSearch = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch,
+                VacancyType = vacancyApplicationsViewModel.VacancyType,
+                Title = vacancyApplicationsViewModel.Title,
+                EmployerName = vacancyApplicationsViewModel.EmployerName,
+                NewApplicationsCount = vacancyApplicationsViewModel.NewApplicationsCount,
+                InProgressApplicationsCount = vacancyApplicationsViewModel.InProgressApplicationsCount,
+                ApplicationSummaries = vacancyApplicationsViewModel.ApplicationSummaries.Page.Where(a => a.Status == ApplicationStatuses.Submitted || a.Status == ApplicationStatuses.InProgress),
+                SelectedApplicationIds = bulkDeclineCandidatesViewModel.SelectedApplicationIds ?? new List<Guid>()
             };
-            List<ApplicationSummary> applications = vacancy.VacancyType == VacancyType.Traineeship
-                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
-                .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
-                .Select(a => (ApplicationSummary)a).ToList()
-                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
-                .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
-                .Select(a => (ApplicationSummary)a).ToList();
 
-            var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
-            var inProgress = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
-
-            switch (vacancyApplicationsSearchViewModel.FilterType)
-            {
-                case VacancyApplicationsFilterTypes.New:
-                    applications = @new;
-                    break;
-                case VacancyApplicationsFilterTypes.InProgress:
-                    applications = inProgress;
-                    break;
-            }
-            viewModel.NewApplicationsCount = @new.Count;
-            viewModel.InProgressApplicationsCount = inProgress.Count;
-            viewModel.VacancyApplicationsSearch = vacancyApplicationsSearchViewModel;
-
-            viewModel.ApplicationSummariesViewModel = new PageableViewModel<ApplicationSummaryViewModel>
-            {
-                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearchViewModel.OrderByField, vacancyApplicationsSearchViewModel.Order, applications)
-                .Skip((vacancyApplicationsSearchViewModel.CurrentPage - 1) * vacancyApplicationsSearchViewModel.PageSize)
-                .Take(vacancyApplicationsSearchViewModel.PageSize)
-                .Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
-                ResultsCount = applications.Count,
-                CurrentPage = vacancyApplicationsSearchViewModel.CurrentPage,
-                TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearchViewModel.PageSize)
-            };
             return viewModel;
         }
 
-        public BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(int vacancyReferenceNumber)
+        public BulkDeclineCandidatesViewModel SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
-            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
-            var viewModel = new BulkDeclineCandidatesViewModel
+            foreach (var application in bulkDeclineCandidatesViewModel.SelectedApplicationIds)
             {
-                EmployerName = employer.FullName,
-                VacancyType = vacancy.VacancyType,
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                VacancyTitle = vacancy.Title,
-                VacancyId = vacancy.VacancyId
-            };
-            List<ApplicationSummary> applications = vacancy.VacancyType == VacancyType.Traineeship
-                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
-                .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
-                .Select(a => (ApplicationSummary)a).ToList()
-                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId)
-                .Where(v => v.Status == ApplicationStatuses.InProgress || v.Status == ApplicationStatuses.Submitted)
-                .Select(a => (ApplicationSummary)a).ToList();
-
-            var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
-            var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
-            viewModel.NewApplicationsCount = @new.Count;
-            viewModel.InProgressApplicationsCount = viewed.Count;
-            var vacancyApplicationsSearch = new VacancyApplicationsSearchViewModel(vacancyReferenceNumber);
-            viewModel.ApplicationSummariesViewModel = new PageableViewModel<ApplicationSummaryViewModel>
-            {
-                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications)
-                .Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize)
-                .Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
-                ResultsCount = applications.Count,
-                CurrentPage = vacancyApplicationsSearch.CurrentPage,
-                TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
-            };
-            viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;
-            return viewModel;
-        }
-
-        public BulkApplicationsRejectViewModel GetBulkApplicationsRejectViewModel(
-            BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
-        {
-            IList<BulkRejectApplicationViewModel> bulkRejectApplications = new List<BulkRejectApplicationViewModel>();
-
-            var vacancy =
-                _vacancyPostingService.GetVacancyByReferenceNumber(
-                    bulkApplicationsRejectViewModel.VacancyReferenceNumber);
-
-            foreach (Guid applicationId in bulkApplicationsRejectViewModel.ApplicationIds)
-            {
-                ApprenticeshipApplicationDetail applicationDetail = _apprenticeshipApplicationService.GetApplicationForReview(applicationId);
-                if (applicationDetail != null)
-                {
-                    BulkRejectApplicationViewModel bulkRejectApplicationViewModel = new BulkRejectApplicationViewModel
-                    {
-                        ApplicationId = applicationId,
-                        FirstName = applicationDetail.CandidateDetails.FirstName,
-                        LastName = applicationDetail.CandidateDetails.LastName
-                    };
-                    bulkRejectApplications.Add(bulkRejectApplicationViewModel);
-                }
+                _apprenticeshipApplicationService.SetUnsuccessfulDecision(application, bulkDeclineCandidatesViewModel.UnSuccessfulReason);
             }
-            bulkApplicationsRejectViewModel.BulkRejectApplications = bulkRejectApplications;
-            bulkApplicationsRejectViewModel.VacancyTitle = vacancy.Title;
-            return bulkApplicationsRejectViewModel;
+            return bulkDeclineCandidatesViewModel;
         }
 
         public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
+        {
+            return GetVacancyApplicationsViewModel(vacancyApplicationsSearch, true);
+        }
+
+        public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch, bool applyPagination)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyApplicationsSearch.VacancyReferenceNumber);
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
@@ -243,10 +159,16 @@
             viewModel.SuccessfulApplicationsCount = successful.Count;
             viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
 
+            var page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications);
+            if (applyPagination)
+            {
+                page = page.Skip((vacancyApplicationsSearch.CurrentPage - 1)*vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize);
+            }
+
             viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;
             viewModel.ApplicationSummaries = new PageableViewModel<ApplicationSummaryViewModel>
             {
-                Page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications).Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
+                Page = page.Select(_mapper.Map<ApplicationSummary, ApplicationSummaryViewModel>).ToList(),
                 ResultsCount = applications.Count,
                 CurrentPage = vacancyApplicationsSearch.CurrentPage,
                 TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
@@ -343,11 +265,6 @@
             return viewModel;
         }
 
-        public ApprenticeshipApplicationDetail GetApprenticeshipApplicationDetails(string applicationId)
-        {
-            return _apprenticeshipApplicationService.GetApplication(new Guid(applicationId));
-        }
-
         public void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate)
         {
             _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes, publishUpdate);
@@ -365,16 +282,6 @@
             var applicationId = applicationSelectionViewModel.ApplicationId;
             _apprenticeshipApplicationService.SetUnsuccessfulDecision(applicationId, candidateApplicationFeedback);
             return applicationSelectionViewModel;
-        }
-
-        public BulkApplicationsRejectViewModel SendBulkUnsuccessfulDecision(
-            BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
-        {
-            foreach (var application in bulkApplicationsRejectViewModel.ApplicationIds)
-            {
-                _apprenticeshipApplicationService.SetUnsuccessfulDecision(application, bulkApplicationsRejectViewModel.UnSuccessfulReason);
-            }
-            return bulkApplicationsRejectViewModel;
         }
 
         public ApplicationSelectionViewModel SetStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)

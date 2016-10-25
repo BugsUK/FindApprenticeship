@@ -24,6 +24,6 @@
 @if (Model.Status.CanBulkDecline(Model.TotalNumberOfApplicationsWithPendingDecision))
 {
     <p class="small-btm-margin">
-        @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary { { "VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber } }, new Dictionary<string, object> { { "class", "disp-block" } })
     </p>
 }

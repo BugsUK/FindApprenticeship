@@ -229,13 +229,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, updatedApplicationViewModel);
         }
 
-        public MediatorResponse<BulkApplicationsRejectViewModel> SendBulkUnsuccessfulDecision(BulkApplicationsRejectViewModel bulkApplicationsRejectViewModel)
-        {
-            var bulkApplicationsViewModel = _applicationProvider.SendBulkUnsuccessfulDecision(bulkApplicationsRejectViewModel);
-            bulkApplicationsViewModel.ConfirmationStatusSentMessage = ApplicationViewModelMessages.BulkUnsuccessfulDecisionFormat;
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, bulkApplicationsViewModel);
-        }
-
         public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
