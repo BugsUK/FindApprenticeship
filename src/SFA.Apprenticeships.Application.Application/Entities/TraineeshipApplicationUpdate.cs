@@ -2,13 +2,10 @@
 {
     using System;
 
-    public class TraineeshipApplicationUpdate
+    public class TraineeshipApplicationUpdate : ApplicationUpdate
     {
-        public TraineeshipApplicationUpdate(Guid applicationGuid)
+        public TraineeshipApplicationUpdate(Guid applicationGuid, ApplicationUpdateType applicationUpdateType) : base(applicationGuid, applicationUpdateType)
         {
-            ApplicationGuid = applicationGuid;
         }
-
-        public Guid ApplicationGuid { get; private set; }
     }
 }
