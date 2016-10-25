@@ -23,8 +23,6 @@
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
         private const int TraineeshipFrameworkId = 999;
-        private const int FirstQuestionId = 1;
-        private const int SecondQuestionId = 2;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
@@ -33,8 +31,6 @@
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
-
-        private const int StandardsApprenticeshipOccupationId = 100;
 
         private const string StatusChangeText = "Status Change";
 
@@ -601,40 +597,6 @@ when not matched then
                 VacancyId = vacancyId,
                 QuestionId = questionId,
                 Question = question ?? string.Empty
-            });
-        }
-
-        private void DeleteAdditionalQuestion(int vacancyId, int additionalQuestionId)
-        {
-            var sql = @"
-    DELETE from dbo.AdditionalQuestion
-    WHERE VacancyId = @VacancyId and QuestionId = @QuestionId";
-
-            _getOpenConnection.MutatingQuery<object>(sql, new
-            {
-                VacancyId = vacancyId,
-                QuestionId = additionalQuestionId
-            });
-        }
-
-        private void DeleteTextField(int vacancyId, string vacancyTextFieldCodeName)
-        {
-            var vacancyTextFieldValueId =
-                _getOpenConnection.Query<int>(
-                    $@"
-	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
-	WHERE CodeName = '{
-                        vacancyTextFieldCodeName}'
-").Single(); // TODO: Hardcode the ID?
-
-            var sql = @"
-    DELETE from dbo.VacancyTextField
-    WHERE VacancyId = @VacancyId and Field = @FieldId";
-
-            _getOpenConnection.MutatingQuery<object>(sql, new
-            {
-                VacancyId = vacancyId,
-                FieldId = vacancyTextFieldValueId
             });
         }
 
