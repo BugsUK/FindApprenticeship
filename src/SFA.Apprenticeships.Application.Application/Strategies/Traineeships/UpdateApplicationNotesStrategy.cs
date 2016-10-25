@@ -21,7 +21,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies.Traineeships
             _traineeshipApplicationWriteRepository.UpdateApplicationNotes(applicationId, notes);
             if (publishUpdate)
             {
-                _serviceBus.PublishMessage(new TraineeshipApplicationUpdate(applicationId));
+                _serviceBus.PublishMessage(new TraineeshipApplicationUpdate(applicationId, ApplicationUpdateType.Update));
             }
         }
     }
