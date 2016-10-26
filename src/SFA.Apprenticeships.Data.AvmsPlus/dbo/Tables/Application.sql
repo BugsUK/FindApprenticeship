@@ -23,7 +23,8 @@
     CONSTRAINT [FK_Application_AttachedDocument] FOREIGN KEY ([CVAttachmentId]) REFERENCES [dbo].[AttachedDocument] ([AttachedDocumentId]),
     CONSTRAINT [FK_Application_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),
     CONSTRAINT [FK_Application_Vacancy1] FOREIGN KEY ([VacancyId]) REFERENCES [dbo].[Vacancy] ([VacancyId]),
-    CONSTRAINT [uq_idx_application] UNIQUE NONCLUSTERED ([CandidateId] ASC, [VacancyId] ASC)
+    CONSTRAINT [uq_idx_application] UNIQUE NONCLUSTERED ([CandidateId] ASC, [VacancyId] ASC),
+    CONSTRAINT [uq_idx_application_guid] UNIQUE NONCLUSTERED ([ApplicationGuid] ASC)
 );
 
 

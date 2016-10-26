@@ -40,19 +40,6 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
 
         public override void Run()
         {
-            var configService = _container.GetInstance<IConfigurationService>();
-            var processor = new MigrationProcessor(configService, _logService);
-
-            try
-            {
-                processor.Execute(_cancelSource.Token);
-            }
-            catch (Exception ex)
-            {
-                _logService.Error("Unhandled exception from processor.Execute method", ex);
-                throw;
-            }
-
             while (true)
             {
                 try

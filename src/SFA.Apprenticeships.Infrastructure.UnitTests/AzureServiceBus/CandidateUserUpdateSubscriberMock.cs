@@ -1,26 +1,26 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.AzureServiceBus
 {
     using System;
-    using Application.Candidate;
+    using Application.UserAccount.Entities;
     using Domain.Interfaces.Messaging;
 
-    public class CreateCandidateRequestSubscriberMock : IServiceBusSubscriber<CreateCandidateRequest>
+    public class CandidateUserUpdateSubscriberMock : IServiceBusSubscriber<CandidateUserUpdate>
     {
         private readonly ServiceBusMessageStates _stateToReturn;
         private readonly Exception _exceptionToThrow;
 
-        public CreateCandidateRequestSubscriberMock(ServiceBusMessageStates stateToReturn)
+        public CandidateUserUpdateSubscriberMock(ServiceBusMessageStates stateToReturn)
         {
             _stateToReturn = stateToReturn;
         }
 
-        public CreateCandidateRequestSubscriberMock(Exception exceptionToThrow)
+        public CandidateUserUpdateSubscriberMock(Exception exceptionToThrow)
         {
             _exceptionToThrow = exceptionToThrow;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "CreateCandidate")]
-        public ServiceBusMessageStates Consume(CreateCandidateRequest message)
+        [ServiceBusTopicSubscription(TopicName = "CandidateUserUpdate")]
+        public ServiceBusMessageStates Consume(CandidateUserUpdate message)
         {
             if (_exceptionToThrow != null)
             {

@@ -2,25 +2,29 @@
 {
     using System;
     using Domain.Entities.Candidates;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using UserAccount.Entities;
 
     public class UnsubscribeStrategy : IUnsubscribeStrategy
     {
         private readonly ILogService _logger;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
+        private readonly IServiceBus _serviceBus;
 
         public UnsubscribeStrategy(
             ILogService logger,
             ICandidateReadRepository candidateReadRepository,
-            ISaveCandidateStrategy saveCandidateStrategy)
+            ISaveCandidateStrategy saveCandidateStrategy, IServiceBus serviceBus)
         {
             _logger = logger;
             _candidateReadRepository = candidateReadRepository;
             _saveCandidateStrategy = saveCandidateStrategy;
+            _serviceBus = serviceBus;
         }
 
         public bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType)
@@ -48,7 +52,8 @@
 
                 if (unsubscribed)
                 {
-                    _logger.Info("Unsubscribed subscriptionType='{0}' for subscriberId='{1}'", subscriptionType, subscriberId);                    
+                    _logger.Info("Unsubscribed subscriptionType='{0}' for subscriberId='{1}'", subscriptionType, subscriberId);
+                    _serviceBus.PublishMessage(new CandidateUserUpdate(candidate.EntityId, CandidateUserUpdateType.Update));
                 }
                 else
                 {
