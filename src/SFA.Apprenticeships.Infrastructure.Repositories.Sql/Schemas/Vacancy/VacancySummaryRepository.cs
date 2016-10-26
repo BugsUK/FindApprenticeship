@@ -182,7 +182,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         AND		((@query IS NULL OR @query = '')
 		                        OR (CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query
 			                        OR v.Title LIKE '%' + @query + '%'
-			                        OR e.FullName LIKe '%' + @query + '%')
+			                        OR e.FullName LIKE '%' + @query + '%'
+                                    OR e.PostCode LIKE '%' + @query + '%')
 		                        )
                         AND		r.ProviderId = @providerId
 					    AND		r.ProviderSiteRelationshipTypeId = 1
