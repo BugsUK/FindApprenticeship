@@ -53,6 +53,7 @@
             viewModel.FurtherVacancyDetailsViewModel.Wage = new WageViewModel()
             {
                 Type = WageType.NationalMinimum,
+                Classification = WageClassification.NationalMinimum,
                 Amount = null,
                 AmountLowerBound = null,
                 AmountUpperBound = null,

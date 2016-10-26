@@ -11,6 +11,9 @@
         {
             Type = WageType.Custom;
             Unit = WageUnit.NotApplicable;
+            Classification = WageClassification.Custom;
+            CustomType = CustomWageType.NotApplicable;
+            PresetText = PresetText.NotApplicable;
         }
 
         public WageType Type { get; set; }

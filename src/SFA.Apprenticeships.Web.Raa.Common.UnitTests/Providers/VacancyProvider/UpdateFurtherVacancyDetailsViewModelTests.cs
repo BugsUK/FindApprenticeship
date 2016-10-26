@@ -46,6 +46,8 @@
             var wage = new WageViewModel()
             {
                 Type = WageType.Custom,
+                Classification = WageClassification.Custom,
+                CustomType = CustomWageType.Fixed,
                 Amount = null,
                 AmountLowerBound = null,
                 AmountUpperBound = null,

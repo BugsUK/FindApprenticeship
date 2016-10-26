@@ -19,6 +19,8 @@
         private WageViewModel dummyWageViewModel = new WageViewModel()
         {
             Type = WageType.Custom,
+            Classification = WageClassification.Custom,
+            CustomType = CustomWageType.Fixed,
             Amount = null,
             AmountLowerBound = null,
             AmountUpperBound = null,
@@ -239,7 +241,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = 37.5m })
+                .With(vm => vm.Wage, new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = 37.5m })
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -258,7 +260,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel() { Type = WageType.Custom, Amount = 123.45m, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null })
+                .With(vm => vm.Wage, new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = 123.45m, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null })
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -294,7 +296,7 @@
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel() { Type = WageType.LegacyText, PresetText = wageType })
+                .With(v => v.Wage, new WageViewModel() { Type = WageType.LegacyText, Classification = WageClassification.LegacyText, PresetText = wageType })
                 .With(v => v.WageTextPresets, ApprenticeshipVacancyConverter.GetWageTextPresets())
                 .Create();
 
@@ -315,7 +317,7 @@
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel() { Type = WageType.Custom,  CustomType = wageType })
+                .With(v => v.Wage, new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = wageType })
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -342,7 +344,7 @@
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
                 .With(v => v.WageUnits, ApprenticeshipVacancyConverter.GetWageUnits())
-                .With(v => v.Wage, new WageViewModel() {Type = WageType.Custom, CustomType = CustomWageType.Fixed, Amount = 300, Unit = WageUnit.Weekly})
+                .With(v => v.Wage, new WageViewModel() {Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = 300, Unit = WageUnit.Weekly})
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -365,7 +367,7 @@
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel() {Type = WageType.Custom, CustomType = CustomWageType.Ranged, AmountLowerBound = 200, AmountUpperBound = 500, Unit = WageUnit.Weekly })
+                .With(v => v.Wage, new WageViewModel() {Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Ranged, AmountLowerBound = 200, AmountUpperBound = 500, Unit = WageUnit.Weekly })
                 .With(v => v.WageUnits, ApprenticeshipVacancyConverter.GetWageUnits())
                 .Create();
 

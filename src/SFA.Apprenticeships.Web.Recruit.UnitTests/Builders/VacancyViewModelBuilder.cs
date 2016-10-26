@@ -56,6 +56,8 @@
                                                             new WageViewModel()
                                                             {
                                                                 Type = WageType.NationalMinimum,
+                                                                Classification = WageClassification.NationalMinimum,
+                                                                CustomType = CustomWageType.NotApplicable,
                                                                 Amount = null,
                                                                 AmountLowerBound = null,
                                                                 AmountUpperBound = null,
