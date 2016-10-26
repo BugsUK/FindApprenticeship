@@ -97,8 +97,6 @@
     <Compile Include="CandidateApplicationService.cs" />
     <Compile Include="CandidateSearchService.cs" />
     <Compile Include="CandidateService.cs" />
-    <Compile Include="Entities\CandidateUpdateType.cs" />
-    <Compile Include="Entities\CandidateUpdate.cs" />
     <Compile Include="Strategies\Candidates\GetCandidateSummariesStrategy.cs" />
     <Compile Include="Strategies\Candidates\IGetCandidateSummariesStrategy.cs" />
     <Compile Include="Strategies\Candidates\ISearchCandidatesStrategy.cs" />

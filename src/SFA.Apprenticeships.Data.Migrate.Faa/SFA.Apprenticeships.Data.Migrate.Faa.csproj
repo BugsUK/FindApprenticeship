@@ -129,6 +129,7 @@
     <Compile Include="ApprenticeshipApplicationUpdater.cs" />
     <Compile Include="AuditMigrationProcessor.cs" />
     <Compile Include="CandidateMigrationProcessor.cs" />
+    <Compile Include="CandidateUserUpdater.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
     <Compile Include="Entities\ApplicationWithSubVacancy.cs" />
     <Compile Include="Entities\CandidatePerson.cs" />
@@ -155,7 +156,7 @@
     <Compile Include="Entities\Sql\CandidateSummary.cs" />
     <Compile Include="Entities\Sql\SubVacancy.cs" />
     <Compile Include="IApprenticeshipApplicationUpdater.cs" />
-    <Compile Include="ICandidateUpdater.cs" />
+    <Compile Include="ICandidateUserUpdater.cs" />
     <Compile Include="ITraineeshipApplicationUpdater.cs" />
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IoC\FaaMigrationRegistry.cs" />
@@ -184,7 +185,7 @@
     <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
     <Compile Include="Repository\Sql\SchoolAttendedTable.cs" />
     <Compile Include="Repository\Sql\SubVacancyTable.cs" />
-    <Compile Include="Subscribers\CandidateUpdateSubscriber.cs" />
+    <Compile Include="Subscribers\CandidateUserUpdateSubscriber.cs" />
     <Compile Include="Subscribers\TraineeshipApplicationUpdateSubscriber.cs" />
     <Compile Include="Subscribers\ApprenticeshipApplicationUpdateSubscriber.cs" />
     <Compile Include="SyncType.cs" />
@@ -218,13 +219,13 @@
       <Project>{7d29ed20-ff3d-4fbb-b253-a44de1e42bcc}</Project>
       <Name>SFA.Apprenticeships.Application.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
-      <Project>{984f8cd2-61b3-48a4-b0cc-5d05e235983d}</Project>
-      <Name>SFA.Apprenticeships.Application.Candidate</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
+      <Project>{f01914fa-a911-4345-acd4-fd80ade21a8c}</Project>
+      <Name>SFA.Apprenticeships.Application.UserAccount</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Data.Migrate\SFA.Apprenticeships.Data.Migrate.csproj">
       <Project>{73c8a0c0-3b18-4ed6-8d14-15f3e009c26c}</Project>

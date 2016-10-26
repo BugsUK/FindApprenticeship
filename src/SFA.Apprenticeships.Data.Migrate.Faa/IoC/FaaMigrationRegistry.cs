@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.IoC
 {
     using Application.Application.Entities;
+    using Application.UserAccount.Entities;
     using Domain.Interfaces.Messaging;
     using Infrastructure.Azure.ServiceBus;
     using StructureMap.Configuration.DSL;
@@ -10,6 +11,7 @@
     {
         public FaaMigrationRegistry()
         {
+            For<ICandidateUserUpdater>().Use<CandidateUserUpdater>();
             For<IApprenticeshipApplicationUpdater>().Use<ApprenticeshipApplicationUpdater>();
             For<ITraineeshipApplicationUpdater>().Use<TraineeshipApplicationUpdater>();
 
@@ -19,6 +21,7 @@
 
         private void RegisterServiceBusMessageBrokers()
         {
+            RegisterServiceBusMessageBroker<CandidateUserUpdateSubscriber, CandidateUserUpdate>();
             RegisterServiceBusMessageBroker<ApprenticeshipApplicationUpdateSubscriber, ApprenticeshipApplicationUpdate>();
             RegisterServiceBusMessageBroker<TraineeshipApplicationUpdateSubscriber, TraineeshipApplicationUpdate>();
         }

@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface ICandidateUpdater
+    public interface ICandidateUserUpdater
     {
         void Create(Guid candidateGuid);
         void Update(Guid candidateGuid);

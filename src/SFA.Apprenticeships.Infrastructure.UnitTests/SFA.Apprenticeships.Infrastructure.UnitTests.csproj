@@ -151,7 +151,7 @@
     </Compile>
     <Compile Include="AzureServiceBus\AzureServiceBusMessageBrokerBuilder.cs" />
     <Compile Include="AzureServiceBus\AzureServiceBusMessageBrokerTests.cs" />
-    <Compile Include="AzureServiceBus\CandidateUpdateSubscriberMock.cs" />
+    <Compile Include="AzureServiceBus\CandidateUserUpdateSubscriberMock.cs" />
     <Compile Include="AzureServiceBus\SubscriptionClientStub.cs" />
     <Compile Include="Communication\Builders\ApplicationStatusAlertsBuilder.cs" />
     <Compile Include="Communication\Builders\CommunicationRequestBuilder.cs" />
@@ -256,6 +256,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
+      <Project>{f01914fa-a911-4345-acd4-fd80ade21a8c}</Project>
+      <Name>SFA.Apprenticeships.Application.UserAccount</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
