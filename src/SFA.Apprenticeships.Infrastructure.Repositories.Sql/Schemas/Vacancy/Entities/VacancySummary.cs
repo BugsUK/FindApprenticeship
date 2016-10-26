@@ -2,9 +2,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 {
     using System;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
-    public class VacancySummary
+    public class VacancySummary : IVacancyWage
     {
         // mild hack to fetch the total amount of records returned in the query
         public int TotalResultCount { get; set; }
@@ -51,5 +52,18 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string SectorCodeName { get; set; }
 
         public int EmployerId { get; set; }
+        public int ContractOwnerId { get; set; }
+        public DateTime PossibleStartDate { get; set; }
+        public int NumberOfPositions { get; set; }
+        public DateTime DateQAApproved { get; set; }
+
+        public string WageText { get; set; }
+
+        public int WageType { get; set; }
+
+        public int? WageUnitId { get; set; }
+
+        public decimal? WeeklyWage { get; set; }
+        public decimal? HoursPerWeek { get; set; }
     }
 }

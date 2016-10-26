@@ -121,7 +121,15 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             p.TradingName as ProviderTradingName,
                             v.SubmissionCount,
                             v.StartedToQADateTime,
-                            v.QAUserName
+                            v.QAUserName,
+                            v.ContractOwnerId,
+                            v.ExpectedStartDate AS PossibleStartDate,
+                            v.NumberOfPositions,
+                            v.WageType,
+                            v.WageUnitId,
+                            v.WeeklyWage,
+                            v.WageText,
+                            v.HoursPerWeek
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
@@ -211,6 +219,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
         public IList<VacancySummary> GetByStatus(VacancySummaryByStatusQuery query, out int totalRecords)
         {
+            if (query.RequestedPage <= 0) query.RequestedPage = 1;
+
             var sqlParams = new
             {
                 Skip = query.PageSize * (query.RequestedPage - 1),
@@ -277,11 +287,20 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
 		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
+                            dbo.GetDateQAApproved(v.VacancyID) AS DateQAApproved,
                             e.FullName AS EmployerName,
                             p.TradingName as ProviderTradingName,
                             v.SubmissionCount,
                             v.StartedToQADateTime,
-                            v.QAUserName
+                            v.QAUserName,
+                            v.ContractOwnerId,
+                            v.ExpectedStartDate AS PossibleStartDate,
+                            v.NumberOfPositions,
+                            v.WageType,
+                            v.WageUnitId,
+                            v.WeeklyWage,
+                            v.WageText,
+                            v.HoursPerWeek
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
@@ -296,7 +315,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     JOIN	RegionalTeams rt
                     ON		rt.Id = t.RegionalTeam_Id
                     --Text search
-                    WHERE	(((@query IS NULL OR @query = '') AND rt.TeamName = '{query.RegionalTeamName}')
+                    WHERE	(((@query IS NULL OR @query = '') {( query.RegionalTeamName != RegionalTeam.Other ? $"AND rt.TeamName = '{query.RegionalTeamName}'" : "" )})
 		                        OR (p.TradingName LIKE '%' + @query + '%')
 		                    )
                     AND     v.VacancyStatusId IN @VacancyStatuses
@@ -431,7 +450,16 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                    dbo.GetCreatedByProviderUsername(v.VacancyId) AS CreatedByProviderUsername,
 		                    dbo.GetDateQAApproved(v.VacancyId) AS DateQAApproved,
 		                    rt.TeamName AS RegionalTeam,
-		                    af.StandardId
+		                    af.StandardId,
+
+                            v.ContractOwnerId,
+                            v.ExpectedStartDate AS PossibleStartDate,
+                            v.NumberOfPositions,
+                            v.WageType,
+                            v.WageUnitId,
+                            v.WeeklyWage,
+                            v.WageText,
+                            v.HoursPerWeek
 
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
