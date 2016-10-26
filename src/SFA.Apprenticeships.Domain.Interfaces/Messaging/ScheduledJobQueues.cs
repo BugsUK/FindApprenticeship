@@ -10,5 +10,6 @@
         public const string DailyMetrics = "dailymetricsscheduler";
         public const string Housekeeping = "housekeepingscheduler";
         public const string VacancyStatus = "vacancystatusscheduler";
+        public const string FaaMigration = "faamigrationscheduler";
     }
 }
