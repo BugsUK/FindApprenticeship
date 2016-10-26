@@ -14,7 +14,6 @@
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string WorkingWeek { get; set; }
-        public Wage Wage { get; set; }
         public string ExpectedDuration { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
@@ -78,5 +77,7 @@
 		
         public string ProviderTradingName { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public Wage Wage { get; set; }
     }
 }

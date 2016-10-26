@@ -8,10 +8,15 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     using Domain.Entities.Raa.Vacancies;
 
     [System.ComponentModel.DataAnnotations.Schema.Table("dbo.Vacancy")]
-    public class Vacancy
+    public class Vacancy : IVacancyWage
     {
-        public DateTime DateQAApproved;
+        [Write(false)]
+        public DateTime DateQAApproved { get; set; }
+
+        [Write(false)]
         public DateTime? DateFirstSubmitted { get; set; }
+
+        [Write(false)]
         public DateTime? DateSubmitted { get; set; }
 
         [Write(false)]
