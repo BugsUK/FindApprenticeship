@@ -12,8 +12,10 @@
             Type = WageType.Custom;
             Unit = WageUnit.NotApplicable;
         }
-        
+
         public WageType Type { get; set; }
+
+        public WageClassification Classification { get; set; }
 
         public CustomWageType CustomType { get; set; }
 
@@ -40,11 +42,11 @@
 
     public enum WageClassification
     {
+        LegacyText = 0,
         ApprenticeshipMinimum = 1,
         NationalMinimum = 2,
         Custom = 3,
-        LegacyText = 4,
-        PresetText = 5
+        PresetText = 4
     }
 
     public enum CustomWageType

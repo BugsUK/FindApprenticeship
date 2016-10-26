@@ -20,44 +20,57 @@
             result.Unit = wage.Unit;
             result.RangeUnit = wage.Unit;
             result.WageTypeReason = wage.ReasonForType;
+            result.Type = wage.Type;
 
             switch (wage.Type)
             {
                 case WageType.Custom:
-                    result.Type = WageType.Custom;
+                    result.Classification = WageClassification.Custom;
                     result.CustomType = CustomWageType.Fixed;
                     result.PresetText = PresetText.NotApplicable;
                     break;
                 case WageType.CustomRange:
-                    result.Type = WageType.Custom;
+                    result.Classification = WageClassification.Custom;
                     result.CustomType = CustomWageType.Ranged;
                     result.PresetText = PresetText.NotApplicable;
                     break;
                 case WageType.CompetitiveSalary:
-                    result.Type = WageType.LegacyText;
+                    result.Classification = WageClassification.PresetText;
                     result.CustomType = CustomWageType.NotApplicable;
                     result.PresetText = PresetText.CompetitiveSalary;
                     break;
                 case WageType.ToBeAgreedUponAppointment:
-                    result.Type = WageType.LegacyText;
+                    result.Classification = WageClassification.PresetText;
                     result.CustomType = CustomWageType.NotApplicable;
                     result.PresetText = PresetText.ToBeAgreedUponAppointment;
                     break;
                 case WageType.Unwaged:
-                    result.Type = WageType.LegacyText;
+                    result.Classification = WageClassification.PresetText;
                     result.CustomType = CustomWageType.NotApplicable;
                     result.PresetText = PresetText.Unwaged;
                     break;
                 case WageType.LegacyText:
+                    result.Classification = WageClassification.LegacyText;
+                    result.CustomType = CustomWageType.NotApplicable;
+                    result.PresetText = PresetText.NotApplicable;
+                    break;
                 case WageType.LegacyWeekly:
+                    result.Classification = WageClassification.Custom;
+                    result.CustomType = CustomWageType.NotApplicable;
+                    result.PresetText = PresetText.NotApplicable;
+                    break;
                 case WageType.ApprenticeshipMinimum:
+                    result.Classification = WageClassification.ApprenticeshipMinimum;
+                    result.CustomType = CustomWageType.NotApplicable;
+                    result.PresetText = PresetText.NotApplicable;
+                    break;
                 case WageType.NationalMinimum:
-                    result.Type = wage.Type;
+                    result.Classification = WageClassification.NationalMinimum;
                     result.CustomType = CustomWageType.NotApplicable;
                     result.PresetText = PresetText.NotApplicable;
                     break;
                 default:
-                    throw new InvalidOperationException("unknown wage type");
+                    throw new InvalidOperationException("Unknown WageType.");
             }
 
             return result;
