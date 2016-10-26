@@ -7,7 +7,6 @@
     using Common.Validators.Extensions;
     using Constants;
     using Domain.Entities.Raa;
-    using Domain.Raa.Interfaces.Repositories.Models;
     using FluentValidation.Mvc;
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
@@ -117,7 +116,6 @@
         public ActionResult BulkOrderApplicationsLastName(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldLastName;
-            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending; ;
             return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
@@ -126,7 +124,6 @@
         public ActionResult BulkOrderApplicationsFirstName(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldFirstName;
-            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending; ;
             return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
@@ -135,7 +132,6 @@
         public ActionResult BulkOrderApplicationsManagerNotes(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes;
-            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending; ;
             return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
@@ -144,7 +140,6 @@
         public ActionResult BulkOrderApplicationsSubmitted(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldSubmitted;
-            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending; ;
             return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
@@ -153,7 +148,6 @@
         public ActionResult BulkOrderApplicationsStatus(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.OrderByField = VacancyApplicationsSearchViewModel.OrderByFieldStatus;
-            bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order = bulkDeclineCandidatesViewModel.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending; ;
             return BulkDeclineCandidates(bulkDeclineCandidatesViewModel);
         }
 
