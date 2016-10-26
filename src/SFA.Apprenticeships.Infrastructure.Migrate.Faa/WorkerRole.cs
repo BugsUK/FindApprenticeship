@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
     using System.Threading;
     using System.Threading.Tasks;
     using Application.Interfaces;
+    using Azure.Common.IoC;
     using Azure.ServiceBus;
     using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
@@ -42,13 +43,22 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
             var configService = _container.GetInstance<IConfigurationService>();
             var processor = new MigrationProcessor(configService, _logService);
 
+            try
+            {
+                processor.Execute(_cancelSource.Token);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error("Unhandled exception from processor.Execute method", ex);
+                throw;
+            }
+
             while (true)
             {
                 try
                 {
                     var tasks = new List<Task>
                     {
-                        processor.Execute(_cancelSource.Token),
                         _faaMigrationControlQueueConsumer.CheckScheduleQueue(_cancelSource.Token)
                     };
 
@@ -116,6 +126,7 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<FaaMigrationRegistry>();
                 x.AddRegistry<JobsRegistry>();
