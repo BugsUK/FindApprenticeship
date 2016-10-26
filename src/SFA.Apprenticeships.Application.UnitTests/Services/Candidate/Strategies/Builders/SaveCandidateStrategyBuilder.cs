@@ -7,6 +7,7 @@
     using Interfaces;
     using Moq;
     using System;
+    using Domain.Interfaces.Messaging;
 
     public class SaveCandidateStrategyBuilder
     {
@@ -25,7 +26,7 @@
 
         public ISaveCandidateStrategy Build()
         {
-            var strategy = new SaveCandidateStrategy(_candidateWriteRepository.Object, _getCandidateApplicationsStrategy.Object, _candidateReadRepository.Object, _apprenticeshipApplicationWriteRepository.Object, _apprenticeshipApplicationReadRepository.Object, _logService.Object);
+            var strategy = new SaveCandidateStrategy(_candidateWriteRepository.Object, _getCandidateApplicationsStrategy.Object, _candidateReadRepository.Object, _apprenticeshipApplicationWriteRepository.Object, _apprenticeshipApplicationReadRepository.Object, _logService.Object, new Mock<IServiceBus>().Object);
             return strategy;
         }
 

@@ -5,6 +5,7 @@
     using Apprenticeships.Application.Candidates.Strategies;
     using Apprenticeships.Application.Candidates.Strategies.DormantAccount;
     using Configuration;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces;
     using Moq;
@@ -31,7 +32,7 @@
         public SetPendingDeletionStrategy Build()
         {
             var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userReadRepository.Object,
-                new SetUserStatusPendingDeletionStrategy(_userWriteRepository.Object, _auditRepository.Object, _logService.Object));
+                new SetUserStatusPendingDeletionStrategy(_userWriteRepository.Object, _auditRepository.Object, _logService.Object, new Mock<IServiceBus>().Object));
             strategy.SetSuccessor(_successor);
             return strategy;
         }
