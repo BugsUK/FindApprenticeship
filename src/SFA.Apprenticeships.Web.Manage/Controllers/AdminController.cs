@@ -167,9 +167,9 @@
         }
 
         [HttpGet]
-        public ActionResult CreateProviderSite(int employerId)
+        public ActionResult CreateProviderSite(int providerId)
         {
-            return View(new ProviderSiteViewModel { ProviderId = employerId });
+            return View(new ProviderSiteViewModel { ProviderId = providerId });
         }
 
         [HttpPost]
