@@ -6,6 +6,6 @@
     {
         ArchiveVacancyViewModel GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber);
 
-        ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel);
+        ArchiveVacancyViewModel ArchiveVacancy(ArchiveVacancyViewModel viewModel);        
     }
 }
