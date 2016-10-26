@@ -131,6 +131,17 @@
             return await _database.GetCollection<Candidate>(CollectionName).FindAsync(filter, options, cancellationToken);
         }
 
+        public Candidate GetCandidate(Guid candidateGuid)
+        {
+            var options = new FindOptions<Candidate>
+            {
+                Projection = GetCandidateProjection()
+            };
+            var filter = Builders<Candidate>.Filter.Eq(a => a.Id, candidateGuid);
+            var cursor = _database.GetCollection<Candidate>(CollectionName).FindSync(filter, options);
+            return cursor.Single();
+        }
+
         private static ProjectionDefinition<Candidate> GetCandidateProjection()
         {
             return Builders<Candidate>.Projection

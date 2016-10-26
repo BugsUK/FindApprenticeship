@@ -279,6 +279,7 @@
                     ProviderSiteRelationShipTypeId = ProviderSiteRelationshipTypes.Owner
                 }
             };
+            providerSite.TrainingProviderStatus = EmployerTrainingProviderStatuses.Activated;
 
             providerSite = _providerService.CreateProviderSite(providerSite);
 

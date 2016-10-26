@@ -3,12 +3,14 @@
     using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
 
     using SFA.Apprenticeships.Application.Interfaces;
 
     using UserAccount.Configuration;
+    using UserAccount.Entities;
     using UserAccount.Strategies;
 
     public class AuthenticateCandidateStrategy : IAuthenticateCandidateStrategy
@@ -18,6 +20,7 @@
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILockAccountStrategy _lockAccountStrategy;
+        private readonly IServiceBus _serviceBus;
         private readonly int _maximumPasswordAttemptsAllowed;
 
         public AuthenticateCandidateStrategy(
@@ -26,13 +29,14 @@
             IUserReadRepository userReadRepository,
             IUserWriteRepository userWriteRepository,
             ICandidateReadRepository candidateReadRepository,
-            ILockAccountStrategy lockAccountStrategy)
+            ILockAccountStrategy lockAccountStrategy, IServiceBus serviceBus)
         {
             _userWriteRepository = userWriteRepository;
             _authenticationService = authenticationService;
             _userReadRepository = userReadRepository;
             _candidateReadRepository = candidateReadRepository;
             _lockAccountStrategy = lockAccountStrategy;
+            _serviceBus = serviceBus;
             _maximumPasswordAttemptsAllowed = configService.Get<UserAccountConfiguration>().MaximumPasswordAttemptsAllowed;
         }
 
@@ -61,6 +65,7 @@
                     user.LastLogin = DateTime.UtcNow;
 
                     _userWriteRepository.Save(user);
+                    _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
 
                     return candidate;
                 }
@@ -82,6 +87,7 @@
             else
             {
                 _lockAccountStrategy.LockAccount(user);
+                _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
             }
         }
     }

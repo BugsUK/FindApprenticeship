@@ -2,6 +2,7 @@
 namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.VerifyMobileStrategy
 {
     using Apprenticeships.Application.Candidate.Strategies;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Moq;
 
@@ -25,7 +26,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.VerifyM
 
         public VerifyMobileStrategy Build()
         {
-            return new VerifyMobileStrategy(_candidateReadRepositoryMock.Object, _candidateWriteRepositoryMock.Object, _auditRepositoryMock.Object);
+            return new VerifyMobileStrategy(_candidateReadRepositoryMock.Object, _candidateWriteRepositoryMock.Object, _auditRepositoryMock.Object, new Mock<IServiceBus>().Object);
         }
     }
 }

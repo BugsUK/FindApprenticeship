@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading;
-    using System.Threading.Tasks;
     using Configuration;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
@@ -12,7 +10,6 @@
 
     public class MigrationProcessor
     {
-        private readonly IConfigurationService _configurationService;
         private readonly ILogService _logService;
 
         private readonly SyncRepository _syncRepository;
@@ -23,10 +20,9 @@
 
         public MigrationProcessor(IConfigurationService configurationService, ILogService logService)
         {
-            _configurationService = configurationService;
             _logService = logService;
 
-            var configuration = _configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
+            var configuration = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
 
             //Ensure date precision is honoured
             Dapper.SqlMapper.AddTypeMap(typeof(DateTime), System.Data.DbType.DateTime2);
@@ -39,64 +35,12 @@
             
             var applicationMappers = new ApplicationMappers(_logService);
 
-            _candidateMigrationProcessor = new CandidateMigrationProcessor(new CandidateMappers(_logService), _syncRepository, genericSyncRespository, targetDatabase, _configurationService, _logService);
-            _traineeshipApplicationsMigrationProcessor = new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(_syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService);
-            _apprenticeshipApplicationsMigrationProcessor = new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(_syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService);
-            _auditMigrationProcessor = new AuditMigrationProcessor(_syncRepository, targetDatabase, _configurationService, _logService);
+            _candidateMigrationProcessor = new CandidateMigrationProcessor(new CandidateMappers(_logService), _syncRepository, genericSyncRespository, targetDatabase, configurationService, _logService);
+            _traineeshipApplicationsMigrationProcessor = new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(_syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, configurationService, _logService);
+            _apprenticeshipApplicationsMigrationProcessor = new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(_syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, configurationService, _logService);
+            _auditMigrationProcessor = new AuditMigrationProcessor(_syncRepository, targetDatabase, configurationService, _logService);
 
             _logService.Info("Initialisation");
-        }
-
-        public Task Execute(CancellationToken cancellationToken)
-        {
-            return Task.Run(() =>
-            {
-                var migrationProcessors = new List<IMigrationProcessor>
-                {
-                    _candidateMigrationProcessor,
-                    _auditMigrationProcessor
-                };
-
-                _logService.Info("Execute Started");
-
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    var configuration = _configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
-                    if (!configuration.IsEnabled)
-                    {
-                        _logService.Warn("Migrate.Faa process is disabled.");
-                        cancellationToken.WaitHandle.WaitOne();
-                        return;
-                    }
-
-                    try
-                    {
-                        var lastSyncVersion = _syncRepository.GetSyncParams().LastSyncVersion;
-                        if (lastSyncVersion.HasValue && lastSyncVersion > 0)
-                        {
-                            foreach (var migrationProcessor in migrationProcessors)
-                            {
-                                if (!cancellationToken.IsCancellationRequested)
-                                {
-                                    migrationProcessor.Process(cancellationToken);
-                                }
-                            }
-                        }
-                    }
-                    catch (FatalException)
-                    {
-                        throw;
-                    }
-                    catch (Exception ex)
-                    {
-                        _logService.Error("Error occurred. Sleeping before trying again", ex);
-                    }
-
-                    Thread.Sleep(configuration.SleepTimeBetweenCyclesInSeconds * 1000);
-                }
-
-                _logService.Info("DoAll Cancelled");
-            }, cancellationToken);
         }
 
         public void ExecuteCandidateMigrationProcessor(CancellationToken cancellationToken)

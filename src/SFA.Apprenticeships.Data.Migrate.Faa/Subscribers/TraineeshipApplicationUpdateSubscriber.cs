@@ -3,6 +3,7 @@
     using System;
     using Application.Application.Entities;
     using Application.Interfaces;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
 
     public class TraineeshipApplicationUpdateSubscriber : IServiceBusSubscriber<TraineeshipApplicationUpdate>
@@ -38,16 +39,22 @@
                         _logService.Debug($"Deleted traineeship application with id {request.ApplicationGuid}");
                         break;
                     default:
-                        _logService.Warn($"Traineeship application update with id {request.ApplicationGuid} was of an unknown or unsupported type {request.ApplicationUpdateType}");
-                        break;
+                        _logService.Warn($"Traineeship application update with id {request.ApplicationGuid} was of an unknown or unsupported type {request.ApplicationUpdateType}. Dead lettering message");
+                        return ServiceBusMessageStates.DeadLetter;
                 }
+
+                return ServiceBusMessageStates.Complete;
+            }
+            catch (CustomException ex)
+            {
+                _logService.Error($"Failed to process traineeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}. Requeuing message", ex);
+                return ServiceBusMessageStates.Requeue;
             }
             catch (Exception ex)
             {
-                _logService.Error($"Failed to process traineeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}", ex);
+                _logService.Error($"Failed to process traineeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}. Dead lettering message", ex);
+                return ServiceBusMessageStates.DeadLetter;
             }
-
-            return ServiceBusMessageStates.Complete;
         }
     }
 }

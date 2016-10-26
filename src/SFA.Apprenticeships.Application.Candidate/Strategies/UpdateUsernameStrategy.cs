@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
-    using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
+    using UserAccount.Entities;
 
     public class UpdateUsernameStrategy : IUpdateUsernameStrategy
     {
@@ -12,18 +13,20 @@
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly IServiceBus _serviceBus;
 
         public UpdateUsernameStrategy(IUserAccountService userAccountService,
             ICandidateReadRepository candidateReadRepository,
             ICandidateWriteRepository candidateWriteRepository,
             ISaveCandidateStrategy saveCandidateStrategy,
-            IUserReadRepository userReadRepository)
+            IUserReadRepository userReadRepository, IServiceBus serviceBus)
         {
             _userAccountService = userAccountService;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
             _saveCandidateStrategy = saveCandidateStrategy;
             _userReadRepository = userReadRepository;
+            _serviceBus = serviceBus;
         }
 
         public void UpdateUsername(Guid userId, string verfiyCode, string password)
@@ -41,11 +44,13 @@
                 if (existingUser == null)
                 {
                    _candidateWriteRepository.Delete(existingCandidate.EntityId);
+                    _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Delete));
                 }
             }
 
             candidate.RegistrationDetails.EmailAddress = user.PendingUsername;
             _saveCandidateStrategy.SaveCandidate(candidate);
+            _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
         }
     }
 }
