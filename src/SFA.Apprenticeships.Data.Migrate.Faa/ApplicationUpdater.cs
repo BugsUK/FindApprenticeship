@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.Interfaces;
     using Configuration;
+    using Domain.Entities.Exceptions;
     using Entities;
     using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
@@ -47,8 +48,9 @@
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] { candidateGuid });
             if (!candidateIds.ContainsKey(candidateGuid))
             {
-                _logService.Warn($"Candidate {candidateGuid} for application {applicationGuid} could not be found");
-                return;
+                var message = $"Candidate {candidateGuid} for application {applicationGuid} could not be found";
+                _logService.Warn(message);
+                throw new CustomException(message);
             }
 
             var destinationCandidateId = candidateIds[candidateGuid];
@@ -87,8 +89,9 @@
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] {candidateGuid});
             if (!candidateIds.ContainsKey(candidateGuid))
             {
-                _logService.Warn($"Candidate {candidateGuid} for application {applicationGuid} could not be found");
-                return;
+                var message = $"Candidate {candidateGuid} for application {applicationGuid} could not be found";
+                _logService.Warn(message);
+                throw new CustomException(message);
             }
 
             var destinationCandidateId = candidateIds[candidateGuid];
