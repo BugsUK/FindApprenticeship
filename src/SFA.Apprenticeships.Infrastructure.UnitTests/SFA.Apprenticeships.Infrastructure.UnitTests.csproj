@@ -151,7 +151,7 @@
     </Compile>
     <Compile Include="AzureServiceBus\AzureServiceBusMessageBrokerBuilder.cs" />
     <Compile Include="AzureServiceBus\AzureServiceBusMessageBrokerTests.cs" />
-    <Compile Include="AzureServiceBus\CreateCandidateRequestSubscriberMock.cs" />
+    <Compile Include="AzureServiceBus\CandidateUpdateSubscriberMock.cs" />
     <Compile Include="AzureServiceBus\SubscriptionClientStub.cs" />
     <Compile Include="Communication\Builders\ApplicationStatusAlertsBuilder.cs" />
     <Compile Include="Communication\Builders\CommunicationRequestBuilder.cs" />
