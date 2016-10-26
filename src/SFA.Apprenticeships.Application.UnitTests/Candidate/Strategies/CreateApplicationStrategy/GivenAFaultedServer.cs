@@ -25,7 +25,7 @@
 
             var createApplicationStrategy = new CreateApprenticeshipApplicationStrategy(vacancyDataProvider.Object,
                 applicationReadRepository.Object, applicationWriteRepository.Object,
-                candidateReadRepository.Object);
+                candidateReadRepository.Object, null);
 
             Assert.Throws<Exception>(() => createApplicationStrategy.CreateApplication(Guid.NewGuid(), 1));
         }

@@ -1,9 +1,12 @@
 namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading;
+    using System.Threading.Tasks;
     using Application.Interfaces;
+    using Azure.Common.IoC;
     using Azure.ServiceBus;
     using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
@@ -11,8 +14,10 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
     using Microsoft.WindowsAzure.ServiceRuntime;
     using StructureMap;
     using Common.IoC;
+    using Consumers;
     using Data.Migrate.Faa;
     using Data.Migrate.Faa.IoC;
+    using IoC;
     using Logging.IoC;
     using Logging;
 
@@ -24,6 +29,7 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
 
         private Container _container;
         private ILogService _logService;
+        private FaaMigrationControlQueueConsumer _faaMigrationControlQueueConsumer;
 
         public override bool OnStart()
         {
@@ -34,17 +40,27 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
 
         public override void Run()
         {
-            var configService = _container.GetInstance<IConfigurationService>();
-            var processor = new MigrationProcessor(configService, _logService);
+            while (true)
+            {
+                try
+                {
+                    var tasks = new List<Task>
+                    {
+                        _faaMigrationControlQueueConsumer.CheckScheduleQueue(_cancelSource.Token)
+                    };
 
-            try
-            {
-                processor.Execute(_cancelSource.Token);
-            }
-            catch (Exception ex)
-            {
-                _logService.Error("Unhandled exception from processor.Execute method", ex);
-                throw;
+                    Task.WaitAll(tasks.ToArray());
+                }
+                catch (TimeoutException te)
+                {
+                    _logService.Warn("TimeoutException from  " + ProcessName, te);
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error("Exception from  " + ProcessName, ex);
+                }
+
+                Thread.Sleep(TimeSpan.FromMinutes(1));
             }
         }
 
@@ -97,11 +113,15 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<FaaMigrationRegistry>();
+                x.AddRegistry<JobsRegistry>();
             });
 
             _logService = _container.GetInstance<ILogService>();
+
+            _faaMigrationControlQueueConsumer = _container.GetInstance<FaaMigrationControlQueueConsumer>();
         }
 
         private void InitialiseServiceBus()

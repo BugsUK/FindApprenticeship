@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Application.Interfaces.Applications;
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
-    using ViewModels.Vacancy;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using ViewModels.VacancyStatus;
 
     public class VacancyStatusChangeProvider : IVacancyStatusChangeProvider

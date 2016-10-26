@@ -5,8 +5,10 @@
     using Apprenticeships;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces;
+    using UserAccount.Entities;
 
     public class SaveCandidateStrategy : ISaveCandidateStrategy
     {
@@ -17,13 +19,14 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly IGetCandidateApprenticeshipApplicationsStrategy _getCandidateApplicationsStrategy;
+        private readonly IServiceBus _serviceBus;
 
         public SaveCandidateStrategy(ICandidateWriteRepository candidateWriteRepository,
             IGetCandidateApprenticeshipApplicationsStrategy getCandidateApplicationsStrategy,
             ICandidateReadRepository candidateReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
-            ILogService logger)
+            ILogService logger, IServiceBus serviceBus)
         {
             _candidateWriteRepository = candidateWriteRepository;
             _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
@@ -31,11 +34,13 @@
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _logger = logger;
+            _serviceBus = serviceBus;
         }
 
         public Candidate SaveCandidate(Candidate candidate)
         {
             var result = _candidateWriteRepository.Save(candidate);
+            _serviceBus.PublishMessage(new CandidateUserUpdate(candidate.EntityId, CandidateUserUpdateType.Update));
             var reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
 
             var candidateApplications = _getCandidateApplicationsStrategy

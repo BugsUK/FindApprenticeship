@@ -57,7 +57,11 @@ USING (VALUES
   (55,N'Papermaking',7),
   (56,N'Project Management',1),
   (57,N'Public Sector',20),
-  (58,N'Travel',13)
+  (58,N'Travel',13),
+  (59,N'Bus, Coach and HGV',17),
+  (60,N'Furniture',17),
+  (61,N'Groundsmanship',1),
+  (62,N'Media',1)
 ) 
 AS Source (StandardSectorId, FullName, ApprenticeshipOccupationId) 
 ON Target.StandardSectorId = Source.StandardSectorId 

@@ -65,10 +65,14 @@
         public const string AdminViewApiUser = "AdminViewApiUser";
         public const string AdminCreateApiUser = "AdminCreateApiUser";
         public const string AdminEditApiUser = "AdminEditApiUser";
-        public const string AdminResetApiUserPassword = "AdminResetApiUserPassword";
+		public const string AdminResetApiUserPassword = "AdminResetApiUserPassword";
         public const string AdminExportApiUsers = "AdminExportApiUsers";
         public const string AdminEmployers = "AdminEmployers";
         public const string AdminViewEmployer = "AdminViewEmployer";
         public const string AdminEditEmployer = "AdminEditEmployer";
+        public const string AdminStandards = "AdminStandards";
+        public const string AdminStandardsCsv = "AdminStandardsCsv";
+        public const string AdminFrameworks = "AdminFrameworks";
+        public const string AdminFrameworksCsv = "AdminFrameworksCsv";
     }
 }

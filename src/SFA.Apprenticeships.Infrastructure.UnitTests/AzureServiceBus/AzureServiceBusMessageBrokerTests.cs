@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.Candidate;
+    using Application.UserAccount.Entities;
     using Azure.ServiceBus.Factory;
     using Azure.ServiceBus.Model;
     using Domain.Interfaces.Messaging;
@@ -18,14 +18,14 @@
         [Test]
         public void MessagesAreNotAutoCompleted()
         {
-            var subscriber = new CreateCandidateRequestSubscriberMock(ServiceBusMessageStates.Complete);
-            var subscribers = new List<IServiceBusSubscriber<CreateCandidateRequest>> { subscriber };
+            var subscriber = new CandidateUserUpdateSubscriberMock(ServiceBusMessageStates.Complete);
+            var subscribers = new List<IServiceBusSubscriber<CandidateUserUpdate>> { subscriber };
             var topicClient = new Mock<ITopicClient>();
             var subscriptionClient = new Mock<ISubscriptionClient>();
             var clientFactory = new Mock<IClientFactory>();
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>())).Returns(topicClient.Object);
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ReceiveMode>())).Returns(subscriptionClient.Object);
-            var broker = new AzureServiceBusMessageBrokerBuilder<CreateCandidateRequest>().With(subscribers).With(clientFactory).Build();
+            var broker = new AzureServiceBusMessageBrokerBuilder<CandidateUserUpdate>().With(subscribers).With(clientFactory).Build();
             broker.Subscribe();
 
             //Subscription should be set up with AutoComplete = false
@@ -35,14 +35,14 @@
         [Test]
         public void MessagesAreCompletedByTheBroker()
         {
-            var subscriber = new CreateCandidateRequestSubscriberMock(ServiceBusMessageStates.Complete);
-            var subscribers = new List<IServiceBusSubscriber<CreateCandidateRequest>> { subscriber };
+            var subscriber = new CandidateUserUpdateSubscriberMock(ServiceBusMessageStates.Complete);
+            var subscribers = new List<IServiceBusSubscriber<CandidateUserUpdate>> { subscriber };
             var topicClient = new Mock<ITopicClient>();
             var subscriptionClient = new SubscriptionClientStub();
             var clientFactory = new Mock<IClientFactory>();
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>())).Returns(topicClient.Object);
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ReceiveMode>())).Returns(subscriptionClient);
-            var broker = new AzureServiceBusMessageBrokerBuilder<CreateCandidateRequest>().With(subscribers).With(clientFactory).Build();
+            var broker = new AzureServiceBusMessageBrokerBuilder<CandidateUserUpdate>().With(subscribers).With(clientFactory).Build();
             broker.Subscribe();
 
             var message = new Mock<IBrokeredMessage>();
@@ -54,14 +54,14 @@
         [Test]
         public void MessagesAreAbandonedByTheBroker()
         {
-            var subscriber = new CreateCandidateRequestSubscriberMock(ServiceBusMessageStates.Abandon);
-            var subscribers = new List<IServiceBusSubscriber<CreateCandidateRequest>> { subscriber };
+            var subscriber = new CandidateUserUpdateSubscriberMock(ServiceBusMessageStates.Abandon);
+            var subscribers = new List<IServiceBusSubscriber<CandidateUserUpdate>> { subscriber };
             var topicClient = new Mock<ITopicClient>();
             var subscriptionClient = new SubscriptionClientStub();
             var clientFactory = new Mock<IClientFactory>();
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>())).Returns(topicClient.Object);
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ReceiveMode>())).Returns(subscriptionClient);
-            var broker = new AzureServiceBusMessageBrokerBuilder<CreateCandidateRequest>().With(subscribers).With(clientFactory).Build();
+            var broker = new AzureServiceBusMessageBrokerBuilder<CandidateUserUpdate>().With(subscribers).With(clientFactory).Build();
             broker.Subscribe();
 
             var message = new Mock<IBrokeredMessage>();
@@ -74,14 +74,14 @@
         [Test]
         public void MessagesAreDeadLetteredByTheBroker()
         {
-            var subscriber = new CreateCandidateRequestSubscriberMock(ServiceBusMessageStates.DeadLetter);
-            var subscribers = new List<IServiceBusSubscriber<CreateCandidateRequest>> { subscriber };
+            var subscriber = new CandidateUserUpdateSubscriberMock(ServiceBusMessageStates.DeadLetter);
+            var subscribers = new List<IServiceBusSubscriber<CandidateUserUpdate>> { subscriber };
             var topicClient = new Mock<ITopicClient>();
             var subscriptionClient = new SubscriptionClientStub();
             var clientFactory = new Mock<IClientFactory>();
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>())).Returns(topicClient.Object);
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ReceiveMode>())).Returns(subscriptionClient);
-            var broker = new AzureServiceBusMessageBrokerBuilder<CreateCandidateRequest>().With(subscribers).With(clientFactory).Build();
+            var broker = new AzureServiceBusMessageBrokerBuilder<CandidateUserUpdate>().With(subscribers).With(clientFactory).Build();
             broker.Subscribe();
 
             var message = new Mock<IBrokeredMessage>();
@@ -94,14 +94,14 @@
         [Test]
         public void MessagesWithUnknownStateAreDeadLettered()
         {
-            var subscriber = new CreateCandidateRequestSubscriberMock(ServiceBusMessageStates.Unknown);
-            var subscribers = new List<IServiceBusSubscriber<CreateCandidateRequest>> { subscriber };
+            var subscriber = new CandidateUserUpdateSubscriberMock(ServiceBusMessageStates.Unknown);
+            var subscribers = new List<IServiceBusSubscriber<CandidateUserUpdate>> { subscriber };
             var topicClient = new Mock<ITopicClient>();
             var subscriptionClient = new SubscriptionClientStub();
             var clientFactory = new Mock<IClientFactory>();
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>())).Returns(topicClient.Object);
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ReceiveMode>())).Returns(subscriptionClient);
-            var broker = new AzureServiceBusMessageBrokerBuilder<CreateCandidateRequest>().With(subscribers).With(clientFactory).Build();
+            var broker = new AzureServiceBusMessageBrokerBuilder<CandidateUserUpdate>().With(subscribers).With(clientFactory).Build();
             broker.Subscribe();
 
             var message = new Mock<IBrokeredMessage>();
@@ -114,8 +114,8 @@
         [Test]
         public void MessagesAreRequeuedAndCompletedByTheBroker()
         {
-            var subscriber = new CreateCandidateRequestSubscriberMock(ServiceBusMessageStates.Requeue);
-            var subscribers = new List<IServiceBusSubscriber<CreateCandidateRequest>> { subscriber };
+            var subscriber = new CandidateUserUpdateSubscriberMock(ServiceBusMessageStates.Requeue);
+            var subscribers = new List<IServiceBusSubscriber<CandidateUserUpdate>> { subscriber };
             var topicClient = new Mock<ITopicClient>();
             BrokeredMessage newBrokeredMessage = null;
             topicClient.Setup(c => c.Send(It.IsAny<BrokeredMessage>())).Callback<BrokeredMessage>(bm => newBrokeredMessage = bm);
@@ -123,7 +123,7 @@
             var clientFactory = new Mock<IClientFactory>();
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>())).Returns(topicClient.Object);
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ReceiveMode>())).Returns(subscriptionClient);
-            var broker = new AzureServiceBusMessageBrokerBuilder<CreateCandidateRequest>().With(subscribers).With(clientFactory).Build();
+            var broker = new AzureServiceBusMessageBrokerBuilder<CandidateUserUpdate>().With(subscribers).With(clientFactory).Build();
             broker.Subscribe();
 
             var message = new Mock<IBrokeredMessage>();
@@ -139,8 +139,8 @@
         [Test]
         public void SubsequentRequeuedMessagesAreScheduledForFiveMinutesHence()
         {
-            var subscriber = new CreateCandidateRequestSubscriberMock(ServiceBusMessageStates.Requeue);
-            var subscribers = new List<IServiceBusSubscriber<CreateCandidateRequest>> { subscriber };
+            var subscriber = new CandidateUserUpdateSubscriberMock(ServiceBusMessageStates.Requeue);
+            var subscribers = new List<IServiceBusSubscriber<CandidateUserUpdate>> { subscriber };
             var topicClient = new Mock<ITopicClient>();
             BrokeredMessage newBrokeredMessage = null;
             topicClient.Setup(c => c.Send(It.IsAny<BrokeredMessage>())).Callback<BrokeredMessage>(bm => newBrokeredMessage = bm);
@@ -148,7 +148,7 @@
             var clientFactory = new Mock<IClientFactory>();
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>())).Returns(topicClient.Object);
             clientFactory.Setup(f => f.CreateFromConnectionString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ReceiveMode>())).Returns(subscriptionClient);
-            var broker = new AzureServiceBusMessageBrokerBuilder<CreateCandidateRequest>().With(subscribers).With(clientFactory).Build();
+            var broker = new AzureServiceBusMessageBrokerBuilder<CandidateUserUpdate>().With(subscribers).With(clientFactory).Build();
             broker.Subscribe();
 
             var message = new Mock<IBrokeredMessage>();

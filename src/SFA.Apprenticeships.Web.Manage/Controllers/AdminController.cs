@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
@@ -8,6 +9,7 @@
     using Common.Mediators;
     using Constants;
     using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
     using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Api;
@@ -60,9 +62,9 @@
         }
 
         [HttpGet]
-        public ActionResult Provider(int employerId)
+        public ActionResult Provider(int providerId)
         {
-            var response = _adminMediator.GetProvider(employerId);
+            var response = _adminMediator.GetProvider(providerId);
 
             return View(response.ViewModel);
         }
@@ -157,17 +159,17 @@
         }
 
         [HttpGet]
-        public ActionResult ProviderSite(int employerSiteId)
+        public ActionResult ProviderSite(int providerSiteId)
         {
-            var response = _adminMediator.GetProviderSite(employerSiteId);
+            var response = _adminMediator.GetProviderSite(providerSiteId);
 
             return View(response.ViewModel);
         }
 
         [HttpGet]
-        public ActionResult CreateProviderSite(int employerId)
+        public ActionResult CreateProviderSite(int providerId)
         {
-            return View(new ProviderSiteViewModel { ProviderId = employerId });
+            return View(new ProviderSiteViewModel { ProviderId = providerId });
         }
 
         [HttpPost]
@@ -461,6 +463,34 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpGet]
+        public ActionResult Standards()
+        {
+            var response = _adminMediator.GetStandard();
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Frameworks()
+        {
+            var response = _adminMediator.GetFrameworks();
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult DownloadFrameworksCsv()
+        {
+            var response = _adminMediator.GetFrameworksBytes();
+            return File(response.ViewModel, "text/csv", "FrameworkList.csv");
+        }
+
+        [HttpGet]
+        public ActionResult DownloadStandardsCsv()
+        {
+            var response = _adminMediator.GetStandardsBytes();
+            return File(response.ViewModel, "text/csv", "StandardsList.csv");
         }
     }
 }

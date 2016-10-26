@@ -87,6 +87,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\UserAccountConfiguration.cs" />
+    <Compile Include="Entities\CandidateUserUpdate.cs" />
+    <Compile Include="Entities\CandidateUserUpdateType.cs" />
     <Compile Include="ProviderUserAccountService.cs" />
     <Compile Include="RandomCodeGenerator.cs" />
     <Compile Include="StaticCodeGenerator.cs" />

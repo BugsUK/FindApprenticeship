@@ -1,15 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
-    using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
     using Constants;
     using Domain.Entities.Raa;
     using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
+    using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.VacancyStatus;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -17,7 +17,10 @@
     {
         private readonly IVacancyStatusMediator _vacancyStatusMediator;
 
-        public VacancyStatusController(IVacancyStatusMediator vacancyStatusMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
+
+        public VacancyStatusController(IVacancyStatusMediator vacancyStatusMediator,
+            IConfigurationService configurationService,
+            ILogService logService) : base(configurationService, logService)
         {
             _vacancyStatusMediator = vacancyStatusMediator;
         }
@@ -45,4 +48,4 @@
             }
         }
     }
-}   
+}

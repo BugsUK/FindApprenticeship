@@ -6,7 +6,7 @@
     {
         public ApplicationSelectionViewModel()
         {
-            
+
         }
 
         public ApplicationSelectionViewModel(Guid applicationId, int vacancyReferenceNumber) : base(vacancyReferenceNumber)

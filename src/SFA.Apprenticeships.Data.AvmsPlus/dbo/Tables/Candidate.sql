@@ -58,7 +58,8 @@
     CONSTRAINT [FK_Candidate_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_Candidate_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),
     CONSTRAINT [FK_Candidate_Person] FOREIGN KEY ([PersonId]) REFERENCES [dbo].[Person] ([PersonId]),
-    CONSTRAINT [uq_idx_candidate_person] UNIQUE NONCLUSTERED ([PersonId] ASC)
+    CONSTRAINT [uq_idx_candidate_person] UNIQUE NONCLUSTERED ([PersonId] ASC),
+    CONSTRAINT [uq_idx_candidate_guid] UNIQUE NONCLUSTERED ([CandidateGuid] ASC)
 );
 
 
@@ -69,6 +70,6 @@ CREATE NONCLUSTERED INDEX [idx_Candidate_CandidateStatusTypeID]
 
 
 GO
-CREATE NONCLUSTERED INDEX [idx_Candidate_CandidateGuid] 
+CREATE NONCLUSTERED INDEX [nci_wi_Candidate_56288E05DCC7E26DF94F5E6F145187EB] 
 	ON [dbo].[Candidate] ([CandidateGuid]) 
 	INCLUDE ([CandidateId], [PersonId]) ;

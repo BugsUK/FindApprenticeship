@@ -4,6 +4,7 @@
     using Apprenticeships.Application.UserAccount.Strategies;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
@@ -29,7 +30,7 @@
             });
 
             var unlockAccountStrategy = new UnlockAccountStrategy(userReadRepository.Object, null,
-                sendAccountUnlockCodeStrategy.Object);
+                sendAccountUnlockCodeStrategy.Object, new Mock<IServiceBus>().Object);
 
             Action a = () => unlockAccountStrategy.UnlockAccount(Username, UnlockAccountCode);
             a.ShouldThrow<CustomException>()
@@ -50,7 +51,7 @@
             });
 
             var unlockAccountStrategy = new UnlockAccountStrategy(userReadRepository.Object, null,
-                sendAccountUnlockCodeStrategy.Object);
+                sendAccountUnlockCodeStrategy.Object, new Mock<IServiceBus>().Object);
 
             Action a = () => unlockAccountStrategy.UnlockAccount(Username, UnlockAccountCode);
             a.ShouldThrow<CustomException>()
@@ -72,7 +73,7 @@
             });
 
             var unlockAccountStrategy = new UnlockAccountStrategy(userReadRepository.Object, userWriteRepository.Object,
-                sendAccountUnlockCodeStrategy.Object);
+                sendAccountUnlockCodeStrategy.Object, new Mock<IServiceBus>().Object);
 
             unlockAccountStrategy.UnlockAccount(Username, UnlockAccountCode);
             

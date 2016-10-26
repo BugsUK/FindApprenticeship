@@ -1,0 +1,42 @@
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Manage.Constants
+@model List<SFA.Apprenticeships.Domain.Entities.ReferenceData.Category>
+@{
+    ViewBag.Title = "Frameworks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 id="heading" class="heading-xlarge">Frameworks</h1>
+
+@Html.RouteLink("Download Frameworks", ManagementRouteNames.AdminFrameworksCsv)
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>SSAT1</th>
+        <th>Frameworks</th>
+        <th>Status</th>
+    </tr>
+
+    @foreach (var ssat1 in Model)
+    {
+        foreach (var subCategory in ssat1.SubCategories)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => subCategory.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => ssat1.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => subCategory.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => subCategory.Status)
+                </td>
+            </tr>
+        }
+    }
+</table>

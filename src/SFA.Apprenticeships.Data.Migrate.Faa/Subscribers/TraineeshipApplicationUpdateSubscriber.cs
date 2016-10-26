@@ -3,6 +3,7 @@
     using System;
     using Application.Application.Entities;
     using Application.Interfaces;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
 
     public class TraineeshipApplicationUpdateSubscriber : IServiceBusSubscriber<TraineeshipApplicationUpdate>
@@ -19,20 +20,41 @@
         [ServiceBusTopicSubscription(TopicName = "TraineeshipApplicationUpdate")]
         public ServiceBusMessageStates Consume(TraineeshipApplicationUpdate request)
         {
-            _logService.Debug($"Updating traineeship application with id {request.ApplicationGuid}");
+            _logService.Debug($"Processing traineeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}");
 
             try
             {
-                _traineeshipApplicationUpdater.Update(request.ApplicationGuid);
+                switch (request.ApplicationUpdateType)
+                {
+                    case ApplicationUpdateType.Create:
+                        _traineeshipApplicationUpdater.Create(request.ApplicationGuid);
+                        _logService.Debug($"Created traineeship application with id {request.ApplicationGuid}");
+                        break;
+                    case ApplicationUpdateType.Update:
+                        _traineeshipApplicationUpdater.Update(request.ApplicationGuid);
+                        _logService.Debug($"Updated traineeship application with id {request.ApplicationGuid}");
+                        break;
+                    case ApplicationUpdateType.Delete:
+                        _traineeshipApplicationUpdater.Delete(request.ApplicationGuid);
+                        _logService.Debug($"Deleted traineeship application with id {request.ApplicationGuid}");
+                        break;
+                    default:
+                        _logService.Warn($"Traineeship application update with id {request.ApplicationGuid} was of an unknown or unsupported type {request.ApplicationUpdateType}. Dead lettering message");
+                        return ServiceBusMessageStates.DeadLetter;
+                }
 
-                _logService.Debug($"Updated traineeship application with id {request.ApplicationGuid}");
+                return ServiceBusMessageStates.Complete;
+            }
+            catch (CustomException ex)
+            {
+                _logService.Error($"Failed to process traineeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}. Requeuing message", ex);
+                return ServiceBusMessageStates.Requeue;
             }
             catch (Exception ex)
             {
-                _logService.Error($"Failed to update traineeship application with id {request.ApplicationGuid}", ex);
+                _logService.Error($"Failed to process traineeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}. Dead lettering message", ex);
+                return ServiceBusMessageStates.DeadLetter;
             }
-
-            return ServiceBusMessageStates.Complete;
         }
     }
 }
