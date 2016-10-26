@@ -225,12 +225,23 @@
 @section scripts
 {
     <script>
-        $(function() {
-            $('#toggleAll')
-                .on('change',
-                    function() {
-                        $("input:checkbox").prop('checked', $(this).prop("checked"));
-                    });
+        $("#toggleAll").change(function () {  //"select all" change 
+            var status = this.checked; // "select all" checked status
+            $('input:checkbox').each(function () { //iterate all listed checkbox items
+                this.checked = status; //change ".checkbox" checked status
+            });
+        });
+
+        $('input:checkbox').change(function () { //".checkbox" change 
+            //uncheck "select all", if one of the listed checkbox item is unchecked
+            if (this.checked == false) { //if this item is unchecked
+                $("#toggleAll")[0].checked = false; //change "select all" checked status to false
+            }
+
+            //check "select all" if all checkbox items are checked
+            if (($('input:checkbox:checked').length+1) == $('input:checkbox').length) {
+                $("#toggleAll")[0].checked = true; //change "select all" checked status to true
+            }
         });
     </script>
 }
