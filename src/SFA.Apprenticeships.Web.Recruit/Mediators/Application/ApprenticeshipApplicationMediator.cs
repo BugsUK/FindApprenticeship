@@ -16,6 +16,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     public class ApprenticeshipApplicationMediator : MediatorBase, IApprenticeshipApplicationMediator
     {
         private readonly IApplicationProvider _applicationProvider;
+
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelServerValidator;
         private readonly IDecryptionService<AnonymisedApplicationLink> _decryptionService;
         private readonly IDateTimeService _dateTimeService;
@@ -41,7 +42,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
             }
 
-            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.Ok, viewModel);
         }
@@ -193,7 +194,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
             }
 
-            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok, viewModel);
         }
@@ -214,7 +215,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
             }
 
-            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok, viewModel);
         }
@@ -236,7 +237,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.NoApplicationId, new ApprenticeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
             }
 
-            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.Ok, viewModel);
         }

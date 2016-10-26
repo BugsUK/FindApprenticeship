@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
     using System;
+    using Application.Entities;
     using Domain.Entities.Applications;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
     public class CreateDraftApprenticeshipFromSavedVacancyStrategy : ICreateDraftApprenticeshipFromSavedVacancyStrategy
@@ -9,15 +11,17 @@
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRespository;
+        private readonly IServiceBus _serviceBus;
 
         public CreateDraftApprenticeshipFromSavedVacancyStrategy(
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
-            ICandidateReadRepository candidateReadRespository)
+            ICandidateReadRepository candidateReadRespository, IServiceBus serviceBus)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _candidateReadRespository = candidateReadRespository;
+            _serviceBus = serviceBus;
         }
 
         public ApprenticeshipApplicationDetail CreateDraft(Guid candidateId, int vacancyId)
@@ -37,6 +41,7 @@
             applicationDetail.CandidateDetails = candidateDetail.RegistrationDetails;
             applicationDetail.CandidateInformation = candidateDetail.ApplicationTemplate;
             applicationDetail = _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+            _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationDetail.EntityId, ApplicationUpdateType.Update));
             return applicationDetail;
         }
     }

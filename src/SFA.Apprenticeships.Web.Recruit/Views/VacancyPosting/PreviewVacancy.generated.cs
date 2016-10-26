@@ -120,17 +120,19 @@ WriteLiteral("        <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 536), Tuple.Create("\"", 595)
+WriteAttribute("href", Tuple.Create(" href=\"", 536), Tuple.Create("\"", 661)
             
             #line 17 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 543), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 543), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates,new {vacancyReferenceNumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
 , 543), false)
 );
 
-WriteLiteral(">Return to recruitment home</a>\r\n");
+WriteLiteral(" class=\"button\"");
+
+WriteLiteral(">Continue responding to candidates</a>\r\n");
 
             
             #line 18 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
@@ -251,14 +253,14 @@ WriteLiteral("                    <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1727), Tuple.Create("\"", 1786)
+WriteAttribute("href", Tuple.Create(" href=\"", 1807), Tuple.Create("\"", 1866)
             
             #line 46 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1734), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 1814), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 1734), false)
+, 1814), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n                </div>\r\n            </section>\r\n");

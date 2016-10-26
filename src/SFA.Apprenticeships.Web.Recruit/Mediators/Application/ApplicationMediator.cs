@@ -7,6 +7,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Providers;
     using Raa.Common.Validators.ProviderUser;
+    using Raa.Common.Validators.VacancyStatus;
     using Raa.Common.ViewModels.Application;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,8 +21,11 @@
         private readonly ShareApplicationsViewModelValidator _shareApplicationsViewModelValidator;
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly BulkDeclineCandidatesViewModelServerValidator _bulkDeclineCandidatesViewModelServerValidator = new BulkDeclineCandidatesViewModelServerValidator();
 
-        public ApplicationMediator(IApplicationProvider applicationProvider, ShareApplicationsViewModelValidator shareApplicationsViewModelValidator, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
+        public ApplicationMediator(IApplicationProvider applicationProvider,
+            ShareApplicationsViewModelValidator shareApplicationsViewModelValidator,
+            IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
         {
             _applicationProvider = applicationProvider;
             _shareApplicationsViewModelValidator = shareApplicationsViewModelValidator;
@@ -72,6 +76,42 @@
             _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks, _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress);
 
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.GetBulkDeclineCandidatesViewModel.Ok, viewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+
+            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(bulkDeclineCandidatesViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.FailedValidation, viewModel, validationResult);
+            }
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.Ok, viewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+
+            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(bulkDeclineCandidatesViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.FailedValidation, viewModel, validationResult);
+            }
+
+            viewModel = _applicationProvider.SendBulkUnsuccessfulDecision(viewModel);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.Ok, viewModel);
         }
     }
 }

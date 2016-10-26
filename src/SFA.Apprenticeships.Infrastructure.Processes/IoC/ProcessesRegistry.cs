@@ -133,8 +133,6 @@
             RegisterServiceBusMessageBroker<ApplicationHousekeepingRequestSubscriber, ApplicationHousekeepingRequest>();
             RegisterServiceBusMessageBroker<ApplicationStatusChangedSubscriber, ApplicationStatusChanged>();
             RegisterServiceBusMessageBroker<CommunicationHousekeepingRequestSubscriber, CommunicationHousekeepingRequest>();
-            RegisterServiceBusMessageBroker<SubmitApprenticeshipApplicationRequestSubscriber, SubmitApprenticeshipApplicationRequest>();
-            RegisterServiceBusMessageBroker<SubmitTraineeshipApplicationRequestSubscriber, SubmitTraineeshipApplicationRequest>();
             RegisterServiceBusMessageBroker<CandidateAccountHousekeepingSubscriber, CandidateHousekeeping>();
             RegisterServiceBusMessageBroker<CandidateSavedSearchesSubscriber, CandidateSavedSearches>();
             RegisterServiceBusMessageBroker<CommunicationRequestSubscriber, CommunicationRequest>();

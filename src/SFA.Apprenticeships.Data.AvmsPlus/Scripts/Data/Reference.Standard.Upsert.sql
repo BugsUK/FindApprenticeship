@@ -130,7 +130,24 @@ USING (VALUES
   (130,56,130,N'Associate Project Manager',13),
   (131,57,131,N'Public Sector Commercial Professional ',13),
   (132,58,132,N'Travel Consultant',12),
-  (133,42,133,N'Broadcast Production Assistant',12)
+  (133,42,133,N'Broadcast Production Assistant',12),
+  (134,46,134,N'Assistant Accountant',12),
+  (135,2,135,N'Aviation Maintenance Mechanic (Military)',11),
+  (136,59,136,N'Bus and Coach Engineering Technician',12),
+  (137,59,137,N'Heavy Vehicle Service and Maintenance Technician',12),
+  (138,59,138,N'Bus and Coach Engineering Manager',13),
+  (139,9,139,N'IT Technical Salesperson',12),
+  (140,11,140,N'Electrical Power Protection and Plant Commissioning Engineer',13),
+  (141,11,141,N'Maintenance and Operations Engineering Technician',12),
+  (142,12,142,N'Compliance / Risk Officer',12),
+  (143,12,143,N'Senior Compliance / Risk Specialist',15),
+  (144,60,144,N'Furniture Manufacturer',11),
+  (145,61,145,N'Sports Turf Operative',11),
+  (146,34,146,N'Hospitality Supervisor',12),
+  (147,34,147,N'Senior Chef Production Cooking',12),
+  (148,62,148,N'Junior Journalist',12),
+  (149,44,149,N'Retail Team Leader',12),
+  (150,44,150,N'Retail Manager',13)
 ) 
 AS Source (StandardId, StandardSectorId, LarsCode, FullName, EducationLevelId) 
 ON Target.StandardId = Source.StandardId 
