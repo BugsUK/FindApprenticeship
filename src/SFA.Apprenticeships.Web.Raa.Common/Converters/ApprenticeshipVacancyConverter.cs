@@ -63,9 +63,9 @@
         {
             return new List<SelectListItem>()
             {
-                new SelectListItem() { Value = ((int)WageType.CompetitiveSalary).ToString(), Text = WagePresenter.CompetitiveSalaryText},
-                new SelectListItem() { Value = ((int)WageType.ToBeAgreedUponAppointment).ToString(), Text = WagePresenter.ToBeAGreedUponAppointmentText},
-                new SelectListItem() { Value = ((int)WageType.Unwaged).ToString(), Text = WagePresenter.UnwagedText}
+                new SelectListItem() { Value = ((int)PresetText.CompetitiveSalary).ToString(), Text = WagePresenter.CompetitiveSalaryText},
+                new SelectListItem() { Value = ((int)PresetText.ToBeAgreedUponAppointment).ToString(), Text = WagePresenter.ToBeAGreedUponAppointmentText},
+                new SelectListItem() { Value = ((int)PresetText.Unwaged).ToString(), Text = WagePresenter.UnwagedText}
             };
         }
 

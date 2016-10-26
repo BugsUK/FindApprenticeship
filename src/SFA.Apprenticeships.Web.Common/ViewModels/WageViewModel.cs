@@ -12,52 +12,12 @@
             Type = WageType.Custom;
             Unit = WageUnit.NotApplicable;
         }
-
-        public WageViewModel(Wage wage)
-        {
-            HoursPerWeek = wage.HoursPerWeek;
-            Type = wage.Type;
-            Amount = wage.Amount;
-            AmountLowerBound = wage.AmountLowerBound;
-            AmountUpperBound= wage.AmountUpperBound;
-            Text = wage.Text;
-            Unit = wage.Unit;
-            RangeUnit = wage.Unit;
-            WageTypeReason = wage.ReasonForType;
-
-            switch (wage.Type)
-            {
-                case WageType.Custom:
-                case WageType.CustomRange:
-                    Type = WageType.Custom;
-                    CustomType = wage.Type;
-                    PresetText = wage.Type;
-                    break;
-                case WageType.CompetitiveSalary:
-                case WageType.ToBeAgreedUponAppointment:
-                case WageType.Unwaged:
-                case WageType.LegacyText:
-                    Type = WageType.LegacyText;
-                    CustomType = WageType.LegacyText;
-                    PresetText = wage.Type;
-                    break;
-                case WageType.LegacyWeekly:
-                case WageType.ApprenticeshipMinimum:
-                case WageType.NationalMinimum:
-                    Type = wage.Type;
-                    CustomType = wage.Type;
-                    PresetText = wage.Type;
-                    break;
-                default:
-                    throw new InvalidOperationException("unknown wage type");
-            }
-        }
-
+        
         public WageType Type { get; set; }
 
-        public WageType CustomType { get; set; }
+        public CustomWageType CustomType { get; set; }
 
-        public WageType PresetText { get; set; }
+        public PresetText PresetText { get; set; }
 
         [Display(Name = WageViewModelMessages.LabelText)]
         public decimal? Amount { get; set; }
