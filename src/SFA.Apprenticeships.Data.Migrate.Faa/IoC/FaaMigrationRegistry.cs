@@ -11,9 +11,9 @@
     {
         public FaaMigrationRegistry()
         {
-            For<ICandidateUserUpdater>().Use<CandidateUserUpdater>();
-            For<IApprenticeshipApplicationUpdater>().Use<ApprenticeshipApplicationUpdater>();
-            For<ITraineeshipApplicationUpdater>().Use<TraineeshipApplicationUpdater>();
+            For<ICandidateUserUpdater>().Use<CandidateUserUpdater>().Singleton();
+            For<IApprenticeshipApplicationUpdater>().Use<ApprenticeshipApplicationUpdater>().Singleton();
+            For<ITraineeshipApplicationUpdater>().Use<TraineeshipApplicationUpdater>().Singleton();
 
             // service bus
             RegisterServiceBusMessageBrokers();

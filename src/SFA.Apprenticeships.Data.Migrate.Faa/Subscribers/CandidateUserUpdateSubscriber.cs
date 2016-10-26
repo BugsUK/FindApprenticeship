@@ -17,7 +17,7 @@
             _candidateUserUpdater = candidateUserUpdater;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "CandidateUpdate")]
+        [ServiceBusTopicSubscription(TopicName = "CandidateUserUpdate")]
         public ServiceBusMessageStates Consume(CandidateUserUpdate request)
         {
             _logService.Debug($"Processing apprenticeship candidate update with id {request.CandidateGuid} and type {request.CandidateUserUpdateType}");

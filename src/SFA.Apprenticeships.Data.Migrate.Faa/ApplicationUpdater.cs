@@ -112,7 +112,6 @@
             //update existing application
             _targetDatabase.UpdateSingle(applicationWithHistory.ApplicationWithSubVacancy.Application);
             
-            //TODO: Likely that this creates multiple history records when the status is changed from new to inprogress and back again
             //Insert new application history records
             foreach (var applicationHistory in applicationWithHistory.ApplicationHistory.Where(a => a.ApplicationHistoryId == 0))
             {
