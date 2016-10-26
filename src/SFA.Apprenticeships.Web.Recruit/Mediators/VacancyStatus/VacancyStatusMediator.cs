@@ -5,9 +5,10 @@
     using Raa.Common.ViewModels.VacancyStatus;
     using VacancyPosting;
 
-    public class VacancyStatusMediator : IVacancyStatusMediator
+    public class VacancyStatusMediator : MediatorBase, IVacancyStatusMediator
     {
         private readonly IVacancyStatusChangeProvider _vacancyStatusChangeProvider;
+
 
         public VacancyStatusMediator(IVacancyStatusChangeProvider vacancyStatusChangeProvider)
         {
@@ -17,7 +18,7 @@
         public MediatorResponse<ArchiveVacancyViewModel> GetArchiveVacancyViewModelByVacancyReferenceNumber(int vacancyReferenceNumber)
         {
             var model = _vacancyStatusChangeProvider.GetArchiveVacancyViewModelByVacancyReferenceNumber(vacancyReferenceNumber);
-            return new MediatorResponse<ArchiveVacancyViewModel>()
+            return new MediatorResponse<ArchiveVacancyViewModel>
             {
                 ViewModel = model,
                 Code = VacancyStatusMediatorCodes.GetArchiveVacancyViewModel.Ok
@@ -37,7 +38,7 @@
                 };
             }
 
-            return new MediatorResponse<ArchiveVacancyViewModel>()
+            return new MediatorResponse<ArchiveVacancyViewModel>
             {
                 ViewModel = model,
                 Code = VacancyStatusMediatorCodes.ArchiveVacancy.Ok

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces;
@@ -29,7 +30,6 @@
             _logService = logService;
 
             var configuration = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
-            var sourceDatabase = new GetOpenConnectionFromConnectionString(configuration.SourceConnectionString);
             _targetDatabase = new GetOpenConnectionFromConnectionString(configuration.TargetConnectionString);
 
             _applicationMappers = new ApplicationMappers(_logService);
@@ -41,11 +41,55 @@
             _schoolAttendedRepository = new SchoolAttendedRepository(_targetDatabase);
         }
 
+        public void Create(Guid applicationGuid)
+        {
+            var destinationApplicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(new[] { applicationGuid });
+            if (destinationApplicationIds.ContainsKey(applicationGuid))
+            {
+                Update(applicationGuid);
+                return;
+            }
+
+            var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
+            var candidateGuid = application.CandidateId;
+            var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] { candidateGuid });
+            if (!candidateIds.ContainsKey(candidateGuid))
+            {
+                _logService.Warn($"Candidate {candidateGuid} for application {applicationGuid} could not be found");
+                return;
+            }
+
+            var destinationCandidateId = candidateIds[candidateGuid];
+
+            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(application, destinationCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, ApplicationSummary>(), new Dictionary<int, int>(), new Dictionary<int, SubVacancy>(), new Dictionary<int, Dictionary<int, int>>(), new Dictionary<int, List<ApplicationHistorySummary>>());
+
+            Create(applicationWithHistory);
+        }
+
+        private void Create(ApplicationWithHistory applicationWithHistory)
+        {
+            //Insert existing application
+            var applicationId = (int)_targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.Application);
+
+            //Insert new application history records
+            foreach (var applicationHistory in applicationWithHistory.ApplicationHistory)
+            {
+                applicationHistory.ApplicationId = applicationId;
+                _targetDatabase.Insert(applicationHistory);
+            }
+
+            var schoolAttended = applicationWithHistory.ApplicationWithSubVacancy.SchoolAttended;
+            if (schoolAttended != null)
+            {
+                //Insert school attended
+                schoolAttended.ApplicationId = applicationId;
+                _targetDatabase.Insert(schoolAttended);
+            }
+        }
+
         public void Update(Guid applicationGuid)
         {
             var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
-
-            _logService.Debug($"Updating application {application.Id} to status {application.Status} with notes {application.Notes}");
 
             var candidateGuid = application.CandidateId;
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] {candidateGuid});
@@ -68,10 +112,8 @@
             Update(applicationWithHistory);
         }
 
-        public void Update(ApplicationWithHistory applicationWithHistory)
+        private void Update(ApplicationWithHistory applicationWithHistory)
         {
-            _logService.Debug($"Updating database application {applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationGuid} to status {applicationWithHistory.ApplicationWithSubVacancy.Application.ApplicationStatusTypeId} with notes {applicationWithHistory.ApplicationWithSubVacancy.Application.NextActionOther}");
-
             //update existing application
             _targetDatabase.UpdateSingle(applicationWithHistory.ApplicationWithSubVacancy.Application);
             
@@ -86,6 +128,35 @@
             foreach (var applicationHistory in applicationWithHistory.ApplicationHistory.Where(a => a.ApplicationHistoryId != 0))
             {
                 _targetDatabase.UpdateSingle(applicationHistory);
+            }
+
+            var schoolAttended = applicationWithHistory.ApplicationWithSubVacancy.SchoolAttended;
+            if (schoolAttended != null)
+            {
+                if (schoolAttended.SchoolAttendedId == 0)
+                {
+                    //Insert school attended if not already present
+                    _targetDatabase.Insert(schoolAttended);
+                }
+                else
+                {
+                    //Otherwise update
+                    _targetDatabase.UpdateSingle(schoolAttended);
+                }
+            }
+        }
+
+        public void Delete(Guid applicationGuid)
+        {
+            var destinationApplicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(new[] {applicationGuid});
+            if (destinationApplicationIds.ContainsKey(applicationGuid))
+            {
+                var applicationId = destinationApplicationIds[applicationGuid].ApplicationId;
+
+                _targetDatabase.MutatingQuery<object>("DELETE FROM SubVacancy WHERE AllocatedApplicationId = @applicationId", new { applicationId });
+                _targetDatabase.MutatingQuery<object>("DELETE FROM SchoolAttended WHERE ApplicationId = @applicationId", new { applicationId });
+                _targetDatabase.MutatingQuery<object>("DELETE FROM ApplicationHistory WHERE ApplicationId = @applicationId", new { applicationId });
+                _targetDatabase.MutatingQuery<object>("DELETE FROM Application WHERE ApplicationId = @applicationId", new { applicationId });
             }
         }
     }

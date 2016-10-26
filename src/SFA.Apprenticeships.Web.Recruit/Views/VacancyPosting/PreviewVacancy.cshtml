@@ -14,7 +14,7 @@
 
     @if (Model.Status.IsStateReadOnly())
     {
-        <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>
+        <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates,new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Continue responding to candidates</a>
     }
     else
     {

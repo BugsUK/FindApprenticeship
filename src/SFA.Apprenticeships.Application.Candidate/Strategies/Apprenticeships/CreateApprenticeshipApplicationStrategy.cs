@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
     using System;
+    using Application.Entities;
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Vacancy;
 
@@ -15,17 +17,19 @@
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
+        private readonly IServiceBus _serviceBus;
 
         public CreateApprenticeshipApplicationStrategy(
             IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
-            ICandidateReadRepository candidateReadRepository)
+            ICandidateReadRepository candidateReadRepository, IServiceBus serviceBus)
         {
             _vacancyDataProvider = vacancyDataProvider;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _candidateReadRepository = candidateReadRepository;
+            _serviceBus = serviceBus;
         }
 
         public ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
@@ -99,6 +103,7 @@
             }
 
             _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+            _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationDetail.EntityId, ApplicationUpdateType.Create));
 
             return applicationDetail;
         }
