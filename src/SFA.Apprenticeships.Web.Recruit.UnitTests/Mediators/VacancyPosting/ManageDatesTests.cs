@@ -26,8 +26,7 @@
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new WageViewModel() { Type = WageType.Custom,
-                    Classification = WageClassification.Custom,
+                Wage = new WageViewModel() {
                     CustomType = CustomWageType.Fixed,
                     Amount = 99, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.Weekly, HoursPerWeek = 30 },
                 VacancyDatesViewModel = new VacancyDatesViewModel

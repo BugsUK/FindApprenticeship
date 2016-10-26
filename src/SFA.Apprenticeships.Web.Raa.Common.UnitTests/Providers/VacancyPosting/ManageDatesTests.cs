@@ -23,7 +23,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
+                Wage = new WageViewModel(),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -60,7 +60,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
+                Wage = new WageViewModel(),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -91,6 +91,7 @@
         [Test]
         public void ShouldUpdateWage()
         {
+            //Arrange.
             const int vacancyReferenceNumber = 1;
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
@@ -98,7 +99,6 @@
             var wageViewModel = new WageViewModel()
             {
                 Type = WageType.Custom,
-                Classification = WageClassification.Custom,
                 CustomType = CustomWageType.Fixed,
                 Amount = 450,
                 AmountLowerBound = null,
@@ -107,7 +107,9 @@
                 Unit = WageUnit.Monthly,
                 HoursPerWeek = 37.5m
             };
-            var viewModel = new FurtherVacancyDetailsViewModel
+            var wage = new Wage(WageType.Custom, 450, null, null, null, WageUnit.Monthly, 37.5m, null);
+
+            var updatedViewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
@@ -118,33 +120,34 @@
                 Wage = wageViewModel
             };
 
-            var wage = new Wage(WageType.Custom, 450, null, null, null, WageUnit.Monthly, 37.5m, null);
-            var apprenticeshipVacancy = new Vacancy
+            var dbApprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Wage = new Wage(WageType.NationalMinimum, null, null, null, "Legacy text", WageUnit.Weekly, 30, null)
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(apprenticeshipVacancy);
+                .Returns(dbApprenticeshipVacancy);
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
-                .Returns(apprenticeshipVacancy);
+                .Returns(dbApprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<WageViewModel, Wage>(It.IsAny<WageViewModel>())).Returns(wage);
-            MockMapper.Setup(m => m.Map<Wage, WageViewModel>(It.IsAny<Wage>())).Returns(wageViewModel);
-            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
-                .Returns(viewModel);
+            MockMapper.Setup(m => m.Map<Wage, WageViewModel>(It.IsAny<Wage>())).Returns(wageViewModel); //this line kind of invalidates this test.
+            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(dbApprenticeshipVacancy))
+                .Returns(updatedViewModel);
 
             var provider = GetVacancyPostingProvider();
 
-            provider.UpdateVacancyDates(viewModel);
-
+            //Act.
+            provider.UpdateVacancyDates(updatedViewModel);
+            
+            //Assert.
             MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(
                 v => v.PossibleStartDate == possibleStartDate
-                && v.Wage.Type == viewModel.Wage.Type
-                && v.Wage.Amount == viewModel.Wage.Amount
-                && v.Wage.Text == apprenticeshipVacancy.Wage.Text
-                && v.Wage.Unit == viewModel.Wage.Unit
-                && v.Wage.HoursPerWeek == apprenticeshipVacancy.Wage.HoursPerWeek)));
+                && v.Wage.Type == updatedViewModel.Wage.Type
+                && v.Wage.Amount == updatedViewModel.Wage.Amount
+                && v.Wage.Text == dbApprenticeshipVacancy.Wage.Text
+                && v.Wage.Unit == updatedViewModel.Wage.Unit
+                && v.Wage.HoursPerWeek == dbApprenticeshipVacancy.Wage.HoursPerWeek)));
         }
 
         [Test]
@@ -156,7 +159,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
+                Wage = new WageViewModel(),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -197,7 +200,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
+                Wage = new WageViewModel(),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
@@ -250,7 +253,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
+                Wage = new WageViewModel(),
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),

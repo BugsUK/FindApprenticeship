@@ -585,19 +585,19 @@
             }
         }
 
-        [TestCase(VacancySource.Av, "40", WageType.LegacyWeekly, WageClassification.Custom, CustomWageType.NotApplicable, true)]
-        [TestCase(VacancySource.Av, "40", WageType.LegacyText, WageClassification.LegacyText, CustomWageType.NotApplicable, true)]
-        [TestCase(VacancySource.Av, "40", WageType.Custom, WageClassification.Custom, CustomWageType.Fixed, true)]
-        [TestCase(VacancySource.Av, "40", WageType.Custom, WageClassification.Custom, CustomWageType.Ranged, true)]
-        [TestCase(VacancySource.Av, "40", WageType.NationalMinimum, WageClassification.NationalMinimum, CustomWageType.NotApplicable, true)]
-        [TestCase(VacancySource.Av, "40", WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, CustomWageType.NotApplicable, true)]
-        [TestCase(VacancySource.Av, null, WageType.LegacyWeekly, WageClassification.Custom, CustomWageType.NotApplicable, true)]
-        [TestCase(VacancySource.Av, null, WageType.LegacyText, WageClassification.LegacyText, CustomWageType.NotApplicable, true)]
-        [TestCase(VacancySource.Av, null, WageType.Custom, WageClassification.Custom, CustomWageType.Fixed, true)]
-        [TestCase(VacancySource.Av, null, WageType.Custom, WageClassification.Custom, CustomWageType.Ranged, true)]
-        [TestCase(VacancySource.Av, null, WageType.NationalMinimum, WageClassification.NationalMinimum, CustomWageType.NotApplicable, false)]
-        [TestCase(VacancySource.Av, null, WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, CustomWageType.NotApplicable, false)]
-        public void WageTypeAndHoursPerWeekValidation(VacancySource vacancySource, string hoursPerWeekString, WageType wageType, WageClassification classification, CustomWageType customType, bool expectHoursPerWeekValid)
+        [TestCase("40", WageType.LegacyWeekly, WageClassification.Custom, CustomWageType.NotApplicable, true)]
+        [TestCase("40", WageType.LegacyText, WageClassification.LegacyText, CustomWageType.NotApplicable, true)]
+        [TestCase("40", WageType.Custom, WageClassification.Custom, CustomWageType.Fixed, true)]
+        [TestCase("40", WageType.Custom, WageClassification.Custom, CustomWageType.Ranged, true)]
+        [TestCase("40", WageType.NationalMinimum, WageClassification.NationalMinimum, CustomWageType.NotApplicable, true)]
+        [TestCase("40", WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, CustomWageType.NotApplicable, true)]
+        [TestCase(null, WageType.LegacyWeekly, WageClassification.Custom, CustomWageType.NotApplicable, true)]
+        [TestCase(null, WageType.LegacyText, WageClassification.LegacyText, CustomWageType.NotApplicable, true)]
+        [TestCase(null, WageType.Custom, WageClassification.Custom, CustomWageType.Fixed, true)]
+        [TestCase(null, WageType.Custom, WageClassification.Custom, CustomWageType.Ranged, true)]
+        [TestCase(null, WageType.NationalMinimum, WageClassification.NationalMinimum, CustomWageType.NotApplicable, false)]
+        [TestCase(null, WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, CustomWageType.NotApplicable, false)]
+        public void WageTypeAndHoursPerWeekValidation(string hoursPerWeekString, WageType wageType, WageClassification classification, CustomWageType customType, bool expectHoursPerWeekValid)
         {
             decimal? hoursPerWeek = null;
             decimal parsedHoursPerWeek;
@@ -606,11 +606,11 @@
                 hoursPerWeek = parsedHoursPerWeek;
             }
 
-            var vacancyViewModel = BuildValidVacancy(vacancySource);
+            var vacancyViewModel = BuildValidVacancy(VacancySource.Av);
             vacancyViewModel.FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
             {
-                VacancySource = vacancySource,
-                Wage = new WageViewModel() { Type = wageType, Classification = WageClassification.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek }
+                VacancySource = VacancySource.Av,
+                Wage = new WageViewModel() { Type = wageType, Classification = classification, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek }
             };
 
             _aggregateValidator.Validate(vacancyViewModel);

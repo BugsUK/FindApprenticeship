@@ -38,7 +38,7 @@
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel(),
                 VacancySource = VacancySource.Raa,
-                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+                Wage = new WageViewModel()
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -60,7 +60,7 @@
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 WorkingWeek = workingWeek,
-                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+                Wage = new WageViewModel()
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -112,7 +112,7 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
+                Wage = new WageViewModel() { HoursPerWeek = hoursPerWeek },
                 VacancySource = VacancySource.Raa
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
@@ -162,7 +162,7 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek },
+                Wage = new WageViewModel() { HoursPerWeek = hoursPerWeek },
                 VacancyType = VacancyType.Traineeship
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
@@ -199,7 +199,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = wageType, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+                Wage = new WageViewModel() { Type = wageType }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -235,7 +235,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = wageType, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
+                Wage = new WageViewModel() { Type = wageType },
                 VacancyType = VacancyType.Traineeship
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
@@ -290,7 +290,7 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = wageType, Amount = wage, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable, HoursPerWeek = 37.5m }
+                Wage = new WageViewModel() { Type = wageType, Amount = wage, Unit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable, HoursPerWeek = 37.5m }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -344,7 +344,7 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Type = wageType, Amount = wage, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable, HoursPerWeek = 37.5m },
+                Wage = new WageViewModel() { Type = wageType, Amount = wage, Unit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable, HoursPerWeek = 37.5m },
                 VacancyType = VacancyType.Traineeship
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
@@ -393,7 +393,7 @@
             {
                 Duration = duration,
                 VacancySource = VacancySource.Raa,
-                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+                Wage = new WageViewModel()
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -437,7 +437,7 @@
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 LongDescription = longDescription,
-                Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+                Wage = new WageViewModel()
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -464,5 +464,57 @@
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.LongDescription, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
+
+        //[TestCase(WageType.Custom, WageType.Custom, true)]
+        //[TestCase(WageType.Custom, WageType.CustomRange, true)]
+        //[TestCase(WageType.Custom, WageType.ApprenticeshipMinimum, false)]
+        //[TestCase(WageType.Custom, WageType.CompetitiveSalary, false)]
+        //[TestCase(WageType.Custom, WageType.LegacyText, false)]
+        //[TestCase(WageType.Custom, WageType.LegacyWeekly, false)]
+        //[TestCase(WageType.Custom, WageType.NationalMinimum, false)]
+        //[TestCase(WageType.Custom, WageType.ToBeAgreedUponAppointment, false)]
+        //[TestCase(WageType.Custom, WageType.Unwaged, false)]
+        public void CustomTypeMustBeSetWhenCustomWageTypeIsSelected(WageType selectedType, WageType selectedCustomType, bool expectValid)
+        {
+            //var viewModel = new FurtherVacancyDetailsViewModel
+            //{
+            //    Wage = new WageViewModel() { Type = selectedType, CustomType = selectedCustomType, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+            //};
+            //var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            //var response = _validator.Validate(viewModel, ruleSet: RuleSet);
+            //_aggregateValidator.Validate(vacancyViewModel);
+            //var aggregateResponse = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+
+            //if (expectValid)
+            //{
+            //    _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.CustomType, viewModel, RuleSet);
+            //    _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.CustomType, vacancyViewModel);
+            //    _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.CustomType, vacancyViewModel, RuleSet);
+            //}
+            //else
+            //{
+            //    _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.CustomType, viewModel, RuleSet);
+            //    _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.CustomType, vacancyViewModel);
+            //    _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.CustomType, vacancyViewModel, RuleSet);
+
+            //    var error = response.Errors.SingleOrDefault(e => e.PropertyName == "Wage.CustomType");
+            //    error.Should().NotBeNull();
+            //    error?.ErrorMessage.Should().Be("You must select a wage type");
+            //    var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.Wage.CustomType");
+            //    aggregateError.Should().NotBeNull();
+            //    aggregateError?.ErrorMessage.Should().Be("You must select a wage type");
+            //}
+        }
+
+        public void AmountMustBeSetWhenFixedWageTypeIsSelected() { }
+
+        public void AmountRangeMustBeSetWhenWageRangeTypeIsSelected() { }
+
+        public void AmountLowerMustBeGreaterThanMinimumWage() { }
+
+        public void PresetTextMustBeSetWhenLegacyTextTypeIsSelected() { }
+
+        public void ReasonForTypeMustBeSetWhenPresetTextTypeIsSelected() { }
     }
 }

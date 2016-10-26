@@ -32,16 +32,7 @@
             _serverCommonValidator = new VacancyDatesViewModelServerCommonValidator();
             _serverWarningValidator = new VacancyDatesViewModelServerWarningValidator(null);
             _aggregateValidator = new VacancyViewModelValidator();
-            _wageViewModel = new WageViewModel()
-            {
-                Type = WageType.Custom,
-                Amount = null,
-                AmountLowerBound = null,
-                AmountUpperBound = null,
-                Text = null,
-                Unit = WageUnit.NotApplicable,
-                HoursPerWeek = null
-            };
+            _wageViewModel = new WageViewModel();
         }
 
         [Test]

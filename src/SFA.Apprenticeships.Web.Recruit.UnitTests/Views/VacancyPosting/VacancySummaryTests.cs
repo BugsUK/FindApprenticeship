@@ -65,7 +65,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
                         Year = year
                     }
                 },
-                Wage = new WageViewModel() { Type = WageType.Custom, Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null }
+                Wage = new WageViewModel() { CustomType = CustomWageType.Fixed }
             };
             var validator = new VacancySummaryViewModelServerValidator();
             var results = validator.Validate(viewModelToValidate, ruleSet: RuleSets.ErrorsAndWarnings);

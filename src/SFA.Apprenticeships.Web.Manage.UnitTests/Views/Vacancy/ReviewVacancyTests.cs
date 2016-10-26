@@ -159,12 +159,12 @@
             view.GetElementbyId("btnReject").Should().NotBeNull("Should exists a return to dashboard button");
         }
 
-        [TestCase(WageType.NationalMinimum, 30, "&#163;116.10 - &#163;201.00")]
-        [TestCase(WageType.NationalMinimum, 37.5, "&#163;145.13 - &#163;251.25")]
-        [TestCase(WageType.ApprenticeshipMinimum, 20, "&#163;66.00")]
-        [TestCase(WageType.ApprenticeshipMinimum, 16, "&#163;52.80")]
-        [TestCase(WageType.ApprenticeshipMinimum, 37.5, "&#163;123.75")]
-        public void ShouldShowWageText(WageType wagetype, decimal hoursPerWeek, string expectedDisplayText)
+        [TestCase(WageType.NationalMinimum, WageClassification.NationalMinimum, 30, "&#163;116.10 - &#163;201.00")]
+        [TestCase(WageType.NationalMinimum, WageClassification.NationalMinimum, 37.5, "&#163;145.13 - &#163;251.25")]
+        [TestCase(WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, 20, "&#163;66.00")]
+        [TestCase(WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, 16, "&#163;52.80")]
+        [TestCase(WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, 37.5, "&#163;123.75")]
+        public void ShouldShowWageText(WageType wagetype, WageClassification classification, decimal hoursPerWeek, string expectedDisplayText)
         {
             var details = new WorkingWeekAndWage();
 
@@ -181,7 +181,7 @@
                         ClosingDate = new DateViewModel(new DateTime(2016, 09, 01)),
                         PossibleStartDate = new DateViewModel(new DateTime(2016, 09, 08))
                     },
-                    Wage = new WageViewModel() { Type = wagetype, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek }
+                    Wage = new WageViewModel() { Type = wagetype, Classification = classification, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -227,7 +227,7 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    Wage = new WageViewModel() { Type = WageType.Custom, Amount = wage, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = wageUnit, HoursPerWeek = null }
+                    Wage = new WageViewModel() { Amount = wage, Unit = wageUnit }
 
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
@@ -323,7 +323,7 @@
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
                     VacancyType = VacancyType.Apprenticeship,
-                    Wage = new WageViewModel() { Type = WageType.Custom, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = (decimal?)hoursPerWeek }
+                    Wage = new WageViewModel() { HoursPerWeek = (decimal?)hoursPerWeek }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
