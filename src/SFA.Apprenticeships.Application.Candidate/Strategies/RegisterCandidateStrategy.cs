@@ -3,13 +3,13 @@
     using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Interfaces.Users;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using Interfaces;
     using UserAccount.Configuration;
+    using UserAccount.Entities;
 
     public class RegisterCandidateStrategy : IRegisterCandidateStrategy
     {
@@ -20,6 +20,7 @@
         private readonly ICodeGenerator _codeGenerator;
         private readonly ICommunicationService _communicationService;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly IServiceBus _serviceBus;
 
         public RegisterCandidateStrategy(IConfigurationService configurationService,
             IUserAccountService userAccountService,
@@ -27,7 +28,7 @@
             ICandidateWriteRepository candidateWriteRepository,
             ICommunicationService communicationService,
             ICodeGenerator codeGenerator,
-            IUserReadRepository userReadRepository)
+            IUserReadRepository userReadRepository, IServiceBus serviceBus)
         {
             _userAccountService = userAccountService;
             _authenticationService = authenticationService;
@@ -35,6 +36,7 @@
             _communicationService = communicationService;
             _codeGenerator = codeGenerator;
             _userReadRepository = userReadRepository;
+            _serviceBus = serviceBus;
             _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>().ActivationCodeExpiryDays;
         }
 
@@ -53,7 +55,9 @@
                 _authenticationService.CreateUser(newCandidateId, password);
                 _userAccountService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
 
-                return SaveAndNotifyCandidate(newCandidateId, newCandidate, activationCode);
+                var createdCandidate = SaveAndNotifyCandidate(newCandidateId, newCandidate, activationCode);
+                _serviceBus.PublishMessage(new CandidateUserUpdate(createdCandidate.EntityId, CandidateUserUpdateType.Create));
+                return createdCandidate;
             }
 
             user.AssertState("Register candidate", UserStatuses.PendingActivation);
@@ -68,7 +72,9 @@
             _authenticationService.ResetUserPassword(user.EntityId, password);
             _userAccountService.Register(username, user.EntityId, activationCode, UserRoles.Candidate);
 
-            return SaveAndNotifyCandidate(user.EntityId, newCandidate, activationCode);
+            var updatedCandidate = SaveAndNotifyCandidate(user.EntityId, newCandidate, activationCode);
+            _serviceBus.PublishMessage(new CandidateUserUpdate(updatedCandidate.EntityId, CandidateUserUpdateType.Update));
+            return updatedCandidate;
         }
 
         #region Helpers

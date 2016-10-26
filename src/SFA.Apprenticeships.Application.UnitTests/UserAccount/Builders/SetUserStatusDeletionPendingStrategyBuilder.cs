@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.UserAccount.Builders
 {
     using Apprenticeships.Application.Candidate.Strategies.Candidates;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces;
     using Moq;
@@ -13,7 +14,7 @@
 
         public ISetUserStatusPendingDeletionStrategy Build()
         {
-            var service = new SetUserStatusPendingDeletionStrategy(_userWriteRepository.Object, _auditRepository.Object, _logService.Object);
+            var service = new SetUserStatusPendingDeletionStrategy(_userWriteRepository.Object, _auditRepository.Object, _logService.Object, new Mock<IServiceBus>().Object);
             return service;
         }
 

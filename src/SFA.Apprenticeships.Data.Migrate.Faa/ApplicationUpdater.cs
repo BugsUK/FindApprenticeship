@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.Interfaces;
     using Configuration;
+    using Domain.Entities.Exceptions;
     using Entities;
     using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
@@ -47,8 +48,9 @@
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] { candidateGuid });
             if (!candidateIds.ContainsKey(candidateGuid))
             {
-                _logService.Warn($"Candidate {candidateGuid} for application {applicationGuid} could not be found");
-                return;
+                var message = $"Candidate {candidateGuid} for application {applicationGuid} could not be found";
+                _logService.Warn(message);
+                throw new CustomException(message);
             }
 
             var destinationCandidateId = candidateIds[candidateGuid];
@@ -87,8 +89,9 @@
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] {candidateGuid});
             if (!candidateIds.ContainsKey(candidateGuid))
             {
-                _logService.Warn($"Candidate {candidateGuid} for application {applicationGuid} could not be found");
-                return;
+                var message = $"Candidate {candidateGuid} for application {applicationGuid} could not be found";
+                _logService.Warn(message);
+                throw new CustomException(message);
             }
 
             var destinationCandidateId = candidateIds[candidateGuid];
@@ -109,7 +112,6 @@
             //update existing application
             _targetDatabase.UpdateSingle(applicationWithHistory.ApplicationWithSubVacancy.Application);
             
-            //TODO: Likely that this creates multiple history records when the status is changed from new to inprogress and back again
             //Insert new application history records
             foreach (var applicationHistory in applicationWithHistory.ApplicationHistory.Where(a => a.ApplicationHistoryId == 0))
             {

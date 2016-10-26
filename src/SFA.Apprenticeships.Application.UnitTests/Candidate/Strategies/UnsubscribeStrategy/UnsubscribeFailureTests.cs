@@ -2,6 +2,7 @@
 {
     using System;
     using Apprenticeships.Application.Candidate.Strategies;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
@@ -33,7 +34,7 @@
             var strategy = new UnsubscribeStrategy(
                 _mockLogger.Object,
                 _mockCandidateRepository.Object,
-                _mockSaveCandidateStrategy.Object);
+                _mockSaveCandidateStrategy.Object, new Mock<IServiceBus>().Object);
 
             // Act.
             _mockCandidateRepository.Setup(mock => mock

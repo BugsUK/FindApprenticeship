@@ -129,6 +129,7 @@
     <Compile Include="ApprenticeshipApplicationUpdater.cs" />
     <Compile Include="AuditMigrationProcessor.cs" />
     <Compile Include="CandidateMigrationProcessor.cs" />
+    <Compile Include="CandidateUserUpdater.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
     <Compile Include="Entities\ApplicationWithSubVacancy.cs" />
     <Compile Include="Entities\CandidatePerson.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Entities\Sql\CandidateSummary.cs" />
     <Compile Include="Entities\Sql\SubVacancy.cs" />
     <Compile Include="IApprenticeshipApplicationUpdater.cs" />
+    <Compile Include="ICandidateUserUpdater.cs" />
     <Compile Include="ITraineeshipApplicationUpdater.cs" />
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IoC\FaaMigrationRegistry.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
     <Compile Include="Repository\Sql\SchoolAttendedTable.cs" />
     <Compile Include="Repository\Sql\SubVacancyTable.cs" />
+    <Compile Include="Subscribers\CandidateUserUpdateSubscriber.cs" />
     <Compile Include="Subscribers\TraineeshipApplicationUpdateSubscriber.cs" />
     <Compile Include="Subscribers\ApprenticeshipApplicationUpdateSubscriber.cs" />
     <Compile Include="SyncType.cs" />
@@ -220,9 +223,17 @@
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
+      <Project>{f01914fa-a911-4345-acd4-fd80ade21a8c}</Project>
+      <Name>SFA.Apprenticeships.Application.UserAccount</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Data.Migrate\SFA.Apprenticeships.Data.Migrate.csproj">
       <Project>{73c8a0c0-3b18-4ed6-8d14-15f3e009c26c}</Project>
       <Name>SFA.Apprenticeships.Data.Migrate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>

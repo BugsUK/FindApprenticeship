@@ -58,7 +58,8 @@
     CONSTRAINT [FK_Candidate_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_Candidate_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),
     CONSTRAINT [FK_Candidate_Person] FOREIGN KEY ([PersonId]) REFERENCES [dbo].[Person] ([PersonId]),
-    CONSTRAINT [uq_idx_candidate_person] UNIQUE NONCLUSTERED ([PersonId] ASC)
+    CONSTRAINT [uq_idx_candidate_person] UNIQUE NONCLUSTERED ([PersonId] ASC),
+    CONSTRAINT [uq_idx_candidate_guid] UNIQUE NONCLUSTERED ([CandidateGuid] ASC)
 );
 
 

@@ -20,7 +20,6 @@
         private readonly AuditRepository _auditRepository;
         private readonly CandidateRepository _candidateRepository;
         private readonly ApplicationRepository _applicationRepository;
-        private readonly ApplicationHistoryRepository _applicationHistoryRepository;
 
         public AuditMigrationProcessor(SyncRepository syncRepository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
@@ -30,7 +29,6 @@
             _auditRepository = new AuditRepository(configurationService, logService);
             _candidateRepository = new CandidateRepository(targetDatabase);
             _applicationRepository = new ApplicationRepository(targetDatabase);
-            _applicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase, _logService);
         }
 
         public void Process(CancellationToken cancellationToken)

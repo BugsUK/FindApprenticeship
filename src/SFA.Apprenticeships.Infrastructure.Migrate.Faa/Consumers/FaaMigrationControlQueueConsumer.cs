@@ -34,6 +34,8 @@
 
                 _logService.Info("Calling migration processor to migrate data from FAA");
 
+                _migrationProcessor.ExecuteAuditMigrationProcessor(new CancellationToken());
+                _migrationProcessor.ExecuteCandidateMigrationProcessor(new CancellationToken());
                 _migrationProcessor.ExecuteTraineeshipApplicationsMigrationProcessor(new CancellationToken());
                 _migrationProcessor.ExecuteApprenticeshipApplicationsMigrationProcessor(new CancellationToken());
 

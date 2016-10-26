@@ -5,18 +5,22 @@
     using Domain.Interfaces.Repositories;
     using Interfaces;
     using System;
+    using Domain.Interfaces.Messaging;
+    using UserAccount.Entities;
 
     public class VerifyMobileStrategy : IVerifyMobileStrategy
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly IAuditRepository _auditRepository;
+        private readonly IServiceBus _serviceBus;
 
-        public VerifyMobileStrategy(ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository, IAuditRepository auditRepository)
+        public VerifyMobileStrategy(ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository, IAuditRepository auditRepository, IServiceBus serviceBus)
         {
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
             _auditRepository = auditRepository;
+            _serviceBus = serviceBus;
         }
 
         public void VerifyMobile(Guid candidateId, string verificationCode)
@@ -36,6 +40,7 @@
                 candidate.CommunicationPreferences.VerifiedMobile = true;
 
                 _candidateWriteRepository.Save(candidate);
+                _serviceBus.PublishMessage(new CandidateUserUpdate(candidate.EntityId, CandidateUserUpdateType.Update));
                 _auditRepository.Audit(candidate, AuditEventTypes.CandidateVerifiedMobileNumber, candidate.EntityId);
             }
             else

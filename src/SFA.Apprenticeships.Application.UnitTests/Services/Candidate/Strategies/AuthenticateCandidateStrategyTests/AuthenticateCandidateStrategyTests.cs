@@ -9,6 +9,7 @@
     using Domain.Entities.UnitTests.Builder;
     using Interfaces.Users;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
 
@@ -131,7 +132,7 @@
 
             return new AuthenticateCandidateStrategy(
                 _configService.Object, _authenticationService.Object, _userReadRepository.Object,
-                _userWriteRepository.Object, _candidateReadRepository.Object, _lockAccountStrategy.Object);
+                _userWriteRepository.Object, _candidateReadRepository.Object, _lockAccountStrategy.Object, new Mock<IServiceBus>().Object);
         }
 
         private static User GetAnActiveUserWithSomeLoginIncorrectAttempt(int incorrectAttempts)
