@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using System.Threading.Tasks;
     using Configuration;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
@@ -46,53 +47,56 @@
             _logService.Info("Initialisation");
         }
 
-        public void Execute(CancellationToken cancellationToken)
+        public Task Execute(CancellationToken cancellationToken)
         {
-            var migrationProcessors = new List<IMigrationProcessor>
+            return Task.Run(() =>
             {
-                _candidateMigrationProcessor,
-                _auditMigrationProcessor
-            };
-
-            _logService.Info("Execute Started");
-
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                var configuration = _configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
-                if (!configuration.IsEnabled)
+                var migrationProcessors = new List<IMigrationProcessor>
                 {
-                    _logService.Warn("Migrate.Faa process is disabled.");
-                    cancellationToken.WaitHandle.WaitOne();
-                    return;
-                }
+                    _candidateMigrationProcessor,
+                    _auditMigrationProcessor
+                };
 
-                try
+                _logService.Info("Execute Started");
+
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    var lastSyncVersion = _syncRepository.GetSyncParams().LastSyncVersion;
-                    if (lastSyncVersion.HasValue && lastSyncVersion > 0)
+                    var configuration = _configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
+                    if (!configuration.IsEnabled)
                     {
-                        foreach (var migrationProcessor in migrationProcessors)
+                        _logService.Warn("Migrate.Faa process is disabled.");
+                        cancellationToken.WaitHandle.WaitOne();
+                        return;
+                    }
+
+                    try
+                    {
+                        var lastSyncVersion = _syncRepository.GetSyncParams().LastSyncVersion;
+                        if (lastSyncVersion.HasValue && lastSyncVersion > 0)
                         {
-                            if (!cancellationToken.IsCancellationRequested)
+                            foreach (var migrationProcessor in migrationProcessors)
                             {
-                                migrationProcessor.Process(cancellationToken);
+                                if (!cancellationToken.IsCancellationRequested)
+                                {
+                                    migrationProcessor.Process(cancellationToken);
+                                }
                             }
                         }
                     }
-                }
-                catch (FatalException)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    _logService.Error("Error occurred. Sleeping before trying again", ex);
+                    catch (FatalException)
+                    {
+                        throw;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logService.Error("Error occurred. Sleeping before trying again", ex);
+                    }
+
+                    Thread.Sleep(configuration.SleepTimeBetweenCyclesInSeconds * 1000);
                 }
 
-                Thread.Sleep(configuration.SleepTimeBetweenCyclesInSeconds * 1000);
-            }
-
-            _logService.Info("DoAll Cancelled");
+                _logService.Info("DoAll Cancelled");
+            }, cancellationToken);
         }
 
         public void ExecuteCandidateMigrationProcessor(CancellationToken cancellationToken)

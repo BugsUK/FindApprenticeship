@@ -20,7 +20,7 @@
             _migrationProcessor = new MigrationProcessor(configurationService, _logService);
         }
 
-        public Task CheckScheduleQueue()
+        public Task CheckScheduleQueue(CancellationToken cancellationToken)
         {
             return Task.Run(() =>
             {
@@ -38,7 +38,7 @@
                 _migrationProcessor.ExecuteApprenticeshipApplicationsMigrationProcessor(new CancellationToken());
 
                 _logService.Info("Migration processor executed. Check logs for FAA migration completion");
-            });
+            }, cancellationToken);
         }
     }
 }

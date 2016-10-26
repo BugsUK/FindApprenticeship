@@ -97,6 +97,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\FaaMigrationControlQueueConsumer.cs" />
+    <Compile Include="IoC\JobsRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
