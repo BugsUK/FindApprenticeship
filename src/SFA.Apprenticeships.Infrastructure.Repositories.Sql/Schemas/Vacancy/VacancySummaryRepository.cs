@@ -130,7 +130,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     AND		((@query IS NULL OR @query = '')
 		                    OR (CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query
 			                    OR v.Title LIKE '%' + @query + '%'
-			                    OR e.FullName LIKe '%' + @query + '%')
+			                    OR e.FullName LIKE '%' + @query + '%'
+                                OR e.PostCode LIKE '%' + @query + '%')
 		                    )
                     AND     v.VacancyStatusId != 4
                     {filterSql}
@@ -352,10 +353,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
             var fillItems = expectedRegions
                                 .Where(w => counts.All(a => a.RegionalTeam != w))
-                                .Select(s => new RegionalTeamMetrics() { RegionalTeam = s});
+                                .Select(s => new RegionalTeamMetrics() { RegionalTeam = s });
 
             counts.AddRange(fillItems);
-            
+
             return counts.OrderBy(o => o.RegionalTeam).ToList();
         }
 
