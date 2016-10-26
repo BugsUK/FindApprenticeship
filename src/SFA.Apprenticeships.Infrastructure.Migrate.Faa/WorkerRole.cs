@@ -64,8 +64,8 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
                 VersionLogging.SetVersion();
 
                 InitializeIoC();
-                InitialiseServiceBus();
-                SubscribeServiceBusMessageBrokers();
+                //InitialiseServiceBus();
+                //SubscribeServiceBusMessageBrokers();
             }
             catch (Exception e)
             {
