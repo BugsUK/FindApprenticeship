@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.Subscribers
 {
     using System;
+    using System.Data.SqlClient;
     using Application.Application.Entities;
     using Application.Interfaces;
     using Domain.Entities.Exceptions;
@@ -47,7 +48,12 @@
             }
             catch (CustomException ex)
             {
-                _logService.Error($"Failed to process apprenticeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}. Requeuing message", ex);
+                _logService.Warn($"Failed to process apprenticeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}. Requeuing message", ex);
+                return ServiceBusMessageStates.Requeue;
+            }
+            catch (SqlException ex)
+            {
+                _logService.Warn($"Failed to process apprenticeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}. Requeuing message", ex);
                 return ServiceBusMessageStates.Requeue;
             }
             catch (Exception ex)
