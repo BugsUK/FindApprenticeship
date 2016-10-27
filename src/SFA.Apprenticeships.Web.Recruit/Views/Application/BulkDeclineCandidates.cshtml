@@ -17,7 +17,7 @@
     <input type="hidden" name="@Html.NameFor(m => m.VacancyApplicationsSearch.OrderByField)" value="@Model.VacancyApplicationsSearch.OrderByField" />
     <input type="hidden" name="@Html.NameFor(m => m.VacancyApplicationsSearch.Order)" value="@Model.VacancyApplicationsSearch.Order" />
 
-    foreach (var selectedApplicationId in Model.SelectedApplicationIds.Where(aid => Model.ApplicationSummaries.All(a => a.ApplicationId == aid)))
+    foreach (var selectedApplicationId in Model.SelectedApplicationIds.Where(aid => Model.ApplicationSummaries.All(a => a.ApplicationId != aid)))
     {
         <input type="hidden" name="@Html.NameFor(m => m.SelectedApplicationIds)" value="@selectedApplicationId" />
     }
