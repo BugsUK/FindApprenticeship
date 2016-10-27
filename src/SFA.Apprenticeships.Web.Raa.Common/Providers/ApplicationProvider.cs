@@ -213,6 +213,12 @@
                 return applications.Where(a => a.CandidateId.ToString().StartsWith(candidateGuidPrefix, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
 
+            if (!string.IsNullOrEmpty(vacancyApplicationsSearch.ApplicantId))
+            {
+                //Attempt to search by an unrecognised application id. Return no results
+                return new List<ApplicationSummary>();
+            }
+
             return
                 applications.Where(
                     a =>
