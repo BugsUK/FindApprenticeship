@@ -2,10 +2,10 @@
 {
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies;
     using FluentValidation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
+    using Web.Common.ViewModels;
     using Common = Common;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
@@ -115,6 +115,23 @@
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.ExpectedDuration.WhiteListInvalidTagErrorText)
                 .When(x => Common.IsNotEmpty(x.ExpectedDuration));
+
+            validator.RuleFor(x => x.Wage.CustomType)
+                .Must(ct => ct != CustomWageType.NotApplicable)
+                .WithMessage(VacancyViewModelMessages.CustomWageType.RequiredErrorText)
+                .When(x => x.Wage.Classification == WageClassification.Custom);
+
+            validator.RuleFor(x => x.Wage.AmountLowerBound)
+                .Must(ct => ct.HasValue)
+                .WithMessage(VacancyViewModelMessages.AmountLower.RequiredErrorText)
+                .When(x => x.Wage.Classification == WageClassification.Custom
+                    && x.Wage.CustomType == CustomWageType.Ranged);
+
+            validator.RuleFor(x => x.Wage.AmountUpperBound)
+                .Must(ct => ct.HasValue)
+                .WithMessage(VacancyViewModelMessages.AmountUpper.RequiredErrorText)
+                .When(x => x.Wage.Classification == WageClassification.Custom
+                    && x.Wage.CustomType == CustomWageType.Ranged);
         }
 
         internal static void AddVacancySummaryViewModelDatesServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator, string parentPropertyName)
@@ -143,22 +160,22 @@
                 .When(
                     x =>
                         x.VacancySource == VacancySource.Raa || x.Duration.HasValue ||
-                        x.Wage.Type == WageType.ApprenticeshipMinimum || x.Wage.Type == WageType.NationalMinimum);
+                        x.Wage.Classification == WageClassification.ApprenticeshipMinimum || x.Wage.Classification == WageClassification.NationalMinimum);
 
             validator.RuleFor(x => x.Wage.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.HoursPerWeekShouldBeGreaterThan16)
                 .When(x => x.Wage.HoursPerWeek.HasValue);
 
-            validator.RuleFor(viewModel => (int)viewModel.Wage.Type)
-                .InclusiveBetween((int)WageType.ApprenticeshipMinimum, (int)WageType.Custom)
-                .WithMessage(VacancyViewModelMessages.WageType.RequiredErrorText)
+            validator.RuleFor(viewModel => (int)viewModel.Wage.Classification)
+                .InclusiveBetween((int)WageClassification.ApprenticeshipMinimum, (int)WageClassification.PresetText)
+                .WithMessage(VacancyViewModelMessages.WageClassification.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
             validator.RuleFor(x => x.Wage.Amount)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Wage.RequiredErrorText)
-                .When(x => x.Wage.Type == WageType.Custom)
+                .When(x => x.Wage.Classification == WageClassification.Custom)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
             validator.RuleFor(x => x.Duration)
