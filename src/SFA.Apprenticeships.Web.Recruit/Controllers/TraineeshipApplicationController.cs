@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
@@ -10,9 +10,7 @@
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
@@ -46,7 +44,7 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewSaveAndContinue(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        public ActionResult ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             var response = _traineeshipApplicationMediator.ReviewSaveAndContinue(traineeshipApplicationViewModel);
             var viewModel = response.ViewModel;
