@@ -100,6 +100,8 @@
                 SelectedApplicationIds = bulkDeclineCandidatesViewModel.SelectedApplicationIds ?? new List<Guid>()
             };
 
+            viewModel.SelectedApplicationIds = viewModel.SelectedApplicationIds.Distinct();
+
             return viewModel;
         }
 
@@ -162,7 +164,7 @@
             var page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications);
             if (applyPagination)
             {
-                page = page.Skip((vacancyApplicationsSearch.CurrentPage - 1)*vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize);
+                page = page.Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize);
             }
 
             viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;

@@ -19,7 +19,7 @@
             this.AddCommonRules();
 
             RuleFor(m => m.SelectedApplicationIds)
-                .NotNull()
+                 .NotEmpty()
                 .WithMessage(BulkDeclineCandidatesViewModelMessages.NoApplicationIdsErrorText);
 
             RuleFor(m => m.UnSuccessfulReason)

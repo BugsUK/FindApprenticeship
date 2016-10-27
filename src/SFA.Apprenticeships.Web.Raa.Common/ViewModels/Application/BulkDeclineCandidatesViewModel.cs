@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
+    using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using FluentValidation.Attributes;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Constants.ViewModels;
     using Validators.VacancyStatus;
-    using FluentValidation.Attributes;
 
     [Validator(typeof(BulkDeclineCandidatesViewModelClientValidator))]
     public class BulkDeclineCandidatesViewModel

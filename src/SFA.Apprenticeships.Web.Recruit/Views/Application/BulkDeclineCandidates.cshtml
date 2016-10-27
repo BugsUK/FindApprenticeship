@@ -13,9 +13,14 @@
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(m => m.VacancyApplicationsSearch.VacancyReferenceNumber)
-    @Html.HiddenFor(m => m.VacancyApplicationsSearch.FilterType)
-    @*@Html.HiddenFor(m => m.VacancyApplicationsSearch.OrderByField)
-    @Html.HiddenFor(m => m.VacancyApplicationsSearch.Order)*@
+    <input type="hidden" name="@Html.NameFor(m => m.VacancyApplicationsSearch.FilterType)" value="@Model.VacancyApplicationsSearch.FilterType" />
+    <input type="hidden" name="@Html.NameFor(m => m.VacancyApplicationsSearch.OrderByField)" value="@Model.VacancyApplicationsSearch.OrderByField" />
+    <input type="hidden" name="@Html.NameFor(m => m.VacancyApplicationsSearch.Order)" value="@Model.VacancyApplicationsSearch.Order" />
+
+    foreach (var selectedApplicationId in Model.SelectedApplicationIds.Where(aid => Model.ApplicationSummaries.All(a => a.ApplicationId == aid)))
+    {
+        <input type="hidden" name="@Html.NameFor(m => m.SelectedApplicationIds)" value="@selectedApplicationId" />
+    }
 
     <div class="grid-wrapper">
         <section class="grid grid-2-3">
@@ -120,10 +125,8 @@
             <tr>
                 <th>
                     @{
-                        var newOrder = Model.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
                         var surnameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ?
                             Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-                        <input type="hidden" name="@Html.NameFor(m => m.VacancyApplicationsSearch.Order)" value="@newOrder" />
                     }
                     <button class="vacancy-order font-black" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsLastName">
                         <span class="font-black">Surname <i class="fa @surnameSortClass" aria-hidden="true"></i></span>
@@ -146,7 +149,6 @@
                     @{
                         var managerNotesSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ?
                             Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-                        @Html.HiddenFor(m => m.VacancyApplicationsSearch.Order)
                     }
                     <button class="vacancy-order font-black" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsLastManagerNotes">
                         <span class="font-black">Vacancy manager notes <i class="fa @managerNotesSortClass" aria-hidden="true"></i></span>
