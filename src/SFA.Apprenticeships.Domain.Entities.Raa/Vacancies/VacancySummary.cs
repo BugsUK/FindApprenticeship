@@ -5,7 +5,7 @@
     using Locations;
     using Reference;
 
-    public class VacancySummary : IMinimalVacancyDetails
+    public class VacancySummary
     {
         public int VacancyId { get; set; }
         public int VacancyOwnerRelationshipId { get; set; }

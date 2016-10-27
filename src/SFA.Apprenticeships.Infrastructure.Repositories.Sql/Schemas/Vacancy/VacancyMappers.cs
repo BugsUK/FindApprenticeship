@@ -447,6 +447,7 @@
 
             Mapper.CreateMap<DbVacancySummary, VacancySummary>()
                 .ForMember(av => av.Wage, opt => opt.MapFrom(v => MapWage(v)))
+                .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
 
                 .IgnoreMember(av => av.ContractOwnerId)
                 .IgnoreMember(av => av.DateFirstSubmitted)
@@ -464,7 +465,6 @@
                 .IgnoreMember(av => av.PossibleStartDate)
                 .IgnoreMember(av => av.QAUserName)
                 .IgnoreMember(av => av.RegionalTeam)
-                .IgnoreMember(av => av.ShortDescription)
                 .IgnoreMember(av => av.StandardId)
                 .IgnoreMember(av => av.TrainingType)
                 .IgnoreMember(av => av.TrainingType)
@@ -495,6 +495,7 @@
                 .MapMemberFrom(av => av.ProviderTradingName, v => v.ProviderTradingName)
                 .MapMemberFrom(av => av.QAUserName, v => v.QAUserName)
                 .MapMemberFrom(av => av.SectorCodeName, v => v.SectorCodeName)
+                .MapMemberFrom(av => av.ShortDescription, v => v.ShortDescription)
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)
                 .MapMemberFrom(av => av.Title, v => v.Title)

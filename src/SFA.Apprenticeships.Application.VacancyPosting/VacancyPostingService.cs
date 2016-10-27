@@ -120,11 +120,6 @@
             _vacancyLocationsStrategies.DeleteVacancyLocationsFor(vacancyId);
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
-        {
-            return _getVacancySummaryStrategies.GetMinimalVacancyDetails(vacancyOwnerRelationshipIds, providerId, providerSiteIds);
-        }
-
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyOwnerRelationshipIds)
         {
             return _vacancyLocationsStrategies.GetVacancyLocationsByVacancyIds(vacancyOwnerRelationshipIds);

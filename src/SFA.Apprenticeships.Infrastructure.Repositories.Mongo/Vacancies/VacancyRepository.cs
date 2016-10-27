@@ -276,11 +276,6 @@
             return null;
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
-        {
-            throw new NotImplementedException();
-        }
-
         public int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber)
         {
             throw new NotImplementedException();

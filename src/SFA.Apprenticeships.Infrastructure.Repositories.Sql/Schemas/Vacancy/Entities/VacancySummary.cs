@@ -68,5 +68,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public decimal? WeeklyWage { get; set; }
         public decimal? HoursPerWeek { get; set; }
+
+        public string ShortDescription { get; set; }
+        public int? VacancyLocationTypeId { get; set; }
     }
 }
