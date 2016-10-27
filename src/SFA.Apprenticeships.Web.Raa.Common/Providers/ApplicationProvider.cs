@@ -201,9 +201,10 @@
             var applicantId = CandidateSearchExtensions.GetCandidateId(vacancyApplicationsSearch.ApplicantId);
             if (applicantId.HasValue)
             {
-                var candidate = _candidateApplicationService.GetCandidate(applicantId.Value);
+                var candidate = _candidateApplicationService.GetCandidate(applicantId.Value, false);
                 if (candidate != null)
                     return applications.Where(a => a.CandidateId == candidate.EntityId).ToList();
+                return new List<ApplicationSummary>();
             }
 
             var candidateGuidPrefix = CandidateSearchExtensions.GetCandidateGuidPrefix(vacancyApplicationsSearch.ApplicantId);
