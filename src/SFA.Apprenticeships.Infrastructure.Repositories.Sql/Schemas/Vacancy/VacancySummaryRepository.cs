@@ -131,7 +131,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                    OR (CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query
 			                    OR v.Title LIKE '%' + @query + '%'
 			                    OR e.FullName LIKE '%' + @query + '%'
-                                OR e.PostCode LIKE '%' + @query + '%')
+                                OR REPLACE(v.PostCode, ' ', '') LIKE REPLACE(@query, ' ', '') + '%')
 		                    )
                     AND     v.VacancyStatusId != 4
                     {filterSql}
@@ -183,7 +183,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                        OR (CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query
 			                        OR v.Title LIKE '%' + @query + '%'
 			                        OR e.FullName LIKE '%' + @query + '%'
-                                    OR e.PostCode LIKE '%' + @query + '%')
+                                    OR REPLACE(v.PostCode, ' ', '') LIKE REPLACE(@query, ' ', '') + '%')
 		                        )
                         AND		r.ProviderId = @providerId
 					    AND		r.ProviderSiteRelationshipTypeId = 1
