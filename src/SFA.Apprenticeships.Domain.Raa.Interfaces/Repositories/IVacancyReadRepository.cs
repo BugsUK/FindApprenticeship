@@ -15,8 +15,6 @@
 
         int CountWithStatus(params VacancyStatus[] desiredStatuses);
 
-        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds);
-
         int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber);
     }
 }

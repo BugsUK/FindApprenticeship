@@ -809,37 +809,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 entity.UpdatedDateTime = _dateTimeService.UtcNow;
             }
         }
-
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
-        {
-            var sql = @"SELECT VacancyId, VacancyReferenceNumber, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId, Title, NoOfOfflineApplicants, ApplyOutsideNAVMS
-                        FROM   dbo.Vacancy
-                        WHERE  VacancyOwnerRelationshipId IN @Ids";
-
-            if (_configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled())
-            {
-                sql += " AND (VacancyManagerId IN @providerSiteIds OR DeliveryOrganisationId IN @providerSiteIds)";
-            }
-
-            var vacancyCollections = new List<dynamic>();
-            var relationshipIds = vacancyOwnerRelationshipIds as int[] ?? vacancyOwnerRelationshipIds.ToArray();
-            var splitVacancyOwnerRelationshipIds = DbHelpers.SplitIds(relationshipIds);
-            foreach (var splitVacancyOwnerRelationshipId in splitVacancyOwnerRelationshipIds)
-            {
-                IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(sql,
-                    new
-                    {
-                        Ids = splitVacancyOwnerRelationshipId,
-                        providerId,
-                        providerSiteIds
-                    });
-                vacancyCollections.AddRange(singleCollection);
-            }
-            return vacancyCollections
-                .GroupBy(x => (int)x.VacancyOwnerRelationshipId)
-                .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));
-        }
-
+        
         public int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber)
         {
             _logger.Debug("Calling database to get vacancy id for Vacancy Reference Number={0}",
@@ -850,57 +820,6 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
 
             return vacancyId;
-        }
-
-        private class MinimalVacancyDetails : IMinimalVacancyDetails
-        {
-            public MinimalVacancyDetails(dynamic record)
-            {
-                VacancyId = record.VacancyId;
-                VacancyReferenceNumber = record.VacancyReferenceNumber;
-                VacancyOwnerRelationshipId = record.VacancyOwnerRelationshipId;
-                Status = (VacancyStatus)record.VacancyStatusId;
-                _closingDate = record.ApplicationClosingDate;
-
-                // TODO: Should get from history because won't be set for old records, but this is an issue throughout
-                SyntheticUpdatedDateTime = record.UpdatedDateTime ?? new DateTime(2016, 6, 1, 0, 0, 0, DateTimeKind.Utc);
-
-                // TODO: Won't be set for uploaded vacancies, but this is an issue throughout
-                VacancyType = (VacancyType)record.VacancyTypeId;
-                EmployerName = record.EmployerName;
-                Title = record.Title;
-                OfflineVacancy = record.ApplyOutsideNAVMS;
-            }
-
-            public int VacancyId { get; private set; }
-            public int VacancyReferenceNumber { get; }
-
-            public int VacancyOwnerRelationshipId { get; private set; }
-
-            private DateTime? _closingDate;
-            public DateTime LiveClosingDate
-            {
-                get
-                {
-                    if (Status != VacancyStatus.Live && Status != VacancyStatus.Closed && Status != VacancyStatus.Completed)
-                        throw new InvalidOperationException(Status.ToString());
-                    if (_closingDate == null)
-                        throw new InvalidOperationException($"Null closing date found for live vacancy {VacancyId}");
-                    return _closingDate.Value;
-                }
-            }
-
-            public VacancyStatus Status { get; private set; }
-
-            public DateTime SyntheticUpdatedDateTime { get; private set; }
-
-            public VacancyType VacancyType { get; private set; }
-
-            public string EmployerName { get; set; }
-
-            public string Title { get; private set; }
-
-            public bool? OfflineVacancy { get; private set; }
         }
     }
 }

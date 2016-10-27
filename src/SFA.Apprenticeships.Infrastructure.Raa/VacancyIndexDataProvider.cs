@@ -57,7 +57,7 @@
             var query = new VacancySummaryByStatusQuery()
             {
                 PageSize = PageSize,
-                RequestedPage = pageNumber - 1,
+                RequestedPage = pageNumber,
                 DesiredStatuses = _desiredStatuses
             };
 
