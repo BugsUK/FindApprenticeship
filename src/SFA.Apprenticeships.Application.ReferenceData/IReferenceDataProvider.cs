@@ -7,6 +7,7 @@
     public interface IReferenceDataProvider
     {
         IEnumerable<Category> GetCategories();
+        IEnumerable<Category> GetCategories(params CategoryStatus[] statuses);
 
         Category GetSubCategoryByName(string subCategoryName);
 

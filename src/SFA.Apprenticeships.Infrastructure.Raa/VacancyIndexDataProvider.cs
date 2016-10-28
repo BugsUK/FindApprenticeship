@@ -12,6 +12,7 @@
     using Mappers;
     using Application.Interfaces;
     using Application.Vacancy;
+    using Domain.Entities.ReferenceData;
     using Domain.Raa.Interfaces.Repositories.Models;
 
     /// <summary>
@@ -67,7 +68,7 @@
             var vacancyParties = _providerService.GetVacancyOwnerRelationships(vacancies.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
             var providers = _providerService.GetProviders(vacancies.Select(v => v.ContractOwnerId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
-            var categories = _referenceDataProvider.GetCategories().ToList();
+            var categories = _referenceDataProvider.GetCategories(CategoryStatus.Active, CategoryStatus.PendingClosure).ToList();
             //TODO: workaround to have the indexing partially working. Should be done properly
             var apprenticeshipSummaries =
                 vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship).Select(

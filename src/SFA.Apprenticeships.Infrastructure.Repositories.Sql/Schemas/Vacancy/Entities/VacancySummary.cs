@@ -1,8 +1,10 @@
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities
 {
     using System;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancySummary : IVacancyWage
@@ -68,5 +70,17 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string ShortDescription { get; set; }
         public int? VacancyLocationTypeId { get; set; }
+        public int? StandardId { get; set; }
+        public int? DeliveryOrganisationId { get; set; }
+        public int? Duration { get; set; }
+        public DurationType DurationType { get; set; }
+        public string EmployerAnonymousName { get; set; }
+        public string ExpectedDuration { get; set; }
+        public int? OriginalContractOwnerId { get; set; }
+        public RegionalTeam RegionalTeam { get; set; }
+        public TrainingType TrainingTypeId { get; set; }
+        public int? VacancyManagerId { get; set; }
+        public string WorkingWeek { get; set; }
+        public int? ParentVacancyId { get; set; }
     }
 }
