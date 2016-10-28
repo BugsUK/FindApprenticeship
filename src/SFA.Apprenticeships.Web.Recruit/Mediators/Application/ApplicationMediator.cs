@@ -89,7 +89,7 @@
             var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
             var originalSelectedApplicationIds = viewModel.SelectedApplicationIds.ToList();
             viewModel.SelectedApplicationIds = viewModel.SelectedApplicationIds.Where(aid => viewModel.ApplicationSummaries.Any(a => a.ApplicationId == aid)).ToList();
-            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(bulkDeclineCandidatesViewModel);
+            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {
