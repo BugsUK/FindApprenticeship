@@ -54,9 +54,9 @@
             var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
             if (application == null)
             {
-                var message = $"Application {applicationGuid} could not be found";
+                var message = $"Application {applicationGuid} could not be found. It has likely been deleted since this update";
                 _logService.Warn(message);
-                throw new CustomException(message);
+                return;
             }
 
             var candidateGuid = application.CandidateId;
