@@ -53,6 +53,11 @@
             }
             catch (SqlException ex)
             {
+                if (ex.Message.Contains("Violation of UNIQUE KEY constraint"))
+                {
+                    _logService.Error($"Failed to process apprenticeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType} due to unique key violation. Completing message as can't be recovered", ex);
+                    return ServiceBusMessageStates.Complete;
+                }
                 _logService.Warn($"Failed to process apprenticeship application update with id {request.ApplicationGuid} and type {request.ApplicationUpdateType}. Requeuing message", ex);
                 return ServiceBusMessageStates.Requeue;
             }
