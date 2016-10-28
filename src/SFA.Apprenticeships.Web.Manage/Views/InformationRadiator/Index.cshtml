@@ -134,6 +134,22 @@
             </li>
             <li>
                 <figure class="data">
+                    <p class="count">@Model.TotalNewApplicationsInPastFourWeeks</p>
+                    <figcaption>
+                        <h2>of those, total in progress (@(Math.Round((double)Model.TotalNewApplicationsInPastFourWeeks / Model.TotalApplicationsSubmittedInPastFourWeeks * 100, 1))%)</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
+                    <p class="count">@Model.TotalInProgressApplicationsInPastFourWeeks</p>
+                    <figcaption>
+                        <h2>of those, total in progress (@(Math.Round((double)Model.TotalInProgressApplicationsInPastFourWeeks / Model.TotalApplicationsSubmittedInPastFourWeeks * 100, 1))%)</h2>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="data">
                     <p class="count">@Model.TotalUnsuccessfulApplicationsInPastFourWeeks</p>
                     <figcaption>
                         <h2>of those, total made unsuccessful (@(Math.Round((double)Model.TotalUnsuccessfulApplicationsInPastFourWeeks / Model.TotalApplicationsSubmittedInPastFourWeeks * 100, 1))%)</h2>
