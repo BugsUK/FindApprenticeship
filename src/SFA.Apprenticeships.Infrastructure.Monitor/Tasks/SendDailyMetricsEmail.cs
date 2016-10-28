@@ -128,7 +128,7 @@
             sb.AppendFormat(" - Total number of applications: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationCount));
             sb.AppendFormat("   - Saved: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Saved));
             sb.AppendFormat("   - Draft: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Draft));
-            sb.AppendFormat("   - Submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Submitted));
+            sb.AppendFormat("   - Submitted: {0} ({1}ms)\n", TimedMongoCall(() => { return _apprenticeshipMetricsRepository.GetApplicationStateCount(ApplicationStatuses.Submitted) + _apprenticeshipMetricsRepository.GetApplicationStateCount(ApplicationStatuses.InProgress); }));
             sb.AppendFormat("   - Expired or Withdrawn: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.ExpiredOrWithdrawn));
             sb.AppendFormat("   - Unsuccessful: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Unsuccessful));
             sb.AppendFormat("   - Successful: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Successful));

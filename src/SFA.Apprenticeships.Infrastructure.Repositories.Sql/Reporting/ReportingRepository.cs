@@ -511,9 +511,11 @@
 (SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-3).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-2).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedThreeDaysAgo,
 (SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-4).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-3).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedFourDaysAgo,
 (SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') as TotalApplicationsStartedInPastFourWeeks,
-(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId >= 2) as TotalApplicationsSubmittedInPastFourWeeks,
-(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId = 5) as TotalUnsuccessfulApplicationsInPastFourWeeks,
-(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId = 6) as TotalSuccessfulApplicationsInPastFourWeeks";
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId >= 2) as TotalApplicationsSubmittedInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId = 2) as TotalNewApplicationsInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId = 3) as TotalInProgressApplicationsInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId = 5) as TotalUnsuccessfulApplicationsInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId = 6) as TotalSuccessfulApplicationsInPastFourWeeks";
 
             var command = new SqlCommand(sql, (SqlConnection)_getOpenConnection.GetOpenConnection());
 
@@ -541,6 +543,8 @@
                     VacanciesReviewedFourDaysAgo = Convert.ToInt32(reader["VacanciesReviewedFourDaysAgo"]),
                     TotalApplicationsStartedInPastFourWeeks = Convert.ToInt32(reader["TotalApplicationsStartedInPastFourWeeks"]),
                     TotalApplicationsSubmittedInPastFourWeeks = Convert.ToInt32(reader["TotalApplicationsSubmittedInPastFourWeeks"]),
+                    TotalNewApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalNewApplicationsInPastFourWeeks"]),
+                    TotalInProgressApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalInProgressApplicationsInPastFourWeeks"]),
                     TotalUnsuccessfulApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsInPastFourWeeks"]),
                     TotalSuccessfulApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalSuccessfulApplicationsInPastFourWeeks"]),
                 };
