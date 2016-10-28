@@ -42,6 +42,7 @@
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
                     EmployerName = string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName) ? employer.FullName : string.Empty,
+                    IsEmployerAnonymous = !string.IsNullOrEmpty(vacancy.EmployerAnonymousName),
                     ProviderName = provider.TradingName,
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
