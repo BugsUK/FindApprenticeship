@@ -44,6 +44,13 @@
         public void Create(Guid applicationGuid)
         {
             var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
+            if (application == null)
+            {
+                var message = $"Application {applicationGuid} could not be found";
+                _logService.Warn(message);
+                throw new CustomException(message);
+            }
+
             var candidateGuid = application.CandidateId;
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] { candidateGuid });
             if (!candidateIds.ContainsKey(candidateGuid))
@@ -84,6 +91,12 @@
         public void Update(Guid applicationGuid)
         {
             var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
+            if (application == null)
+            {
+                var message = $"Application {applicationGuid} could not be found. It has likely been deleted since this update";
+                _logService.Warn(message);
+                return;
+            }
 
             var candidateGuid = application.CandidateId;
             var candidateIds = _candidateRepository.GetCandidateIdsByGuid(new[] {candidateGuid});
