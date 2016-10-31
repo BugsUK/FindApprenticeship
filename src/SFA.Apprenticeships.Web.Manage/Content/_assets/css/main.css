@@ -4346,7 +4346,8 @@ input::-webkit-inner-spin-button {
     font-size: 18px;
     padding-bottom: 6px;
     padding-left: 13px;
-    padding-right: 12px; }
+    padding-right: 12px;
+    width: 48px; }
     .search-bar .search-btn span {
       position: absolute;
       left: -5000px; }
