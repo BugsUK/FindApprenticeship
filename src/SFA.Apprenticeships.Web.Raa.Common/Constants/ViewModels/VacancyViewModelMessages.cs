@@ -460,5 +460,10 @@
         {
             public const string RequiredErrorText = "Select a wage description";
         }
+
+        public static class WageTypeReason
+        {
+            public const string RequiredErrorText = "Enter a reason why you need to use a text description";
+        }
     }
 }
