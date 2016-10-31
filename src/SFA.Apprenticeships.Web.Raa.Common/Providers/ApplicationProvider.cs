@@ -100,6 +100,8 @@
                 SelectedApplicationIds = bulkDeclineCandidatesViewModel.SelectedApplicationIds ?? new List<Guid>()
             };
 
+            viewModel.SelectedApplicationIds = viewModel.SelectedApplicationIds.Distinct();
+
             return viewModel;
         }
 
@@ -162,7 +164,7 @@
             var page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications);
             if (applyPagination)
             {
-                page = page.Skip((vacancyApplicationsSearch.CurrentPage - 1)*vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize);
+                page = page.Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize);
             }
 
             viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;
@@ -201,15 +203,22 @@
             var applicantId = CandidateSearchExtensions.GetCandidateId(vacancyApplicationsSearch.ApplicantId);
             if (applicantId.HasValue)
             {
-                var candidate = _candidateApplicationService.GetCandidate(applicantId.Value);
+                var candidate = _candidateApplicationService.GetCandidate(applicantId.Value, false);
                 if (candidate != null)
                     return applications.Where(a => a.CandidateId == candidate.EntityId).ToList();
+                return new List<ApplicationSummary>();
             }
 
             var candidateGuidPrefix = CandidateSearchExtensions.GetCandidateGuidPrefix(vacancyApplicationsSearch.ApplicantId);
             if (!string.IsNullOrEmpty(candidateGuidPrefix))
             {
                 return applications.Where(a => a.CandidateId.ToString().StartsWith(candidateGuidPrefix, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(vacancyApplicationsSearch.ApplicantId))
+            {
+                //Attempt to search by an unrecognised application id. Return no results
+                return new List<ApplicationSummary>();
             }
 
             return

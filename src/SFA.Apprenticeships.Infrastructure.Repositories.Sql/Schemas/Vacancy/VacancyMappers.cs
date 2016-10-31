@@ -416,7 +416,6 @@
                 .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)
                 .MapMemberFrom(av => av.DateStartedToQA, v => v.StartedToQADateTime)
                 .IgnoreMember(av => av.DateSubmitted)
-                .IgnoreMember(av => av.QAUserName)
                 .IgnoreMember(av => av.TrainingType)
                 .IgnoreMember(av => av.UpdatedDateTime)
                 .IgnoreMember(av => av.SectorCodeName)

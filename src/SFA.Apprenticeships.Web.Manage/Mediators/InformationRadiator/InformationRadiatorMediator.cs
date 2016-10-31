@@ -51,6 +51,8 @@
 
                 viewModel.TotalApplicationsStartedInPastFourWeeks = data.TotalApplicationsStartedInPastFourWeeks;
                 viewModel.TotalApplicationsSubmittedInPastFourWeeks = data.TotalApplicationsSubmittedInPastFourWeeks;
+                viewModel.TotalNewApplicationsInPastFourWeeks = data.TotalNewApplicationsInPastFourWeeks;
+                viewModel.TotalInProgressApplicationsInPastFourWeeks = data.TotalInProgressApplicationsInPastFourWeeks;
                 viewModel.TotalUnsuccessfulApplicationsInPastFourWeeks = data.TotalUnsuccessfulApplicationsInPastFourWeeks;
                 viewModel.TotalSuccessfulApplicationsInPastFourWeeks = data.TotalSuccessfulApplicationsInPastFourWeeks;
 

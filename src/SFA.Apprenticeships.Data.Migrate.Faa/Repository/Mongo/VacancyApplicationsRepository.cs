@@ -94,7 +94,7 @@
             };
             var filter = Builders<VacancyApplication>.Filter.Eq(a => a.Id, applicationGuid);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).FindSync(filter, options);
-            return cursor.Single();
+            return cursor.SingleOrDefault();
         }
 
         private static ProjectionDefinition<VacancyApplication> GetVacancyApplicationProjection()

@@ -31,6 +31,7 @@ $(function () {
         this.vacancyId = this.link.attr('data-vacancy-id');
         this.lat = this.link.attr('data-lat');
         this.lon = this.link.attr('data-lon');        
+        this.isEmployerAnonymous = this.link.attr('data-is-employer-anonymous');
         this.duration = resultItem.find('.journey-time');
         this.travelMode = resultItem.find('.select-mode');
         this.journeyTime = resultItem.find('.journey-time');
@@ -268,7 +269,9 @@ $(function () {
             if (status == google.maps.DirectionsStatus.OK) {
                 var responseJourneyTime = response.routes[0].legs[0].duration.text;
                 resultMap.journeyTime.text(responseJourneyTime);
-                resultMap.directionsDisplay.setDirections(response);
+                if (resultMap.isEmployerAnonymous !== "True") {
+                    resultMap.directionsDisplay.setDirections(response);
+                }
                 Webtrends.multiTrack({ argsa: ['DCS.dcsuri', dcsUri, 'WT.dl', '99', 'WT.ti', 'Search Results Journey Time Option', 'journeyMethods', resultMap.travelMode.val(), 'journeyTime', responseJourneyTime] });
             }
         });

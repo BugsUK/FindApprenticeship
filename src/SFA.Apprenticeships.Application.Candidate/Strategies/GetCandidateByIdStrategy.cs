@@ -13,14 +13,14 @@
             _candidateReadRepository = candidateReadRepository;
         }
 
-        public Candidate GetCandidate(int legacyCandidateId)
+        public Candidate GetCandidate(int legacyCandidateId, bool errorIfNotFound = true)
         {
-            return _candidateReadRepository.Get(legacyCandidateId);
+            return _candidateReadRepository.Get(legacyCandidateId, errorIfNotFound);
         }
 
-        public Candidate GetCandidate(Guid candidateId)
+        public Candidate GetCandidate(Guid candidateId, bool errorIfNotFound = true)
         {
-            return _candidateReadRepository.Get(candidateId);
+            return _candidateReadRepository.Get(candidateId, errorIfNotFound);
         }
     }
 }

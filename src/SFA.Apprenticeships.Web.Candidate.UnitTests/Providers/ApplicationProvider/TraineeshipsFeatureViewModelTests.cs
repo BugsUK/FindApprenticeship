@@ -56,7 +56,7 @@
         public void GivenAUserHasMoreThanNUnsuccessfulApplications_ShouldSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>(), true))
                 .Returns(new Candidate());
 
             _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true)).
@@ -77,7 +77,7 @@
         public void GivenAUserHasMoreThanNUnsuccessfulApplications_AndOneSuccessfulApplication_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>(), true))
                 .Returns(new Candidate());
 
             var apprenticeshipApplicationSummaries = GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications);
@@ -100,7 +100,7 @@
         public void GivenAUserHasMoreThanNUnsuccessfulApplications_AndUserHasOptedNotToAllowTraineeshipsPrompt_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>(), true))
                 .Returns(new Candidate
                 {
                     CommunicationPreferences = new CommunicationPreferences
@@ -129,7 +129,7 @@
             //Arrange
             const int unsuccessfulApplicationsThreshold = UnsuccessfulApplications - 1;
 
-            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>(), true))
                 .Returns(new Candidate());
 
             _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true))
@@ -150,7 +150,7 @@
         public void GivenIveAppliedForAtLeastOneTraineeship_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>(), true))
                 .Returns(new Candidate());
 
             _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true))

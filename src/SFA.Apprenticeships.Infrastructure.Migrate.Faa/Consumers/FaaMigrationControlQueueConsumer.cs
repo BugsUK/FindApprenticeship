@@ -32,6 +32,9 @@
                     return;
                 }
 
+                //Delete message as queries can take a long time and the message can be read several times causing multiple code executions
+                MessageService.DeleteMessage(QueueName, latestScheduledMessage.MessageId, latestScheduledMessage.PopReceipt);
+
                 _logService.Info("Calling migration processor to migrate data from FAA");
 
                 _migrationProcessor.ExecuteAuditMigrationProcessor(new CancellationToken());

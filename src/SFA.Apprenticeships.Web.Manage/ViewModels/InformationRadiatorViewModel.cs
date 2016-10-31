@@ -26,6 +26,8 @@
         public string VacanciesReviewedFourDaysAgoColour { get; set; }
         public int TotalApplicationsStartedInPastFourWeeks { get; set; }
         public int TotalApplicationsSubmittedInPastFourWeeks { get; set; }
+        public int TotalNewApplicationsInPastFourWeeks { get; set; }
+        public int TotalInProgressApplicationsInPastFourWeeks { get; set; }
         public int TotalUnsuccessfulApplicationsInPastFourWeeks { get; set; }
         public int TotalSuccessfulApplicationsInPastFourWeeks { get; set; }
     }
