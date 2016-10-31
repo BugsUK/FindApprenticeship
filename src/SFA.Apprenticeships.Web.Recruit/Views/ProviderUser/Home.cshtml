@@ -118,7 +118,7 @@
                 </div>
                 <div class="grid grid-1-2">
                     <div class="search-bar">
-                        
+                        @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchMode, EnumHelper.GetSelectList(typeof(VacancySearchMode)))
                         <div class="search-input-wrapper">
                             @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your " + vacanciesLabel})
                         </div>
