@@ -46,12 +46,14 @@
 
     @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
 
-    <div class="grid-wrapper">
+    <div class="grid-wrapper med-btm-margin">
         <div class="grid grid-2-3">
-            <h1 class="heading-xlarge">
+            <h1 class="heading-xlarge med-btm-margin">
                 Recruitment home
                 <span class="heading-secondary">@Model.ProviderViewModel.FullName</span>
             </h1>
+
+            <button id="new-vacancy-button" type="submit" name="NewVacancyAction" class="button" value="NewVacancy">Create new vacancy</button>
         </div>
         <div class="grid grid-1-3">
             <div class="grid grid-1-1 med-btm-margin">
@@ -81,10 +83,6 @@
             </div>
         </div>
     </div>
-
-    <section>
-        <button id="new-vacancy-button" type="submit" name="NewVacancyAction" class="button" value="NewVacancy">Create new vacancy</button>
-    </section>
 }
 
 @if (Model.VacanciesSummary.HasVacancies || !string.IsNullOrEmpty(searchString))
@@ -97,26 +95,51 @@
         @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
         @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.OrderByField)
         @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.Order)
-        <nav class="tabbed-nav">
+        <nav class="tabbed-nav med-btm-margin">
             @{
                 var apprenticeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ? " active" : "";
                 var traineeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? " active" : "";
             }
-            @Html.RouteLink("Apprenticeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Apprenticeship).RouteValues, new { @class = "tabbed-tab no-js" + apprenticeshipsTabControlClass })
-            @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship).RouteValues, new { @class = "tabbed-tab no-js" + traineeshipsTabControlClass })
+            @Html.RouteLink("Apprenticeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Apprenticeship).RouteValues, new {@class = "tabbed-tab no-js" + apprenticeshipsTabControlClass})
+            @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship).RouteValues, new {@class = "tabbed-tab no-js" + traineeshipsTabControlClass})
         </nav>
-        <section class="grid-wrapper">
+        <section class="grid-wrapper fieldset-with-border med-btm-margin">
+            <div class="grid-wrapper med-btm-margin">
+                <div class="grid grid-1-2">
+                    <h2 class="heading-medium no-margins" style="margin-top: 4px">
+                        Your @vacanciesLabel
+                        @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
+                        {
+                            <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All, null).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
+                        }
+                    </h2>
+                </div>
+                <div class="grid grid-1-2">
+                    <div class="search-bar">
+                        <div class="search-input-wrapper">
+                            <input type="search" id="search-main" title="Search" class="form-control" placeholder="Search vacancies">
+                        </div>
+                        <button type="submit" class="button search-btn no-margins">
+                            <i class="fa fa-search"></i><span>Search</span>
+                        </button>
+                    </div>
+                    <div style="display: none;">
+                        @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new { aria_label = "Search your " + vacanciesLabel })
+                        <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>
+                        @if (!string.IsNullOrEmpty(searchString))
+                        {
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null).RouteValues)" class="font-small vacancy-filter">Reset search</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid-wrapper fieldset-with-border med-btm-margin">
         @{
             var showAllLotteryNumbers = Model.VacanciesSummary.VacanciesSummarySearch.ShowAllLotteryNumbers;
             var newApplicationsCount = Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount;
         }
-        <h2 class="heading-medium">
-            Your @vacanciesLabel
-            @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
-            {
-                <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All, null).RouteValues)" class="font-small vacancy-filter">Show all</a></span>
-            }
-        </h2>
         <ul class="vacancies-summary">
         <li>
             @if (filterType == VacanciesSummaryFilterTypes.Live)
@@ -346,19 +369,6 @@
         <div class="grid-wrapper">
         <div class="grid grid-1-1">
         <section>
-        @{ var open = string.IsNullOrEmpty(searchString) ? "" : "open"; }
-        <details class="@open" @open>
-            <summary>Search your @vacanciesLabel</summary>
-            <p>You can search your vacancies by reference number, title, employer name or postcode</p>
-            <div class="detail-content">
-                @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {aria_label = "Search your " + vacanciesLabel})
-                <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>
-                @if (!string.IsNullOrEmpty(searchString))
-                {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null).RouteValues)" class="font-small vacancy-filter">Reset search</a>
-                }
-            </div>
-        </details>
         <div class="tabbed-content no-border active width-all-1-1">
         <table id="vacancies-table">
         <colgroup>

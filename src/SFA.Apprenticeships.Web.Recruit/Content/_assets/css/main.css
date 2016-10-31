@@ -4325,6 +4325,32 @@ input::-webkit-inner-spin-button {
   padding: 1em;
   background: #fff2d3; }
 
+.search-bar {
+  overflow: hidden;
+  position: relative; }
+  .search-bar .search-input-wrapper {
+    float: left;
+    box-sizing: border-box;
+    padding-right: 47px;
+    width: 100%; }
+    .search-bar .search-input-wrapper input[type="search"] {
+      padding-top: 7px;
+      padding-bottom: 4px;
+      padding-left: 7px;
+      box-sizing: border-box;
+      width: 100%; }
+  .search-bar .search-btn {
+    position: absolute;
+    overflow: hidden;
+    right: 0px;
+    font-size: 18px;
+    padding-bottom: 6px;
+    padding-left: 13px;
+    padding-right: 12px; }
+    .search-bar .search-btn span {
+      position: absolute;
+      left: -5000px; }
+
 .grid {
   float: left;
   width: 100%; }
