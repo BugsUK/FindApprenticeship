@@ -5055,8 +5055,6 @@ video {
   padding: 30px 10px 0; }
   .tabbed-content.active {
     display: block; }
-  .tabbed-content.no-border {
-    border: 0; }
 
 .tabbed-element {
   display: none; }
@@ -6353,17 +6351,17 @@ h2 a i.raa-icon-comment {
       text-decoration: underline; }
 
 @media screen and (max-width: 640px) {
-  .vacancies-summary li {
+  ul.vacancies-summary li {
     padding: 0 10px;
     width: 100%; } }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
-  .vacancies-summary li {
+  ul.vacancies-summary li {
     padding: 0 10px 0 0;
     width: 50%; } }
 
 @media screen and (min-width: 769px) {
-  .vacancies-summary li {
+  ul.vacancies-summary li {
     padding: 0 10px 0 0;
     width: 25%; } }
 

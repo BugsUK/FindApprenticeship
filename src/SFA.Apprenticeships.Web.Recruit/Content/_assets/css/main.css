@@ -5055,8 +5055,6 @@ video {
   padding: 30px 10px 0; }
   .tabbed-content.active {
     display: block; }
-  .tabbed-content.no-border {
-    border: 0; }
 
 .tabbed-element {
   display: none; }
