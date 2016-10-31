@@ -46,9 +46,9 @@
 
     @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
 
-    <div class="grid-wrapper med-btm-margin">
-        <div class="grid grid-2-3 med-btm-margin">
-            <h1 class="heading-xlarge med-btm-margin">
+    <div class="grid-wrapper lrg-btm-margin">
+        <div class="grid grid-2-3">
+            <h1 class="heading-xlarge lrg-btm-margin">
                 Recruitment home
                 <span class="heading-secondary">@Model.ProviderViewModel.FullName</span>
             </h1>
@@ -361,7 +361,7 @@
                         Model.VacanciesSummary.VacanciesSummarySearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                 }
                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummarySearchViewModel.OrderByFieldTitle, titleNewOrder).RouteValues)" class="vacancy-filter">
-                    <span class="font-black">@vacanciesTitle title <i class="fa @titleSortClass" aria-hidden="true"></i></span>
+                    <span>@vacanciesTitle title <i class="fa @titleSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
             <th>
@@ -371,7 +371,7 @@
                         Model.VacanciesSummary.VacanciesSummarySearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                 }
                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummarySearchViewModel.OrderByEmployer, employerNewOrder).RouteValues)" class="vacancy-filter">
-                    <span class="font-black">Employer <i class="fa @employerSortClass" aria-hidden="true"></i></span>
+                    <span>Employer <i class="fa @employerSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
             <th>Location</th>
@@ -383,7 +383,7 @@
                         Model.VacanciesSummary.VacanciesSummarySearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                 }
                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummarySearchViewModel.OrderByApplications, applicationsNewOrder).RouteValues)" class="vacancy-filter">
-                    <span class="font-black">@headerText <i class="fa @applicationsSortClass" aria-hidden="true"></i></span>
+                    <span>@headerText <i class="fa @applicationsSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
             <th>@vacanciesTitle status</th>
