@@ -294,7 +294,7 @@
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel() { Type = WageType.LegacyText, Classification = WageClassification.LegacyText, PresetText = wageType })
+                .With(v => v.Wage, new WageViewModel() { Classification = WageClassification.LegacyText, PresetText = wageType })
                 .With(v => v.WageTextPresets, ApprenticeshipVacancyConverter.GetWageTextPresets())
                 .Create();
 

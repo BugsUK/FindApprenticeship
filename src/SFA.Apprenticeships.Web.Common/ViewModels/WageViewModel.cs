@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.ViewModels
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
 
     public class WageViewModel
@@ -18,6 +18,7 @@
 
         public WageType Type { get; set; }
 
+        [Display(Name = WageViewModelMessages.LabelText)]
         public WageClassification Classification { get; set; }
 
         public CustomWageType CustomType { get; set; }

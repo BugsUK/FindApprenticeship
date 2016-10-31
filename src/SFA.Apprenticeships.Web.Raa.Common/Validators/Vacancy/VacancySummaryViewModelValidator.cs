@@ -133,8 +133,8 @@
                 .When(x => x.Wage.Classification == WageClassification.Custom
                     && x.Wage.CustomType == CustomWageType.Ranged);
 
-            validator.RuleFor(x => x.Wage.AmountLowerBound)
-                .Must((model, amtLwr) => amtLwr.Value < model.Wage.AmountUpperBound.Value)
+            validator.RuleFor(x => x.Wage.AmountUpperBound)
+                .Must((model, amtUpr) => amtUpr.Value > model.Wage.AmountLowerBound.Value)
                 .WithMessage(VacancyViewModelMessages.AmountUpper.RequiredErrorText)
                 .When(x => x.Wage.Classification == WageClassification.Custom
                     && x.Wage.CustomType == CustomWageType.Ranged
@@ -155,9 +155,27 @@
 
         internal static void AddVacancySummaryViewModelDatesServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator, string parentPropertyName)
         {
-            validator.Custom(x => x.HaveAValidHourRate(x.Wage.Amount, parentPropertyName, "Wage.Amount"));
+            validator.Custom(x =>
+            {
+                if (x.Wage.Classification == WageClassification.Custom
+                && x.Wage.CustomType == CustomWageType.Fixed)
+                {
+                    return x.HaveAValidHourRate(x.Wage.Amount, parentPropertyName, "Wage.Amount");
+                }
+                return null;
+            });
 
-            validator.Custom(x => x.HaveAValidHourRate(x.Wage.AmountLowerBound, parentPropertyName, "Wage.AmountLowerBound"));
+
+            validator.Custom(
+                x =>
+                {
+                    if (x.Wage.Classification == WageClassification.Custom
+                && x.Wage.CustomType == CustomWageType.Ranged)
+                    { 
+                        return x.HaveAValidHourRate(x.Wage.AmountLowerBound, parentPropertyName, "Wage.AmountLowerBound");
+                    }
+                    return null;
+                });
 
             validator.RuleFor(x => x.VacancyDatesViewModel).SetValidator(new VacancyDatesViewModelServerCommonValidator());
         }
@@ -196,7 +214,8 @@
             validator.RuleFor(x => x.Wage.Amount)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Wage.RequiredErrorText)
-                .When(x => x.Wage.Classification == WageClassification.Custom)
+                .When(x => x.Wage.Classification == WageClassification.Custom
+                && x.Wage.CustomType == CustomWageType.Fixed)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
             validator.RuleFor(x => x.Duration)

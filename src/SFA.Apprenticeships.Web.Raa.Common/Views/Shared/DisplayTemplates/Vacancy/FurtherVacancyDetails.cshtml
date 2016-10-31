@@ -52,6 +52,7 @@
         @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
         {
             @Html.HiddenFor(m => m.Wage.Type)
+            @Html.HiddenFor(m => m.Wage.Classification)
             @Html.HiddenFor(m => m.Wage.CustomType)
             @Html.HiddenFor(m => m.Wage.Amount)
             @Html.HiddenFor(m => m.Wage.AmountLowerBound)
@@ -64,27 +65,27 @@
         {
             <div class="blocklabel-single-container">
                 <div class="form-group">
-                    <a name="@Html.NameFor(m => m.Wage.Type).ToString().ToLower()"></a>
+                    <a name="@Html.NameFor(m => m.Wage.Classification).ToString().ToLower()"></a>
                     <label class="form-label" for="weekly-wage">Wage</label>
                     <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.Type)))" data-editable-x="">
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
-                            @Html.RadioButtonFor(model => model.Wage.Type, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.Wage.Classification, (int)WageClassification.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
                             Custom wage
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="national-minimum-wage" class="block-label">
-                            @Html.RadioButtonFor(model => model.Wage.Type, WageType.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.Wage.Classification, (int)WageClassification.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
                             National Minimum Wage
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="apprenticeship-minimum-wage" class="block-label">
-                            @Html.RadioButtonFor(model => model.Wage.Type, WageType.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
+                            @Html.RadioButtonFor(model => model.Wage.Classification, (int)WageClassification.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
                             National Minimum Wage for apprentices
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="preset-text" class="block-label" data-target="preset-text-panel">
-                            @Html.RadioButtonFor(model => model.Wage.Type, WageType.LegacyText, new { id = "preset-text", aria_controls = "wage-type-panel" })
+                            @Html.RadioButtonFor(model => model.Wage.Classification, (int)WageClassification.PresetText, new { id = "preset-text", aria_controls = "wage-type-panel" })
                             Choose a text description of the wage
                         </label>
                         @Html.ValidationMessageFor(m => m.Wage.Type)
@@ -98,9 +99,10 @@
                             </label>
                             @* ReSharper disable once Html.IdNotResolved *@
                             <label for="custom-wage-range" class="block-label" data-target="custom-wage-range-panel">
-                                @Html.RadioButtonFor(model => model.Wage.CustomType, CustomWageType.Ranged, new { id = "custom-wage-range", aria_controls = "custom-wage-panel" })
+                                @Html.RadioButtonFor(model => model.Wage.CustomType, CustomWageType.Ranged, new {id = "custom-wage-range", aria_controls = "custom-wage-panel"})
                                 Wage range
                             </label>
+                            @Html.ValidationMessageFor(m => m.Wage.CustomType)
                         </fieldset>
                         <div id="custom-wage-fixed-panel" class="toggle-content blocklabel-content">
                             @Html.Label(WageViewModelMessages.AmountMessages.HelpText)
@@ -129,6 +131,7 @@
                             @Html.Label(WageViewModelMessages.WageTypeReason.HelpText)
                             @Html.FormTextAreaFor(m => m.Wage.WageTypeReason, WageViewModelMessages.WageTypeReason.LabelText, containerHtmlAttributes: new {@baseClassName = "form-group-compound"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText, data_val_regex = Whitelists.FreetextWhitelist.RegularExpression})
                         </fieldset>
+                        @Html.ValidationMessageFor(m => m.Wage.WageTypeReason)
                     </div>
                 </div>
                 <div class="form-group">@Html.EditorFor(m => m.WageComment, "Comment", Html.GetLabelFor(m => m.WageComment))</div>
