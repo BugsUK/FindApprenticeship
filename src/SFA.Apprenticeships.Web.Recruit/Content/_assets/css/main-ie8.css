@@ -4997,9 +4997,11 @@ video {
     background: #fff;
     border-color: #0b0c0c; }
 
+.tabbed-nav {
+  border-bottom: 1px solid #bfc1c3; }
+
 .tabbed-tab {
   border: 1px solid transparent;
-  border-bottom: 1px solid #bfc1c3;
   display: inline-block;
   margin-bottom: -1px;
   margin-right: 1px;
@@ -5021,11 +5023,14 @@ video {
 
 .tabbed-content {
   border: 1px solid #bfc1c3;
+  border-top: 0;
   display: none;
   margin-bottom: 15px;
   padding: 30px 10px 0; }
   .tabbed-content.active {
     display: block; }
+  .tabbed-content.no-border {
+    border: 0; }
 
 .tabbed-element {
   display: none; }

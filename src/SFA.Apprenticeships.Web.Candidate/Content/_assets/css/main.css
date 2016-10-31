@@ -2666,6 +2666,18 @@ input[type="search"]::-webkit-search-decoration {
 .grey-background {
   background: #F8F8F8; }
 
+ul.applications-summary.bulk-response {
+  width: 200%; }
+
+#triple li {
+  width: 33.333%; }
+
+.three-column ul {
+  overflow: hidden; }
+
+.three-column li {
+  float: left; }
+
 html {
   font-size: 62.5%;
   /* 1 */ }
@@ -5159,9 +5171,11 @@ video {
     background: #fff;
     border-color: #0b0c0c; }
 
+.tabbed-nav {
+  border-bottom: 1px solid #bfc1c3; }
+
 .tabbed-tab {
   border: 1px solid transparent;
-  border-bottom: 1px solid #bfc1c3;
   display: inline-block;
   margin-bottom: -1px;
   margin-right: 1px;
@@ -5183,11 +5197,14 @@ video {
 
 .tabbed-content {
   border: 1px solid #bfc1c3;
+  border-top: 0;
   display: none;
   margin-bottom: 15px;
   padding: 30px 10px 0; }
   .tabbed-content.active {
     display: block; }
+  .tabbed-content.no-border {
+    border: 0; }
 
 .tabbed-element {
   display: none; }
