@@ -12,7 +12,7 @@
             Type = WageType.Custom;
             Unit = WageUnit.NotApplicable;
             Classification = WageClassification.Custom;
-            CustomType = CustomWageType.NotApplicable;
+            CustomType = CustomWageType.Fixed;
             PresetText = PresetText.NotApplicable;
         }
 

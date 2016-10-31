@@ -132,6 +132,14 @@
                 .WithMessage(VacancyViewModelMessages.AmountUpper.RequiredErrorText)
                 .When(x => x.Wage.Classification == WageClassification.Custom
                     && x.Wage.CustomType == CustomWageType.Ranged);
+
+            validator.RuleFor(x => x.Wage.AmountLowerBound)
+                .Must((model, amtLwr) => amtLwr.Value < model.Wage.AmountUpperBound.Value)
+                .WithMessage(VacancyViewModelMessages.AmountUpper.RequiredErrorText)
+                .When(x => x.Wage.Classification == WageClassification.Custom
+                    && x.Wage.CustomType == CustomWageType.Ranged
+                    && x.Wage.AmountLowerBound.HasValue
+                    && x.Wage.AmountUpperBound.HasValue);
         }
 
         internal static void AddVacancySummaryViewModelDatesServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator, string parentPropertyName)
