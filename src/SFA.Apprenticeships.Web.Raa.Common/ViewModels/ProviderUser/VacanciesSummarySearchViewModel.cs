@@ -54,12 +54,14 @@
 
         public VacancyType VacancyType { get; set; }
         public VacanciesSummaryFilterTypes FilterType { get; set; }
+        public VacancySearchMode SearchMode { get; set; }
         public string SearchString { get; set; }
 
         public override object RouteValues => new
         {
             VacancyType,
             FilterType,
+            SearchMode,
             SearchString,
             OrderByField,
             Order,
