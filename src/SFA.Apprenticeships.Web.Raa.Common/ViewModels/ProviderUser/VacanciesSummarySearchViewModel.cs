@@ -12,14 +12,12 @@
         public VacanciesSummarySearchViewModel()
         {
             VacancyType = VacancyType.Apprenticeship;
-            ShowAllLotteryNumbers = true;
         }
 
         internal VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel) : base(viewModel)
         {
             VacancyType = viewModel.VacancyType;
             FilterType = viewModel.FilterType;
-            ShowAllLotteryNumbers = viewModel.ShowAllLotteryNumbers;
             SearchString = viewModel.SearchString;
             PageSize = viewModel.PageSize;
         }
@@ -33,11 +31,6 @@
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacanciesSummaryFilterTypes filterType, string searchString) : this(viewModel, filterType)
         {
             SearchString = searchString;
-        }
-
-        public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, bool showAllLotteryNumbers) : this(viewModel)
-        {
-            ShowAllLotteryNumbers = showAllLotteryNumbers;
         }
 
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacancyType vacancyType) : this(viewModel)
@@ -60,14 +53,12 @@
 
         public VacancyType VacancyType { get; set; }
         public VacanciesSummaryFilterTypes FilterType { get; set; }
-        public bool ShowAllLotteryNumbers { get; set; }
         public string SearchString { get; set; }
 
         public override object RouteValues => new
         {
             VacancyType,
             FilterType,
-            ShowAllLotteryNumbers,
             SearchString,
             OrderByField,
             Order,

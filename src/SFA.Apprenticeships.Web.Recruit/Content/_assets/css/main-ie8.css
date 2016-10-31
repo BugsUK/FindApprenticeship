@@ -6396,35 +6396,23 @@ button.vacancy-order {
     .vacancies-summary li figure.data figcaption.underline, .applications-summary li figure.data figcaption.underline {
       text-decoration: underline; }
 
+ul.vacancies-summary {
+  display: table;
+  width: 100%;
+  margin-bottom: 15px; }
+
 @media screen and (max-width: 640px) {
-  .vacancies-summary li {
+  ul.vacancies-summary li, ul.applications-summary li {
     padding: 0 10px;
     width: 100%; } }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
-  .vacancies-summary li {
-    padding: 0 10px 0 0;
-    width: 33.33333%;
-    margin-bottom: 10px; } }
-
-@media screen and (min-width: 769px) {
-  .vacancies-summary li {
-    padding: 0 10px 0 0;
-    width: 20%;
-    margin-bottom: 10px; } }
-
-@media screen and (max-width: 640px) {
-  .applications-summary li {
-    padding: 0 10px;
-    width: 100%; } }
-
-@media screen and (min-width: 641px) and (max-width: 768px) {
-  .applications-summary li {
+  ul.vacancies-summary li, ul.applications-summary li {
     padding: 0 10px 0 0;
     width: 50%; } }
 
 @media screen and (min-width: 769px) {
-  .applications-summary li {
+  ul.vacancies-summary li, ul.applications-summary li {
     padding: 0 10px 0 0;
     width: 25%; } }
 
