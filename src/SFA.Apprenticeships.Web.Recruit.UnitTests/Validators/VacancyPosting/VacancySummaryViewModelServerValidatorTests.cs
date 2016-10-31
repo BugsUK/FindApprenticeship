@@ -614,7 +614,47 @@
             }
         }
 
-        public void AmountLowerMustBeGreaterThanMinimumWage() { }
+        [TestCase(1, 40, WageUnit.Weekly, false)]
+        [TestCase(1, 40, WageUnit.Monthly, false)]
+        [TestCase(1, 40, WageUnit.Annually, false)]
+        [TestCase(1, 40, WageUnit.NotApplicable, true)]
+        [TestCase(100, 40, WageUnit.Weekly, false)]
+        [TestCase(100, 40, WageUnit.Monthly, false)]
+        [TestCase(100, 40, WageUnit.Annually, false)]
+        [TestCase(1000, 40, WageUnit.Weekly, true)]
+        [TestCase(2000, 40, WageUnit.Monthly, true)]
+        [TestCase(20000, 40, WageUnit.Annually, true)]
+        public void AmountLowerMustBeGreaterThanMinimumWage(decimal? amount, decimal? hoursPerWeek, WageUnit rangeUnit, bool expectValid)
+        {
+            var viewModel = new FurtherVacancyDetailsViewModel
+            {
+                Wage = new WageViewModel() { Classification = WageClassification.Custom, CustomType = CustomWageType.Ranged, AmountLowerBound = amount, HoursPerWeek = hoursPerWeek, RangeUnit = rangeUnit}
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.AmountLowerBound, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.AmountLowerBound, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
 
         public void PresetTextMustBeSetWhenLegacyTextTypeIsSelected() { }
 

@@ -448,6 +448,7 @@
         public static class AmountLower
         {
             public const string RequiredErrorText = "Enter a valid wage range";
+            public const string EnterValidWage = "Enter a valid wage";
         }
 
         public static class AmountUpper

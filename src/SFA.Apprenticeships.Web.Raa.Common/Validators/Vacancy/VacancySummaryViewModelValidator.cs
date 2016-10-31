@@ -136,7 +136,9 @@
 
         internal static void AddVacancySummaryViewModelDatesServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator, string parentPropertyName)
         {
-            validator.Custom(x => x.HaveAValidHourRate(x.Wage.Amount, parentPropertyName));
+            validator.Custom(x => x.HaveAValidHourRate(x.Wage.Amount, parentPropertyName, "Wage.Amount"));
+
+            validator.Custom(x => x.HaveAValidHourRate(x.Wage.AmountLowerBound, parentPropertyName, "Wage.AmountLowerBound"));
 
             validator.RuleFor(x => x.VacancyDatesViewModel).SetValidator(new VacancyDatesViewModelServerCommonValidator());
         }
