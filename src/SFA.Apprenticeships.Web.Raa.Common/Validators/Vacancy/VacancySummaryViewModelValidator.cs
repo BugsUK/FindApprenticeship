@@ -140,6 +140,11 @@
                     && x.Wage.CustomType == CustomWageType.Ranged
                     && x.Wage.AmountLowerBound.HasValue
                     && x.Wage.AmountUpperBound.HasValue);
+
+            validator.RuleFor(x => x.Wage.PresetText)
+                .Must(ct => ct != PresetText.NotApplicable)
+                .WithMessage(VacancyViewModelMessages.PresetText.RequiredErrorText)
+                .When(x => x.Wage.Classification == WageClassification.PresetText);
         }
 
         internal static void AddVacancySummaryViewModelDatesServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator, string parentPropertyName)

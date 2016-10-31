@@ -455,5 +455,10 @@
         {
             public const string RequiredErrorText = "Enter a valid wage range";
         }
+
+        public static class PresetText
+        {
+            public const string RequiredErrorText = "Select a wage description";
+        }
     }
 }

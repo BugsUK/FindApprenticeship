@@ -693,7 +693,45 @@
             }
         }
 
-        public void PresetTextMustBeSetWhenLegacyTextTypeIsSelected() { }
+        [TestCase(WageClassification.PresetText, PresetText.NotApplicable, false)]
+        [TestCase(WageClassification.PresetText, PresetText.CompetitiveSalary, true)]
+        [TestCase(WageClassification.PresetText, PresetText.ToBeAgreedUponAppointment, true)]
+        [TestCase(WageClassification.PresetText, PresetText.Unwaged, true)]
+        [TestCase(WageClassification.Custom, PresetText.NotApplicable, true)]
+        [TestCase(WageClassification.ApprenticeshipMinimum, PresetText.NotApplicable, true)]
+        [TestCase(WageClassification.NationalMinimum, PresetText.NotApplicable, true)]
+        [TestCase(WageClassification.LegacyText, PresetText.NotApplicable, true)]
+        public void PresetTextMustBeSetWhenLegacyTextTypeIsSelected(WageClassification classification, PresetText presetText, bool expectValid)
+        {
+            var viewModel = new FurtherVacancyDetailsViewModel
+            {
+                Wage = new WageViewModel() { Classification = classification, PresetText = presetText }
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.PresetText, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.PresetText, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.PresetText, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.PresetText, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.PresetText, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.PresetText, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.PresetText, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.PresetText, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.PresetText, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.PresetText, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
 
         public void ReasonForTypeMustBeSetWhenPresetTextTypeIsSelected() { }
     }
