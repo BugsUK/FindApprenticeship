@@ -95,6 +95,7 @@
         @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
         @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.OrderByField)
         @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.Order)
+
         <nav class="tabbed-nav med-btm-margin">
             @{
                 var apprenticeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ? " active" : "";
@@ -103,6 +104,7 @@
             @Html.RouteLink("Apprenticeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Apprenticeship).RouteValues, new {@class = "tabbed-tab no-js" + apprenticeshipsTabControlClass})
             @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship).RouteValues, new {@class = "tabbed-tab no-js" + traineeshipsTabControlClass})
         </nav>
+
         <section class="grid-wrapper fieldset-with-border med-btm-margin">
             <div class="grid-wrapper med-btm-margin">
                 <div class="grid grid-1-2">
@@ -117,19 +119,11 @@
                 <div class="grid grid-1-2">
                     <div class="search-bar">
                         <div class="search-input-wrapper">
-                            <input type="search" id="search-main" title="Search" class="form-control" placeholder="Search vacancies">
+                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new { type = "search", title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your " + vacanciesLabel })
                         </div>
-                        <button type="submit" class="button search-btn no-margins">
+                        <button id="search-vacancies-button" type="submit" class="button search-btn no-margins" name="SearchVacanciesAction" value="SearchVacancies">
                             <i class="fa fa-search"></i><span>Search</span>
                         </button>
-                    </div>
-                    <div style="display: none;">
-                        @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new { aria_label = "Search your " + vacanciesLabel })
-                        <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>
-                        @if (!string.IsNullOrEmpty(searchString))
-                        {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null).RouteValues)" class="font-small vacancy-filter">Reset search</a>
-                        }
                     </div>
                 </div>
             </div>
