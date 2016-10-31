@@ -7,6 +7,7 @@
     {
         public static readonly string OrderByFieldTitle = VacancySummaryOrderByColumn.Title.ToString();
         public static readonly string OrderByEmployer = VacancySummaryOrderByColumn.Employer.ToString();
+        public static readonly string OrderByLocation = VacancySummaryOrderByColumn.Location.ToString();
         public static readonly string OrderByApplications = VacancySummaryOrderByColumn.Applications.ToString();
 
         public VacanciesSummarySearchViewModel()

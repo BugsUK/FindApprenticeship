@@ -48,6 +48,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                 case VacancySummaryOrderByColumn.Employer:
                     orderByField = "e.FullName";
                     break;
+                case VacancySummaryOrderByColumn.Location:
+                    orderByField = $"v.Town {(query.Order == Order.Descending ? "DESC" : "")}, v.PostCode";
+                    break;
             }
 
             if (query.OrderByField == VacancySummaryOrderByColumn.OrderByFilter)
