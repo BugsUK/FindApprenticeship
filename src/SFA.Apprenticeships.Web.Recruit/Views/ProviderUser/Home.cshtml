@@ -46,7 +46,7 @@
 
     @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
 
-    <div class="grid-wrapper lrg-btm-margin">
+    <div class="grid-wrapper xlrg-btm-margin">
         <div class="grid grid-2-3">
             <h1 class="heading-xlarge lrg-btm-margin">
                 Recruitment home
@@ -108,7 +108,7 @@
         <section class="grid-wrapper fieldset-with-border med-btm-margin">
             <div class="grid-wrapper med-btm-margin">
                 <div class="grid grid-1-2">
-                    <h2 class="heading-medium no-margins" style="margin-top: 4px">
+                    <h2 class="heading-large no-margins">
                         Your @vacanciesLabel
                         @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
                         {
@@ -119,8 +119,12 @@
                 <div class="grid grid-1-2">
                     <div class="search-bar">
                         <div class="search-input-wrapper">
-                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new { type = "search", title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your " + vacanciesLabel })
+                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {type = "search", title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your " + vacanciesLabel})
                         </div>
+                        @if (!string.IsNullOrEmpty(searchString))
+                        {
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null).RouteValues)" class="font-small vacancy-filter"><i class="fa fa-crosshairs" aria-hidden="true"></i></a>
+                        }
                         <button id="search-vacancies-button" type="submit" class="button search-btn no-margins" name="SearchVacanciesAction" value="SearchVacancies">
                             <i class="fa fa-search"></i><span>Search</span>
                         </button>
@@ -372,6 +376,16 @@
                 }
                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummarySearchViewModel.OrderByEmployer, employerNewOrder).RouteValues)" class="vacancy-filter">
                     <span>Employer <i class="fa @employerSortClass" aria-hidden="true"></i></span>
+                </a>
+            </th>
+            <th>
+                @{
+                    var locationNewOrder = Model.VacanciesSummary.VacanciesSummarySearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                    var locationSortClass = Model.VacanciesSummary.VacanciesSummarySearch.OrderByField == VacanciesSummarySearchViewModel.OrderByLocation ?
+                        Model.VacanciesSummary.VacanciesSummarySearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                }
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummarySearchViewModel.OrderByLocation, locationNewOrder).RouteValues)" class="vacancy-filter">
+                    <span>Location <i class="fa @locationSortClass" aria-hidden="true"></i></span>
                 </a>
             </th>
             <th>Location</th>
