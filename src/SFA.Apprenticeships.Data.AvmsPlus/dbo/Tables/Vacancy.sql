@@ -152,6 +152,11 @@ INCLUDE ([ApprenticeshipFrameworkId],[CountyId],[DeliveryOrganisationID],[Town],
 
 
 GO
+CREATE NONCLUSTERED INDEX [nci_wi_Vacancy_4E92302198811890FD5CB516FEF6F9B0] 
+ON [dbo].[Vacancy] ([VacancyStatusId] ASC)
+INCLUDE ( [ContractOwnerID],[SubmissionCount],[VacancyOwnerRelationshipId])
+
+GO
 
 CREATE TRIGGER uDeleteVacancySearch
    ON  Vacancy
