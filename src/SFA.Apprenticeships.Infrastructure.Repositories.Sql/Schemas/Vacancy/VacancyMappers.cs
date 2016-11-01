@@ -516,6 +516,24 @@
                         Postcode = v.PostCode,
                         Town = v.Town
                     };
+
+                    if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
+                        (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue))
+                    {
+                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
+
+                    if (v.Latitude.HasValue && v.Longitude.HasValue)
+                    {
+                        av.Address.GeoPoint.Latitude = (double)v.Latitude.Value;
+                        av.Address.GeoPoint.Longitude = (double)v.Longitude.Value;
+                    }
+
+                    if (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue)
+                    {
+                        av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
+                        av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
+                    }
                 })
                 .End();
 

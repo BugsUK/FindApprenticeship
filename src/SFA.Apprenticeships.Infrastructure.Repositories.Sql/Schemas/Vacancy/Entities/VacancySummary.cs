@@ -85,5 +85,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public int? VacancyManagerId { get; set; }
         public string WorkingWeek { get; set; }
         public int? ParentVacancyId { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
+        public int? GeocodeEasting { get; set; }
+        public int? GeocodeNorthing { get; set; }
     }
 }

@@ -87,8 +87,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             v.TrainingTypeId,
                             v.VacancyLocationTypeId,
                             v.VacancyManagerId,
-                            v.WorkingWeek,
-                            v.MasterVacancyId
+                            v.WorkingWeek,  
+                            v.MasterVacancyId,
+                            v.Latitude,
+                            v.Longitude,
+                            v.GeocodeEasting,
+                            v.GeocodeNorthing
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
