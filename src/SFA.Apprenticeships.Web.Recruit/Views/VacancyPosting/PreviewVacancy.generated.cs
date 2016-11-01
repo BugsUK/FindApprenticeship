@@ -122,10 +122,10 @@ WriteLiteral("            <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 617), Tuple.Create("\"", 743)
+WriteAttribute("href", Tuple.Create(" href=\"", 617), Tuple.Create("\"", 793)
             
             #line 19 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 624), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})
+, Tuple.Create(Tuple.Create("", 624), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})
             
             #line default
             #line hidden
@@ -149,14 +149,14 @@ WriteLiteral("            <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 868), Tuple.Create("\"", 927)
+WriteAttribute("href", Tuple.Create(" href=\"", 918), Tuple.Create("\"", 977)
             
             #line 23 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 875), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 925), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 875), false)
+, 925), false)
 );
 
 WriteLiteral(">Return to recruitment home</a>\r\n");
@@ -283,14 +283,14 @@ WriteLiteral("                    <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2066), Tuple.Create("\"", 2125)
+WriteAttribute("href", Tuple.Create(" href=\"", 2116), Tuple.Create("\"", 2175)
             
             #line 55 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 2073), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 2123), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2073), false)
+, 2123), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n                </div>\r\n            </section>\r\n");

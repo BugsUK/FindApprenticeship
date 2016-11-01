@@ -16,7 +16,7 @@
     {
         if (Model.Status.CanBulkDecline(Model.ApplicationCount))
         {
-            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Continue responding to candidates</a>
+            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Continue responding to candidates</a>
         }
         else
         {
