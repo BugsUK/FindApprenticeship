@@ -1,7 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories.Models;
+    using Factories;
 
     public class VacanciesSummarySearchViewModel : OrderedPageableSearchViewModel
     {
@@ -55,6 +58,7 @@
         public VacancyType VacancyType { get; set; }
         public VacanciesSummaryFilterTypes FilterType { get; set; }
         public VacancySearchMode SearchMode { get; set; }
+        public List<SelectListItem> SearchModes => SelectListItemsFactory.GetVacancySearchModes(SearchMode);
         public string SearchString { get; set; }
 
         public override object RouteValues => new

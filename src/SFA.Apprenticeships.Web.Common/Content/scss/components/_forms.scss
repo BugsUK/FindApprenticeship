@@ -535,9 +535,16 @@ input::-webkit-inner-spin-button {
 .search-bar {
   overflow:hidden;
   position: relative;
+    select{
+    position: absolute;
+    left:0px;
+        width:75px;
+        height: 38px;
+    }
   .search-input-wrapper {
     float:left;
     box-sizing: border-box;
+    padding-left:74px;
     padding-right:47px;
     width:100%;
     input[type="text"] {
@@ -546,6 +553,16 @@ input::-webkit-inner-spin-button {
       padding-left: 7px;
       box-sizing: border-box;
       width:100%;
+    }
+  }
+  .reset-search{
+    position: absolute;
+    overflow: hidden;
+    right:53px;
+    top: 8px;
+    & span {
+      position: absolute;
+      left:-5000px;     
     }
   }
   .search-btn {
