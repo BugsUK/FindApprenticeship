@@ -97,8 +97,11 @@
                 NewApplicationsCount = vacancyApplicationsViewModel.NewApplicationsCount,
                 InProgressApplicationsCount = vacancyApplicationsViewModel.InProgressApplicationsCount,
                 ApplicationSummaries = vacancyApplicationsViewModel.ApplicationSummaries.Page.Where(a => a.Status == ApplicationStatuses.Submitted || a.Status == ApplicationStatuses.InProgress),
-                SelectedApplicationIds = bulkDeclineCandidatesViewModel.SelectedApplicationIds ?? new List<Guid>()
+                SelectedApplicationIds = bulkDeclineCandidatesViewModel.SelectedApplicationIds ?? new List<Guid>(),
+                UnSuccessfulReason = bulkDeclineCandidatesViewModel.UnSuccessfulReason
             };
+
+            viewModel.SelectedApplicationIds = viewModel.SelectedApplicationIds.Distinct();
 
             return viewModel;
         }
@@ -162,7 +165,7 @@
             var page = GetOrderedApplicationSummaries(vacancyApplicationsSearch.OrderByField, vacancyApplicationsSearch.Order, applications);
             if (applyPagination)
             {
-                page = page.Skip((vacancyApplicationsSearch.CurrentPage - 1)*vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize);
+                page = page.Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize);
             }
 
             viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;

@@ -23,6 +23,7 @@
             EmployerName = vacancySummary.EmployerName;
             ProviderName = vacancySummary.ProviderName;
             IsPositiveAboutDisability = vacancySummary.IsPositiveAboutDisability;
+            IsEmployerAnonymous = vacancySummary.IsEmployerAnonymous;
             Location = vacancySummary.Location;
             Category = vacancySummary.Category;
             CategoryCode = vacancySummary.CategoryCode;
@@ -51,6 +52,8 @@
         public string ProviderName { get; set; }
 
         public bool IsPositiveAboutDisability { get; set; }
+
+        public bool IsEmployerAnonymous { get; set; }
 
         public GeoPoint Location { get; set; }
 

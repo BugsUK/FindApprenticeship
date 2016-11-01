@@ -87,11 +87,13 @@
         public MediatorResponse<BulkDeclineCandidatesViewModel> ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
         {
             var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
-
-            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(bulkDeclineCandidatesViewModel);
+            var originalSelectedApplicationIds = viewModel.SelectedApplicationIds.ToList();
+            viewModel.SelectedApplicationIds = viewModel.SelectedApplicationIds.Where(aid => viewModel.ApplicationSummaries.Any(a => a.ApplicationId == aid)).ToList();
+            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {
+                viewModel.SelectedApplicationIds = originalSelectedApplicationIds;
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.FailedValidation, viewModel, validationResult);
             }
 
