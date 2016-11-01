@@ -353,12 +353,21 @@ WriteLiteral(">");
             
             #line default
             #line hidden
+WriteLiteral("</p>\r\n        <p>");
+
+            
+            #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+      Write(Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason);
+
+            
+            #line default
+            #line hidden
 WriteLiteral("</p>\r\n");
 
 WriteLiteral("        ");
 
             
-            #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
 
             
@@ -367,7 +376,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 60 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
 
     var possibleStartDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date;
 
@@ -378,14 +387,14 @@ WriteLiteral("\r\n    </div>\r\n");
             #line default
             #line hidden
             
-            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 66 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
    Write(Html.Partial("_ApprenticeMinimumWageExplained", possibleStartDate));
 
             
             #line default
             #line hidden
             
-            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 66 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
                                                                            
     }
 
@@ -396,14 +405,14 @@ WriteLiteral("\r\n    </div>\r\n");
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 71 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
    Write(Html.Partial("_NationalMinimumWageExplained", possibleStartDate));
 
             
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 71 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
                                                                          
     }
 }
