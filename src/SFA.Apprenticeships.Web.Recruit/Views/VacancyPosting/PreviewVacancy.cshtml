@@ -14,7 +14,7 @@
 
     @if (Model.Status.IsStateReadOnly())
     {
-        if (Model.Status.CanBulkDecline(Model.ApplicationCount))
+        if (Model.Status.CanBulkDecline(Model.ApplicationCount) && Model.VacancyType.IsApprentcieshipVacancyType())
         {
             <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Continue responding to candidates</a>
         }
