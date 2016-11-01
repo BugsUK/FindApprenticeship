@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Candidates
 {
+    using System;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -30,8 +31,12 @@
             _auditRepository.Audit(user, AuditEventTypes.UserSoftDelete, user.EntityId);
 
             user.Status = UserStatuses.PendingDeletion;
-            _userWriteRepository.SoftDelete(user);
-            _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Delete));
+            var deletedUserId = _userWriteRepository.SoftDelete(user);
+            _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
+            if (deletedUserId != Guid.Empty)
+            {
+                _serviceBus.PublishMessage(new CandidateUserUpdate(deletedUserId, CandidateUserUpdateType.Delete));
+            }
 
             _logService.Info("Set User: {0} Status to PendingDeletion", user.EntityId);
 
