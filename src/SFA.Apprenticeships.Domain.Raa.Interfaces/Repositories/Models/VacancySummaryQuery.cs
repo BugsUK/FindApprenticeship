@@ -6,6 +6,7 @@
     {
         public int PageSize { get; set; }
         public int RequestedPage { get; set; }
+        public VacancySearchMode SearchMode { get; set; }
         public string SearchString { get; set; }
         public VacancyType VacancyType { get; set; }
         public VacanciesSummaryFilterTypes Filter { get; set; }

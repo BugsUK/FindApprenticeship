@@ -22,6 +22,7 @@
         {
             VacancyType = viewModel.VacancyType;
             FilterType = viewModel.FilterType;
+            SearchMode = viewModel.SearchMode;
             SearchString = viewModel.SearchString;
             PageSize = viewModel.PageSize;
         }
@@ -35,6 +36,7 @@
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacanciesSummaryFilterTypes filterType, string searchString) : this(viewModel, filterType)
         {
             SearchString = searchString;
+            SearchMode = VacancySearchMode.All;
         }
 
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacancyType vacancyType) : this(viewModel)
