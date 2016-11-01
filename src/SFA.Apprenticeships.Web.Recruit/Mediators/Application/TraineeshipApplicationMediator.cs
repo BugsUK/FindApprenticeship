@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using Apprenticeships.Application.Interfaces.Security;
     using Common.Constants;
     using Common.Mediators;
+    using Constants.Messages;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Application;
@@ -18,19 +19,28 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         private readonly TraineeshipApplicationViewModelServerValidator _traineeshipApplicationViewModelServerValidator;
         private readonly IDecryptionService<AnonymisedApplicationLink> _decryptionService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly ILogService _logService;
 
-        public TraineeshipApplicationMediator(IApplicationProvider applicationProvider, TraineeshipApplicationViewModelServerValidator traineeshipApplicationViewModelServerValidator, IDecryptionService<AnonymisedApplicationLink> decryptionService, IDateTimeService dateTimeService)
+        public TraineeshipApplicationMediator(IApplicationProvider applicationProvider,
+            TraineeshipApplicationViewModelServerValidator traineeshipApplicationViewModelServerValidator,
+            IDecryptionService<AnonymisedApplicationLink> decryptionService, IDateTimeService dateTimeService,
+            ILogService logService)
         {
             _applicationProvider = applicationProvider;
             _traineeshipApplicationViewModelServerValidator = traineeshipApplicationViewModelServerValidator;
             _decryptionService = decryptionService;
             _dateTimeService = dateTimeService;
+            _logService = logService;
         }
 
         public MediatorResponse<TraineeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
+            if (applicationSelectionViewModel.ApplicationId == Guid.Empty)
+            {
+                _logService.Info("Review vacancy failed: VacancyGuid is empty.");
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Review.NoApplicationId, new TraineeshipApplicationViewModel(), ApplicationPageMessages.ApplicationNotFound, UserMessageLevel.Info);
+            }
             var viewModel = _applicationProvider.GetTraineeshipApplicationViewModel(applicationSelectionViewModel);
-
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Review.Ok, viewModel);
         }
 
@@ -86,7 +96,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             if (!validationResult.IsValid)
             {
                 return GetMediatorResponse(
-                    ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation,
+                    TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation,
                     traineeshipApplicationViewModel, validationResult);
             }
 
@@ -95,8 +105,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
                 _applicationProvider.UpdateTraineeshipApplicationViewModelNotes(
                     traineeshipApplicationViewModel.ApplicationSelection.ApplicationId,
                     traineeshipApplicationViewModel.Notes, false);
-                _applicationProvider.SetStateSubmitted(traineeshipApplicationViewModel.ApplicationSelection);
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok,
+                _applicationProvider.SetTraineeshipStateSubmitted(traineeshipApplicationViewModel.ApplicationSelection);
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok,
                     traineeshipApplicationViewModel);
             }
             catch (Exception)
@@ -104,7 +114,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
                 var viewModel =
                     GetFailedUpdateTraineeshipApplicationViewModel(
                         traineeshipApplicationViewModel.ApplicationSelection);
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error, viewModel,
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error, viewModel,
                     ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
             }
         }
@@ -115,19 +125,19 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation, traineeshipApplicationViewModel, validationResult);
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation, traineeshipApplicationViewModel, validationResult);
             }
 
             try
             {
                 _applicationProvider.UpdateTraineeshipApplicationViewModelNotes(traineeshipApplicationViewModel.ApplicationSelection.ApplicationId, traineeshipApplicationViewModel.Notes, false);
-                _applicationProvider.SetStateInProgress(traineeshipApplicationViewModel.ApplicationSelection);
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok, traineeshipApplicationViewModel);
+                _applicationProvider.SetTraineeshipStateInProgress(traineeshipApplicationViewModel.ApplicationSelection);
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.PromoteToInProgress.Ok, traineeshipApplicationViewModel);
             }
             catch (Exception)
             {
                 var viewModel = GetFailedUpdateTraineeshipApplicationViewModel(traineeshipApplicationViewModel.ApplicationSelection);
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Error, viewModel, ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.PromoteToInProgress.Error, viewModel, ApplicationViewModelMessages.UpdateNotesFailed, UserMessageLevel.Error);
             }
         }
 

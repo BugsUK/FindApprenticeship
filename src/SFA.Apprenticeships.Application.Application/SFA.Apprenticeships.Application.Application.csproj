@@ -105,7 +105,9 @@
     <Compile Include="Strategies\IApplicationVacancyUpdater.cs" />
     <Compile Include="Strategies\Traineeships\GetApplicationForReviewStrategy.cs" />
     <Compile Include="Strategies\Traineeships\IGetApplicationForReviewStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\ISetApplicationStatusStrategy.cs" />
     <Compile Include="Strategies\Traineeships\IUpdateApplicationNotesStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\SetApplicationStatusStrategy.cs" />
     <Compile Include="Strategies\Traineeships\UpdateApplicationNotesStrategy.cs" />
     <Compile Include="TraineeshipApplicationService.cs" />
     <Compile Include="ApprenticeshipApplicationService.cs" />

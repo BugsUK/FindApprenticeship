@@ -73,14 +73,14 @@
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Error:
+                case TraineeshipApplicationMediatorCodes.PromoteToInProgress.Error:
                     return View("Review", response.ViewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation:
+                case TraineeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok:
+                case TraineeshipApplicationMediatorCodes.PromoteToInProgress.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
 
                 default:
@@ -102,14 +102,14 @@
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error:
+                case TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error:
                     return View("Review", response.ViewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation:
+                case TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok:
+                case TraineeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
 
                 default:
