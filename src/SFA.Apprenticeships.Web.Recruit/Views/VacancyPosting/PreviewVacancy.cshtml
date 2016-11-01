@@ -14,13 +14,22 @@
 
     @if (Model.Status.IsStateReadOnly())
     {
-        <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates,new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Continue responding to candidates</a>
+        if (Model.Status.CanBulkDecline(Model.ApplicationCount))
+        {
+            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Continue responding to candidates</a>
+        }
+        else
+        {
+            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>
+        }
     }
+
     else
     {
         using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
         {
             @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
 
             if (Model.Status == VacancyStatus.Referred)
             {
