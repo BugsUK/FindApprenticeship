@@ -742,8 +742,16 @@
                 if (existingViewModel.Wage != null && viewModel.Wage != null)
                 {
                     existingViewModel.Wage.Type = viewModel.Wage.Type;
+                    existingViewModel.Wage.CustomType = viewModel.Wage.CustomType;
+                    existingViewModel.Wage.Classification = viewModel.Wage.Classification;
+                    existingViewModel.Wage.PresetText = viewModel.Wage.PresetText;
                     existingViewModel.Wage.Amount = viewModel.Wage.Amount;
+                    existingViewModel.Wage.AmountLowerBound = viewModel.Wage.AmountLowerBound;
+                    existingViewModel.Wage.AmountUpperBound = viewModel.Wage.AmountUpperBound;
                     existingViewModel.Wage.Unit = viewModel.Wage.Unit;
+                    existingViewModel.Wage.RangeUnit = viewModel.Wage.RangeUnit;
+                    existingViewModel.Wage.WageTypeReason = viewModel.Wage.WageTypeReason;
+                    existingViewModel.Wage.HoursPerWeek = viewModel.Wage.HoursPerWeek;
                 }
 
                 viewModel = existingViewModel;
