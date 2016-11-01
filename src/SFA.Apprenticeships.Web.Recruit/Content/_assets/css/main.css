@@ -4211,6 +4211,12 @@ input::-webkit-inner-spin-button {
 .verified {
   color: #28a197; }
 
+label.vertically-stacked {
+    display: block;
+    float: left;
+    clear: left;
+}
+
 .block-label {
   background: #ecedee;
   border: 1px solid #dee0e2;
