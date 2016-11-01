@@ -5,9 +5,10 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
+    using UserAccount.Entities;
 
     public class HardDeleteStrategy : HousekeepingStrategy
     {
@@ -22,6 +23,7 @@
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
         private readonly IAuditRepository _auditRepository;
         private readonly ILogService _logService;
+        private readonly IServiceBus _serviceBus;
 
         public HardDeleteStrategy(IConfigurationService configurationService, IUserWriteRepository userWriteRepository,
             IAuthenticationRepository authenticationRepository, ICandidateWriteRepository candidateWriteRepository,
@@ -30,7 +32,7 @@
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
-            IAuditRepository auditRepository, ILogService logService)
+            IAuditRepository auditRepository, ILogService logService, IServiceBus serviceBus)
             : base(configurationService)
         {
             _userWriteRepository = userWriteRepository;
@@ -44,6 +46,7 @@
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _auditRepository = auditRepository;
             _logService = logService;
+            _serviceBus = serviceBus;
         }
 
         protected override bool DoHandle(User user, Candidate candidate)
@@ -91,6 +94,8 @@
             DeleteAuthentication(entityId);
 
             DeleteUser(entityId);
+
+            _serviceBus.PublishMessage(new CandidateUserUpdate(entityId, CandidateUserUpdateType.Delete));
 
             return true;
         }

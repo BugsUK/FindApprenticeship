@@ -28,6 +28,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             {
                 Skip = query.PageSize * (query.RequestedPage - 1),
                 Take = query.PageSize,
+                QueryMode = query.SearchMode,
                 Query = query.SearchString,
                 query.ProviderId,
                 query.ProviderSiteId
@@ -47,6 +48,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     break;
                 case VacancySummaryOrderByColumn.Employer:
                     orderByField = "e.FullName";
+                    break;
+                case VacancySummaryOrderByColumn.Location:
+                    orderByField = $"v.Town {(query.Order == Order.Descending ? "DESC" : "")}, v.PostCode";
                     break;
             }
 
@@ -128,10 +132,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     AND     (v.VacancyTypeId = {(int)query.VacancyType} OR v.VacancyTypeId = {(int)VacancyType.Unknown})
                     --Text search
                     AND		((@query IS NULL OR @query = '')
-		                    OR (CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query
-			                    OR v.Title LIKE '%' + @query + '%'
-			                    OR e.FullName LIKE '%' + @query + '%'
-                                OR REPLACE(v.PostCode, ' ', '') LIKE REPLACE(@query, ' ', '') + '%')
+		                    OR ((CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query AND (@QueryMode = '{(int)VacancySearchMode.All}' OR @QueryMode = '{(int)VacancySearchMode.ReferenceNumber}'))
+			                    OR (v.Title LIKE '%' + @query + '%' AND (@QueryMode = '{(int)VacancySearchMode.All}' OR @QueryMode = '{(int)VacancySearchMode.VacancyTitle}'))
+			                    OR (e.FullName LIKE '%' + @query + '%' AND (@QueryMode = '{(int)VacancySearchMode.All}' OR @QueryMode = '{(int)VacancySearchMode.EmployerName}'))
+                                OR (REPLACE(v.PostCode, ' ', '') LIKE REPLACE(@query, ' ', '') + '%' AND (@QueryMode = '{(int)VacancySearchMode.All}' OR @QueryMode = '{(int)VacancySearchMode.Postcode}')))
 		                    )
                     AND     v.VacancyStatusId != 4
                     {filterSql}
@@ -155,6 +159,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             {
                 query.ProviderId,
                 query.ProviderSiteId,
+                QueryMode = query.SearchMode,
                 Query = query.SearchString
             };
 
@@ -180,10 +185,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         AND     (v.VacancyTypeId = {(int)query.VacancyType} OR v.VacancyTypeId = {(int)VacancyType.Unknown})
                         --Text search
                         AND		((@query IS NULL OR @query = '')
-		                        OR (CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query
-			                        OR v.Title LIKE '%' + @query + '%'
-			                        OR e.FullName LIKE '%' + @query + '%'
-                                    OR REPLACE(v.PostCode, ' ', '') LIKE REPLACE(@query, ' ', '') + '%')
+		                        OR ((CAST(v.VacancyReferenceNumber AS VARCHAR(255)) = @query AND (@QueryMode = '{(int)VacancySearchMode.All}' OR @QueryMode = '{(int)VacancySearchMode.ReferenceNumber}'))
+			                        OR (v.Title LIKE '%' + @query + '%' AND (@QueryMode = '{(int)VacancySearchMode.All}' OR @QueryMode = '{(int)VacancySearchMode.VacancyTitle}'))
+			                        OR (e.FullName LIKE '%' + @query + '%' AND (@QueryMode = '{(int)VacancySearchMode.All}' OR @QueryMode = '{(int)VacancySearchMode.EmployerName}'))
+                                    OR (REPLACE(v.PostCode, ' ', '') LIKE REPLACE(@query, ' ', '') + '%' AND (@QueryMode = '{(int)VacancySearchMode.All}' OR @QueryMode = '{(int)VacancySearchMode.Postcode}')))
 		                        )
                         AND		r.ProviderId = @providerId
 					    AND		r.ProviderSiteRelationshipTypeId = 1

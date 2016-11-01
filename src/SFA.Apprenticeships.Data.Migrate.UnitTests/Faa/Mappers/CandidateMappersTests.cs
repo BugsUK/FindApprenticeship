@@ -96,30 +96,14 @@
         [TestCase(10, 1)] //PendingActivation
         [TestCase(20, 2)] //Active
         //We don't feed back the status changes to AVMS so users never go from Activated to any other state. As a result always return Activated for reporting purposes
-        [TestCase(30, 2)] //Inactive
-        [TestCase(90, 2)] //Locked
-        [TestCase(100, 2)] //Dormant
+        [TestCase(30, 4)] //Inactive
+        [TestCase(90, 4)] //Locked
+        [TestCase(100, 5)] //Dormant
+        [TestCase(999, 6)] //Deleted
         public void StatusTest(int status, int expectedCandidateStatusTypeId)
         {
             //Arrange
             var candidateUser = new CandidateUserBuilder().WithStatus(status).Build();
-
-            //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);
-            var candidate = candidatePerson.Candidate;
-
-            //Assert
-            candidate.CandidateStatusTypeId.Should().Be(expectedCandidateStatusTypeId);
-        }
-
-        [TestCase(true, 0, 2)]
-        [TestCase(false, 0, 1)]
-        [TestCase(true, 456789, 2)]
-        [TestCase(false, 456789, 2)]
-        public void PendingDeletionStatusTest(bool activated, int legacyCandidateId, int expectedCandidateStatusTypeId)
-        {
-            //Arrange
-            var candidateUser = new CandidateUserBuilder().WithStatus(999).WithActivated(activated).WithLegacyCandidateId(legacyCandidateId).Build();
 
             //Act
             var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), new Dictionary<int, int>(), false);

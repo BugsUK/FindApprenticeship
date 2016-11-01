@@ -4325,6 +4325,47 @@ input::-webkit-inner-spin-button {
   padding: 1em;
   background: #fff2d3; }
 
+.search-bar {
+  overflow: hidden;
+  position: relative; }
+  .search-bar select {
+    position: absolute;
+    left: 0px;
+    width: 75px;
+    height: 38px; }
+  .search-bar .search-input-wrapper {
+    float: left;
+    box-sizing: border-box;
+    padding-left: 74px;
+    padding-right: 47px;
+    width: 100%; }
+    .search-bar .search-input-wrapper input[type="text"] {
+      padding-top: 7px;
+      padding-bottom: 4px;
+      padding-left: 7px;
+      box-sizing: border-box;
+      width: 100%; }
+  .search-bar .reset-search {
+    position: absolute;
+    overflow: hidden;
+    right: 53px;
+    top: 8px; }
+    .search-bar .reset-search span {
+      position: absolute;
+      left: -5000px; }
+  .search-bar .search-btn {
+    position: absolute;
+    overflow: hidden;
+    right: 0px;
+    font-size: 18px;
+    padding-bottom: 6px;
+    padding-left: 13px;
+    padding-right: 12px;
+    width: 48px; }
+    .search-bar .search-btn span {
+      position: absolute;
+      left: -5000px; }
+
 .grid {
   float: left;
   width: 100%; }
@@ -4997,9 +5038,11 @@ video {
     background: #fff;
     border-color: #0b0c0c; }
 
+.tabbed-nav {
+  border-bottom: 1px solid #bfc1c3; }
+
 .tabbed-tab {
   border: 1px solid transparent;
-  border-bottom: 1px solid #bfc1c3;
   display: inline-block;
   margin-bottom: -1px;
   margin-right: 1px;
@@ -5021,6 +5064,7 @@ video {
 
 .tabbed-content {
   border: 1px solid #bfc1c3;
+  border-top: 0;
   display: none;
   margin-bottom: 15px;
   padding: 30px 10px 0; }
@@ -5517,6 +5561,12 @@ details summary:focus {
 
 .med-btm-margin {
   margin-bottom: 10px; }
+
+.lrg-btm-margin {
+  margin-bottom: 20px; }
+
+.xlrg-btm-margin {
+  margin-bottom: 50px; }
 
 .small-top-padding {
   padding-top: 5px; }
@@ -6365,35 +6415,23 @@ button.vacancy-order {
     .vacancies-summary li figure.data figcaption.underline, .applications-summary li figure.data figcaption.underline {
       text-decoration: underline; }
 
+ul.vacancies-summary {
+  display: table;
+  width: 100%;
+  margin-bottom: 15px; }
+
 @media screen and (max-width: 640px) {
-  .vacancies-summary li {
+  ul.vacancies-summary li, ul.applications-summary li {
     padding: 0 10px;
     width: 100%; } }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
-  .vacancies-summary li {
-    padding: 0 10px 0 0;
-    width: 33.33333%;
-    margin-bottom: 10px; } }
-
-@media screen and (min-width: 769px) {
-  .vacancies-summary li {
-    padding: 0 10px 0 0;
-    width: 20%;
-    margin-bottom: 10px; } }
-
-@media screen and (max-width: 640px) {
-  .applications-summary li {
-    padding: 0 10px;
-    width: 100%; } }
-
-@media screen and (min-width: 641px) and (max-width: 768px) {
-  .applications-summary li {
+  ul.vacancies-summary li, ul.applications-summary li {
     padding: 0 10px 0 0;
     width: 50%; } }
 
 @media screen and (min-width: 769px) {
-  .applications-summary li {
+  ul.vacancies-summary li, ul.applications-summary li {
     padding: 0 10px 0 0;
     width: 25%; } }
 

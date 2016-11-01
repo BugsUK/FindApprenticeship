@@ -277,21 +277,15 @@
                 case 10:
                     return CandidateStatusTypeIdPreRegistered;
                 case 20:
-                case 30:
-                case 90:
-                case 100:
                     return CandidateStatusTypeIdActivated;
-                case 999:
-                    return candidateUser.User.ActivationDate.HasValue || candidateUser.Candidate.LegacyCandidateId != 0 ? CandidateStatusTypeIdActivated : CandidateStatusTypeIdPreRegistered;
-                //We don't feed back the status changes to AVMS so users never go from Activated to any other state. As a result always return Activated for reporting purposes
-                /*case 30:
+                case 30:
                     return CandidateStatusTypeIdSuspended;
                 case 90:
                     return CandidateStatusTypeIdSuspended;
                 case 100:
-                    return CandidateStatusTypeIdSuspended;
+                    return CandidateStatusTypeIdPendingDelete;
                 case 999:
-                    return CandidateStatusTypeIdDeleted;*/
+                    return CandidateStatusTypeIdDeleted;
             }
 
             return CandidateStatusTypeIdPreRegistered;

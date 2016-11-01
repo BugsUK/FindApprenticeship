@@ -70,7 +70,7 @@
                 providerSiteIds = ownedProviderSites.Select(ps => ps.ProviderSiteId).ToList();
             }
 
-            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, CandidateSearchExtensions.GetCandidateGuidPrefix(searchViewModel.ApplicantId), CandidateSearchExtensions.GetCandidateId(searchViewModel.ApplicantId), providerSiteIds);
+            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, CandidateSearchExtensions.GetCandidateGuidPrefix(searchViewModel.ApplicantId), CandidateSearchExtensions.GetCandidateId(searchViewModel.ApplicantId), providerSiteIds, !string.IsNullOrEmpty(ukprn));
             var candidates = _candidateSearchService.SearchCandidates(request) ?? new List<CandidateSummary>();
 
             var results = new CandidateSearchResultsViewModel
