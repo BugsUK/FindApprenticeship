@@ -123,19 +123,19 @@
 
             validator.RuleFor(x => x.Wage.AmountLowerBound)
                 .Must(amt => amt.HasValue)
-                .WithMessage(VacancyViewModelMessages.AmountLower.RequiredErrorText)
+                .WithMessage(VacancyViewModelMessages.AmountLower.EnterLowestFigure)
                 .When(x => x.Wage.Classification == WageClassification.Custom
                     && x.Wage.CustomType == CustomWageType.Ranged);
 
             validator.RuleFor(x => x.Wage.AmountUpperBound)
                 .Must(amt => amt.HasValue)
-                .WithMessage(VacancyViewModelMessages.AmountUpper.RequiredErrorText)
+                .WithMessage(VacancyViewModelMessages.AmountUpper.EnterHighestFigure)
                 .When(x => x.Wage.Classification == WageClassification.Custom
                     && x.Wage.CustomType == CustomWageType.Ranged);
 
             validator.RuleFor(x => x.Wage.AmountUpperBound)
                 .Must((model, amtUpr) => amtUpr.Value > model.Wage.AmountLowerBound.Value)
-                .WithMessage(VacancyViewModelMessages.AmountUpper.RequiredErrorText)
+                .WithMessage(VacancyViewModelMessages.AmountUpper.EnterWageRange)
                 .When(x => x.Wage.Classification == WageClassification.Custom
                     && x.Wage.CustomType == CustomWageType.Ranged
                     && x.Wage.AmountLowerBound.HasValue

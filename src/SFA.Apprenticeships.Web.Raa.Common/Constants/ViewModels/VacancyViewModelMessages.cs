@@ -447,13 +447,13 @@
 
         public static class AmountLower
         {
-            public const string RequiredErrorText = "Enter a valid wage range";
-            public const string EnterValidWage = "Enter a valid wage";
+            public const string EnterLowestFigure = "Enter the lowest figure for the wage range";
         }
 
         public static class AmountUpper
         {
-            public const string RequiredErrorText = "Enter a valid wage range";
+            public const string EnterHighestFigure = "Enter a the highest figure for the wage range";
+            public const string EnterWageRange = "Enter a valid wage range";
         }
 
         public static class PresetText

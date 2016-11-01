@@ -536,13 +536,13 @@
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
-            viewModel = vacancy.ConvertToVacancySummaryViewModel();
-            viewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
+            var updatedViewModel = vacancy.ConvertToVacancySummaryViewModel();
+            updatedViewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
 
-            viewModel.AutoSaveTimeoutInSeconds =
+            updatedViewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
-            return viewModel;
+            return updatedViewModel;
         }
 
         public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)

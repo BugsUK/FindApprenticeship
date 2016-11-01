@@ -115,11 +115,6 @@ $(function() {
 
     $('input:not(:checked)').parent().removeClass('selected');
 
-    //$this.parent().siblings().each(function () {
-    //      var targetToHide = $(this).attr('data-target');
-    //      $('#' + targetToHide).hide();
-    //  });
-
     $('input:checked').parent().addClass('selected');
 
     if($target == undefined) {
