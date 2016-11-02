@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests
     [SetUpFixture]
     public class TestAssemblySetup
     {
-        [SetUp]
+        [OneTimeSetUp]
         public void RunBeforeAnyTestsInThisAssembly()
         {
             var dbInitialiser = new DatabaseInitialiser();

@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
@@ -25,17 +26,7 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
 
         public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)
         {
-            return _vacancyReadRepository.GetByIds(vacancyIds);
-        }
-
-        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
-        {
-            return _vacancyReadRepository.GetByOwnerPartyIds(ownerPartyIds);
-        }
-
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
-        {
-            return _vacancyReadRepository.GetMinimalVacancyDetails(vacancyOwnerRelationshipIds, providerId, providerSiteIds);
+            return _vacancySummaryService.GetByIds(vacancyIds).ToList();
         }
 
         public IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query)

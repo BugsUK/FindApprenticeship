@@ -7,6 +7,7 @@
     [ApprenticeshipFrameworkStatusTypeId] INT            NOT NULL,
     [ClosedDate]                          DATETIME       NULL,
     [PreviousApprenticeshipOccupationId]  INT            NULL,
+    [StandardId] INT NULL, 
     CONSTRAINT [PK_Apprenticeship_Framework] PRIMARY KEY CLUSTERED ([ApprenticeshipFrameworkId] ASC),
     CONSTRAINT [FK_ApprenticeshipFramework_ApprenticeshipFrameworkStatusType] FOREIGN KEY ([ApprenticeshipFrameworkStatusTypeId]) REFERENCES [dbo].[ApprenticeshipFrameworkStatusType] ([ApprenticeshipFrameworkStatusTypeId]),
     CONSTRAINT [FK_ApprenticeshipFramework_ApprenticeshipOccupation] FOREIGN KEY ([ApprenticeshipOccupationId]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId]),

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
 
@@ -32,6 +33,21 @@
         public IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query)
         {
             return _vacancySummaryRepository.GetRegionalTeamMetrics(query);
+        }
+
+        public VacancySummary GetById(int vacancyId)
+        {
+            return _vacancySummaryRepository.GetById(vacancyId);
+        }
+
+        public IList<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
+        {
+            return _vacancySummaryRepository.GetByIds(vacancyIds);
+        }
+
+        public IList<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int resultCount)
+        {
+            return _vacancySummaryRepository.Find(query, out resultCount);
         }
     }
 }
