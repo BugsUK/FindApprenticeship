@@ -53,7 +53,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 		                    e.FullName AS EmployerName,
 		                    dbo.GetDateQAApproved(v.VacancyID) AS DateQAApproved,
 		                    e.EmployerId,
-		                    e.FullName AS EmployerName,
 		                    e.Town AS EmployerLocation,
 		                    p.TradingName as ProviderTradingName,
 		                    v.SubmissionCount,
@@ -92,7 +91,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             v.Latitude,
                             v.Longitude,
                             v.GeocodeEasting,
-                            v.GeocodeNorthing
+                            v.GeocodeNorthing,
+                            v.EmployerAnonymousName,
+                            v.UpdatedDateTime
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId

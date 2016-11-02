@@ -86,5 +86,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public decimal? Longitude { get; set; }
         public int? GeocodeEasting { get; set; }
         public int? GeocodeNorthing { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
     }
 }
