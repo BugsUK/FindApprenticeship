@@ -18,6 +18,7 @@
     @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
+    var currentStatus = "&nbsp;(current status)";
 
     if (Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful)
     {
@@ -77,13 +78,32 @@
                     <div class="detail-content qa-comment">
                         <p class="heading-medium">Notes (optional)</p>
                         <div class="blocklabel-single-container">
-                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"})
+                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
                         </div>
+                        <p class="heading-medium">How would you like to assign this candidate's application?</p>
+                        <p>
+                            <label for="application-status-submitted" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new { id = "application-status-submitted" })
+                                New @if (Model.Status == ApplicationStatuses.Submitted)
+                                {
+                                    @Html.Raw(currentStatus)
+                                }
+                            </label>
+                            <br />
+                            <label for="application-status-inprogress" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new { id = "application-status-inprogress" })
+                                In progress @if (Model.Status == ApplicationStatuses.InProgress)
+                                {
+                                    @Html.Raw(currentStatus)
+                                }
+                            </label>
+                        </p>
                     </div>
                 </div>
                 <div class="form-group">
                     <p class="med-btm-margin">
-                        <button type="submit" class="button-link" name="Review" value="ReviewSaveAndContinue">Save and Continuet</button>
+                        <button type="submit" class="button" name="Review" value="ReviewSaveAndExit">Save and exit</button>
+                        @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
                     </p>
                 </div>
             </section>

@@ -104,35 +104,39 @@
                         <h2 class="heading-large">Decision log</h2>
                         <p class="heading-medium">Notes (optional)</p>
                         <div class="blocklabel-single-container">
-                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"})
+                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
                         </div>
                         <p class="heading-medium">How would you like to assign this candidate's application?</p>
                         <p>
                             <label for="application-status-submitted" class="block-label">
-                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new {id = "application-status-submitted"}) New @if (Model.Status == ApplicationStatuses.Submitted)
-                                                                                                                                                                      {
-                                                                                                                                                                          @Html.Raw(currentStatus)
-                                                                                                                                                                      }
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new { id = "application-status-submitted" })
+                                New @if (Model.Status == ApplicationStatuses.Submitted)
+                                {
+                                    @Html.Raw(currentStatus)
+                                }
                             </label>
-                            <br/>
+                            <br />
                             <label for="application-status-inprogress" class="block-label">
-                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new {id = "application-status-inprogress"}) In progress @if (Model.Status == ApplicationStatuses.InProgress)
-                                                                                                                                                                    {
-                                                                                                                                                                        @Html.Raw(currentStatus)
-                                                                                                                                                                    }
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new { id = "application-status-inprogress" })
+                                In progress @if (Model.Status == ApplicationStatuses.InProgress)
+                                {
+                                    @Html.Raw(currentStatus)
+                                }
                             </label>
-                            <br/>
+                            <br />
                             <label for="application-status-unsuccessful" class="block-label">
-                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Unsuccessful, new {id = "application-status-unsuccessful"}) Unsuccessful
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Unsuccessful, new { id = "application-status-unsuccessful" })
+                                Unsuccessful
                             </label>
-                            <br/>
+                            <br />
                             <label for="application-status-successful" class="block-label">
-                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Successful, new {id = "application-status-successful"}) Successful
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Successful, new { id = "application-status-successful" })
+                                Successful
                             </label>
                         </p>
                         <p>
                             <button type="submit" class="button" name="Review" value="ReviewSaveAndContinue">Save and Continue</button>
-                            @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new {Model.Vacancy.VacancyReferenceNumber})
+                            @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
                         </p>
                     </div>
                 </div>
