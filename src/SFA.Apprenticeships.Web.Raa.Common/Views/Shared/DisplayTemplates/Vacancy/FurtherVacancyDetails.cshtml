@@ -76,7 +76,7 @@
                             @Html.RadioButtonFor(model => model.Wage.Classification, WageClassification.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
                             Custom wage
                         </label>
-                        <div id="custom-wage-panel" class="toggle-content blocklabel-content">
+                        <div id="custom-wage-panel" class="toggle-content blocklabel-content nested-panel-1">
                             <fieldset class="form-group inline-fixed">
                                 @* ReSharper disable once Html.IdNotResolved *@
                                 <label for="custom-wage-fixed" class="block-label" data-target="custom-wage-fixed-panel">
@@ -125,7 +125,7 @@
                             Choose a text description of the wage
                         </label>
                         @Html.ValidationMessageFor(m => m.Wage.Classification)
-                        <div id="preset-text-panel" class="toggle-content blocklabel-content">
+                        <div id="preset-text-panel" class="toggle-content blocklabel-content nested-panel-1">
                             <fieldset class="form-group inline-fixed">
                                 @Html.DropDownListFor(m => m.Wage.PresetText, Model.WageTextPresets)
                             </fieldset>

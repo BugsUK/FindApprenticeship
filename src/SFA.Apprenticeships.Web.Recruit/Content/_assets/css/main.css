@@ -4214,7 +4214,16 @@ input::-webkit-inner-spin-button {
 label.vertically-stacked {
     display: block;
     float: left;
-    clear: left;
+    clear: both;
+}
+
+div.nested-panel-1 {
+    clear: both;
+    background: #ffffff;
+    border-left: 3px solid #999999;
+    box-sizing: content-box;
+    margin-left: 0px;
+    padding: 15px 0 50px 15px;
 }
 
 .block-label {

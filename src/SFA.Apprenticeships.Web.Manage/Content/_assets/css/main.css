@@ -4205,6 +4205,15 @@ label.vertically-stacked {
     clear: left;
 }
 
+div.nested-panel-1 {
+    clear: both;
+    background: #ffffff;
+    border-left: 3px solid #999999;
+    box-sizing: content-box;
+    margin-left: 0px;
+    padding: 15px 0 50px 15px;
+}
+
 .block-label {
   background: #ecedee;
   border: 1px solid #dee0e2;
