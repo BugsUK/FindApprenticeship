@@ -11,6 +11,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Vacancies;
+    using Infrastructure.Presentation;
     using Raa.Common.Converters;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
@@ -132,7 +133,8 @@
                 return GetMediatorResponse<VacancyViewModel>(VacancyMediatorCodes.ReviewVacancy.InvalidVacancy, null,
                     VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
             }
-
+            vacancyViewModel.IsManageReviewerView = true;
+            vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateReviewable();
             var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel);
 
             if (!validationResult.IsValid)

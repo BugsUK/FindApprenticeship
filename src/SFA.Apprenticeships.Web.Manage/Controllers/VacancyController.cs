@@ -42,9 +42,7 @@
 
             if (response.ViewModel != null)
             {
-                SetLinks(vacancyViewModel);
-                vacancyViewModel.IsManageReviewerView = true;
-                vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateReviewable();
+                SetLinks(vacancyViewModel);                
             }
 
             ModelState.Clear();
