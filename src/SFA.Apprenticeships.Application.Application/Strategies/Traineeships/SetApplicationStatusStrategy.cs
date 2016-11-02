@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies.Traineeships
             var application = _traineeshipApplicationReadRepository.Get(applicationId);
             application.SetStateInProgress();
             _traineeshipApplicationWriteRepository.Save(application);
-            _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationId, ApplicationUpdateType.Update));
+            _serviceBus.PublishMessage(new TraineeshipApplicationUpdate(applicationId, ApplicationUpdateType.Update));
         }
 
         public void SetStateSubmitted(Guid applicationId)
@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies.Traineeships
             var application = _traineeshipApplicationReadRepository.Get(applicationId);
             application.SetStateSubmitted();
             _traineeshipApplicationWriteRepository.Save(application);
-            _serviceBus.PublishMessage(new ApprenticeshipApplicationUpdate(applicationId, ApplicationUpdateType.Update));
+            _serviceBus.PublishMessage(new TraineeshipApplicationUpdate(applicationId, ApplicationUpdateType.Update));
         }
     }
 }
