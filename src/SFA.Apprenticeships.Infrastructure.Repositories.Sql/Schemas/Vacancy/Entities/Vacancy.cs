@@ -266,6 +266,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Write(false)]
         public string FrameworkCodeName { get; set; }
         [Write(false)]
+        public string SectorCodeName { get; set; }
+        [Write(false)]
         public RegionalTeam RegionalTeam { get; set; }
         [Write(false)]
         public string EmployerName { get; set; }
@@ -273,5 +275,17 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string EmployerLocation { get; set; }
         [Write(false)]
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
+        [Write(false)]
+        public int? NewApplicantCount { get; set; }
+        [Write(false)]
+        public int? ApplicantCount { get; set; }
+        [Write(false)]
+        public string CreatedByProviderUsername { get; set; }
+        [Write(false)]
+        public DateTime CreatedDate { get; set; }
+        [Write(false)]
+        public int EmployerId { get; set; }
+        [Write(false)]
+        public string LocalAuthorityCode { get; set; }
     }
 }
