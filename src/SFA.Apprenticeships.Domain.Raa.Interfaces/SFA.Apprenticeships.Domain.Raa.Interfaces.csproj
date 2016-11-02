@@ -108,6 +108,7 @@
     <Compile Include="Repositories\Models\RegionalTeamMetrics.cs" />
     <Compile Include="Repositories\Models\ProviderUserSearchParameters.cs" />
     <Compile Include="Repositories\Models\VacancyCounts.cs" />
+    <Compile Include="Repositories\Models\VacancySearchMode.cs" />
     <Compile Include="Repositories\Models\VacancySummaryByStatusQuery.cs" />
     <Compile Include="Repositories\Models\VacancySummaryOrderByColumn.cs" />
     <Compile Include="Repositories\Models\Order.cs" />

@@ -12,6 +12,7 @@
     using Application.Vacancy;
     using Configuration;
     using Converters;
+    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
@@ -35,7 +36,6 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
-    using Order = Domain.Raa.Interfaces.Repositories.Models.Order;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
@@ -358,7 +358,7 @@
                             existingVacancyOwnerRelationship.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
                             existingVacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship);
                         }
-                        
+
                         vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;
                         vacancy.ContractOwnerId = vacancyTransferViewModel.ProviderId;
                         vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
@@ -704,10 +704,20 @@
                 if (viewModel.VacancyType == VacancyType.Apprenticeship)
                 {
                     viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
+                    viewModel.ApplicationPendingDecisionCount =
+                        _apprenticeshipApplicationService
+                            .GetSubmittedApplicationSummaries(
+                                vacancy.VacancyId).Count(v => v.Status == ApplicationStatuses.InProgress ||
+                                    v.Status == ApplicationStatuses.Submitted);
                 }
                 else if (viewModel.VacancyType == VacancyType.Traineeship)
                 {
                     viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
+                    viewModel.ApplicationPendingDecisionCount =
+                        _traineeshipApplicationService
+                            .GetSubmittedApplicationSummaries(
+                                vacancy.VacancyId).Count(v => v.Status == ApplicationStatuses.InProgress ||
+                                    v.Status == ApplicationStatuses.Submitted);
                 }
             }
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.CreatedByProviderUsername);
@@ -833,7 +843,7 @@
                 searchString = vacanciesSummarySearch.SearchString;
             }
 
-            var query = new VacancySummaryQuery()
+            var query = new VacancySummaryQuery
             {
                 ProviderId = providerId,
                 ProviderSiteId = providerSiteId,
@@ -841,6 +851,7 @@
                 Filter = vacanciesSummarySearch.FilterType,
                 PageSize = vacanciesSummarySearch.PageSize,
                 RequestedPage = vacanciesSummarySearch.CurrentPage,
+                SearchMode = vacanciesSummarySearch.SearchMode,
                 SearchString = searchString,
                 Order = vacanciesSummarySearch.Order,
                 VacancyType = vacanciesSummarySearch.VacancyType
@@ -980,7 +991,7 @@
                 Filter = searchViewModel.FilterType,
                 OrderByField = orderByField,
                 SearchString = searchViewModel.Provider,
-                DesiredStatuses = new []{ VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
+                DesiredStatuses = new[] { VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
                 Order = searchViewModel.Order,
                 RegionalTeamName = regionalTeam
             };
@@ -988,7 +999,7 @@
             int totalRecords;
             var vacancies = _vacancyPostingService.GetWithStatus(query, out totalRecords);
 
-            var regionalTeamsMetrics =  _vacancyPostingService.GetRegionalTeamsMetrics(query);
+            var regionalTeamsMetrics = _vacancyPostingService.GetRegionalTeamsMetrics(query);
 
             if (string.IsNullOrEmpty(searchViewModel.Provider) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
             {

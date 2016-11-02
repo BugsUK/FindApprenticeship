@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces;
@@ -43,6 +44,13 @@
 
         public void Create(Guid applicationGuid)
         {
+            var destinationApplicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(new[] { applicationGuid });
+            if (destinationApplicationIds.ContainsKey(applicationGuid))
+            {
+                Update(applicationGuid);
+                return;
+            }
+
             var application = _vacancyApplicationsRepository.GetVacancyApplication(applicationGuid);
             if (application == null)
             {

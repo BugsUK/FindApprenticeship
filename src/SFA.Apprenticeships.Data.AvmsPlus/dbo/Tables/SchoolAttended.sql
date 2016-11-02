@@ -14,6 +14,6 @@
 );
 
 GO
-CREATE NONCLUSTERED INDEX [idx_SchoolAttended_ApplicationId_CandidateId] 
+CREATE NONCLUSTERED INDEX [nci_wi_SchoolAttended_2D23755993DE88360657AAF79B578B8F] 
 	ON [dbo].[SchoolAttended] ([ApplicationId], [CandidateId]) 
 	INCLUDE ([SchoolAttendedId]) 

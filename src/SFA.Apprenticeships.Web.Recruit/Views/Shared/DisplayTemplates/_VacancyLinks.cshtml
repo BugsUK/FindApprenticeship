@@ -15,9 +15,15 @@
     </p>
 }
 
-@if (Model.Status.CanArchiveVacancy() && Model.VacancyType.CanArchiveVacancy())
+@if (Model.Status.CanArchiveVacancy() && Model.VacancyType.IsApprentcieshipVacancyType())
 {
     <p class="small-btm-margin">
         @Html.RouteLink("Archive vacancy", RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+    </p>
+}
+@if (Model.Status.CanBulkDecline(Model.TotalNumberOfApplicationsWithPendingDecision) && Model.VacancyType.IsApprentcieshipVacancyType())
+{
+    <p class="small-btm-margin">
+        @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary { { "VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber } }, new Dictionary<string, object> { { "class", "disp-block" } })
     </p>
 }

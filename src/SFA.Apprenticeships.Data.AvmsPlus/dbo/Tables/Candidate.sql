@@ -70,6 +70,6 @@ CREATE NONCLUSTERED INDEX [idx_Candidate_CandidateStatusTypeID]
 
 
 GO
-CREATE NONCLUSTERED INDEX [idx_Candidate_CandidateGuid] 
+CREATE NONCLUSTERED INDEX [nci_wi_Candidate_56288E05DCC7E26DF94F5E6F145187EB] 
 	ON [dbo].[Candidate] ([CandidateGuid]) 
 	INCLUDE ([CandidateId], [PersonId]) ;
