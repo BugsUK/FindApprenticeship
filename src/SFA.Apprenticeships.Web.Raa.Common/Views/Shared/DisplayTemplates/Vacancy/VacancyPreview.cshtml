@@ -13,6 +13,10 @@
 {
     @Html.Partial("DisplayTemplates/Vacancy/_AboutTheEmployer", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
 }
+@if (Model.IsManageReviewerView)
+{
+    @Html.Partial("DisplayTemplates/Vacancy/_TrainingProvider", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+}
 
 @Html.Partial("DisplayTemplates/Vacancy/_RequirementsAndProspects", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
 
@@ -28,6 +32,10 @@
 
 @Html.Partial("DisplayTemplates/Vacancy/_OfflineVacancy", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
 
-@Html.Partial("DisplayTemplates/Vacancy/_TrainingProvider", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+@if (!Model.IsManageReviewerView)
+{
+    @Html.Partial("DisplayTemplates/Vacancy/_TrainingProvider", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+}
+
 
 @Html.Partial("DisplayTemplates/Vacancy/_AboutTraineeships", Model.VacancyType)

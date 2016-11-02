@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Builders
 {
-    using System;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using Ploeh.AutoFixture;
+    using System;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
@@ -60,6 +60,7 @@
             viewModel.Status = status;
             viewModel.VacancyType = vacancyType;
             viewModel.IsCandidateView = false;
+            viewModel.IsManageReviewerView = false;
             viewModel.VacancySource = VacancySource.Raa;
 
             return viewModel;
