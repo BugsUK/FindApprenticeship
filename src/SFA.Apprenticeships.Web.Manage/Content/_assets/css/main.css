@@ -4211,7 +4211,10 @@ div.nested-panel-1 {
     border-left: 3px solid #999999;
     box-sizing: content-box;
     margin-left: 0px;
-    padding: 15px 0 50px 15px;
+}
+
+div.nested-panel-div {
+    margin-left: 10px;
 }
 
 .block-label {
