@@ -565,7 +565,171 @@ WriteLiteral("                            ");
             #line default
             #line hidden
 WriteLiteral("\r\n                            Custom wage\r\n                        </label>\r\n    " +
-"                    ");
+"                    <div");
+
+WriteLiteral(" id=\"custom-wage-panel\"");
+
+WriteLiteral(" class=\"toggle-content blocklabel-content\"");
+
+WriteLiteral(">\r\n                            <fieldset");
+
+WriteLiteral(" class=\"form-group inline-fixed\"");
+
+WriteLiteral(">\r\n                                ");
+
+WriteLiteral("\r\n                                <label");
+
+WriteLiteral(" for=\"custom-wage-fixed\"");
+
+WriteLiteral(" class=\"block-label\"");
+
+WriteLiteral(" data-target=\"custom-wage-fixed-panel\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                               Write(Html.RadioButtonFor(model => model.Wage.CustomType, CustomWageType.Fixed, new { id = "custom-wage-fixed", aria_controls = "custom-wage-panel" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                    Fixed wage\r\n                               " +
+" </label>\r\n                                ");
+
+WriteLiteral("\r\n                                <label");
+
+WriteLiteral(" for=\"custom-wage-range\"");
+
+WriteLiteral(" class=\"block-label\"");
+
+WriteLiteral(" data-target=\"custom-wage-range-panel\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                               Write(Html.RadioButtonFor(model => model.Wage.CustomType, CustomWageType.Ranged, new { id = "custom-wage-range", aria_controls = "custom-wage-panel" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                    Wage range\r\n                               " +
+" </label>\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.ValidationMessageFor(m => m.Wage.CustomType));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            </fieldset>\r\n                            <div");
+
+WriteLiteral(" id=\"custom-wage-fixed-panel\"");
+
+WriteLiteral(" class=\"toggle-content blocklabel-content\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 94 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.Label(WageViewModelMessages.AmountMessages.HelpText));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                <fieldset");
+
+WriteLiteral(" class=\"form-group inline-fixed\"");
+
+WriteLiteral(">\r\n                                    £\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 97 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                               Write(Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 98 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                               Write(Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                </fieldset>\r\n                            </div>" +
+"\r\n                            <div");
+
+WriteLiteral(" id=\"custom-wage-range-panel\"");
+
+WriteLiteral(" class=\"toggle-content blocklabel-content\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 102 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.Label(WageViewModelMessages.AmountRangeMessages.HelpText));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                <fieldset");
+
+WriteLiteral(" class=\"form-group inline-fixed\"");
+
+WriteLiteral(">\r\n                                    £\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 105 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                               Write(Html.FormTextFor(m => m.Wage.AmountLowerBound, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                    &nbsp;to&nbsp;£\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 107 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                               Write(Html.FormTextFor(m => m.Wage.AmountUpperBound, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 108 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                               Write(Html.DropDownListFor(m => m.Wage.RangeUnit, Model.WageUnits));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                </fieldset>\r\n                            </div>" +
+"\r\n                        </div>\r\n                        ");
 
 WriteLiteral("\r\n                        <label");
 
@@ -578,7 +742,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 114 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                        Write(Html.RadioButtonFor(model => model.Wage.Classification, WageClassification.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"}));
 
             
@@ -598,7 +762,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 119 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                        Write(Html.RadioButtonFor(model => model.Wage.Classification, WageClassification.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"}));
 
             
@@ -620,7 +784,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                        Write(Html.RadioButtonFor(model => model.Wage.Classification, WageClassification.PresetText, new { id = "preset-text", aria_controls = "wage-type-panel" }));
 
             
@@ -632,235 +796,72 @@ WriteLiteral("\r\n                            Choose a text description of the w
 WriteLiteral("                        ");
 
             
-            #line 94 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 127 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                    Write(Html.ValidationMessageFor(m => m.Wage.Classification));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n                    <div");
-
-WriteLiteral(" id=\"custom-wage-panel\"");
-
-WriteLiteral(" class=\"toggle-content blocklabel-content\"");
-
-WriteLiteral(">\r\n                        <fieldset");
-
-WriteLiteral(" class=\"form-group inline-fixed\"");
-
-WriteLiteral(">\r\n                            ");
-
-WriteLiteral("\r\n                            <label");
-
-WriteLiteral(" for=\"custom-wage-fixed\"");
-
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(" data-target=\"custom-wage-fixed-panel\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 100 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                           Write(Html.RadioButtonFor(model => model.Wage.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                Fixed wage\r\n                            </label" +
-">\r\n                            ");
-
-WriteLiteral("\r\n                            <label");
-
-WriteLiteral(" for=\"custom-wage-range\"");
-
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(" data-target=\"custom-wage-range-panel\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 105 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                           Write(Html.RadioButtonFor(model => model.Wage.CustomType, CustomWageType.Ranged, new {id = "custom-wage-range", aria_controls = "custom-wage-panel"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                Wage range\r\n                            </label" +
-">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 108 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.ValidationMessageFor(m => m.Wage.CustomType));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        </fieldset>\r\n                        <div");
-
-WriteLiteral(" id=\"custom-wage-fixed-panel\"");
-
-WriteLiteral(" class=\"toggle-content blocklabel-content\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 111 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.Label(WageViewModelMessages.AmountMessages.HelpText));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <fieldset");
-
-WriteLiteral(" class=\"form-group inline-fixed\"");
-
-WriteLiteral(">\r\n                                £\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 114 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                           Write(Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 115 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                           Write(Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            </fieldset>\r\n                        </div>\r\n      " +
-"                  <div");
-
-WriteLiteral(" id=\"custom-wage-range-panel\"");
-
-WriteLiteral(" class=\"toggle-content blocklabel-content\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 119 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.Label(WageViewModelMessages.AmountRangeMessages.HelpText));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <fieldset");
-
-WriteLiteral(" class=\"form-group inline-fixed\"");
-
-WriteLiteral(">\r\n                                £\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 122 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                           Write(Html.FormTextFor(m => m.Wage.AmountLowerBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                &nbsp;to&nbsp;£\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                           Write(Html.FormTextFor(m => m.Wage.AmountUpperBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 125 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                           Write(Html.DropDownListFor(m => m.Wage.RangeUnit, Model.WageUnits));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            </fieldset>\r\n                        </div>\r\n      " +
-"              </div>\r\n                    <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" id=\"preset-text-panel\"");
 
 WriteLiteral(" class=\"toggle-content blocklabel-content\"");
 
-WriteLiteral(">\r\n                        <fieldset");
+WriteLiteral(">\r\n                            <fieldset");
 
 WriteLiteral(" class=\"form-group inline-fixed\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                            ");
+WriteLiteral("                                ");
 
             
-            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.DropDownListFor(m => m.Wage.PresetText, Model.WageTextPresets));
+            #line 130 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.DropDownListFor(m => m.Wage.PresetText, Model.WageTextPresets));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </fieldset>\r\n                        <fieldset");
+WriteLiteral("\r\n                            </fieldset>\r\n                            <fieldset");
 
 WriteLiteral(" class=\"form-group inline-fixed\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                            ");
+WriteLiteral("                                ");
 
             
-            #line 134 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.Label(WageViewModelMessages.WageTypeReason.HelpText));
+            #line 133 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.Label(WageViewModelMessages.WageTypeReason.HelpText));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
+WriteLiteral("                                ");
+
+            
+            #line 134 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                           Write(Html.FormTextAreaFor(m => m.Wage.WageTypeReason, WageViewModelMessages.WageTypeReason.LabelText, containerHtmlAttributes: new { @baseClassName = "form-group-compound" }, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText, data_val_regex = Whitelists.FreetextWhitelist.RegularExpression }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            </fieldset>\r\n");
+
 WriteLiteral("                            ");
 
             
-            #line 135 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                       Write(Html.FormTextAreaFor(m => m.Wage.WageTypeReason, WageViewModelMessages.WageTypeReason.LabelText, containerHtmlAttributes: new {@baseClassName = "form-group-compound"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText, data_val_regex = Whitelists.FreetextWhitelist.RegularExpression}));
+            #line 136 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+                       Write(Html.ValidationMessageFor(m => m.Wage.WageTypeReason));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </fieldset>\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 137 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                   Write(Html.ValidationMessageFor(m => m.Wage.WageTypeReason));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n                <div");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -897,27 +898,27 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10817), Tuple.Create("\"", 10957)
-, Tuple.Create(Tuple.Create("", 10825), Tuple.Create("form-group", 10825), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11015), Tuple.Create("\"", 11155)
+, Tuple.Create(Tuple.Create("", 11023), Tuple.Create("form-group", 11023), true)
             
             #line 145 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 10835), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration))
+, Tuple.Create(Tuple.Create(" ", 11033), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration))
             
             #line default
             #line hidden
-, 10836), false)
+, 11034), false)
 );
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 10979), Tuple.Create("\"", 11037)
+WriteAttribute("name", Tuple.Create(" name=\"", 11177), Tuple.Create("\"", 11235)
             
             #line 146 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 10986), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Duration).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 11184), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Duration).ToString().ToLower()
             
             #line default
             #line hidden
-, 10986), false)
+, 11184), false)
 );
 
 WriteLiteral("></a>\r\n");
@@ -1012,29 +1013,29 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </fieldset>\r\n\r\n        <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11910), Tuple.Create("\"", 12097)
-, Tuple.Create(Tuple.Create("", 11918), Tuple.Create("form-group", 11918), true)
-, Tuple.Create(Tuple.Create(" ", 11928), Tuple.Create("inline-fixed", 11929), true)
-, Tuple.Create(Tuple.Create(" ", 11941), Tuple.Create("date-input", 11942), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 12108), Tuple.Create("\"", 12295)
+, Tuple.Create(Tuple.Create("", 12116), Tuple.Create("form-group", 12116), true)
+, Tuple.Create(Tuple.Create(" ", 12126), Tuple.Create("inline-fixed", 12127), true)
+, Tuple.Create(Tuple.Create(" ", 12139), Tuple.Create("date-input", 12140), true)
             
             #line 162 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 11952), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
+, Tuple.Create(Tuple.Create(" ", 12150), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
             
             #line default
             #line hidden
-, 11953), false)
+, 12151), false)
 );
 
 WriteLiteral(">\r\n            <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 12115), Tuple.Create("\"", 12216)
+WriteAttribute("name", Tuple.Create(" name=\"", 12313), Tuple.Create("\"", 12414)
             
             #line 163 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 12122), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()
+, Tuple.Create(Tuple.Create("", 12320), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()
             
             #line default
             #line hidden
-, 12122), false)
+, 12320), false)
 );
 
 WriteLiteral("></a>\r\n            <legend");
@@ -1087,29 +1088,29 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n\r\n        <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 12799), Tuple.Create("\"", 12992)
-, Tuple.Create(Tuple.Create("", 12807), Tuple.Create("form-group", 12807), true)
-, Tuple.Create(Tuple.Create(" ", 12817), Tuple.Create("inline-fixed", 12818), true)
-, Tuple.Create(Tuple.Create(" ", 12830), Tuple.Create("date-input", 12831), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 12997), Tuple.Create("\"", 13190)
+, Tuple.Create(Tuple.Create("", 13005), Tuple.Create("form-group", 13005), true)
+, Tuple.Create(Tuple.Create(" ", 13015), Tuple.Create("inline-fixed", 13016), true)
+, Tuple.Create(Tuple.Create(" ", 13028), Tuple.Create("date-input", 13029), true)
             
             #line 170 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 12841), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
+, Tuple.Create(Tuple.Create(" ", 13039), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
             
             #line default
             #line hidden
-, 12842), false)
+, 13040), false)
 );
 
 WriteLiteral(">\r\n            <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 13010), Tuple.Create("\"", 13117)
+WriteAttribute("name", Tuple.Create(" name=\"", 13208), Tuple.Create("\"", 13315)
             
             #line 171 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 13017), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()
+, Tuple.Create(Tuple.Create("", 13215), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()
             
             #line default
             #line hidden
-, 13017), false)
+, 13215), false)
 );
 
 WriteLiteral("></a>\r\n            <legend");
