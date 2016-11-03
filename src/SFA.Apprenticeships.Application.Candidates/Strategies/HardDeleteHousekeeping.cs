@@ -2,9 +2,9 @@
 {
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class HardDeleteHousekeeping : IHousekeepingChainOfResponsibility
     {
@@ -18,12 +18,12 @@
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
-            IAuditRepository auditRepository, ILogService logService)
+            IAuditRepository auditRepository, ILogService logService, IServiceBus serviceBus)
         {
             var hardDeleteStrategy = new HardDeleteStrategy(configurationService, userWriteRepository, authenticationRepository,
                 candidateWriteRepository, savedSearchReadRepository, savedSearchWriteRepository, apprenticeshipApplicationReadRepository,
                 apprenticeshipApplicationWriteRepository, traineeshipApplicationReadRepository,
-                traineeshipApplicationWriteRepository, auditRepository, logService);
+                traineeshipApplicationWriteRepository, auditRepository, logService, serviceBus);
             var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
 
             hardDeleteStrategy.SetSuccessor(terminatingHousekeepingStrategy);

@@ -846,7 +846,7 @@
                 searchString = vacanciesSummarySearch.SearchString;
             }
 
-            var query = new VacancySummaryQuery()
+            var query = new VacancySummaryQuery
             {
                 ProviderId = providerId,
                 ProviderSiteId = providerSiteId,
@@ -854,6 +854,7 @@
                 Filter = vacanciesSummarySearch.FilterType,
                 PageSize = vacanciesSummarySearch.PageSize,
                 RequestedPage = vacanciesSummarySearch.CurrentPage,
+                SearchMode = vacanciesSummarySearch.SearchMode,
                 SearchString = searchString,
                 Order = vacanciesSummarySearch.Order,
                 VacancyType = vacanciesSummarySearch.VacancyType

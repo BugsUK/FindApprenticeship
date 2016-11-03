@@ -6,6 +6,7 @@
     using Strategies.Traineeships;
     using System;
     using System.Collections.Generic;
+    using ISetApplicationStatusStrategy = Strategies.Traineeships.ISetApplicationStatusStrategy;
 
     public class TraineeshipApplicationService : ITraineeshipApplicationService
     {
@@ -13,17 +14,20 @@
         private readonly ITraineeshipApplicationStatsRepository _traineeshipApplicationStatsRepository;
         private readonly IGetApplicationForReviewStrategy _getApplicationForReviewStrategy;
         private readonly IUpdateApplicationNotesStrategy _updateApplicationNotesStrategy;
+        private readonly ISetApplicationStatusStrategy _setApplicationStatusStrategy;
 
         public TraineeshipApplicationService(
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ITraineeshipApplicationStatsRepository traineeshipApplicationStatsRepository,
             IGetApplicationForReviewStrategy getApplicationForReviewStrategy,
-            IUpdateApplicationNotesStrategy updateApplicationNotesStrategy)
+            IUpdateApplicationNotesStrategy updateApplicationNotesStrategy,
+            ISetApplicationStatusStrategy setApplicationStatusStrategy)
         {
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _traineeshipApplicationStatsRepository = traineeshipApplicationStatsRepository;
             _getApplicationForReviewStrategy = getApplicationForReviewStrategy;
             _updateApplicationNotesStrategy = updateApplicationNotesStrategy;
+            _setApplicationStatusStrategy = setApplicationStatusStrategy;
         }
 
         public IEnumerable<TraineeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
@@ -49,6 +53,16 @@
         public TraineeshipApplicationDetail GetApplicationForReview(Guid applicationId)
         {
             return _getApplicationForReviewStrategy.GetApplicationForReview(applicationId);
+        }
+
+        public void SetStateInProgress(Guid applicationId)
+        {
+            _setApplicationStatusStrategy.SetStateInProgress(applicationId);
+        }
+
+        public void SetStateSubmitted(Guid applicationId)
+        {
+            _setApplicationStatusStrategy.SetStateSubmitted(applicationId);
         }
 
         public void UpdateApplicationNotes(Guid applicationId, string notes, bool publishUpdate)

@@ -13,6 +13,7 @@
     public class VacancyViewModel
     {
         public const string PartialView = "Vacancy/VacancyPreview";
+        public const string BulkUploadMode = "bulkUpload";
 
         public int VacancyReferenceNumber { get; set; }
 
@@ -84,6 +85,8 @@
         public bool IsSingleLocation => NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true;
 
         public bool IsCandidateView { get; set; }
+
+        public bool IsManageReviewerView { get; set; }
 
         public VacancySource VacancySource { get; set; }
 

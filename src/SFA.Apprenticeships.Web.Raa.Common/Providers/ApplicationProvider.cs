@@ -301,10 +301,24 @@
             return applicationSelectionViewModel;
         }
 
+        public ApplicationSelectionViewModel SetTraineeshipStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationId = applicationSelectionViewModel.ApplicationId;
+            _traineeshipApplicationService.SetStateInProgress(applicationId);
+            return applicationSelectionViewModel;
+        }
+
         public ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
             _apprenticeshipApplicationService.SetStateSubmitted(applicationId);
+            return applicationSelectionViewModel;
+        }
+
+        public ApplicationSelectionViewModel SetTraineeshipStateSubmitted(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationId = applicationSelectionViewModel.ApplicationId;
+            _traineeshipApplicationService.SetStateSubmitted(applicationId);
             return applicationSelectionViewModel;
         }
 

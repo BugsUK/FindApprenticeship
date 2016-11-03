@@ -111,7 +111,7 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
         public ApiUser GetApiUser(Guid externalSystemId)
         {
-            var sql = SelectApiUsersSql + " WHERE Username = @ExternalSystemId";
+            const string sql = SelectApiUsersSql + " WHERE Username = @ExternalSystemId";
 
             var externalSystemPermission = _getOpenConnection.Query<ExternalSystem, ExternalSystemPermission, ExternalSystem>(sql,
                 (es, esp) =>
@@ -125,11 +125,11 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
         public ApiUser GetApiUser(string companyId)
         {
-            var externalSystemPermission = GetExternalSystemPermission(companyId);
+            var externalSystemPermission = GetExternalSystem(companyId);
             return externalSystemPermission != null ? MapApiUser(externalSystemPermission) : null;
         }
 
-        private ExternalSystem GetExternalSystemPermission(string companyId)
+        private ExternalSystem GetExternalSystem(string companyId)
         {
             var sqls = new[]
             {
@@ -140,15 +140,10 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
 
             foreach (var sql in sqls)
             {
-                var externalSystemPermission = _getOpenConnection.Query<ExternalSystem, ExternalSystemPermission, ExternalSystem>(sql,
-                (es, esp) =>
-                {
-                    es.ExternalSystemPermission = esp;
-                    return es;
-                }, new { companyId }, "Username").SingleOrDefault();
+                var externalSystemPermission = _getOpenConnection.Query<ExternalSystemPermission>(sql, new { companyId }).SingleOrDefault();
                 if (externalSystemPermission != null)
                 {
-                    return externalSystemPermission;
+                    return new ExternalSystem {ExternalSystemPermission = externalSystemPermission};
                 }
             }
 
@@ -159,7 +154,7 @@ OR tp.ThirdPartyName LIKE '%' + @name + '%'";
         {
             var apiConfiguration = _configurationService.Get<ApiConfiguration>();
 
-            var externalSystem = GetExternalSystemPermission(apiUser.CompanyId);
+            var externalSystem = GetExternalSystem(apiUser.CompanyId);
             var externalSystemPermission = externalSystem.ExternalSystemPermission;
 
             externalSystemPermission.Username = apiUser.ExternalSystemId == Guid.Empty ? Guid.NewGuid() : apiUser.ExternalSystemId;

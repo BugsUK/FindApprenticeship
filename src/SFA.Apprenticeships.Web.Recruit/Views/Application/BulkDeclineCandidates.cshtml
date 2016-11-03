@@ -1,6 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @model BulkDeclineCandidatesViewModel
 
@@ -40,7 +41,7 @@
                     </p>
                     <br/>
                     <p class="font-xsmall">
-                        @Html.RouteLink("See full vacancy details", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber, mode = "bulkUpload"}, new {@class = "account-link"})
+                        @Html.RouteLink("See full vacancy details", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber, mode = VacancyViewModel.BulkUploadMode }, new {@class = "account-link"})
                     </p>
                     <br/>
                 </div>
@@ -150,7 +151,7 @@
                         var managerNotesSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ?
                             Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                     }
-                    <button class="vacancy-order font-black" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsLastManagerNotes">
+                    <button class="vacancy-order font-black" name="BulkOrderApplicationsAction" value="BulkOrderApplicationsManagerNotes">
                         <span class="font-black">Vacancy manager notes <i class="fa @managerNotesSortClass" aria-hidden="true"></i></span>
                     </button>
                 </th>

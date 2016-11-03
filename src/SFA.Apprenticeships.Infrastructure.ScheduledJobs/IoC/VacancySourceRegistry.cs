@@ -25,6 +25,7 @@
             For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
             For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>().Use<ApprenticeshipVacancyDataProvider>();
             For<IVacancyDataProvider<TraineeshipVacancyDetail>>().Use<TraineeshipVacancyDataProvider>();
+            For<IVacancySummaryService>().Use<VacancySummaryService>();
             //--
         }
     }
