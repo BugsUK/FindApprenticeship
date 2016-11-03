@@ -4225,6 +4225,10 @@ div.nested-panel-1 {
     margin-left: 0px;
 }
 
+fieldset.nested-panel-2 {
+    margin-left: 10px;
+}
+
 .block-label {
   background: #ecedee;
   border: 1px solid #dee0e2;
