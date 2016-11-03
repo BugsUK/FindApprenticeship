@@ -353,16 +353,20 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n        <p>");
+WriteLiteral("</p>\r\n        <div");
+
+WriteLiteral(" class=\"wage-reason-display\"");
+
+WriteLiteral(">");
 
             
             #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-      Write(Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason);
+                                    Write(Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n");
+WriteLiteral("</div>\r\n");
 
 WriteLiteral("        ");
 

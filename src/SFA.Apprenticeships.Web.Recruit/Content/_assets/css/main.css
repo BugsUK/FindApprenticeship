@@ -4229,6 +4229,12 @@ fieldset.nested-panel-2 {
     margin-left: 10px;
 }
 
+.wage-reason-display {
+    background: #ffffff;
+    border-left: 3px solid #999999;
+    padding: 10px;
+}
+
 .block-label {
   background: #ecedee;
   border: 1px solid #dee0e2;
