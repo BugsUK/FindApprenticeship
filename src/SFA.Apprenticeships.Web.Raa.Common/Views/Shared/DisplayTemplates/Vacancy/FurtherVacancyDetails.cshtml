@@ -111,7 +111,8 @@
                                 </div>
                                 <div id="custom-wage-range-panel" class="toggle-content blocklabel-content">
                                     @Html.Label(WageViewModelMessages.AmountRangeMessages.HelpText)
-                                    <fieldset class="form-group inline-fixed">
+                                    <fieldset class="form-group inline-fixed @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.AmountLowerBound))
+                                              @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.AmountUpperBound))">
                                         £
                                         @Html.FormTextFor(m => m.Wage.AmountLowerBound, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
                                         &nbsp;to&nbsp;£
