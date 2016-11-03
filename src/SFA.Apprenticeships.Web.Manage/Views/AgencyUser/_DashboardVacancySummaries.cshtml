@@ -61,7 +61,7 @@
                                         Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                                 }
                                 <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldDateSubmitted, dateSubmittedNewOrder))">
-                                    <span>Date submitted <i class="fa @dateSubmittedSortClass" aria-hidden="true"></i></span>
+                                    <span>Submitted date <i class="fa @dateSubmittedSortClass" aria-hidden="true"></i></span>
                                 </a>
                             </th>
                             <th>
@@ -98,7 +98,7 @@
                                         <div class="reactive-title">@HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title)</div>
                                     </td>
                                     <td>
-                                        @vacancy.VacancyType.ToString()
+                                        @vacancy.VacancyType.ToString().Substring(0,3)
                                     </td>
                                     <td>
                                         @vacancy.Location.Town<br />
