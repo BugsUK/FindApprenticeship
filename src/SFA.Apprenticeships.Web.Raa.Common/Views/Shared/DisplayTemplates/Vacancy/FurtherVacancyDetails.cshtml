@@ -89,6 +89,7 @@
                         <div id="custom-wage-panel" class="toggle-content blocklabel-content nested-panel-1 clearfix">
                             <fieldset class="nested-panel-2 form-group inline-fixed">
                                 @* ReSharper disable once Html.IdNotResolved *@
+                                <span class="clearfix">Select type</span>
                                 <label for="custom-wage-fixed" class="block-label" data-target="custom-wage-fixed-panel">
                                     @Html.RadioButtonFor(model => model.Wage.CustomType, CustomWageType.Fixed, new { id = "custom-wage-fixed", aria_controls = "custom-wage-panel" })
                                     Fixed wage
