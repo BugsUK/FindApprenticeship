@@ -79,6 +79,7 @@
             For<IApiUserProvider>().Use<ApiUserProvider>();
             For<IProviderUserProvider>().Use<ProviderUserProvider>();
             For<IEmployerProvider>().Use<EmployerProvider>();
+            For<IStandardsAndFrameworksProvider>().Use<StandardsAndFrameworksProvider>();
         }
 
         private void RegisterServices()

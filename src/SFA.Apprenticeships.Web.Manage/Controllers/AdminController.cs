@@ -479,6 +479,9 @@
         [HttpGet]
         public ActionResult CreateStandard()
         {
+            //var response = _adminMediator.GetCreateStandard();
+
+            //TODO: Create above mediator function and move all this code into it
             var sectorList = _adminMediator.GetStandards();
 
             var viewModel = new StandardViewModel

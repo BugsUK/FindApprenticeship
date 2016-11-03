@@ -120,17 +120,6 @@
             return GetByUkprn(provider.Ukprn);
         }
 
-        public StandardSubjectAreaTierOne CreateStandard(StandardSubjectAreaTierOne standard)
-        {
-            //var dbStandard = MapProvider(standard);
-
-            //_getOpenConnection.Insert(dbStandard);
-
-            //return GetByUkprn(standard.Ukprn);
-
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// UpdateEntityTimeStamps
         /// Save to Collection

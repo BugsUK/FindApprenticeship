@@ -225,6 +225,8 @@
     <Compile Include="Mediators\Admin\AdminMediator.cs" />
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
+    <Compile Include="Providers\IStandardsAndFrameworksProvider.cs" />
+    <Compile Include="Providers\StandardsAndFrameworksProvider.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
     <Compile Include="ViewModels\Admin\StandardViewModel.cs" />
     <Compile Include="ViewModels\Admin\FrameworkViewModel.cs" />

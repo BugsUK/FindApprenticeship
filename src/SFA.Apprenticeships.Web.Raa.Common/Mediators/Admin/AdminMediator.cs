@@ -52,9 +52,10 @@
         private readonly IProviderUserProvider _providerUserProvider;
         private readonly IEmployerProvider _employerProvider;
 		private readonly IReferenceDataProvider _referenceDataProvider;
+		private readonly IStandardsAndFrameworksProvider _standardsAndFrameworksProvider;
 
         public AdminMediator(IProviderProvider providerProvider, IApiUserProvider apiUserProvider, ILogService logService, IVacancyPostingService vacancyPostingService,
-            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider, IProviderUserProvider providerUserProvider, IEmployerProvider employerProvider, IReferenceDataProvider referenceDataProvider)
+            IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider, IProviderUserProvider providerUserProvider, IEmployerProvider employerProvider, IReferenceDataProvider referenceDataProvider, IStandardsAndFrameworksProvider standardsAndFrameworksProvider)
         {
             _providerProvider = providerProvider;
             _apiUserProvider = apiUserProvider;
@@ -64,6 +65,7 @@
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerUserProvider = providerUserProvider;
 			_referenceDataProvider = referenceDataProvider;
+            _standardsAndFrameworksProvider = standardsAndFrameworksProvider;
             _employerProvider = employerProvider;
         }
 
@@ -519,7 +521,7 @@
 
         public MediatorResponse<StandardViewModel> CreateStandard(StandardViewModel viewModel)
         {
-            viewModel = _providerProvider.CreateStandard(viewModel);
+            viewModel = _standardsAndFrameworksProvider.CreateStandard(viewModel);
 
             return GetMediatorResponse(AdminMediatorCodes.CreateProvider.Ok, viewModel);
         }

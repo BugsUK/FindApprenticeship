@@ -3,15 +3,18 @@
     using System.Collections.Generic;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.ReferenceData;
 
     public class ReferenceDataService : IReferenceDataService
     {
         private readonly IReferenceDataProvider _referenceDataProvider;
+        private readonly IReferenceRepository _referenceRepository;
 
-        public ReferenceDataService(IReferenceDataProvider referenceDataProvider)
+        public ReferenceDataService(IReferenceDataProvider referenceDataProvider, IReferenceRepository referenceRepository)
         {
             _referenceDataProvider = referenceDataProvider;
+            _referenceRepository = referenceRepository;
         }
 
         public IEnumerable<Category> GetCategories()
@@ -52,6 +55,11 @@
         public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
         {
             return _referenceDataProvider.GetReleaseNotes(dasApplication);
+        }
+
+        public Standard CreateStandard(Standard standard)
+        {
+            return _referenceRepository.CreateStandard(standard);
         }
     }
 }

@@ -22,7 +22,6 @@
     public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
         private static readonly IMapper ProviderMappers = new ProviderMappers();
-        private static readonly IMapper StandardMappers = new StandardMappers();
 
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
@@ -331,13 +330,6 @@
             _providerService.CreateProviderSiteRelationship(providerSiteRelationship);
 
             return GetProviderSiteViewModel(viewModel.ProviderSiteId);
-        }
-        public StandardViewModel CreateStandard(StandardViewModel viewModel)
-        {
-            var standard = StandardMappers.Map<StandardViewModel, StandardSubjectAreaTierOne>(viewModel);
-            standard = _providerService.CreateStandard(standard);
-
-            return StandardMappers.Map<StandardSubjectAreaTierOne, StandardViewModel>(standard);
         }
     }
 }

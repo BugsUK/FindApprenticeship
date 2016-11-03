@@ -166,6 +166,11 @@
             return standardSubjectAreaTierOnes;
         }
 
+        public Standard CreateStandard(Standard standard)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()
         {
             _logger.Debug("Getting all apprenticeship occupations");

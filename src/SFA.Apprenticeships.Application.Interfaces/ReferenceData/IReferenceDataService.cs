@@ -21,5 +21,7 @@
         IEnumerable<Sector> GetSectors();
 
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
+
+        Standard CreateStandard(Standard standard);
     }
 }

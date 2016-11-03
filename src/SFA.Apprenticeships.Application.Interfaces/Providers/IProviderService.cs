@@ -62,7 +62,5 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         ProviderSite SaveProviderSite(ProviderSite providerSite);
 
         ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship);
-
-        StandardSubjectAreaTierOne CreateStandard(StandardSubjectAreaTierOne standard);
     }
 }

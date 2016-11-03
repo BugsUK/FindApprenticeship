@@ -230,11 +230,6 @@
             return _providerWriteRepository.Create(provider);
         }
 
-        public StandardSubjectAreaTierOne CreateStandard(StandardSubjectAreaTierOne standard)
-        {
-            return _providerWriteRepository.CreateStandard(standard);
-        }
-
         public Provider SaveProvider(Provider provider)
         {
             return _providerWriteRepository.Update(provider);
