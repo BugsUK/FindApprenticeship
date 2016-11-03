@@ -1,5 +1,6 @@
 ﻿@model VacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
@@ -14,7 +15,7 @@
 
     @if (Model.Status.IsStateReadOnly())
     {
-        if (Model.Status.CanBulkDecline(Model.ApplicationCount) && Model.VacancyType.IsApprentcieshipVacancyType())
+        if (Model.Mode == VacancyViewModel.BulkUploadMode)
         {
             <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Continue responding to candidates</a>
         }

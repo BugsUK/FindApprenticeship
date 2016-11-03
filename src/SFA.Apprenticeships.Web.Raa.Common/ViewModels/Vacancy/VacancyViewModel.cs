@@ -13,6 +13,7 @@
     public class VacancyViewModel
     {
         public const string PartialView = "Vacancy/VacancyPreview";
+        public const string BulkUploadMode = "bulkUpload";
 
         public int VacancyReferenceNumber { get; set; }
 

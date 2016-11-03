@@ -2,5 +2,5 @@
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyLinksViewModel
 
     <p class="small-btm-margin">
-        @Html.RouteLink("Continue responding to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        @Html.RouteLink("Continue responding to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}}, new Dictionary<string, object> { {"class", "disp-block" } })
     </p>
