@@ -1,6 +1,7 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation.Constants
+@using SFA.Apprenticeships.Web.Common.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using HtmlExtensions = SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions
@@ -39,7 +40,7 @@
 {
     <div class="@editableItemClass">
         <h3 class="bold-small">
-            @if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.Custom)
+            @if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.Custom)
             {
                 <span id="furthervacancydetailsviewmodel_wage_amount">
                     @Model.FurtherVacancyDetailsViewModel.Wage.Unit.GetHeaderDisplayText()
@@ -55,7 +56,10 @@
             }
         </h3>
         <p id="vacancy-wage">@WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, Model.FurtherVacancyDetailsViewModel.Wage.AmountUpperBound, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date)</p>
-        <div class="wage-reason-display">@Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason</div>
+        @if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.PresetText)
+        {
+            <div class="wage-reason-display">@Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason</div>
+        }
         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
     </div>
 
