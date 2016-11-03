@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
@@ -34,7 +35,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30, null)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
@@ -71,7 +72,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30, null)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
@@ -90,44 +91,63 @@
         [Test]
         public void ShouldUpdateWage()
         {
+            //Arrange.
             const int vacancyReferenceNumber = 1;
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
-            var viewModel = new FurtherVacancyDetailsViewModel
+            var wageViewModel = new WageViewModel()
             {
-                Wage = new WageViewModel(WageType.Custom, 450, null, WageUnit.Monthly, 37.5m),
+                Type = WageType.Custom,
+                CustomType = CustomWageType.Fixed,
+                Amount = 450,
+                AmountLowerBound = null,
+                AmountUpperBound = null,
+                Text = null,
+                Unit = WageUnit.Monthly,
+                HoursPerWeek = 37.5m
+            };
+            var wage = new Wage(WageType.Custom, 450, null, null, null, WageUnit.Monthly, 37.5m, null);
+
+            var updatedViewModel = new FurtherVacancyDetailsViewModel
+            {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(closingDate),
                     PossibleStartDate = new DateViewModel(possibleStartDate)
                 },
-                VacancyReferenceNumber = vacancyReferenceNumber
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                Wage = wageViewModel
             };
 
-            var apprenticeshipVacancy = new Vacancy
+            var dbApprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, "Legacy text", WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, "Legacy text", WageUnit.Weekly, 30, null)
             };
+
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(apprenticeshipVacancy);
+                .Returns(dbApprenticeshipVacancy);
             MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
-                .Returns(apprenticeshipVacancy);
-            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(apprenticeshipVacancy))
-                .Returns(viewModel);
+                .Returns(dbApprenticeshipVacancy);
+            MockMapper.Setup(m => m.Map<WageViewModel, Wage>(It.IsAny<WageViewModel>())).Returns(wage);
+            MockMapper.Setup(m => m.Map<Wage, WageViewModel>(It.IsAny<Wage>())).Returns(wageViewModel); //this line kind of invalidates this test.
+            MockMapper.Setup(m => m.Map<Vacancy, FurtherVacancyDetailsViewModel>(dbApprenticeshipVacancy))
+                .Returns(updatedViewModel);
 
             var provider = GetVacancyPostingProvider();
 
-            provider.UpdateVacancyDates(viewModel);
-
+            //Act.
+            provider.UpdateVacancyDates(updatedViewModel);
+            
+            //Assert.
             MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(
                 v => v.PossibleStartDate == possibleStartDate
-                && v.Wage.Type == viewModel.Wage.Type
-                && v.Wage.Amount == viewModel.Wage.Amount
-                && v.Wage.Text == apprenticeshipVacancy.Wage.Text
-                && v.Wage.Unit == viewModel.Wage.Unit
-                && v.Wage.HoursPerWeek == apprenticeshipVacancy.Wage.HoursPerWeek)));
+                && v.Wage.Type == updatedViewModel.Wage.Type
+                && v.Wage.Amount == updatedViewModel.Wage.Amount
+                && v.Wage.Text == dbApprenticeshipVacancy.Wage.Text
+                && v.Wage.Unit == updatedViewModel.Wage.Unit
+                && v.Wage.HoursPerWeek == dbApprenticeshipVacancy.Wage.HoursPerWeek)));
         }
 
         [Test]
@@ -151,7 +171,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30, null)
             };
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
@@ -193,7 +213,7 @@
             {
                 VacancyId = vacancyId,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30, null)
             };
 
             MockVacancyPostingService.Setup(mock => mock
@@ -246,7 +266,7 @@
             {
                 VacancyId = vacancyId,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new Wage(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30)
+                Wage = new Wage(WageType.NationalMinimum, null, null, null, null, WageUnit.Weekly, 30, null)
             };
 
             MockVacancyPostingService.Setup(mock => mock

@@ -6,6 +6,7 @@
     using FluentAssertions;
     using NUnit.Framework;
     using Candidate.Mappers;
+    using Candidate.Mediators.Login;
     using Infrastructure.Presentation;
 
     [TestFixture]
@@ -24,7 +25,8 @@
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 EmployerName = "Acme Corp",
-                IsEmployerAnonymous = false
+                IsEmployerAnonymous = false,
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -40,7 +42,8 @@
             {
                 EmployerName = "Acme Corp",
                 AnonymousEmployerName = "Blue Chip Corp",
-                IsEmployerAnonymous = true
+                IsEmployerAnonymous = true,
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -54,14 +57,14 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                Wage = new Wage(WageType.LegacyWeekly, 101.19m, null, WageUnit.NotApplicable, null)
+                Wage = new Wage(WageType.LegacyWeekly, 101.19m, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
             const string expectedWage = "£101.19";
 
             model.Should().NotBeNull();
-            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should().Be(expectedWage);
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.AmountLowerBound, model.Wage.AmountUpperBound, model.Wage.Text, model.Wage.HoursPerWeek, null).Should().Be(expectedWage);
         }
 
         [Test]
@@ -69,13 +72,13 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                Wage = new Wage(WageType.LegacyText, null, "Competitive", WageUnit.NotApplicable, null)
+                Wage = new Wage(WageType.LegacyText, null, null, null, "Competitive", WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should()
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.AmountLowerBound, model.Wage.AmountUpperBound, model.Wage.Text, model.Wage.HoursPerWeek, null).Should()
                 .Be("Competitive");
         }
 
@@ -84,13 +87,13 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                Wage = new Wage(WageType.LegacyText, null, "123.45678", WageUnit.NotApplicable, null)
+                Wage = new Wage(WageType.LegacyText, null, null, null, "123.45678", WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.Text, model.Wage.HoursPerWeek, null).Should().Be("£123.46");
+            WagePresenter.GetDisplayAmount(model.Wage.Type, model.Wage.Amount, model.Wage.AmountLowerBound, model.Wage.AmountUpperBound, model.Wage.Text, model.Wage.HoursPerWeek, null).Should().Be("£123.46");
         }
 
         [Test]
@@ -98,7 +101,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                EmployerWebsite = "http://wwww.someweb.com"
+                EmployerWebsite = "http://wwww.someweb.com",
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -113,7 +117,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                EmployerWebsite = "wwww.someweb.com"
+                EmployerWebsite = "wwww.someweb.com",
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -128,7 +133,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                EmployerWebsite = "https://wwww.someweb.com"
+                EmployerWebsite = "https://wwww.someweb.com",
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -143,7 +149,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                EmployerWebsite = "www.somedomain.co.uk / www.anotherdomain.co.uk"
+                EmployerWebsite = "www.somedomain.co.uk / www.anotherdomain.co.uk",
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -158,7 +165,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                VacancyUrl = "http://wwww.someweb.com"
+                VacancyUrl = "http://wwww.someweb.com",
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -173,7 +181,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                VacancyUrl = "wwww.someweb.com"
+                VacancyUrl = "wwww.someweb.com",
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -188,7 +197,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                VacancyUrl = "https://wwww.someweb.com"
+                VacancyUrl = "https://wwww.someweb.com",
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -203,7 +213,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                VacancyUrl = "www.somedomain.co.uk / www.anotherdomain.co.uk"
+                VacancyUrl = "www.somedomain.co.uk / www.anotherdomain.co.uk",
+                Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.NotApplicable, null, null)
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);

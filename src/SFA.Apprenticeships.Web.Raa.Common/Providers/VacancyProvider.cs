@@ -504,6 +504,7 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            viewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
 
             viewModel.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
 
@@ -518,7 +519,7 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -535,11 +536,13 @@
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
-            viewModel = vacancy.ConvertToVacancySummaryViewModel();
-            viewModel.AutoSaveTimeoutInSeconds =
+            var updatedViewModel = vacancy.ConvertToVacancySummaryViewModel();
+            updatedViewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
+
+            updatedViewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
-            return viewModel;
+            return updatedViewModel;
         }
 
         public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
@@ -603,7 +606,7 @@
 
             vacancy.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate.Date;
             vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate.Date;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, vacancy.Wage.Text, viewModel.Wage.Unit, vacancy.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.Status = VacancyStatus.Live;
 
             FurtherVacancyDetailsViewModel result;
@@ -1275,7 +1278,7 @@
             }
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -1303,6 +1306,7 @@
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            viewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
 
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;

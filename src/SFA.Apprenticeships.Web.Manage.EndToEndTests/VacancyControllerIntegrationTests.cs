@@ -665,7 +665,7 @@
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
-                Wage = new Wage(WageType.Custom, 0, null, WageUnit.NotApplicable, 40)
+                Wage = new Wage(WageType.Custom, 0, null, null, null, WageUnit.NotApplicable, 40, null)
                 // Ukprn = "10003816"
             };
         }
@@ -726,7 +726,7 @@
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "Long description",
-                Wage = new WageViewModel(WageType.ApprenticeshipMinimum, null, null, WageUnit.NotApplicable, 40),
+                Wage = new WageViewModel() {Type = WageType.ApprenticeshipMinimum, Classification = WageClassification.ApprenticeshipMinimum, HoursPerWeek = 40},
                 WorkingWeek = "working week"
             };
 

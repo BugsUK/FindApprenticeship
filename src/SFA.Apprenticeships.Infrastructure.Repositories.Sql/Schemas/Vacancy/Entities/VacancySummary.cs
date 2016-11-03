@@ -59,11 +59,14 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public int NumberOfPositions { get; set; }
         public DateTime DateQAApproved { get; set; }
 
+        public decimal? WageLowerBound { get; set; }
         public string WageText { get; set; }
 
         public int WageType { get; set; }
+        public string WageTypeReason { get; set; }
 
         public int? WageUnitId { get; set; }
+        public decimal? WageUpperBound { get; set; }
 
         public decimal? WeeklyWage { get; set; }
         public decimal? HoursPerWeek { get; set; }

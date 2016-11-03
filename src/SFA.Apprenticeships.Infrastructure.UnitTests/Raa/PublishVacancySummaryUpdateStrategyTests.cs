@@ -43,7 +43,7 @@
                 DateQAApproved = DateTime.UtcNow,
                 PossibleStartDate = DateTime.UtcNow,
                 ClosingDate = DateTime.UtcNow,
-                Wage = new Wage(WageType.ApprenticeshipMinimum, 0, null, WageUnit.NotApplicable, 0)
+                Wage = new Wage(WageType.ApprenticeshipMinimum, 0, null, null, null, WageUnit.NotApplicable, 0, null)
             } });
             _mockProviderService.Setup(r => r.GetVacancyOwnerRelationships(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new Dictionary<int, VacancyOwnerRelationship> { { 1, new VacancyOwnerRelationship() } });
             _mockEmployerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>(), It.IsAny<bool>())).Returns(new List<Employer> { new Employer() });

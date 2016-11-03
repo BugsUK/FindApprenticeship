@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Views.Shared.DisplayTemplates.Vacancy
 {
+    using System.Linq;
+    using Common.Converters;
     using Common.Views.Shared.DisplayTemplates.Vacancy;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
@@ -14,6 +16,17 @@
     [TestFixture]
     public class FurtherVacancyDetailsTests : ViewUnitTest
     {
+        private WageViewModel dummyWageViewModel = new WageViewModel()
+        {
+            CustomType = CustomWageType.Fixed,
+            Amount = null,
+            AmountLowerBound = null,
+            AmountUpperBound = null,
+            Text = null,
+            Unit = WageUnit.NotApplicable,
+            HoursPerWeek = null
+        };
+
         [Test]
         public void ApprenticeshipHeading()
         {
@@ -93,7 +106,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -112,7 +125,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -131,7 +144,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -156,7 +169,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -181,7 +194,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, dummyWageViewModel)
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -226,7 +239,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, 37.5m))
+                .With(vm => vm.Wage, new WageViewModel() { CustomType = CustomWageType.Fixed, HoursPerWeek = 37.5m })
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -245,7 +258,7 @@
             //Arrange
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
-                .With(vm => vm.Wage, new WageViewModel(WageType.Custom, 123.45m, null, WageUnit.NotApplicable, null))
+                .With(vm => vm.Wage, new WageViewModel() { CustomType = CustomWageType.Fixed, Amount = 123.45m })
                 .Create();
             var details = new FurtherVacancyDetails();
 
@@ -256,6 +269,122 @@
             var wage = view.GetElementbyId("Wage_Amount");
             wage.Should().NotBeNull();
             wage.GetAttributeValue("value", "").Should().Be("123.45");
+        }
+
+        [Test]
+        public void ShouldAlwaysShowChooseTextDescriptionRadio()
+        {
+            var details = new FurtherVacancyDetails();
+
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.Status, VacancyStatus.Referred)
+                .Create();
+
+            var view = details.RenderAsHtml(viewModel);
+
+            view.GetElementbyId("preset-text").Should().NotBeNull();
+        }
+
+        [TestCase(PresetText.ToBeAgreedUponAppointment)]
+        [TestCase(PresetText.CompetitiveSalary)]
+        [TestCase(PresetText.Unwaged)]
+        public void ShouldShowTextDropdownAndReasonBoxWhenChooseTextIsSelected(PresetText wageType)
+        {
+            var details = new FurtherVacancyDetails();
+
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.Status, VacancyStatus.Draft)
+                .With(v => v.Wage, new WageViewModel() { Classification = WageClassification.LegacyText, PresetText = wageType })
+                .With(v => v.WageTextPresets, ApprenticeshipVacancyConverter.GetWageTextPresets())
+                .Create();
+
+            var view = details.RenderAsHtml(viewModel);
+
+            //TODO: Our HTML is invalid.  This causes the browser to fail to set the "checked" property.
+            //A quick W3C check on this page resulted in 136 errors and 8 warnings.
+            //This is not good at all.  The input appears to be selected but does not have the property.
+            //So, we can't verify as we should.
+            //view.GetElementbyId("preset-text").Attributes["checked"].Value.Should().Be("checked");
+
+            view.GetElementbyId("Wage_PresetText").Should().NotBeNull();
+            view.GetElementbyId("Wage_PresetText").ChildNodes.Any(x => x.Attributes.Contains("selected") && x.Attributes["selected"].Value == "selected").Should().BeTrue();
+            view.GetElementbyId("Wage_PresetText").ChildNodes.Single(x => x.Attributes.Contains("selected") && x.Attributes["selected"].Value == "selected").Attributes["value"].Value.Should().Be(((int)wageType).ToString());
+            view.GetElementbyId("Wage_WageTypeReason").Should().NotBeNull();
+        }
+
+        [TestCase(CustomWageType.Fixed)]
+        [TestCase(CustomWageType.Ranged)]
+        public void ShouldShowFixedWageAndWageRangeRadiosWhenCustomWageIsSelected(CustomWageType wageType)
+        {
+            var details = new FurtherVacancyDetails();
+
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.Status, VacancyStatus.Draft)
+                .With(v => v.Wage, new WageViewModel() { CustomType = wageType })
+                .Create();
+
+            var view = details.RenderAsHtml(viewModel);
+
+            view.GetElementbyId("custom-wage").Attributes["checked"].Value.Should().Be("checked");
+            view.GetElementbyId("custom-wage-fixed").Should().NotBeNull();
+            view.GetElementbyId("custom-wage-range").Should().NotBeNull();
+
+            if (wageType == CustomWageType.Fixed)
+            {
+                view.GetElementbyId("custom-wage-fixed").Attributes["checked"].Value.Should().Be("checked");
+            }
+            else
+            {
+                view.GetElementbyId("custom-wage-range").Attributes["checked"].Value.Should().Be("checked");
+            }
+        }
+
+        [Test]
+        public void ShouldShowFixedWageInputWhenFixedWageIsSelected()
+        {
+            var details = new FurtherVacancyDetails();
+
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.Status, VacancyStatus.Draft)
+                .With(v => v.WageUnits, ApprenticeshipVacancyConverter.GetWageUnits())
+                .With(v => v.Wage, new WageViewModel() { CustomType = CustomWageType.Fixed, Amount = 300, Unit = WageUnit.Weekly})
+                .Create();
+
+            var view = details.RenderAsHtml(viewModel);
+
+            view.GetElementbyId("custom-wage").Attributes["checked"].Value.Should().Be("checked");
+            view.GetElementbyId("custom-wage-fixed").Attributes["checked"].Value.Should().Be("checked");
+            view.GetElementbyId("custom-wage-range").Attributes["checked"]?.Value.Should().NotBe("checked");
+            view.GetElementbyId("Wage_Amount").Should().NotBeNull();
+            view.GetElementbyId("Wage_Amount").Attributes["value"].Value.Should().Be("300");
+            view.GetElementbyId("Wage_Unit").Should().NotBeNull();
+            view.GetElementbyId("Wage_Unit")
+                .ChildNodes.Any(cn => cn.Attributes["value"].Value == WageUnit.Weekly.ToString()).Should().BeTrue();
+        }
+
+
+        [Test]
+        public void ShouldShowWageRangeInputsWhenWageRangeIsSelected()
+        {
+            var details = new FurtherVacancyDetails();
+
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.Status, VacancyStatus.Draft)
+                .With(v => v.Wage, new WageViewModel() { CustomType = CustomWageType.Ranged, AmountLowerBound = 200, AmountUpperBound = 500, Unit = WageUnit.Weekly })
+                .With(v => v.WageUnits, ApprenticeshipVacancyConverter.GetWageUnits())
+                .Create();
+
+            var view = details.RenderAsHtml(viewModel);
+
+            view.GetElementbyId("custom-wage").Attributes["checked"].Value.Should().Be("checked");
+            view.GetElementbyId("custom-wage-fixed").Attributes["checked"]?.Value.Should().NotBe("checked");
+            view.GetElementbyId("custom-wage-range").Attributes["checked"].Value.Should().Be("checked");
+            view.GetElementbyId("Wage_AmountLowerBound").Should().NotBeNull();
+            view.GetElementbyId("Wage_AmountLowerBound").Attributes["value"].Value.Should().Be("200");
+            view.GetElementbyId("Wage_AmountUpperBound").Attributes["value"].Value.Should().Be("500");
+            view.GetElementbyId("Wage_RangeUnit").Should().NotBeNull();
+            view.GetElementbyId("Wage_RangeUnit")
+                .ChildNodes.Any(cn => cn.Attributes["value"].Value == WageUnit.Weekly.ToString()).Should().BeTrue();
         }
     }
 }

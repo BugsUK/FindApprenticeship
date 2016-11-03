@@ -6,10 +6,13 @@
     public class Wage
     {
         [JsonConstructor]
-        public Wage(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek)
+        public Wage(WageType type, decimal? amount, decimal? lowerBound, decimal? upperBound, string text, WageUnit unit, decimal? hoursPerWeek, string reasonForType)
         {
             Type = type;
             Amount = amount;
+            AmountLowerBound = lowerBound;
+            AmountUpperBound = upperBound;
+            ReasonForType = reasonForType;
             Text = text;
             HoursPerWeek = hoursPerWeek;
             Unit = CorrectWageUnit(type, unit);
@@ -17,7 +20,13 @@
 
         public WageType Type { get; private set; }
 
+        public string ReasonForType { get; private set; }
+
         public decimal? Amount { get; private set; }
+
+        public decimal? AmountLowerBound { get; private set; }
+
+        public decimal? AmountUpperBound { get; private set; }
 
         public string Text { get; private set; }
 
@@ -27,30 +36,35 @@
 
         private static WageUnit CorrectWageUnit(WageType type, WageUnit unit)
         {
-            if (type == WageType.LegacyWeekly)
+            switch (type)
             {
-                return WageUnit.Weekly;
-            }
-            if (type == WageType.LegacyText)
-            {
-                return WageUnit.NotApplicable;
-            }
-
-            if (type != WageType.Custom)
-            {
-                return WageUnit.Weekly;
-            }
-
-            switch (unit)
-            {
-                case WageUnit.Weekly:
-                case WageUnit.Monthly:
-                case WageUnit.Annually:
-                case WageUnit.NotApplicable:
+                case WageType.CustomRange:
+                    if (unit == WageUnit.NotApplicable)
+                        return WageUnit.Weekly;
                     return unit;
 
+                case WageType.LegacyText:
+                case WageType.CompetitiveSalary:
+                case WageType.ToBeAgreedUponAppointment:
+                case WageType.Unwaged:
+                    return WageUnit.NotApplicable;
+
+                case WageType.Custom:
+                    switch (unit)
+                    {
+                        case WageUnit.Weekly:
+                        case WageUnit.Monthly:
+                        case WageUnit.Annually:
+                        case WageUnit.NotApplicable:
+                            return unit;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(Unit), $"Invalid Wage Unit: {unit}");
+                    }
+
+                case WageType.LegacyWeekly:
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(Unit), $"Invalid Wage Unit: {unit}");
+                    return WageUnit.Weekly;
             }
         }
     }

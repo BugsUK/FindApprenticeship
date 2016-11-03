@@ -70,10 +70,12 @@
         {
             //not sure why we are doing this here??
             //TODO: ensure that moving this from the db => domain entity mapper will not cause issues, then move this logic into Wage object ctor
-            var wageType = vacancy.WageType == (int) WageType.LegacyWeekly ? WageType.Custom : (WageType)vacancy.WageType;
+            var wageType = vacancy.WageType == (int)WageType.LegacyWeekly ? WageType.Custom : (WageType)vacancy.WageType;
             var wageUnit = vacancy.WageUnitId.HasValue ? (WageUnit)vacancy.WageUnitId.Value : vacancy.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable;
             var wageAmount = RoundMoney(vacancy.WeeklyWage);
-            return new Wage(wageType, wageAmount, vacancy.WageText, wageUnit, vacancy.HoursPerWeek);
+            var wageLowerBound = RoundMoney(vacancy.WageLowerBound);
+            var wageUpperBound = RoundMoney(vacancy.WageUpperBound);
+            return new Wage(wageType, wageAmount, wageLowerBound, wageUpperBound, vacancy.WageText, wageUnit, vacancy.HoursPerWeek, vacancy.WageTypeReason);
         }
 
         public override void Initialise()
@@ -88,8 +90,11 @@
                 .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
                 .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
                 .ForMember(v => v.VacancyManagerAnonymous, opt => opt.UseValue(false))
-                .ForMember(v => v.WageText, opt => opt.MapFrom(av => av.Wage == null ? null : WagePresenter.GetDisplayAmount(av.Wage.Type, av.Wage.Amount, av.Wage.Text, av.Wage.HoursPerWeek, av.PossibleStartDate)))
+                .ForMember(v => v.WageLowerBound, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.AmountLowerBound))
+                .ForMember(v => v.WageUpperBound, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.AmountUpperBound))
+                .ForMember(v => v.WageText, opt => opt.MapFrom(av => av.Wage == null ? null : WagePresenter.GetDisplayAmount(av.Wage.Type, av.Wage.Amount, av.Wage.AmountLowerBound, av.Wage.AmountUpperBound, av.Wage.Text, av.Wage.HoursPerWeek, av.PossibleStartDate)))
                 .ForMember(v => v.WageType, opt => opt.MapFrom(av => av.Wage == null ? 0 : av.Wage.Type))
+                .ForMember(v => v.WageTypeReason, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.ReasonForType))
                 .ForMember(v => v.WageUnitId, opt => opt.MapFrom(av => av.Wage == null ? default(int) : av.Wage.Unit == WageUnit.NotApplicable ? default(int) : av.Wage.Unit))
                 .ForMember(v => v.WeeklyWage, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.Amount))
 
