@@ -37,7 +37,8 @@
         MediatorResponse<EmployerSearchViewModel> SearchEmployers(EmployerSearchViewModel searchViewModel);
         MediatorResponse<EmployerViewModel> GetEmployer(int employerId);
         MediatorResponse<EmployerViewModel> SaveEmployer(EmployerViewModel viewModel);
-        MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandard();
+        MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandards();
+        MediatorResponse<StandardViewModel> CreateStandard(StandardViewModel viewModel);
         MediatorResponse<List<Category>> GetFrameworks();
         MediatorResponse<byte[]> GetFrameworksBytes();
         MediatorResponse<byte[]> GetStandardsBytes();

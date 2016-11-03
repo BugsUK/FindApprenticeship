@@ -184,6 +184,7 @@
     <Compile Include="Constants\ViewModels\ProviderUserSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
     <Compile Include="Constants\ViewModels\ShareApplicationsViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\StandardViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyOwnerRelationshipViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
@@ -220,10 +221,12 @@
     <Compile Include="Mappers\Resolvers\VacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
+    <Compile Include="Mappers\StandardMappers.cs" />
     <Compile Include="Mediators\Admin\AdminMediator.cs" />
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
+    <Compile Include="ViewModels\Admin\StandardViewModel.cs" />
     <Compile Include="ViewModels\Admin\FrameworkViewModel.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />
     <Compile Include="Constants\Pages\TransferVacanciesMessages.cs" />

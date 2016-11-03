@@ -9,6 +9,7 @@
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Application.Interfaces;
+    using Domain.Entities.Raa.Vacancies;
 
     public class ProviderRepository : IProviderReadRepository, IProviderWriteRepository
     {
@@ -117,6 +118,17 @@
             _getOpenConnection.Insert(dbProvider);
 
             return GetByUkprn(provider.Ukprn);
+        }
+
+        public StandardSubjectAreaTierOne CreateStandard(StandardSubjectAreaTierOne standard)
+        {
+            //var dbStandard = MapProvider(standard);
+
+            //_getOpenConnection.Insert(dbStandard);
+
+            //return GetByUkprn(standard.Ukprn);
+
+            throw new NotImplementedException();
         }
 
         /// <summary>

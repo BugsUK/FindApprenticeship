@@ -4,6 +4,7 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using ViewModels.Admin;
     using ViewModels.Employer;
 
     public interface IProviderProvider
@@ -25,5 +26,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel);
         ProviderSiteViewModel SaveProviderSite(ProviderSiteViewModel viewModel);
         ProviderSiteViewModel CreateProviderSiteRelationship(ProviderSiteViewModel viewModel, int providerId);
+        StandardViewModel CreateStandard(StandardViewModel viewModel);
     }
 }

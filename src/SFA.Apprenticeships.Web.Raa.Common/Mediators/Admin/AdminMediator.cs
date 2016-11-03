@@ -9,6 +9,7 @@
     using Domain.Entities.Vacancies;
     using Providers;
     using System;
+    using System.Web.Mvc;
     using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
     using Application.ReferenceData;
@@ -509,11 +510,18 @@
             return viewModel;
         }		
 
-        public MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandard()
+        public MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandards()
         {
             var viewModel = _referenceDataProvider.GetStandardSubjectAreaTierOnes().ToList();
 
             return GetMediatorResponse(AdminMediatorCodes.GetStandard.Ok, viewModel);
+        }
+
+        public MediatorResponse<StandardViewModel> CreateStandard(StandardViewModel viewModel)
+        {
+            viewModel = _providerProvider.CreateStandard(viewModel);
+
+            return GetMediatorResponse(AdminMediatorCodes.CreateProvider.Ok, viewModel);
         }
 
         public MediatorResponse<List<Category>> GetFrameworks()
@@ -541,8 +549,6 @@
                                         FrameworkFullName = s.FullName
                                     }));
 
-                //Convert to list ofFrameworkData
-                //Pass that list into function
                 var bytes = GetCsvBytes<FrameworkViewModel, FrameworkDataClassMap>(frameworkResult, "");
                 return GetMediatorResponse(AdminMediatorCodes.GetFrameworksBytes.Ok, bytes);
             }
@@ -572,7 +578,7 @@
                                                 StandardId = s.Id,
                                                 StandardSectorName = ss.Name,
                                                 StandardName = s.Name
-                                            }))).OrderBy(ss => ss.StandardName);
+                                            }))).OrderBy(ss => ss.StandardSectorName);
 
                 var bytes = GetCsvBytes<StandardSubjectAreaTierOneViewModel, StandardSubjectAreaTierOneClassMap>(standardSubjectAreaTierOneResult, "");
                 return GetMediatorResponse(AdminMediatorCodes.GetStandardsBytes.Ok, bytes);

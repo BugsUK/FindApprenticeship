@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Entities.Raa.Parties;
+    using Entities.Raa.Vacancies;
     using Models;
 
     public interface IProviderReadRepository
@@ -16,5 +17,6 @@
     {
         Provider Create(Provider provider);
         Provider Update(Provider provider);
+        StandardSubjectAreaTierOne CreateStandard(StandardSubjectAreaTierOne standard);
     }
 }

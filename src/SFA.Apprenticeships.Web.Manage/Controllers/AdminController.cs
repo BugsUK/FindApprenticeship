@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
@@ -11,10 +12,13 @@
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
+    using Glimpse.Core.Extensions;
     using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Admin;
+    using Standard = Infrastructure.Repositories.Sql.Schemas.Reference.Entities.Standard;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [AuthorizeUser(Roles = Roles.Admin)]
@@ -192,7 +196,7 @@
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateProviderSite.Ok:
-                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new {viewModel.ProviderId});
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new { viewModel.ProviderId });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -468,7 +472,42 @@
         [HttpGet]
         public ActionResult Standards()
         {
-            var response = _adminMediator.GetStandard();
+            var response = _adminMediator.GetStandards();
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult CreateStandard()
+        {
+            var sectorList = _adminMediator.GetStandards();
+
+            var viewModel = new StandardViewModel
+            {
+                ApprenticeshipSectors = sectorList.ViewModel.SelectMany(ssat1 => ssat1.Sectors.Select(sector => new SelectListItem
+                {
+                    Value = sector.Id.ToString(),
+                    Text = sector.Name
+                }).OrderBy(sli => sli.Text)),
+
+                ApprenticeshipLevels = new List<SelectListItem>
+                {
+                    new SelectListItem {Value = ApprenticeshipLevel.Intermediate.ToString(), Text = "Intermediate"},
+                    new SelectListItem {Value = ApprenticeshipLevel.Advanced.ToString(), Text = "Advanced"},
+                    new SelectListItem {Value = ApprenticeshipLevel.Higher.ToString(), Text = "Higher"},
+                    new SelectListItem {Value = ApprenticeshipLevel.FoundationDegree.ToString(), Text = "Foundation Degree"},
+                    new SelectListItem {Value = ApprenticeshipLevel.Degree.ToString(), Text = "Degree"},
+                    new SelectListItem {Value = ApprenticeshipLevel.Masters.ToString(), Text = "Masters"}
+                }
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateStandardAction")]
+        public ActionResult CreateStandard(StandardViewModel viewModel)
+        {
+            var response = _adminMediator.CreateStandard(viewModel);
             return View(response.ViewModel);
         }
 

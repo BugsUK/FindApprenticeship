@@ -1,7 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Manage.Constants
-@model List<SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne>
+@model List<StandardSubjectAreaTierOne>
 @{
     ViewBag.Title = "Standards";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,6 +9,7 @@
 
 <h1 id="heading" class="heading-xlarge">Standards</h1>
 
+<p>@Html.RouteLink("Add Standard", ManagementRouteNames.AdminCreateStandard)</p>
 @Html.RouteLink("Download Standards", ManagementRouteNames.AdminStandardsCsv)
 
 <table>

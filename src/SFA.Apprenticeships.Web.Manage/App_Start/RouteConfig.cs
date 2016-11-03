@@ -397,6 +397,12 @@
                defaults: new { controller = "Admin", action = "DownloadFrameworksCsv" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateStandard,
+               url: "admin/standards/create",
+               defaults: new { controller = "Admin", action = "CreateStandard" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

@@ -164,7 +164,12 @@
 
         public class GetStandard
         {
-            public const string Ok = "AdminMediatorCodes.GetStandard.Ok";
+            public const string Ok = "AdminMediatorCodes.GetStandards.Ok";
+        }
+
+        public class CreateStandard
+        {
+            public const string Ok = "AdminMediatorCodes.CreateStandard.Ok";
         }
 
         public class GetStandardsBytes

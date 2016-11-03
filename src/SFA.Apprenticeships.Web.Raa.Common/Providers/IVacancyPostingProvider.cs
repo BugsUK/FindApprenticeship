@@ -47,11 +47,11 @@
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
-        List<StandardViewModel> GetStandards();
+        List<ViewModels.Vacancy.StandardViewModel> GetStandards();
 
         List<SelectListItem> GetSectors();
 
-        StandardViewModel GetStandard(int? standardId);
+        ViewModels.Vacancy.StandardViewModel GetStandard(int? standardId);
 
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 

@@ -2,6 +2,7 @@
 {
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Interfaces;
@@ -12,6 +13,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using Standard = Infrastructure.Repositories.Sql.Schemas.Reference.Entities.Standard;
 
     public class ProviderService : IProviderService
     {
@@ -226,6 +228,11 @@
         public Provider CreateProvider(Provider provider)
         {
             return _providerWriteRepository.Create(provider);
+        }
+
+        public StandardSubjectAreaTierOne CreateStandard(StandardSubjectAreaTierOne standard)
+        {
+            return _providerWriteRepository.CreateStandard(standard);
         }
 
         public Provider SaveProvider(Provider provider)

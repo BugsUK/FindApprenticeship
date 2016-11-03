@@ -771,7 +771,7 @@
             return sectorsAndFrameworkItems;
         }
 
-        public List<StandardViewModel> GetStandards()
+        public List<ViewModels.Vacancy.StandardViewModel> GetStandards()
         {
             var sectors = _referenceDataService.GetSectors();
 
@@ -803,7 +803,7 @@
             return sectorItems;
         }
 
-        public StandardViewModel GetStandard(int? standardId)
+        public ViewModels.Vacancy.StandardViewModel GetStandard(int? standardId)
         {
             if (!standardId.HasValue) return null;
 
