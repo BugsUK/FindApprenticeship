@@ -147,7 +147,7 @@ WriteLiteral(">            \r\n");
             #line hidden
             
             #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-             if (Model.Mode == "bulkUpload")
+             if (Model.Mode == VacancyViewModel.BulkUploadMode)
             {
                 
             
@@ -207,16 +207,16 @@ WriteLiteral(" style=\"clear: left\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1805), Tuple.Create("\"", 1843)
-, Tuple.Create(Tuple.Create("", 1813), Tuple.Create("hgroup", 1813), true)
-, Tuple.Create(Tuple.Create(" ", 1819), Tuple.Create("text", 1820), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1824), Tuple.Create("\"", 1862)
+, Tuple.Create(Tuple.Create("", 1832), Tuple.Create("hgroup", 1832), true)
+, Tuple.Create(Tuple.Create(" ", 1838), Tuple.Create("text", 1839), true)
             
             #line 39 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1824), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create(" ", 1843), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1825), false)
+, 1844), false)
 );
 
 WriteLiteral(">\r\n                <h1");
@@ -292,14 +292,14 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2851), Tuple.Create("\"", 2877)
+WriteAttribute("class", Tuple.Create(" class=\"", 2870), Tuple.Create("\"", 2896)
             
             #line 55 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 2859), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 2878), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 2859), false)
+, 2878), false)
 );
 
 WriteLiteral(">\r\n                    <h3");
@@ -361,14 +361,14 @@ WriteLiteral(">\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-description\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3626), Tuple.Create("\"", 3709)
+WriteAttribute("class", Tuple.Create(" class=\"", 3645), Tuple.Create("\"", 3728)
             
             #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 3634), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ShortDescription.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 3653), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ShortDescription.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 3634), false)
+, 3653), false)
 );
 
 WriteLiteral(">");
@@ -408,14 +408,14 @@ WriteLiteral(" class=\"grid grid-1-3\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4387), Tuple.Create("\"", 4413)
+WriteAttribute("class", Tuple.Create(" class=\"", 4406), Tuple.Create("\"", 4432)
             
             #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 4395), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 4414), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 4395), false)
+, 4414), false)
 );
 
 WriteLiteral(">\r\n                <h3");
