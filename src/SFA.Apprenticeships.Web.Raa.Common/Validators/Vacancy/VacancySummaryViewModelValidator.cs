@@ -153,7 +153,7 @@
                 && x.Wage.PresetText != PresetText.NotApplicable);
 
             validator.RuleFor(x => x.Wage.WageTypeReason)
-                .Must(wtr => wtr.Length <= 240)
+                .Must(wtr => !string.IsNullOrWhiteSpace(wtr) && wtr.Length <= 240)
                 .WithMessage(VacancyViewModelMessages.WageTypeReason.TooLongErrorText)
                 .When(x => x.Wage.Classification == WageClassification.PresetText
                 && x.Wage.PresetText != PresetText.NotApplicable);
