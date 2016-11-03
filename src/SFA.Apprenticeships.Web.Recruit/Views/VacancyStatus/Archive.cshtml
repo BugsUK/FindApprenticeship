@@ -10,7 +10,7 @@
     <h1 id="heading" class="heading-xlarge">Are you ready to archive this vacancy?</h1>
     <p>
         You can only archive this vacancy once all positions have been filled and responses sent to all candidates.</p>
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Respond to remaining candidates</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Respond to remaining candidates</a>
         <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Return to applications</a>
 }
 else

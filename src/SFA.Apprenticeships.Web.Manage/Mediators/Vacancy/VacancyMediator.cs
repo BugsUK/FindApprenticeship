@@ -180,6 +180,7 @@
             if (!validationResult.IsValid )
             {
                 vacancyViewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
+                vacancyViewModel.WageTextPresets = ApprenticeshipVacancyConverter.GetWageTextPresets();
                 vacancyViewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(vacancyViewModel.VacancyType);
 
                 return GetMediatorResponse(VacancyMediatorCodes.GetVacancySummaryViewModel.FailedValidation, vacancyViewModel, validationResult);
@@ -195,6 +196,7 @@
             if (!validationResult.IsValid && (!viewModel.AcceptWarnings || validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)))
             {
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
+                viewModel.WageTextPresets = ApprenticeshipVacancyConverter.GetWageTextPresets();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(viewModel.VacancyType);
 
                 if (validationResult.Errors.All(e => (ValidationType?) e.CustomState == ValidationType.Warning))

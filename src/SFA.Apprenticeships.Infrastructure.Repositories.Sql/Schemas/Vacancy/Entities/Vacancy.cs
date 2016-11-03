@@ -250,41 +250,61 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Write(false)]
         public string WageComment { get; set; }
 
+        [Column(TypeName = "money")]
+        public decimal? WageLowerBound { get; set; }
+
+        [Column(TypeName = "money")]
+        public decimal? WageUpperBound { get; set; }
+
         public string WageText { get; set; }
 
         public int WageType { get; set; }
+
+        public string WageTypeReason { get; set; }
 
         public int? WageUnitId { get; set; }
 
         [Column(TypeName = "money")]
         public decimal? WeeklyWage { get; set; }
-
         
         public string WorkingWeek { get; set; }
+
         [Write(false)]
         public string WorkingWeekComment { get; set; }
+
         [Write(false)]
         public string FrameworkCodeName { get; set; }
+
         [Write(false)]
         public string SectorCodeName { get; set; }
+
         [Write(false)]
         public RegionalTeam RegionalTeam { get; set; }
+
         [Write(false)]
         public string EmployerName { get; set; }
+
         [Write(false)]
         public string EmployerLocation { get; set; }
+
         [Write(false)]
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
+
         [Write(false)]
         public int? NewApplicantCount { get; set; }
+
         [Write(false)]
         public int? ApplicantCount { get; set; }
+
         [Write(false)]
         public string CreatedByProviderUsername { get; set; }
+
         [Write(false)]
         public DateTime CreatedDate { get; set; }
+
         [Write(false)]
         public int EmployerId { get; set; }
+
         [Write(false)]
         public string LocalAuthorityCode { get; set; }
     }

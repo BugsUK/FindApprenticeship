@@ -13,6 +13,9 @@
         public const string PerMonthText = "per month";
         public const string PerWeekText = "per week";
         public const string UnknownText = "unknown";
+        public const string CompetitiveSalaryText = "Competitive salary";
+        public const string UnwagedText = "Unwaged";
+        public const string ToBeAGreedUponAppointmentText = "To be agreed upon appointment";
         private const string WageAmountFormat = "N2";
 
         public static string GetHeaderDisplayText(this WageUnit wageUnit)
@@ -36,11 +39,11 @@
             }
         }
 
-        public static string GetDisplayAmountWithFrequencyPostfix(WageType type, decimal? amount, string text, WageUnit unit, decimal? hoursPerWeek, DateTime? possibleDateTime)
+        public static string GetDisplayAmountWithFrequencyPostfix(WageType type, decimal? amount, decimal? amountLowerBound, decimal? amountUpperBound, string text, WageUnit unit, decimal? hoursPerWeek, DateTime? possibleDateTime)
         {
             var postfix = unit.GetWagePostfix();
 
-            var displayAmount = GetDisplayAmount(type, amount, text, hoursPerWeek, possibleDateTime);
+            var displayAmount = GetDisplayAmount(type, amount, amountLowerBound, amountUpperBound, text, hoursPerWeek, possibleDateTime);
             if (string.IsNullOrWhiteSpace(displayAmount))
             {
                 return postfix;
@@ -49,7 +52,7 @@
             return $"{displayAmount} {postfix}";
         }
 
-        public static string GetDisplayAmount(WageType type, decimal? amount, string text, decimal? hoursPerWeek, DateTime? possibleDateTime)
+        public static string GetDisplayAmount(WageType type, decimal? amount, decimal? amountLowerBound, decimal? amountUpperBound, string text, decimal? hoursPerWeek, DateTime? possibleDateTime)
         {
             switch (type)
             {
@@ -78,10 +81,22 @@
                     //if it's already got a '£' sign, or is text, fail to parse and all is good => return value.
                     if (decimal.TryParse(displayText, out wageDecimal))
                     {
-                        displayText = $"£{wageDecimal:N2}";
+                        displayText = $"£{wageDecimal.ToString(WageAmountFormat)}";
                     }
 
                     return displayText;
+
+                case WageType.CustomRange:
+                    return $"£{amountLowerBound?.ToString(WageAmountFormat) ?? UnknownText} - £{amountUpperBound?.ToString(WageAmountFormat) ?? UnknownText}";
+
+                case WageType.CompetitiveSalary:
+                    return CompetitiveSalaryText;
+
+                case WageType.ToBeAgreedUponAppointment:
+                    return ToBeAGreedUponAppointmentText;
+
+                case WageType.Unwaged:
+                    return UnwagedText;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type,
@@ -119,17 +134,12 @@
                 case WageUnit.Weekly:
                     return PerWeekText;
 
-                // TODO: HOTFIX: should revert this change.
-                default:
+                case WageUnit.NotApplicable:
                     return string.Empty;
 
-                    /*
-                    case WageUnit.NotApplicable:
-                        return string.Empty;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
-                    */
             }
         }
         

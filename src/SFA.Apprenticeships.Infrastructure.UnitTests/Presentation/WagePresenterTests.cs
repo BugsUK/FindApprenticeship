@@ -48,7 +48,7 @@
         public void ShouldGetDisplayAmountWithFrequencyPostfix(WageUnit wageUnit, decimal displayAmount, string expected)
         {
             // Act.
-            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(WageType.Custom, displayAmount, null, wageUnit, null, null);
+            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(WageType.Custom, displayAmount, null, null, null, wageUnit, null, null);
 
             // Assert.
             actual.Should().Be(expected);
@@ -59,7 +59,7 @@
         public void ShouldGetDisplayAmountWithFrequencyPostfixNationalMinimums(WageType wageType, string expected)
         {
             // Act.
-            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(wageType, null, null, WageUnit.Weekly, 37.5m, new DateTime(2016, 9, 30));
+            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(wageType, null, null, null, null, WageUnit.Weekly, 37.5m, new DateTime(2016, 9, 30));
 
             // Assert.
             actual.Should().Be(expected);
@@ -70,25 +70,43 @@
         public void ShouldGetDisplayAmountWithFrequencyPostfixNationalMinimums_After1stOct2016(WageType wageType, string expected)
         {
             // Act.
-            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(wageType, null, null, WageUnit.Weekly, 37.5m, new DateTime(2016, 10, 1));
+            var actual = WagePresenter.GetDisplayAmountWithFrequencyPostfix(wageType, null, null, null, null, WageUnit.Weekly, 37.5m, new DateTime(2016, 10, 1));
 
             // Assert.
             actual.Should().Be(expected);
         }
         
-        [TestCase(WageType.LegacyText, "Competitive salary", "123.45", null, "Competitive salary")]
-        [TestCase(WageType.LegacyText, null, "123.45", null, WagePresenter.UnknownText)]
+        [TestCase(WageType.LegacyText, "Competitive salary", "123.45", null, null, null, "Competitive salary")]
+        [TestCase(WageType.LegacyText, null, "123.45", null, null, null, WagePresenter.UnknownText)]
+        [TestCase(WageType.CustomRange, null, null, "1", "2", null, @"£1.00 - £2.00")]
+        [TestCase(WageType.CustomRange, null, null, null, "2", null, @"£unknown - £2.00")]
+        [TestCase(WageType.CustomRange, null, null, "1", null, null, @"£1.00 - £unknown")]
+        [TestCase(WageType.CompetitiveSalary, null, null, null, null, null, WagePresenter.CompetitiveSalaryText)]
+        [TestCase(WageType.ToBeAgreedUponAppointment, null, null, null, null, null, WagePresenter.ToBeAGreedUponAppointmentText)]
+        [TestCase(WageType.Unwaged, null, null, null, null, null, WagePresenter.UnwagedText)]
         public void ShouldGetDisplayText(
-            WageType wageType, string wageText, string wageAmountString, string hoursPerWeekString, string expected)
+            WageType wageType, string wageText, string wageAmountString, string wageLowerString, string wageUpperString, string hoursPerWeekString, string expected)
         {
-            // Arrange.
+            // Arrange.  This is frustrating. You cant use decimal parameters as decimals aren't primitives.
             decimal tempDecimal;
             decimal? wageAmount = null;
+            decimal? wageAmountLower = null;
+            decimal? wageAmountUpper = null;
             decimal? hoursPerWeek = null;
 
             if (decimal.TryParse(wageAmountString, out tempDecimal))
             {
                 wageAmount = tempDecimal;
+            }
+
+            if (decimal.TryParse(wageLowerString, out tempDecimal))
+            {
+                wageAmountLower = tempDecimal;
+            }
+
+            if (decimal.TryParse(wageUpperString, out tempDecimal))
+            {
+                wageAmountUpper = tempDecimal;
             }
 
             if (decimal.TryParse(hoursPerWeekString, out tempDecimal))
@@ -97,7 +115,7 @@
             }
 
             // Act.
-            var actual = WagePresenter.GetDisplayAmount(wageType, wageAmount, wageText, Convert.ToDecimal(hoursPerWeek), null);
+            var actual = WagePresenter.GetDisplayAmount(wageType, wageAmount, wageAmountLower, wageAmountUpper, wageText, Convert.ToDecimal(hoursPerWeek), null);
 
             // Assert.
             actual.Should().Be(expected);
@@ -107,9 +125,12 @@
         [TestCase(WageType.LegacyText, WageUnit.NotApplicable)]
         [TestCase(WageType.ApprenticeshipMinimum, WageUnit.Weekly)]
         [TestCase(WageType.NationalMinimum, WageUnit.Weekly)]
+        [TestCase(WageType.CompetitiveSalary, WageUnit.NotApplicable)]
+        [TestCase(WageType.ToBeAgreedUponAppointment, WageUnit.NotApplicable)]
+        [TestCase(WageType.Unwaged, WageUnit.NotApplicable)]
         public void ShouldGetTheCorrectWageUnitForNonCustomWages(WageType wageType, WageUnit expected)
         {
-            var wage = new Wage(wageType, null, string.Empty, WageUnit.NotApplicable, null);
+            var wage = new Wage(wageType, null, null, null, string.Empty, WageUnit.NotApplicable, null, null);
             // Act.
             var actual = wage.Unit;
 
@@ -123,7 +144,7 @@
         [TestCase(WageUnit.NotApplicable, WageUnit.NotApplicable)]
         public void ShouldGetTheCorrectWageUnitForCustomWages(WageUnit wageUnit, WageUnit expected)
         {
-            var wage = new Wage(WageType.Custom, null, string.Empty, wageUnit, null);
+            var wage = new Wage(WageType.Custom, null, null, null, string.Empty, wageUnit, null, null);
 
             var actual = wage.Unit;
 

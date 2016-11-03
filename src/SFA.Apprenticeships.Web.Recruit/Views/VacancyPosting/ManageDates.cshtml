@@ -20,8 +20,16 @@
     @Html.HiddenFor(m => m.WarningsHash)
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.Wage.Type)
+    @Html.HiddenFor(m => m.Wage.Classification)
+    @Html.HiddenFor(m => m.Wage.CustomType)
+    @Html.HiddenFor(m => m.Wage.PresetText)
     @Html.HiddenFor(m => m.Wage.Amount)
+    @Html.HiddenFor(m => m.Wage.AmountLowerBound)
+    @Html.HiddenFor(m => m.Wage.AmountUpperBound)
     @Html.HiddenFor(m => m.Wage.Unit)
+    @Html.HiddenFor(m => m.Wage.RangeUnit)
+    @Html.HiddenFor(m => m.Wage.WageTypeReason)
+    @Html.HiddenFor(m => m.Wage.HoursPerWeek)
     @Html.HiddenFor(m => m.VacancyDatesViewModel.VacancyStatus)
 
     <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">

@@ -2,6 +2,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
 {
     using AutoMapper;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
 
@@ -20,7 +21,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 LongDescription = source.LongDescription,
                 LongDescriptionComment = source.LongDescriptionComment,
                 VacancyReferenceNumber = source.VacancyReferenceNumber,
-                Wage = new WageViewModel(source.Wage),
+                Wage = context.Engine.Map<Wage, WageViewModel>(source.Wage),
                 WageComment = source.WageComment,
                 WorkingWeek = source.WorkingWeek,
                 WorkingWeekComment = source.WorkingWeekComment,
