@@ -14,6 +14,7 @@
         public VacanciesSummaryFilterTypes FilterType { get; set; }
         public DashboardVacancySummariesMode Mode { get; set; }
         public string Provider { get; set; }
+        public string SearchString { get; set; }
 
         public DashboardVacancySummariesSearchViewModel()
         {
