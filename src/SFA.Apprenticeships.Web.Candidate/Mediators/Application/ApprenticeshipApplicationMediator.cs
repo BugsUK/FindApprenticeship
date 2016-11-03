@@ -410,6 +410,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             {
                 return GetMediatorResponse<MyApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.CandidateApplicationFeedback.Error, null, ApplicationPageMessages.ViewApplicationFailed, UserMessageLevel.Warning);
             }
+
+            apprenticeshipApplication.ProviderDescription = model.ProviderDescription;
+            apprenticeshipApplication.ProviderName = model.ProviderName;
+            apprenticeshipApplication.Contact = model.Contact;
+            apprenticeshipApplication.IsRecruitmentAgencyAnonymous = model.IsRecruitmentAgencyAnonymous;
+            apprenticeshipApplication.RecruitmentAgency = model.RecruitmentAgency;
+            apprenticeshipApplication.IsNasProvider = model.IsNasProvider;
+
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.CandidateApplicationFeedback.Ok, apprenticeshipApplication);
         }
 
