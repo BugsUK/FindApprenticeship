@@ -9,6 +9,7 @@
         public const string OrderByFieldDateSubmitted = "DateSubmitted";
         public const string OrderByFieldClosingDate = "ClosingDate";
         public const string OrderByFieldSubmissionCount = "SubmissionCount";
+        public const string OrderByFieldVacancyLocation = "VacancyLocation";
 
         public VacanciesSummaryFilterTypes FilterType { get; set; }
         public DashboardVacancySummariesMode Mode { get; set; }
@@ -16,7 +17,7 @@
 
         public DashboardVacancySummariesSearchViewModel()
         {
-            
+
         }
 
         public DashboardVacancySummariesSearchViewModel(DashboardVacancySummariesSearchViewModel viewModel) : base(viewModel)

@@ -10,6 +10,7 @@
         Provider,
         DateSubmitted,
         ClosingDate,
-        SubmissionCount
+        SubmissionCount,
+        VacancyLocation
     }
 }

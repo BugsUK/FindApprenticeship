@@ -1137,7 +1137,8 @@
                 QAUserName = vacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = _vacancyLockingService.IsVacancyAvailableToQABy(userName, vacancy),
                 SubmissionCount = vacancy.SubmissionCount,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                Location = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address)
             };
         }
 

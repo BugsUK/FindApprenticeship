@@ -291,6 +291,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                 case VacancySummaryOrderByColumn.SubmissionCount:
                     orderByField = "v.SubmissionCount";
                     break;
+                case VacancySummaryOrderByColumn.VacancyLocation:
+                    orderByField = "v.Town";
+                    break;
             }
 
             if (query.OrderByField == VacancySummaryOrderByColumn.OrderByFilter)
@@ -303,7 +306,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             var sql = $@"{CoreQuery}
 
                     --Text search
-                    WHERE	(((@query IS NULL OR @query = '') {( query.RegionalTeamName != RegionalTeam.Other ? $"AND rt.TeamName = '{query.RegionalTeamName}'" : "" )})
+                    WHERE	(((@query IS NULL OR @query = '') {(query.RegionalTeamName != RegionalTeam.Other ? $"AND rt.TeamName = '{query.RegionalTeamName}'" : "")})
 		                        OR (p.TradingName LIKE '%' + @query + '%')
 		                    )
                     AND     v.VacancyStatusId IN @VacancyStatuses
@@ -384,7 +387,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
         public VacancySummary GetById(int vacancyId)
         {
-            var summary = GetByIds(new[] {vacancyId});
+            var summary = GetByIds(new[] { vacancyId });
 
             return summary.Any() ? summary.Single() : null;
         }
@@ -405,7 +408,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 ";
 
             var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
-            
+
             var mapped = Mapper.Map<IList<DbVacancySummary>, List<VacancySummary>>(vacancies);
 
             return mapped;
