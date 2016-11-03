@@ -60,6 +60,7 @@
         {
             ProviderSiteId,
             FilterType,
+            Id,
             EdsUrn,
             Name,
             Location,

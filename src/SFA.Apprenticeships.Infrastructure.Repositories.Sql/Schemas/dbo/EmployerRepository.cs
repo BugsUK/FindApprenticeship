@@ -61,7 +61,7 @@
 
             if (!string.IsNullOrEmpty(searchParameters.Id))
             {
-                sql += "ProviderId = @Id ";
+                sql += "EmployerId = @Id ";
                 and = "AND ";
             }
             if (!string.IsNullOrEmpty(searchParameters.EdsUrn))
