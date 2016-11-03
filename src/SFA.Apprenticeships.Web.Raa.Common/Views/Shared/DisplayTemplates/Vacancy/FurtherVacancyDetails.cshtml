@@ -134,7 +134,13 @@
                             <fieldset class="nested-panel-2 form-group inline-fixed @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.WageTypeReason))">
                                 @Html.Label(WageViewModelMessages.WageTypeReason.LabelText)
                                 @Html.Label(WageViewModelMessages.WageTypeReason.HelpText, new { @class = "form-hint"})
-                                @Html.FormTextAreaFor(m => m.Wage.WageTypeReason, labelText: null, containerHtmlAttributes: new { @baseClassName = "form-group-compound" }, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText, data_val_regex = Whitelists.FreetextWhitelist.RegularExpression })
+                                @Html.FormTextAreaFor(m => m.Wage.WageTypeReason,
+                               string.Empty,
+                               containerHtmlAttributes: new { @baseClassName = "form-group-compound" },
+                               controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12,
+                                   data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText,
+                                   data_val_length_max = 240,
+                                   data_val_regex = Whitelists.FreetextWhitelist.RegularExpression })
                             </fieldset>
                         </div>
                     </div>

@@ -464,6 +464,7 @@
         public static class WageTypeReason
         {
             public const string RequiredErrorText = "Enter a reason why you need to use a text description";
+            public const string TooLongErrorText = "Your reason must not be more than 240 characters";
         }
     }
 }

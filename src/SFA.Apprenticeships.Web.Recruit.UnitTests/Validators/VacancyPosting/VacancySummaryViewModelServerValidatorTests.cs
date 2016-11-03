@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using System.Text;
     using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
@@ -10,6 +11,7 @@
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
@@ -746,6 +748,50 @@
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 Wage = new WageViewModel() { Classification = WageClassification.PresetText, PresetText = presetText, WageTypeReason = reasonText }
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.WageTypeReason, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.WageTypeReason, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.WageTypeReason, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.WageTypeReason, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.WageTypeReason, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, vm => vm.Wage.WageTypeReason, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.WageTypeReason, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.WageTypeReason, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.WageTypeReason, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vm => vm.FurtherVacancyDetailsViewModel.Wage.WageTypeReason, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
+        [TestCase(0, false)]
+        [TestCase(1, true)]
+        [TestCase(239, true)]
+        [TestCase(240, true)]
+        [TestCase(241, false)]
+        public void ReasonForTypeMustBeBetween1And240characters(int textLength, bool expectValid)
+        {
+            var reasonText = new StringBuilder();
+
+            for (int i = 1; i <= textLength; i++)
+            {
+                reasonText.Append('a');
+            }
+
+            var viewModel = new FurtherVacancyDetailsViewModel
+            {
+                Wage = new WageViewModel() { Classification = WageClassification.PresetText, PresetText = PresetText.CompetitiveSalary, WageTypeReason = reasonText.ToString()}
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
