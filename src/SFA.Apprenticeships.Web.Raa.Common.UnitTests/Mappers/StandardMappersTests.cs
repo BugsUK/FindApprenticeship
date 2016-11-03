@@ -22,7 +22,7 @@
             var viewModel = new StandardViewModel
             {
                 ApprenticeshipLevel = ApprenticeshipLevel.FoundationDegree,
-                ApprenticeshipSectorId = "42",
+                ApprenticeshipSectorId = 42,
                 Name = "Test"
             };
 

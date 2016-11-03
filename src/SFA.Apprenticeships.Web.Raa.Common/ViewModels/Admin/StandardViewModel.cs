@@ -14,7 +14,7 @@
         public string Name { get; set; }
 
         [Display(Name = StandardViewModelMessages.ApprenticeshipSectorId.LabelText)]
-        public string ApprenticeshipSectorId { get; set; }
+        public int ApprenticeshipSectorId { get; set; }
 
         public IEnumerable<SelectListItem> ApprenticeshipSectors { get; set; }
 

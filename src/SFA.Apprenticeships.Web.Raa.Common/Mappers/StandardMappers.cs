@@ -8,10 +8,7 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<StandardSubjectAreaTierOne, StandardViewModel>()
-                .ForMember(dest => dest.ApprenticeshipSectors, opt => opt.Ignore())
-                .ForMember(dest => dest.ApprenticeshipLevels, opt => opt.Ignore())
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            Mapper.CreateMap<StandardViewModel, Standard>();
         }
     }
 }
