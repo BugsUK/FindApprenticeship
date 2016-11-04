@@ -2684,9 +2684,11 @@ ul.applications-summary.bulk-response {
 .close-icon {
   content: "\f057";
   position: absolute;
-  right: 45px;
+  right: 50px;
   top: 10px;
-  z-index: 2; }
+  z-index: 2;
+  color: #BFC1C3;
+  font-size: 16px; }
 
 html {
   font-size: 62.5%;
