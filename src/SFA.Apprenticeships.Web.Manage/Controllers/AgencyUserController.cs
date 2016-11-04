@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System.Security.Claims;
-    using System.Web;
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -12,13 +10,15 @@
     using Constants;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Reference;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Mediators.AgencyUser;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
     using Raa.Common.ViewModels.Vacancy;
-    using Application.Interfaces;
-    using Domain.Raa.Interfaces.Repositories.Models;
+    using System.Security.Claims;
+    using System.Web;
+    using System.Web.Mvc;
     using ViewModels;
 
     public class AgencyUserController : ManagementControllerBase
@@ -143,12 +143,18 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult ChangeTeam(RegionalTeam regionalTeam, VacanciesSummaryFilterTypes filterType, string provider)
+        public ActionResult ChangeTeam(RegionalTeam regionalTeam, VacanciesSummaryFilterTypes filterType, string searchString, ManageVacancySearchMode searchMode)
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
-            _agencyUserMediator.SaveAgencyUser(claimsPrincipal, new AgencyUserViewModel {RegionalTeam = regionalTeam});
+            _agencyUserMediator.SaveAgencyUser(claimsPrincipal, new AgencyUserViewModel { RegionalTeam = regionalTeam });
 
-            return RedirectToRoute(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel {FilterType = filterType, Mode = DashboardVacancySummariesMode.Review, Provider = provider });
+            return RedirectToRoute(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = filterType,
+                Mode = DashboardVacancySummariesMode.Review,
+                SearchString = searchString,
+                SearchMode = searchMode
+            });
         }
     }
 }

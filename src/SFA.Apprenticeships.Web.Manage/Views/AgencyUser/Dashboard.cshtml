@@ -56,7 +56,7 @@
             <div class="grid grid-1-2">
                 <label class="form-label" style="margin-top: 10px">Search your team's vacancies</label>
                 <div class="search-bar">
-                    @Html.DropDownListFor(m => m.AgencyUser.SearchMode, Model.AgencyUser.SearchModes, new { @class = "grey-background" })
+                    @Html.DropDownListFor(m => m.VacancySummaries.SearchViewModel.SearchMode, Model.VacancySummaries.SearchViewModel.SearchModes, new { @class = "grey-background" })
                     <div class="search-input-wrapper">
                         @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.SearchString,
                        new
@@ -81,7 +81,7 @@
                         var dashboardVacancySummariesSearchViewModel = Model.VacancySummaries.SearchViewModel;
                         var reviewTabControlClass = dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Review ? " active" : "";
                         var metricsTabControlClass = dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Metrics ? " active" : "";
-                        var reviewTitle = !string.IsNullOrEmpty(dashboardVacancySummariesSearchViewModel.Provider) ? dashboardVacancySummariesSearchViewModel.Provider + "'s" : Model.AgencyUser.RegionalTeam.GetTitle();
+                        var reviewTitle = !string.IsNullOrEmpty(dashboardVacancySummariesSearchViewModel.SearchString) ? dashboardVacancySummariesSearchViewModel.SearchString + "'s" : Model.AgencyUser.RegionalTeam.GetTitle();
                     }
 
                     @Html.RouteLink(reviewTitle + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Review), new { @class = "tabbed-tab no-js" + reviewTabControlClass })
