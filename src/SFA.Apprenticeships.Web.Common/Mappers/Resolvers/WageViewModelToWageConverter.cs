@@ -30,6 +30,8 @@
                             return WageType.Custom;
                         case CustomWageType.Ranged:
                             return WageType.CustomRange;
+                        case CustomWageType.NotApplicable:
+                            return WageType.Custom;
                         default:
                             throw new InvalidOperationException();
                     }
@@ -49,6 +51,8 @@
                     }
                 case WageClassification.LegacyText:
                     return WageType.LegacyText;
+                case WageClassification.NotApplicable:
+                    return WageType.Custom;
                 default:
                     throw new InvalidOperationException("Cannot determine WageType from this WageClassification.");
             }
