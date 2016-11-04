@@ -1,8 +1,10 @@
-﻿'use strict';
+﻿/// <binding AfterBuild='default' />
+'use strict';
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var gutil = require('gulp-util');
+var copy = require('gulp-copy');
 
 var repo_root = __dirname + '/';
 var govuk_frontend_toolkit_root = repo_root + 'node_modules/govuk_frontend_toolkit/stylesheets'; // 1.
@@ -11,12 +13,12 @@ var govuk_elements_sass_root = repo_root + 'node_modules/govuk-elements-sass/pub
 var buildDir = './build/';
 
 var outputPaths = [
-    '/../SFA.Apprenticeships.Web.Recruit/_assets/',
-    '/../SFA.Apprenticeships.Web.Manage/_assets/',
-    '/../SFA.Apprenticeships.Web.Candidate/_assets/'
-]
+    repo_root + '../SFA.Apprenticeships.Web.Recruit/Content/_assets/',
+    repo_root + '../SFA.Apprenticeships.Web.Manage/Content/_assets/',
+    repo_root + '../SFA.Apprenticeships.Web.Candidate/Content/_assets/'
+];
 
-gutil.log(govuk_frontend_toolkit_root);
+gulp.task('default', ['styles', 'copy']);
 
 // Compile scss files to css
 gulp.task('styles', function () {
@@ -31,11 +33,11 @@ gulp.task('styles', function () {
 });
 
 gulp.task('copy', function() {
-    var pipe = gulp.src(buildDir);
+    var pipe = gulp.src(buildDir + '**/*');
 
     for (var i = 0; i < outputPaths.length; i++) {
-        pipe.pipe($.copy(outputPaths[i], options));
+        pipe.pipe(gulp.dest(outputPaths[i]));
     }
 
     return pipe;
-})
+});

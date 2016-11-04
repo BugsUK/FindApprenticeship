@@ -306,6 +306,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BingSiteAuth.xml" />
+    <Content Include="Content\_assets\css\styles.css" />
     <Content Include="Content\_assets\img\logo-apprenticeships.png" />
     <Content Include="google63f704cde409cb80.html" />
     <Content Include="403.aspx" />
