@@ -57,7 +57,7 @@
             <div class="grid grid-1-2">
                 <div class="search-bar">
                     <label class="form-label" style="margin-top: 10px">Search your team's vacancies</label>
-                    @Html.DropDownListFor(m => m.AgencyUser.SearchMode, Model.AgencyUser.SearchModes)
+                    @Html.DropDownListFor(m => m.AgencyUser.SearchMode, Model.AgencyUser.SearchModes,new {@class="grey-background"})
                     <div class="search-input-wrapper">
                         @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.SearchString, new {title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your vacancies"})
                     </div>
