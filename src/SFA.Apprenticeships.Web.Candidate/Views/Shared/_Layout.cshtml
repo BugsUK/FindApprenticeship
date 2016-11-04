@@ -67,13 +67,15 @@
             <a href="#main" class="skiplink">Skip to main content</a>
         </div>
     </div>
-    <header role="banner" class="global-header">
-        <div class="global-header__wrapper">
-            <div class="global-header__logo">
-                <a href="http://gov.uk" title="Go to the GOV.UK homepage" class="govuk-logo">
-                    <img src="@Url.CdnImage("gov.uk_logotype_crown.png")" alt="Crown">
-                    GOV.UK
-                </a>
+    <header role="banner" id="global-header" class="with-proposition">
+        <div class="header-wrapper">
+            <div class="header-global">
+                <div class="header-logo">
+                    <a href="http://gov.uk" title="Go to the GOV.UK homepage" class="govuk-logo">
+                        <img src="@Url.CdnImage("gov.uk_logotype_crown.png")" alt="Crown">
+                        GOV.UK
+                    </a>
+                </div>
             </div>
             @*@RenderSection("TitleLink", true)*@
             @if (ViewBag.UserJourney == UserJourney.Apprenticeship)
