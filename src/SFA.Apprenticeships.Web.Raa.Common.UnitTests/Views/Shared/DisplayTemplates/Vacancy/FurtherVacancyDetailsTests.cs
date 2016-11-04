@@ -320,7 +320,7 @@
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel() { CustomType = wageType })
+                .With(v => v.Wage, new WageViewModel() { Classification = WageClassification.Custom, CustomType = wageType })
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -347,7 +347,7 @@
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
                 .With(v => v.WageUnits, ApprenticeshipVacancyConverter.GetWageUnits())
-                .With(v => v.Wage, new WageViewModel() { CustomType = CustomWageType.Fixed, Amount = 300, Unit = WageUnit.Weekly})
+                .With(v => v.Wage, new WageViewModel() { Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = 300, Unit = WageUnit.Weekly})
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -370,7 +370,7 @@
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(v => v.Status, VacancyStatus.Draft)
-                .With(v => v.Wage, new WageViewModel() { CustomType = CustomWageType.Ranged, AmountLowerBound = 200, AmountUpperBound = 500, Unit = WageUnit.Weekly })
+                .With(v => v.Wage, new WageViewModel() { Classification = WageClassification.Custom, CustomType = CustomWageType.Ranged, AmountLowerBound = 200, AmountUpperBound = 500, Unit = WageUnit.Weekly })
                 .With(v => v.WageUnits, ApprenticeshipVacancyConverter.GetWageUnits())
                 .Create();
 
