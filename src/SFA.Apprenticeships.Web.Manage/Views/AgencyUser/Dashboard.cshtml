@@ -1,5 +1,4 @@
 ﻿@using SFA.Apprenticeships.Web.Manage.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
@@ -24,7 +23,7 @@
         </div>
         <div class="grid grid-1-2">
             <h2 class="heading-small">Change role</h2>
-            @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new {id = "role", @class = "chosen-select grid grid-1-1"})
+            @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new { id = "role", @class = "chosen-select grid grid-1-1" })
             @if (Model.AgencyUser.RoleId != "QA_advisor")
             {
                 @Html.HiddenFor(m => m.AgencyUser.RegionalTeam)
@@ -46,7 +45,7 @@
             <div class="grid grid-1-2">
                 <h2 class="heading-small">Change team</h2>
                 @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams,
-                    new {id = "regional-team", @class = "chosen-select grid grid-1-1"})
+                    new { id = "regional-team", @class = "chosen-select grid grid-1-1" })
                 <noscript>
                     <button class="button" name="DashboardAction" value="ChangeTeam">Change team</button>
                 </noscript>
@@ -55,18 +54,23 @@
                 &nbsp;
             </div>
             <div class="grid grid-1-2">
+                <label class="form-label" style="margin-top: 10px">Search your team's vacancies</label>
                 <div class="search-bar">
-                    <label class="form-label" style="margin-top: 10px">Search your team's vacancies</label>
-                    @Html.DropDownListFor(m => m.AgencyUser.SearchMode, Model.AgencyUser.SearchModes,new {@class="grey-background"})
+                    @Html.DropDownListFor(m => m.AgencyUser.SearchMode, Model.AgencyUser.SearchModes, new { @class = "grey-background" })
                     <div class="search-input-wrapper">
-                        @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.SearchString, new {title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your vacancies"})
+                        @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.SearchString,
+                       new
+                       {
+                           title = "Search",
+                           placeholder = "Search vacancies",
+                           @class = "form-control",
+                           aria_label = "Search your vacancies"
+                       })
+                        @Html.HiddenFor(m => m.VacancySummaries.SearchViewModel.SearchString)
                     </div>
-                    @Html.HiddenFor(m => m.VacancySummaries.SearchViewModel.SearchString)
-                    <div>
-                        <button id="search-vacancies-button" type="submit" class="button search-btn no-margins" name="SearchVacanciesAction" value="SearchVacancies">
-                            <i class="fa fa-search"></i><span>Search</span>
-                        </button>
-                    </div>
+                    <button type="submit" id="search-vacancies-button-manage" class="search-btn no-margins button" name="DashboardAction" value="SearchVacancies">
+                        <i class="fa fa-search"></i>
+                    </button>                 
                 </div>
             </div>
         </div>
@@ -80,8 +84,8 @@
                         var reviewTitle = !string.IsNullOrEmpty(dashboardVacancySummariesSearchViewModel.Provider) ? dashboardVacancySummariesSearchViewModel.Provider + "'s" : Model.AgencyUser.RegionalTeam.GetTitle();
                     }
 
-                    @Html.RouteLink(reviewTitle + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Review), new {@class = "tabbed-tab no-js" + reviewTabControlClass})
-                    @Html.RouteLink("All teams", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Metrics), new {@class = "tabbed-tab no-js" + metricsTabControlClass})
+                    @Html.RouteLink(reviewTitle + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Review), new { @class = "tabbed-tab no-js" + reviewTabControlClass })
+                    @Html.RouteLink("All teams", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Metrics), new { @class = "tabbed-tab no-js" + metricsTabControlClass })
                 </nav>
             </div>
         </div>
@@ -97,13 +101,13 @@
                 @Html.Partial("_DashboardTeamMetrics", Model)
             }
         </div>
-    }
+                        }
 
-    if (Model.AgencyUser.RoleId == "Helpdesk_advisor")
-    {
-        @Html.Partial("_DashboardHelpDesk")
-    }
-}
+                        if (Model.AgencyUser.RoleId == "Helpdesk_advisor")
+                        {
+                            @Html.Partial("_DashboardHelpDesk")
+                            }
+                        }
 
 <div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
     Loading
