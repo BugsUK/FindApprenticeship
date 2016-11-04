@@ -408,6 +408,7 @@
     <None Include="Content\scss\_components.scss" />
     <None Include="Content\scss\_ie8-hacks.scss" />
     <None Include="Content\scss\_modules.scss" />
+    <None Include="package.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -417,6 +418,7 @@
     <Content Include="Content\scss\main.min.css">
       <DependentUpon>main.css</DependentUpon>
     </Content>
+    <Content Include="gulpfile.js" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Date.generated.cs</LastGenOutput>
