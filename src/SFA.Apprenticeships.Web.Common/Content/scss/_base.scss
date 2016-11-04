@@ -154,3 +154,12 @@ input[type="search"]::-webkit-search-decoration {
  .select2-container .select2-choice{
      background:#F8F8F8
  }
+
+ .close-icon{
+     content:"\f057";
+     position: absolute;
+    right: 45px;
+    top: 10px;
+    z-index: 2;
+ }
+
