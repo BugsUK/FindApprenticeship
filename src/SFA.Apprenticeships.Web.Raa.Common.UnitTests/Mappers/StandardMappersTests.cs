@@ -39,6 +39,20 @@
         public void DomainToViewModelMapperTest()
         {
             //TODO: Test the reverse of above
+            var model = new Standard
+            {
+                ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
+                ApprenticeshipSectorId = 23,
+                Name = "Test"
+            };
+
+            var mapper = new StandardMappers();
+
+            var standard = mapper.Map<Standard, StandardViewModel>(model);
+
+            standard.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Advanced);
+            standard.ApprenticeshipSectorId.Should().Be(23);
+            standard.Name.Should().Be("Test");
         }
     }
 }

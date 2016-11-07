@@ -19,7 +19,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         [Required]
         public string FullName { get; set; }
 
-        [Required]
         public int LarsCode { get; set; }
 
         [Required]

@@ -22,5 +22,7 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public List<SelectListItem> ApprenticeshipLevels { get; set; }
+
+        public int LarsCode { get; set; }
     }
 }

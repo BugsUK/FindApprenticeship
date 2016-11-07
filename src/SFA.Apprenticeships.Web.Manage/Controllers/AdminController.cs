@@ -494,13 +494,22 @@
 
                 ApprenticeshipLevels = new List<SelectListItem>
                 {
-                    new SelectListItem {Value = ApprenticeshipLevel.Intermediate.ToString(), Text = "Intermediate"},
-                    new SelectListItem {Value = ApprenticeshipLevel.Advanced.ToString(), Text = "Advanced"},
-                    new SelectListItem {Value = ApprenticeshipLevel.Higher.ToString(), Text = "Higher"},
-                    new SelectListItem {Value = ApprenticeshipLevel.FoundationDegree.ToString(), Text = "Foundation Degree"},
-                    new SelectListItem {Value = ApprenticeshipLevel.Degree.ToString(), Text = "Degree"},
-                    new SelectListItem {Value = ApprenticeshipLevel.Masters.ToString(), Text = "Masters"}
-                }
+                    //new SelectListItem {Value = ApprenticeshipLevel.Intermediate.ToString(), Text = "Intermediate"},
+                    //new SelectListItem {Value = ApprenticeshipLevel.Advanced.ToString(), Text = "Advanced"},
+                    //new SelectListItem {Value = ApprenticeshipLevel.Higher.ToString(), Text = "Higher"},
+                    //new SelectListItem {Value = ApprenticeshipLevel.FoundationDegree.ToString(), Text = "Foundation Degree"},
+                    //new SelectListItem {Value = ApprenticeshipLevel.Degree.ToString(), Text = "Degree"},
+                    //new SelectListItem {Value = ApprenticeshipLevel.Masters.ToString(), Text = "Masters"}
+
+                    new SelectListItem {Value = "11", Text = "Intermediate"},
+                    new SelectListItem {Value = "12", Text = "Advanced"},
+                    new SelectListItem {Value = "13", Text = "Higher"},
+                    new SelectListItem {Value = "14", Text = "Foundation Degree"},
+                    new SelectListItem {Value = "15", Text = "Degree"},
+                    new SelectListItem {Value = "16", Text = "Masters"}
+                },
+
+                LarsCode = 0
             };
 
             return View(viewModel);

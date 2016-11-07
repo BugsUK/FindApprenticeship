@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
-
+    using Entities;
     using Infrastructure.Common.Mappers;
     using DomainFramework = Domain.Entities.Raa.Reference.Framework;
     using DomainOccupation = Domain.Entities.Raa.Reference.Occupation;
     using DomainSector = Domain.Entities.Raa.Vacancies.Sector;
+    using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceMappers : MapperEngine
     {
@@ -35,6 +36,14 @@
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ApprenticeshipOccupationId))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.ApprenticeshipOccupationStatusTypeId))
                 .ForMember(dest => dest.Frameworks, opt => opt.Ignore());
+            Mapper.CreateMap<Standard, Entities.Standard>()
+                .ForMember(dest => dest.EducationLevelId, opt => opt.MapFrom(src => (int) src.ApprenticeshipLevel))
+                .ForMember(dest => dest.StandardSectorId, opt => opt.MapFrom(src => src.ApprenticeshipSectorId))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Name));
+            Mapper.CreateMap<Entities.Standard, Standard>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(dest => dest.ApprenticeshipSectorId, opt => opt.MapFrom(src => src.StandardSectorId))
+                .ForMember(dest => (int)dest.ApprenticeshipLevel, opt => opt.MapFrom(src => src.EducationLevelId));
         }
     }
 }

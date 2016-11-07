@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Raa.Reference;
@@ -17,6 +18,7 @@
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
+        private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
         public ReferenceRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
         {
@@ -168,7 +170,14 @@
 
         public Standard CreateStandard(Standard standard)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
+            _logger.Info("Creating new Standard");
+
+            var dbStandard = MapStandard(standard);
+
+            _getOpenConnection.Insert(dbStandard);
+
+            return null;
         }
 
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()
@@ -221,6 +230,18 @@
             _logger.Debug("Got all education levels");
 
             return levels;
+        }
+
+        private Entities.Standard MapStandard(Standard standard)
+        {
+            return _mapper.Map<Standard, Entities.Standard>(standard);
+        }
+
+        private Standard MapStandard(Entities.Standard provider)
+        {
+            return provider == null
+                ? null
+                : _mapper.Map<Entities.Standard, Standard>(provider);
         }
     }
 }
