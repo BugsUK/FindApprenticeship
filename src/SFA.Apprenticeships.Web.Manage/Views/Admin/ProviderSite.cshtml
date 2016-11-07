@@ -80,7 +80,7 @@
                             @Html.DropDownList("ProviderSiteRelationships[" + i + "].ProviderSiteRelationshipType", EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes), providerSiteRelationship.ProviderSiteRelationshipType))
                         </td>
                         <td>
-                            @Html.RouteLink("Delete", ManagementRouteNames.AdminDeleteProviderSiteRelationship)
+                            @Html.RouteLink("Delete", ManagementRouteNames.AdminDeleteProviderSiteRelationship, new { providerSiteRelationship.ProviderSiteRelationshipId })
                         </td>
                     </tr>
                 }

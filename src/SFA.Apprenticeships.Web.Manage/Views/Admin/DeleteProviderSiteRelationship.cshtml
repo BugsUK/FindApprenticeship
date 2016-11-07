@@ -7,7 +7,7 @@
 
 <h1 id="heading" class="heading-xlarge">Confirm Delete Provider Site Relationship</h1>
 
-<p>Are you sure you want to delete the provider site relationship between @Model.ProviderFullName (@Model.ProviderTradingName) and @Model.ProviderSiteFullName (@Model.ProviderSiteTradingName) ? </p>
+<p>Are you sure you want to delete the @Model.ProviderSiteRelationshipType provider site relationship between @Model.ProviderFullName (@Model.ProviderTradingName) and @Model.ProviderSiteFullName (@Model.ProviderSiteTradingName) ? </p>
 
 @using (Html.BeginRouteForm(ManagementRouteNames.AdminDeleteProviderSiteRelationship))
 {
@@ -18,6 +18,6 @@
 
     <div class="form-group">
         <button id="delete-provider-site-relationship-button" type="submit" class="button" name="ConfirmDeleteProviderSiteRelationshipAction" value="ConfirmDeleteProviderSiteRelationship">Delete</button>
-        @Html.RouteLink("Cancel", ManagementRouteNames.AdminEditProviderSite, new { providerSiteId = Model.ProviderSiteId })
+        @Html.RouteLink("Cancel", ManagementRouteNames.AdminViewProviderSite, new { providerSiteId = Model.ProviderSiteId })
     </div>
 }

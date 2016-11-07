@@ -15,6 +15,8 @@
         IEnumerable<ProviderSite> GetByProviderId(int providerId);
 
         IEnumerable<ProviderSite> Search(ProviderSiteSearchParameters searchParameters);
+
+        ProviderSiteRelationship GetProviderSiteRelationship(int providerSiteRelationshipId);
     }
 
     public interface IProviderSiteWriteRepository

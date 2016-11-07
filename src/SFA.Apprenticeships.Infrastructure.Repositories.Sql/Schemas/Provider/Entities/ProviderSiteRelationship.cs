@@ -14,5 +14,9 @@
         public string ProviderFullName { get; set; }
         [Write(false)]
         public string ProviderTradingName { get; set; }
+        [Write(false)]
+        public string ProviderSiteFullName { get; set; }
+        [Write(false)]
+        public string ProviderSiteTradingName { get; set; }
     }
 }

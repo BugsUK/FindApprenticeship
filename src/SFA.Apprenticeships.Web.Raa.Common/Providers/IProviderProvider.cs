@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
@@ -25,5 +24,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         ProviderSiteViewModel CreateProviderSite(ProviderSiteViewModel viewModel);
         ProviderSiteViewModel SaveProviderSite(ProviderSiteViewModel viewModel);
         ProviderSiteViewModel CreateProviderSiteRelationship(ProviderSiteViewModel viewModel, int providerId);
+        ProviderSiteRelationshipViewModel GetProviderSiteRelationshipViewModel(int providerSiteRelationshipId);
     }
 }

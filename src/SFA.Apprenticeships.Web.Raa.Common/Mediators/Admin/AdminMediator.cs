@@ -180,6 +180,13 @@
             }
         }
 
+        public MediatorResponse<ProviderSiteRelationshipViewModel> GetProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            var viewModel = _providerProvider.GetProviderSiteRelationshipViewModel(providerSiteRelationshipId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetProviderSiteRelationship.Ok, viewModel);
+        }
+
         public MediatorResponse<ProviderSiteViewModel> CreateProviderSiteRelationship(ProviderSiteViewModel viewModel)
         {
             var existingViewModel = _providerProvider.GetProviderSiteViewModel(viewModel.ProviderSiteId);
@@ -211,6 +218,11 @@
                 _logService.Error($"Failed to create provider site relationship for provider site with id={viewModel.ProviderSiteId}", ex);
                 return GetMediatorResponse(AdminMediatorCodes.CreateProviderSiteRelationship.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipCreationError, UserMessageLevel.Error);
             }
+        }
+
+        public MediatorResponse<ProviderSiteRelationshipViewModel> DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            throw new NotImplementedException();
         }
 
         public MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel)

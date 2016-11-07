@@ -243,6 +243,11 @@
             return _providerSiteWriteRepository.Update(providerSite);
         }
 
+        public ProviderSiteRelationship GetProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            return _providerSiteReadRepository.GetProviderSiteRelationship(providerSiteRelationshipId);
+        }
+
         public ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship)
         {
             return _providerSiteWriteRepository.Create(providerSiteRelationship);

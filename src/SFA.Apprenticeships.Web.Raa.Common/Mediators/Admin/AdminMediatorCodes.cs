@@ -52,6 +52,12 @@
             public const string Ok = "AdminMediatorCodes.SaveProviderSite.Ok";
         }
 
+        public class GetProviderSiteRelationship
+        {
+            public const string Error = "AdminMediatorCodes.GetProviderSiteRelationship.Error";
+            public const string Ok = "AdminMediatorCodes.GetProviderSiteRelationship.Ok";
+        }
+
         public class CreateProviderSiteRelationship
         {
             public const string FailedValidation = "AdminMediatorCodes.CreateProviderSiteRelationship.FailedValidation";

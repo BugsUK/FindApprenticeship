@@ -259,9 +259,9 @@
         [HttpGet]
         public ActionResult DeleteProviderSiteRelationship(int providerSiteRelationshipId)
         {
-            //ProviderSiteRelationshipViewModel
+            var response = _adminMediator.GetProviderSiteRelationship(providerSiteRelationshipId);
 
-            return View();
+            return View(response.ViewModel);
         }
 
         [HttpGet]
