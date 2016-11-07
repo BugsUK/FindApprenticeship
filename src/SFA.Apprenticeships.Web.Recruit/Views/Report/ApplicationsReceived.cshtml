@@ -28,7 +28,7 @@
             @Html.ValidationMessageFor(m => m.ToDate)
         </fieldset>
 
-        <div class="grid grid-1-2">
+        <div class="grid-row grid-1-2">
             <button id="ValidateReportParameters" type="submit" class="button" name="ApplicationsReceived" value="ValidateApplicationsReceived">Export CSV</button>
             @if (Model.IsValid)
             {

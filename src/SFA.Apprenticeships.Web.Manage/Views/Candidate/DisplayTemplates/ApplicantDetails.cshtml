@@ -2,7 +2,7 @@
 
 <section class="section-border grid-wrapper">
     <h2 class="heading-large">Your details</h2>
-    <div class="grid grid-1-2">
+    <div class="grid-row grid-1-2">
         <div class="form-group">
             <p class="form-label">Full name</p>
             <span id="candidate-fullname" class="form-prepopped">@Model.Name</span>
@@ -38,7 +38,7 @@
             </ul>
         </div>
     </div>
-    <div class="grid grid-1-2">
+    <div class="grid-row grid-1-2">
         <div class="form-group">
             <p class="form-label">Email address</p>
             @Html.HiddenFor(m => m.EmailAddress)

@@ -8,14 +8,14 @@
 
 <div id="categories" class="form-group tabbed-element browsetab @divClass">
     <span class="form-label" id="categoryLabelTour">Browse by category</span>
-    <div class="grid-wrapper">
+    <div class="grid-row">
         @{
             if (Model.Categories != null && Model.Categories.Any())
             {
                 var categories = Model.Categories.ToList();
                 var categorySplitCount = categories.Count/2 + categories.Count%2;
 
-                <div class="grid grid-1-2">
+                <div class="grid-row grid-1-2">
                     <div class="inner-block-padr">
                         <ul id="category-list-left" class="font-xsmall list-text list-checkradio">
                             @for (var i = 0; i < categorySplitCount; i++)
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-1-2">
+                <div class="grid-row grid-1-2">
                     <ul id="category-list-right" class="font-xsmall list-text list-checkradio">
                         @for (var i = categorySplitCount; i < categories.Count; i++)
                         {

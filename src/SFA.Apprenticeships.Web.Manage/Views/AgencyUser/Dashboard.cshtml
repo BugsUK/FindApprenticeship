@@ -13,15 +13,15 @@
 }
 @using (Html.BeginForm(null, "AgencyUser", FormMethod.Post))
 {
-    <div class="grid-wrapper">
-        <div class="grid grid-1-2">
+    <div class="grid-row">
+        <div class="grid-row grid-1-2">
             <div class="inner-block-padr">
                 <h1 class="heading-xlarge">
                     Agency home
                 </h1>
             </div>
         </div>
-        <div class="grid grid-1-2">
+        <div class="grid-row grid-1-2">
             <label class="form-label">Change role</label>
             @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new {id = "role", @class = "chosen-select grid grid-1-1"})
             @if (Model.AgencyUser.RoleId != "QA_advisor")
@@ -36,25 +36,25 @@
 
     if (Model.AgencyUser.RoleId == "QA_advisor")
     {
-        <div class="grid-wrapper">
-            <div class="grid grid-1-2">
+        <div class="grid-row">
+            <div class="grid-row grid-1-2">
                 <h2 class="heading-medium">
                     Review vacancies
                 </h2>
             </div>
-            <div class="grid grid-1-2">
+            <div class="grid-row grid-1-2">
                 <label class="form-label">Change team</label>
                 @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams, new {id = "regional-team", @class = "chosen-select grid grid-1-1"})
                 <noscript>
                     <button class="button" name="DashboardAction" value="ChangeTeam">Change team</button>
                 </noscript>
             </div>
-            <div class="grid grid-1-2">
+            <div class="grid-row grid-1-2">
                 &nbsp;
             </div>
-            <div class="grid grid-1-2">
+            <div class="grid-row grid-1-2">
                 <label class="form-label" style="margin-top: 10px">Provider</label>
-                @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.Provider, new { @class = "grid grid-1-1" })
+                @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.Provider, new { @class = "grid-row grid-1-1" })
                 @Html.HiddenFor(m => m.VacancySummaries.SearchViewModel.Mode)
                 <div>
                     @Html.RouteLink("Clear", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(), new {@class = "button-link", style = "padding-top: 17px; margin-bottom: 0" })
@@ -63,8 +63,8 @@
             </div>
         </div>
 
-        <div class="grid-wrapper">
-            <div class="grid grid-1-1">
+        <div class="grid-row">
+            <div class="grid-row grid-1-1">
                 <nav class="tabbed-nav">
                     @{
                         var dashboardVacancySummariesSearchViewModel = Model.VacancySummaries.SearchViewModel;

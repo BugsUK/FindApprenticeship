@@ -7,8 +7,8 @@
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-2">
+<div class="grid-row">
+    <div class="grid-row grid-1-2">
         @using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post))
         {
             @Html.AntiForgeryToken();
@@ -46,7 +46,7 @@
             </div>
         }
     </div>
-    <div class="grid grid-1-2">
+    <div class="grid-row grid-1-2">
         <h2 class="heading-large">New to this service?</h2>
         <div class="text">
             <p>

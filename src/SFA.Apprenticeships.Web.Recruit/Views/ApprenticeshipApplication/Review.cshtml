@@ -39,23 +39,23 @@
             </p>
         </div>
     }
-    <div class="grid-wrapper hgroup">
-        <div class="grid-2-3 grid">
+    <div class="grid-row hgroup">
+        <div class="column-two-thirds grid">
             <h1 class="heading-xlarge med-btm-margin">@Model.Vacancy.Title</h1>
             <p class="subtitle">@Model.Vacancy.EmployerName</p>
         </div>
-        <div class="grid grid-1-3">
+        <div class="grid-row column-one-third">
             <div class="page-link hide-nojs">
                 <p>
                     <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
                 </p>
             </div>
         </div>
-        <div class="grid-wrapper">
-            <div class="grid grid-2-3">
+        <div class="grid-row">
+            <div class="grid-row column-two-thirds">
                 @Html.DisplayFor(m => m.ApplicantDetails, ApplicantDetailsViewModel.PartialView)
             </div>
-            <div class="grid grid-1-3">
+            <div class="grid-row column-one-third">
             </div>
         </div>
         @Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)

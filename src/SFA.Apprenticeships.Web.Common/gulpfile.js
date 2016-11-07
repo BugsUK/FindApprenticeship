@@ -18,7 +18,7 @@ var outputPaths = [
     repo_root + '../SFA.Apprenticeships.Web.Candidate/Content/_assets/'
 ];
 
-gulp.task('default', ['styles', 'copy']);
+gulp.task('default', ['styles', 'merge-base', 'copy']);
 
 // Compile scss files to css
 gulp.task('styles', function () {
@@ -30,6 +30,15 @@ gulp.task('styles', function () {
           ]
       }).on('error', sass.logError))
       .pipe(gulp.dest(buildDir + 'css'));
+});
+
+gulp.task('merge-base', function() {
+    gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/images/**/*')
+        .pipe(gulp.dest(buildDir + 'img'));
+    gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/stylesheets/**/*')
+        .pipe(gulp.dest(buildDir + 'css'));
+    return gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/javascripts/**/*')
+        .pipe(gulp.dest(buildDir + 'js'));
 });
 
 gulp.task('copy', function() {

@@ -23,7 +23,7 @@
             @if (Model.NewVacancyViewModel.OfflineVacancyType == OfflineVacancyType.MultiUrl && Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count > 1)
             {
                 var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1) / 2;
-                <div class="grid grid-1-2">
+                <div class="grid-row grid-1-2">
                     <div class="inner-block-padr">
                         <table>
                             <thead>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-1-2">
+                <div class="grid-row grid-1-2">
                     <table>
                         <thead>
                             <tr>

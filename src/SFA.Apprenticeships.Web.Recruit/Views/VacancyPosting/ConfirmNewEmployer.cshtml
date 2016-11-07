@@ -7,7 +7,7 @@
     ViewBag.Title = "Recruit an Apprentice - Add employer information";
 }
 
-<div class="grid-wrapper">
+<div class="grid-row">
     <div class="hgroup">
         <h1 class="heading-xlarge">
             Add employer information
@@ -19,7 +19,7 @@
 {
     @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
 
-    <div class="grid grid-1-1">
+    <div class="grid-row grid-1-1">
         <button class="button">Save description and link to employer</button>
         @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectNewEmployer, new { providerSiteErn = Model.ProviderSiteId, edsUrn = Model.Employer.EdsUrn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview })
     </div>

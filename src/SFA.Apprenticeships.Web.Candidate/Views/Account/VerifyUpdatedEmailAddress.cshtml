@@ -4,11 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-2">
+<div class="grid-row">
+    <div class="grid-row grid-1-2">
         <h1 class="heading-xlarge">Verify your email address</h1>
     </div>
-    <div class="grid grid-1-2">
+    <div class="grid-row grid-1-2">
         <p>
             @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
         </p>

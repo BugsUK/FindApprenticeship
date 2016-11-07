@@ -10,14 +10,14 @@
 }
 
 <div itemscope itemtype="http://schema.org/JobPosting">
-    <div class="grid-wrapper">
-        <div class="grid grid-2-3">
+    <div class="grid-row">
+        <div class="grid-row column-two-thirds">
             <div class="hgroup text">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.Title)</h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
             </div>
         </div>
-        <div class="grid grid-1-3">
+        <div class="grid-row column-one-third">
             @if (ViewBag.SearchReturnUrl != null)
             {
                 <a href="@ViewBag.SearchReturnUrl" title="Return to search results" class="page-link" id="lnk-return-search-results">Return to search results</a>
@@ -35,25 +35,25 @@
     @if (!Model.HasError())
     {
         <section class=" grid-wrapper">
-            <div class="grid grid-2-3">
+            <div class="grid-row column-two-thirds">
                 <div class="inner-block-padr">
                     <p class="@Model.Description.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description))</p>
                 </div>
             </div>
-            <div class="grid grid-1-3">
+            <div class="grid-row column-one-third">
                 @Html.Partial("_Apply", Model, new ViewDataDictionary() { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top") })
             </div>
         </section>
         <section class="section-border grid-wrapper">
             <h2 class="heading-large">Traineeship details</h2>
-            <div class="grid grid-2-3">
+            <div class="grid-row column-two-thirds">
                 <div class="inner-block-padr">
                     <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription))</p>
                     <h3 class="heading-medium">Training to be provided</h3>
                     <p class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided))</p>
                 </div>
             </div>
-            <div class="grid grid-1-3">
+            <div class="grid-row column-one-third">
                 @if (!Model.IsEmployerAnonymous)
                 {
                     <h3 class="bold-small">Training provider</h3>
@@ -90,8 +90,8 @@
         </section>
         <section class="section-border grid-wrapper" id="vacancy-info">
             <h2 class="heading-large">Employer</h2>
-            <div class="grid-wrapper">
-                <div class="grid grid-1-2">
+            <div class="grid-row">
+                <div class="grid-row grid-1-2">
                     <div class="inner-block-padr">
                         <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
                         @if (Model.IsWellFormedEmployerWebsiteUrl)
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-1-2 hide-print">
+                <div class="grid-row grid-1-2 hide-print">
                     <div class="ad-details__map">
                         <div class="map-overlay" onclick="style.pointerEvents = 'none'"></div>
                         <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
@@ -125,7 +125,7 @@
 
                 @if (!string.IsNullOrWhiteSpace(Model.AdditionalLocationInformation))
                 {
-                    <div class="grid text">
+                    <div class="grid-rowtext">
                         <p></p>
                         <h3 class="bold-small">
                             Additional location information
@@ -152,7 +152,7 @@
 
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {
-            <section class="grid-wrapper">
+            <section class="grid-row">
                 <div class="text">
                     <h2 class="heading-large">Other information</h2>
                     <p id="vacany-other-information" class="@Model.OtherInformation.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.OtherInformation))</p>

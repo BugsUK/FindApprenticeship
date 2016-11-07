@@ -54,10 +54,10 @@ else
             </li>
         }
     </ul>
-    <div class="grid-wrapper proto-dashboard">
+    <div class="grid-row proto-dashboard">
         @if (Model.SuccessfulApprenticeshipApplications.Any() || Model.UnsuccessfulApplications.Any() || Model.SubmittedApprenticeshipApplications.Any())
         {
-            <div class="grid grid-1-2">
+            <div class="grid-row grid-1-2">
                 <div class="inner-block-padr">
                     <section class="clearfix">
                         @if (Model.SuccessfulApprenticeshipApplications.Any())
@@ -207,7 +207,7 @@ else
                     Model.DraftApprenticeshipApplications.Any() ||
                     Model.CandidateTraineeshipApplications.Any())
         {
-            <div class="grid grid-1-2">
+            <div class="grid-row grid-1-2">
                 <section class="clearfix">
                     @if (Model.DraftApprenticeshipApplications.Any())
                     {

@@ -16,7 +16,7 @@
     var searchPerformed = ViewData.ModelState.IsValid && ( !string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected));
 }
 
-<div class="grid-wrapper">
+<div class="grid-row">
     <div class="hgroup">
         <h1 class="heading-xlarge">
             Link to a new employer
@@ -49,7 +49,7 @@
         <p>Search for an employer</p>
         @if (!(searchPerformed && noResults))
         {
-            <div class="panel-indent grid grid-2-3">
+            <div class="panel-indent grid column-two-thirds">
                 If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN
             </div>
         }
@@ -110,7 +110,7 @@
                 var resultsMessage = Model.Employers.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.Employers.ResultsCount) : "Found one employer";
             }
             <h2 class="heading-small">@resultsMessage</h2>
-            <div class="grid grid-3-3">
+            <div class="grid-row grid-3-3">
                 <table>
                     <colgroup>
                         <col class="t30">

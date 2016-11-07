@@ -6,7 +6,7 @@
 {
     @Html.DisplayFor(m => m, VacancyQuestionsViewModel.PartialView)
 
-    <div class="grid grid-1-2">
+    <div class="grid-row grid-1-2">
         <button type="submit" class="button">Save</button>
         @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
     </div>

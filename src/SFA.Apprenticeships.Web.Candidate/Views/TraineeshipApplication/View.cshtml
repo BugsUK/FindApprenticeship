@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="grid-wrapper">
-    <div class="grid grid-2-3">
+<div class="grid-row">
+    <div class="grid-row column-two-thirds">
         <h1 class="heading-xlarge">Your application</h1>
     </div>
-    <div class="grid grid-1-3">
+    <div class="grid-row column-one-third">
         <div class="page-link hide-nojs">
             <p>
                 <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
@@ -18,15 +18,15 @@
     </div>
 </div>
 
-<div class="grid-wrapper">
-    <div class="grid grid-2-3">
+<div class="grid-row">
+    <div class="grid-row column-two-thirds">
         <div class="hgroup-medium">
             <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
             <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
         </div>
         <p class="text" id="vacancy-summary">@Model.VacancyDetail.Description</p>
     </div>
-    <div class="grid grid-1-3 para-btm-margin">
+    <div class="grid-row column-one-third para-btm-margin">
         <p class="small-btm-margin">This is your submitted application.</p>
         <p class="small-btm-margin">
             You applied on @Html.DisplayFor(m => m.DateApplied, "Date").
