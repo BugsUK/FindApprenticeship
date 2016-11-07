@@ -120,11 +120,16 @@
                     <div class="search-bar">
                         @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchMode, Model.VacanciesSummary.VacanciesSummarySearch.SearchModes)
                         <div class="search-input-wrapper">
-                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your " + vacanciesLabel})
+                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new { title = "Search", placeholder = "Search vacancies", @class = "form-control", aria_label = "Search your " + vacanciesLabel })
                         </div>
                         @if (!string.IsNullOrEmpty(searchString))
                         {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null).RouteValues)" class="vacancy-filter reset-search"><i class="fa fa-crosshairs" aria-hidden="true"></i><span>Reset search</span></a>
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome,
+                                         new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null)
+                                             .RouteValues)" class="vacancy-filter reset-search close-icon">
+                                <i class="fa fa-times-circle" aria-hidden="true">
+                                </i><span>Reset search</span>
+                            </a>
                         }
                         <button id="search-vacancies-button" type="submit" class="button search-btn no-margins" name="SearchVacanciesAction" value="SearchVacancies">
                             <i class="fa fa-search"></i><span>Search</span>

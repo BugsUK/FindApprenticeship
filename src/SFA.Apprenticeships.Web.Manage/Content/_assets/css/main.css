@@ -2678,6 +2678,18 @@ ul.applications-summary.bulk-response {
 .three-column li {
   float: left; }
 
+.select2-container .select2-choice {
+  background: #F8F8F8; }
+
+.close-icon {
+  content: "\f057";
+  position: absolute;
+  right: 50px;
+  top: 10px;
+  z-index: 2;
+  color: #BFC1C3;
+  font-size: 16px; }
+
 html {
   font-size: 62.5%;
   /* 1 */ }
@@ -4211,30 +4223,6 @@ input::-webkit-inner-spin-button {
 .verified {
   color: #28a197; }
 
-label.vertically-stacked {
-    display: block;
-    float: left;
-    clear: left;
-}
-
-div.nested-panel-1 {
-    clear: both;
-    background: #ffffff;
-    border-left: 3px solid #999999;
-    box-sizing: content-box;
-    margin-left: 0px;
-}
-
-fieldset.nested-panel-2 {
-    margin-left: 10px;
-}
-
-.wage-reason-display {
-    background: #ffffff;
-    border-left: 3px solid #999999;
-    padding: 10px;
-}
-
 .block-label {
   background: #ecedee;
   border: 1px solid #dee0e2;
@@ -4352,17 +4340,31 @@ fieldset.nested-panel-2 {
 .search-bar {
   overflow: hidden;
   position: relative; }
+  .search-bar select {
+    position: absolute;
+    left: 0px;
+    width: 75px;
+    height: 38px; }
   .search-bar .search-input-wrapper {
     float: left;
     box-sizing: border-box;
+    padding-left: 74px;
     padding-right: 47px;
     width: 100%; }
-    .search-bar .search-input-wrapper input[type="search"] {
+    .search-bar .search-input-wrapper input[type="text"] {
       padding-top: 7px;
       padding-bottom: 4px;
       padding-left: 7px;
       box-sizing: border-box;
       width: 100%; }
+  .search-bar .reset-search {
+    position: absolute;
+    overflow: hidden;
+    right: 53px;
+    top: 8px; }
+    .search-bar .reset-search span {
+      position: absolute;
+      left: -5000px; }
   .search-bar .search-btn {
     position: absolute;
     overflow: hidden;
@@ -5574,6 +5576,9 @@ details summary:focus {
 
 .lrg-btm-margin {
   margin-bottom: 20px; }
+
+.xlrg-btm-margin {
+  margin-bottom: 50px; }
 
 .small-top-padding {
   padding-top: 5px; }

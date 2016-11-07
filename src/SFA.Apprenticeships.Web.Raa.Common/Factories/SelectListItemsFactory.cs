@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Factories
 {
+    using Domain.Raa.Interfaces.Repositories.Models;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Domain.Raa.Interfaces.Repositories.Models;
 
     public class SelectListItemsFactory
     {
@@ -26,6 +26,16 @@
                 new SelectListItem {Value = "VacancyTitle", Text = "Vacancy Title", Selected = searchMode == VacancySearchMode.VacancyTitle},
                 new SelectListItem {Value = "EmployerName", Text = "Employer Name", Selected = searchMode == VacancySearchMode.EmployerName},
                 new SelectListItem {Value = "Postcode", Text = "Postcode", Selected = searchMode == VacancySearchMode.Postcode},
+            };
+        }
+
+        public static List<SelectListItem> GetManageSearchModes(ManageVacancySearchMode searchMode)
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem {Value = "All", Text = "All", Selected = searchMode == ManageVacancySearchMode.All},
+                new SelectListItem {Value = "Provider", Text = "Provider", Selected = searchMode == ManageVacancySearchMode.Provider},
+                new SelectListItem {Value = "VacancyPostcode", Text = "Vacancy postcode", Selected = searchMode == ManageVacancySearchMode.VacancyPostcode}
             };
         }
     }

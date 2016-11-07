@@ -993,7 +993,8 @@
                 RequestedPage = 1,
                 Filter = searchViewModel.FilterType,
                 OrderByField = orderByField,
-                SearchString = searchViewModel.Provider,
+                SearchString = searchViewModel.SearchString,
+                SearchMode = searchViewModel.SearchMode,
                 DesiredStatuses = new[] { VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
                 Order = searchViewModel.Order,
                 RegionalTeamName = regionalTeam
@@ -1004,7 +1005,7 @@
 
             var regionalTeamsMetrics = _vacancyPostingService.GetRegionalTeamsMetrics(query);
 
-            if (string.IsNullOrEmpty(searchViewModel.Provider) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
+            if (string.IsNullOrEmpty(searchViewModel.SearchString) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
             {
                 //No vacancies for current team selection. Redirect to metrics
                 searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
@@ -1012,7 +1013,7 @@
 
             RegionalTeamMetrics currentTeamMetrics = null;
 
-            if (string.IsNullOrEmpty(searchViewModel.Provider))
+            if (string.IsNullOrEmpty(searchViewModel.SearchString))
             {
                 currentTeamMetrics = regionalTeamsMetrics.SingleOrDefault(s => s.RegionalTeam == regionalTeam);
             }
@@ -1140,7 +1141,8 @@
                 QAUserName = vacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = _vacancyLockingService.IsVacancyAvailableToQABy(userName, vacancy),
                 SubmissionCount = vacancy.SubmissionCount,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                Location = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address)
             };
         }
 

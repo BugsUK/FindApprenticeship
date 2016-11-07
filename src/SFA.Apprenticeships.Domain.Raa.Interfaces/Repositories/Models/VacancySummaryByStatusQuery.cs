@@ -10,6 +10,7 @@
         public VacanciesSummaryFilterTypes Filter { get; set; }
         public VacancySummaryOrderByColumn OrderByField { get; set; }
         public string SearchString { get; set; }
+        public ManageVacancySearchMode SearchMode { get; set; }
         public VacancyStatus[] DesiredStatuses { get; set; }
         public Order Order { get; set; }
         public RegionalTeam RegionalTeamName { get; set; }
