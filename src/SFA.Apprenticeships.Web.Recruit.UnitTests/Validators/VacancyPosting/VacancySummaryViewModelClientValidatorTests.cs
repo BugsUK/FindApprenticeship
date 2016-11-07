@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using Common.ViewModels;
     using FluentAssertions;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
@@ -21,7 +22,7 @@
         [Test]
         public void DefaultShouldNotHaveAnyValidationErrors()
         {
-            var viewModel = new FurtherVacancyDetailsViewModel();
+            var viewModel = new FurtherVacancyDetailsViewModel() {Wage = new WageViewModel()};
 
             var result = _validator.Validate(viewModel);
 
@@ -34,8 +35,9 @@
         [TestCase("<script>", false)]
         public void WorkingWeekInvalidCharacters(string workingWeek, bool expectValid)
         {
-            var viewModel = new FurtherVacancyDetailsViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel()
             {
+                Wage = new WageViewModel(),
                 WorkingWeek = workingWeek
             };
 
@@ -57,6 +59,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
+                Wage = new WageViewModel(),
                 WorkingWeek = workingWeek
             };
 
@@ -80,6 +83,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
+                Wage = new WageViewModel(),
                 LongDescription = longDescription
             };
 

@@ -67,15 +67,15 @@
                         <td>@providerSite.Address.Town</td>
                         <td>
                             @{
-                                var providerSiteRelationship = providerSite.ProviderSiteRelationships.SingleOrDefault(psr => psr.ProviderId == Model.ProviderId);
+                                var providerSiteRelationships = providerSite.ProviderSiteRelationships.Where(psr => psr.ProviderId == Model.ProviderId).ToList();
                             }
-                            @if (providerSiteRelationship == null)
+                            @if (providerSiteRelationships.Count == 0)
                             {
                                 <text>Visible via subcontractor relationship</text>
                             }
                             else
                             {
-                                @providerSiteRelationship.ProviderSiteRelationshipType
+                                <span>@string.Join(", ", providerSiteRelationships.Select(psr => psr.ProviderSiteRelationshipType))</span>
                             }
                         </td>
                         <td></td>

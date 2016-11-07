@@ -85,11 +85,6 @@
             return _getVacancySummaryStrategies.GetVacancySummariesByIds(vacancyIds);
         }
 
-        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
-        {
-            return _getVacancySummaryStrategies.GetByOwnerPartyIds(ownerPartyIds);
-        }
-
         public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             return _qaVacancyStrategies.ReserveVacancyForQa(vacancyReferenceNumber);
@@ -123,11 +118,6 @@
         public void DeleteVacancyLocationsFor(int vacancyId)
         {
             _vacancyLocationsStrategies.DeleteVacancyLocationsFor(vacancyId);
-        }
-
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
-        {
-            return _getVacancySummaryStrategies.GetMinimalVacancyDetails(vacancyOwnerRelationshipIds, providerId, providerSiteIds);
         }
 
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyOwnerRelationshipIds)

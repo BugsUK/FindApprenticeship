@@ -16,6 +16,7 @@
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
             For<IApplicationStatusAlertStrategy>().Use<ApplicationStatusAlertStrategy>();
             For<ISetApplicationStatusStrategy>().Use<SetApplicationStatusStrategy>();
+            For<Strategies.Traineeships.ISetApplicationStatusStrategy>().Use<Strategies.Traineeships.SetApplicationStatusStrategy>();
 
             // Services
             For<IApprenticeshipApplicationService>().Use<ApprenticeshipApplicationService>();

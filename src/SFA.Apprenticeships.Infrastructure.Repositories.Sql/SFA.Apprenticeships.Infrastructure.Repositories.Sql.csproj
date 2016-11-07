@@ -197,6 +197,7 @@
     <Compile Include="Schemas\Reference\Entities\Standard.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappers.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\IVacancyWage.cs" />
     <Compile Include="Schemas\Vacancy\Entities\PropertyMapItem.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancySummary.cs" />
     <Compile Include="Schemas\Vacancy\VacancyMappers.cs" />

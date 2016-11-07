@@ -23,7 +23,10 @@
     [ShortDescription]                 NVARCHAR (MAX)   NULL,
     [Description]                      NVARCHAR (MAX)   NULL,
     [WeeklyWage]                       MONEY            NULL,
+    [WageLowerBound]                   MONEY            NULL,
+    [WageUpperBound]                   MONEY            NULL,
     [WageType]                         INT              CONSTRAINT [DFT_WageType] DEFAULT ((1)) NOT NULL,
+    [WageTypeReason]                   NVARCHAR (MAX)    NULL,
     [WageText]                         NVARCHAR (MAX)    NULL,
     [NumberofPositions]                SMALLINT         NULL,
     [ApplicationClosingDate]           DATETIME         NULL,
@@ -134,22 +137,27 @@ CREATE NONCLUSTERED INDEX [idx_Vacancy_MasterVacancyId]
 
 
 GO
-CREATE NONCLUSTERED INDEX [idx_Vacancy_LocalAuthorityId] 
+CREATE NONCLUSTERED INDEX [nci_wi_Vacancy_136242F1D1D373F4C191545969D2CE95] 
 	ON [dbo].[Vacancy] ([LocalAuthorityId]) 
 	INCLUDE ([PostCode]) 
 
 
 GO
-CREATE NONCLUSTERED INDEX [idx_Vacancy_VacancyStatusId_ApplicationClosingDate] 
+CREATE NONCLUSTERED INDEX [nci_wi_Vacancy_37E2B321B5B1402B955604AA0564D615] 
 ON [dbo].[Vacancy] ([VacancyStatusId] ASC,[ApplicationClosingDate] ASC)
 INCLUDE ([VacancyId], [VacancyLocationTypeId], [VacancyReferenceNumber])
 
 
 GO
-CREATE NONCLUSTERED INDEX [idx_Vacancy_VacancyStatusId_LocalAuthorityId] 
+CREATE NONCLUSTERED INDEX [nci_wi_Vacancy_45BC84E293EA6D30CE40CD72130B6F23] 
 ON [dbo].[Vacancy] ([VacancyStatusId] ASC,[LocalAuthorityId] ASC)
 INCLUDE ([ApprenticeshipFrameworkId],[CountyId],[DeliveryOrganisationID],[Town],[VacancyLocationTypeId],[VacancyReferenceNumber]) 
 
+
+GO
+CREATE NONCLUSTERED INDEX [nci_wi_Vacancy_4E92302198811890FD5CB516FEF6F9B0] 
+ON [dbo].[Vacancy] ([VacancyStatusId] ASC)
+INCLUDE ( [ContractOwnerID],[SubmissionCount],[VacancyOwnerRelationshipId])
 
 GO
 

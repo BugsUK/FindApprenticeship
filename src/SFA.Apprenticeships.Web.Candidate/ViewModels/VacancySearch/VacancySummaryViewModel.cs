@@ -14,6 +14,8 @@
 
         public bool IsPositiveAboutDisability { get; set; }
 
+        public bool IsEmployerAnonymous { get; set; }
+
         public DateTime ClosingDate { get; set; }
 
         public string Description { get; set; }

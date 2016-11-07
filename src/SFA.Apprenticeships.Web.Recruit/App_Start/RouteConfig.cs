@@ -338,6 +338,24 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.BulkDeclineCandidates,
+               url: "vacancy/bulkdeclinecandidates",
+               defaults: new { controller = "Application", action = "BulkDeclineCandidates" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.BulkDeclineCandidatesSearch,
+               url: "vacancy/bulkdeclinecandidatessearch",
+               defaults: new { controller = "Application", action = "BulkDeclineCandidatesSearch" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ConfirmBulkDeclineCandidates,
+               url: "vacancy/confirmbulkdeclinecandidates",
+               defaults: new { controller = "Application", action = "ConfirmBulkDeclineCandidates" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmArchiveVacancy,
                url: "vacancy/confirmarchive",
                defaults: new { controller = "VacancyStatus", action = "ConfirmArchive" }
@@ -372,6 +390,12 @@
                url: "apprenticeshipapplication/confirmunsuccessfuldecision",
                defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmUnsuccessfulDecision" }
                );
+
+            routes.MapRoute(
+              name: RecruitmentRouteNames.ConfirmBulkUnsuccessfulApprenticeshipApplication,
+              url: "apprenticeshipapplication/confirmbulkunsuccessfuldecision",
+              defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmBulkUnsuccessfulDecision" }
+              );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmRevertToInProgress,

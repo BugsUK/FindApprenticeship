@@ -183,6 +183,13 @@
             }
         }
 
+        public MediatorResponse<ProviderSiteRelationshipViewModel> GetProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            var viewModel = _providerProvider.GetProviderSiteRelationshipViewModel(providerSiteRelationshipId);
+
+            return GetMediatorResponse(AdminMediatorCodes.GetProviderSiteRelationship.Ok, viewModel);
+        }
+
         public MediatorResponse<ProviderSiteViewModel> CreateProviderSiteRelationship(ProviderSiteViewModel viewModel)
         {
             var existingViewModel = _providerProvider.GetProviderSiteViewModel(viewModel.ProviderSiteId);
@@ -213,6 +220,23 @@
             {
                 _logService.Error($"Failed to create provider site relationship for provider site with id={viewModel.ProviderSiteId}", ex);
                 return GetMediatorResponse(AdminMediatorCodes.CreateProviderSiteRelationship.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipCreationError, UserMessageLevel.Error);
+            }
+        }
+
+        public MediatorResponse<ProviderSiteRelationshipViewModel> DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            var viewModel = _providerProvider.GetProviderSiteRelationshipViewModel(providerSiteRelationshipId);
+
+            try
+            {
+                _providerProvider.DeleteProviderSiteRelationship(providerSiteRelationshipId);
+                var message = string.Format(ProviderSiteViewModelMessages.ProviderSiteRelationshipDeletedSuccessfully, viewModel.ProviderSiteRelationshipType, viewModel.ProviderFullName, viewModel.ProviderTradingName, viewModel.ProviderSiteFullName, viewModel.ProviderSiteTradingName);
+                return GetMediatorResponse(AdminMediatorCodes.DeleteProviderSiteRelationship.Ok, viewModel, message, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save provider site with id={viewModel.ProviderSiteId}", ex);
+                return GetMediatorResponse(AdminMediatorCodes.DeleteProviderSiteRelationship.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipDeletionError, UserMessageLevel.Error);
             }
         }
 

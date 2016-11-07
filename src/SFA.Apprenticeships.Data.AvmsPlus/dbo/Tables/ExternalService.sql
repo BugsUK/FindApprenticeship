@@ -9,3 +9,9 @@
     CONSTRAINT [PK_ExternalService] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 
+GO
+CREATE NONCLUSTERED INDEX [nci_wi_ExternalMessages_F47B829097E9311BF6EBD1E6E93E27CB] 
+ON [dbo].[ExternalMessages]([ReceivedDate] ASC);
+
+
+GO

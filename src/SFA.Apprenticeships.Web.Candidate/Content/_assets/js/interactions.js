@@ -90,7 +90,13 @@ $(function() {
 
     // Add focus
     $(".block-label input").focus(function() {
-      $("label[for='" + this.id + "']").addClass("add-focus");
+        $("label[for='" + this.id + "']").addClass("add-focus");
+        $(this).parent().siblings().each(function () {
+            var targetToHide = $(this).attr('data-target');
+            $('#' + targetToHide).hide();
+            $(this).removeClass('add-focus');
+            $(this).removeClass('selected');
+        });
       }).blur(function() {
       $("label").removeClass("add-focus");
     });
@@ -108,6 +114,7 @@ $(function() {
         $target = $this.parent().attr('data-target');
 
     $('input:not(:checked)').parent().removeClass('selected');
+
     $('input:checked').parent().addClass('selected');
 
     if($target == undefined) {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
+﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 {
     using Entities.Raa.Reference;
     using Entities.Raa.Vacancies;
@@ -16,6 +10,7 @@ namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
         public VacanciesSummaryFilterTypes Filter { get; set; }
         public VacancySummaryOrderByColumn OrderByField { get; set; }
         public string SearchString { get; set; }
+        public ManageVacancySearchMode SearchMode { get; set; }
         public VacancyStatus[] DesiredStatuses { get; set; }
         public Order Order { get; set; }
         public RegionalTeam RegionalTeamName { get; set; }

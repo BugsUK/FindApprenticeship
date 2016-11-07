@@ -32,22 +32,22 @@ namespace SFA.Apprenticeships.Application.Candidate
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
         }
 
-        public Candidate GetCandidate(int legacyCandidateId)
+        public Candidate GetCandidate(int legacyCandidateId, bool errorIfNotFound = true)
         {
             Condition.Requires(legacyCandidateId);
 
             _logService.Debug("Calling CandidateApplicationService to get the user with legacy Id={0}.", legacyCandidateId);
 
-            return _getCandidateByIdStrategy.GetCandidate(legacyCandidateId);
+            return _getCandidateByIdStrategy.GetCandidate(legacyCandidateId, errorIfNotFound);
         }
 
-        public Candidate GetCandidate(Guid candidateId)
+        public Candidate GetCandidate(Guid candidateId, bool errorIfNotFound = true)
         {
             Condition.Requires(candidateId);
 
             _logService.Debug("Calling CandidateApplicationService to get the user with Id={0}.", candidateId);
 
-            return _getCandidateByIdStrategy.GetCandidate(candidateId);
+            return _getCandidateByIdStrategy.GetCandidate(candidateId, errorIfNotFound);
         }
 
         public IList<CandidateSummary> GetCandidateSummaries(IEnumerable<Guid> candidateIds)

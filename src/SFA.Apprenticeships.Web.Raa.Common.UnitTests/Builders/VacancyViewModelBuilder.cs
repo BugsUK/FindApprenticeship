@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Builders
 {
-    using System;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using Ploeh.AutoFixture;
+    using System;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
@@ -50,7 +50,17 @@
             viewModel.FurtherVacancyDetailsViewModel.VacancyType = vacancyType;
             viewModel.FurtherVacancyDetailsViewModel.Duration = 12;
             viewModel.FurtherVacancyDetailsViewModel.DurationType = DurationType.Months;
-            viewModel.FurtherVacancyDetailsViewModel.Wage = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.NotApplicable, 30);
+            viewModel.FurtherVacancyDetailsViewModel.Wage = new WageViewModel()
+            {
+                Type = WageType.NationalMinimum,
+                Classification = WageClassification.NationalMinimum,
+                Amount = null,
+                AmountLowerBound = null,
+                AmountUpperBound = null,
+                Text = null,
+                Unit = WageUnit.NotApplicable,
+                HoursPerWeek = 30
+            };
             viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
             {
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),
@@ -60,6 +70,7 @@
             viewModel.Status = status;
             viewModel.VacancyType = vacancyType;
             viewModel.IsCandidateView = false;
+            viewModel.IsManageReviewerView = false;
             viewModel.VacancySource = VacancySource.Raa;
 
             return viewModel;

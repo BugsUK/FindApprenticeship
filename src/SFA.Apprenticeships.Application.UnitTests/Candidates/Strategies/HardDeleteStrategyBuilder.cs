@@ -1,14 +1,13 @@
 ﻿using Moq;
 using SFA.Apprenticeships.Application.Candidates.Strategies;
-using SFA.Infrastructure.Interfaces;
 using SFA.Apprenticeships.Domain.Interfaces.Repositories;
 
 namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 {
     using Apprenticeships.Application.Candidates.Configuration;
     using Configuration;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Domain.Interfaces.Messaging;
+    using Interfaces;
 
     public class HardDeleteStrategyBuilder
     {
@@ -24,6 +23,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
         private Mock<ITraineeshipApplicationWriteRepository> _traineeshipApplicationWriteRepository = new Mock<ITraineeshipApplicationWriteRepository>();
         private Mock<IAuditRepository> _auditRepository = new Mock<IAuditRepository>();
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
+        private readonly Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
 
         private IHousekeepingStrategy _successor;
 
@@ -38,7 +38,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
             var strategy = new HardDeleteStrategy(_configurationService.Object, _userWriteRepository.Object, _authenticationRepository.Object,
                 _candidateWriteRepository.Object, _savedSearchReadRepository.Object, _savedSearchWriteRepository.Object, _apprenticeshipApplicationReadRepository.Object,
                 _apprenticeshipApplicationWriteRepository.Object, _traineeshipApplicationReadRepository.Object,
-                _traineeshipApplicationWriteRepository.Object, _auditRepository.Object, _logService.Object);
+                _traineeshipApplicationWriteRepository.Object, _auditRepository.Object, _logService.Object, _serviceBus.Object);
             strategy.SetSuccessor(_successor);
             return strategy;
         }

@@ -22,7 +22,12 @@
 
         public IEnumerable<Category> GetCategories()
         {
-            var categories = GetFrameworks().Where(c => c.Status == CategoryStatus.Active).ToList();
+            return GetCategories(CategoryStatus.Active);
+        }
+
+        public IEnumerable<Category> GetCategories(params CategoryStatus[] statuses)
+        {
+            var categories = GetFrameworks().Where(c => statuses.Contains(c.Status)).ToList();
             var standardSectors = GetSectors();
 
             foreach (var standardSector in standardSectors)
@@ -39,7 +44,7 @@
             //Order the new standard sectors correctly
             foreach (var category in categories)
             {
-                var orderedSubCategories = category.SubCategories.Where(c => c.Status == CategoryStatus.Active).OrderBy(c => c.FullName).ThenBy(c => c.CodeName).ToList();
+                var orderedSubCategories = category.SubCategories.Where(c => statuses.Contains(c.Status)).OrderBy(c => c.FullName).ThenBy(c => c.CodeName).ToList();
                 category.SubCategories.Clear();
                 foreach (var subCategory in orderedSubCategories)
                 {

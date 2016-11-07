@@ -5,7 +5,7 @@
     using Locations;
     using Reference;
 
-    public class VacancySummary : IMinimalVacancyDetails
+    public class VacancySummary
     {
         public int VacancyId { get; set; }
         public int VacancyOwnerRelationshipId { get; set; }
@@ -14,7 +14,6 @@
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string WorkingWeek { get; set; }
-        public Wage Wage { get; set; }
         public string ExpectedDuration { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
@@ -48,6 +47,7 @@
         public int OriginalContractOwnerId { get; set; }
         public RegionalTeam RegionalTeam { get; set; }
         public VacancyLocationType VacancyLocationType { get; set; }
+        public int EmployerId { get; set; }
 
         public DateTime LiveClosingDate
         {
@@ -70,11 +70,14 @@
         }
 
         public string EmployerName { get; set; }
+        public string EmployerLocation { get; set; }
 
         public int NewApplicationCount { get; set; }
 		public int ApplicantCount { get; set; }
 		
         public string ProviderTradingName { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public Wage Wage { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿@using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 @using SFA.Apprenticeships.Web.Manage.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
 <div class="grid-wrapper">
@@ -59,19 +58,19 @@
                                     <div class="reactive-title">@regionalTeamMetrics.RegionalTeam.GetTitle()</div>
                                 </td>
                                 <td class="ta-center reactive-header" data-label="Total vacancies">
-                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.All, Model.VacancySummaries.SearchViewModel.Provider})">@regionalTeamMetrics.TotalCount</a>
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.All, Model.VacancySummaries.SearchViewModel.SearchString,Model.VacancySummaries.SearchViewModel.SearchMode})">@regionalTeamMetrics.TotalCount</a>
                                 </td>
                                 <td class="ta-center reactive-header" data-label="Submitted today">
-                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.SubmittedToday, Model.VacancySummaries.SearchViewModel.Provider})">@regionalTeamMetrics.SubmittedTodayCount</a>
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.SubmittedToday, Model.VacancySummaries.SearchViewModel.SearchString,Model.VacancySummaries.SearchViewModel.SearchMode})">@regionalTeamMetrics.SubmittedTodayCount</a>
                                 </td>
                                 <td class="ta-center reactive-header" data-label="Submitted yesterday">
-                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.SubmittedYesterday, Model.VacancySummaries.SearchViewModel.Provider})">@regionalTeamMetrics.SubmittedYesterdayCount</a>
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.SubmittedYesterday, Model.VacancySummaries.SearchViewModel.SearchString,Model.VacancySummaries.SearchViewModel.SearchMode})">@regionalTeamMetrics.SubmittedYesterdayCount</a>
                                 </td>
                                 <td class="ta-center reactive-header" data-label="Submitted +48 hours">
-                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.SubmittedMoreThan48Hours, Model.VacancySummaries.SearchViewModel.Provider})">@regionalTeamMetrics.SubmittedMoreThan48HoursCount</a>
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.SubmittedMoreThan48Hours, Model.VacancySummaries.SearchViewModel.SearchString,Model.VacancySummaries.SearchViewModel.SearchMode})">@regionalTeamMetrics.SubmittedMoreThan48HoursCount</a>
                                 </td>
                                 <td class="ta-center reactive-header" data-label="Resubmitted vacancies">
-                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.Resubmitted, Model.VacancySummaries.SearchViewModel.Provider})">@regionalTeamMetrics.ResubmittedCount</a>
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = VacanciesSummaryFilterTypes.Resubmitted, Model.VacancySummaries.SearchViewModel.SearchString,Model.VacancySummaries.SearchViewModel.SearchMode})">@regionalTeamMetrics.ResubmittedCount</a>
                                 </td>
                             </tr>
                         }

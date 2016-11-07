@@ -2,9 +2,11 @@
 {
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using UserAccount.Entities;
 
     public class SetPendingDeletionStrategy : HousekeepingStrategy
     {
@@ -12,13 +14,15 @@
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IAuditRepository _auditRepository;
         private readonly ILogService _logService;
+        private readonly IServiceBus _serviceBus;
 
-        public SetPendingDeletionStrategy(IConfigurationService configurationService, IUserWriteRepository userWriteRepository, IAuditRepository auditRepository, ILogService logService)
+        public SetPendingDeletionStrategy(IConfigurationService configurationService, IUserWriteRepository userWriteRepository, IAuditRepository auditRepository, ILogService logService, IServiceBus serviceBus)
             : base(configurationService)
         {
             _userWriteRepository = userWriteRepository;
             _auditRepository = auditRepository;
             _logService = logService;
+            _serviceBus = serviceBus;
         }
 
         protected override bool DoHandle(User user, Candidate candidate)
@@ -45,6 +49,7 @@
 
             user.Status = UserStatuses.PendingDeletion;
             _userWriteRepository.Save(user);
+            _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
 
             _logService.Info("Set User: {0} Status to PendingDeletion", user.EntityId);
 

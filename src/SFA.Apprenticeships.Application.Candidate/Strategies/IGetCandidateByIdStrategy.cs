@@ -5,7 +5,7 @@
 
     public interface IGetCandidateByIdStrategy
     {
-        Candidate GetCandidate(int legacyCandidateId);
-        Candidate GetCandidate(Guid candidateId);
+        Candidate GetCandidate(int legacyCandidateId, bool errorIfNotFound = true);
+        Candidate GetCandidate(Guid candidateId, bool errorIfNotFound = true);
     }
 }

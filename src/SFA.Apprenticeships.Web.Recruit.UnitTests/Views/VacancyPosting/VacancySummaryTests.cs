@@ -32,6 +32,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 WageUnits = ApprenticeshipVacancyConverter.GetWageUnits(),
+                WageTextPresets = ApprenticeshipVacancyConverter.GetWageTextPresets(),
                 DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(VacancyType.Apprenticeship)
             };
            
@@ -64,7 +65,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
                         Year = year
                     }
                 },
-                Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, null)
+                Wage = new WageViewModel() { CustomType = CustomWageType.Fixed }
             };
             var validator = new VacancySummaryViewModelServerValidator();
             var results = validator.Validate(viewModelToValidate, ruleSet: RuleSets.ErrorsAndWarnings);
@@ -116,8 +117,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var view = details.RenderAsHtml(viewModel);
 
             view.GetElementbyId("vacancySummaryButton").Should().NotBeNull("Should exists a save button");
-            view.GetElementbyId("vacancySummaryButton").InnerHtml.Should().Be("Save and continue");
-            view.GetElementbyId("vacancySummaryButton").Attributes["value"].Value.Should().Be("VacancySummary");
+            view.GetElementbyId("vacancySummaryButton").InnerHtml.Should().Be("Save and return to Preview");
+            view.GetElementbyId("vacancySummaryButton").Attributes["value"].Value.Should().Be("VacancySummaryAndPreview");
         }
 
 

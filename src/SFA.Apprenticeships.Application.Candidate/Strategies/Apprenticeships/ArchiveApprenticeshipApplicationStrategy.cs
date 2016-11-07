@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
     using System;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
     public class ArchiveApprenticeshipApplicationStrategy : IArchiveApplicationStrategy
@@ -9,7 +10,7 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
 
         public ArchiveApprenticeshipApplicationStrategy(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
-            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository)
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, IServiceBus serviceBus)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;

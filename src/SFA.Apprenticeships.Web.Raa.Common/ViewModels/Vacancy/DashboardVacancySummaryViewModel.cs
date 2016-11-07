@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Raa.Vacancies;
+    using Web.Common.ViewModels.Locations;
 
     public class DashboardVacancySummaryViewModel
     {
@@ -28,5 +29,6 @@
         public int SubmissionCount { get; set; }
 
         public VacancyType VacancyType { get; set; }
+        public AddressViewModel Location { get; set; }
     }
 }

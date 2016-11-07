@@ -15,7 +15,9 @@
                 ProviderSiteRelationshipType = providerSiteRelationship.ProviderSiteRelationShipTypeId,
                 ProviderUkprn = providerSiteRelationship.ProviderUkprn,
                 ProviderFullName = providerSiteRelationship.ProviderFullName,
-                ProviderTradingName = providerSiteRelationship.ProviderTradingName
+                ProviderTradingName = providerSiteRelationship.ProviderTradingName,
+                ProviderSiteFullName = providerSiteRelationship.ProviderSiteFullName,
+                ProviderSiteTradingName = providerSiteRelationship.ProviderSiteTradingName
             };
 
             return viewModel;

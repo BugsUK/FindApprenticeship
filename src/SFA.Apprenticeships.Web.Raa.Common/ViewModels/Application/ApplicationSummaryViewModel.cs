@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
-    using System;
     using Domain.Entities.Applications;
+    using System;
 
     public class ApplicationSummaryViewModel
     {

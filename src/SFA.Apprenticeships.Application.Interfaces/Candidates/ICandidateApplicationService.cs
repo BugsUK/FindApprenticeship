@@ -7,8 +7,8 @@
 
     public interface ICandidateApplicationService
     {
-        Candidate GetCandidate(int legacyCandidateId);
-        Candidate GetCandidate(Guid candidateId);
+        Candidate GetCandidate(int legacyCandidateId, bool errorIfNotFound = true);
+        Candidate GetCandidate(Guid candidateId, bool errorIfNotFound = true);
         IList<CandidateSummary> GetCandidateSummaries(IEnumerable<Guid> candidateIds);
         IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
         IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId);

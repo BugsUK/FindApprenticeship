@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
+    using Domain.Entities.Raa.Reference;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Domain.Entities.Raa.Reference;
 
     public class AgencyUserViewModel
     {

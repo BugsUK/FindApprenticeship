@@ -1,6 +1,5 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
-    using System.Web.Mvc;
     using Common.Mediators;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
@@ -8,7 +7,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     public interface ITraineeshipApplicationMediator
     {
         MediatorResponse<TraineeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<TraineeshipApplicationViewModel> ReviewSaveAndContinue(TraineeshipApplicationViewModel traineeshipApplicationViewModel);
+        MediatorResponse<TraineeshipApplicationViewModel> ReviewSaveAndExit(TraineeshipApplicationViewModel traineeshipApplicationViewModel);
         MediatorResponse<TraineeshipApplicationViewModel> View(string application);
+        MediatorResponse<TraineeshipApplicationViewModel> ReviewSetToSubmitted(TraineeshipApplicationViewModel traineeshipApplicationViewModel);
+        MediatorResponse<TraineeshipApplicationViewModel> PromoteToInProgress(TraineeshipApplicationViewModel traineeshipApplicationViewModel);
     }
 }

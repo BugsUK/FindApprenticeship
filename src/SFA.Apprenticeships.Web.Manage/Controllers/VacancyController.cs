@@ -1,25 +1,24 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using Application.Interfaces;
+    using Attributes;
+    using Common.Attributes;
+    using Common.Mediators;
+    using Common.Validators.Extensions;
+    using Constants;
+    using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Vacancies;
+    using FluentValidation.Mvc;
+    using Infrastructure.Presentation;
+    using Mediators.Vacancy;
+    using Raa.Common.Constants.ViewModels;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyPosting;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Web.Mvc;
-    using Attributes;
-    using Common.Attributes;
-    using Constants;
-    using Mediators.Vacancy;
-    using Common.Mediators;
-    using Common.Validators.Extensions;
-    using Domain.Entities.Raa;
-    using FluentValidation.Mvc;
-    using Infrastructure.Presentation;
-    using Raa.Common.Constants.ViewModels;
-    using Raa.Common.ViewModels.Vacancy;
-    using Raa.Common.ViewModels.Provider;
-    using Raa.Common.ViewModels.VacancyPosting;
-    using Application.Interfaces;
-    using Common.Extensions;
-    using Domain.Entities.Raa.Vacancies;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
@@ -43,9 +42,7 @@
 
             if (response.ViewModel != null)
             {
-                SetLinks(vacancyViewModel);
-
-                vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateReviewable();
+                SetLinks(vacancyViewModel);                
             }
 
             ModelState.Clear();
@@ -443,7 +440,7 @@
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.ApproveVacancy.Ok:
                     return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
-                        new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+                        new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
                 case VacancyMediatorCodes.ApproveVacancy.PostcodeLookupFailed:
                     SetUserMessage(response.Message);
                     return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
@@ -469,7 +466,7 @@
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.RejectVacancy.Ok:
                     return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
-                        new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+                        new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
                 default:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
             }
@@ -547,7 +544,7 @@
             {
                 case VacancyMediatorCodes.AddLocations.Ok:
                     return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
-                        new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+                        new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
 
                 case VacancyMediatorCodes.AddLocations.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
@@ -556,7 +553,7 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-        
+
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
         [HttpPost]
         public ActionResult SearchLocations(LocationSearchViewModel viewModel)
@@ -570,7 +567,7 @@
                 VacancyReferenceNumber = viewModel.VacancyReferenceNumber
             });
         }
-        
+
         [HttpGet]
         public ActionResult SearchAddresses(LocationSearchViewModel viewModel)
         {
@@ -614,7 +611,7 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-        
+
         [HttpGet]
         public ActionResult ShowLocations(LocationSearchViewModel viewModel)
         {

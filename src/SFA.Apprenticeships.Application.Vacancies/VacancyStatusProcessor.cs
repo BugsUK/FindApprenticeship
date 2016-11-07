@@ -10,6 +10,7 @@
     using Entities;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using Vacancy;
 
     public class VacancyStatusProcessor : IVacancyStatusProcessor
     {
@@ -17,17 +18,20 @@
         private readonly IVacancyWriteRepository _vacancyWriteRepository;
         private readonly IServiceBus _serviceBus;
         private readonly ILogService _logService;
+        private IVacancySummaryService _vacancySummaryService;
 
         public VacancyStatusProcessor(
             IVacancyReadRepository vacancyReadRepository,
             IVacancyWriteRepository vacancyWriteRepository,
             IServiceBus serviceBus,
-            ILogService logService)
+            ILogService logService,
+            IVacancySummaryService vacancySummaryService)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
             _serviceBus = serviceBus;
             _logService = logService;
+            _vacancySummaryService = vacancySummaryService;
         }
 
         /// <summary>
@@ -40,7 +44,7 @@
             stopwatch.Start();
 
             var query = new ApprenticeshipVacancyQuery() {
-                CurrentPage = 1,
+                RequestedPage = 1,
                 DesiredStatuses = new List<VacancyStatus>() { VacancyStatus.Live },
                 LatestClosingDate = deadline,
                 EditedInRaa = false,
@@ -48,7 +52,7 @@
 
             int resultCount;
 
-            var eligibleVacancies = _vacancyReadRepository.Find(query, out resultCount);
+            var eligibleVacancies = _vacancySummaryService.Find(query, out resultCount);
 
             var message = string.Format("Querying vacancies about to close took {0}", stopwatch.Elapsed);
 

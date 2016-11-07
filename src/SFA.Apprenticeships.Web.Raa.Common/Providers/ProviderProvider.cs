@@ -15,7 +15,6 @@
     using Mappers;
     using ViewModels.Employer;
     using ViewModels.Provider;
-    using ViewModels.VacancyPosting;
     using Web.Common.Converters;
     using ViewModels.Admin;
 
@@ -280,6 +279,7 @@
                     ProviderSiteRelationShipTypeId = ProviderSiteRelationshipTypes.Owner
                 }
             };
+            providerSite.TrainingProviderStatus = EmployerTrainingProviderStatuses.Activated;
 
             providerSite = _providerService.CreateProviderSite(providerSite);
 
@@ -330,6 +330,18 @@
             _providerService.CreateProviderSiteRelationship(providerSiteRelationship);
 
             return GetProviderSiteViewModel(viewModel.ProviderSiteId);
+        }
+
+        public ProviderSiteRelationshipViewModel GetProviderSiteRelationshipViewModel(int providerSiteRelationshipId)
+        {
+            var providerSiteRelationship = _providerService.GetProviderSiteRelationship(providerSiteRelationshipId);
+
+            return providerSiteRelationship.Convert();
+        }
+
+        public void DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            _providerService.DeleteProviderSiteRelationship(providerSiteRelationshipId);
         }
     }
 }

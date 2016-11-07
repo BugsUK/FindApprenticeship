@@ -9,6 +9,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Interfaces.Communications;
     using Interfaces.Users;
     using System;
+    using Domain.Interfaces.Messaging;
+    using Entities;
 
     public class ResetForgottenPasswordStrategy : IResetForgottenPasswordStrategy
     {
@@ -19,6 +21,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly ICommunicationService _communicationService;
         private readonly ILockAccountStrategy _lockAccountStrategy;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IServiceBus _serviceBus;
         private readonly int _maximumPasswordAttemptsAllowed;
 
         public ResetForgottenPasswordStrategy(ICommunicationService communicationService,
@@ -28,7 +31,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             IAuthenticationService authenticationService,
             IConfigurationService configurationService,
             IUserWriteRepository userWriteRepository,
-            IAuditRepository auditRepository)
+            IAuditRepository auditRepository, IServiceBus serviceBus)
         {
             _communicationService = communicationService;
             _lockAccountStrategy = lockAccountStrategy;
@@ -37,6 +40,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _authenticationService = authenticationService;
             _userWriteRepository = userWriteRepository;
             _auditRepository = auditRepository;
+            _serviceBus = serviceBus;
             _maximumPasswordAttemptsAllowed = configurationService.Get<UserAccountConfiguration>().MaximumPasswordAttemptsAllowed;
         }
 
@@ -60,6 +64,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 user.LastLogin = DateTime.UtcNow;
 
                 _userWriteRepository.Save(user);
+                _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
                 _auditRepository.Audit(user, AuditEventTypes.UserResetPassword, user.EntityId);
 
                 SendPasswordResetConfirmationMessage(candidate);
@@ -79,11 +84,13 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             if (user.PasswordResetIncorrectAttempts == _maximumPasswordAttemptsAllowed)
             {
                 _lockAccountStrategy.LockAccount(user);
+                _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
                 throw new CustomException("Maximum password attempts allowed reached, account is now locked.", Interfaces.Users.ErrorCodes.UserAccountLockedError);
             }
 
             user.PasswordResetIncorrectAttempts++;
             _userWriteRepository.Save(user);
+            _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
         }
 
         private void SendPasswordResetConfirmationMessage(Candidate candidate)

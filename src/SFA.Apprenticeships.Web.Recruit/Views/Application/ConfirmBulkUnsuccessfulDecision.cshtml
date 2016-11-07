@@ -1,0 +1,58 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.BulkDeclineCandidatesViewModel
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Send Bulk Unsuccessful decision";
+}
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.BulkDeclineCandidates, FormMethod.Post))
+{
+
+    @Html.HiddenFor(m => m.VacancyApplicationsSearch.VacancyReferenceNumber)
+    @Html.HiddenFor(m => m.VacancyApplicationsSearch.FilterType)
+    @Html.HiddenFor(m => m.VacancyApplicationsSearch.OrderByField)
+    @Html.HiddenFor(m => m.VacancyApplicationsSearch.Order)
+
+    <div>
+        <h1 class="heading-xlarge med-btm-margin">Inform the selected candidates their applications have been unsuccessful</h1>
+        <div class="inner-block hgroup grey-background">
+            <br/>
+            <div class="three-column">
+                <ul id="triple">
+                    @foreach (var application in Model.ApplicationSummaries.Where(a => Model.SelectedApplicationIds.Contains(a.ApplicationId)))
+                    {
+                        var applicationId = application.ApplicationId;
+                        <li>
+                            @application.FirstName @application.LastName
+                            <input type="hidden" name="@Html.NameFor(m => m.SelectedApplicationIds)" value="@application.ApplicationId"/>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <br/>
+            <button type="submit" class="button-link" name="EditBulkDeclineCandidatesAction" value="EditBulkDeclineCandidates">
+                Edit list
+            </button>
+        </div>
+        <h2 class="heading-medium">Candidate feedback</h2>
+        <p>
+            An automated message will now be sent to these candidates.
+            You must provide feedback explaining why they have not been selected for the role of <b>@Model.Title</b>
+        </p>
+        <h2 class="bold-small">What feedback would you like to share with these candidates?</h2>
+        @Html.FormTextAreaFor(m => m.UnSuccessfulReason,
+            controlHtmlAttributes: new {@class = "width-all-3-4", type = "text", size = 12, style = "height: 200px;"},
+            labelHtmlAttributes: new {@class = "bold-small"})
+        <section>
+            <div class="form-group">
+                <br/>
+                <button type="submit" class="button" name="SendBulkUnsuccessfulDecisionAction" value="SendBulkUnsuccessfulDecision">
+                    Send feedback
+                </button>
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyApplicationsSearch.VacancyReferenceNumber}})
+            </div>
+        </section>
+    </div>
+}
+

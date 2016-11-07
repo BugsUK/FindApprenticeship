@@ -228,6 +228,8 @@
     <Compile Include="Providers\IStandardsAndFrameworksProvider.cs" />
     <Compile Include="Providers\StandardsAndFrameworksProvider.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
+    <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelMessages.cs" />
+    <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelValidator.cs" />
     <Compile Include="ViewModels\Admin\StandardViewModel.cs" />
     <Compile Include="ViewModels\Admin\FrameworkViewModel.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />
@@ -280,6 +282,7 @@
     <Compile Include="ViewModels\Api\ApiUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserSearchViewModel.cs" />
     <Compile Include="ViewModels\Api\ApiUserViewModel.cs" />
+    <Compile Include="ViewModels\Application\Apprenticeship\ConfirmationStatusViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserSearchViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSearchResultsViewModel.cs" />
@@ -342,6 +345,7 @@
     <Compile Include="ViewModels\Provider\ProviderSiteRelationshipViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
+    <Compile Include="ViewModels\Application\BulkDeclineCandidatesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DeleteVacancyViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />

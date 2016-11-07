@@ -12,6 +12,7 @@
     using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
+    using Web.Common.ViewModels;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public static class VacancySummaryViewModelBusinessRulesExtensions
@@ -125,18 +126,22 @@
             return null;
         }
 
-        public static ValidationFailure HaveAValidHourRate(this FurtherVacancyDetailsViewModel viewModel, decimal? amount, string parentPropertyName)
+        public static ValidationFailure HaveAValidHourRate(this FurtherVacancyDetailsViewModel viewModel, decimal? amount, string parentPropertyName, string nameOfTestedProperty)
         {
-            if (amount.HasValue && viewModel.Wage.Type == WageType.Custom && viewModel.Wage.Unit != WageUnit.NotApplicable && viewModel.Wage.HoursPerWeek.HasValue && viewModel.Wage.HoursPerWeek > 0)
+            var unitToMeasure = viewModel.Wage.CustomType == CustomWageType.Ranged
+                ? viewModel.Wage.RangeUnit
+                : viewModel.Wage.Unit;
+            var unitPrecondition = unitToMeasure != WageUnit.NotApplicable;
+            if (amount.HasValue && viewModel.Wage.Classification == WageClassification.Custom && unitPrecondition && viewModel.Wage.HoursPerWeek.HasValue && viewModel.Wage.HoursPerWeek > 0)
             {
-                var hourRate = GetHourRate(amount.Value, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek.Value);
+                var hourRate = GetHourRate(amount.Value, unitToMeasure, viewModel.Wage.HoursPerWeek.Value);
 
                 DateTime possibleStartDate;
                 var wageRange = viewModel.VacancyDatesViewModel.GetWageRangeForPossibleStartDate(out possibleStartDate);
 
                 if (hourRate < wageRange.ApprenticeMinimumWage)
                 {
-                    var propertyName = HaveAValidHourRatePropertyName;
+                    var propertyName = nameOfTestedProperty;
                     if (!string.IsNullOrEmpty(parentPropertyName))
                     {
                         propertyName = parentPropertyName + "." + propertyName;

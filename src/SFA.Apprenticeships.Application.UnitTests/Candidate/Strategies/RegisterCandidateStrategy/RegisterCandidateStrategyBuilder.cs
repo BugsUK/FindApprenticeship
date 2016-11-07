@@ -3,6 +3,7 @@
     using Apprenticeships.Application.Candidate.Strategies;
     using Apprenticeships.Application.UserAccount.Configuration;
     using Domain.Entities.Candidates;
+    using Domain.Interfaces.Messaging;
     using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
@@ -32,7 +33,7 @@
         {
             var strategy = new RegisterCandidateStrategy(_configurationService.Object, _userAccountService.Object,
                 _authenticationService.Object, _candidateWriteRepository.Object, _communicationService.Object,
-                _codeGenerator.Object, _userReadRepository.Object);
+                _codeGenerator.Object, _userReadRepository.Object, new Mock<IServiceBus>().Object);
             return strategy;
         }
 

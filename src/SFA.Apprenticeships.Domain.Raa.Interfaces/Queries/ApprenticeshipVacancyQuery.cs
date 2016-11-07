@@ -14,7 +14,7 @@
 
         public List<VacancyStatus> DesiredStatuses { get; set; }
 
-        public int CurrentPage { get; set; }
+        public int RequestedPage { get; set; }
 
         public int PageSize { get; set; }
 

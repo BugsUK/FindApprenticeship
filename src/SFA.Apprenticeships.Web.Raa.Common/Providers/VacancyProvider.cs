@@ -12,6 +12,7 @@
     using Application.Vacancy;
     using Configuration;
     using Converters;
+    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
@@ -35,7 +36,6 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
-    using Order = Domain.Raa.Interfaces.Repositories.Models.Order;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
@@ -358,7 +358,7 @@
                             existingVacancyOwnerRelationship.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
                             existingVacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship);
                         }
-                        
+
                         vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;
                         vacancy.ContractOwnerId = vacancyTransferViewModel.ProviderId;
                         vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
@@ -504,6 +504,7 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            viewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
 
             viewModel.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
 
@@ -518,7 +519,7 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -535,11 +536,13 @@
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
-            viewModel = vacancy.ConvertToVacancySummaryViewModel();
-            viewModel.AutoSaveTimeoutInSeconds =
+            var updatedViewModel = vacancy.ConvertToVacancySummaryViewModel();
+            updatedViewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
+
+            updatedViewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
-            return viewModel;
+            return updatedViewModel;
         }
 
         public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
@@ -603,7 +606,7 @@
 
             vacancy.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate.Date;
             vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate.Date;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, vacancy.Wage.Text, viewModel.Wage.Unit, vacancy.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.Status = VacancyStatus.Live;
 
             FurtherVacancyDetailsViewModel result;
@@ -704,10 +707,20 @@
                 if (viewModel.VacancyType == VacancyType.Apprenticeship)
                 {
                     viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
+                    viewModel.ApplicationPendingDecisionCount =
+                        _apprenticeshipApplicationService
+                            .GetSubmittedApplicationSummaries(
+                                vacancy.VacancyId).Count(v => v.Status == ApplicationStatuses.InProgress ||
+                                    v.Status == ApplicationStatuses.Submitted);
                 }
                 else if (viewModel.VacancyType == VacancyType.Traineeship)
                 {
                     viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
+                    viewModel.ApplicationPendingDecisionCount =
+                        _traineeshipApplicationService
+                            .GetSubmittedApplicationSummaries(
+                                vacancy.VacancyId).Count(v => v.Status == ApplicationStatuses.InProgress ||
+                                    v.Status == ApplicationStatuses.Submitted);
                 }
             }
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.CreatedByProviderUsername);
@@ -833,7 +846,7 @@
                 searchString = vacanciesSummarySearch.SearchString;
             }
 
-            var query = new VacancySummaryQuery()
+            var query = new VacancySummaryQuery
             {
                 ProviderId = providerId,
                 ProviderSiteId = providerSiteId,
@@ -841,6 +854,7 @@
                 Filter = vacanciesSummarySearch.FilterType,
                 PageSize = vacanciesSummarySearch.PageSize,
                 RequestedPage = vacanciesSummarySearch.CurrentPage,
+                SearchMode = vacanciesSummarySearch.SearchMode,
                 SearchString = searchString,
                 Order = vacanciesSummarySearch.Order,
                 VacancyType = vacanciesSummarySearch.VacancyType
@@ -979,8 +993,9 @@
                 RequestedPage = 1,
                 Filter = searchViewModel.FilterType,
                 OrderByField = orderByField,
-                SearchString = searchViewModel.Provider,
-                DesiredStatuses = new []{ VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
+                SearchString = searchViewModel.SearchString,
+                SearchMode = searchViewModel.SearchMode,
+                DesiredStatuses = new[] { VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
                 Order = searchViewModel.Order,
                 RegionalTeamName = regionalTeam
             };
@@ -988,9 +1003,9 @@
             int totalRecords;
             var vacancies = _vacancyPostingService.GetWithStatus(query, out totalRecords);
 
-            var regionalTeamsMetrics =  _vacancyPostingService.GetRegionalTeamsMetrics(query);
+            var regionalTeamsMetrics = _vacancyPostingService.GetRegionalTeamsMetrics(query);
 
-            if (string.IsNullOrEmpty(searchViewModel.Provider) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
+            if (string.IsNullOrEmpty(searchViewModel.SearchString) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
             {
                 //No vacancies for current team selection. Redirect to metrics
                 searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
@@ -998,7 +1013,7 @@
 
             RegionalTeamMetrics currentTeamMetrics = null;
 
-            if (string.IsNullOrEmpty(searchViewModel.Provider))
+            if (string.IsNullOrEmpty(searchViewModel.SearchString))
             {
                 currentTeamMetrics = regionalTeamsMetrics.SingleOrDefault(s => s.RegionalTeam == regionalTeam);
             }
@@ -1126,7 +1141,8 @@
                 QAUserName = vacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = _vacancyLockingService.IsVacancyAvailableToQABy(userName, vacancy),
                 SubmissionCount = vacancy.SubmissionCount,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                Location = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address)
             };
         }
 
@@ -1264,7 +1280,7 @@
             }
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -1292,6 +1308,7 @@
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            viewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
 
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;

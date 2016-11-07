@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Reference].[Standard]
 (
-	[StandardId] INT NOT NULL, 
+	[StandardId] INT IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
     [StandardSectorId] INT NOT NULL, 
     [LarsCode] INT NOT NULL, 
     [FullName] NVARCHAR(MAX) NOT NULL,

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Reference].[StandardSector]
 (
-	[StandardSectorId] INT NOT NULL, 
+	[StandardSectorId] INT IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
     [FullName] NVARCHAR(MAX) NOT NULL, 
 	[ApprenticeshipOccupationId] INT NOT NULL DEFAULT 1, 
     CONSTRAINT [PK_StandardSector] PRIMARY KEY ([StandardSectorId]),
