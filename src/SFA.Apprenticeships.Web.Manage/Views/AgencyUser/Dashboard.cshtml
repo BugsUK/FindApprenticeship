@@ -75,7 +75,7 @@
                         @Html.HiddenFor(m => m.VacancySummaries.SearchViewModel.SearchString)
                         @if (!string.IsNullOrEmpty(searchString))
                         {
-                            <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard,new DashboardVacancySummariesSearchViewModel())"
+                            <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard)"
                                class="close-icon">
                                 <i class="fa fa-times-circle" aria-hidden="true"></i>                                
                             </a>
