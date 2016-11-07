@@ -47,7 +47,7 @@
             <div class="grid-row">
                 @for (int i = 0; i < Math.Min(3, Model.SavedAndDraftApplications.Count); i++)
                 {
-                    <div class="grid-row column-one-third" id="saved-vacancy-@Model.SavedAndDraftApplications[i].VacancyId">
+                    <div class="column-one-third" id="saved-vacancy-@Model.SavedAndDraftApplications[i].VacancyId">
                         <div class="inner-block-padr">
                             
                             @if (Model.SavedAndDraftApplications[i].IsPositiveAboutDisability)
@@ -81,7 +81,7 @@
             <div class="grid-row">
                 @for (int i = 0; i < Math.Min(3, Model.SuggestedVacancies.Count()); i++)
                 {
-                    <div class="grid-row column-one-third" id="suggested-vacancy-@Model.SuggestedVacancies[i].VacancyId">
+                    <div class="column-one-third" id="suggested-vacancy-@Model.SuggestedVacancies[i].VacancyId">
                         <div class="inner-block-padr">
                             
                             @if (Model.SuggestedVacancies[i].IsPositiveAboutDisability)

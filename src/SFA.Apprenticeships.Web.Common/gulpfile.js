@@ -35,6 +35,8 @@ gulp.task('styles', function () {
 gulp.task('merge-base', function() {
     gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/images/**/*')
         .pipe(gulp.dest(buildDir + 'img'));
+    gulp.src(repo_root + 'node_modules/govuk_frontend_toolkit/images/**/*')
+        .pipe(gulp.dest(buildDir + 'img'));
     gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/stylesheets/**/*')
         .pipe(gulp.dest(buildDir + 'css'));
     return gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/javascripts/**/*')

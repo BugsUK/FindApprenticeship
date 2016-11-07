@@ -107,7 +107,7 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"grid-row column-two-thirds\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n            <div");
 
@@ -149,7 +149,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            </div>\r\n        </div>\r\n        <div");
 
-WriteLiteral(" class=\"grid-row column-one-third\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n");
 
@@ -169,14 +169,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1074), Tuple.Create("\"", 1105)
+WriteAttribute("href", Tuple.Create(" href=\"", 1056), Tuple.Create("\"", 1087)
             
             #line 27 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 1081), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
+, Tuple.Create(Tuple.Create("", 1063), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
             
             #line default
             #line hidden
-, 1081), false)
+, 1063), false)
 );
 
 WriteLiteral(" title=\"Return to search results\"");
@@ -330,7 +330,7 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"grid-row column-two-thirds\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n                <div");
 
@@ -346,14 +346,14 @@ WriteLiteral(">\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-description\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2519), Tuple.Create("\"", 2577)
+WriteAttribute("class", Tuple.Create(" class=\"", 2492), Tuple.Create("\"", 2550)
             
             #line 56 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 2527), Tuple.Create<System.Object, System.Int32>(Model.Description.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 2500), Tuple.Create<System.Object, System.Int32>(Model.Description.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 2527), false)
+, 2500), false)
 );
 
 WriteLiteral(">");
@@ -368,7 +368,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n   " +
 "         <div");
 
-WriteLiteral(" class=\"grid-row column-one-third\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n");
 
@@ -395,7 +395,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Apprenticeship summary</h2>\r\n            <div");
 
-WriteLiteral(" class=\"grid-row column-one-third\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n                <div");
 
@@ -438,14 +438,14 @@ WriteLiteral(" id=\"vacancy-working-week\"");
 
 WriteLiteral(" itemprop=\"workHours\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3482), Tuple.Create("\"", 3500)
+WriteAttribute("class", Tuple.Create(" class=\"", 3437), Tuple.Create("\"", 3455)
             
             #line 76 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 3490), Tuple.Create<System.Object, System.Int32>(className
+, Tuple.Create(Tuple.Create("", 3445), Tuple.Create<System.Object, System.Int32>(className
             
             #line default
             #line hidden
-, 3490), false)
+, 3445), false)
 );
 
 WriteLiteral(">");
@@ -684,7 +684,7 @@ WriteLiteral(" available</p>\r\n");
             #line hidden
 WriteLiteral("                </div>\r\n            </div>\r\n            <div");
 
-WriteLiteral(" class=\"grid-row column-two-thirds\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n                <div");
 
@@ -696,14 +696,14 @@ WriteLiteral(">\r\n                    <p");
 
 WriteLiteral(" id=\"vacancy-full-descrpition\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5705), Tuple.Create("\"", 5767)
+WriteAttribute("class", Tuple.Create(" class=\"", 5651), Tuple.Create("\"", 5713)
             
             #line 115 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 5713), Tuple.Create<System.Object, System.Int32>(Model.FullDescription.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 5659), Tuple.Create<System.Object, System.Int32>(Model.FullDescription.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 5713), false)
+, 5659), false)
 );
 
 WriteLiteral(">");
@@ -777,14 +777,14 @@ WriteLiteral("                                 <p");
 
 WriteLiteral(" id=\"vacancy-skills-required\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6853), Tuple.Create("\"", 6914)
+WriteAttribute("class", Tuple.Create(" class=\"", 6799), Tuple.Create("\"", 6860)
             
             #line 134 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 6861), Tuple.Create<System.Object, System.Int32>(Model.SkillsRequired.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 6807), Tuple.Create<System.Object, System.Int32>(Model.SkillsRequired.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 6861), false)
+, 6807), false)
 );
 
 WriteLiteral(" itemprop=\"skills\"");
@@ -827,14 +827,14 @@ WriteLiteral("                                 <p");
 
 WriteLiteral(" id=\"vacancy-qualities-required\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7348), Tuple.Create("\"", 7412)
+WriteAttribute("class", Tuple.Create(" class=\"", 7294), Tuple.Create("\"", 7358)
             
             #line 139 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 7356), Tuple.Create<System.Object, System.Int32>(Model.PersonalQualities.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 7302), Tuple.Create<System.Object, System.Int32>(Model.PersonalQualities.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 7356), false)
+, 7302), false)
 );
 
 WriteLiteral(" itemprop=\"qualities\"");
@@ -877,14 +877,14 @@ WriteLiteral("                                 <p");
 
 WriteLiteral(" id=\"vacancy-qualifications-required\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7866), Tuple.Create("\"", 7934)
+WriteAttribute("class", Tuple.Create(" class=\"", 7812), Tuple.Create("\"", 7880)
             
             #line 144 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 7874), Tuple.Create<System.Object, System.Int32>(Model.QualificationRequired.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 7820), Tuple.Create<System.Object, System.Int32>(Model.QualificationRequired.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 7874), false)
+, 7820), false)
 );
 
 WriteLiteral(" itemprop=\"qualifications\"");
@@ -942,14 +942,14 @@ WriteLiteral("                             <p");
 
 WriteLiteral(" id=\"vacancy-future-prospects\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8541), Tuple.Create("\"", 8603)
+WriteAttribute("class", Tuple.Create(" class=\"", 8487), Tuple.Create("\"", 8549)
             
             #line 155 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 8549), Tuple.Create<System.Object, System.Int32>(Model.FutureProspects.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 8495), Tuple.Create<System.Object, System.Int32>(Model.FutureProspects.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 8549), false)
+, 8495), false)
 );
 
 WriteLiteral(" itemprop=\"incentives\"");
@@ -992,14 +992,14 @@ WriteLiteral("                             <p");
 
 WriteLiteral(" id=\"vacancy-reality-check\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9012), Tuple.Create("\"", 9071)
+WriteAttribute("class", Tuple.Create(" class=\"", 8958), Tuple.Create("\"", 9017)
             
             #line 160 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 9020), Tuple.Create<System.Object, System.Int32>(Model.RealityCheck.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 8966), Tuple.Create<System.Object, System.Int32>(Model.RealityCheck.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 9020), false)
+, 8966), false)
 );
 
 WriteLiteral(" itemprop=\"incentives\"");
@@ -1047,7 +1047,7 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"grid-row column-two-thirds\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n                    <div");
 
@@ -1077,14 +1077,14 @@ WriteLiteral(">\r\n                                <p");
 
 WriteLiteral(" id=\"vacancy-employer-description\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9794), Tuple.Create("\"", 9860)
+WriteAttribute("class", Tuple.Create(" class=\"", 9731), Tuple.Create("\"", 9797)
             
             #line 174 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 9802), Tuple.Create<System.Object, System.Int32>(Model.EmployerDescription.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 9739), Tuple.Create<System.Object, System.Int32>(Model.EmployerDescription.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 9802), false)
+, 9739), false)
 );
 
 WriteLiteral(">");
@@ -1123,7 +1123,7 @@ WriteLiteral("                    </div>\r\n                </div>\r\n");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteLiteral(" class=\"grid-row column-one-third\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n                        <p>\r\n                            <a");
 
@@ -1135,14 +1135,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 10415), Tuple.Create("\"", 10455)
+WriteAttribute("src", Tuple.Create(" src=\"", 10343), Tuple.Create("\"", 10383)
             
             #line 184 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 10421), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-2x.png")
+, Tuple.Create(Tuple.Create("", 10349), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-2x.png")
             
             #line default
             #line hidden
-, 10421), false)
+, 10349), false)
 );
 
 WriteLiteral(" height=\"120\"");
@@ -1185,14 +1185,14 @@ WriteLiteral(">Employer</h3>\r\n                            <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10973), Tuple.Create("\"", 11043)
+WriteAttribute("class", Tuple.Create(" class=\"", 10901), Tuple.Create("\"", 10971)
             
             #line 195 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 10981), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
+, Tuple.Create(Tuple.Create("", 10909), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
             
             #line default
             #line hidden
-, 10981), false)
+, 10909), false)
 );
 
 WriteLiteral(">");
@@ -1224,29 +1224,29 @@ WriteLiteral("                                <p>\r\n                           
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11263), Tuple.Create("\"", 11292)
+WriteAttribute("href", Tuple.Create(" href=\"", 11191), Tuple.Create("\"", 11220)
             
             #line 199 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 11270), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
+, Tuple.Create(Tuple.Create("", 11198), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
             
             #line default
             #line hidden
-, 11270), false)
+, 11198), false)
 );
 
 WriteLiteral("\r\n                                       id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                                       target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 11419), Tuple.Create("\"", 11494)
+WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 11347), Tuple.Create("\"", 11422)
             
             #line 202 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 11467), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
+, Tuple.Create(Tuple.Create("", 11395), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
             
             #line default
             #line hidden
-, 11467), false)
-, Tuple.Create(Tuple.Create(" ", 11486), Tuple.Create("Website", 11487), true)
+, 11395), false)
+, Tuple.Create(Tuple.Create(" ", 11414), Tuple.Create("Website", 11415), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -1458,16 +1458,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 13575), Tuple.Create("\"", 13730)
-, Tuple.Create(Tuple.Create("", 13581), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13581), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 13503), Tuple.Create("\"", 13658)
+, Tuple.Create(Tuple.Create("", 13509), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13509), true)
             
             #line 231 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                        , Tuple.Create(Tuple.Create("", 13626), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
+                                                                        , Tuple.Create(Tuple.Create("", 13554), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
             
             #line default
             #line hidden
-, 13626), false)
-, Tuple.Create(Tuple.Create("", 13666), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 13666), true)
+, 13554), false)
+, Tuple.Create(Tuple.Create("", 13594), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 13594), true)
 );
 
 WriteLiteral("></iframe>\r\n                            <p");
@@ -1572,7 +1572,7 @@ WriteLiteral(">Training provider selection is currently in progress</p>\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"grid-row column-two-thirds\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n                <div");
 
@@ -1602,14 +1602,14 @@ WriteLiteral("                            <p");
 
 WriteLiteral(" id=\"vacancy-training-to-be-provided\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 15142), Tuple.Create("\"", 15209)
+WriteAttribute("class", Tuple.Create(" class=\"", 15061), Tuple.Create("\"", 15128)
             
             #line 262 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 15150), Tuple.Create<System.Object, System.Int32>(Model.TrainingToBeProvided.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 15069), Tuple.Create<System.Object, System.Int32>(Model.TrainingToBeProvided.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 15150), false)
+, 15069), false)
 );
 
 WriteLiteral(">");
@@ -1685,7 +1685,7 @@ WriteLiteral("</p>\r\n                    </div>\r\n                </div>\r\n  
 
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"grid-row column-one-third\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n                <div");
 
@@ -1774,14 +1774,14 @@ WriteLiteral(">Contact</h3>\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-provider-contact\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 16704), Tuple.Create("\"", 16758)
+WriteAttribute("class", Tuple.Create(" class=\"", 16614), Tuple.Create("\"", 16668)
             
             #line 291 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 16712), Tuple.Create<System.Object, System.Int32>(Model.Contact.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 16622), Tuple.Create<System.Object, System.Int32>(Model.Contact.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 16712), false)
+, 16622), false)
 );
 
 WriteLiteral(">");
@@ -1842,14 +1842,14 @@ WriteLiteral(" class=\"collpanel toggle-content\"");
 
 WriteLiteral(">\r\n                        <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 17231), Tuple.Create("\"", 17294)
+WriteAttribute("class", Tuple.Create(" class=\"", 17141), Tuple.Create("\"", 17204)
             
             #line 304 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 17239), Tuple.Create<System.Object, System.Int32>(Model.OtherInformation.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 17149), Tuple.Create<System.Object, System.Int32>(Model.OtherInformation.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 17239), false)
+, 17149), false)
 );
 
 WriteLiteral(">");
@@ -1892,14 +1892,14 @@ WriteLiteral(">\r\n                    <p");
 
 WriteLiteral(" id=\"application-instructions\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 17878), Tuple.Create("\"", 17948)
+WriteAttribute("class", Tuple.Create(" class=\"", 17788), Tuple.Create("\"", 17858)
             
             #line 315 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 17886), Tuple.Create<System.Object, System.Int32>(Model.ApplicationInstructions.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 17796), Tuple.Create<System.Object, System.Int32>(Model.ApplicationInstructions.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 17886), false)
+, 17796), false)
 );
 
 WriteLiteral(">");

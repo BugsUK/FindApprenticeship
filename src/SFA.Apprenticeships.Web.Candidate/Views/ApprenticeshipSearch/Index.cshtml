@@ -11,7 +11,7 @@
 </div>
 <div class="grid-row" id="searchHome">
     <div class="grid-row controls-3-4">
-        <section class="grid-row column-two-thirds">
+        <section class="column-two-thirds">
             @using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -111,7 +111,7 @@
                 </div>
             }
         </section>
-        <aside class="grid-row column-one-third">
+        <aside class="column-one-third">
             <div class="inner-block">
                 <div class="gov-border">
                     <h2 class="heading-medium">Help</h2>
@@ -140,7 +140,7 @@
 
 <ol id="firstSearchTour" class="alwayshidden">
     <li class="startTourGuide" data-id="runSearchHelp" data-button="Start tour">
-        <h3 class="heading-small med-btm-margin">Start tour</h3>
+        <h3 class="heading-small sfa-medium-bottom-margin">Start tour</h3>
         <p aria-live="polite">If you'd like some help on how to use the search to find apprenticeships that are suitable for you, start the tour here.</p>
     </li>
     <li class="startNextTourGuide" data-id="keywords-tab-control">

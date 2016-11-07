@@ -194,3 +194,4 @@ tools/ContactForms/SFA.Apprenticeships.Infrastructure/Communication/Email/SendGr
 # =========================
 src/SFA.Apprenticeships.Web.Common/node_modules/
 src/SFA.Apprenticeships.Web.Common/build/
+nCrunchTemp

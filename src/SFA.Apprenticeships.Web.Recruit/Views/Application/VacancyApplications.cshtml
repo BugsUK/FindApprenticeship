@@ -31,7 +31,7 @@
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
             </div>
             <div class="grid-row">
-                <div class="grid-row column-two-thirds">
+                <div class="column-two-thirds">
                     <div class="inner-block-padr">
                         <div>
                             <div class="text" itemprop="description">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid-row column-one-third">
+                <div class="column-one-third">
                     <p class="small-btm-margin">
                         Closing date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
                     </p>
@@ -355,7 +355,7 @@
                 <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
             </a>
 
-            <div id="page-size-container" class="grid-row column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
+            <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
                 <label for="page-size" class="heading-small inline">Display results</label>
                 @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new {id = "page-size"})
                 <noscript>

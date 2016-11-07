@@ -1,1 +1,138 @@
-﻿@import "_govuk-elements";
+﻿// layout and margin/padding overrides
+.force-full-width {
+    width: 100% !important;
+}
+
+.no-margins {
+    margin: 0 !important;
+}
+
+.sfa-medium-bottom-margin {
+    margin-bottom: 10px !important;
+}
+
+.sfa-large-bottom-margin {
+    margin-bottom: 15px !important;
+}
+
+.sfa-xlarge-bottom-margin {
+    margin-bottom: 30px !important;
+}
+// end layout and margin/padding overrides
+
+// tabs
+.tabbed-nav {
+    border-bottom: 1px solid #bfc1c3
+}
+
+.tabbed-tab {
+    border: 1px solid transparent;
+    display: inline-block;
+    margin-bottom: -1px;
+    margin-right: 1px;
+    padding: 15px 10px
+}
+
+.tabbed-tab.active {
+    background: #fff;
+    border-color: #bfc1c3;
+    border-bottom-color: #fff;
+    color: #0b0c0c;
+    text-decoration: none
+}
+
+.tabbed-tab.active:hover {
+    color: inherit;
+    cursor: default;
+    text-decoration: none
+}
+
+.tabbed-tab:hover {
+    text-decoration: underline
+}
+
+.tabbed-tab:focus {
+    outline: none
+}
+
+.tabbed-content {
+    border: 1px solid #bfc1c3;
+    border-top: 0;
+    display: none;
+    margin-bottom: 15px;
+    padding: 30px 10px 0
+}
+
+.tabbed-content.active {
+    display: block
+}
+
+.tabbed-element {
+    display: none
+}
+
+.tabbed-element.active {
+    display: inline-block
+}
+// end tabs
+
+// inline search bar
+.search-bar {
+    overflow: hidden;
+    position: relative
+}
+
+.search-bar select {
+    position: absolute;
+    left: 0;
+    width: 75px;
+}
+
+.search-bar .search-input-wrapper {
+    float: left;
+    box-sizing: border-box;
+    padding-left: 74px;
+    padding-right: 47px;
+    width: 100%
+}
+
+.search-bar .search-input-wrapper input[type="text"] {
+    padding-top: 7px;
+    padding-bottom: 4px;
+    padding-left: 7px;
+    box-sizing: border-box;
+    width: 100%
+}
+
+.search-bar .reset-search {
+    position: absolute;
+    overflow: hidden;
+    right: 53px;
+    top: 8px
+}
+
+.search-bar .reset-search span {
+    position: absolute;
+    left: -5000px
+}
+
+.search-bar .search-btn {
+    position: absolute;
+    overflow: hidden;
+    right: 0;
+    font-size: 18px;
+    padding-bottom: 6px;
+    padding-left: 13px;
+    padding-right: 12px;
+    width: 48px
+}
+
+.search-bar .search-btn span {
+    position: absolute;
+    left: -5000px
+}
+// end inline search bar
+
+$path: "/Content/_assets/img/";
+
+@import "_govuk-elements";

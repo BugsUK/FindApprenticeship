@@ -48,7 +48,7 @@ else
 {
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
-        <div class="grid-row med-btm-margin">
+        <div class="grid-row sfa-medium-bottom-margin">
             <div class="font-xsmall grid column-one-third">
                 <div class="width-all-1-3 hide-js inl-block"></div>
                 <div class="inner-block-padr hide-nojs">
@@ -95,7 +95,7 @@ else
                     </details>
                 </div>
             </div>
-            <div class="grid-row column-two-thirds ta-right ta-left-mob">
+            <div class="column-two-thirds ta-right ta-left-mob">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
                 @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" })
                 <noscript>
@@ -165,7 +165,7 @@ else
                     }
                     <p data-show="DisplayDescription" class="@{if (!Model.VacancySearch.DisplayDescription) {<text>toggle-content</text>} else {<text>@vacancy.Description.GetPreserveFormattingCssClass()</text>}}">@vacancy.Description</p>
                     <div class="grid-row">
-                        <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid-row column-two-thirds" : "")">
+                        <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "column-two-thirds" : "")">
                             <ul class="list-text no-btm-margin inner-block-padr">
 
                                 @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
@@ -173,7 +173,7 @@ else
                                     <li data-show="DisplayDistance" @{if (!Model.VacancySearch.DisplayDistance) { <text> class="toggle-content" </text>      }}>
                                         <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
                                         <div class="detail-content toggle-content hide-nojs">
-                                            <select class="select-mode" name="">
+                                            <select class="form-control select-mode" name="">
                                                 <option value="DRIVING" aria-live="polite">Driving</option>
                                                 <option value="TRANSIT" aria-live="polite">Bus/Train</option>
                                                 <option value="WALKING" aria-live="polite">Walking</option>
@@ -209,7 +209,7 @@ else
                             <div class="hide-tablet hide-nojs">
                                 <span style="margin-left: 0;" class="summary-style fake-link mob-map-trigger map-closed">Show/hide map</span>
                             </div>
-                            <div class="grid-row column-one-third map-container hide-nojs small-btm-margin toggle-content--mob">
+                            <div class="column-one-third map-container hide-nojs small-btm-margin toggle-content--mob">
                                 <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
                                 <div class="map"></div>
                             </div>

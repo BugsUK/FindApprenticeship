@@ -12,14 +12,14 @@
 
 <div>
     <div class="hgroup">
-        <h1 class="heading-xlarge med-btm-margin">Vacancy application</h1>
+        <h1 class="heading-xlarge sfa-medium-bottom-margin">Vacancy application</h1>
         <p class="subtitle">@Model.Vacancy.Title</p>
     </div>
     <div class="grid-row">
-        <div class="grid-row column-two-thirds">
+        <div class="column-two-thirds">
             @Html.DisplayFor(m => m.AnonymousApplicantDetails, AnonymisedApplicantDetailsViewModel.PartialView)
         </div>
-        <div class="grid-row column-one-third">
+        <div class="column-one-third">
         </div>
     </div>
     @Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)

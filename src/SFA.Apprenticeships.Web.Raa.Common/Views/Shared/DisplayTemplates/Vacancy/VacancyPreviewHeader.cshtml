@@ -12,7 +12,7 @@
 
 <section>
     <div class="grid-row">
-        <div class="grid-row column-two-thirds">
+        <div class="column-two-thirds">
             <h1 id="heading" class="heading-xlarge">
                 @if (Model.VacancyType == VacancyType.Traineeship)
                 {
@@ -24,7 +24,7 @@
                 }
             </h1>
         </div>
-        <div class="grid-row column-one-third" style="float: right">            
+        <div class="column-one-third" style="float: right">            
             @if (Model.Mode == VacancyViewModel.BulkUploadMode)
             {
                 @Html.Partial("DisplayTemplates/_BulkUploadVacancyLinks", new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status, Model.ApplicationCount, Model.VacancyType, Model.ApplicationPendingDecisionCount))
@@ -35,7 +35,7 @@
                 @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status, Model.ApplicationCount, Model.VacancyType, Model.ApplicationPendingDecisionCount))
             }            
         </div>
-        <div class="grid-row column-two-thirds" style="clear: left">
+        <div class="column-two-thirds" style="clear: left">
             <div class="hgroup text @editableItemClass">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
                     @HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title))
@@ -50,7 +50,7 @@
 
 <section>
     <div class="grid-row">
-        <div class="grid-row column-two-thirds">
+        <div class="column-two-thirds">
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid-row column-one-third">
+        <div class="column-one-third">
             <div class="@editableItemClass">
                 <h3 class="bold-small">
                     Closing date

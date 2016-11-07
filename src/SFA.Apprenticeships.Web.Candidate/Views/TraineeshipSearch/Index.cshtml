@@ -11,7 +11,7 @@
 <div class="grid-row">
 
     <div class="grid-row controls-3-4">
-        <section class="grid-row column-two-thirds">
+        <section class="column-two-thirds">
             @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -33,7 +33,7 @@
                 @Html.HiddenFor(m=> m.ResultsPerPage);
             }
         </section>
-        <aside class="grid-row column-one-third">
+        <aside class="column-one-third">
             <div class="inner-block">
                 <div class="gov-border">
                     <h2 class="heading-medium">Help</h2>

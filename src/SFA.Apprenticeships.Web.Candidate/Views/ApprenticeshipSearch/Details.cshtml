@@ -15,13 +15,13 @@
 
 <div itemscope itemtype="http://schema.org/JobPosting">
     <div class="grid-row">
-        <div class="grid-row column-two-thirds">
+        <div class="column-two-thirds">
             <div class="hgroup text">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.Title)</h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
             </div>
         </div>
-        <div class="grid-row column-one-third">
+        <div class="column-one-third">
             @if (ViewBag.SearchReturnUrl != null)
             {
                 <a href="@ViewBag.SearchReturnUrl" title="Return to search results" class="page-link" id="lnk-return-search-results">Return to search results</a>
@@ -50,20 +50,20 @@
     @if (!Model.HasError())
     {
         <section class="grid-row">
-            <div class="grid-row column-two-thirds">
+            <div class="column-two-thirds">
                 <div class="inner-block-padr">
                     <div class="text" itemprop="description">
                         <p id="vacancy-description" class="@Model.Description.GetPreserveFormattingCssClass()">@Model.Description</p>
                     </div>
                 </div>
             </div>
-            <div class="grid-row column-one-third">
+            <div class="column-one-third">
                 @Html.Partial("_Apply", Model, new ViewDataDictionary { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top")})
             </div>
         </section>
         <section class="section-border grid-wrapper" id="vacancy-info">
             <h2 class="heading-large">Apprenticeship summary</h2>
-            <div class="grid-row column-one-third">
+            <div class="column-one-third">
                 <div class="inner-block-padr">
 
                     @Html.Partial("_wage", Model)
@@ -110,7 +110,7 @@
                     }
                 </div>
             </div>
-            <div class="grid-row column-two-thirds">
+            <div class="column-two-thirds">
                 <div class="text" itemprop="responsibilities">
                     <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription))</p>
                 </div>
@@ -166,7 +166,7 @@
         <section class="section-border" id="employer-info">
             <h2 class="heading-large">About the employer</h2>
             <div class="grid-row">
-                <div class="grid-row column-two-thirds">
+                <div class="column-two-thirds">
                     <div class="inner-block-padr">
                         @if (!Model.IsEmployerAnonymous)
                         {
@@ -178,7 +178,7 @@
                 </div>
                 @if (Model.IsPositiveAboutDisability)
                 {
-                    <div class="grid-row column-one-third">
+                    <div class="column-one-third">
                         <p>
                             <a class="inl-block" href="https://www.gov.uk/looking-for-work-if-disabled" target="_blank">
                                 <img src="@Url.CdnImage("logo-ticks-2x.png")" height="120" width="151" alt="Two ticks logo - Positive about disabled people">
@@ -254,7 +254,7 @@
         }
         else
         {
-            <div class="grid-row column-two-thirds">
+            <div class="column-two-thirds">
                 <div class="inner-block-padr">
                     <div class="text">
                         @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
@@ -273,7 +273,7 @@
                     </div>
                 </div>
             </div>
-            <div class="grid-row column-one-third">
+            <div class="column-one-third">
                 <div class="text">
                     <h3 class="bold-small">Training provider</h3>
                     <p id="vacancy-provider-name">@Model.ProviderName</p>

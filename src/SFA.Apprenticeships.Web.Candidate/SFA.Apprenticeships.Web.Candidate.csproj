@@ -306,6 +306,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BingSiteAuth.xml" />
+    <Content Include="Content\_assets\css\fonts-ie8.css" />
+    <Content Include="Content\_assets\css\fonts.css" />
+    <Content Include="Content\_assets\css\govuk-template-ie6.css" />
+    <Content Include="Content\_assets\css\govuk-template-ie7.css" />
+    <Content Include="Content\_assets\css\govuk-template-ie8.css" />
+    <Content Include="Content\_assets\css\govuk-template-print.css" />
+    <Content Include="Content\_assets\css\govuk-template.css" />
+    <Content Include="Content\_assets\css\images\close.png" />
+    <Content Include="Content\_assets\css\images\gov.uk_logotype_crown-1x.png" />
+    <Content Include="Content\_assets\css\images\gov.uk_logotype_crown.png" />
+    <Content Include="Content\_assets\css\images\govuk-crest-2x.png" />
+    <Content Include="Content\_assets\css\images\govuk-crest-ie.png" />
+    <Content Include="Content\_assets\css\images\govuk-crest.png" />
+    <Content Include="Content\_assets\css\images\open-government-licence.png" />
+    <Content Include="Content\_assets\css\images\open-government-licence_2x.png" />
+    <Content Include="Content\_assets\css\styles.css" />
+    <Content Include="Content\_assets\img\apple-touch-icon-120x120.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-152x152.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-60x60.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-76x76.png" />
+    <Content Include="Content\_assets\img\favicon.ico" />
+    <Content Include="Content\_assets\img\gov.uk_logotype_crown.svg" />
+    <Content Include="Content\_assets\img\gov.uk_logotype_crown_invert.png" />
+    <Content Include="Content\_assets\img\gov.uk_logotype_crown_invert_trans.png" />
+    <Content Include="Content\_assets\img\opengraph-image.png" />
+    <Content Include="Content\_assets\js\govuk-template.js" />
+    <Content Include="Content\_assets\js\ie.js" />
     <Content Include="google63f704cde409cb80.html" />
     <Content Include="403.aspx" />
     <Content Include="403.html" />
@@ -320,6 +347,10 @@
     <Content Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
+    <Content Include="Content\_assets\css\fonts\GDSTransportTabular-Bold.eot" />
+    <Content Include="Content\_assets\css\fonts\GDSTransportTabular-Light.eot" />
+    <Content Include="Content\_assets\css\fonts\GDSTransportWebsite-Bold.eot" />
+    <Content Include="Content\_assets\css\fonts\GDSTransportWebsite.eot" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1484,7 +1515,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
@@ -1663,8 +1693,7 @@ SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$
 SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\
 )
 robocopy /IS /E %25COPY_PATH%25 $(ProjectDir)
-if %25errorlevel%25 gtr 3 exit %25errorlevel%25
-</PreBuildEvent>
+if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

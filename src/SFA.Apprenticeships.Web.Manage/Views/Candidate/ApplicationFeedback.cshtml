@@ -8,7 +8,7 @@
 }
 
 <div class="grid-row">
-    <section class="grid-row column-two-thirds">
+    <section class="column-two-thirds">
         <div class="inner-block-padr">
             <h1 class="heading-xlarge">Your feedback (@Model.ApplicantDetails.Name)</h1>
             @if (!string.IsNullOrWhiteSpace(Model.UnSuccessfulReason))
@@ -38,7 +38,7 @@
             @Html.RouteLink("Return to my applications", ManagementRouteNames.ViewCandidate, new { id = Model.ApplicantDetails.CandidateId }, new { @class = "button" })
         </div>
     </section>
-    <section class="grid-row column-one-third gov-border grey-background">
+    <section class="column-one-third gov-border grey-background">
         <br />
         <div class="inner-block">
             <div class="hgroup-small">

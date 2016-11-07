@@ -127,7 +127,7 @@
                     <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
                 </a>
 
-                <div id="page-size-container" class="grid-row column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
+                <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
                     <label for="page-size" class="heading-small inline">Display results</label>
                     @Html.DropDownListFor(m => m.SearchViewModel.PageSize, Model.SearchViewModel.PageSizes, new {id = "page-size"})
                     <noscript>
