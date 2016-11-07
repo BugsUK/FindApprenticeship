@@ -10,7 +10,7 @@
     <p>
         @if (filterType != VacanciesSummaryFilterTypes.All)
         {
-            <span><a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, VacanciesSummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
+            <span><a href="@Url.RouteUrl(ManagementRouteNames.Dashboard)" class="font-small vacancy-filter">Show all</a></span>
         }
     </p>
     <ul class="vacancies-summary">
