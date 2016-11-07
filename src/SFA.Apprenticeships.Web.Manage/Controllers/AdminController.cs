@@ -257,6 +257,14 @@
         }
 
         [HttpGet]
+        public ActionResult DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            //ProviderSiteRelationshipViewModel
+
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult ApiUsers(ApiUserSearchViewModel viewModel)
         {
             var response = _adminMediator.SearchApiUsers(viewModel);

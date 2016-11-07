@@ -79,7 +79,9 @@
                             @Html.Hidden("ProviderSiteRelationships[" + i + "].ProviderSiteRelationshipId", providerSiteRelationship.ProviderSiteRelationshipId)
                             @Html.DropDownList("ProviderSiteRelationships[" + i + "].ProviderSiteRelationshipType", EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes), providerSiteRelationship.ProviderSiteRelationshipType))
                         </td>
-                        <td></td>
+                        <td>
+                            @Html.RouteLink("Delete", ManagementRouteNames.AdminDeleteProviderSiteRelationship)
+                        </td>
                     </tr>
                 }
                 </tbody>
