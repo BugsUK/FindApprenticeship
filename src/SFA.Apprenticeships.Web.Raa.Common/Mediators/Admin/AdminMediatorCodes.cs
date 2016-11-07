@@ -52,12 +52,25 @@
             public const string Ok = "AdminMediatorCodes.SaveProviderSite.Ok";
         }
 
+        public class GetProviderSiteRelationship
+        {
+            public const string Error = "AdminMediatorCodes.GetProviderSiteRelationship.Error";
+            public const string Ok = "AdminMediatorCodes.GetProviderSiteRelationship.Ok";
+        }
+
         public class CreateProviderSiteRelationship
         {
             public const string FailedValidation = "AdminMediatorCodes.CreateProviderSiteRelationship.FailedValidation";
             public const string InvalidUkprn = "AdminMediatorCodes.CreateProviderSiteRelationship.InvalidUkprn";
             public const string Error = "AdminMediatorCodes.CreateProviderSiteRelationship.Error";
             public const string Ok = "AdminMediatorCodes.CreateProviderSiteRelationship.Ok";
+        }
+
+
+        public class DeleteProviderSiteRelationship
+        {
+            public const string Error = "AdminMediatorCodes.DeleteProviderSiteRelationship.Error";
+            public const string Ok = "AdminMediatorCodes.DeleteProviderSiteRelationship.Ok";
         }
 
         public class SearchApiUsers

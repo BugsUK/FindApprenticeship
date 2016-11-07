@@ -167,6 +167,25 @@
             return providerSites.Select(ps => MapProviderSite(ps, providerSiteRelationships));
         }
 
+        public ProviderSiteRelationship GetProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            const string sql = @"
+                SELECT psr.*, p.UKPRN As ProviderUkprn, p.FullName as ProviderFullName, p.TradingName as ProviderTradingName, ps.FullName as ProviderSiteFullName, ps.TradingName as ProviderSiteTradingName
+                FROM dbo.ProviderSiteRelationship AS psr 
+                JOIN Provider p ON psr.ProviderID = p.ProviderId 
+                JOIN ProviderSite ps ON psr.ProviderSiteID = ps.ProviderSiteId 
+                WHERE ProviderSiteRelationshipID = @providerSiteRelationshipId";
+
+            var sqlParams = new
+            {
+                providerSiteRelationshipId
+            };
+
+            var providerSiteRelationship = _getOpenConnection.Query<Entities.ProviderSiteRelationship>(sql, sqlParams).SingleOrDefault();
+
+            return _mapper.Map<Entities.ProviderSiteRelationship, ProviderSiteRelationship>(providerSiteRelationship);
+        }
+
         private IEnumerable<ProviderSite> GetByProviderIds(IEnumerable<int> providerIds, IEnumerable<int> providerSiteRelationShipTypeIds)
         {
             var sql = @"
@@ -243,6 +262,11 @@
             return providerSiteRelationship;
         }
 
+        public void DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            _getOpenConnection.MutatingQuery<object>("DELETE FROM ProviderSiteRelationship WHERE ProviderSiteRelationshipID = @providerSiteRelationshipId", new { providerSiteRelationshipId });
+        }
+
         private Entities.ProviderSite MapProviderSite(ProviderSite providerSite)
         {
             return _mapper.Map<ProviderSite, Entities.ProviderSite>(providerSite);
@@ -271,10 +295,11 @@
         private IReadOnlyDictionary<int, List<Entities.ProviderSiteRelationship>> GetProviderIdByProviderSiteId(IEnumerable<int> providerSiteIds)
         {
             const string sql = @"
-                SELECT psr.*, p.UKPRN As ProviderUkprn, p.FullName as ProviderFullName, p.TradingName as ProviderTradingName
+                SELECT psr.*, p.UKPRN As ProviderUkprn, p.FullName as ProviderFullName, p.TradingName as ProviderTradingName, ps.FullName as ProviderSiteFullName, ps.TradingName as ProviderSiteTradingName
                 FROM dbo.ProviderSiteRelationship AS psr 
                 JOIN Provider p ON psr.ProviderID = p.ProviderId 
-                WHERE ProviderSiteId IN @providerSiteIds
+                JOIN ProviderSite ps ON psr.ProviderSiteID = ps.ProviderSiteId 
+                WHERE psr.ProviderSiteId IN @providerSiteIds
                 ORDER BY psr.ProviderSiteRelationshipTypeID";
 
             var sqlParams = new

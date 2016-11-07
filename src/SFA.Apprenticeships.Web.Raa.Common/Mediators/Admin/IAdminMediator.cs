@@ -21,7 +21,9 @@
         MediatorResponse<ProviderSiteViewModel> GetProviderSite(int providerSiteId);
         MediatorResponse<ProviderSiteViewModel> CreateProviderSite(ProviderSiteViewModel viewModel);
         MediatorResponse<ProviderSiteViewModel> SaveProviderSite(ProviderSiteViewModel viewModel);
+        MediatorResponse<ProviderSiteRelationshipViewModel> GetProviderSiteRelationship(int providerSiteRelationshipId);
         MediatorResponse<ProviderSiteViewModel> CreateProviderSiteRelationship(ProviderSiteViewModel viewModel);
+        MediatorResponse<ProviderSiteRelationshipViewModel> DeleteProviderSiteRelationship(int providerSiteRelationshipId);
         MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel);
         MediatorResponse<ApiUserViewModel> GetApiUser(Guid externalSystemId);
         MediatorResponse<ApiUserViewModel> CreateApiUser(ApiUserViewModel viewModel);
