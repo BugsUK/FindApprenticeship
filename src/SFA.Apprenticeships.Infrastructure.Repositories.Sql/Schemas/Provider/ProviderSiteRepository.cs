@@ -262,6 +262,11 @@
             return providerSiteRelationship;
         }
 
+        public void DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            _getOpenConnection.MutatingQuery<object>("DELETE FROM ProviderSiteRelationship WHERE ProviderSiteRelationshipID = @providerSiteRelationshipId", new { providerSiteRelationshipId });
+        }
+
         private Entities.ProviderSite MapProviderSite(ProviderSite providerSite)
         {
             return _mapper.Map<ProviderSite, Entities.ProviderSite>(providerSite);

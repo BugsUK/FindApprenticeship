@@ -63,5 +63,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         ProviderSiteRelationship GetProviderSiteRelationship(int providerSiteRelationshipId);
 
         ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship);
+
+        void DeleteProviderSiteRelationship(int providerSiteRelationshipId);
     }
 }

@@ -11,6 +11,8 @@
         public const string ProviderSiteRelationshipInvalidUkprn = "The supplied UKPRN does not map to a provider";
         public const string ProviderSiteRelationshipCreatedSuccessfully = "Successfully created a new provider site relationship";
         public const string ProviderSiteRelationshipCreationError = "An error occured when trying to save the new provider site relationship. Please check your entries and try again";
+        public const string ProviderSiteRelationshipDeletedSuccessfully = "Successfully deleted the {0} provider site relationship between {1} ({2}) and {3} ({4})";
+        public const string ProviderSiteRelationshipDeletionError = "An error occured when trying to delete the new provider site relationship. Please try again";
 
         public static class DisplayName
         {

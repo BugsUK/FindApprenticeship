@@ -222,7 +222,19 @@
 
         public MediatorResponse<ProviderSiteRelationshipViewModel> DeleteProviderSiteRelationship(int providerSiteRelationshipId)
         {
-            throw new NotImplementedException();
+            var viewModel = _providerProvider.GetProviderSiteRelationshipViewModel(providerSiteRelationshipId);
+
+            try
+            {
+                _providerProvider.DeleteProviderSiteRelationship(providerSiteRelationshipId);
+                var message = string.Format(ProviderSiteViewModelMessages.ProviderSiteRelationshipDeletedSuccessfully, viewModel.ProviderSiteRelationshipType, viewModel.ProviderFullName, viewModel.ProviderTradingName, viewModel.ProviderSiteFullName, viewModel.ProviderSiteTradingName);
+                return GetMediatorResponse(AdminMediatorCodes.DeleteProviderSiteRelationship.Ok, viewModel, message, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save provider site with id={viewModel.ProviderSiteId}", ex);
+                return GetMediatorResponse(AdminMediatorCodes.DeleteProviderSiteRelationship.Error, viewModel, ProviderSiteViewModelMessages.ProviderSiteRelationshipDeletionError, UserMessageLevel.Error);
+            }
         }
 
         public MediatorResponse<ApiUserSearchResultsViewModel> SearchApiUsers(ApiUserSearchViewModel searchViewModel)

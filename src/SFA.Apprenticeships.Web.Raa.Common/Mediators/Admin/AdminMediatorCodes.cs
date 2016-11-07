@@ -66,6 +66,13 @@
             public const string Ok = "AdminMediatorCodes.CreateProviderSiteRelationship.Ok";
         }
 
+
+        public class DeleteProviderSiteRelationship
+        {
+            public const string Error = "AdminMediatorCodes.DeleteProviderSiteRelationship.Error";
+            public const string Ok = "AdminMediatorCodes.DeleteProviderSiteRelationship.Ok";
+        }
+
         public class SearchApiUsers
         {
             public const string FailedValidation = "AdminMediatorCodes.SearchApiUsers.FailedValidation";

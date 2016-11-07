@@ -337,5 +337,10 @@
 
             return providerSiteRelationship.Convert();
         }
+
+        public void DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            _providerService.DeleteProviderSiteRelationship(providerSiteRelationshipId);
+        }
     }
 }

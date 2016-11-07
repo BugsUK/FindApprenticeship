@@ -253,6 +253,11 @@
             return _providerSiteWriteRepository.Create(providerSiteRelationship);
         }
 
+        public void DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            _providerSiteWriteRepository.DeleteProviderSiteRelationship(providerSiteRelationshipId);
+        }
+
         private List<VacancyOwnerRelationship> GetVacancyParties(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();
