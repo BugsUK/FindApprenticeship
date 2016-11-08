@@ -12,6 +12,7 @@
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Raa.Common.Constants.ViewModels;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -19,7 +20,6 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Web.Mvc;
-    using Raa.Common.ViewModels.Employer;
 
     //TODO: Split this class by code region
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -339,7 +339,7 @@
             {
                 case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
                     return RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
-                        new {response.ViewModel.VacancyReferenceNumber, response.ViewModel.ComeFromPreview});
+                        new { response.ViewModel.VacancyReferenceNumber, response.ViewModel.ComeFromPreview });
 
                 case VacancyPostingMediatorCodes.CreateVacancy.Ok:
                     return okAction();
