@@ -232,6 +232,7 @@
     <Compile Include="Validators\Standard\StandardViewModelValidator.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelMessages.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelValidator.cs" />
+    <Compile Include="ViewModels\Admin\SectorViewModel.cs" />
     <Compile Include="ViewModels\Admin\StandardViewModel.cs" />
     <Compile Include="ViewModels\Admin\FrameworkViewModel.cs" />
     <Compile Include="ViewModels\Admin\ManageVacancyTransferResultsViewModel.cs" />

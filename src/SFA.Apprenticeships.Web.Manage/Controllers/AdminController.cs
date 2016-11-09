@@ -534,6 +534,13 @@
         }
 
         [HttpGet]
+        public ActionResult CreateSector()
+        {
+            var response = _adminMediator.GetCreateSector();
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
         public ActionResult Standard(int standardId)
         {
             var response = _adminMediator.GetStandard(standardId);

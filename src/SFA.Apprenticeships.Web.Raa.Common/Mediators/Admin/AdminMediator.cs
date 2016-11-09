@@ -555,7 +555,7 @@
             var id = viewModel.StandardId;
             var larsCode = viewModel.LarsCode;
 
-            PopulateDropdown(viewModel);
+            PopulateStandardsDropdown(viewModel);
             viewModel.ApprenticeshipSectorId = apprenticeshipSectorId;
             viewModel.ApprenticeshipLevel = apprenticeshipLevel;
             viewModel.Name = standardName;
@@ -596,7 +596,7 @@
             return GetMediatorResponse(AdminMediatorCodes.CreateStandard.Ok, viewModel);
         }
 
-        public void PopulateDropdown(StandardViewModel model)
+        public void PopulateStandardsDropdown(StandardViewModel model)
         {
             var sectorList = GetStandards();
 
@@ -621,11 +621,30 @@
             };
         }
 
+        public void PopulateSectorsDropdown(SectorViewModel model)
+        {
+            var sectorList = GetStandards();
+
+            model.ApprenticeshipOccupations =
+                sectorList.ViewModel.Select(sector => new SelectListItem
+                {
+                    Value = sector.Id.ToString(),
+                    Text = sector.Name
+                }).OrderBy(sli => sli.Text);
+        }
+
         public MediatorResponse<StandardViewModel> GetCreateStandard()
         {
             var viewModel = new StandardViewModel();
-            PopulateDropdown(viewModel);
+            PopulateStandardsDropdown(viewModel);
             return GetMediatorResponse(AdminMediatorCodes.GetCreateStandard.Ok, viewModel);
+        }
+
+        public MediatorResponse<SectorViewModel> GetCreateSector()
+        {
+            var viewModel = new SectorViewModel();
+            PopulateSectorsDropdown(viewModel);
+            return GetMediatorResponse(AdminMediatorCodes.GetCreateSector.Ok, viewModel);
         }
 
         public MediatorResponse<List<Category>> GetFrameworks()

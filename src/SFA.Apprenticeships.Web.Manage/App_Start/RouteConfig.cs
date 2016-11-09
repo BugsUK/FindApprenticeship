@@ -421,6 +421,12 @@
                defaults: new { controller = "Admin", action = "SaveStandard" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateSector,
+               url: "admin/sectors/create",
+               defaults: new { controller = "Admin", action = "CreateSector" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

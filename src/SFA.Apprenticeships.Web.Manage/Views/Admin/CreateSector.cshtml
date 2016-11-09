@@ -1,0 +1,25 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin.SectorViewModel
+
+@{
+    ViewBag.Title = "Create Standard";
+}
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateSector))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="form-group">
+        @Html.FormTextFor(m => m.Name, controlHtmlAttributes: new { type = "text" })
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ApprenticeshipOccupationId, new { @class = "form-label" })
+            @Html.DropDownListFor(m => m.ApprenticeshipOccupationId, Model.ApprenticeshipOccupations)
+        </div>
+
+        <div class="form-group">
+            <button id="add-sector-button" type="submit" class="button" name="CreateSectorAction" value="CreateSector">Add Standard</button>
+        </div>
+    </div>
+}

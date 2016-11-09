@@ -45,8 +45,8 @@
         MediatorResponse<byte[]> GetFrameworksBytes();
         MediatorResponse<byte[]> GetStandardsBytes();
         MediatorResponse<StandardViewModel> GetCreateStandard();
+        MediatorResponse<SectorViewModel> GetCreateSector();
         MediatorResponse<StandardViewModel> GetStandard(int standardId);
-
         MediatorResponse<StandardViewModel> SaveStandard(StandardViewModel viewModel);
     }
 }

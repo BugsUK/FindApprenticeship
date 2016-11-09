@@ -78,5 +78,6 @@
         public const string AdminCreateStandard = "AdminCreateStandard";
         public const string AdminViewStandard = "AdminViewStandard";
         public const string AdminEditStandard = "AdminEditStandard";
+        public const string AdminCreateSector = "AdminCreateSector";
     }
 }
