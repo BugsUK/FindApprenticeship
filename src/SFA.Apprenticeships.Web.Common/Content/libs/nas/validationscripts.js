@@ -9,11 +9,11 @@
         var oldErrorFunction = settings.errorPlacement;
         var oldSuccessFunction = settings.success;
         settings.errorPlacement = function (error, element) {
-            $(element).parent().addClass("input-validation-error");
+            $(element).parent().addClass("error");
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
-            $(element).parent().removeClass("input-validation-error");
+            $(element).parent().removeClass("error");
             oldSuccessFunction(label, element);
 
         };
@@ -29,9 +29,9 @@
 
         setTimeout(function () {    
             if ($thisParent.find('.error-rmessage').length > 0) {
-                $thisParent.addClass('input-validation-error');
+                $thisParent.addClass('error');
             } else {
-                $thisParent.removeClass('input-validation-error');
+                $thisParent.removeClass('error');
             }
         }, 10);
     });
@@ -101,9 +101,9 @@ $(document).ready(function () {
         }
 
         setTimeout(function () {
-            if($('.form-group.input-validation-error').length > 0) {
+            if($('.form-group.error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
-            } else if($('.block-label.input-validation-error').length > 0) {
+            } else if($('.block-label.error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
             }
             $this.attr('disabled');

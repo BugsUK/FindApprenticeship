@@ -605,7 +605,7 @@ WriteLiteral(">\r\n");
                         var className = "form-group";
                         if (ViewData.ModelState.Keys.Contains("NumberOfPositions"))
                         {
-                            className += " input-validation-error";
+                            className += " error";
                         }
                     
             
@@ -613,14 +613,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6592), Tuple.Create("\"", 6610)
+WriteAttribute("class", Tuple.Create(" class=\"", 6575), Tuple.Create("\"", 6593)
             
             #line 99 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 6600), Tuple.Create<System.Object, System.Int32>(className
+, Tuple.Create(Tuple.Create("", 6583), Tuple.Create<System.Object, System.Int32>(className
             
             #line default
             #line hidden
-, 6600), false)
+, 6583), false)
 );
 
 WriteLiteral(">\r\n                        <h4");

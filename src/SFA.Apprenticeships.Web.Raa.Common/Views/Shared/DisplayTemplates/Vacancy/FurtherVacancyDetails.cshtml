@@ -172,13 +172,10 @@
         
         <div class="form-group">@Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDateComment, "Comment", Html.GetLabelFor(m => m.VacancyDatesViewModel.ClosingDateComment))</div>
 
-        <fieldset class="form-group inline-fixed date-input @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))">
-            <a name="@Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()"></a>
-            <legend class="form-label">@Model.GetMetadata(m => m.VacancyDatesViewModel.PossibleStartDate).DisplayName</legend>
-            @Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate)
-            @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
-        </fieldset>
+        @Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate)
+        
         <div class="form-group">@Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDateComment, "Comment", Html.GetLabelFor(m => m.VacancyDatesViewModel.PossibleStartDateComment))</div>
+        
         <fieldset @disabledTag>
             @{
                 var longDescriptionlabelText = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipLabelText : null;

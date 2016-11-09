@@ -180,5 +180,7 @@
 // end inline search bar
 
 $path: "/Content/_assets/img/";
+$warning-colour: #2b8cc4;
 
 @import "_govuk-elements";
+@import "_form-warnings";

@@ -173,7 +173,7 @@
         {
             if (validationType == ValidationType.Error)
             {
-                return HtmlHelper.ValidationInputCssClassName;
+                return Validators.HtmlHelper.ValidationInputCssClassName;
             }
             if (validationType == ValidationType.Warning)
             {
@@ -440,21 +440,12 @@
 
         #region Helpers
 
-        public static ValidationType GetValidationType<TModel, TProperty>(this HtmlHelper<TModel> helper, params Expression<Func<TModel, TProperty>>[] expressions)
+        public static ValidationType GetValidationType<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
         {
-            var validationTypes = new List<ValidationType>();
-
-            foreach (var expression in expressions)
-            {
-                var expressionText = ExpressionHelper.GetExpressionText(expression);
-                var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
-                var propertyName = string.IsNullOrEmpty(htmlFieldPrefix)
-                    ? expressionText
-                    : string.Join(".", htmlFieldPrefix, expressionText);
-                validationTypes.Add(GetValidationType(helper, propertyName));
-            }
-
-            return validationTypes.Distinct().OrderByDescending(v => v).First();
+            //var expressionText = ExpressionHelper.GetExpressionText(expression);
+            //var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
+            var propertyName = helper.NameFor(expression).ToString(); //string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
+            return GetValidationType(helper, propertyName);
         }
 
         public static ValidationType GetValidationType<TModel>(this HtmlHelper<TModel> helper, string propertyName)

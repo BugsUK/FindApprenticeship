@@ -1,9 +1,23 @@
 ﻿@using SFA.Apprenticeships.Web.Common.Extensions
+@using SFA.Apprenticeships.Web.Common.Validators
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Common.ViewModels
 @model DateViewModel
 
-<div class="form-group @HtmlExtensions.GetValidationCssClass(Html.GetValidationType<DateViewModel,object>(m => m, m => m.Day, m => m.Month, m => m.Year))">
+@{
+    var classes = new List<ValidationType>();
+
+    classes.Add(Html.GetValidationType(m => m));
+    classes.Add(Html.GetValidationType(m => m.Day));
+    classes.Add(Html.GetValidationType(m => m.Month));
+    classes.Add(Html.GetValidationType(m => m.Year));
+
+    var item = classes.Distinct().OrderByDescending(v => v).First();
+
+    var errorClass = HtmlExtensions.GetValidationCssClass(item);
+}
+
+<div class="form-group @errorClass">
     <fieldset>
         <legend>
             <span class="form-label-bold">@Html.DisplayNameFor(m => m)</span>

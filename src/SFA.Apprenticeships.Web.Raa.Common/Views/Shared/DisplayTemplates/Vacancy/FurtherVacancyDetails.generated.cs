@@ -1082,85 +1082,34 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n        <fieldset");
+WriteLiteral("</div>\r\n\r\n");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 13450), Tuple.Create("\"", 13643)
-, Tuple.Create(Tuple.Create("", 13458), Tuple.Create("form-group", 13458), true)
-, Tuple.Create(Tuple.Create(" ", 13468), Tuple.Create("inline-fixed", 13469), true)
-, Tuple.Create(Tuple.Create(" ", 13481), Tuple.Create("date-input", 13482), true)
+WriteLiteral("        ");
+
             
             #line 175 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 13492), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
-            
-            #line default
-            #line hidden
-, 13493), false)
-);
-
-WriteLiteral(">\r\n            <a");
-
-WriteAttribute("name", Tuple.Create(" name=\"", 13661), Tuple.Create("\"", 13768)
-            
-            #line 176 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 13668), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()
-            
-            #line default
-            #line hidden
-, 13668), false)
-);
-
-WriteLiteral("></a>\r\n            <legend");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">");
-
-            
-            #line 177 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-                                  Write(Model.GetMetadata(m => m.VacancyDatesViewModel.PossibleStartDate).DisplayName);
+   Write(Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate));
 
             
             #line default
             #line hidden
-WriteLiteral("</legend>\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 178 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-       Write(Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 179 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
-       Write(Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        </fieldset>\r\n        <div");
+WriteLiteral("\r\n        \r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">");
 
             
-            #line 181 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 177 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
                            Write(Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDateComment, "Comment", Html.GetLabelFor(m => m.VacancyDatesViewModel.PossibleStartDateComment)));
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <fieldset ");
+WriteLiteral("</div>\r\n        \r\n        <fieldset ");
 
             
-            #line 182 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 179 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
              Write(disabledTag);
 
             
@@ -1169,13 +1118,13 @@ WriteLiteral("</div>\r\n        <fieldset ");
 WriteLiteral(">\r\n");
 
             
-            #line 183 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 180 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 183 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 180 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
               
                 var longDescriptionlabelText = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipLabelText : null;
                 var longDescriptionDataValLength = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipTooLongErrorText : VacancyViewModelMessages.LongDescription.TooLongErrorText;
@@ -1189,7 +1138,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 188 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 185 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.FormTextAreaFor(m => m.LongDescription, longDescriptionlabelText, controlHtmlAttributes: new { id = "LongDescription", @class = "ckeditor", type = "text", size = 12, rows = 22, data_val_length = longDescriptionDataValLength, data_val_regex = longDescriptionDataValRegex }));
 
             
@@ -1200,7 +1149,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 189 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
+            #line 186 "..\..\Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml"
        Write(Html.EditorFor(m => m.LongDescriptionComment, "Comment", Html.GetLabelFor(m => m.LongDescriptionComment, Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.LongDescriptionComment.TraineeshipLabelText : null)));
 
             

@@ -139,11 +139,11 @@
             messagesOnModified: true,
             insertMessages: true,
             parseInputAttributes: true,
-            errorClass: 'input-validation-error',
+            errorClass: 'error',
             grouping: {
                 deep: true
             },
-            errorElementClass: 'input-validation-error'
+            errorElementClass: 'error'
         });
 
         var locationsViewModel = new locationAddressesViewModel();

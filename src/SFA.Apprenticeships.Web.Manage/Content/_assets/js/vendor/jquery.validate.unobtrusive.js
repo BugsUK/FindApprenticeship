@@ -62,7 +62,7 @@
 
         if (replace) {
             container.empty();
-            error.removeClass("input-validation-error").appendTo(container);
+            error.removeClass("error").appendTo(container);
         }
         else {
             error.hide();
@@ -120,7 +120,7 @@
         if (!result) {
             result = {
                 options: {  // options structure passed to jQuery Validate's validate() method
-                    errorClass: "input-validation-error",
+                    errorClass: "error",
                     errorElement: "span",
                     errorPlacement: $.proxy(onError, form),
                     invalidHandler: $.proxy(onErrors, form),

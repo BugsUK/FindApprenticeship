@@ -185,7 +185,7 @@ WriteLiteral("        </ul>\r\n\r\n    </div>\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"error-summary\"");
+WriteLiteral(" class=\"warning-summary\"");
 
 WriteLiteral(" role=\"group\"");
 
@@ -253,15 +253,15 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2673), Tuple.Create("\"", 2704)
-, Tuple.Create(Tuple.Create("", 2680), Tuple.Create("#", 2680), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2675), Tuple.Create("\"", 2706)
+, Tuple.Create(Tuple.Create("", 2682), Tuple.Create("#", 2682), true)
             
             #line 73 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 2681), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+, Tuple.Create(Tuple.Create("", 2683), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 2681), false)
+, 2683), false)
 );
 
 WriteLiteral(">");

@@ -39,12 +39,18 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Shared.EditorTemplates
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
     #line 2 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-    using SFA.Apprenticeships.Web.Common.Validators.Extensions;
+    using SFA.Apprenticeships.Web.Common.Validators;
     
     #line default
     #line hidden
     
     #line 3 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+    using SFA.Apprenticeships.Web.Common.Validators.Extensions;
+    
+    #line default
+    #line hidden
+    
+    #line 4 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
     using SFA.Apprenticeships.Web.Common.ViewModels;
     
     #line default
@@ -61,17 +67,34 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Shared.EditorTemplates
         }
         public override void Execute()
         {
-WriteLiteral("<div");
-
-WriteAttribute("class", Tuple.Create(" class=\"", 189), Tuple.Create("\"", 338)
-, Tuple.Create(Tuple.Create("", 197), Tuple.Create("form-group", 197), true)
             
-            #line 6 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-, Tuple.Create(Tuple.Create(" ", 207), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType<DateViewModel,object>(m => m, m => m.Day, m => m.Month, m => m.Year))
+            #line 7 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+  
+    var classes = new List<ValidationType>();
+
+    classes.Add(Html.GetValidationType(m => m));
+    classes.Add(Html.GetValidationType(m => m.Day));
+    classes.Add(Html.GetValidationType(m => m.Month));
+    classes.Add(Html.GetValidationType(m => m.Year));
+
+    var item = classes.Distinct().OrderByDescending(v => v).First();
+
+    var errorClass = HtmlExtensions.GetValidationCssClass(item);
+
             
             #line default
             #line hidden
-, 208), false)
+WriteLiteral("\r\n\r\n<div");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 652), Tuple.Create("\"", 682)
+, Tuple.Create(Tuple.Create("", 660), Tuple.Create("form-group", 660), true)
+            
+            #line 20 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+, Tuple.Create(Tuple.Create(" ", 670), Tuple.Create<System.Object, System.Int32>(errorClass
+            
+            #line default
+            #line hidden
+, 671), false)
 );
 
 WriteLiteral(">\r\n    <fieldset>\r\n        <legend>\r\n            <span");
@@ -81,7 +104,7 @@ WriteLiteral(" class=\"form-label-bold\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 23 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
                                      Write(Html.DisplayNameFor(m => m));
 
             
@@ -96,7 +119,7 @@ WriteLiteral(" id=\"example-dob-hint\"");
 WriteLiteral(">");
 
             
-            #line 10 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 24 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
                                                      Write(Model.GetMetadata(m => m).DisplayName);
 
             
@@ -107,7 +130,7 @@ WriteLiteral("</span>\r\n");
 WriteLiteral("            ");
 
             
-            #line 11 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 25 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m, Html.GetValidationType(m => m)));
 
             
@@ -118,7 +141,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 12 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 26 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m.Day, Html.GetValidationType(m => m.Day)));
 
             
@@ -129,7 +152,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 13 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 27 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m.Month, Html.GetValidationType(m => m.Month)));
 
             
@@ -140,7 +163,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 14 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 28 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m.Year, Html.GetValidationType(m => m.Year)));
 
             
@@ -165,7 +188,7 @@ WriteLiteral(">Day</label>\r\n");
 WriteLiteral("                ");
 
             
-            #line 19 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 33 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
            Write(Html.TextBoxFor(m => m.Day, new { name = Html.NameFor(m => m).ToString().Replace(".", "_").ToLower(), type = "number", pattern = "[0-9]*", min = "0", max = "31" }));
 
             
@@ -188,7 +211,7 @@ WriteLiteral(">Month</label>\r\n");
 WriteLiteral("                ");
 
             
-            #line 24 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 38 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
            Write(Html.TextBoxFor(m => m.Month, new { pattern = "[0-9]*", min = "0", max = "12" }));
 
             
@@ -211,7 +234,7 @@ WriteLiteral(">Year</label>\r\n");
 WriteLiteral("                ");
 
             
-            #line 29 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 43 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
            Write(Html.TextBoxFor(m => m.Year, new { pattern = "[0-9]*", min = "0" }));
 
             

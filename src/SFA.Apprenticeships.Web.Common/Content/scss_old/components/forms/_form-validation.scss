@@ -34,7 +34,7 @@
 
 // Validation error message box
 .validation-error,
-.input-validation-error {
+.error {
   border-left: 3px solid $error-colour;
   box-sizing: content-box;
   margin-left: -13px;
@@ -111,7 +111,7 @@
   margin-top: 8px;
 }
 
-.form-control.input-validation-error {
+.form-control.error {
   background: $error-background;
 }
 
@@ -130,11 +130,11 @@
   margin-top: 5px;
 }
 
-.form-group.input-validation-error {
+.form-group.error {
   > .form-control {
     background: $error-background;
   }
-  .form-group.input-validation-error {
+  .form-group.error {
     border-left: 0;
     margin-left: 0;
     padding-left: 0;
