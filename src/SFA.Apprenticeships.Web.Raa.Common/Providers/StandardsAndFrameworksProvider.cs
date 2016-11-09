@@ -10,6 +10,7 @@
     public class StandardsAndFrameworksProvider : IStandardsAndFrameworksProvider
     {
         private static readonly IMapper StandardMappers = new StandardMappers();
+        private static readonly IMapper SectorMappers = new SectorMapper();
 
         private readonly IReferenceDataService _referenceDataService;
 
@@ -25,6 +26,14 @@
             var createdStandard = _referenceDataService.CreateStandard(standard);
 
             return StandardMappers.Map<Standard, StandardViewModel>(createdStandard);
+        }
+
+        public SectorViewModel CreateSector(SectorViewModel viewModel)
+        {
+            var sector = SectorMappers.Map<SectorViewModel, Sector>(viewModel);
+            var createSector = _referenceDataService.CreateSector(sector);
+
+            return SectorMappers.Map<Sector, SectorViewModel>(createSector);
         }
 
         public StandardViewModel GetStandardViewModel(int standardId)

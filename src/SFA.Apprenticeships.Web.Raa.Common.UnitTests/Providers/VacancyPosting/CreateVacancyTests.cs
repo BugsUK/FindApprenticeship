@@ -56,7 +56,7 @@
                 {
                     new Sector
                     {
-                        Id = 1,
+                        SectorId = 1,
                         Standards =
                             new List<Standard>
                             {

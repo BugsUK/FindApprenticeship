@@ -596,6 +596,12 @@
             return GetMediatorResponse(AdminMediatorCodes.CreateStandard.Ok, viewModel);
         }
 
+        public MediatorResponse<SectorViewModel> CreateSector(SectorViewModel viewModel)
+        {
+            viewModel = _standardsAndFrameworksProvider.CreateSector(viewModel);
+            return GetMediatorResponse(AdminMediatorCodes.CreateSector.Ok, viewModel);
+        }
+
         public void PopulateStandardsDropdown(StandardViewModel model)
         {
             var sectorList = GetStandards();
@@ -603,7 +609,7 @@
             model.ApprenticeshipSectors =
                 sectorList.ViewModel.SelectMany(ssat1 => ssat1.Sectors.Select(sector => new SelectListItem
                 {
-                    Value = sector.Id.ToString(),
+                    Value = sector.SectorId.ToString(),
                     Text = sector.Name
                 }).OrderBy(sli => sli.Text));
             model.ApprenticeshipLevels = new List<SelectListItem>

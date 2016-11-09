@@ -13,10 +13,10 @@
         {
             Mapper.CreateMap<DomainSector, Entities.StandardSector>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.StandardSectorId, opt => opt.MapFrom(src => src.Id));
+                .ForMember(dest => dest.StandardSectorId, opt => opt.MapFrom(src => src.SectorId));
             Mapper.CreateMap<Entities.StandardSector, DomainSector>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.StandardSectorId))
+                .ForMember(dest => dest.SectorId, opt => opt.MapFrom(src => src.StandardSectorId))
                 .ForMember(dest => dest.Standards, opt => opt.Ignore());
             Mapper.CreateMap<DomainFramework, Entities.ApprenticeshipFramework>()
                 .ForMember(dest => dest.ApprenticeshipFrameworkId, opt => opt.MapFrom(src => src.Id))
@@ -39,7 +39,7 @@
             Mapper.CreateMap<Standard, Entities.Standard>()
                 .ForMember(dest => dest.StandardId, opt => opt.MapFrom(src => src.StandardId))
                 .ForMember(dest => dest.LarsCode, opt => opt.MapFrom(src => src.LarsCode))
-                .ForMember(dest => dest.EducationLevelId, opt => opt.MapFrom(src => (int) src.ApprenticeshipLevel))
+                .ForMember(dest => dest.EducationLevelId, opt => opt.MapFrom(src => (int)src.ApprenticeshipLevel))
                 .ForMember(dest => dest.StandardSectorId, opt => opt.MapFrom(src => src.ApprenticeshipSectorId))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Name));
             Mapper.CreateMap<Entities.Standard, Standard>()
@@ -47,6 +47,14 @@
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
                 .ForMember(dest => dest.ApprenticeshipSectorId, opt => opt.MapFrom(src => src.StandardSectorId))
                 .ForMember(dest => (int)dest.ApprenticeshipLevel, opt => opt.MapFrom(src => src.EducationLevelId));
+            Mapper.CreateMap<DomainSector, Entities.StandardSector>()
+                .ForMember(dest => dest.StandardSectorId, opt => opt.MapFrom(src => src.SectorId))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.ApprenticeshipOccupationId, opt => opt.MapFrom(src => src.ApprenticeshipOccupationId));
+            Mapper.CreateMap<Entities.StandardSector, DomainSector>()
+                .ForMember(dest => dest.SectorId, opt => opt.MapFrom(src => src.StandardSectorId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(dest => dest.ApprenticeshipOccupationId, opt => opt.MapFrom(src => src.ApprenticeshipOccupationId));
         }
     }
 }

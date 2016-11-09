@@ -41,8 +41,8 @@
             _standardB = new Standard {StandardId = 12, Name = "Standard B", ApprenticeshipLevel = ApprenticeshipLevel.Advanced, ApprenticeshipSectorId = 1};
             _standardC = new Standard {StandardId = 13, Name = "Standard C", ApprenticeshipLevel = ApprenticeshipLevel.FoundationDegree, ApprenticeshipSectorId = 11};
             _standardList = new List<Standard> { _standardA, _standardB, _standardC };
-            _standardSector = new Sector {Id = 1, Name = "Sector A", ApprenticeshipOccupationId = 1, Standards = new List<Standard> { _standardA, _standardB } };
-            _standardSectorWithNameSharedWithFramework = new Sector {Id = 11, Name = "Duplicate Name", ApprenticeshipOccupationId = 1, Standards = new List<Standard> { _standardC } };
+            _standardSector = new Sector {SectorId = 1, Name = "Sector A", ApprenticeshipOccupationId = 1, Standards = new List<Standard> { _standardA, _standardB } };
+            _standardSectorWithNameSharedWithFramework = new Sector {SectorId = 11, Name = "Duplicate Name", ApprenticeshipOccupationId = 1, Standards = new List<Standard> { _standardC } };
             _standardSectorList = new List<Sector> { _standardSector, _standardSectorWithNameSharedWithFramework };
             _frameworkA = new Framework {Id = 1, CodeName = "FW.1", FullName = "Full Name", ShortName = "Short", ParentCategoryCodeName = "SSAT1.MFP" };
             _frameworkB = new Framework {Id = 12, CodeName = "FW.12", FullName = "Duplicate Framework Name (Lantra)", ShortName = "Short", ParentCategoryCodeName = "SSAT1.MFP" };

@@ -822,7 +822,7 @@
 
             var sectors = _referenceDataService.GetSectors().ToList();
             var standard = sectors.SelectMany(s => s.Standards).First(s => s.StandardId == standardId.Value);
-            var sector = sectors.First(s => s.Id == standard.ApprenticeshipSectorId);
+            var sector = sectors.First(s => s.SectorId == standard.ApprenticeshipSectorId);
             return standard.Convert(sector);
         }
 

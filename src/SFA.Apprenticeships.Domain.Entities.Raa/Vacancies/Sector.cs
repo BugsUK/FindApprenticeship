@@ -4,7 +4,7 @@
 
     public class Sector
     {
-        public int Id { get; set; }
+        public int SectorId { get; set; }
 
         public string Name { get; set; }
 

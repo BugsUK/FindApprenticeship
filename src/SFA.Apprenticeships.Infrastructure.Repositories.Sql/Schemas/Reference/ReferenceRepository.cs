@@ -194,6 +194,17 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
                 }).Single();
         }
 
+        public Sector CreateSector(Sector sector)
+        {
+            _logger.Info("Creating new Sector");
+
+            var dbSector = MapSector(sector);
+            var sectorId = _getOpenConnection.Insert(dbSector);
+            sector.SectorId = (int) sectorId;
+
+            return sector;
+        }
+
         public Standard GetById(int standardId)
         {
             _logger.Debug("Getting standard with StandardId={0}", standardId);
@@ -294,6 +305,11 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
             return standard == null
                 ? null
                 : _mapper.Map<Entities.Standard, Standard>(standard);
+        }
+
+        private Entities.StandardSector MapSector(Sector sector)
+        {
+            return _mapper.Map<Sector, Entities.StandardSector>(sector);
         }
     }
 }

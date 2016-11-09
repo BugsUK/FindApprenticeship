@@ -222,6 +222,7 @@
     <Compile Include="Mappers\Resolvers\VacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
+    <Compile Include="Mappers\SectorMapper.cs" />
     <Compile Include="Mappers\StandardMappers.cs" />
     <Compile Include="Mediators\Admin\AdminMediator.cs" />
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />

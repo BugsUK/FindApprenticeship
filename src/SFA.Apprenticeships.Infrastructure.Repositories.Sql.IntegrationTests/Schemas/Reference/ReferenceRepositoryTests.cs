@@ -56,10 +56,10 @@
 
             //Assert
             sectors.Should().NotBeNullOrEmpty();
-            sectors.Any(std => std.Id == 0
+            sectors.Any(std => std.SectorId == 0
                                || string.IsNullOrWhiteSpace(std.Name)
                                || !std.Standards.Any()
-                               || std.Standards.Any(x => x.ApprenticeshipSectorId != std.Id))
+                               || std.Standards.Any(x => x.ApprenticeshipSectorId != std.SectorId))
                                .Should().BeFalse();
         }
 

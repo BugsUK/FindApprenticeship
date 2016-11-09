@@ -540,6 +540,13 @@
             return View(response.ViewModel);
         }
 
+        [HttpPost]
+        public ActionResult CreateSector(SectorViewModel viewModel)
+        {
+            var response = _adminMediator.CreateSector(viewModel);
+            return View(response.ViewModel);
+        }
+
         [HttpGet]
         public ActionResult Standard(int standardId)
         {

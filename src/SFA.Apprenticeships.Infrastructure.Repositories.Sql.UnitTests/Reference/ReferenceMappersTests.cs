@@ -43,7 +43,7 @@
             //Assert
             destination.Should().NotBeNull();
             destination.Name.Should().Be(source.FullName);
-            destination.Id.Should().Be(source.StandardSectorId);
+            destination.SectorId.Should().Be(source.StandardSectorId);
             destination.Standards.Should().BeNull();
         }
 
@@ -59,7 +59,7 @@
             //Assert
             destination.Should().NotBeNull();
             destination.FullName.Should().Be(source.Name);
-            destination.StandardSectorId.Should().Be(source.Id);
+            destination.StandardSectorId.Should().Be(source.SectorId);
         }
 
         [Test]

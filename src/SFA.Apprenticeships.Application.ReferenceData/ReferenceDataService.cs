@@ -62,6 +62,11 @@
             return _referenceRepository.CreateStandard(standard);
         }
 
+        public Sector CreateSector(Sector sector)
+        {
+            return _referenceRepository.CreateSector(sector);
+        }
+
         public Standard GetStandard(int standardId)
         {
             return _referenceRepository.GetById(standardId);

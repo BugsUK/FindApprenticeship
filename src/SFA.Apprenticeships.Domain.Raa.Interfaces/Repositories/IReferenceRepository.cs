@@ -24,5 +24,7 @@
         Standard GetById(int standardId);
 
         Standard Update(Standard standard);
+
+        Sector CreateSector(Sector sector);
     }
 }
