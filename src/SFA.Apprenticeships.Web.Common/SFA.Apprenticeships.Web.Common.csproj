@@ -211,6 +211,7 @@
     <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
     <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
     <Compile Include="BundleConfig.cs" />
+    <Compile Include="Configuration\AnalyticsConfiguration.cs" />
     <Compile Include="Configuration\ReportServerConfiguration.cs" />
     <Compile Include="Configuration\WebApiConfig.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
