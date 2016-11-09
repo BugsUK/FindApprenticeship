@@ -2,22 +2,16 @@
 {
     using Application.Interfaces;
     using Common;
-    using dbo;
-    using Domain.Entities.Feature;
-    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
     using Newtonsoft.Json;
-    using Reference.Entities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
-    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
@@ -280,13 +274,13 @@
 
         private void PatchTrainingType(DomainVacancy result)
         {
-            if (result.TrainingType != TrainingType.Unknown) return;
+            if (result?.TrainingType != TrainingType.Unknown) return;
 
             if (!string.IsNullOrWhiteSpace(result.SectorCodeName))
             {
                 result.TrainingType = TrainingType.Sectors;
             }
-            else if (result.StandardId != null)
+            else if (result?.StandardId != null)
             {
                 result.TrainingType = TrainingType.Standards;
             }
@@ -809,7 +803,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
                 entity.UpdatedDateTime = _dateTimeService.UtcNow;
             }
         }
-        
+
         public int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber)
         {
             _logger.Debug("Calling database to get vacancy id for Vacancy Reference Number={0}",

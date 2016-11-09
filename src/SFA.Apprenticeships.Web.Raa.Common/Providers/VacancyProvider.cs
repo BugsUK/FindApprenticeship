@@ -59,6 +59,7 @@
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
 
+
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
             IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
@@ -1142,7 +1143,8 @@
                 CanBeReservedForQaByCurrentUser = _vacancyLockingService.IsVacancyAvailableToQABy(userName, vacancy),
                 SubmissionCount = vacancy.SubmissionCount,
                 VacancyType = vacancy.VacancyType,
-                Location = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address)
+                Location = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
+                VacancyViewModel = GetVacancy(vacancy.VacancyGuid)
             };
         }
 

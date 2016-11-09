@@ -100,10 +100,19 @@
                                         @vacancy.VacancyType.ToString().Substring(0,3)
                                     </td>
                                     <td>
-                                        @vacancy.Location.Town<br />
-                                        <div class="hgroup-small">
-                                            <p class="subtitle">@vacancy.Location.Postcode</p>
-                                        </div>
+                                        @if (vacancy.VacancyViewModel != null && vacancy.VacancyViewModel.LocationAddresses != null && vacancy.VacancyViewModel.LocationAddresses.Count > 1)
+                                        {
+                                            <div class="hgroup-small">
+                                                <p class="subtitle">Multiple locations</p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @vacancy.Location.Town<br />
+                                            <div class="hgroup-small">
+                                                <p class="subtitle">@vacancy.Location.Postcode</p>
+                                            </div>
+                                        }                      
                                     </td>
                                     <td class="reactive-header" data-label="Date submitted">
                                         @vacancy.DateSubmitted.ToGmtDate()
