@@ -205,7 +205,7 @@
     </Compile>
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
-    <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
+    <Compile Include="Attributes\ApplyAnalyticsAttribute.cs" />
     <Compile Include="Attributes\AuthorizationDataAttribute.cs" />
     <Compile Include="Attributes\OwinSessionTimeoutAttribute.cs" />
     <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
