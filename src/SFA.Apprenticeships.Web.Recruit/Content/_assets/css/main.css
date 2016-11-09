@@ -4223,6 +4223,26 @@ input::-webkit-inner-spin-button {
 .verified {
   color: #28a197; }
 
+label.vertically-stacked {
+  display: block;
+  float: left;
+  clear: left; }
+
+div.nested-panel-1 {
+  clear: both;
+  background: #ffffff;
+  border-left: 3px solid #999999;
+  box-sizing: content-box;
+  margin-left: 0px; }
+
+fieldset.nested-panel-2 {
+  margin-left: 10px; }
+
+.wage-reason-display {
+  background: #ffffff;
+  border-left: 3px solid #999999;
+  padding: 10px; }
+
 .block-label {
   background: #ecedee;
   border: 1px solid #dee0e2;

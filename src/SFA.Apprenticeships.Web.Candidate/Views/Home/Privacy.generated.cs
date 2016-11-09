@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/Privacy.cshtml")]
@@ -143,9 +144,9 @@ WriteLiteral(">\r\n    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(@">Webtrends analytics cookie</h2>
+WriteLiteral(@">Webtrends analytics cookies</h2>
     <p>We use Webtrends to collect information about how you use the service. This information helps us to make improvements.</p>
-    <p>The Webtrends analytics cookie collects and stores information about:</p>
+    <p>The Webtrends analytics cookies collect and store information about:</p>
     <ul>
         <li>the pages you visit</li>
         <li>how long you spend on each page</li>
@@ -234,6 +235,76 @@ WriteLiteral(@" />
             </td>
             <td>
                5 years
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(@">Measuring website usage (Google Analytics)</h2>
+    <p>We also use Google Analytics software to collect information about how you use this service. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.</p>
+    <p>We don’t collect or store your personal information (for example, your name or address) so this information can’t be used to identify who you are.</p>
+    <p>We don’t allow Google to use or share our analytics data.</p>
+    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">Google Analytics cookies</h2>\r\n    <p>Google Analytics sets the following cookie" +
+"s:</p>\r\n    <table>\r\n        <colgroup>\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(@" />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Purpose
+                </th>
+                <th>
+                    Expires
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                _ga
+            </td>
+            <td>
+                To help us to understand how you have used the service so that we can administer apprenticeships in England
+            </td>
+            <td>
+                2 years
+            </td>
+        </tr>
+        <tr>
+            <td>
+                _gat
+            </td>
+            <td>
+                Used to manage the rate at which page view requests are made
+            </td>
+            <td>
+                10 minutes
             </td>
         </tr>
     </table>
@@ -348,28 +419,6 @@ WriteLiteral(@" />
             </td>
             <td>
                 2 years
-            </td>
-        </tr>
-        <tr>
-            <td>
-                _ga
-            </td>
-            <td>
-                Allows Google to uniquely identify you as a visitor.
-            </td>
-            <td>
-                2 years
-            </td>
-        </tr>
-        <tr>
-            <td>
-                _gat
-            </td>
-            <td>
-                Helps reduce congestion if there are too many visitors at any time. 
-            </td>
-            <td>
-                10 minutes
             </td>
         </tr>
     </table>
