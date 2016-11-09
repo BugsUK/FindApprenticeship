@@ -88,6 +88,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public bool EditedInRaa { get; set; }
 
         public string EmployerAnonymousName { get; set; }
+        public string EmployerAnonymousReason { get; set; }
 
         [Write(false)]
         public string EmployerDescription { get; set; }

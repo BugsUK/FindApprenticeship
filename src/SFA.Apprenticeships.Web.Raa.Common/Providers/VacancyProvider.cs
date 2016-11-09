@@ -934,6 +934,7 @@
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
             vacancy.EmployerAnonymousName = null;
+            vacancy.EmployerAnonymousReason = null;
             vacancy.OfflineVacancyType = null;
 
             //Comments
