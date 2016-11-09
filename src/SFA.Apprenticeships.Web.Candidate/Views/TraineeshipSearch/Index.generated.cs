@@ -75,15 +75,15 @@ WriteLiteral(" class=\"subtitle\"");
 
 WriteLiteral(">Search and apply for a traineeship in England</p>\r\n</div>\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n\r\n    <div");
 
-WriteLiteral(" class=\"grid-wrapper controls-3-4\"");
+WriteLiteral(" class=\"grid-row controls-3-4\"");
 
 WriteLiteral(">\r\n        <section");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n");
 
@@ -236,14 +236,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1441), Tuple.Create("\"", 1471)
+WriteAttribute("value", Tuple.Create(" value=\"", 1437), Tuple.Create("\"", 1467)
             
             #line 32 "..\..\Views\TraineeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1449), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 1445), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 1449), false)
+, 1445), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -271,7 +271,7 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("        </section>\r\n        <aside");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n            <div");
 
@@ -292,14 +292,14 @@ WriteLiteral(" class=\"list-text\"");
 WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
 "");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1868), Tuple.Create("\'", 1918)
+WriteAttribute("href", Tuple.Create(" href=\'", 1867), Tuple.Create("\'", 1917)
             
             #line 42 "..\..\Views\TraineeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1875), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 1874), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 1875), false)
+, 1874), false)
 );
 
 WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    <ul");

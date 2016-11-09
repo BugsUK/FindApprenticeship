@@ -15,7 +15,7 @@
                 var categories = Model.Categories.ToList();
                 var categorySplitCount = categories.Count/2 + categories.Count%2;
 
-                <div class="grid-row grid-1-2">
+                <div class="column-one-half">
                     <div class="inner-block-padr">
                         <ul id="category-list-left" class="font-xsmall list-text list-checkradio">
                             @for (var i = 0; i < categorySplitCount; i++)
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="grid-row grid-1-2">
+                <div class="column-one-half">
                     <ul id="category-list-right" class="font-xsmall list-text list-checkradio">
                         @for (var i = categorySplitCount; i < categories.Count; i++)
                         {
@@ -47,7 +47,7 @@
             }
             else
             {
-                <div id="category-load-failed" class="field-validation-error">Category search is currently unavailable. Please try again or use the keyword search</div>
+                <div id="category-load-failed" class="error-rmessage">Category search is currently unavailable. Please try again or use the keyword search</div>
             }
         }
     </div>

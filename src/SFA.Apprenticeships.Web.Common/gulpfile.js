@@ -39,13 +39,15 @@ gulp.task('merge-base', function() {
         .pipe(gulp.dest(buildDir + 'img'));
     gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/stylesheets/**/*')
         .pipe(gulp.dest(buildDir + 'css'));
+    gulp.src(repo_root + 'content/libs/**/*')
+        .pipe(gulp.dest(buildDir + 'js'));
     return gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/javascripts/**/*')
         .pipe(gulp.dest(buildDir + 'js'));
 });
 
 gulp.task('copy', function() {
     var pipe = gulp.src(buildDir + '**/*');
-
+    4
     for (var i = 0; i < outputPaths.length; i++) {
         pipe.pipe(gulp.dest(outputPaths[i]));
     }

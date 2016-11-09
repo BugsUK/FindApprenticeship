@@ -43,31 +43,117 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Shared.EditorTemplates
         }
         public override void Execute()
         {
+WriteLiteral("<div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n    <fieldset>\r\n        <legend>\r\n            <span");
+
+WriteLiteral(" class=\"form-label-bold\"");
+
+WriteLiteral(">");
+
             
-            #line 2 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-Write(Html.FormTextFor(m => m.Day, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-xsmall", type = "tel", maxlength = "2", pattern = "[0-9]*" }));
+            #line 6 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+                                     Write(Html.DisplayNameFor(m => m));
 
             
             #line default
             #line hidden
+WriteLiteral("</span>\r\n            <span");
+
+WriteLiteral(" class=\"form-hint\"");
+
+WriteLiteral(" id=\"example-dob-hint\"");
+
+WriteLiteral(">For example, 31 3 1980</span>\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 8 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+       Write(Html.ValidationMessageFor(m => m.Date));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        </legend>\r\n        <div");
+
+WriteLiteral(" class=\"form-date\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"form-group form-group-day\"");
+
+WriteLiteral(">\r\n                <label");
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(" for=\"example-dob-day\"");
+
+WriteLiteral(">Day</label>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 13 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+           Write(Html.TextBoxFor(m => m.Day, new { type = "number", pattern = "[0-9]*", min = "0", max = "31" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                ");
+
+WriteLiteral("\r\n            </div>\r\n            <div");
+
+WriteLiteral(" class=\"form-group form-group-month\"");
+
+WriteLiteral(">\r\n                <label");
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(" for=\"example-dob-month\"");
+
+WriteLiteral(">Month</label>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 18 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+           Write(Html.TextBoxFor(m => m.Month, new { pattern = "[0-9]*", min = "0", max = "12" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                ");
+
+WriteLiteral("\r\n            </div>\r\n            <div");
+
+WriteLiteral(" class=\"form-group form-group-year\"");
+
+WriteLiteral(">\r\n                <label");
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(" for=\"example-dob-year\"");
+
+WriteLiteral(">Year</label>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 23 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+           Write(Html.TextBoxFor(m => m.Year, new { pattern = "[0-9]*", min = "0", max = "2016" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                ");
+
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n    </fieldset>\r\n</div>\r\n\r\n");
+
 WriteLiteral("\r\n");
 
-            
-            #line 3 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-Write(Html.FormTextFor(m => m.Month, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-xsmall", type = "tel", maxlength = "2", pattern = "[0-9]*" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 4 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-Write(Html.FormTextFor(m => m.Year, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", maxlength = "4", pattern = "[0-9]*" }));
-
-            
-            #line default
-            #line hidden
         }
     }
 }

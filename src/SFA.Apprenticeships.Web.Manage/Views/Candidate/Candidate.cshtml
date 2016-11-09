@@ -57,7 +57,7 @@ else
     <div class="grid-row proto-dashboard">
         @if (Model.SuccessfulApprenticeshipApplications.Any() || Model.UnsuccessfulApplications.Any() || Model.SubmittedApprenticeshipApplications.Any())
         {
-            <div class="grid-row grid-1-2">
+            <div class="column-one-half">
                 <div class="inner-block-padr">
                     <section class="clearfix">
                         @if (Model.SuccessfulApprenticeshipApplications.Any())
@@ -207,7 +207,7 @@ else
                     Model.DraftApprenticeshipApplications.Any() ||
                     Model.CandidateTraineeshipApplications.Any())
         {
-            <div class="grid-row grid-1-2">
+            <div class="column-one-half">
                 <section class="clearfix">
                     @if (Model.DraftApprenticeshipApplications.Any())
                     {

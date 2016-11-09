@@ -97,7 +97,7 @@ WriteLiteral(" vacancy\r\n</h1>\r\n\r\n");
 WriteLiteral("    <div>\r\n        <p>You will not be able to retreive this vacancy once it has b" +
 "een deleted</p>\r\n        <div");
 
-WriteLiteral(" class=\"grid grid-1-1\"");
+WriteLiteral(" class=\"grid-row grid-1-1\"");
 
 WriteLiteral(">\r\n");
 

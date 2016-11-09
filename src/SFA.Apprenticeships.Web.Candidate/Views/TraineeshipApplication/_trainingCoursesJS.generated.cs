@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/_trainingCoursesJS.cshtml")]
@@ -345,7 +346,7 @@ WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" id=\"training-history-item\"");
 
-WriteLiteral(" class=\"grid-wrapper training-history-item\"");
+WriteLiteral(" class=\"grid-row training-history-item\"");
 
 WriteLiteral(">\r\n                            <div");
 
@@ -394,7 +395,7 @@ WriteLiteral(">Remove</i>\r\n                                    </span>\r\n    
 "         </div>\r\n                            </div>\r\n                           " +
 " <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -491,7 +492,7 @@ WriteLiteral(@"></span>
                             </div>
                             <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 

@@ -61,7 +61,7 @@
                 @Html.Partial("_Apply", Model, new ViewDataDictionary { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top")})
             </div>
         </section>
-        <section class="section-border grid-wrapper" id="vacancy-info">
+        <section class="section-border grid-row" id="vacancy-info">
             <h2 class="heading-large">Apprenticeship summary</h2>
             <div class="column-one-third">
                 <div class="inner-block-padr">
@@ -123,9 +123,9 @@
             || !string.IsNullOrWhiteSpace(Model.FutureProspects)
             || !string.IsNullOrWhiteSpace(Model.RealityCheck))
          {
-             <section class="section-border grid-wrapper" id="course-info">
+             <section class="section-border grid-row" id="course-info">
                  <h2 class="heading-large">Requirements and prospects</h2>
-                 <div class="grid-row grid-1-2">
+                 <div class="column-one-half">
                      <div class="inner-block-padr">
                          <div class="text">
                              @if (!string.IsNullOrWhiteSpace(Model.SkillsRequired))
@@ -147,7 +147,7 @@
                          </div>
                      </div>
                  </div>
-                 <div class="grid-row grid-1-2">
+                 <div class="column-one-half">
                      <div class="text">
                          @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
                          {
@@ -188,7 +188,7 @@
                 }
             </div>
             <div class="grid-row">
-                <div class="grid-row grid-1-2">
+                <div class="column-one-half">
                     <div class="inner-block-padr">
                         <div class="text">
                             <h3 class="bold-small">Employer</h3>
@@ -223,7 +223,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid-row grid-1-2 hide-print">
+                <div class="column-one-half hide-print">
                     @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
                     {
                         <div id="vacancy-map" class="ad-details__map">
@@ -246,7 +246,7 @@
                 }
             </div>
         </section>
-    <section class="section-border grid-wrapper" id="provider-info">
+    <section class="section-border grid-row" id="provider-info">
         <h2 class="heading-large">Training provider</h2>
         @if (Model.IsNasProvider)
         {

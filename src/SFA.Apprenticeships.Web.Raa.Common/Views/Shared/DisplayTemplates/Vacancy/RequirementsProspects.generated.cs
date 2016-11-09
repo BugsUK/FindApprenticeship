@@ -295,7 +295,7 @@ WriteLiteral("        ");
 
             
             #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
+   Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop form-textarea-medium", type = "text"}));
 
             
             #line default
@@ -328,7 +328,7 @@ WriteLiteral("        ");
 
             
             #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"}));
+   Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop form-textarea-medium", type = "text"}));
 
             
             #line default

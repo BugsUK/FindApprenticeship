@@ -1,8 +1,8 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.ApplicantDetailsViewModel
 
-<section class="section-border grid-wrapper">
+<section class="section-border grid-row">
     <h2 class="heading-large">Your details</h2>
-    <div class="grid-row grid-1-2">
+    <div class="column-one-half">
         <div class="form-group">
             <p class="form-label">Full name</p>
             <span id="candidate-fullname" class="form-prepopped">@Model.Name</span>
@@ -38,7 +38,7 @@
             </ul>
         </div>
     </div>
-    <div class="grid-row grid-1-2">
+    <div class="column-one-half">
         <div class="form-group">
             <p class="form-label">Email address</p>
             @Html.HiddenFor(m => m.EmailAddress)

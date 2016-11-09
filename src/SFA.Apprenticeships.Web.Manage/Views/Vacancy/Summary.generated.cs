@@ -97,7 +97,7 @@ Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <button");
 

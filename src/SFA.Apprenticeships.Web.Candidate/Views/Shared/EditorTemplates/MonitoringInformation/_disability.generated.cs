@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_disability.cshtml")]
@@ -119,7 +120,7 @@ WriteLiteral(" class=\"text\"");
 
 WriteLiteral(">\r\n        <details");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <summary>Why we collect this info</summary>\r\n            <div");
 

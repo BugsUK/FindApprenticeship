@@ -10,7 +10,7 @@
 <section class="section-border" id="employer-info">
     <h2 class="heading-large">About the employer</h2>
     <div class="grid-row">
-        <div class="grid">
+        <div class="column-two-thirds">
             <h3 class="bold-small">Employer</h3>
             <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
         </div>
@@ -33,7 +33,7 @@
             var gridClass = "grid";
             if (Model.IsSingleLocation || ( Model.LocationAddresses != null && Model.LocationAddresses.Count == 1))
             {
-                gridClass += " grid-1-2";
+                gridClass += " column-one-half";
             }
         }
         <div class="@gridClass">
@@ -95,12 +95,12 @@
                             {
                                 var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1) / 2;
                                 <p></p>
-                                <div id="vacancy-address" class="editable-item grid-wrapper" itemscope itemtype="http://schema.org/PostalAddress">
+                                <div id="vacancy-address" class="editable-item grid-row" itemscope itemtype="http://schema.org/PostalAddress">
                                     <h3 class="bold-small">
                                         Addresses
                                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
                                     </h3>
-                                    <div class="grid-row grid-1-2">
+                                    <div class="column-one-half">
                                         <div class="inner-block-padr">
                                             <table class="locations-table" id="leftLocationAddressesTable">
                                                 <colgroup>
@@ -130,7 +130,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="grid-row grid-1-2">
+                                    <div class="column-one-half">
                                         <table class="locations-table" id="rightLocationAddressesTable">
                                             <colgroup>
                                                 <col class="t50">
@@ -177,7 +177,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid-row grid-1-2 hide-print">
+        <div class="column-one-half hide-print">
             @if (Model.IsSingleLocation)
             {
                 <div id="vacancy-map" class="ad-details__map">

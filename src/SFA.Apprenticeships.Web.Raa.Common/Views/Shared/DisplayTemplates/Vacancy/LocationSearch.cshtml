@@ -62,8 +62,8 @@
 
         @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Page != null && Model.SearchResultAddresses.Page.Any())
         {
-            <div class="form-group grid grid-1-2 scrolling-panel max-height-15">
-                <div class="tabbed-element tab1 active width-all-1-1">
+            <div class="form-group column-1-2 scrolling-panel max-height-15">
+                <div class="tabbed-element tab1 active form-control-3-4 beepboop">
                     <table class="no-btm-margin">
                         <colgroup>
                             <col class="t70">
@@ -103,7 +103,7 @@
         {
             <div class="form-group">
                 <a name="locationaddresses"></a>
-                <div class="tabbed-element tab1 active width-all-1-1">
+                <div class="tabbed-element tab1 active form-control-3-4 beepboop">
                     <table class="no-btm-margin grid-3-4">
                         <colgroup>
                             <col class="t50">
@@ -158,7 +158,7 @@
             @Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment))
 
             <div class="form-group">
-                @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
+                @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
                 @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
             </div>
         }
@@ -232,7 +232,7 @@
         </div>
 
         <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
-            @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
+            @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
         </div>
     </div>

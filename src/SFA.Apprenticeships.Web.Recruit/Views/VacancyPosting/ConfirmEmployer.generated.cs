@@ -82,7 +82,7 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -111,7 +111,7 @@ Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
             #line hidden
             
             #line 25 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                               
+                                                                           
 
 
             
@@ -119,7 +119,7 @@ Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid grid-1-1\"");
+WriteLiteral(" class=\"grid-row grid-1-1\"");
 
 WriteLiteral(">\r\n        <button");
 

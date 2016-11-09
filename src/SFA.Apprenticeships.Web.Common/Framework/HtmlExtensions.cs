@@ -440,12 +440,21 @@
 
         #region Helpers
 
-        public static ValidationType GetValidationType<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
+        public static ValidationType GetValidationType<TModel, TProperty>(this HtmlHelper<TModel> helper, params Expression<Func<TModel, TProperty>>[] expressions)
         {
-            var expressionText = ExpressionHelper.GetExpressionText(expression);
-            var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
-            var propertyName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
-            return GetValidationType(helper, propertyName);
+            var validationTypes = new List<ValidationType>();
+
+            foreach (var expression in expressions)
+            {
+                var expressionText = ExpressionHelper.GetExpressionText(expression);
+                var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
+                var propertyName = string.IsNullOrEmpty(htmlFieldPrefix)
+                    ? expressionText
+                    : string.Join(".", htmlFieldPrefix, expressionText);
+                validationTypes.Add(GetValidationType(helper, propertyName));
+            }
+
+            return validationTypes.Distinct().OrderByDescending(v => v).First();
         }
 
         public static ValidationType GetValidationType<TModel>(this HtmlHelper<TModel> helper, string propertyName)

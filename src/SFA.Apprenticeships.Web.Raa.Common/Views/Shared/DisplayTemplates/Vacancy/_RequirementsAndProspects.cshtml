@@ -10,7 +10,7 @@
 <section class="section-border" id="course-info">
     <h2 class="heading-large">Requirements and prospects</h2>
     <div class="grid-row">
-        <div class="grid-row grid-1-2">
+        <div class="column-one-half">
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <div class="text">
@@ -65,7 +65,7 @@
                 </div>
                </div>
         </div>
-        <div class="grid-row grid-1-2">
+        <div class="column-one-half">
             @if (Model.VacancyType == VacancyType.Apprenticeship && (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects) || Model.Status.IsStateReviewable()))
             {
                 <div class="@editableItemClass">

@@ -116,7 +116,7 @@ Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n");
 
@@ -161,14 +161,14 @@ WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1142), Tuple.Create("\"", 1166)
+WriteAttribute("value", Tuple.Create(" value=\"", 1144), Tuple.Create("\"", 1168)
             
             #line 28 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 1150), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                                    , Tuple.Create(Tuple.Create("", 1152), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 1150), false)
+, 1152), false)
 );
 
 WriteLiteral(">");

@@ -24,11 +24,11 @@
     @Html.HiddenFor(m => m.VacancySource)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-small"})
+    @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new {type = "text", size = 12, @class = "form-control-3-4 beepboop form-textarea-small"})
     @Html.EditorFor(m => m.TitleComment, "Comment", Html.GetLabelFor(m => m.TitleComment))
     @Html.ValidationMessageFor(m => m.TitleComment)
 
-    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium"})
+    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new {type = "text", size = 12, @class = "form-control-3-4 beepboop form-textarea-medium"})
     @Html.EditorFor(m => m.ShortDescriptionComment, "Comment", Html.GetLabelFor(m => m.ShortDescriptionComment))
     @Html.ValidationMessageFor(m => m.ShortDescriptionComment)
 
@@ -115,7 +115,7 @@
                                                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType("LocationAddresses[" + i + "].OfflineApplicationUrl")))" style="margin-bottom: 0">
                                                     @Html.Hidden("LocationAddresses[" + i + "].VacancyLocationId", locationAddress.VacancyLocationId)
                                                     @Html.Hidden("LocationAddresses[" + i + "].NumberOfPositions", locationAddress.NumberOfPositions)
-                                                    @Html.TextBoxFor(m => Model.LocationAddresses[i].OfflineApplicationUrl, new { @id = "locationaddresses_" + i + "__offlineapplicationurl", @class = "width-all-1-1 form-control", type = "text", size = 12 })
+                                                    @Html.TextBoxFor(m => Model.LocationAddresses[i].OfflineApplicationUrl, new { @id = "locationaddresses_" + i + "__offlineapplicationurl", @class = "form-control-3-4 beepboop form-control", type = "text", size = 12 })
                                                     @Html.ValidationMessage("LocationAddresses[" + i + "].OfflineApplicationUrl")
                                                 </div>
                                             </td>
@@ -129,7 +129,7 @@
                     <div id="single-offline-application-url-div" style="@offlineSingleUrlDivStyle" class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineApplicationUrl)))">
                         @Html.LabelFor(m => m.OfflineApplicationUrl)
                         <p id="multiple-offline-application-urls-para" class="inline-text" style="@offlineMultiUrlParaStyle">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave no-validation" name="@ViewData["OfflineUrlButtonName"]" value="MultipleOfflineApplicationUrls">@NewVacancyViewModelMessages.MultiOfflineUrlsButtonText</button></p>
-                        @Html.TextBoxFor(m => m.OfflineApplicationUrl, new {@class = "width-all-1-1 form-control", type = "text", size = 12, id = "apprenticeship-offline-application-url"})
+                        @Html.TextBoxFor(m => m.OfflineApplicationUrl, new {@class = "form-control-3-4 beepboop form-control", type = "text", size = 12, id = "apprenticeship-offline-application-url"})
                         @Html.ValidationMessageFor(m => m.OfflineApplicationUrl)
                     </div>
 
@@ -138,7 +138,7 @@
                 </div>
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@
-                    @Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium", id = "apprenticheship-offline-application-instructions"})
+                    @Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, controlHtmlAttributes: new {type = "text", size = 12, @class = "form-control-3-4 beepboop form-textarea-medium", id = "apprenticheship-offline-application-instructions"})
                     @Html.EditorFor(m => m.OfflineApplicationInstructionsComment, "Comment", Html.GetLabelFor(m => m.OfflineApplicationInstructionsComment))
                     @Html.ValidationMessageFor(m => m.OfflineApplicationInstructionsComment)
                     <br/>

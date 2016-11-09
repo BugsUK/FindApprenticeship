@@ -174,7 +174,7 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"search-results-wrapper grid-wrapper\"");
+WriteLiteral(" class=\"search-results-wrapper grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -242,14 +242,14 @@ WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" id=\"receiveSaveSearchAlert\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4644), Tuple.Create("\"", 4826)
+WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4640), Tuple.Create("\"", 4822)
             
             #line 95 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4676), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
+, Tuple.Create(Tuple.Create("", 4672), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
             
             #line default
             #line hidden
-, 4676), false)
+, 4672), false)
 );
 
 WriteLiteral("\r\n                       onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'" +
@@ -290,7 +290,7 @@ WriteLiteral("        </div>\r\n    </div>\r\n\r\n");
             #line hidden
 WriteLiteral("        <section");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n            <div");
 

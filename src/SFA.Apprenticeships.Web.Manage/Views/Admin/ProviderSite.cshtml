@@ -37,10 +37,10 @@
 
         @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
         @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
-        @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.CandidateDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.ContactDetailsForCandidate, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.ContactDetailsForEmployer, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.CandidateDescription, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.ContactDetailsForCandidate, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.ContactDetailsForEmployer, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium", type = "text" })
         @Html.LabelFor(m => m.TrainingProviderStatus, new { @class = "form-label" })
         @Html.DropDownListFor(m => m.TrainingProviderStatus, EnumHelper.GetSelectList(typeof(EmployerTrainingProviderStatuses), Model.TrainingProviderStatus))
 

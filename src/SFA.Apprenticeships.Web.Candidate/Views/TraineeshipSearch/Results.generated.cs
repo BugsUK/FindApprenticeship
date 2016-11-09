@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipSearch/Results.cshtml")]
@@ -86,7 +87,7 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"search-results-wrapper grid-wrapper\"");
+WriteLiteral(" class=\"search-results-wrapper grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -139,7 +140,7 @@ WriteLiteral("</b> traineeships in your selected area.</p>\r\n        </div>\r\n
             #line hidden
 WriteLiteral("        <section");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n            <div");
 

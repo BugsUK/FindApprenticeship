@@ -35,7 +35,7 @@
                 var workingWeekDataValLength = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipTooLongErrorText : VacancyViewModelMessages.WorkingWeek.TooLongErrorText;
                 var workingWeekDataValRegex = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipWhiteListErrorText : VacancyViewModelMessages.WorkingWeek.WhiteListErrorText;
             }
-            @Html.FormTextAreaFor(m => m.WorkingWeek, workingWeeklabelText, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, data_val_length = workingWeekDataValLength, data_val_regex = workingWeekDataValRegex})
+            @Html.FormTextAreaFor(m => m.WorkingWeek, workingWeeklabelText, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, data_val_length = workingWeekDataValLength, data_val_regex = workingWeekDataValRegex})
         </fieldset>
         @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
         {
@@ -138,7 +138,7 @@
                                 @Html.FormTextAreaFor(m => m.Wage.WageTypeReason,
                                string.Empty,
                                containerHtmlAttributes: new { @baseClassName = "form-group-compound" },
-                               controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12,
+                               controlHtmlAttributes: new { @class = "form-control-3-4 beepboop", type = "text", size = 12,
                                    data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText,
                                    data_val_length_max = 240,
                                    data_val_regex = Whitelists.FreetextWhitelist.RegularExpression })
@@ -168,12 +168,8 @@
             @Html.EditorFor(m => m.DurationComment, "Comment", Html.GetLabelFor(m => m.DurationComment))
         </fieldset>
 
-        <fieldset class="form-group inline-fixed date-input @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">
-            <a name="@Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
-            <legend class="form-label">@Model.GetMetadata(m => m.VacancyDatesViewModel.ClosingDate).DisplayName</legend>
-            @Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDate)
-            @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.ClosingDate, Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
-        </fieldset>
+        @Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDate)
+        
         <div class="form-group">@Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDateComment, "Comment", Html.GetLabelFor(m => m.VacancyDatesViewModel.ClosingDateComment))</div>
 
         <fieldset class="form-group inline-fixed date-input @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))">

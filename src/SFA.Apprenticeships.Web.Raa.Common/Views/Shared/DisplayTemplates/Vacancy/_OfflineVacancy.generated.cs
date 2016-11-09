@@ -149,7 +149,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1269), Tuple.Create("\"", 1308)
+WriteAttribute("class", Tuple.Create(" class=\"", 1269), Tuple.Create("\"", 1304)
             
             #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
 , Tuple.Create(Tuple.Create("", 1277), Tuple.Create<System.Object, System.Int32>(editableItemClass
@@ -157,7 +157,7 @@ WriteAttribute("class", Tuple.Create(" class=\"", 1269), Tuple.Create("\"", 1308
             #line default
             #line hidden
 , 1277), false)
-, Tuple.Create(Tuple.Create(" ", 1295), Tuple.Create("grid-wrapper", 1296), true)
+, Tuple.Create(Tuple.Create(" ", 1295), Tuple.Create("grid-row", 1296), true)
 );
 
 WriteLiteral(">\r\n            <p");
@@ -183,7 +183,7 @@ WriteLiteral(">This apprenticeship requires you to apply through the employer\'s
             #line hidden
 WriteLiteral("                <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                    <div");
 
@@ -292,26 +292,26 @@ WriteLiteral(" ");
 WriteLiteral("\r\n                                            <br/>\r\n                            " +
 "                <a");
 
-WriteAttribute("id", Tuple.Create(" id=", 3258), Tuple.Create("", 3337)
+WriteAttribute("id", Tuple.Create(" id=", 3256), Tuple.Create("", 3335)
             
             #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 3262), Tuple.Create<System.Object, System.Int32>("newvacancyviewmodel_locationaddresses_" + i + "__offlineapplicationurl"
+, Tuple.Create(Tuple.Create("", 3260), Tuple.Create<System.Object, System.Int32>("newvacancyviewmodel_locationaddresses_" + i + "__offlineapplicationurl"
             
             #line default
             #line hidden
-, 3262), false)
+, 3260), false)
 );
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3352), Tuple.Create("\"", 3397)
+WriteAttribute("href", Tuple.Create(" href=\"", 3350), Tuple.Create("\"", 3395)
             
             #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml"
-                                                                   , Tuple.Create(Tuple.Create("", 3359), Tuple.Create<System.Object, System.Int32>(locationAddress.OfflineApplicationUrl
+                                                                   , Tuple.Create(Tuple.Create("", 3357), Tuple.Create<System.Object, System.Int32>(locationAddress.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 3359), false)
+, 3357), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -347,7 +347,7 @@ WriteLiteral("                            </tbody>\r\n                        </
             #line hidden
 WriteLiteral("                <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                    <table>\r\n                        <thead>\r\n                " +
 "            <tr>\r\n                                <th>\r\n                        " +

@@ -47,6 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipSearch/_categories.cshtml")]
@@ -92,7 +93,7 @@ WriteLiteral(" id=\"categoryLabelTour\"");
 
 WriteLiteral(">Browse by category</span>\r\n    <div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n");
 
@@ -116,7 +117,7 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                    <div");
 
@@ -217,7 +218,7 @@ WriteLiteral("                        </ul>\r\n                    </div>\r\n   
             #line hidden
 WriteLiteral("                <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                    <ul");
 
@@ -273,14 +274,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2295), Tuple.Create("\"", 2309)
+WriteAttribute("for", Tuple.Create(" for=\"", 2299), Tuple.Create("\"", 2313)
             
             #line 42 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                      , Tuple.Create(Tuple.Create("", 2301), Tuple.Create<System.Object, System.Int32>(inputId
+                                                      , Tuple.Create(Tuple.Create("", 2305), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 2301), false)
+, 2305), false)
 );
 
 WriteLiteral(">");
@@ -316,7 +317,7 @@ WriteLiteral("                <div");
 
 WriteLiteral(" id=\"category-load-failed\"");
 
-WriteLiteral(" class=\"field-validation-error\"");
+WriteLiteral(" class=\"error-rmessage\"");
 
 WriteLiteral(">Category search is currently unavailable. Please try again or use the keyword se" +
 "arch</div>\r\n");

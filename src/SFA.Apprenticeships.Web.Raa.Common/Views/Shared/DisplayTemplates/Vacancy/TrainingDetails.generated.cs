@@ -1221,7 +1221,7 @@ WriteLiteral("        ");
 
             
             #line 180 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-   Write(Html.FormTextAreaFor(m => m.TrainingProvided, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium ckeditor", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.TrainingProvided, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium ckeditor", type = "text" }));
 
             
             #line default

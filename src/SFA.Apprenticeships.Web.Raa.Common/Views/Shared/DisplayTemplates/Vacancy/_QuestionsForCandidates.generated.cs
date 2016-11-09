@@ -74,7 +74,7 @@ WriteLiteral("\r\n\r\n");
             #line hidden
 WriteLiteral("    <section");
 
-WriteLiteral(" class=\"section-border grid-wrapper\"");
+WriteLiteral(" class=\"section-border grid-row\"");
 
 WriteLiteral(" id=\"course-info\"");
 
@@ -84,7 +84,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Questions for candidates</h2>\r\n        <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n            <div");
 
@@ -112,14 +112,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 776), Tuple.Create("\"", 802)
+WriteAttribute("class", Tuple.Create(" class=\"", 774), Tuple.Create("\"", 800)
             
             #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 784), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 782), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 784), false)
+, 782), false)
 );
 
 WriteLiteral(">\r\n                            <h3");
@@ -139,14 +139,14 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                            </h3>\r\n                            <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1212), Tuple.Create("\"", 1298)
+WriteAttribute("class", Tuple.Create(" class=\"", 1210), Tuple.Create("\"", 1296)
             
             #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 1220), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.FirstQuestion.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 1218), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.FirstQuestion.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 1220), false)
+, 1218), false)
 );
 
 WriteLiteral(">");
@@ -190,14 +190,14 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1875), Tuple.Create("\"", 1901)
+WriteAttribute("class", Tuple.Create(" class=\"", 1873), Tuple.Create("\"", 1899)
             
             #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 1883), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1881), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1883), false)
+, 1881), false)
 );
 
 WriteLiteral(">\r\n                            <h3");
@@ -217,14 +217,14 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                            </h3>\r\n                            <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2314), Tuple.Create("\"", 2401)
+WriteAttribute("class", Tuple.Create(" class=\"", 2312), Tuple.Create("\"", 2399)
             
             #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 2322), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 2320), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 2322), false)
+, 2320), false)
 );
 
 WriteLiteral(">");

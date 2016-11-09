@@ -118,7 +118,7 @@
         [ElementLocator(Id = "qualifications-summary")]
         public IElementList<IWebElement, QualificationSummaryItem> QualificationsSummaryItems { get; set; }
 
-        [ElementLocator(Class = "field-validation-error")]
+        [ElementLocator(Class = "error-rmessage")]
         public IWebElement FieldValidationError { get; set; }
 
         [ElementLocator(Id = "qualification-save-warning")]
@@ -266,7 +266,7 @@
         {
             get
             {
-                var count = FindElements(By.ClassName("field-validation-error"))
+                var count = FindElements(By.ClassName("error-rmessage"))
                     .Count(fve => fve.GetCssValue("display") != "none")
                     .ToString(CultureInfo.InvariantCulture);
                 return count;
@@ -285,7 +285,7 @@
         {
             get
             {
-                var count = FindElements(By.ClassName("field-validation-error"))
+                var count = FindElements(By.ClassName("error-rmessage"))
                     .Count(fve => fve.GetCssValue("display") != "none")
                     .ToString(CultureInfo.InvariantCulture);
                 return count;

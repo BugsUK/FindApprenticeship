@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/NextSteps.cshtml")]
@@ -118,7 +119,7 @@ WriteLiteral(" class=\"panel-indent\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -132,7 +133,7 @@ WriteLiteral(@"></i>Good applicants have well-written
         </div>
         <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -142,7 +143,7 @@ WriteLiteral("></i>Your application needs to show that\r\n                you ha
 "why you are applying for the job.\r\n            </p>\r\n        </div>\r\n        <di" +
 "v");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -156,7 +157,7 @@ WriteLiteral(@"></i>Avoid poor spelling, grammar and
         </div>
         <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -230,7 +231,7 @@ WriteLiteral(" class=\"detail-content panel-indent\"");
 
 WriteLiteral(">\r\n            Employers want an apprentice who’s:\r\n            <ul");
 
-WriteLiteral(" class=\"list-bullet med-btm-margin\"");
+WriteLiteral(" class=\"list-bullet sfa-medium-bottom-margin\"");
 
 WriteLiteral(@">
                 <li>reliable</li>

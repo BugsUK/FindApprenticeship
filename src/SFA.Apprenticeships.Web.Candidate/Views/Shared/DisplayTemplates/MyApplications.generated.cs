@@ -328,7 +328,7 @@ WriteLiteral("    </ul>\r\n");
 
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid-wrapper proto-dashboard\"");
+WriteLiteral(" class=\"grid-row proto-dashboard\"");
 
 WriteLiteral(">\r\n");
 
@@ -348,7 +348,7 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                <div");
 
@@ -1092,7 +1092,7 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                <section");
 
@@ -1337,29 +1337,29 @@ WriteLiteral(" class=\"ta-center\"");
 
 WriteLiteral(">\r\n                                                <a");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 17662), Tuple.Create("\"", 17686)
-, Tuple.Create(Tuple.Create("", 17667), Tuple.Create("delete-draft-", 17667), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 17666), Tuple.Create("\"", 17690)
+, Tuple.Create(Tuple.Create("", 17671), Tuple.Create("delete-draft-", 17671), true)
             
             #line 268 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-, Tuple.Create(Tuple.Create("", 17680), Tuple.Create<System.Object, System.Int32>(index
+, Tuple.Create(Tuple.Create("", 17684), Tuple.Create<System.Object, System.Int32>(index
             
             #line default
             #line hidden
-, 17680), false)
+, 17684), false)
 );
 
 WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 17755), Tuple.Create("\"", 17853)
+WriteAttribute("href", Tuple.Create(" href=\"", 17759), Tuple.Create("\"", 17857)
             
             #line 268 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                     , Tuple.Create(Tuple.Create("", 17762), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
+                                                                     , Tuple.Create(Tuple.Create("", 17766), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 17762), false)
+, 17766), false)
 );
 
 WriteLiteral("><i");

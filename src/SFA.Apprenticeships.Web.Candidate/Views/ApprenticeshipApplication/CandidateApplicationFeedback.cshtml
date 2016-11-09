@@ -38,7 +38,7 @@
         </div>
     </section>
 
-    <section class="section-border grid-wrapper" id="provider-info">
+    <section class="section-border grid-row" id="provider-info">
         <div class="column-two-thirds">
             <h2 class="heading-large">Provider details</h2>
             @if (Model.IsNasProvider)
@@ -48,7 +48,7 @@
             else
             {
                 <div class="grid-row">
-                    <div class="text grid grid-1-2">
+                    <div class="text column-1-2">
                         <h3 class="bold-small">Training provider</h3>
                         <p id="vacancy-provider-name">@Model.ProviderName</p>
 
@@ -60,7 +60,7 @@
 
                     @if (!string.IsNullOrWhiteSpace(Model.Contact))
                     {
-                        <div class="text grid grid-1-2" style="padding-left: 30px;">
+                        <div class="text column-1-2" style="padding-left: 30px;">
                             <h3 class="bold-small">Contact</h3>
                             <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
                         </div>

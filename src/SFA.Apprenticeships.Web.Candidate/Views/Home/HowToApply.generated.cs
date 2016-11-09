@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/HowToApply.cshtml")]
@@ -96,11 +97,11 @@ WriteLiteral(" class=\"hide-tablet\"");
 
 WriteLiteral("> of 3</span>.\r\n            Submitted\r\n        </li>\r\n    </ul>\r\n</div>\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -110,7 +111,7 @@ WriteLiteral(" id=\"appTourStart\"");
 
 WriteLiteral(">Application form</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -164,7 +165,7 @@ WriteLiteral(" href=\"search-details.html\"");
 
 WriteLiteral(">View apprenticeship</a>\r\n        </p>\r\n    </div>\r\n</section>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border grid-wrapper\"");
+WriteLiteral(" class=\"fieldset-with-border grid-row\"");
 
 WriteLiteral(">\r\n    <legend");
 
@@ -172,7 +173,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Your details</legend>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -238,7 +239,7 @@ WriteLiteral(" id=\"address4Pre\"");
 
 WriteLiteral(">B23 4BB</li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -1684,7 +1685,7 @@ WriteLiteral(" class=\"work-history-wrapper grid-3-4\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"grid-wrapper work-history-item\"");
+WriteLiteral(" class=\"grid-row work-history-item\"");
 
 WriteLiteral("><div");
 
@@ -1716,7 +1717,7 @@ WriteLiteral(" class=\"visuallyhidden\"");
 
 WriteLiteral(">Remove</i></span></div></div><div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral("><table");
 
@@ -1773,7 +1774,7 @@ WriteLiteral(" class=\"cell-span editable-work\"");
 WriteLiteral(">Helping customers with their queries, handling complaints. Working at the checko" +
 "ut to process purchases</span></td></tr></tbody></table></div><div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral("><table");
 
@@ -1813,7 +1814,7 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 
 WriteLiteral("><select");
 
-WriteLiteral(" class=\"work-month-select\"");
+WriteLiteral(" class=\"form-control work-month-select\"");
 
 WriteLiteral(" id=\"workFromSelect\"");
 
@@ -1895,7 +1896,7 @@ WriteLiteral(" class=\"form-group form-group-compound disabled\"");
 
 WriteLiteral("><select");
 
-WriteLiteral(" class=\"editable-current work-month-select\"");
+WriteLiteral(" class=\"form-control editable-current work-month-select\"");
 
 WriteLiteral(" id=\"workToSelect\"");
 
@@ -2656,7 +2657,7 @@ WriteLiteral(" class=\"text\"");
 
 WriteLiteral(">\r\n            <details");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n                <summary>Why we collect this info</summary>\r\n                <" +
 "div");

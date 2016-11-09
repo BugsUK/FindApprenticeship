@@ -365,11 +365,11 @@ WriteLiteral("        </div>\r\n\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"form-group grid grid-1-2 scrolling-panel max-height-15\"");
+WriteLiteral(" class=\"form-group column-1-2 scrolling-panel max-height-15\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"tabbed-element tab1 active width-all-1-1\"");
+WriteLiteral(" class=\"tabbed-element tab1 active form-control-3-4 beepboop\"");
 
 WriteLiteral(">\r\n                    <table");
 
@@ -487,14 +487,14 @@ WriteLiteral(" class=\"button-link use-location-button-link add-location-link\""
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4360), Tuple.Create("\"", 4379)
+WriteAttribute("value", Tuple.Create(" value=\"", 4369), Tuple.Create("\"", 4388)
             
             #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                                     , Tuple.Create(Tuple.Create("", 4368), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                                     , Tuple.Create(Tuple.Create("", 4377), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 4368), false)
+, 4377), false)
 );
 
 WriteLiteral(">add location</button>\r\n                                </td>\r\n                  " +
@@ -544,7 +544,7 @@ WriteLiteral(" name=\"locationaddresses\"");
 
 WriteLiteral("></a>\r\n                <div");
 
-WriteLiteral(" class=\"tabbed-element tab1 active width-all-1-1\"");
+WriteLiteral(" class=\"tabbed-element tab1 active form-control-3-4 beepboop\"");
 
 WriteLiteral(">\r\n                    <table");
 
@@ -796,14 +796,14 @@ WriteLiteral(" class=\"button-link remove-button-link\"");
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8671), Tuple.Create("\"", 8690)
+WriteAttribute("value", Tuple.Create(" value=\"", 8692), Tuple.Create("\"", 8711)
             
             #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 8679), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                , Tuple.Create(Tuple.Create("", 8700), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 8679), false)
+, 8700), false)
 );
 
 WriteLiteral(">remove location</button>\r\n                                </td>\r\n               " +
@@ -851,7 +851,7 @@ WriteLiteral("                ");
 
             
             #line 161 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-           Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
+           Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
 
             
             #line default
@@ -1145,7 +1145,7 @@ WriteLiteral("            ");
 
             
             #line 235 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-       Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" }));
+       Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
             #line default

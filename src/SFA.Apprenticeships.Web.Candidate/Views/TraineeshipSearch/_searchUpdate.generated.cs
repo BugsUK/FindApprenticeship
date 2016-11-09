@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
         {
 WriteLiteral("<section");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n    <div>\r\n        <fieldset");
 
@@ -191,14 +191,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1548), Tuple.Create("\"", 1624)
+WriteAttribute("href", Tuple.Create(" href=\"", 1551), Tuple.Create("\"", 1627)
             
             #line 27 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 1555), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)
+, Tuple.Create(Tuple.Create("", 1558), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)
             
             #line default
             #line hidden
-, 1555), false)
+, 1558), false)
 );
 
 WriteLiteral(">");
@@ -297,14 +297,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2786), Tuple.Create("\"", 2816)
+WriteAttribute("value", Tuple.Create(" value=\"", 2789), Tuple.Create("\"", 2819)
             
             #line 47 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2794), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 2797), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 2794), false)
+, 2797), false)
 );
 
 WriteLiteral(" />\r\n\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n    \r\n\r\n</section>");

@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Account/VerifyUpdatedEmailAddress.cshtml")]
@@ -62,11 +63,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -74,7 +75,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Verify your email address</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <p>\r\n");
 
@@ -182,14 +183,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1463), Tuple.Create("\"", 1533)
+WriteAttribute("href", Tuple.Create(" href=\"", 1467), Tuple.Create("\"", 1537)
             
             #line 33 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-, Tuple.Create(Tuple.Create("", 1470), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
+, Tuple.Create(Tuple.Create("", 1474), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
             
             #line default
             #line hidden
-, 1470), false)
+, 1474), false)
 );
 
 WriteLiteral(" title=\"Resend code\"");

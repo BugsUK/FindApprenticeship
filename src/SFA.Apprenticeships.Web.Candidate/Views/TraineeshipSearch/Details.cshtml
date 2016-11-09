@@ -34,7 +34,7 @@
 
     @if (!Model.HasError())
     {
-        <section class=" grid-wrapper">
+        <section class=" grid-row">
             <div class="column-two-thirds">
                 <div class="inner-block-padr">
                     <p class="@Model.Description.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description))</p>
@@ -44,7 +44,7 @@
                 @Html.Partial("_Apply", Model, new ViewDataDictionary() { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top") })
             </div>
         </section>
-        <section class="section-border grid-wrapper">
+        <section class="section-border grid-row">
             <h2 class="heading-large">Traineeship details</h2>
             <div class="column-two-thirds">
                 <div class="inner-block-padr">
@@ -88,10 +88,10 @@
 
             </div>
         </section>
-        <section class="section-border grid-wrapper" id="vacancy-info">
+        <section class="section-border grid-row" id="vacancy-info">
             <h2 class="heading-large">Employer</h2>
             <div class="grid-row">
-                <div class="grid-row grid-1-2">
+                <div class="column-one-half">
                     <div class="inner-block-padr">
                         <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
                         @if (Model.IsWellFormedEmployerWebsiteUrl)
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid-row grid-1-2 hide-print">
+                <div class="column-one-half hide-print">
                     <div class="ad-details__map">
                         <div class="map-overlay" onclick="style.pointerEvents = 'none'"></div>
                         <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
@@ -135,7 +135,7 @@
                 }
             </div>
         </section>
-        <section class="section-border grid-wrapper" id="course-info">
+        <section class="section-border grid-row" id="course-info">
             <div class="text">
                 <h2 class="heading-large">Desired skills and what this will lead to</h2>
                 <h3 class="heading-small">Desired skills and qualities</h3>
