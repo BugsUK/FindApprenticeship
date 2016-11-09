@@ -36,6 +36,7 @@
     [WorkingWeek]                      NVARCHAR (MAX)    NULL,
     [NumberOfViews]                    INT              NULL,
     [EmployerAnonymousName]            NVARCHAR (MAX)   NULL,
+	[EmployerAnonymousReason]          NVARCHAR (240)   NULL,
     [EmployerDescription]              NVARCHAR (MAX)   NULL,
     [EmployersWebsite]                 NVARCHAR (MAX)   NULL,
     [MaxNumberofApplications]          INT              NULL,

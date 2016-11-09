@@ -330,7 +330,9 @@
                 OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
                 EmployerDescription = vacancyMinimumData.EmployerDescription,
-                EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
+                EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl,
+                EmployerAnonymousName = vacancyMinimumData.AnonymousEmployerDescription,
+                EmployerAnonymousReason = vacancyMinimumData.AnonymousEmployerReason
             });
         }
 
