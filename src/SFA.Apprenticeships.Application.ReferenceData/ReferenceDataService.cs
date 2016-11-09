@@ -61,5 +61,15 @@
         {
             return _referenceRepository.CreateStandard(standard);
         }
+
+        public Standard GetStandard(int standardId)
+        {
+            return _referenceRepository.GetById(standardId);
+        }
+
+        public Standard SaveStandard(Standard standard)
+        {
+            return _referenceRepository.Update(standard);
+        }
     }
 }

@@ -9,7 +9,9 @@
 
 <h1 id="heading" class="heading-xlarge">Standards</h1>
 
-<p>@Html.RouteLink("Add Standard", ManagementRouteNames.AdminCreateStandard)</p>
+<p>
+    @Html.RouteLink("Add Standard", ManagementRouteNames.AdminCreateStandard)
+</p>
 @Html.RouteLink("Download Standards", ManagementRouteNames.AdminStandardsCsv)
 
 <table>
@@ -18,6 +20,7 @@
         <th>SSAT1</th>
         <th>Standard Sector</th>
         <th>Standard</th>
+        <th></th>
     </tr>
 
     @foreach (var standardSector in Model.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
@@ -28,7 +31,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => standard.Id)
+                    @Html.DisplayFor(modelItem => standard.StandardId)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => ssat1.Name)
@@ -39,9 +42,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => standard.Name)
                 </td>
+                <td>
+                    @Html.RouteLink("View", ManagementRouteNames.AdminViewStandard, new { standard.StandardId })
+                </td>
             </tr>
         }
     }
 </table>
-
-

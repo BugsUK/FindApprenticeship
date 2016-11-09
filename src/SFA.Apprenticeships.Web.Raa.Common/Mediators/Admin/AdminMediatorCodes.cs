@@ -183,6 +183,19 @@
         public class CreateStandard
         {
             public const string Ok = "AdminMediatorCodes.CreateStandard.Ok";
+            public const string FailedValidation = "AdminMediatorCodes.CreateStandard.FailedValidation";
+        }
+
+        public class GetCreateStandard
+        {
+            public const string Ok = "AdminMediatorCodes.GetCreateStandard.Ok";
+        }
+
+        public class SaveStandard
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveStandard.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveStandard.Error";
+            public const string Ok = "AdminMediatorCodes.SaveStandard.Ok";
         }
 
         public class GetStandardsBytes

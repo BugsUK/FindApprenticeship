@@ -5,10 +5,14 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Constants.ViewModels;
+    using Validators.Provider;
+    using FluentValidation.Attributes;
+    using Validators.Standard;
 
+    [Validator(typeof(StandardViewModelClientValidator))]
     public class StandardViewModel
     {
-        public int Id { get; set; }
+        public int StandardId { get; set; }
 
         [Display(Name = StandardViewModelMessages.Name.LabelText)]
         public string Name { get; set; }

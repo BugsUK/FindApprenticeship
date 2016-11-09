@@ -2,17 +2,17 @@
 namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
     using Domain.Entities.Raa.Vacancies;
-    using ViewModels.Vacancy;
+    using ViewModels.Admin;
 
-    public static class StandardViewModelConverter
+    public static class AdminStandardViewModelConverter
     {
-        public static StandardViewModel Convert(this Standard standard, Sector sector)
+        public static StandardViewModel Convert(this Standard standard)
         {
             return new StandardViewModel
             {
-                Id = standard.StandardId,
-                Sector = sector.Name,
+                StandardId = standard.StandardId,
                 Name = standard.Name,
+                ApprenticeshipSectorId = standard.ApprenticeshipSectorId,
                 ApprenticeshipLevel = standard.ApprenticeshipLevel
             };
         }

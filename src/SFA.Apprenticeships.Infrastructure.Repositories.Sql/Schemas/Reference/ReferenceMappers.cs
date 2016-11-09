@@ -37,10 +37,13 @@
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.ApprenticeshipOccupationStatusTypeId))
                 .ForMember(dest => dest.Frameworks, opt => opt.Ignore());
             Mapper.CreateMap<Standard, Entities.Standard>()
+                .ForMember(dest => dest.StandardId, opt => opt.MapFrom(src => src.StandardId))
+                .ForMember(dest => dest.LarsCode, opt => opt.MapFrom(src => src.LarsCode))
                 .ForMember(dest => dest.EducationLevelId, opt => opt.MapFrom(src => (int) src.ApprenticeshipLevel))
                 .ForMember(dest => dest.StandardSectorId, opt => opt.MapFrom(src => src.ApprenticeshipSectorId))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Name));
             Mapper.CreateMap<Entities.Standard, Standard>()
+                .ForMember(dest => dest.StandardId, opt => opt.MapFrom(src => src.StandardId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
                 .ForMember(dest => dest.ApprenticeshipSectorId, opt => opt.MapFrom(src => src.StandardSectorId))
                 .ForMember(dest => (int)dest.ApprenticeshipLevel, opt => opt.MapFrom(src => src.EducationLevelId));

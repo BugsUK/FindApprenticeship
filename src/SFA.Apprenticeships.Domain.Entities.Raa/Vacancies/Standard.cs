@@ -6,12 +6,13 @@
     [Table("Reference.Standard")]
     public class Standard
     {
-        public int Id { get; set; }
+        public int StandardId { get; set; }
 
         public int ApprenticeshipSectorId { get; set; }
 
         public string Name { get; set; }
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
+        public int LarsCode { get; set; }
     }
 }

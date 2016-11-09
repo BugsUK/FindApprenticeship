@@ -1,0 +1,39 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin.StandardViewModel
+@{
+    ViewBag.Title = "Standard";
+}
+
+<h1 id="heading" class="heading-xlarge">Standard</h1>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditStandard))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.HiddenFor(m => m.StandardId)
+    <p>
+        <ul>
+            <li>ID: @Model.StandardId</li>
+        </ul>
+    </p>
+
+    <div class="form-group">
+        @Html.FormTextFor(m => m.Name, controlHtmlAttributes: new { type = "text" })
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ApprenticeshipLevel, new { @class = "form-label" })
+            @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ApprenticeshipSectorId, new { @class = "form-label" })
+            @Html.DropDownListFor(m => m.ApprenticeshipSectorId, Model.ApprenticeshipSectors)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button id="save-standard-button" type="submit" class="button" name="SaveStandardAction" value="SaveStandard">Save</button>
+    </div>
+}
+

@@ -20,5 +20,9 @@
         IList<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes();
 
         Standard CreateStandard(Standard standard);
+
+        Standard GetById(int standardId);
+
+        Standard Update(Standard standard);
     }
 }

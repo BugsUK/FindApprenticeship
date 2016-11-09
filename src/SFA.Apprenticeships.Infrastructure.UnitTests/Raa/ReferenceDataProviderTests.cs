@@ -37,9 +37,9 @@
         [SetUp]
         public void SetUpFixture()
         {            
-            _standardA = new Standard {Id = 1, Name = "Standard A", ApprenticeshipLevel = ApprenticeshipLevel.Degree, ApprenticeshipSectorId = 1};
-            _standardB = new Standard {Id = 12, Name = "Standard B", ApprenticeshipLevel = ApprenticeshipLevel.Advanced, ApprenticeshipSectorId = 1};
-            _standardC = new Standard {Id = 13, Name = "Standard C", ApprenticeshipLevel = ApprenticeshipLevel.FoundationDegree, ApprenticeshipSectorId = 11};
+            _standardA = new Standard {StandardId = 1, Name = "Standard A", ApprenticeshipLevel = ApprenticeshipLevel.Degree, ApprenticeshipSectorId = 1};
+            _standardB = new Standard {StandardId = 12, Name = "Standard B", ApprenticeshipLevel = ApprenticeshipLevel.Advanced, ApprenticeshipSectorId = 1};
+            _standardC = new Standard {StandardId = 13, Name = "Standard C", ApprenticeshipLevel = ApprenticeshipLevel.FoundationDegree, ApprenticeshipSectorId = 11};
             _standardList = new List<Standard> { _standardA, _standardB, _standardC };
             _standardSector = new Sector {Id = 1, Name = "Sector A", ApprenticeshipOccupationId = 1, Standards = new List<Standard> { _standardA, _standardB } };
             _standardSectorWithNameSharedWithFramework = new Sector {Id = 11, Name = "Duplicate Name", ApprenticeshipOccupationId = 1, Standards = new List<Standard> { _standardC } };

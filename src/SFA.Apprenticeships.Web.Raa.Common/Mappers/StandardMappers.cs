@@ -11,6 +11,7 @@
             Mapper.CreateMap<StandardViewModel, Standard>();
             Mapper.CreateMap<Standard, StandardViewModel>()
                 .ForMember(dest => dest.ApprenticeshipSectors, opt => opt.Ignore())
+                .ForMember(dest => dest.LarsCode, opt => opt.Ignore())
                 .ForMember(dest => dest.ApprenticeshipLevels, opt => opt.Ignore());
         }
     }

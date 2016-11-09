@@ -88,7 +88,7 @@
                 var std = new Standard()
                 {
                     ApprenticeshipLevel = (ApprenticeshipLevel)levelAsInt,
-                    Id = x.StandardId,
+                    StandardId = x.StandardId,
                     Name = x.FullName,
                     ApprenticeshipSectorId = x.StandardSectorId
                 };
@@ -174,10 +174,62 @@
             _logger.Info("Creating new Standard");
 
             var dbStandard = MapStandard(standard);
+            PopulateEducationLevelId(standard, dbStandard);
 
-            _getOpenConnection.Insert(dbStandard);
+            var standardId = _getOpenConnection.Insert(dbStandard);
+            standard.StandardId = (int)standardId;
 
-            return null;
+            return standard;
+        }
+
+        private void PopulateEducationLevelId(Standard entity, Entities.Standard dbVacancy)
+        {
+            dbVacancy.EducationLevelId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT EducationLevelId
+FROM   [Reference].[EducationLevel]
+WHERE  CodeName = @EntityApprenticeshipLevel",
+                new
+                {
+                    EntityApprenticeshipLevel = (int)entity.ApprenticeshipLevel
+                }).Single();
+        }
+
+        public Standard GetById(int standardId)
+        {
+            _logger.Debug("Getting standard with StandardId={0}", standardId);
+
+            const string sql = "SELECT * FROM reference.Standard WHERE StandardId = @standardId";
+
+            var sqlParams = new
+            {
+                standardId
+            };
+
+            var dbStandard = _getOpenConnection.Query<Entities.Standard>(sql, sqlParams).SingleOrDefault();
+
+            _logger.Debug(dbStandard == null
+                ? "Did not find standard with StandardId={0}"
+                : "Got standard with StandardId={0}",
+                standardId);
+
+            return MapStandard(dbStandard);
+        }
+
+        public Standard Update(Standard standard)
+        {
+            _logger.Debug("Saving standard with Id={0}", standard.StandardId);
+
+            var dbStandard = MapStandard(standard);
+            PopulateEducationLevelId(standard, dbStandard);
+
+            // TODO: SQL: AG: note that we are not attempting to insert a new Provider, we always update (temporary).
+
+            if (!_getOpenConnection.UpdateSingle(dbStandard))
+            {
+                throw new Exception($"Failed to save standard with Id={standard.StandardId}");
+            }
+
+            return MapStandard(dbStandard);
         }
 
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()
@@ -237,11 +289,11 @@
             return _mapper.Map<Standard, Entities.Standard>(standard);
         }
 
-        private Standard MapStandard(Entities.Standard provider)
+        private Standard MapStandard(Entities.Standard standard)
         {
-            return provider == null
+            return standard == null
                 ? null
-                : _mapper.Map<Entities.Standard, Standard>(provider);
+                : _mapper.Map<Entities.Standard, Standard>(standard);
         }
     }
 }

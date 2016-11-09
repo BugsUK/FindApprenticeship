@@ -510,48 +510,58 @@
         [HttpGet]
         public ActionResult CreateStandard()
         {
-            //var response = _adminMediator.GetCreateStandard();
-
-            //TODO: Create above mediator function and move all this code into it
-            var sectorList = _adminMediator.GetStandards();
-
-            var viewModel = new StandardViewModel
-            {
-                ApprenticeshipSectors = sectorList.ViewModel.SelectMany(ssat1 => ssat1.Sectors.Select(sector => new SelectListItem
-                {
-                    Value = sector.Id.ToString(),
-                    Text = sector.Name
-                }).OrderBy(sli => sli.Text)),
-
-                ApprenticeshipLevels = new List<SelectListItem>
-                {
-                    //new SelectListItem {Value = ApprenticeshipLevel.Intermediate.ToString(), Text = "Intermediate"},
-                    //new SelectListItem {Value = ApprenticeshipLevel.Advanced.ToString(), Text = "Advanced"},
-                    //new SelectListItem {Value = ApprenticeshipLevel.Higher.ToString(), Text = "Higher"},
-                    //new SelectListItem {Value = ApprenticeshipLevel.FoundationDegree.ToString(), Text = "Foundation Degree"},
-                    //new SelectListItem {Value = ApprenticeshipLevel.Degree.ToString(), Text = "Degree"},
-                    //new SelectListItem {Value = ApprenticeshipLevel.Masters.ToString(), Text = "Masters"}
-
-                    new SelectListItem {Value = "11", Text = "Intermediate"},
-                    new SelectListItem {Value = "12", Text = "Advanced"},
-                    new SelectListItem {Value = "13", Text = "Higher"},
-                    new SelectListItem {Value = "14", Text = "Foundation Degree"},
-                    new SelectListItem {Value = "15", Text = "Degree"},
-                    new SelectListItem {Value = "16", Text = "Masters"}
-                },
-
-                LarsCode = 0
-            };
-
-            return View(viewModel);
+            var response = _adminMediator.GetCreateStandard();
+            return View(response.ViewModel);
         }
 
         [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "CreateStandardAction")]
         public ActionResult CreateStandard(StandardViewModel viewModel)
         {
             var response = _adminMediator.CreateStandard(viewModel);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.CreateStandard.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateStandard.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Standard(int standardId)
+        {
+            var response = _adminMediator.GetStandard(standardId);
+
             return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult SaveStandard(StandardViewModel viewModel)
+        {
+            var response = _adminMediator.SaveStandard(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SaveStandard.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.SaveStandard.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewStandard, new { viewModel.StandardId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]

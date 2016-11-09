@@ -821,7 +821,7 @@
             if (!standardId.HasValue) return null;
 
             var sectors = _referenceDataService.GetSectors().ToList();
-            var standard = sectors.SelectMany(s => s.Standards).First(s => s.Id == standardId.Value);
+            var standard = sectors.SelectMany(s => s.Standards).First(s => s.StandardId == standardId.Value);
             var sector = sectors.First(s => s.Id == standard.ApprenticeshipSectorId);
             return standard.Convert(sector);
         }

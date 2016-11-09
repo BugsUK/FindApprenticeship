@@ -409,6 +409,18 @@
                defaults: new { controller = "Admin", action = "CreateStandard" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminViewStandard,
+               url: "admin/standard",
+               defaults: new { controller = "Admin", action = "Standard" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminEditStandard,
+               url: "admin/standards/edit",
+               defaults: new { controller = "Admin", action = "SaveStandard" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

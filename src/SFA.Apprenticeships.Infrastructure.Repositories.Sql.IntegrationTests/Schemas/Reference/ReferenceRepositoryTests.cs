@@ -39,7 +39,7 @@
             standards.Should().NotBeNullOrEmpty();
             standards.Any(std => std.ApprenticeshipLevel == ApprenticeshipLevel.Unknown
                                  || std.ApprenticeshipSectorId == 0
-                                 || std.Id == 0
+                                 || std.StandardId == 0
                                  || string.IsNullOrWhiteSpace(std.Name))
                                  .Should().BeFalse();
         }

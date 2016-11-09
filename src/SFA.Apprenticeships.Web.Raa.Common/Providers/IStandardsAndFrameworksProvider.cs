@@ -5,5 +5,7 @@
     public interface IStandardsAndFrameworksProvider
     {
         StandardViewModel CreateStandard(StandardViewModel viewModel);
+        StandardViewModel GetStandardViewModel(int standardId);
+        StandardViewModel SaveStandard(StandardViewModel viewModel);
     }
 }

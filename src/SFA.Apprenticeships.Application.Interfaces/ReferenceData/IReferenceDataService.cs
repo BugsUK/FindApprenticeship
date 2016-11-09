@@ -23,5 +23,9 @@
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
 
         Standard CreateStandard(Standard standard);
+
+        Standard GetStandard(int standardId);
+
+        Standard SaveStandard(Standard standard);
     }
 }

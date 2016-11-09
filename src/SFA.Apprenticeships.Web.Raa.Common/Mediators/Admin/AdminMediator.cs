@@ -23,6 +23,7 @@
     using Validators.Employer;
     using Validators.Provider;
     using Validators.ProviderUser;
+    using Validators.Standard;
     using ViewModels.Admin;
     using ViewModels.Api;
     using ViewModels.Employer;
@@ -34,6 +35,7 @@
     public class AdminMediator : MediatorBase, IAdminMediator
     {
         private readonly ProviderSearchViewModelServerValidator _providerSearchViewModelServerValidator = new ProviderSearchViewModelServerValidator();
+        private readonly StandardViewModelServerValidator _standardViewModelServerValidator = new StandardViewModelServerValidator();
         private readonly ProviderViewModelServerValidator _providerViewModelServerValidator = new ProviderViewModelServerValidator();
         private readonly ProviderSiteSearchViewModelServerValidator _providerSiteSearchViewModelServerValidator = new ProviderSiteSearchViewModelServerValidator();
         private readonly ProviderSiteViewModelServerValidator _providerSiteViewModelServerValidator = new ProviderSiteViewModelServerValidator();
@@ -51,8 +53,8 @@
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
         private readonly IProviderUserProvider _providerUserProvider;
         private readonly IEmployerProvider _employerProvider;
-		private readonly IReferenceDataProvider _referenceDataProvider;
-		private readonly IStandardsAndFrameworksProvider _standardsAndFrameworksProvider;
+        private readonly IReferenceDataProvider _referenceDataProvider;
+        private readonly IStandardsAndFrameworksProvider _standardsAndFrameworksProvider;
 
         public AdminMediator(IProviderProvider providerProvider, IApiUserProvider apiUserProvider, ILogService logService, IVacancyPostingService vacancyPostingService,
             IProviderService providerService, IVacancyPostingProvider vacancyPostingProvider, IProviderUserProvider providerUserProvider, IEmployerProvider employerProvider, IReferenceDataProvider referenceDataProvider, IStandardsAndFrameworksProvider standardsAndFrameworksProvider)
@@ -64,7 +66,7 @@
             _providerService = providerService;
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerUserProvider = providerUserProvider;
-			_referenceDataProvider = referenceDataProvider;
+            _referenceDataProvider = referenceDataProvider;
             _standardsAndFrameworksProvider = standardsAndFrameworksProvider;
             _employerProvider = employerProvider;
         }
@@ -534,7 +536,7 @@
             };
 
             return viewModel;
-        }		
+        }
 
         public MediatorResponse<List<StandardSubjectAreaTierOne>> GetStandards()
         {
@@ -543,11 +545,87 @@
             return GetMediatorResponse(AdminMediatorCodes.GetStandard.Ok, viewModel);
         }
 
+        public MediatorResponse<StandardViewModel> GetStandard(int standardId)
+        {
+            var viewModel = _standardsAndFrameworksProvider.GetStandardViewModel(standardId);
+
+            var apprenticeshipLevel = viewModel.ApprenticeshipLevel;
+            var apprenticeshipSectorId = viewModel.ApprenticeshipSectorId;
+            var standardName = viewModel.Name;
+            var id = viewModel.StandardId;
+            var larsCode = viewModel.LarsCode;
+
+            PopulateDropdown(viewModel);
+            viewModel.ApprenticeshipSectorId = apprenticeshipSectorId;
+            viewModel.ApprenticeshipLevel = apprenticeshipLevel;
+            viewModel.Name = standardName;
+            viewModel.StandardId = id;
+            viewModel.LarsCode = larsCode;
+
+            return GetMediatorResponse(AdminMediatorCodes.GetProvider.Ok, viewModel);
+        }
+
+        public MediatorResponse<StandardViewModel> SaveStandard(StandardViewModel viewModel)
+        {
+            try
+            {
+                viewModel = _standardsAndFrameworksProvider.SaveStandard(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveStandard.Ok, viewModel,
+                    StandardViewModelMessages.StandardSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save standard with id={viewModel.StandardId}", ex);
+                viewModel = _standardsAndFrameworksProvider.GetStandardViewModel(viewModel.StandardId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveStandard.Error, viewModel, StandardViewModelMessages.StandardSaveError, UserMessageLevel.Error);
+            }
+        }
+
         public MediatorResponse<StandardViewModel> CreateStandard(StandardViewModel viewModel)
         {
+            var validatonResult = _standardViewModelServerValidator.Validate(viewModel);
+
+            if (!validatonResult.IsValid)
+            {
+                return GetMediatorResponse(AdminMediatorCodes.CreateStandard.FailedValidation, viewModel, validatonResult);
+            }
+
             viewModel = _standardsAndFrameworksProvider.CreateStandard(viewModel);
 
-            return GetMediatorResponse(AdminMediatorCodes.CreateProvider.Ok, viewModel);
+            return GetMediatorResponse(AdminMediatorCodes.CreateStandard.Ok, viewModel);
+        }
+
+        public void PopulateDropdown(StandardViewModel model)
+        {
+            var sectorList = GetStandards();
+
+            model.ApprenticeshipSectors =
+                sectorList.ViewModel.SelectMany(ssat1 => ssat1.Sectors.Select(sector => new SelectListItem
+                {
+                    Value = sector.Id.ToString(),
+                    Text = sector.Name
+                }).OrderBy(sli => sli.Text));
+            model.ApprenticeshipLevels = new List<SelectListItem>
+            {
+                new SelectListItem {Value = ((int) ApprenticeshipLevel.Intermediate).ToString(), Text = "Intermediate"},
+                new SelectListItem {Value = ((int) ApprenticeshipLevel.Advanced).ToString(), Text = "Advanced"},
+                new SelectListItem {Value = ((int) ApprenticeshipLevel.Higher).ToString(), Text = "Higher"},
+                new SelectListItem
+                {
+                    Value = ((int) ApprenticeshipLevel.FoundationDegree).ToString(),
+                    Text = "Foundation Degree"
+                },
+                new SelectListItem {Value = ((int) ApprenticeshipLevel.Degree).ToString(), Text = "Degree"},
+                new SelectListItem {Value = ((int) ApprenticeshipLevel.Masters).ToString(), Text = "Masters"}
+            };
+        }
+
+        public MediatorResponse<StandardViewModel> GetCreateStandard()
+        {
+            var viewModel = new StandardViewModel();
+            PopulateDropdown(viewModel);
+            return GetMediatorResponse(AdminMediatorCodes.GetCreateStandard.Ok, viewModel);
         }
 
         public MediatorResponse<List<Category>> GetFrameworks()
@@ -601,7 +679,7 @@
                                             new StandardSubjectAreaTierOneViewModel()
                                             {
                                                 SSAT1Name = r.Name,
-                                                StandardId = s.Id,
+                                                StandardId = s.StandardId,
                                                 StandardSectorName = ss.Name,
                                                 StandardName = s.Name
                                             }))).OrderBy(ss => ss.StandardSectorName);
@@ -615,7 +693,7 @@
                 return GetMediatorResponse(AdminMediatorCodes.GetStandardsBytes.Error, new byte[0]);
             }
         }
-		
+
         private static byte[] GetCsvBytes<T, TClassMap>(IEnumerable<T> items, string header) where T : class where TClassMap : CsvClassMap<T>
         {
             var csvString = header + CsvPresenter.ToCsv<T, TClassMap>(items);
