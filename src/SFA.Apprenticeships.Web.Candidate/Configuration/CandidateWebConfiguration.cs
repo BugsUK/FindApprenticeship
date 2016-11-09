@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Configuration
 {
-    public class CandidateWebConfiguration
+    using Common.Configuration;
+
+    public class CandidateWebConfiguration : AnalyticsConfiguration
     {
          
     }

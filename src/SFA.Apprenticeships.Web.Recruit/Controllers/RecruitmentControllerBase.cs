@@ -4,9 +4,9 @@
     using Application.Interfaces;
     using Common.Attributes;
     using Common.Constants;
-    using SFA.Infrastructure.Interfaces;
 
-    [AuthorizationData,
+    [ApplyAnalytics("RecruitWebConfiguration"),
+    AuthorizationData,
     Raa.Common.Attributes.CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None)]
     public abstract class RecruitmentControllerBase : Common.Controllers.ControllerBase
