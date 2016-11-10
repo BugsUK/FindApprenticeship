@@ -189,6 +189,7 @@
         public class CreateSector
         {
             public const string Ok = "AdminMediatorCode.CreateSector.Ok";
+            public const string FailedValidation = "AdminMediatorCodes.CreateSector.FailedValidation";
         }
 
         public class GetCreateStandard

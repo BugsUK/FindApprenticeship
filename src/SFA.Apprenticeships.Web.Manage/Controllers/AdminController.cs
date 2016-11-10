@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
@@ -10,15 +8,12 @@
     using Common.Mediators;
     using Constants;
     using Domain.Entities.Raa;
-    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
-    using Glimpse.Core.Extensions;
     using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Admin;
-    using Standard = Infrastructure.Repositories.Sql.Schemas.Reference.Entities.Standard;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [AuthorizeUser(Roles = Roles.Admin)]
@@ -537,7 +532,19 @@
         public ActionResult CreateSector()
         {
             var response = _adminMediator.GetCreateSector();
-            return View(response.ViewModel);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.CreateSector.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.CreateSector.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]

@@ -5,7 +5,6 @@
     using System.Security.Cryptography;
     using Application.Interfaces;
     using Configuration;
-    using SFA.Infrastructure.Interfaces;
 
     public class AES256Provider : IEncryptionProvider
     {
