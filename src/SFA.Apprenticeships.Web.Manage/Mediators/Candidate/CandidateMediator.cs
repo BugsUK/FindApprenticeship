@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Candidate
 {
     using System;
+    using Application.Interfaces.Candidates;
     using Common.Mediators;
     using Providers;
     using Raa.Common.Factories;
