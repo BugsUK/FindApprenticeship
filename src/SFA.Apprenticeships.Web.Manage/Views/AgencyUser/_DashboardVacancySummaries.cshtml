@@ -87,49 +87,56 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach (var vacancy in Model.Vacancies)
+                            @if (Model.Vacancies.Any())
                             {
-                                <tr>
-                                    <td class="reactive-header" data-label="Provider">
-                                        @vacancy.ProviderName
-                                    </td>
-                                    <td>
-                                        <div class="reactive-title">@HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title)</div>
-                                    </td>
-                                    <td>
-                                        @vacancy.VacancyType.ToString().Substring(0,3)
-                                    </td>
-                                    <td>
-                                        @if (vacancy.VacancyViewModel != null && vacancy.VacancyViewModel.LocationAddresses != null && vacancy.VacancyViewModel.LocationAddresses.Count > 1)
-                                        {
-                                            <div class="hgroup-small">
-                                                <p class="subtitle">Multiple locations</p>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            @vacancy.Location.Town<br />
-                                            <div class="hgroup-small">
-                                                <p class="subtitle">@vacancy.Location.Postcode</p>
-                                            </div>
-                                        }                      
-                                    </td>
-                                    <td class="reactive-header" data-label="Date submitted">
-                                        @vacancy.DateSubmitted.ToGmtDate()
-                                    </td>
-                                    <td class="reactive-header" data-label="Closing date">
-                                        @vacancy.ClosingDate.ToFriendlyClosingToday()
-                                    </td>
-                                    <td class="ta-center reactive-header" data-label="Submission count">
-                                        @vacancy.SubmissionCount
-                                    </td>
-                                    <td>
-                                        @if (vacancy.CanBeReservedForQaByCurrentUser)
-                                        {
-                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReserveForQA, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Review @vacancy.Title">Review</a>
-                                        }
-                                    </td>
-                                </tr>
+                                foreach (var vacancy in Model.Vacancies)
+                                {
+                                    <tr>
+                                        <td class="reactive-header" data-label="Provider">
+                                            @vacancy.ProviderName
+                                        </td>
+                                        <td>
+                                            <div class="reactive-title">@HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title)</div>
+                                        </td>
+                                        <td>
+                                            @vacancy.VacancyType.ToString().Substring(0, 3)
+                                        </td>
+                                        <td>
+                                            @if (vacancy.VacancyViewModel != null && vacancy.VacancyViewModel.LocationAddresses != null && vacancy.VacancyViewModel.LocationAddresses.Count > 1)
+                                            {
+                                                <div class="hgroup-small">
+                                                    <p class="subtitle">Multiple locations</p>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @vacancy.Location.Town<br />
+                                                <div class="hgroup-small">
+                                                    <p class="subtitle">@vacancy.Location.Postcode</p>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td class="reactive-header" data-label="Date submitted">
+                                            @vacancy.DateSubmitted.ToGmtDate()
+                                        </td>
+                                        <td class="reactive-header" data-label="Closing date">
+                                            @vacancy.ClosingDate.ToFriendlyClosingToday()
+                                        </td>
+                                        <td class="ta-center reactive-header" data-label="Submission count">
+                                            @vacancy.SubmissionCount
+                                        </td>
+                                        <td>
+                                            @if (vacancy.CanBeReservedForQaByCurrentUser)
+                                            {
+                                                <a href="@Url.RouteUrl(ManagementRouteNames.ReserveForQA, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Review @vacancy.Title">Review</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="6">No results</td></tr>
                             }
                         </tbody>
                     </table>
