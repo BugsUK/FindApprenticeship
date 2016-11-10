@@ -257,6 +257,37 @@
         }
 
         [HttpGet]
+        public ActionResult DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            var response = _adminMediator.GetProviderSiteRelationship(providerSiteRelationshipId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmDeleteProviderSiteRelationshipAction")]
+        public ActionResult ConfirmDeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            var response = _adminMediator.DeleteProviderSiteRelationship(providerSiteRelationshipId);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.DeleteProviderSiteRelationship.Error:
+                    return RedirectToRoute(ManagementRouteNames.AdminDeleteProviderSiteRelationship, new { response.ViewModel.ProviderSiteRelationshipId });
+
+                case AdminMediatorCodes.DeleteProviderSiteRelationship.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProviderSite, new { response.ViewModel.ProviderSiteId });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
         public ActionResult ApiUsers(ApiUserSearchViewModel viewModel)
         {
             var response = _adminMediator.SearchApiUsers(viewModel);

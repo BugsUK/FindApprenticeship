@@ -9,6 +9,7 @@
         public const string AnnualWageText = "Annual wage";
         public const string MonthlyWageText = "Monthly wage";
         public const string WeeklyWageText = "Weekly wage";
+        public const string WageText = "Wage";
         public const string PerYearText = "per year";
         public const string PerMonthText = "per month";
         public const string PerWeekText = "per week";
@@ -32,7 +33,7 @@
                     return WeeklyWageText;
 
                 case WageUnit.NotApplicable:
-                    return string.Empty;
+                    return WageText;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");

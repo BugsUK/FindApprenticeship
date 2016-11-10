@@ -150,3 +150,18 @@ input[type="search"]::-webkit-search-decoration {
  .three-column li{      
   float:left;  
  }
+
+ .select2-container .select2-choice{
+     background:#F8F8F8
+ }
+
+ .close-icon{
+     content:"\f057";
+     position: absolute;
+    right: 50px;
+    top: 10px;
+    z-index: 2;
+    color: #BFC1C3;
+    font-size:16px;
+ }
+

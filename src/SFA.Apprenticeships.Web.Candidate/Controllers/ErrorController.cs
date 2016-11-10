@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
-    using Attributes;
     using Common.Attributes;
     using Common.Constants;
-    using Constants;
 
-    [ApplyWebTrends]
+    [ApplyAnalytics("CandidateWebConfiguration")]
     [OutputCache(CacheProfile = CacheProfiles.Long)]
     public class ErrorController : Controller
     {

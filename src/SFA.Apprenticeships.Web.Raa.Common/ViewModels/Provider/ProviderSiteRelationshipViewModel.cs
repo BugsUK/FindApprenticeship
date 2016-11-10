@@ -11,5 +11,7 @@
         public string ProviderUkprn { get; set; }
         public string ProviderFullName { get; set; }
         public string ProviderTradingName { get; set; }
+        public string ProviderSiteFullName { get; set; }
+        public string ProviderSiteTradingName { get; set; }
     }
 }

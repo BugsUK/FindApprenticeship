@@ -1,15 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System.Web.Mvc;
-    using Raa.Common.Attributes;
+    using Common.Attributes;
     using Common.Constants;
     using Constants;
     using Raa.Common.ViewModels.Vacancy;
+    using Application.Interfaces;
 
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
-
-    [CookiesEnabled,
+    [ApplyAnalytics("ManageWebConfiguration"), 
+    Raa.Common.Attributes.CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None)]
     public abstract class ManagementControllerBase : Common.Controllers.ControllerBase
     {

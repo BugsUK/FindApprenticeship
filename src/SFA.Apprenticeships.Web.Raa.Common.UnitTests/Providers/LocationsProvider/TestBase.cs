@@ -2,6 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvider
 {
+    using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
@@ -10,15 +11,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Application.Vacancy;
-    using Moq;
-    using NUnit.Framework;
+    using Common.Mappers;
     using Common.Providers;
     using Configuration;
     using Domain.Entities.Raa.Parties;
+    using Moq;
+    using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using Application.Interfaces;
-    using Common.Mappers;
     using Web.Common.Configuration;
 
     public abstract class TestBase
@@ -57,7 +56,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
                 .Returns(new Fixture().Build<Employer>().Create());
             _mockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
             _mockConfigurationService.Setup(mcs => mcs.Get<RecruitWebConfiguration>())
-                .Returns(new RecruitWebConfiguration {AutoSaveTimeoutInSeconds = 60});
+                .Returns(new RecruitWebConfiguration { AutoSaveTimeoutInSeconds = 60 });
 
             _mockTimeService = new Mock<IDateTimeService>();
             _mockApprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
@@ -79,7 +78,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
                 MockProviderService.Object,
                 MockEmployerService.Object,
                 _mockTimeService.Object,
-                new RaaCommonWebMappers(), 
+                new RaaCommonWebMappers(),
                 _mockApprenticeshipApplicationService.Object,
                 _mockTraineeshipApplicationService.Object,
                 _mockVacancyLockingService.Object,

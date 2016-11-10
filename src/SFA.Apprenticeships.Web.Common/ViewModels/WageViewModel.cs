@@ -11,8 +11,8 @@
         {
             Type = WageType.Custom;
             Unit = WageUnit.NotApplicable;
-            Classification = WageClassification.Custom;
-            CustomType = CustomWageType.Fixed;
+            Classification = WageClassification.NotApplicable;
+            CustomType = CustomWageType.NotApplicable;
             PresetText = PresetText.NotApplicable;
         }
 
@@ -46,6 +46,7 @@
 
     public enum WageClassification
     {
+        NotApplicable = -1,
         LegacyText = 0,
         ApprenticeshipMinimum = 1,
         NationalMinimum = 2,

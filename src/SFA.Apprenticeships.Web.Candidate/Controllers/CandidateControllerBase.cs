@@ -6,13 +6,11 @@
     using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
-    using SFA.Infrastructure.Interfaces;
     using NLog.Contrib;
     using Providers;
+    using Application.Interfaces;
 
-    using SFA.Apprenticeships.Application.Interfaces;
-
-    [ApplyWebTrends,
+    [ApplyAnalytics("CandidateWebConfiguration"),
     DefaultSessionTimeout,
     CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None),

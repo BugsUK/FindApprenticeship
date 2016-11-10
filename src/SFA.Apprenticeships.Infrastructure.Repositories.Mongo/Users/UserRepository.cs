@@ -107,7 +107,7 @@
 
             //Check if there is another, existing user with the same username that has already been soft deleted
             var mongoEntity = Collection.Find(Query.And(Query.EQ("Username", entity.Username.ToLower()), Query.EQ("Status", UserStatuses.PendingDeletion))).SingleOrDefault();
-            if (mongoEntity != null)
+            if (mongoEntity != null && mongoEntity.Id != entity.EntityId)
             {
                 //Fully delete existing user
                 Delete(mongoEntity.Id);

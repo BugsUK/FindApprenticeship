@@ -4,7 +4,7 @@
 @if (Model.Status.CanManageVacancyDates())
 {
     <p class="small-btm-margin">
-        @Html.RouteLink("Change vacancy dates", RecruitmentRouteNames.ManageDates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        @Html.RouteLink("Close or extend vacancy", RecruitmentRouteNames.ManageDates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
     </p>
 }
 
