@@ -692,7 +692,7 @@
             if (vacancyOwnerRelationship != null)
             {
                 var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);  //Same with employers
-                viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy.EmployerAnonymousName);
+                viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy);
                 var providerSite = _providerService.GetProviderSite(vacancyOwnerRelationship.ProviderSiteId);
                 viewModel.ProviderSite = providerSite.Convert();
             }

@@ -12,8 +12,19 @@
     <div class="grid-wrapper">
         <div class="grid">
             <h3 class="bold-small">Employer</h3>
-            <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
-        </div>
+            @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.IsAnonymousEmployer)
+            {
+                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName (@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.OriginalFullName - Set as Anonymous)</p>
+                <div>
+                    <h3 class="bold-small">Reason for setting employer as anonymous</h3>
+                    <p>@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.AnonymousEmployerReason</p>
+                </div>
+            }
+            else
+            {
+                <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
+            }
+        </div>        
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
                 <div class="@editableItemClass">

@@ -2,6 +2,7 @@
 {
     using Common.Converters;
     using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -20,8 +21,11 @@
             var employer = new Fixture()
                 .Create<Employer>();
 
+            var vacancy = new Fixture().Create<Vacancy>();
+            vacancy.EmployerAnonymousName = anonymousName;
+
             // Act.
-            var converted = vacancyOwnerRelationship.Convert(employer, anonymousName);
+            var converted = vacancyOwnerRelationship.Convert(employer, vacancy);
 
             // Assert.
             converted.Should().NotBeNull();
@@ -42,8 +46,10 @@
                 .With(each => each.FullName, employerName)
                 .Create();
 
+            var vacancy = new Fixture().Create<Vacancy>();
+            vacancy.EmployerAnonymousName = anonymousName;
             // Act.
-            var converted = vacancyOwnerRelationship.Convert(employer, anonymousName);
+            var converted = vacancyOwnerRelationship.Convert(employer, vacancy);
 
             // Assert.
             converted.Should().NotBeNull();
