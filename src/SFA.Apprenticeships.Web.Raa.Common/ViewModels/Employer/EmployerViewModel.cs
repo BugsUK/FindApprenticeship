@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Employer
 {
-    using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Parties;
+    using System.ComponentModel.DataAnnotations;
     using Web.Common.ViewModels.Locations;
 
     public class EmployerViewModel
@@ -16,5 +16,8 @@
         public AddressViewModel Address { get; set; }
         [Display(Name = EmployerViewModelMessages.Status.LabelText)]
         public EmployerTrainingProviderStatuses Status { get; set; }
+
+        public string OriginalFullName { get; set; }
+        public bool IsAnonymousEmployer { get; set; }
     }
 }

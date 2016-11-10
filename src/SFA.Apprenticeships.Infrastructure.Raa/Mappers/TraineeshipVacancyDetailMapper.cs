@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.Mappers
 {
-    using System;
-    using System.Collections.Generic;
+    using Application.Interfaces;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
@@ -10,7 +9,8 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
-    using Application.Interfaces;
+    using System;
+    using System.Collections.Generic;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     public class TraineeshipVacancyDetailMapper
@@ -44,7 +44,7 @@
                 RealityCheck = vacancy.ThingsToConsider,
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
-                EmployerName = employer.FullName,
+                EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : vacancy.EmployerAnonymousName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = vacancy.EmployerDescription,
