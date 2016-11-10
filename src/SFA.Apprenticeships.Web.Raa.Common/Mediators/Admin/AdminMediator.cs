@@ -570,6 +570,7 @@
             try
             {
                 viewModel = _standardsAndFrameworksProvider.SaveStandard(viewModel);
+                PopulateStandardsDropdown(viewModel);
 
                 return GetMediatorResponse(AdminMediatorCodes.SaveStandard.Ok, viewModel,
                     StandardViewModelMessages.StandardSavedSuccessfully, UserMessageLevel.Info);
@@ -578,6 +579,7 @@
             {
                 _logService.Error($"Failed to save standard with id={viewModel.StandardId}", ex);
                 viewModel = _standardsAndFrameworksProvider.GetStandardViewModel(viewModel.StandardId);
+                PopulateStandardsDropdown(viewModel);
                 return GetMediatorResponse(AdminMediatorCodes.SaveStandard.Error, viewModel, StandardViewModelMessages.StandardSaveError, UserMessageLevel.Error);
             }
         }
@@ -621,16 +623,19 @@
 
             if (!validatonResult.IsValid)
             {
+                PopulateStandardsDropdown(viewModel);
                 return GetMediatorResponse(AdminMediatorCodes.CreateStandard.FailedValidation, viewModel, validatonResult);
             }
 
             viewModel = _standardsAndFrameworksProvider.CreateStandard(viewModel);
+            PopulateStandardsDropdown(viewModel);
 
             return GetMediatorResponse(AdminMediatorCodes.CreateStandard.Ok, viewModel);
         }
 
         public MediatorResponse<SectorViewModel> CreateSector(SectorViewModel viewModel)
         {
+            //TODO: validation
             viewModel = _standardsAndFrameworksProvider.CreateSector(viewModel);
             return GetMediatorResponse(AdminMediatorCodes.CreateSector.Ok, viewModel);
         }

@@ -8,7 +8,6 @@
 @using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateStandard))
 {
     @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <div class="form-group">
         @Html.FormTextFor(m => m.Name, controlHtmlAttributes: new { type = "text" })

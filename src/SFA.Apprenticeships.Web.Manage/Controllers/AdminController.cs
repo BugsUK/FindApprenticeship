@@ -41,7 +41,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SearchProviders.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.SearchProviders.Ok:
@@ -87,7 +87,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.CreateProvider.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateProvider.UkprnAlreadyExists:
@@ -114,7 +114,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SaveProvider.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View("Provider", response.ViewModel);
 
                 case AdminMediatorCodes.SaveProvider.Error:
@@ -138,7 +138,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SearchProviderSites.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.SearchProviderSites.Ok:
@@ -184,7 +184,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.CreateProviderSite.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateProviderSite.EdsUrnAlreadyExists:
@@ -211,7 +211,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SaveProviderSite.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View("ProviderSite", response.ViewModel);
 
                 case AdminMediatorCodes.SaveProviderSite.Error:
@@ -238,7 +238,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.CreateProviderSiteRelationship.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View("ProviderSite", response.ViewModel);
 
                 case AdminMediatorCodes.CreateProviderSiteRelationship.InvalidUkprn:
@@ -296,7 +296,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SearchApiUsers.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.SearchApiUsers.Ok:
@@ -342,7 +342,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.CreateApiUser.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateApiUser.CompanyIdAlreadyExists:
@@ -375,7 +375,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SaveApiUser.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View("ApiUser", response.ViewModel);
 
                 case AdminMediatorCodes.SaveApiUser.Error:
@@ -410,7 +410,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.ResetApiUserPassword.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View("ResetApiUserPassword", response.ViewModel);
 
                 case AdminMediatorCodes.ResetApiUserPassword.Error:
@@ -441,7 +441,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SearchEmployers.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.SearchEmployers.Ok:
@@ -481,7 +481,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SaveEmployer.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View("Employer", response.ViewModel);
 
                 case AdminMediatorCodes.SaveEmployer.Error:
@@ -517,7 +517,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.CreateStandard.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateStandard.Ok:
@@ -536,7 +536,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.CreateSector.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateSector.Ok:
@@ -574,7 +574,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SaveStandard.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.SaveStandard.Ok:
@@ -604,7 +604,7 @@
             switch (response.Code)
             {
                 case AdminMediatorCodes.SaveSector.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.SaveSector.Ok:

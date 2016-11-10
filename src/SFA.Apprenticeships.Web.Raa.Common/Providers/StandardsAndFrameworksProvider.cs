@@ -22,7 +22,6 @@
         public StandardViewModel CreateStandard(StandardViewModel viewModel)
         {
             var standard = StandardMappers.Map<StandardViewModel, Standard>(viewModel);
-
             var createdStandard = _referenceDataService.CreateStandard(standard);
 
             return StandardMappers.Map<Standard, StandardViewModel>(createdStandard);
