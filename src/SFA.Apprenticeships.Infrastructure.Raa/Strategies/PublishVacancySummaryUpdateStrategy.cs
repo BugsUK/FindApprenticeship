@@ -8,6 +8,7 @@
     using Application.Interfaces.Providers;
     using Application.ReferenceData;
     using Application.Vacancies.Entities;
+    using Application.Vacancy;
     using Application.VacancyPosting.Strategies;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -25,6 +26,7 @@
         private readonly IMapper _mapper;
         private readonly IServiceBus _serviceBus;
         private readonly ILogService _logService;
+        private readonly IVacancySummaryService _vacancySummaryService;
 
         public PublishVacancySummaryUpdateStrategy(
             IVacancyReadRepository vacancyReadRepository, 
@@ -33,7 +35,8 @@
             IReferenceDataProvider referenceDataProvider, 
             IMapper mapper, 
             IServiceBus serviceBus, 
-            ILogService logService)
+            ILogService logService,
+            IVacancySummaryService vacancySummaryService)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _providerService = providerService;
@@ -42,6 +45,7 @@
             _mapper = mapper;
             _serviceBus = serviceBus;
             _logService = logService;
+            _vacancySummaryService = vacancySummaryService;
         }
 
         public void PublishVacancySummaryUpdate(Vacancy vacancy)
@@ -52,7 +56,7 @@
             {
                 if (vacancy.Status == VacancyStatus.Live)
                 {
-                    var vacancySummary = _vacancyReadRepository.GetByIds(new List<int> { vacancy.VacancyId }).Single();
+                    var vacancySummary = _vacancySummaryService.GetByIds(new List<int> { vacancy.VacancyId }).Single();
                     var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationships(new List<int> { vacancySummary.VacancyOwnerRelationshipId }, false).Single().Value;
                     var employer = _employerService.GetEmployers(new List<int> { vacancyOwnerRelationship.EmployerId }).Single();
                     var providers = _providerService.GetProviders(new List<int> { vacancy.ContractOwnerId }).Single();

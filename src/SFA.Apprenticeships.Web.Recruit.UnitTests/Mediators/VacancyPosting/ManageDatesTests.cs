@@ -26,7 +26,9 @@
             var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Wage = new WageViewModel(WageType.Custom, 99, null, WageUnit.Weekly, 30),
+                Wage = new WageViewModel() {
+                    CustomType = CustomWageType.Fixed,
+                    Amount = 99, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.Weekly, HoursPerWeek = 30 },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
@@ -34,7 +36,7 @@
                 }
             };
 
-            var existingViewModel = new VacancyViewModelBuilder().With(new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.Weekly, 37.5m)).BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
+            var existingViewModel = new VacancyViewModelBuilder().With(new WageViewModel() { Type = WageType.NationalMinimum, Classification = WageClassification.NationalMinimum, CustomType = CustomWageType.NotApplicable, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.Weekly, HoursPerWeek = 37.5m}).BuildValid(VacancyStatus.Live, VacancyType.Apprenticeship).FurtherVacancyDetailsViewModel;
 
             VacancyPostingProvider.Setup(p => p.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(existingViewModel);
 
@@ -60,7 +62,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.NationalMinimum, null, null, WageUnit.Weekly, 30),
+                Wage = new WageViewModel() { Type = WageType.NationalMinimum, Classification = WageClassification.NationalMinimum, CustomType = CustomWageType.NotApplicable, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.Weekly, HoursPerWeek = 30 },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
@@ -105,10 +107,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel
-                {
-                    Type = WageType.NationalMinimum
-                },
+                Wage = new WageViewModel() { Type = WageType.NationalMinimum, Classification = WageClassification.NationalMinimum, CustomType = CustomWageType.NotApplicable, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(DateTime.Now.AddDays(7)),
@@ -132,10 +131,7 @@
 
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel
-                {
-                    Type = WageType.NationalMinimum
-                },
+                Wage = new WageViewModel() { Type = WageType.NationalMinimum, Classification = WageClassification.NationalMinimum, CustomType = CustomWageType.NotApplicable, Amount = null, AmountLowerBound = null, AmountUpperBound = null, Text = null, Unit = WageUnit.NotApplicable, HoursPerWeek = null },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     ClosingDate = new DateViewModel(DateTime.Now.AddDays(20)),
@@ -212,6 +208,8 @@
             existingViewModel.ComeFromPreview = false;
             //Invalid after Sept 30th
             existingViewModel.Wage.Type = WageType.Custom;
+            existingViewModel.Wage.Classification = WageClassification.Custom;
+            existingViewModel.Wage.CustomType = CustomWageType.Fixed;
             existingViewModel.Wage.Amount = 99;
             existingViewModel.Wage.Unit = WageUnit.Weekly;
             existingViewModel.Wage.HoursPerWeek = 30;

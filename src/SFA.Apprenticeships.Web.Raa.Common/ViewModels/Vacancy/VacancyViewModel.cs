@@ -86,6 +86,8 @@
 
         public bool IsCandidateView { get; set; }
 
+        public bool IsManageReviewerView { get; set; }
+
         public VacancySource VacancySource { get; set; }
 
         public string Mode { get; set; }

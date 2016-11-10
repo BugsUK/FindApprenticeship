@@ -149,7 +149,7 @@
 
             var vacancies = Collection.Find(queryBuilder.And(mongoQueryConditions))
                 .SetSortOrder(SortBy.Ascending("VacancyReferenceNumber"))
-                .SetSkip(query.PageSize * (query.CurrentPage - 1))
+                .SetSkip(query.PageSize * (query.RequestedPage - 1))
                 .SetLimit(query.PageSize)
                 .Select(vacancy => _mapper.Map<MongoVacancy, VacancySummary>(vacancy))
                 .ToList();
@@ -274,11 +274,6 @@
 
             _logger.Warn($"Call to Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA failed: {result.Code}, {result.ErrorMessage}");
             return null;
-        }
-
-        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyOwnerRelationshipIds, int providerId, IEnumerable<int> providerSiteIds)
-        {
-            throw new NotImplementedException();
         }
 
         public int GetVacancyIdByReferenceNumber(int vacancyReferenceNumber)

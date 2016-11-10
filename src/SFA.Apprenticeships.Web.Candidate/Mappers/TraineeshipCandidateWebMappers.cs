@@ -3,9 +3,11 @@
     using Application.Interfaces.Search;
     using Domain.Entities.Locations;
     using Application.Interfaces.Vacancies;
+    using Common.Mappers.Resolvers;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
@@ -16,6 +18,9 @@
     {
         public override void Initialise()
         {
+            Mapper.CreateMap<Wage, WageViewModel>().ConvertUsing<WageToWageViewModelConverter>();
+            Mapper.CreateMap<WageViewModel, Wage>().ConvertUsing<WageViewModelToWageConverter>();
+
             Mapper.CreateMap<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>()
                 .ConvertUsing<TraineeshipSearchResultsResolver>();
 
@@ -32,7 +37,7 @@
                     opt => opt.MapFrom(src => src.VacancyStatus))
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
-                .ForMember(d => d.Wage, opt => opt.MapFrom(src => new WageViewModel(src.Wage)))
+                .ForMember(d => d.Wage, opt => opt.MapFrom(src => src.Wage))
                 .ForMember(d => d.RealityCheck,
                     opt => opt.MapFrom(src => src.RealityCheck))
                 .ForMember(d => d.OtherInformation,

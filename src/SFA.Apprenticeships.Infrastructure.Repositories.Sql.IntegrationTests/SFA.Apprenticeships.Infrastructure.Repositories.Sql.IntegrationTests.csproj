@@ -133,6 +133,7 @@
     <Compile Include="Schemas\dbo\Provider\ProviderRepositoryTests.cs" />
     <Compile Include="Schemas\dbo\ReferenceNumber\ReferenceNumberTests.cs" />
     <Compile Include="Schemas\dbo\VacancyOwnerRelationship\VacancyOwnerRelationshipRepositoryTests.cs" />
+    <Compile Include="Schemas\dbo\VacancySummary\VacancySummaryRepositoryTests.cs" />
     <Compile Include="Schemas\Provider\ProviderUserRepositoryTests.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepositoryTests.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepositoryTests.cs" />

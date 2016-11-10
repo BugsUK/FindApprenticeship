@@ -4,6 +4,7 @@
     using System.Linq;
     using Apprenticeships.Application.Vacancies;
     using Apprenticeships.Application.Vacancies.Entities;
+    using Apprenticeships.Application.Vacancy;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Queries;
@@ -23,12 +24,14 @@
         private Mock<IVacancyWriteRepository> _apprenticeshipVacancyWriteRepository;
         private Mock<IServiceBus> _serviceBus;
         private Mock<ILogService> _logService;
+        private Mock<IVacancySummaryService> _apprenticeshipVacancySummaryService;
 
         [SetUp]
         public void Setup()
         {
             _apprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();
             _apprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
+            _apprenticeshipVacancySummaryService = new Mock<IVacancySummaryService>();
             _serviceBus = new Mock<IServiceBus>();
             _logService = new Mock<ILogService>();
 
@@ -37,6 +40,7 @@
                 .With(_apprenticeshipVacancyWriteRepository)
                 .With(_serviceBus)
                 .With(_logService)
+                .With(_apprenticeshipVacancySummaryService)
                 .Build();
         }
 
@@ -51,7 +55,7 @@
             var result = new Fixture().Build<VacancySummary>()
                 .With(x => x.Status, VacancyStatus.Live)
                 .CreateMany(capacity).ToList();
-            _apprenticeshipVacancyReadRepository
+            _apprenticeshipVacancySummaryService
                 .Setup(m => m.Find(It.Is<ApprenticeshipVacancyQuery>(q => q.LatestClosingDate == deadline), out outParam))
                 .Returns(result);
 
@@ -59,10 +63,10 @@
             _processor.QueueVacanciesForClosure(deadline);
 
             //Assert
-            _apprenticeshipVacancyReadRepository.Verify(
+            _apprenticeshipVacancySummaryService.Verify(
                 m => m.Find(It.Is<ApprenticeshipVacancyQuery>(q => q.LatestClosingDate == deadline), out outParam),
                 Times.Once);
-            _apprenticeshipVacancyReadRepository.Verify(m => m.Find(It.IsAny<ApprenticeshipVacancyQuery>(), out outParam), Times.Once);
+            _apprenticeshipVacancySummaryService.Verify(m => m.Find(It.IsAny<ApprenticeshipVacancyQuery>(), out outParam), Times.Once);
             _serviceBus.Verify(m => m.PublishMessage(It.IsAny<VacancyEligibleForClosure>()), Times.Exactly(capacity));
         }
     }
