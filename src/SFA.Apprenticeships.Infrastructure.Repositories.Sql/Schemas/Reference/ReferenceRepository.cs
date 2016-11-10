@@ -170,16 +170,15 @@
 
         public Standard CreateStandard(Standard standard)
         {
-            //throw new System.NotImplementedException();
             _logger.Info("Creating new Standard");
 
             var dbStandard = MapStandard(standard);
             PopulateEducationLevelId(standard, dbStandard);
 
             var standardId = _getOpenConnection.Insert(dbStandard);
-            standard.StandardId = (int)standardId;
+            dbStandard.StandardId = (int)standardId;
 
-            return standard;
+            return MapStandard(dbStandard);
         }
 
         private void PopulateEducationLevelId(Standard entity, Entities.Standard dbVacancy)
@@ -200,9 +199,9 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
 
             var dbSector = MapSector(sector);
             var sectorId = _getOpenConnection.Insert(dbSector);
-            sector.SectorId = (int) sectorId;
+            dbSector.StandardSectorId = (int) sectorId;
 
-            return sector;
+            return MapSector(dbSector);
         }
 
         public Standard GetStandardById(int standardId)
@@ -253,8 +252,6 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
 
             var dbStandard = MapStandard(standard);
             PopulateEducationLevelId(standard, dbStandard);
-
-            // TODO: SQL: AG: note that we are not attempting to insert a new Provider, we always update (temporary).
 
             if (!_getOpenConnection.UpdateSingle(dbStandard))
             {
