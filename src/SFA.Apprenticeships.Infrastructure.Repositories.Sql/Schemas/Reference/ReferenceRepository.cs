@@ -247,7 +247,7 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
             return MapSector(dbSector);
         }
 
-        public Standard Update(Standard standard)
+        public Standard UpdateStandard(Standard standard)
         {
             _logger.Debug("Saving standard with Id={0}", standard.StandardId);
 
@@ -262,6 +262,20 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
             }
 
             return MapStandard(dbStandard);
+        }
+
+        public Sector UpdateSector(Sector sector)
+        {
+            _logger.Debug("Saving sector with Id={0}", sector.SectorId);
+
+            var dbSector = MapSector(sector);
+
+            if (!_getOpenConnection.UpdateSingle(dbSector))
+            {
+                throw new Exception($"Failed to save sector with Id={sector.SectorId}");
+            }
+
+            return MapSector(dbSector);
         }
 
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()

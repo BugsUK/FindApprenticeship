@@ -62,5 +62,17 @@
             var sector = _referenceDataService.GetSector(sectorId);
             return sector.Convert();
         }
+
+        public SectorViewModel SaveSector(SectorViewModel viewModel)
+        {
+            var sector = _referenceDataService.GetSector(viewModel.SectorId);
+
+            sector.Name = viewModel.Name;
+            sector.ApprenticeshipOccupationId = viewModel.ApprenticeshipOccupationId;
+
+            var updateSector = _referenceDataService.SaveSector(sector);
+
+            return SectorMappers.Map<Sector, SectorViewModel>(updateSector);
+        }
     }
 }

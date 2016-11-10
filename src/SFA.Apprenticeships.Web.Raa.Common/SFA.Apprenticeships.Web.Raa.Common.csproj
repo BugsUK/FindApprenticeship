@@ -183,6 +183,7 @@
     <Compile Include="Constants\ViewModels\ProviderSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ReportParametersMessages.cs" />
+    <Compile Include="Constants\ViewModels\SectorViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ShareApplicationsViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\StandardViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyOwnerRelationshipViewModelMessages.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Providers\IStandardsAndFrameworksProvider.cs" />
     <Compile Include="Providers\StandardsAndFrameworksProvider.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
+    <Compile Include="Validators\Sector\SectorViewModelValidator.cs" />
     <Compile Include="Validators\Standard\StandardViewModelValidator.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelMessages.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelValidator.cs" />

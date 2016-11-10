@@ -9,5 +9,6 @@
         StandardViewModel SaveStandard(StandardViewModel viewModel);
         SectorViewModel CreateSector(SectorViewModel viewModel);
         SectorViewModel GetSectorViewModel(int sectorId);
+        SectorViewModel SaveSector(SectorViewModel viewModel);
     }
 }

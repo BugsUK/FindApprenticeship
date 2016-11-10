@@ -74,12 +74,17 @@
 
         public Standard SaveStandard(Standard standard)
         {
-            return _referenceRepository.Update(standard);
+            return _referenceRepository.UpdateStandard(standard);
         }
 
         public Sector GetSector(int sectorId)
         {
             return _referenceRepository.GetSectorById(sectorId);
+        }
+
+        public Sector SaveSector(Sector sector)
+        {
+            return _referenceRepository.UpdateSector(sector);
         }
     }
 }

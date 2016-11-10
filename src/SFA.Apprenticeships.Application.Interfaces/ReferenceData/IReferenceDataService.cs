@@ -31,5 +31,7 @@
         Sector CreateSector(Sector sector);
 
         Sector GetSector(int sectorId);
+
+        Sector SaveSector(Sector sector);
     }
 }

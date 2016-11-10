@@ -600,7 +600,19 @@
 
         public MediatorResponse<SectorViewModel> SaveSector(SectorViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                viewModel = _standardsAndFrameworksProvider.SaveSector(viewModel);
+
+                return GetMediatorResponse(AdminMediatorCodes.SaveSector.Ok, viewModel,
+                    SectorViewModelMessages.SectorSavedSuccessfully, UserMessageLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error($"Failed to save sector with id={viewModel.SectorId}", ex);
+                viewModel = _standardsAndFrameworksProvider.GetSectorViewModel(viewModel.SectorId);
+                return GetMediatorResponse(AdminMediatorCodes.SaveSector.Error, viewModel, SectorViewModelMessages.SectorSaveError, UserMessageLevel.Error);
+            }
         }
 
         public MediatorResponse<StandardViewModel> CreateStandard(StandardViewModel viewModel)

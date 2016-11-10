@@ -5,7 +5,6 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Constants.ViewModels;
-    using Validators.Provider;
     using FluentValidation.Attributes;
     using Validators.Standard;
 
