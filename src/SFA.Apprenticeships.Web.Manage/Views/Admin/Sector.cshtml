@@ -1,0 +1,35 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Admin.SectorViewModel
+@{
+    ViewBag.Title = "Sector";
+}
+
+<h1 id="heading" class="heading-xlarge">Sector</h1>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditSector))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.HiddenFor(m => m.SectorId)
+    <p>
+        <ul>
+            <li>ID: @Model.SectorId</li>
+        </ul>
+    </p>
+
+    <div class="form-group">
+        @Html.FormTextFor(m => m.Name, controlHtmlAttributes: new { type = "text" })
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ApprenticeshipOccupationId, new { @class = "form-label" })
+            @Html.DropDownListFor(m => m.ApprenticeshipOccupationId, Model.ApprenticeshipOccupations)
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <button id="save-sector-button" type="submit" class="button" name="SaveSectorAction" value="SaveSector">Save</button>
+    </div>
+}
+

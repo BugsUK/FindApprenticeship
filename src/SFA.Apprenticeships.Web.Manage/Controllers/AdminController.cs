@@ -579,6 +579,35 @@
         }
 
         [HttpGet]
+        public ActionResult Sector(int sectorId)
+        {
+            var response = _adminMediator.GetSector(sectorId);
+            return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult SaveSector(SectorViewModel viewModel)
+        {
+            var response = _adminMediator.SaveSector(viewModel);
+
+            ModelState.Clear();
+
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case AdminMediatorCodes.SaveSector.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
+                    return View(response.ViewModel);
+
+                case AdminMediatorCodes.SaveSector.Ok:
+                    return RedirectToRoute(ManagementRouteNames.AdminViewSector, new { viewModel.SectorId });
+
+                default: throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
         public ActionResult Frameworks()
         {
             var response = _adminMediator.GetFrameworks();

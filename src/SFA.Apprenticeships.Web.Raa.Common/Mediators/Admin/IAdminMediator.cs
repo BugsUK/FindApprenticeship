@@ -49,5 +49,7 @@
         MediatorResponse<StandardViewModel> GetStandard(int standardId);
         MediatorResponse<StandardViewModel> SaveStandard(StandardViewModel viewModel);
         MediatorResponse<SectorViewModel> CreateSector(SectorViewModel viewModel);
+        MediatorResponse<SectorViewModel> GetSector(int sectorId);
+        MediatorResponse<SectorViewModel> SaveSector(SectorViewModel viewModel);
     }
 }

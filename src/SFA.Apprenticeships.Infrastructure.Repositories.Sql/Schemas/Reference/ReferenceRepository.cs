@@ -205,7 +205,7 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
             return sector;
         }
 
-        public Standard GetById(int standardId)
+        public Standard GetStandardById(int standardId)
         {
             _logger.Debug("Getting standard with StandardId={0}", standardId);
 
@@ -224,6 +224,27 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
                 standardId);
 
             return MapStandard(dbStandard);
+        }
+
+        public Sector GetSectorById(int sectorId)
+        {
+            _logger.Debug("Getting sector with SectorId={0}", sectorId);
+
+            const string sql = "SELECT * FROM Reference.StandardSector WHERE StandardSectorId = @sectorId";
+
+            var sqlParams = new
+            {
+                sectorId
+            };
+
+            var dbSector = _getOpenConnection.Query<Entities.StandardSector>(sql, sqlParams).SingleOrDefault();
+
+            _logger.Debug(dbSector == null
+                ? "Did not find sector with SectorId={0}"
+                : "Got sector with SectorId={0}",
+                sectorId);
+
+            return MapSector(dbSector);
         }
 
         public Standard Update(Standard standard)
@@ -310,6 +331,13 @@ WHERE  CodeName = @EntityApprenticeshipLevel",
         private Entities.StandardSector MapSector(Sector sector)
         {
             return _mapper.Map<Sector, Entities.StandardSector>(sector);
+        }
+
+        private Sector MapSector(Entities.StandardSector sector)
+        {
+            return sector == null
+                ? null
+                : _mapper.Map<Entities.StandardSector, Sector>(sector);
         }
     }
 }

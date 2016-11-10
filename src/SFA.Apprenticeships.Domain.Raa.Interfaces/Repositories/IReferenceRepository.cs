@@ -21,10 +21,12 @@
 
         Standard CreateStandard(Standard standard);
 
-        Standard GetById(int standardId);
+        Standard GetStandardById(int standardId);
 
         Standard Update(Standard standard);
 
         Sector CreateSector(Sector sector);
+
+        Sector GetSectorById(int sectorId);
     }
 }

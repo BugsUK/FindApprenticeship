@@ -582,6 +582,27 @@
             }
         }
 
+        public MediatorResponse<SectorViewModel> GetSector(int sectorId)
+        {
+            var viewModel = _standardsAndFrameworksProvider.GetSectorViewModel(sectorId);
+
+            var apprenticeshipOccupationId = viewModel.ApprenticeshipOccupationId;
+            var id = viewModel.SectorId;
+            var sectorName = viewModel.Name;
+
+            PopulateSectorsDropdown(viewModel);
+            viewModel.ApprenticeshipOccupationId = apprenticeshipOccupationId;
+            viewModel.SectorId = id;
+            viewModel.Name = sectorName;
+
+            return GetMediatorResponse(AdminMediatorCodes.GetProvider.Ok, viewModel);
+        }
+
+        public MediatorResponse<SectorViewModel> SaveSector(SectorViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         public MediatorResponse<StandardViewModel> CreateStandard(StandardViewModel viewModel)
         {
             var validatonResult = _standardViewModelServerValidator.Validate(viewModel);

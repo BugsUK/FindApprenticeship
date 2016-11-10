@@ -29,5 +29,7 @@
         Standard SaveStandard(Standard standard);
 
         Sector CreateSector(Sector sector);
+
+        Sector GetSector(int sectorId);
     }
 }

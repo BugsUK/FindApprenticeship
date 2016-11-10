@@ -56,5 +56,11 @@
 
             return StandardMappers.Map<Standard, StandardViewModel>(updatedStandard);
         }
+
+        public SectorViewModel GetSectorViewModel(int sectorId)
+        {
+            var sector = _referenceDataService.GetSector(sectorId);
+            return sector.Convert();
+        }
     }
 }

@@ -193,6 +193,7 @@
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
     <Compile Include="Converters\AddressViewModelConverter.cs" />
+    <Compile Include="Converters\AdminSectorViewModelConverter.cs" />
     <Compile Include="Converters\AdminStandardViewModelConverter.cs" />
     <Compile Include="Converters\ApprenticeshipVacancyConverter.cs" />
     <Compile Include="Converters\ContactDetailsAndVacancyHistoryViewModelConverter.cs" />

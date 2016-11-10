@@ -208,6 +208,13 @@
             public const string Ok = "AdminMediatorCodes.SaveStandard.Ok";
         }
 
+        public class SaveSector
+        {
+            public const string FailedValidation = "AdminMediatorCodes.SaveSector.FailedValidation";
+            public const string Error = "AdminMediatorCodes.SaveSector.Error";
+            public const string Ok = "AdminMediatorCodes.SaveSector.Ok";
+        }
+
         public class GetStandardsBytes
         {
             public const string FailedValidation = "AdminMediatorCodes.GetStandardsBytes.FailedValidation";
