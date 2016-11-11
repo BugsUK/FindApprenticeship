@@ -1,25 +1,25 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Common.Constants;
     using Common.Mediators;
-    using FluentValidation;
     using Common.Validators;
     using Common.ViewModels;
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Vacancies;
+    using FluentValidation;
     using Infrastructure.Presentation;
     using Raa.Common.Converters;
-    using Raa.Common.Validators.Vacancy;
-    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Provider;
+    using Raa.Common.Validators.Vacancy;
     using Raa.Common.Validators.VacancyPosting;
     using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class VacancyMediator : MediatorBase, IVacancyMediator
     {
@@ -40,10 +40,10 @@
         public VacancyMediator(IVacancyQAProvider vacancyQaProvider,
             VacancyViewModelValidator vacancyViewModelValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
-            NewVacancyViewModelServerValidator newVacancyViewModelServerValidator, 
+            NewVacancyViewModelServerValidator newVacancyViewModelServerValidator,
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
-            VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator, 
-            VacancyOwnerRelationshipViewModelValidator vacancyOwnerRelationshipViewModelValidator, 
+            VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator,
+            VacancyOwnerRelationshipViewModelValidator vacancyOwnerRelationshipViewModelValidator,
             IProviderQAProvider providerQaProvider, LocationSearchViewModelServerValidator locationSearchViewModelServerValidator, ILocationsProvider locationsProvider, TrainingDetailsViewModelServerValidator trainingDetailsViewModelServerValidator)
         {
             _vacancyQaProvider = vacancyQaProvider;
@@ -142,10 +142,10 @@
                 switch (vacancyViewModel.VacancySource)
                 {
                     case VacancySource.Av:
-                        return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors, 
+                        return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInAvmsWithValidationErrors,
                             vacancyViewModel, validationResult, VacancyViewModelMessages.VacancyAuthoredInAvms, UserMessageLevel.Info);
                     case VacancySource.Api:
-                        return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors, 
+                        return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.VacancyAuthoredInApiWithValidationErrors,
                             vacancyViewModel, validationResult, VacancyViewModelMessages.VacancyAuthoredInApi, UserMessageLevel.Info);
                     case VacancySource.Raa:
                         return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.FailedValidation,
@@ -153,7 +153,7 @@
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                
+
             }
 
             switch (vacancyViewModel.VacancySource)
@@ -177,7 +177,7 @@
 
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
-            if (!validationResult.IsValid )
+            if (!validationResult.IsValid)
             {
                 vacancyViewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 vacancyViewModel.WageTextPresets = ApprenticeshipVacancyConverter.GetWageTextPresets();
@@ -199,7 +199,7 @@
                 viewModel.WageTextPresets = ApprenticeshipVacancyConverter.GetWageTextPresets();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(viewModel.VacancyType);
 
-                if (validationResult.Errors.All(e => (ValidationType?) e.CustomState == ValidationType.Warning))
+                if (validationResult.Errors.All(e => (ValidationType?)e.CustomState == ValidationType.Warning))
                 {
                     viewModel.AcceptWarnings = true;
                 }
@@ -318,14 +318,29 @@
                     vacancy.IsEmployerLocationMainApprenticeshipLocation;
             viewModel.NumberOfPositions = vacancy.NumberOfPositions;
             viewModel.Status = vacancy.Status;
-
+            viewModel.IsAnonymousEmployer = vacancy.VacancyOwnerRelationship.Employer.IsAnonymousEmployer;
+            if (viewModel.IsAnonymousEmployer.Value)
+            {
+                viewModel.AnonymousEmployerDescription = vacancy.VacancyOwnerRelationship.Employer.FullName;
+                viewModel.AnonymousEmployerReason = vacancy.VacancyOwnerRelationship.Employer.AnonymousEmployerReason;
+                viewModel.AnonymousEmployerReasonComment =
+                    vacancy.VacancyOwnerRelationship.Employer.AnonymousEmployerReasonComment;
+                viewModel.AnonymousEmployerDescriptionComment =
+                    vacancy.VacancyOwnerRelationship.Employer.AnonymousEmployerDescriptionComment;
+                viewModel.EmployerWebsiteUrl = null;
+            }
+            else
+            {
+                viewModel.EmployerDescriptionComment = vacancy.EmployerDescriptionComment;
+                viewModel.EmployerWebsiteUrlComment = vacancy.EmployerWebsiteUrlComment;
+            }
+            
             if (vacancy.VacancyReferenceNumber.HasValue)
             {
                 viewModel.VacancyReferenceNumber = vacancy.VacancyReferenceNumber.Value;
             }
 
-            viewModel.EmployerDescriptionComment = vacancy.EmployerDescriptionComment;
-            viewModel.EmployerWebsiteUrlComment = vacancy.EmployerWebsiteUrlComment;
+            
             viewModel.NumberOfPositionsComment = vacancy.NumberOfPositionsComment;
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)

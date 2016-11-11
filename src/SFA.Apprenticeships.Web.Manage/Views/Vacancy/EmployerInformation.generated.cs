@@ -165,6 +165,11 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(@">
 
         $(""#NumberOfPositionsJS"").attr(""id"", ""NumberOfPositions"").attr(""Name"", ""NumberOfPositions"");
+
+        $(""#NonAnonymousEmployerJS"").attr(""id"", ""NonAnonymousEmployer"").attr(""Name"", ""NonAnonymousEmployer"");
+        $(""#AnonymousEmployerJS"").attr(""id"", ""AnonymousEmployer"").attr(""Name"", ""AnonymousEmployer"");
+        
+
         $(""#location-type-main-location"").on('click', function () {
                 $(""#confirmEmployer"").text(""Save"");
         });

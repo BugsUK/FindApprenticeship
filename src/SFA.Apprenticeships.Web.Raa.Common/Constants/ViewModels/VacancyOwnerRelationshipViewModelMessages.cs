@@ -57,8 +57,8 @@
             public const string RequiredErrorText = "Enter employer description";
             public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
             public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListInvalidCharacterErrorText = "About the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
-            public const string WhiteListInvalidTagErrorText = "About the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+            public const string WhiteListInvalidCharacterErrorText = "Employer description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Employer description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public class AnonymousEmployerReason
@@ -79,6 +79,26 @@
         public class AnonymousEmployerReasonComment
         {
             public const string LabelText = "Reason for setting employer as anonymous comment";
+        }
+
+        public class AnonymousAboutTheEmployerDescription
+        {
+            public const string LabelText = "About the employer";
+            public const string RequiredErrorText = "You must specify something about the employer";
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "About the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "About the employer " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public class AnonymousAboutTheEmployerDescriptionComment
+        {
+            public const string LabelText = "Employer description comment";
+        }
+
+        public class IsAnonymousEmployer
+        {
+            public const string RequiredErrorText = "Select whether the employer name and address be shown in this vacancy";
         }
     }
 }

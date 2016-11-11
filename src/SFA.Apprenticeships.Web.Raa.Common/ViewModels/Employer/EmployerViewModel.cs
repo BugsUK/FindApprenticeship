@@ -21,5 +21,6 @@
         public bool IsAnonymousEmployer { get; set; }
         public string AnonymousEmployerReason { get; set; }
         public string AnonymousEmployerReasonComment { get; set; }
+        public string AnonymousEmployerDescriptionComment { get; set; }
     }
 }

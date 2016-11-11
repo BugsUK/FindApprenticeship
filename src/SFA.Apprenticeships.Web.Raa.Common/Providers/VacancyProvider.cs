@@ -166,7 +166,7 @@
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);
-            viewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer);
+            viewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy);
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
             viewModel.VacancyGuid = vacancy.VacancyGuid;
