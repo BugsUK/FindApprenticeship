@@ -16,7 +16,8 @@
                 EmployerDescription = vacancyOwnerRelationship.EmployerDescription,
                 EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl,
                 Employer = employer.Convert(),
-                IsEmployerAddressValid = true
+                IsEmployerAddressValid = true,
+                AnonymousAboutTheEmployerDescription = vacancyOwnerRelationship.EmployerDescription
             };
             if (!string.IsNullOrWhiteSpace(vacancy?.EmployerAnonymousName))
             {
