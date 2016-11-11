@@ -11,20 +11,29 @@
     <h2 class="heading-large">About the employer</h2>
     <div class="grid-wrapper">
         <div class="grid">
-            <h3 class="bold-small">Employer</h3>
-            @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.IsAnonymousEmployer)
-            {
-                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName (@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.OriginalFullName - Set as Anonymous)</p>
-                <div>
-                    <h3 class="bold-small">Reason for setting employer as anonymous</h3>
-                    <p>@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.AnonymousEmployerReason</p>
+            <div class="inner-block-padr">
+                <div class="@editableItemClass">
+                    <h3 class="bold-small">Employer</h3>
+                    @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.IsAnonymousEmployer)
+                    {
+                        <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName (@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.OriginalFullName - Set as Anonymous)</p>
+                        <div class="left-grey-border">
+
+                            <h3 class="bold-xsmall">Reason for setting employer as anonymous</h3>
+                            <p class="font-xsmall">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.AnonymousEmployerReason</p>
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.Employer.AnonymousEmployerReason, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReasonComment, Model.EmployerLink))
+                        </div>
+                    }
+                    else
+                    {
+                        <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
+                    }
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.Employer.AnonymousEmployerReason, Model.EmployerLink, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReasonComment))
                 </div>
-            }
-            else
-            {
-                <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
-            }
-        </div>        
+            </div>
+        </div>
+    </div>
+    <div class="grid-wrapper">
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
@@ -42,7 +51,7 @@
     <div class="grid-wrapper">
         @{
             var gridClass = "grid";
-            if (Model.IsSingleLocation || ( Model.LocationAddresses != null && Model.LocationAddresses.Count == 1))
+            if (Model.IsSingleLocation || (Model.LocationAddresses != null && Model.LocationAddresses.Count == 1))
             {
                 gridClass += " grid-1-2";
             }

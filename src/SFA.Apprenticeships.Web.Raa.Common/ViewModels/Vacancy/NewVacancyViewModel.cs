@@ -1,16 +1,16 @@
 namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
     using Provider;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using VacancyPosting;
     using Validators.Vacancy;
 
-    [Validator(typeof (NewVacancyViewModelClientValidator))]
+    [Validator(typeof(NewVacancyViewModelClientValidator))]
     public class NewVacancyViewModel : IPartialVacancyViewModel
     {
         public const string PartialView = "Vacancy/BasicVacancyDetails";
