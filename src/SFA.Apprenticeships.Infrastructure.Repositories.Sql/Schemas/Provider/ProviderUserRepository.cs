@@ -43,8 +43,8 @@
                 .SingleOrDefault();
 
             _logger.Debug(dbProviderUser == null
-                ? "Did not find provider user with username=\"{0}\""
-                : "Got provider user with username=\"{0}\"", id);
+                ? "Did not find provider user with id=\"{0}\""
+                : "Got provider user with id=\"{0}\"", id);
 
             return MapProviderUser(dbProviderUser);
         }
@@ -53,7 +53,7 @@
         {
             _logger.Debug("Getting provider user with username=\"{0}\"", username);
 
-            const string sql = ProviderUserSelect + "Username = @username";
+            const string sql = ProviderUserSelect + "Username LIKE @username";
 
             var sqlParams = new
             {
@@ -75,7 +75,7 @@
         {
             _logger.Debug("Getting provider user with username=\"{0}\"", email);
 
-            const string sql = ProviderUserSelect + "Email = @email";
+            const string sql = ProviderUserSelect + "Email LIKE @email";
 
             var sqlParams = new
             {
@@ -87,8 +87,8 @@
                 .SingleOrDefault();
 
             _logger.Debug(dbProviderUser == null
-                ? "Did not find provider user with username=\"{0}\""
-                : "Got provider user with username=\"{0}\"", email);
+                ? "Did not find provider user with email=\"{0}\""
+                : "Got provider user with email=\"{0}\"", email);
 
             return MapProviderUser(dbProviderUser);
         }
