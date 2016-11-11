@@ -10,7 +10,7 @@
 <div class="grid-wrapper">
     <section class="grid grid-2-3">
         <div class="inner-block-padr">
-            <h1 class="heading-xlarge">Your feedback</h1>
+            <h1 class="heading-xlarge">Your feedback (@Model.ApplicantDetails.Name)</h1>
             @{
                 var reason = string.IsNullOrWhiteSpace(Model.UnsuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnsuccessfulReason;
             }
