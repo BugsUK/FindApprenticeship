@@ -10,7 +10,7 @@
 
         public MemoryCacheRegistry()
         {
-            For<ICacheService>().Singleton().Use<MemoryCacheService>().Name = MemoryCacheName;
+            For<ICacheService>().Singleton().Use<AzureRedisCacheService>().Name = MemoryCacheName;
         }
     }
 }
