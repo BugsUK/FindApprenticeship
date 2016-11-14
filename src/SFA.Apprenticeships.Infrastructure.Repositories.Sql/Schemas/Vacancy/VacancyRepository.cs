@@ -67,16 +67,16 @@
             };
 
             var sql = $@"SELECT	v.*,
-                            CASE v.ApplyOutsideNAVMS
- 			                    WHEN 1 THEN 0
-                                ELSE dbo.GetApplicantCount(v.VacancyId) 
-                            END
-                            AS ApplicantCount,
-		                    CASE v.ApplyOutsideNAVMS
- 			                    WHEN 1 THEN 0
-			                    ELSE dbo.GetNewApplicantCount(v.VacancyId)
-		                    END
-		                    AS NewApplicantCount,
+                            --CASE v.ApplyOutsideNAVMS
+ 			                --    WHEN 1 THEN 0
+                            --    ELSE dbo.GetApplicantCount(v.VacancyId) 
+                            --END
+                            --AS ApplicantCount,
+		                    --CASE v.ApplyOutsideNAVMS
+ 			                --    WHEN 1 THEN 0
+			                --    ELSE dbo.GetNewApplicantCount(v.VacancyId)
+		                    --END
+		                    --AS NewApplicantCount,
                             dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
 		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
@@ -140,8 +140,6 @@
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
                     JOIN	Employer e
                     ON		o.EmployerId = e.EmployerId
-                    JOIN	ProviderSiteRelationship r
-                    ON		r.ProviderSiteId = o.ProviderSiteId
                     JOIN	ProviderSite s
                     ON      s.ProviderSiteId = v.VacancyManagerId
 
@@ -205,8 +203,7 @@
                     LEFT OUTER JOIN VacancyReferralComments LAD ON LAD.VacancyId = v.VacancyId AND LAD.FieldTypeId = dbo.GetCommentFieldId('LAD')
                     LEFT OUTER JOIN VacancyReferralComments ALI ON ALI.VacancyId = v.VacancyId AND ALI.FieldTypeId = dbo.GetCommentFieldId('ALI')
 
-                    WHERE	r.ProviderSiteRelationshipTypeId = 1
-                    AND      v.VacancyID = @vacancyId
+                    WHERE v.VacancyID = @vacancyId
             ";
 
             var vacancy = _getOpenConnection.Query<Vacancy>(sql, sqlParams).SingleOrDefault();
