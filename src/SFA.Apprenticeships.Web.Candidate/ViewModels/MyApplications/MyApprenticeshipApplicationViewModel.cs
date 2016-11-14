@@ -84,5 +84,9 @@
         public string UnsuccessfulReason { get; set; }
 
         public DateTime UnsuccessfulDateTime { get; set; }
+
+        // Provider details
+        public string ProviderName { get; set; }
+        public string Contact { get; set; }
     }
 }

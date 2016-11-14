@@ -27,6 +27,7 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
+    using Infrastructure.Raa.Extensions;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -661,11 +662,13 @@
         public VacancyViewModel GetVacancyById(int vacancyId)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyId);
-
+            
             if (vacancy == null)
                 return null;
 
             var viewModel = GetVacancyViewModelFrom(vacancy);
+
+
             return viewModel;
         }
 
@@ -693,14 +696,20 @@
                 viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy.EmployerAnonymousName);
                 var providerSite = _providerService.GetProviderSite(vacancyOwnerRelationship.ProviderSiteId);
                 viewModel.ProviderSite = providerSite.Convert();
+
+                viewModel.Contact = vacancy.GetContactInformation(providerSite);
             }
+
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
                 ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
                 : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
+
             viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
                 ? viewModel.TrainingDetailsViewModel.SectorCodeName
                 : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName).FullName;
+
             var standard = GetStandard(vacancy.StandardId);
+
             viewModel.StandardName = standard == null ? "" : standard.Name;
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {

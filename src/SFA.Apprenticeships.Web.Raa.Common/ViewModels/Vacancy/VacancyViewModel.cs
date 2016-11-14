@@ -91,5 +91,6 @@
         public VacancySource VacancySource { get; set; }
 
         public string Mode { get; set; }
+        public string Contact { get; set; }
     }
 }
