@@ -86,11 +86,7 @@
         public DateTime UnsuccessfulDateTime { get; set; }
 
         // Provider details
-        public string ProviderDescription { get; set; }
         public string ProviderName { get; set; }
         public string Contact { get; set; }
-        public bool IsRecruitmentAgencyAnonymous { get; set; }
-        public string RecruitmentAgency { get; set; }
-        public bool IsNasProvider { get; set; }
     }
 }
