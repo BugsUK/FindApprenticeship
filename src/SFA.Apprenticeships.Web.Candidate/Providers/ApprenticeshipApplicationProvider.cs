@@ -580,12 +580,8 @@
             apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
 
             // add in provider contact details
-            apprenticeshipApplicationViewModel.ProviderDescription = vacancyDetailViewModel.ProviderDescription;
             apprenticeshipApplicationViewModel.ProviderName = vacancyDetailViewModel.ProviderName;
             apprenticeshipApplicationViewModel.Contact = vacancyDetailViewModel.Contact;
-            apprenticeshipApplicationViewModel.IsRecruitmentAgencyAnonymous = vacancyDetailViewModel.IsRecruitmentAgencyAnonymous;
-            apprenticeshipApplicationViewModel.RecruitmentAgency = vacancyDetailViewModel.RecruitmentAgency;
-            apprenticeshipApplicationViewModel.IsNasProvider = vacancyDetailViewModel.IsNasProvider;
 
             return apprenticeshipApplicationViewModel;
         }
