@@ -13,13 +13,12 @@
     public class CandidateRepository : ICandidateReadRepository
     {
         private readonly IGetOpenConnection _getOpenConnection;
-        private readonly IMapper _candidateMapper;
+        private static readonly IMapper CandidateMapper = new CandidateMappers();
         private readonly ILogService _logService;
 
         public CandidateRepository(IGetOpenConnection getOpenConnection, ILogService logService)
         {
             _getOpenConnection = getOpenConnection;
-            _candidateMapper = new CandidateMappers();
             _logService = logService;
         }
 
@@ -92,23 +91,26 @@
             {
                 query.Add("c.CandidateId = @CandidateId");
             }
+            if (request.ProviderSiteIds != null)
+            {
+                query.Add("(VacancyManagerId IN @providerSiteIds OR DeliveryOrganisationId IN @providerSiteIds)");
+            }
+            if (request.HasSubmittedApplications)
+            {
+                query.Add("a.ApplicationStatusTypeId >= 2");
+            }
 
-            var sql = 
+            var sql =
 @"SELECT DISTINCT c.CandidateId, c.CandidateGuid, p.FirstName, p.MiddleNames, p.Surname, c.DateofBirth, 
 c.AddressLine1, c.AddressLine2, c.AddressLine3, c.AddressLine4, c.Postcode, c.Town, ct.FullName As County, c.Latitude, c.Longitude
 FROM Person p
 JOIN Candidate c ON p.PersonId = c.PersonId
 JOIN County ct on c.CountyId = ct.CountyId 
-JOIN [Application] a ON c.CandidateId = a.CandidateId
-JOIN Vacancy v ON a.VacancyId = v.VacancyId 
-WHERE a.ApplicationStatusTypeId >= 2 AND " + string.Join(" AND ", query);
+LEFT JOIN [Application] a ON c.CandidateId = a.CandidateId
+LEFT JOIN Vacancy v ON a.VacancyId = v.VacancyId 
+WHERE " + string.Join(" AND ", query);
 
-            if (request.ProviderSiteIds != null)
-            {
-                sql += @" AND (VacancyManagerId IN @providerSiteIds OR DeliveryOrganisationId IN @providerSiteIds)";
-            }
-
-            var candidates = _candidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
+            var candidates = CandidateMapper.Map<IEnumerable<DbCandidateSummary>, IEnumerable<CandidateSummary>>(
                 _getOpenConnection.Query<DbCandidateSummary>(sql,
                     new
                     {

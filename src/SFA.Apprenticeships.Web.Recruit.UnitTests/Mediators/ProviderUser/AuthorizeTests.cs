@@ -52,7 +52,7 @@
                 new ProviderSiteViewModel()
             }).Build();
 
-            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
+            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>(), true)).Returns(providerViewModel);
             MockProviderUserProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>()))
                 .Returns(new ProviderUserViewModel());
 
@@ -88,7 +88,7 @@
         public void Authorize_FailedMinimumSitesCountCheck()
         {
             // Arrange.
-            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(new ProviderViewModelBuilder().Build());
+            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>(), true)).Returns(new ProviderViewModelBuilder().Build());
 
             var mediator = GetMediator();
             var principal =
@@ -148,8 +148,8 @@
                 new ProviderSiteViewModel()
             }).Build();
             
-            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
-            MockProviderUserProvider.Setup(p => p.GetUserProfileViewModels(It.IsAny<string>()))
+            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>(), true)).Returns(providerViewModel);
+            MockProviderUserProvider.Setup(p => p.GetProviderUsers(It.IsAny<string>()))
                 .Returns(new List<ProviderUserViewModel> {new ProviderUserViewModel()});
 
             var mediator = GetMediator();
@@ -173,7 +173,7 @@
                 new ProviderSiteViewModel()
             }).Build();
 
-            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
+            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>(), true)).Returns(providerViewModel);
             MockProviderUserProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>()))
                 .Returns(new ProviderUserViewModel {EmailAddressVerified = true});
 
@@ -197,7 +197,7 @@
                 new ProviderSiteViewModel()
             }).Build();
 
-            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
+            MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>(), true)).Returns(providerViewModel);
             MockProviderUserProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>()))
                 .Returns(new ProviderUserViewModel { EmailAddressVerified = true });
 
@@ -227,7 +227,7 @@
                 }).Build();
 
             MockProviderProvider
-                .Setup(mock => mock.GetProviderViewModel(It.IsAny<string>()))
+                .Setup(mock => mock.GetProviderViewModel(It.IsAny<string>(), true))
                 .Returns(providerViewModel);
 
             MockProviderUserProvider

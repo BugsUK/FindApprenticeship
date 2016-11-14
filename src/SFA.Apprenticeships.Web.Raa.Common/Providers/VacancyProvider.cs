@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -8,24 +9,27 @@
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
+    using Application.Vacancy;
     using Configuration;
     using Converters;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
-    using Application.Interfaces;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Raa.Parties;
+    using Infrastructure.Raa.Extensions;
     using ViewModels;
+    using ViewModels.Admin;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -47,7 +51,6 @@
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
-        private readonly IDictionary<VacancyType, ICommonApplicationService> _commonApplicationService;
         private readonly IVacancyLockingService _vacancyLockingService;
         private readonly ICurrentUserService _currentUserService;
         private readonly IUserProfileService _userProfileService;
@@ -55,14 +58,17 @@
         private readonly IMapper _mapper;
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
+        private readonly IVacancySummaryService _vacancySummaryService;
+
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
             IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
-            ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService,
-            ILocalAuthorityLookupService localAuthLookupService)
+            ICurrentUserService currentUserService, IUserProfileService userProfileService,
+            IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
+            IVacancySummaryService vacancySummaryService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -74,29 +80,26 @@
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
-            _commonApplicationService = new Dictionary<VacancyType, ICommonApplicationService>() {
-                { VacancyType.Apprenticeship, apprenticeshipApplicationService },
-                { VacancyType.Traineeship,    traineeshipApplicationService }
-            };
             _vacancyLockingService = vacancyLockingService;
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
+            _vacancySummaryService = vacancySummaryService;
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
+        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId, true);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
-            var vacancyPartyViewModel = vacancyParty.Convert(employer);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancyOwnerRelationshipId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
+            var vacancyOwnerRelationshipViewModel = vacancyOwnerRelationship.Convert(employer);
 
             if (existingVacancy != null)
             {
                 var vacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(existingVacancy);
-                vacancyViewModel.OwnerParty = vacancyPartyViewModel;
+                vacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationshipViewModel;
                 vacancyViewModel.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
                 vacancyViewModel.LocationAddresses = GetLocationsAddressViewModel(existingVacancy);
@@ -105,45 +108,66 @@
 
             return new NewVacancyViewModel
             {
-                OwnerParty = vacancyPartyViewModel,
+                VacancyOwnerRelationship = vacancyOwnerRelationshipViewModel,
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions,
                 AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
             };
         }
 
-        private List<VacancyLocationAddressViewModel> GetLocationsAddressViewModel(Vacancy vacancy)
+        public List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(
+            int vacancyReferenceNumber)
         {
-            var locationAddressesVm = new List<VacancyLocationAddressViewModel>();
-            var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+            var locationAddresses = _vacancyPostingService.GetVacancyLocationsByReferenceNumber(vacancyReferenceNumber);
+            return GetVacancyLocationAddressViewModels(locationAddresses);
+        }
+
+        public List<VacancyLocationAddressViewModel> GetLocationsAddressViewModels(int vacancyId)
+        {
+            var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancyId);
+            return GetVacancyLocationAddressViewModels(locationAddresses);
+        }
+
+        private List<VacancyLocationAddressViewModel> GetVacancyLocationAddressViewModels(List<VacancyLocation> locationAddresses)
+        {
             if (locationAddresses != null && locationAddresses.Any())
             {
-                return
-                    _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);
+                return _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);
             }
+            return new List<VacancyLocationAddressViewModel>();
+        }
+
+        private List<VacancyLocationAddressViewModel> GetLocationsAddressViewModel(Vacancy vacancy)
+        {
+            var locationAddresses = GetLocationsAddressViewModels(vacancy.VacancyId);
+            if (locationAddresses.Any())
+            {
+                return locationAddresses;
+            }
+
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                 vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
                 vacancy.Address != null)
             {
 
-                locationAddressesVm.Add(
+                locationAddresses.Add(
                     new VacancyLocationAddressViewModel
                     {
                         Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
                         NumberOfPositions = vacancy.NumberOfPositions
                     });
             }
-            return locationAddressesVm;
+            return locationAddresses;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);
-            viewModel.OwnerParty = vacancyParty.Convert(employer);
+            viewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer);
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
             viewModel.VacancyGuid = vacancy.VacancyGuid;
@@ -238,12 +262,12 @@
 
         public VacancyMinimumData UpdateVacancy(VacancyMinimumData vacancyMinimumData)
         {
-            var vacancyParty =
-                _providerService.GetVacancyParty(vacancyMinimumData.VacancyPartyId, true);
-            if (vacancyParty == null)
-                throw new Exception($"Vacancy Party {vacancyMinimumData.VacancyPartyId} not found / no longer current");
+            var vacancyOwnerRelationship =
+                _providerService.GetVacancyOwnerRelationship(vacancyMinimumData.VacancyOwnerRelationshipId, true);
+            if (vacancyOwnerRelationship == null)
+                throw new Exception($"Vacancy Party {vacancyMinimumData.VacancyOwnerRelationshipId} not found / no longer current");
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
 
             if (!employer.Address.GeoPoint.IsValid())
             {
@@ -286,8 +310,8 @@
         public void CreateVacancy(VacancyMinimumData vacancyMinimumData)
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-            var vacancyParty = _providerService.GetVacancyParty(vacancyMinimumData.VacancyPartyId, true);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancyMinimumData.VacancyOwnerRelationshipId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
             var provider = _providerService.GetProvider(vacancyMinimumData.Ukprn);
 
             if (!employer.Address.GeoPoint.IsValid())
@@ -299,18 +323,59 @@
             {
                 VacancyGuid = vacancyMinimumData.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                OwnerPartyId = vacancyParty.VacancyPartyId,
+                VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId,
                 Status = VacancyStatus.Draft,
                 IsEmployerLocationMainApprenticeshipLocation = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
                 Address = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation ? employer.Address : null,
-                ProviderId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
+                ContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
+                OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
                 EmployerDescription = vacancyMinimumData.EmployerDescription,
                 EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
             });
         }
-        
+
+        public void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel)
+        {
+            try
+            {
+                foreach (var referenceNumber in vacancyTransferViewModel.VacancyReferenceNumbers)
+                {
+                    var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(referenceNumber);
+                    if (vacancy != null)
+                    {
+                        var vacancyOwnerRelationship =
+                            _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);
+                        //This method actually returns a new VOR but with an Id of 0 if none exists however that couples this code to that implementation so we should still perform the null check 
+                        var existingVacancyOwnerRelationship =
+                            _providerService.GetVacancyOwnerRelationship(vacancyOwnerRelationship.EmployerId,
+                                vacancyTransferViewModel.ProviderSiteId);
+                        if (existingVacancyOwnerRelationship == null || existingVacancyOwnerRelationship.VacancyOwnerRelationshipId == 0)
+                        {
+                            //No matching VOR exists for the new provider and provider site so create it.
+                            //We do this because changing the provider site id for a VOR could make any non transfered vacancies associated with it unavailable to any provider
+                            existingVacancyOwnerRelationship = existingVacancyOwnerRelationship ?? new VacancyOwnerRelationship { ProviderSiteId = vacancyTransferViewModel.ProviderSiteId, EmployerId = vacancyOwnerRelationship.EmployerId };
+                            existingVacancyOwnerRelationship.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
+                            existingVacancyOwnerRelationship.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
+                            existingVacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship);
+                        }
+
+                        vacancy.VacancyOwnerRelationshipId = existingVacancyOwnerRelationship.VacancyOwnerRelationshipId;
+                        vacancy.ContractOwnerId = vacancyTransferViewModel.ProviderId;
+                        vacancy.DeliveryOrganisationId = vacancyTransferViewModel.ProviderSiteId;
+                        vacancy.VacancyManagerId = vacancyTransferViewModel.ProviderSiteId;
+                        _vacancyPostingService.UpdateVacanciesWithNewProvider(vacancy);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                _logService.Error($"Exception occurred while transferring the vacancy:{exception.Message}");
+                throw exception;
+            }
+        }
+
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
             return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : CategoryPrefixes.GetOriginalFrameworkCode(trainingDetailsViewModel.FrameworkCodeName);
@@ -339,45 +404,60 @@
 
         private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
         {
-            var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
+            var comesFromPreview = newVacancyViewModel.ComeFromPreview;
 
-            var vacancyParty =
-                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId, true);
-            if (vacancyParty == null)
-                throw new Exception($"Vacancy Party {newVacancyViewModel.OwnerParty.VacancyPartyId} not found / no longer current");
-
-            //var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
-
-            //if (!employer.Address.GeoPoint.IsValid())
-            //{
-            //    employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
-            //}
+            var vacancyOwnerRelationship =
+                _providerService.GetVacancyOwnerRelationship(newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId, true);
+            if (vacancyOwnerRelationship == null)
+                throw new Exception($"Vacancy Party {newVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId} not found / no longer current");
 
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
+            var currentOfflineVacancyType = vacancy.OfflineVacancyType;
 
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
-            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            vacancy.OfflineVacancyType = newVacancyViewModel.OfflineVacancyType;
+
+            if (currentOfflineVacancyType != OfflineVacancyType.MultiUrl)
+            {
+                var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl)
+                    ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString()
+                    : newVacancyViewModel.OfflineApplicationUrl;
+                vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            }
+
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
-            //vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
-            //vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
-            //vacancy.Address = (newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-            //                   newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
-            //                    ? employer.Address
-            //                    : null;
-            //vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
-            
+
+            if (newVacancyViewModel.LocationAddresses != null)
+            {
+                var vacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+                if (vacancyLocations != null)
+                {
+                    foreach (var locationAddress in newVacancyViewModel.LocationAddresses)
+                    {
+                        var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
+                        if (vacancyLocation != null)
+                        {
+                            var offlineApplicationUrl = !string.IsNullOrEmpty(locationAddress.OfflineApplicationUrl) ? new UriBuilder(locationAddress.OfflineApplicationUrl).Uri.ToString() : locationAddress.OfflineApplicationUrl;
+                            vacancyLocation.EmployersWebsite = offlineApplicationUrl;
+                        }
+                    }
+                }
+                _vacancyPostingService.UpdateVacancyLocations(vacancyLocations);
+            }
+
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
+            newVacancyViewModel.ComeFromPreview = comesFromPreview;
 
             return newVacancyViewModel;
         }
-        
+
         public TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -426,6 +506,7 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            viewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
 
             viewModel.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
 
@@ -440,7 +521,7 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -457,11 +538,13 @@
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
-            viewModel = vacancy.ConvertToVacancySummaryViewModel();
-            viewModel.AutoSaveTimeoutInSeconds =
+            var updatedViewModel = vacancy.ConvertToVacancySummaryViewModel();
+            updatedViewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
+
+            updatedViewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
-            return viewModel;
+            return updatedViewModel;
         }
 
         public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
@@ -525,7 +608,7 @@
 
             vacancy.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate.Date;
             vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate.Date;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, vacancy.Wage.Text, viewModel.Wage.Unit, vacancy.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.Status = VacancyStatus.Live;
 
             FurtherVacancyDetailsViewModel result;
@@ -579,11 +662,13 @@
         public VacancyViewModel GetVacancyById(int vacancyId)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyId);
-
+            
             if (vacancy == null)
                 return null;
 
             var viewModel = GetVacancyViewModelFrom(vacancy);
+
+
             return viewModel;
         }
 
@@ -602,23 +687,29 @@
         private VacancyViewModel GetVacancyViewModelFrom(Vacancy vacancy)
         {
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
-            var provider = _providerService.GetProvider(vacancy.ProviderId);
+            var provider = _providerService.GetProvider(vacancy.ContractOwnerId);
             viewModel.Provider = provider.Convert();
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Some current vacancies have non-current vacancy parties
-            if (vacancyParty != null)
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Some current vacancies have non-current vacancy parties
+            if (vacancyOwnerRelationship != null)
             {
-                var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);  //Same with employers
-                viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
-                var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
+                var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);  //Same with employers
+                viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy.EmployerAnonymousName);
+                var providerSite = _providerService.GetProviderSite(vacancyOwnerRelationship.ProviderSiteId);
                 viewModel.ProviderSite = providerSite.Convert();
+
+                viewModel.Contact = vacancy.GetContactInformation(providerSite);
             }
+
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
                 ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
                 : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
+
             viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
                 ? viewModel.TrainingDetailsViewModel.SectorCodeName
                 : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName).FullName;
+
             var standard = GetStandard(vacancy.StandardId);
+
             viewModel.StandardName = standard == null ? "" : standard.Name;
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
@@ -626,10 +717,20 @@
                 if (viewModel.VacancyType == VacancyType.Apprenticeship)
                 {
                     viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
+                    viewModel.ApplicationPendingDecisionCount =
+                        _apprenticeshipApplicationService
+                            .GetSubmittedApplicationSummaries(
+                                vacancy.VacancyId).Count(v => v.Status == ApplicationStatuses.InProgress ||
+                                    v.Status == ApplicationStatuses.Submitted);
                 }
                 else if (viewModel.VacancyType == VacancyType.Traineeship)
                 {
                     viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
+                    viewModel.ApplicationPendingDecisionCount =
+                        _traineeshipApplicationService
+                            .GetSubmittedApplicationSummaries(
+                                vacancy.VacancyId).Count(v => v.Status == ApplicationStatuses.InProgress ||
+                                    v.Status == ApplicationStatuses.Submitted);
                 }
             }
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.CreatedByProviderUsername);
@@ -673,12 +774,12 @@
 
             var blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(_configurationService);
 
-            foreach (var sector in categories.Where(category => !blacklistedCategoryCodes.Contains(category.CodeName)))
+            foreach (var sector in categories.Where(category => !blacklistedCategoryCodes.Contains(category.CodeName) && category.Status == CategoryStatus.Active))
             {
                 if (sector.SubCategories != null)
                 {
                     var sectorGroup = new SelectListGroup { Name = sector.FullName };
-                    foreach (var framework in sector.SubCategories)
+                    foreach (var framework in sector.SubCategories.Where(subCategory => subCategory.Status == CategoryStatus.Active))
                     {
                         sectorsAndFrameworkItems.Add(new SelectListItem
                         {
@@ -735,217 +836,94 @@
             return standard.Convert(sector);
         }
 
-        /// <summary>
-        /// TODO: OO: Refactor/clean up this code.  Not a priority for now, as it works, but this is horrendous.
-        /// </summary>
-        /// <param name="providerId"></param>
-        /// <param name="providerSiteId"></param>
-        /// <param name="vacanciesSummarySearch"></param>
-        /// <returns></returns>
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
-            if (isVacancySearch)
+            _logService.Debug("Starting GetVacanciesSummaryForProvider");
+
+            var orderByField = string.IsNullOrEmpty(vacanciesSummarySearch.OrderByField)
+                ? VacancySummaryOrderByColumn.OrderByFilter
+                : (VacancySummaryOrderByColumn)
+                Enum.Parse(typeof(VacancySummaryOrderByColumn), vacanciesSummarySearch.OrderByField);
+
+            // Support searching by full vacancy reference number
+            string searchString;
+            if (!VacancyHelper.TryGetVacancyReference(vacanciesSummarySearch.SearchString, out searchString))
             {
-                //When searching, the ﬁlters (lottery numbers) are ignored and the search applies to all vacancies
-                vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
+                searchString = vacanciesSummarySearch.SearchString;
             }
 
-            // Although the most straightforward thing to do would be to get by Vacancy.VacancyManagerId, this is sometimes null.
-            // TODO: It may be that we should (and AVMS did) try Vacancy.VacancyManagerId first and then fall back to VacancyParty (aka VacancyOwnerRelationship)
-            var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
-            _logService.Info($"Retrieved vacancy parties {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var ownedProviderSites = _providerService.GetOwnedProviderSites(providerId);
-
-            var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(
-                vacancyParties.Select(vp => vp.VacancyPartyId), providerId, ownedProviderSites.Select(ps => ps.ProviderSiteId))
-                .Values
-                .SelectMany(a => a)
-                .Where(
-                    v => (v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown)
-                         && v.Status != VacancyStatus.Withdrawn && v.Status != VacancyStatus.Deleted);
-            _logService.Info($"Retrieved minimal vacancy details {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var hasVacancies = minimalVacancyDetails.Any();
-
-            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.OfflineVacancy == false).Select(a => a.VacancyId);
-
-            var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
-            _logService.Info($"Retrieved application counts {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            // Apply each of the filters to the vacancies
-
-            // Get vacancies for selected filter
-            var filteredVacancies = (IEnumerable<IMinimalVacancyDetails>)Filter(minimalVacancyDetails, vacanciesSummarySearch.FilterType, applicationCountsByVacancyId).ToList();
-            _logService.Info($"Filtered vacancies {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var vacancyPartyIds = new HashSet<int>(filteredVacancies.Select(v => v.OwnerPartyId));
-            var employers = _employerService.GetMinimalEmployerDetails(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct(), false);
-            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
-            _logService.Info($"Retrieved employers {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            filteredVacancies = filteredVacancies.Select(v =>
+            var query = new VacancySummaryQuery
             {
-                v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName; // vacancyPartyToEmployerMap[v.OwnerPartyId].Name;
-                v.ApplicationOrClickThroughCount = v.OfflineVacancy.HasValue && v.OfflineVacancy.Value ? v.ApplicationOrClickThroughCount : applicationCountsByVacancyId[v.VacancyId].AllApplications;
-                return v;
-            });
+                ProviderId = providerId,
+                ProviderSiteId = providerSiteId,
+                OrderByField = orderByField,
+                Filter = vacanciesSummarySearch.FilterType,
+                PageSize = vacanciesSummarySearch.PageSize,
+                RequestedPage = vacanciesSummarySearch.CurrentPage,
+                SearchMode = vacanciesSummarySearch.SearchMode,
+                SearchString = searchString,
+                Order = vacanciesSummarySearch.Order,
+                VacancyType = vacanciesSummarySearch.VacancyType
+            };
 
-            // try to filter as soon as we can to not get too many vacancies from DB
-            if (isVacancySearch)
-            {
-                _logService.Info($"Running vacancy search {stopwatch.ElapsedMilliseconds}ms elapsed");
-                // If doing a search then all the vacancies have been fetched and after filtering need to be cut down to the current page
+            _logService.Debug("Calling Vacancy Summary Service: " + stopwatch.Elapsed);
 
-                string vacancyReference;
-                if (VacancyHelper.TryGetVacancyReference(vacanciesSummarySearch.SearchString, out vacancyReference))
-                {
-                    var vacancyReferenceNumber = int.Parse(vacancyReference);
-                    filteredVacancies = filteredVacancies.Where(v => v.VacancyReferenceNumber == vacancyReferenceNumber);
-                }
-                else
-                {
-                    filteredVacancies = filteredVacancies.Where(v =>
-                        (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                        v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
-                    );
-                }
-                _logService.Info($"Vacancy search completed {stopwatch.ElapsedMilliseconds}ms elapsed");
-            }
+            int totalRecords;
+            var summaries = _vacancySummaryService.GetSummariesForProvider(query, out totalRecords);
 
-            var vacanciesToFetch = Sort(filteredVacancies, vacanciesSummarySearch).GetCurrentPage(vacanciesSummarySearch).ToList();
-            _logService.Info($"Sorted vacancies {stopwatch.ElapsedMilliseconds}ms elapsed");
+            _logService.Debug("Mapping vacancy summaries: " + stopwatch.Elapsed);
 
-            var vacanciesWithoutEmployerName =
-                _vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId));
-            _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
+            var mapped = _mapper.Map<IList<VacancySummary>, IList<VacancySummaryViewModel>>(summaries);
 
-            var vacancies = Sort(vacanciesWithoutEmployerName.Select(v =>
-            {
-                v.EmployerName = vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).FullName;
-                v.ApplicationOrClickThroughCount = v.OfflineVacancy.HasValue && v.OfflineVacancy.Value ? v.OfflineApplicationClickThroughCount : applicationCountsByVacancyId[v.VacancyId].AllApplications;
-                return v;
-            }), vacanciesSummarySearch);
-
-            var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
-            _logService.Info($"Mapped vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            var applicationCountsByVacancyIdForPage = applicationCountsByVacancyId;
-
-            if (isVacancySearch || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.All || vacanciesSummarySearch.FilterType == VacanciesSummaryFilterTypes.Completed)
-            {
-                //Get counts again but just for the page of vacancies
-                applicationCountsByVacancyIdForPage =
-                    _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(
-                        vacancySummaries.Where(v => v.Status.CanHaveApplicationsOrClickThroughs())
-                            .Select(a => a.VacancyId));
-            }
-
-            var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
-            _logService.Info($"Retrieved vacancy locations {stopwatch.ElapsedMilliseconds}ms elapsed");
-
-            foreach (var vacancySummary in vacancySummaries)
-            {
-                vacancySummary.EmployerName = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId).FullName;
-                vacancySummary.ApplicationCount = applicationCountsByVacancyIdForPage[vacancySummary.VacancyId].AllApplications;
-                vacancySummary.NewApplicationCount = applicationCountsByVacancyIdForPage[vacancySummary.VacancyId].NewApplications;
-                vacancySummary.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancySummary.VacancyId)).ToList();
-            }
+            _logService.Debug("Constructing view models: " + stopwatch.Elapsed);
 
             var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
             {
-                Page = vacancySummaries,
-                ResultsCount = vacancySummaries.Count,
+                Page = mapped,
+                ResultsCount = totalRecords,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = filteredVacancies.TotalPages(vacanciesSummarySearch)
+                TotalNumberOfPages = totalRecords == 0 ? 1 : (int)Math.Ceiling((double)totalRecords / (double)vacanciesSummarySearch.PageSize)
             };
 
-            Func<VacanciesSummaryFilterTypes, int> count = type => Filter(minimalVacancyDetails, type, applicationCountsByVacancyId).Count();
-            var vacanciesSummary = new VacanciesSummaryViewModel
+            var viewModel = new VacanciesSummaryViewModel()
             {
+                Vacancies = vacancyPage,
                 VacanciesSummarySearch = vacanciesSummarySearch,
-                LiveCount = count(VacanciesSummaryFilterTypes.Live),
-                SubmittedCount = count(VacanciesSummaryFilterTypes.Submitted),
-                RejectedCount = count(VacanciesSummaryFilterTypes.Rejected),
-                ClosingSoonCount = count(VacanciesSummaryFilterTypes.ClosingSoon),
-                ClosedCount = count(VacanciesSummaryFilterTypes.Closed),
-                DraftCount = count(VacanciesSummaryFilterTypes.Draft),
-                NewApplicationsAcrossAllVacanciesCount = minimalVacancyDetails.Sum(v => applicationCountsByVacancyId[v.VacancyId].NewApplications),
-                CompletedCount = count(VacanciesSummaryFilterTypes.Completed),
-                HasVacancies = hasVacancies,
-                Vacancies = vacancyPage
             };
-            _logService.Info($"Complete {stopwatch.ElapsedMilliseconds}ms elapsed");
 
-            return vacanciesSummary;
+            _logService.Debug("Fetching vacancy counts: " + stopwatch.Elapsed);
+
+            var counts = _vacancySummaryService.GetLotteryCounts(query);
+
+            viewModel.LiveCount = counts.LiveCount;
+            viewModel.ClosedCount = counts.ClosedCount;
+            viewModel.ClosingSoonCount = counts.ClosingSoonCount;
+            viewModel.CompletedCount = counts.CompletedCount;
+            viewModel.DraftCount = counts.DraftCount;
+            viewModel.RejectedCount = counts.RejectedCount;
+            viewModel.SubmittedCount = counts.SubmittedCount;
+            viewModel.NewApplicationsAcrossAllVacanciesCount = counts.NewApplicationsCount;
+
+            viewModel.HasVacancies = (viewModel.LiveCount +
+                                      viewModel.ClosedCount +
+                                      viewModel.ClosingSoonCount +
+                                      viewModel.CompletedCount +
+                                      viewModel.DraftCount +
+                                      viewModel.RejectedCount +
+                                      viewModel.SubmittedCount +
+                                      viewModel.NewApplicationsAcrossAllVacanciesCount) > 0;
+
+            _logService.Debug("Finished getting vacancy summaries: " + stopwatch.Elapsed);
+            stopwatch.Stop();
+
+            return viewModel;
         }
 
-        private IEnumerable<T> Filter<T>(IEnumerable<T> data, VacanciesSummaryFilterTypes vacanciesSummaryFilterType, IReadOnlyDictionary<int, IApplicationCounts> applicationCountsByVacancyId) where T : IMinimalVacancyDetails
-        {
-            switch (vacanciesSummaryFilterType)
-            {
-                case VacanciesSummaryFilterTypes.All:       return data;
-                case VacanciesSummaryFilterTypes.Live:      return data.Where(v => v.Status == VacancyStatus.Live);
-                case VacanciesSummaryFilterTypes.Submitted: return data.Where(v => v.Status.EqualsAnyOf(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
-                case VacanciesSummaryFilterTypes.Rejected:  return data.Where(v => v.Status == VacancyStatus.Referred);
-                case VacanciesSummaryFilterTypes.ClosingSoon:
-                    return data.Where(v =>
-                    v.Status == VacancyStatus.Live &&
-                    v.LiveClosingDate >= _dateTimeService.UtcNow.Date &&
-                    v.LiveClosingDate.AddDays(-5) < _dateTimeService.UtcNow);
-                case VacanciesSummaryFilterTypes.Closed:    return data.Where(v => v.Status == VacancyStatus.Closed);
-                case VacanciesSummaryFilterTypes.Draft:     return data.Where(v => v.Status == VacancyStatus.Draft);
-                case VacanciesSummaryFilterTypes.NewApplications:
-                    return data.Where(v => applicationCountsByVacancyId[v.VacancyId].NewApplications > 0);
-                case VacanciesSummaryFilterTypes.Completed: return data.Where(v => v.Status == VacancyStatus.Completed);
-                default: throw new ArgumentException($"{vacanciesSummaryFilterType}");
-            }
-        }
-
-        private IEnumerable<T> Sort<T>(IEnumerable<T> data, VacanciesSummarySearchViewModel vacanciesSummarySearch) where T : IMinimalVacancyDetails
-        {
-            if(string.IsNullOrEmpty(vacanciesSummarySearch.OrderByField))
-            {
-                switch (vacanciesSummarySearch.FilterType)
-                {
-                    case VacanciesSummaryFilterTypes.ClosingSoon:
-                    case VacanciesSummaryFilterTypes.NewApplications:
-                        return data.OrderBy(v => v.LiveClosingDate).ThenByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
-                    case VacanciesSummaryFilterTypes.Closed:
-                    case VacanciesSummaryFilterTypes.Live:
-                    case VacanciesSummaryFilterTypes.Completed:
-                        return data.OrderBy(v => v.EmployerName).ThenBy(v => v.Title);
-                    case VacanciesSummaryFilterTypes.All:
-                    case VacanciesSummaryFilterTypes.Submitted:
-                    case VacanciesSummaryFilterTypes.Rejected:
-                    case VacanciesSummaryFilterTypes.Draft:
-                        // Requirement is "most recently created first" (Faizal 30/6/2016).
-                        // Previously there was no ordering in the code and it was coming out in natural database order
-                        return data.OrderByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
-                    default:
-                        throw new ArgumentException($"{vacanciesSummarySearch.FilterType}");
-                }
-            }
-
-            switch (vacanciesSummarySearch.OrderByField)
-            {
-                case VacanciesSummarySearchViewModel.OrderByFieldTitle:
-                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.Title) : data.OrderBy(v => v.Title);
-                case VacanciesSummarySearchViewModel.OrderByEmployer:
-                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.EmployerName) : data.OrderBy(v => v.EmployerName);
-                case VacanciesSummarySearchViewModel.OrderByApplications:
-                    return vacanciesSummarySearch.Order == Order.Descending ? data.OrderByDescending(v => v.ApplicationOrClickThroughCount) : data.OrderBy(v => v.ApplicationOrClickThroughCount);
-                default:
-                    throw new ArgumentException($"{vacanciesSummarySearch.OrderByField}");
-            }
-        }
-
-        public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)
+        public VacancyOwnerRelationshipViewModel CloneVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
@@ -964,6 +942,7 @@
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
             vacancy.EmployerAnonymousName = null;
+            vacancy.OfflineVacancyType = null;
 
             //Comments
             vacancy.TitleComment = null;
@@ -975,7 +954,7 @@
             vacancy.DesiredQualificationsComment = null;
             vacancy.OfflineApplicationUrlComment = null;
             vacancy.OfflineApplicationInstructionsComment = null;
-            vacancy.OfflineApplicationClickThroughCount = 0;
+            vacancy.NoOfOfflineApplicants = 0;
             vacancy.ApprenticeshipLevelComment = null;
             vacancy.FrameworkCodeNameComment = null;
             vacancy.StandardIdComment = null;
@@ -997,12 +976,12 @@
 
             _vacancyPostingService.CreateVacancy(vacancy);
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, true);
-            if (vacancyParty == null)
-                throw new Exception($"Vacancy Party {vacancy.OwnerPartyId} not found / no longer current");
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, true);
+            if (vacancyOwnerRelationship == null)
+                throw new Exception($"Vacancy Party {vacancy.VacancyOwnerRelationshipId} not found / no longer current");
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
-            var result = vacancyParty.Convert(employer);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
+            var result = vacancyOwnerRelationship.Convert(employer);
             result.VacancyGuid = vacancy.VacancyGuid;
 
             return result;
@@ -1013,189 +992,86 @@
             var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
             var regionalTeam = agencyUser.RegionalTeam;
 
-            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
+            var orderByField = string.IsNullOrEmpty(searchViewModel.OrderByField)
+                ? VacancySummaryOrderByColumn.OrderByFilter
+                : (VacancySummaryOrderByColumn)
+                Enum.Parse(typeof(VacancySummaryOrderByColumn), searchViewModel.OrderByField);
 
-            vacancies = SearchVacancySummaries(searchViewModel, vacancies);
-
-            var utcNow = _dateTimeService.UtcNow;
-
-            //ra-217: The ~Yesterday and ~MoreThan48hours handle special cases. See work item and unit tests for verbose description.
-            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
-            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
-
-            var submittedYesterday =
-                vacancies.Where(v => IsVacancySubmittedYesterday(v, utcNow)).ToList();
-
-            var submittedMoreThan48Hours =
-                vacancies.Where(v => IsVacancySubmittedMoreThan48HrsAgo(v, utcNow)).ToList();
-
-            var regionalTeamsMetrics = GetRegionalTeamsMetrics(vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted);
-
-            if (!IsSearch(searchViewModel))
+            var query = new VacancySummaryByStatusQuery()
             {
-                //Only filter by regional team if not a search
-                vacancies = vacancies.Where(v => v.RegionalTeam == regionalTeam).ToList();
-                submittedToday = submittedToday.Where(v => v.RegionalTeam == regionalTeam).ToList();
-                submittedYesterday = submittedYesterday.Where(v => v.RegionalTeam == regionalTeam).ToList();
-                submittedMoreThan48Hours = submittedMoreThan48Hours.Where(v => v.RegionalTeam == regionalTeam).ToList();
-                resubmitted = resubmitted.Where(v => v.RegionalTeam == regionalTeam).ToList();
-            }
+                PageSize = 0,
+                RequestedPage = 1,
+                Filter = searchViewModel.FilterType,
+                OrderByField = orderByField,
+                SearchString = searchViewModel.SearchString,
+                SearchMode = searchViewModel.SearchMode,
+                DesiredStatuses = new[] { VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
+                Order = searchViewModel.Order,
+                RegionalTeamName = regionalTeam
+            };
 
-            if (vacancies.Count == 0)
+            int totalRecords;
+            var vacancies = _vacancyPostingService.GetWithStatus(query, out totalRecords);
+
+            var regionalTeamsMetrics = _vacancyPostingService.GetRegionalTeamsMetrics(query);
+
+            if (string.IsNullOrEmpty(searchViewModel.SearchString) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
             {
                 //No vacancies for current team selection. Redirect to metrics
                 searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
             }
 
-            if (string.IsNullOrEmpty(searchViewModel.OrderByField))
-            {
-                switch (searchViewModel.FilterType)
-                {
-                    case DashboardVacancySummaryFilterTypes.SubmittedToday:
-                        vacancies = submittedToday.OrderBy(v => v.DateFirstSubmitted).ToList();
-                        break;
-                    case DashboardVacancySummaryFilterTypes.SubmittedYesterday:
-                        vacancies = submittedYesterday.OrderBy(v => v.DateFirstSubmitted).ToList();
-                        break;
-                    case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
-                        vacancies = submittedMoreThan48Hours;
-                        break;
-                    case DashboardVacancySummaryFilterTypes.Resubmitted:
-                        vacancies = resubmitted.OrderBy(v => v.DateFirstSubmitted).ToList();
-                        break;
-                }
-            }
+            RegionalTeamMetrics currentTeamMetrics = null;
 
-            var providerMap = _providerService.GetProviders(vacancies.Select(v => v.ProviderId)).ToDictionary(p => p.ProviderId, p => p);
+            if (string.IsNullOrEmpty(searchViewModel.SearchString))
+            {
+                currentTeamMetrics = regionalTeamsMetrics.SingleOrDefault(s => s.RegionalTeam == regionalTeam);
+            }
+            else
+            {
+                currentTeamMetrics = new RegionalTeamMetrics()
+                {
+                    RegionalTeam = RegionalTeam.Other,
+                    TotalCount = regionalTeamsMetrics.Sum(s => s.TotalCount),
+                    ResubmittedCount = regionalTeamsMetrics.Sum(s => s.ResubmittedCount),
+                    SubmittedYesterdayCount = regionalTeamsMetrics.Sum(s => s.SubmittedYesterdayCount),
+                    SubmittedMoreThan48HoursCount = regionalTeamsMetrics.Sum(s => s.SubmittedMoreThan48HoursCount),
+                    SubmittedTodayCount = regionalTeamsMetrics.Sum(s => s.SubmittedTodayCount)
+                };
+            }
 
             var viewModel = new DashboardVacancySummariesViewModel
             {
                 SearchViewModel = searchViewModel,
-                SubmittedTodayCount = submittedToday.Count,
-                SubmittedYesterdayCount = submittedYesterday.Count,
-                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
-                ResubmittedCount = resubmitted.Count,
-                Vacancies = GetOrderedVacancySummaries(searchViewModel, vacancies.Select(v => ConvertToDashboardVacancySummaryViewModel(v, providerMap[v.ProviderId]))).ToList(),
+                SubmittedTodayCount = currentTeamMetrics?.SubmittedTodayCount ?? 0,
+                SubmittedYesterdayCount = currentTeamMetrics?.SubmittedYesterdayCount ?? 0,
+                SubmittedMoreThan48HoursCount = currentTeamMetrics?.SubmittedMoreThan48HoursCount ?? 0,
+                ResubmittedCount = currentTeamMetrics?.ResubmittedCount ?? 0,
+                Vacancies = vacancies.Select(vacancy => ConvertToDashboardVacancySummaryViewModel(vacancy)).ToList(),
                 RegionalTeamsMetrics = regionalTeamsMetrics
             };
 
             return viewModel;
         }
 
-        private static bool IsVacancySubmittedMoreThan48HrsAgo(VacancySummary v, DateTime utcNow)
+        private List<VacancySummary> GetTeamVacancySummaries()
         {
-            if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
+            var regionalTeam = GetRegionalTeamForCurrentUser();
+
+            var query = new VacancySummaryByStatusQuery()
             {
-                return false;
-            }
+                DesiredStatuses = new[] { VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
+                PageSize = 0,
+                RequestedPage = 0,
+                RegionalTeamName = regionalTeam,
+                OrderByField = VacancySummaryOrderByColumn.DateSubmitted
+            };
 
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Sunday || utcNow.DayOfWeek == DayOfWeek.Monday)
-                {
-                    return v.DateSubmitted < utcNow.Date.AddDays(-3);
-                }
-            }
+            int totalRecords;
 
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Saturday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Monday || utcNow.DayOfWeek == DayOfWeek.Tuesday)
-                {
-                    return v.DateSubmitted < utcNow.Date.AddDays(-3);
-                }
-            }
+            var vacancies = _vacancyPostingService.GetWithStatus(query, out totalRecords);
 
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Sunday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Tuesday)
-                {
-                    return v.DateSubmitted < utcNow.Date.AddDays(-2);
-                }
-            }
-
-            return v.DateSubmitted < utcNow.Date.AddDays(-1);
-        }
-
-        private static bool IsVacancySubmittedYesterday(VacancySummary v, DateTime utcNow)
-        {
-            if (!v.DateSubmitted.HasValue || v.DateSubmitted >= utcNow.Date)
-            {
-                return false;
-            }
-
-            if (v.DateSubmitted.Value.DayOfWeek == DayOfWeek.Friday)
-            {
-                if (utcNow.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    return false;
-                }
-
-                if (utcNow.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    return v.DateSubmitted >= utcNow.Date.AddDays(-2) && v.DateSubmitted < utcNow.Date.AddDays(-1);
-                }
-            }
-
-            return v.DateSubmitted >= utcNow.Date.AddDays(-1);
-        }
-
-        private List<VacancySummary> SearchVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, List<VacancySummary> vacancies)
-        {
-            if (IsSearch(searchViewModel))
-            {
-                if (!string.IsNullOrEmpty(searchViewModel.Provider) && searchViewModel.Provider.Length >= 3)
-                {
-                    var providers = _providerService.GetProviders(vacancies.Select(v => v.ProviderId));
-                    var providerIds = new List<int>();
-                    foreach (var provider in providers)
-                    {
-                        if (provider.TradingName.IndexOf(searchViewModel.Provider, StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            providerIds.Add(provider.ProviderId);
-                        }
-                    }
-                    vacancies = vacancies.Where(v => providerIds.Contains(v.ProviderId)).ToList();
-                }
-            }
-            return vacancies;
-        }
-
-        private bool IsSearch(DashboardVacancySummariesSearchViewModel searchViewModel)
-        {
-            return !string.IsNullOrEmpty(searchViewModel.Provider);
-        }
-
-        private IEnumerable<DashboardVacancySummaryViewModel> GetOrderedVacancySummaries(DashboardVacancySummariesSearchViewModel searchViewModel, IEnumerable<DashboardVacancySummaryViewModel> vacancySummaries)
-        {
-            switch (searchViewModel.OrderByField)
-            {
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldTitle:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.Title).ToList()
-                        : vacancySummaries.OrderBy(a => a.Title).ToList();
-                    break;
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldProvider:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.ProviderName).ToList()
-                        : vacancySummaries.OrderBy(a => a.ProviderName).ToList();
-                    break;
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldDateSubmitted:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.DateSubmitted).ToList()
-                        : vacancySummaries.OrderBy(a => a.DateSubmitted).ToList();
-                    break;
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldClosingDate:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.ClosingDate).ToList()
-                        : vacancySummaries.OrderBy(a => a.ClosingDate).ToList();
-                    break;
-                case DashboardVacancySummariesSearchViewModel.OrderByFieldSubmissionCount:
-                    vacancySummaries = searchViewModel.Order == Order.Descending
-                        ? vacancySummaries.OrderByDescending(a => a.SubmissionCount).ToList()
-                        : vacancySummaries.OrderBy(a => a.SubmissionCount).ToList();
-                    break;
-            }
-            return vacancySummaries;
+            return vacancies.ToList();
         }
 
         public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
@@ -1203,9 +1079,9 @@
             var vacancies = GetTeamVacancySummaries();
 
             var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
-                vacancies); 
+                vacancies);
 
-            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ProviderId)) : null;
+            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy, _providerService.GetProvider(nextVacancy.ContractOwnerId)) : null;
         }
 
         public void UnReserveVacancyForQA(int vacancyReferenceNumber)
@@ -1258,35 +1134,7 @@
                 .ToArray();
         }
 
-        private static List<RegionalTeamMetrics> GetRegionalTeamsMetrics(List<VacancySummary> vacancies, List<VacancySummary> submittedToday, List<VacancySummary> submittedYesterday, List<VacancySummary> submittedMoreThan48Hours, List<VacancySummary> resubmitted)
-        {
-            return new List<RegionalTeamMetrics>
-            {
-                GetRegionalTeamMetrics(RegionalTeam.North, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.NorthWest, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.YorkshireAndHumberside, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.EastMidlands, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.WestMidlands, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.EastAnglia, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.SouthEast, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
-                GetRegionalTeamMetrics(RegionalTeam.SouthWest, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted)
-            };
-        }
-
-        private static RegionalTeamMetrics GetRegionalTeamMetrics(RegionalTeam regionalTeam, IEnumerable<VacancySummary> vacancies, IEnumerable<VacancySummary> submittedToday, IEnumerable<VacancySummary> submittedYesterday, IEnumerable<VacancySummary> submittedMoreThan48Hours, IEnumerable<VacancySummary> resubmitted)
-        {
-            return new RegionalTeamMetrics
-            {
-                RegionalTeam = regionalTeam,
-                TotalCount = vacancies.Count(v => v.RegionalTeam == regionalTeam),
-                SubmittedTodayCount = submittedToday.Count(v => v.RegionalTeam == regionalTeam),
-                SubmittedYesterdayCount = submittedYesterday.Count(v => v.RegionalTeam == regionalTeam),
-                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count(v => v.RegionalTeam == regionalTeam),
-                ResubmittedCount = resubmitted.Count(v => v.RegionalTeam == regionalTeam),
-            };
-        }
-
-        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy, Provider provider)
+        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy, Provider provider = null)
         {
             var userName = _currentUserService.CurrentUserName;
 
@@ -1295,7 +1143,7 @@
                 ClosingDate = vacancy.ClosingDate,
                 DateSubmitted = vacancy.DateSubmitted,
                 DateFirstSubmitted = vacancy.DateFirstSubmitted,
-                ProviderName = provider.TradingName,
+                ProviderName = provider?.TradingName ?? vacancy.ProviderTradingName,
                 Status = vacancy.Status,
                 Title = vacancy.Title,
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
@@ -1303,10 +1151,12 @@
                 QAUserName = vacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = _vacancyLockingService.IsVacancyAvailableToQABy(userName, vacancy),
                 SubmissionCount = vacancy.SubmissionCount,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                Location = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
+                VacancyViewModel = GetVacancy(vacancy.VacancyGuid)
             };
         }
-        
+
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
@@ -1323,6 +1173,10 @@
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+            if (newVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
+            {
+                newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
+            }
 
             return _vacancyPostingService.CreateVacancy(newVacancy);
         }
@@ -1359,10 +1213,17 @@
                         submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
                         submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
+                        if (submittedVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
+                        {
+                            submittedVacancy.OfflineApplicationUrl = vacancyLocation.EmployersWebsite;
+                        }
+
                         foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
                         {
                             CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                         }
+
+                        submittedVacancy.OfflineVacancyType = null;
 
                         _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
                     }
@@ -1407,19 +1268,6 @@
             return regionalTeam;
         }
 
-        private List<VacancySummary> GetTeamVacancySummaries()
-        {
-            var regionalTeam = GetRegionalTeamForCurrentUser();
-
-            var vacancies =
-                _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)
-                    .Where(v => v.RegionalTeam == regionalTeam)
-                    .OrderBy(v => v.DateSubmitted)
-                    .ToList();
-
-            return vacancies;
-        }
-
         public VacancyViewModel ReviewVacancy(int vacancyReferenceNumber)
         {
             var vacancyToReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -1436,14 +1284,14 @@
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
-            
+
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
                 return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.InvalidVacancy);
             }
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.Wage = new Wage(viewModel.Wage.Type, viewModel.Wage.Amount, viewModel.Wage.Text, viewModel.Wage.Unit, viewModel.Wage.HoursPerWeek);
+            vacancy.Wage = _mapper.Map<WageViewModel, Wage>(viewModel.Wage);
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
@@ -1471,6 +1319,7 @@
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            viewModel.Wage = _mapper.Map<Wage, WageViewModel>(vacancy.Wage);
 
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
@@ -1490,13 +1339,20 @@
                 return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.InvalidVacancy);
             }
 
-            var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl) ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString() : viewModel.OfflineApplicationUrl;
+            var currentOfflineVacancyType = vacancy.OfflineVacancyType;
 
             //update properties
             vacancy.Title = viewModel.Title;
             vacancy.ShortDescription = viewModel.ShortDescription;
             vacancy.OfflineVacancy = viewModel.OfflineVacancy.Value; // At this point we'll always have a value
-            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            vacancy.OfflineVacancyType = viewModel.OfflineVacancyType;
+            if (currentOfflineVacancyType != OfflineVacancyType.MultiUrl)
+            {
+                var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl)
+                    ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString()
+                    : viewModel.OfflineApplicationUrl;
+                vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            }
             vacancy.OfflineApplicationInstructions = viewModel.OfflineApplicationInstructions;
             vacancy.OfflineApplicationInstructionsComment = viewModel.OfflineApplicationInstructionsComment;
             vacancy.OfflineApplicationUrlComment = viewModel.OfflineApplicationUrlComment;
@@ -1505,6 +1361,24 @@
             vacancy.VacancyType = viewModel.VacancyType;
             // TODO: not sure if do this or call reserveForQA in the service
             AddQAInformation(vacancy);
+
+            if (viewModel.LocationAddresses != null)
+            {
+                var vacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+                if (vacancyLocations != null)
+                {
+                    foreach (var locationAddress in viewModel.LocationAddresses)
+                    {
+                        var vacancyLocation = vacancyLocations.SingleOrDefault(vl => vl.VacancyLocationId == locationAddress.VacancyLocationId);
+                        if (vacancyLocation != null)
+                        {
+                            var offlineApplicationUrl = !string.IsNullOrEmpty(locationAddress.OfflineApplicationUrl) ? new UriBuilder(locationAddress.OfflineApplicationUrl).Uri.ToString() : locationAddress.OfflineApplicationUrl;
+                            vacancyLocation.EmployersWebsite = offlineApplicationUrl;
+                        }
+                    }
+                }
+                _vacancyPostingService.UpdateVacancyLocations(vacancyLocations);
+            }
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
@@ -1576,11 +1450,11 @@
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
-            var vacancyParty = _providerService.GetVacancyParty(viewModel.OwnerParty.VacancyPartyId, false);
-            if (vacancyParty == null)
-                throw new Exception($"Vacancy Party {viewModel.OwnerParty.VacancyPartyId} not found / no longer current");
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId, false);
+            if (vacancyOwnerRelationship == null)
+                throw new Exception($"Vacancy Party {viewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId} not found / no longer current");
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
 
             //update properties
             vacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
@@ -1675,13 +1549,13 @@
 
         public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
         {
-            var addresses = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>);
+            var vacancyLocations = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>).ToList();
 
-            var vacancyParty =
-                _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
-            viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
+            var vacancyOwnerRelationship =
+                _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
+            viewModel.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId;
 
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, true);
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
 
             employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
 
@@ -1689,19 +1563,32 @@
 
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            vacancy.NumberOfPositions = null;           
+            vacancy.NumberOfPositions = null;
             vacancy.Address = employer.Address;
             vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
             vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
             vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
-            
-			GeoCodeVacancyLocations(viewModel);
-			
-            if (addresses.Count() == 1)
+
+            GeoCodeVacancyLocations(viewModel);
+
+            var existingVacancyLocations = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
+            if (existingVacancyLocations != null && existingVacancyLocations.Count > 0)
+            {
+                foreach (var vacancyLocation in vacancyLocations.Where(a => a.VacancyLocationId != 0))
+                {
+                    var existingVacancyLocation = existingVacancyLocations.SingleOrDefault(l => l.VacancyLocationId == vacancyLocation.VacancyLocationId);
+                    if (existingVacancyLocation != null)
+                    {
+                        vacancyLocation.EmployersWebsite = existingVacancyLocation.EmployersWebsite;
+                    }
+                }
+            }
+
+            if (vacancyLocations.Count == 1)
             {
                 //Set address
-                vacancy.Address = addresses.Single().Address;
-                vacancy.NumberOfPositions = addresses.Single().NumberOfPositions;
+                vacancy.Address = vacancyLocations.Single().Address;
+                vacancy.NumberOfPositions = vacancyLocations.Single().NumberOfPositions;
                 vacancy.LocalAuthorityCode =
                     _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
@@ -1711,17 +1598,14 @@
             else
             {
                 _vacancyPostingService.UpdateVacancy(vacancy);
-                var vacancyLocations =
-                    _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        viewModel.Addresses);
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
-					vacancyLocation.LocalAuthorityCode =
+                    vacancyLocation.LocalAuthorityCode =
                     _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
-                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
+                _vacancyPostingService.CreateVacancyLocations(vacancyLocations);
             }
 
             viewModel.AutoSaveTimeoutInSeconds =
@@ -1754,7 +1638,7 @@
             {
                 vacancy.AdditionalLocationInformation = null;
                 _vacancyPostingService.UpdateVacancy(vacancy);
-                
+
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
             }
         }
@@ -1767,7 +1651,7 @@
 
     public static class Extensions
     {
-        public static V GetValueOrDefault<K,V>(this IReadOnlyDictionary<K,V> dict, K key)
+        public static V GetValueOrDefault<K, V>(this IReadOnlyDictionary<K, V> dict, K key)
         {
             return GetValueOrDefault(dict, key, _ => default(V));
         }

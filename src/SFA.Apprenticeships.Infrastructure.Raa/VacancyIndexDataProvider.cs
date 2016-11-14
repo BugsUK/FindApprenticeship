@@ -11,6 +11,9 @@
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
     using Application.Interfaces;
+    using Application.Vacancy;
+    using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     /// <summary>
     /// TODO: This class will eventually use an RAA service for the data rather than referencing repositories directly.
@@ -26,14 +29,16 @@
         private readonly IEmployerService _employerService;
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly ILogService _logService;
+        private IVacancySummaryService _vacancySummaryService;
 
-        public VacancyIndexDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService)
+        public VacancyIndexDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService, IVacancySummaryService vacancySummaryService)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _providerService = providerService;
             _employerService = employerService;
             _referenceDataProvider = referenceDataProvider;
             _logService = logService;
+            _vacancySummaryService = vacancySummaryService;
         }
 
         public int GetVacancyPageCount()
@@ -50,11 +55,20 @@
         public VacancySummaries GetVacancySummaries(int pageNumber)
         {
             //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
-            var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber - 1, false, _desiredStatuses);
-            var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct(), false);
+            var query = new VacancySummaryByStatusQuery()
+            {
+                PageSize = PageSize,
+                RequestedPage = pageNumber,
+                DesiredStatuses = _desiredStatuses
+            };
+
+            int totalRecords;
+
+            var vacancies = _vacancySummaryService.GetWithStatus(query, out totalRecords);
+            var vacancyParties = _providerService.GetVacancyOwnerRelationships(vacancies.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
-            var providers = _providerService.GetProviders(vacancies.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
-            var categories = _referenceDataProvider.GetCategories().ToList();
+            var providers = _providerService.GetProviders(vacancies.Select(v => v.ContractOwnerId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
+            var categories = _referenceDataProvider.GetCategories(CategoryStatus.Active, CategoryStatus.PendingClosure).ToList();
             //TODO: workaround to have the indexing partially working. Should be done properly
             var apprenticeshipSummaries =
                 vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship).Select(
@@ -63,8 +77,8 @@
                         try
                         {
                             return ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
-                                employers[vacancyParties[v.OwnerPartyId].EmployerId],
-                                providers[v.ProviderId],
+                                employers[vacancyParties[v.VacancyOwnerRelationshipId].EmployerId],
+                                providers[v.ContractOwnerId],
                                 categories, _logService);
                         }
                         catch (Exception ex)
@@ -81,8 +95,8 @@
                         try
                         {
                             return TraineeshipSummaryMapper.GetTraineeshipSummary(v,
-                                employers[vacancyParties[v.OwnerPartyId].EmployerId],
-                                providers[v.ProviderId],
+                                employers[vacancyParties[v.VacancyOwnerRelationshipId].EmployerId],
+                                providers[v.ContractOwnerId],
                                 categories, _logService);
                         }
                         catch (Exception ex)

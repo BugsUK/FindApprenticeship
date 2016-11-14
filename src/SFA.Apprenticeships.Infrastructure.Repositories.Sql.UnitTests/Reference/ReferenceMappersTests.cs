@@ -99,7 +99,7 @@
             destination.CodeName.Should().Be(source.CodeName);
             destination.ShortName.Should().Be(source.ShortName);
             destination.ApprenticeshipFrameworkId.Should().Be(source.Id);
-            destination.ApprenticeshipFrameworkStatusTypeId.Should().Be(0);
+            destination.ApprenticeshipFrameworkStatusTypeId.Should().Be((int)source.Status);
             destination.ClosedDate.Should().NotHaveValue();
             destination.PreviousApprenticeshipOccupationId.Should().NotHaveValue();
         }

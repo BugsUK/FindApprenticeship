@@ -114,6 +114,18 @@
       <HintPath>..\packages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Glimpse.AspNet, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
@@ -354,6 +366,7 @@
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -366,6 +379,7 @@
     <Compile Include="CsvClassMaps\ReportUnsuccessfulCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacancyExtensionsResultItemClassMap.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
@@ -509,6 +523,7 @@
     <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\basicVacancyDetails.js" />
     <Content Include="Content\_assets\js\nas\candidates.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
@@ -845,6 +860,23 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
     <Content Include="Views\InformationRadiator\Index.cshtml" />
     <Content Include="Views\Report\RegisteredCandidatesCsv.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Providers.cshtml" />
+    <Content Include="Views\Admin\CreateProvider.cshtml" />
+    <Content Include="Views\Admin\Provider.cshtml" />
+    <Content Include="Views\Admin\CreateProviderSite.cshtml" />
+    <Content Include="Views\Admin\ProviderSites.cshtml" />
+    <Content Include="Views\Admin\ProviderSite.cshtml" />
+    <Content Include="Views\Admin\ApiUsers.cshtml" />
+    <Content Include="Views\Admin\ApiUser.cshtml" />
+    <Content Include="Views\Admin\CreateApiUser.cshtml" />
+    <Content Include="Views\Admin\ResetApiUserPassword.cshtml" />
+    <Content Include="Views\Candidate\ApplicationFeedback.cshtml" />
+    <Content Include="Views\Admin\Employers.cshtml" />
+    <Content Include="Views\Admin\Employer.cshtml" />
+    <Content Include="Views\Admin\Standards.cshtml" />
+    <Content Include="Views\Admin\Frameworks.cshtml" />
+    <Content Include="Views\Admin\DeleteProviderSiteRelationship.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -876,7 +908,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Mappers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -951,7 +982,7 @@
       <Name>SFA.Apprenticeships.Application.Provider</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
-      <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
@@ -1029,6 +1060,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Security\SFA.Apprenticeships.Infrastructure.Security.csproj">
+      <Project>{e8841e6e-382a-476b-9af0-acdbd4870659}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

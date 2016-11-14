@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SFA.Apprenticeships.Application.Interfaces.Users;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SFA.Apprenticeships.Application.Interfaces.Users;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Application.Interfaces.ReferenceData;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.ReferenceData;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Web.Common.ViewModels;
 
     public class ProviderUserProvider : IProviderUserProvider
@@ -22,13 +23,19 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public ProviderUserProvider(
             IUserProfileService userProfileService,
             IProviderService providerService,
-            IProviderUserAccountService providerUserAccountService, 
+            IProviderUserAccountService providerUserAccountService,
             IReferenceDataService referenceDataService)
         {
             _userProfileService = userProfileService;
             _providerService = providerService;
             _providerUserAccountService = providerUserAccountService;
             _referenceDataService = referenceDataService;
+        }
+
+        public ProviderUserViewModel GetProviderUserViewModel(int providerUserId)
+        {
+            var providerUser = _userProfileService.GetProviderUser(providerUserId);
+            return Convert(providerUser);
         }
 
         public ProviderUserViewModel GetUserProfileViewModel(string username)
@@ -55,10 +62,40 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _userProfileService.UpdateProviderUser(providerUser);
         }
 
-        public IEnumerable<ProviderUserViewModel> GetUserProfileViewModels(string ukprn)
+        public ProviderUserViewModel VerifyProviderUserEmail(ProviderUserViewModel providerUserViewModel)
+        {
+            var providerUser = _userProfileService.GetProviderUser(providerUserViewModel.ProviderUserId);
+            providerUser.Status = ProviderUserStatus.EmailVerified;
+            providerUser.EmailVerificationCode = null;
+            var savedProviderUser = _userProfileService.UpdateProviderUser(providerUser);
+            return Convert(savedProviderUser);
+        }
+
+        public IEnumerable<ProviderUserViewModel> GetProviderUsers(string ukprn)
         {
             var providerUsers = _userProfileService.GetProviderUsers(ukprn);
             return providerUsers.Select(Convert);
+        }
+
+        public ProviderUserSearchResultsViewModel SearchProviderUsers(ProviderUserSearchViewModel searchViewModel)
+        {
+            var searchParameters = new ProviderUserSearchParameters
+            {
+                Username = searchViewModel.Username,
+                Name = searchViewModel.Name,
+                Email = searchViewModel.Email,
+                AllUnverifiedEmails = searchViewModel.AllUnverifiedEmails
+            };
+
+            var providerUsers = _userProfileService.SearchProviderUsers(searchParameters);
+            
+            var viewModel = new ProviderUserSearchResultsViewModel
+            {
+                SearchViewModel = searchViewModel,
+                ProviderUsers = providerUsers.Select(Convert).ToList()
+            };
+
+            return viewModel;
         }
 
         public bool ValidateEmailVerificationCode(string username, string code)
@@ -77,7 +114,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _userProfileService.UpdateProviderUser(providerUser);
 
             return true;
-        }                
+        }
 
         public ProviderUserViewModel SaveProviderUser(
             string username, string ukprn, ProviderUserViewModel providerUserViewModel)
@@ -105,12 +142,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
-
-            var defaultProviderSiteId = providerUserViewModel.DefaultProviderSiteId > 0
-                ? providerUserViewModel.DefaultProviderSiteId
-                : default(int?);
-
-            providerUser.PreferredProviderSiteId = defaultProviderSiteId;
+            providerUser.PreferredProviderSiteId = providerUserViewModel.DefaultProviderSiteId;
 
             var savedProviderUser = isNewProviderUser
                 ? _userProfileService.CreateProviderUser(providerUser)
@@ -121,6 +153,18 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 _providerUserAccountService.SendEmailVerificationCode(username);
             }
 
+            return Convert(savedProviderUser);
+        }
+
+        public ProviderUserViewModel SaveProviderUser(ProviderUserViewModel providerUserViewModel)
+        {
+            var providerUser = _userProfileService.GetProviderUser(providerUserViewModel.ProviderUserId);
+
+            providerUser.Fullname = providerUserViewModel.Fullname;
+            providerUser.Email = providerUserViewModel.EmailAddress;
+            providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
+
+            var savedProviderUser = _userProfileService.UpdateProviderUser(providerUser);
             return Convert(savedProviderUser);
         }
 
@@ -145,15 +189,22 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             var viewModel = new ProviderUserViewModel
             {
+                ProviderUserId = providerUser.ProviderUserId,
+                ProviderUserGuid = providerUser.ProviderUserGuid,
+                ProviderId = providerUser.ProviderId,
+                Ukprn = providerUser.Ukprn,
+                ProviderName = providerUser.ProviderName,
+                Username = providerUser.Username,
                 DefaultProviderSiteId = providerUser.PreferredProviderSiteId ?? 0,
                 EmailAddress = providerUser.Email,
                 EmailAddressVerified = providerUser.Status == ProviderUserStatus.EmailVerified,
                 Fullname = providerUser.Fullname,
                 PhoneNumber = providerUser.PhoneNumber,
+                CreatedDateTime = providerUser.CreatedDateTime,
                 ReleaseNoteViewModel = releaseNoteViewModel
             };
 
             return viewModel;
-        }        
+        }
     }
 }

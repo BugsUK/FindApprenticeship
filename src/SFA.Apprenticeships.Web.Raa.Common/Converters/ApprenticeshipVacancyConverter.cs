@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
+    using Infrastructure.Presentation;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
@@ -18,8 +19,10 @@
             {
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                 WorkingWeek = vacancy.WorkingWeek,
-                Wage = new WageViewModel(vacancy.Wage),
+                //this is set via automapper
+                //Wage = new WageViewModel(vacancy.Wage),
                 WageUnits = GetWageUnits(),
+                WageTextPresets = GetWageTextPresets(),
                 DurationType = vacancy.DurationType,
                 DurationTypes = GetDurationTypes(vacancy.VacancyType),
                 Duration = vacancy.Duration,
@@ -29,7 +32,8 @@
                     ClosingDate = new DateViewModel(vacancy.ClosingDate),
                     PossibleStartDate = new DateViewModel(vacancy.PossibleStartDate),
                     ClosingDateComment = vacancy.ClosingDateComment,
-                    PossibleStartDateComment = vacancy.PossibleStartDateComment
+                    PossibleStartDateComment = vacancy.PossibleStartDateComment,
+                    VacancyStatus = vacancy.Status
                 },
                 LongDescription = vacancy.LongDescription,
                 WageComment = vacancy.WageComment,
@@ -53,6 +57,16 @@
                     .ToList();
 
             return wageUnits;
+        }
+
+        public static List<SelectListItem> GetWageTextPresets()
+        {
+            return new List<SelectListItem>()
+            {
+                new SelectListItem() { Value = ((int)PresetText.CompetitiveSalary).ToString(), Text = WagePresenter.CompetitiveSalaryText},
+                new SelectListItem() { Value = ((int)PresetText.ToBeAgreedUponAppointment).ToString(), Text = WagePresenter.ToBeAGreedUponAppointmentText},
+                new SelectListItem() { Value = ((int)PresetText.Unwaged).ToString(), Text = WagePresenter.UnwagedText}
+            };
         }
 
         public static List<SelectListItem> GetDurationTypes(VacancyType vacancyType)

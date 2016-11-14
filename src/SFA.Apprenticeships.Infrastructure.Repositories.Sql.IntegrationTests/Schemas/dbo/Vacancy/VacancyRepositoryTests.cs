@@ -74,10 +74,10 @@
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "West Midlands";
-            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
             vacancy.Duration = 2;
             vacancy.DurationType = DurationType.Years;
             vacancy.ExpectedDuration = "2 years";
@@ -143,10 +143,10 @@
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "West Midlands";
-            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
             vacancy.Status = VacancyStatus.Submitted;
@@ -186,10 +186,10 @@
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "West Midlands";
-            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var entity = writeRepository.Create(vacancy);
             vacancy.VacancyId = entity.VacancyId;
@@ -202,8 +202,7 @@
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
-            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+            IVacancySummaryRepository summaryRepository = new VacancySummaryRepository(_connection);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -218,18 +217,18 @@
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Live;
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
-            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.UpdatedDateTime = null;
             vacancy.CreatedDateTime = DateTime.MinValue;
             vacancy.ClosingDate = DateTime.UtcNow.AddDays(2);
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             writeRepository.Create(vacancy);
 
             int totalResultsCount;
-            var findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            var findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 1,
+                RequestedPage = 1,
                 LatestClosingDate = DateTime.UtcNow.AddDays(3),
                 LiveDate = DateTime.UtcNow.AddHours(-2),
                 PageSize = 10,
@@ -239,9 +238,9 @@
             findResults.Should().HaveCount(1);
             totalResultsCount.Should().Be(1);
 
-            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 1,
+                RequestedPage = 1,
                 LatestClosingDate = DateTime.UtcNow.AddDays(3),
                 LiveDate = DateTime.UtcNow.AddHours(-2),
                 PageSize = 10,
@@ -251,9 +250,9 @@
             findResults.Should().HaveCount(0);
             totalResultsCount.Should().Be(0);
 
-            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 2,
+                RequestedPage = 2,
                 LatestClosingDate = DateTime.UtcNow.AddDays(3),
                 LiveDate = DateTime.UtcNow.AddHours(-2),
                 PageSize = 10,
@@ -263,9 +262,9 @@
             findResults.Should().HaveCount(0);
             totalResultsCount.Should().Be(1);
 
-            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 2,
+                RequestedPage = 2,
                 LatestClosingDate = DateTime.UtcNow.AddDays(1),
                 LiveDate = DateTime.UtcNow.AddHours(-2),
                 PageSize = 10,
@@ -275,9 +274,9 @@
             findResults.Should().HaveCount(0);
             totalResultsCount.Should().Be(0);
 
-            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            findResults = summaryRepository.Find(new ApprenticeshipVacancyQuery
             {
-                CurrentPage = 2,
+                RequestedPage = 2,
                 LatestClosingDate = DateTime.UtcNow.AddDays(3),
                 LiveDate = DateTime.UtcNow.AddHours(2),
                 PageSize = 10,
@@ -295,27 +294,28 @@
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+            var summaryRepository = new VacancySummaryRepository(_connection);
 
             var vacancy1 = CreateValidDomainVacancy();
             vacancy1.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
-            vacancy1.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
-            vacancy1.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy1.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy1.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var vacancy2 = CreateValidDomainVacancy();
             vacancy2.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
-            vacancy2.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
-            vacancy2.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy2.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy2.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var vacancy3 = CreateValidDomainVacancy();
             vacancy3.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
-            vacancy3.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
-            vacancy3.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy3.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy3.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy1 = writeRepository.Create(vacancy1);
             vacancy2 = writeRepository.Create(vacancy2);
             vacancy3 = writeRepository.Create(vacancy3);
 
-            var vacancies = readRepository.GetByIds(new[] {vacancy1.VacancyId, vacancy2.VacancyId, vacancy3.VacancyId});
+            var vacancies = summaryRepository.GetByIds(new[] {vacancy1.VacancyId, vacancy2.VacancyId, vacancy3.VacancyId});
 
             vacancies.Count.Should().Be(3);
             foreach (var vacancySummary in vacancies)
@@ -342,9 +342,9 @@
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = null;
             vacancy.Address.County = null;
-            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
             
@@ -370,7 +370,7 @@
                 }
             };
 
-            locationWriteRepository.Save(vacancyLocations);
+            locationWriteRepository.Create(vacancyLocations);
 
             var retrievedLocations = locationReadRepository.GetForVacancyId(vacancy.VacancyId);
 
@@ -396,15 +396,15 @@
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "West Midlands";
-            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
             vacancy.Duration = 2;
             vacancy.DurationType = DurationType.Years;
             vacancy.ExpectedDuration = "2 years";
 
-            vacancy.OfflineApplicationClickThroughCount = 0;
+            vacancy.NoOfOfflineApplicants = 0;
             
             vacancy = writeRepository.Create(vacancy);
             
@@ -416,7 +416,7 @@
 
             var entity = readRepository.Get(vacancy.VacancyId);
 
-            entity.OfflineApplicationClickThroughCount.Should().Be(5);
+            entity.NoOfOfflineApplicants.Should().Be(5);
         }
     }
 }

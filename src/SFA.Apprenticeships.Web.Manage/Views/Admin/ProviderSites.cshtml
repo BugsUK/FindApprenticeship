@@ -1,0 +1,68 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteSearchResultsViewModel
+@{
+    ViewBag.Title = "Provider Sites";
+}
+
+<h1 id="heading" class="heading-xlarge">Provider Sites</h1>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminProviderSites))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.SearchViewModel.Id, controlHtmlAttributes: new {type = "tel", size = 8})
+        @Html.FormTextFor(m => m.SearchViewModel.EdsUrn, controlHtmlAttributes: new {type = "tel", size = 9, autofocus = "autofocus"})
+        @Html.FormTextFor(m => m.SearchViewModel.Name, controlHtmlAttributes: new {type = "text"})
+
+        <div class="form-group">
+            <button id="search-provider-sites-button" type="submit" class="button" name="SearchProviderSitesAction" value="SearchProviderSites">Search Provider Sites</button>
+        </div>
+    </div>
+
+    if (Model.ProviderSites != null && Model.ProviderSites.Count > 0)
+    {
+        <div class="grid-wrapper">
+            <div class="grid grid-1-1">
+                <table>
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>EDSURN</th>
+                            <th>Full Name</th>
+                            <th>Trading Name</th>
+                            <th>Location</th>
+                            <th>Relationship Count</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var providerSite in Model.ProviderSites)
+                        {
+                            <tr>
+                                <td>@providerSite.ProviderSiteId</td>
+                                <td>@providerSite.EdsUrn</td>
+                                <td>@providerSite.FullName</td>
+                                <td>@providerSite.TradingName</td>
+                                <td>@providerSite.Address.Town</td>
+                                <td>@providerSite.ProviderSiteRelationships.Count</td>
+                                <td>@Html.RouteLink("View", ManagementRouteNames.AdminViewProviderSite, new { providerSite.ProviderSiteId })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}

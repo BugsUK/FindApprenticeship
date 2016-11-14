@@ -7,10 +7,13 @@
     using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Providers;
     using Raa.Common.Validators.ProviderUser;
+    using Raa.Common.Validators.VacancyStatus;
     using Raa.Common.ViewModels.Application;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
+    using System.Web.Routing;
 
     public class ApplicationMediator : MediatorBase, IApplicationMediator
     {
@@ -18,8 +21,11 @@
         private readonly ShareApplicationsViewModelValidator _shareApplicationsViewModelValidator;
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly BulkDeclineCandidatesViewModelServerValidator _bulkDeclineCandidatesViewModelServerValidator = new BulkDeclineCandidatesViewModelServerValidator();
 
-        public ApplicationMediator(IApplicationProvider applicationProvider, ShareApplicationsViewModelValidator shareApplicationsViewModelValidator, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
+        public ApplicationMediator(IApplicationProvider applicationProvider,
+            ShareApplicationsViewModelValidator shareApplicationsViewModelValidator,
+            IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
         {
             _applicationProvider = applicationProvider;
             _shareApplicationsViewModelValidator = shareApplicationsViewModelValidator;
@@ -57,16 +63,57 @@
             foreach (var selectedApplicationId in viewModel.SelectedApplicationIds)
             {
                 var application = newViewModel.ApplicationSummaries.Single(a => a.ApplicationId == selectedApplicationId);
-                var anonymisedApplicationLink = new AnonymisedApplicationLink(application.ApplicationId, _dateTimeService.TwoWeeksFromUtcNow);
-                var encryptedLink = _encryptionService.Encrypt(anonymisedApplicationLink);
+                var anonymisedApplicationLinkData = new AnonymisedApplicationLink(application.ApplicationId, _dateTimeService.TwoWeeksFromUtcNow);
+                var encryptedLinkData = _encryptionService.Encrypt(anonymisedApplicationLinkData);
+                var urlEncodedLinkData = HttpUtility.UrlEncode(encryptedLinkData);
                 var routeName = newViewModel.VacancyType == VacancyType.Apprenticeship ? RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication : RecruitmentRouteNames.ViewAnonymousTraineeshipApplication;
-                var link = urlHelper.RouteUrl(routeName, new { application = encryptedLink });
+                var routeValues = new RouteValueDictionary();
+                routeValues["application"] = urlEncodedLinkData;
+                var link = urlHelper.RouteUrl(routeName, routeValues);
                 applicationLinks[application.ApplicantID] = link;
             }
 
             _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks, _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress);
 
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.GetBulkDeclineCandidatesViewModel.Ok, viewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> ConfirmBulkDeclineCandidates(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+            var originalSelectedApplicationIds = viewModel.SelectedApplicationIds.ToList();
+            viewModel.SelectedApplicationIds = viewModel.SelectedApplicationIds.Where(aid => viewModel.ApplicationSummaries.Any(a => a.ApplicationId == aid)).ToList();
+            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                viewModel.SelectedApplicationIds = originalSelectedApplicationIds;
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.FailedValidation, viewModel, validationResult);
+            }
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmBulkDeclineCandidates.Ok, viewModel);
+        }
+
+        public MediatorResponse<BulkDeclineCandidatesViewModel> SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel)
+        {
+            var viewModel = _applicationProvider.GetBulkDeclineCandidatesViewModel(bulkDeclineCandidatesViewModel);
+
+            var validationResult = _bulkDeclineCandidatesViewModelServerValidator.Validate(bulkDeclineCandidatesViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.FailedValidation, viewModel, validationResult);
+            }
+
+            viewModel = _applicationProvider.SendBulkUnsuccessfulDecision(viewModel);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendBulkUnsuccessfulDecision.Ok, viewModel);
         }
     }
 }

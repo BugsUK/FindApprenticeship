@@ -1,5 +1,6 @@
 ﻿@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Candidate
@@ -103,7 +104,7 @@
                     @Html.Partial("_applicationStatus", applicationSummary.Status)
                 </td>
                 <td>
-                    <a href="@Url.RouteUrl(applicationSummary.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(applicationSummary.ApplicationId).RouteValues)" title="View @applicationSummary.VacancyTitle application">View application</a><br/>
+                    <a href="@Url.RouteUrl(applicationSummary.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(applicationSummary.ApplicationId, applicationSummary.VacancyReferenceNumber).RouteValues)" title="View @applicationSummary.VacancyTitle application">View application</a><br/>
                     <a href="@Url.RouteUrl(applicationSummary.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new {application = applicationSummary.AnonymousLinkData})" title="View anonymous application">Anonymous view</a>
                 </td>
             </tr>

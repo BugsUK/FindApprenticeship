@@ -41,9 +41,10 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
+                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : string.Empty,
                     ProviderName = provider.TradingName,
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
+                    IsEmployerAnonymous = !string.IsNullOrEmpty(vacancy.EmployerAnonymousName),
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),

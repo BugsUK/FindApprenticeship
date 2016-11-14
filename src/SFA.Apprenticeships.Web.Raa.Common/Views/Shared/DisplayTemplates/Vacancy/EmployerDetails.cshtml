@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.VacancyPartyViewModel
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.VacancyOwnerRelationshipViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
@@ -14,7 +14,7 @@
     <div class="grid grid-1-2">
         <div class="inner-block-padr">
             <h3 class="bold-small">Employer</h3>
-            <p class="small-btm-margin">@Model.Employer.Name</p>
+            <p class="small-btm-margin">@Model.Employer.FullName</p>
             <h3 class="bold-small">Address</h3>
             <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
             <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>

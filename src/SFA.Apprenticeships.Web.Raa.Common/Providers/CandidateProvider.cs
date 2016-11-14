@@ -1,29 +1,29 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text.RegularExpressions;
+    using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
+    using Application.Interfaces.Security;
     using Application.Interfaces.VacancyPosting;
+    using Common.Extensions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
     using ViewModels.Candidate;
-    using Application.Interfaces;
-    using Application.Interfaces.Security;
-    using Common.Extensions;
-    using ViewModels;
+    using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
 
@@ -42,8 +42,9 @@
         private readonly IConfigurationService _configurationService;
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly IVacancyQAProvider _vacancyQaProvider;
 
-        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService, IConfigurationService configurationService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
+        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService, IConfigurationService configurationService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService, IVacancyQAProvider vacancyQaProvider)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
@@ -51,6 +52,7 @@
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
             _vacancyPostingService = vacancyPostingService;
+            _vacancyQaProvider = vacancyQaProvider;
             _providerService = providerService;
             _employerService = employerService;
             _logService = logService;
@@ -71,7 +73,7 @@
                 providerSiteIds = ownedProviderSites.Select(ps => ps.ProviderSiteId).ToList();
             }
 
-            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, CandidateSearchExtensions.GetCandidateGuidPrefix(searchViewModel.ApplicantId), CandidateSearchExtensions.GetCandidateId(searchViewModel.ApplicantId), providerSiteIds);
+            var request = new CandidateSearchRequest(searchViewModel.FirstName, searchViewModel.LastName, dateOfBirth, searchViewModel.Postcode, CandidateSearchExtensions.GetCandidateGuidPrefix(searchViewModel.ApplicantId), CandidateSearchExtensions.GetCandidateId(searchViewModel.ApplicantId), providerSiteIds, !string.IsNullOrEmpty(ukprn));
             var candidates = _candidateSearchService.SearchCandidates(request) ?? new List<CandidateSummary>();
 
             var results = new CandidateSearchResultsViewModel
@@ -84,7 +86,7 @@
                             .ThenBy(c => c.FirstName)
                             .ThenBy(c => c.Address.Postcode)
                             .ThenBy(c => c.Address.AddressLine1)
-                            .Skip((searchViewModel.CurrentPage - 1)*searchViewModel.PageSize)
+                            .Skip((searchViewModel.CurrentPage - 1) * searchViewModel.PageSize)
                             .Take(searchViewModel.PageSize)
                             .Select(c => _mapper.Map<CandidateSummary, CandidateSummaryViewModel>(c))
                             .ToList(),
@@ -93,7 +95,7 @@
                     TotalNumberOfPages =
                         candidates.Count == 0
                             ? 1
-                            : (int) Math.Ceiling((double) candidates.Count/searchViewModel.PageSize)
+                            : (int)Math.Ceiling((double)candidates.Count / searchViewModel.PageSize)
                 }
             };
 
@@ -103,7 +105,7 @@
         public CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId)
         {
             var webSettings = _configurationService.Get<CommonWebConfiguration>();
-            var domainUrl = webSettings.SiteDomainName;            
+            var domainUrl = webSettings.SiteDomainName;
             _logService.Debug("Calling CandidateApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
                 candidateId);
 
@@ -155,8 +157,10 @@
         public ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId)
         {
             var application = _apprenticeshipApplicationService.GetApplication(applicationId);
-            var viewModel = ConvertToApprenticeshipApplicationViewModel(application);
 
+            var vacancyDetail = _vacancyQaProvider.GetVacancyById(application.Vacancy.Id);
+
+            var viewModel = ConvertToApprenticeshipApplicationViewModel(application, vacancyDetail);
             return viewModel;
         }
 
@@ -164,15 +168,12 @@
         {
             var application = _traineeshipApplicationService.GetApplication(applicationId);
             var viewModel = ConvertToTraineeshipApplicationViewModel(application);
-
             return viewModel;
         }
 
         public CandidateApplicationSummariesViewModel GetCandidateApplicationSummaries(CandidateApplicationsSearchViewModel searchViewModel, string ukprn)
         {
             var candidateId = searchViewModel.CandidateGuid;
-            var provider = _providerService.GetProvider(ukprn);
-            var ownedProviderSites = _providerService.GetOwnedProviderSites(provider.ProviderId).Select(ps => ps.ProviderSiteId).ToList();
 
             var candidate = _candidateApplicationService.GetCandidate(candidateId);
 
@@ -181,9 +182,10 @@
 
             var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
 
-            var vacancySummaries = _vacancyPostingService.GetVacancySummariesByIds(candidateApplicationSummaries.Select(a => a.VacancyId).Distinct()).Where(v => (v.VacancyManagerId != null && ownedProviderSites.Contains(v.VacancyManagerId.Value)) || (v.DeliveryOrganisationId != null && ownedProviderSites.Contains(v.DeliveryOrganisationId.Value))).ToDictionary(v => v.VacancyId, v => v);
-            var vacancyOwnerRelationships = _providerService.GetVacancyParties(vacancySummaries.Values.Select(v => v.VacancyOwnerRelationshipId).Distinct(), false);
-            var employers = _employerService.GetEmployers(vacancyOwnerRelationships.Values.Select(vor => vor.EmployerId)).ToDictionary(e => e.EmployerId, e => e);
+            var vacancySummaries =
+                _vacancyPostingService.GetVacancySummariesByIds(
+                        candidateApplicationSummaries.Select(a => a.VacancyId).Distinct())
+                    .ToDictionary(v => v.VacancyId, v => v);
 
             //Restrict to only the applications for vacancies owned by the logged in user
             candidateApplicationSummaries = candidateApplicationSummaries.Where(a => vacancySummaries.ContainsKey(a.VacancyId)).ToList();
@@ -192,9 +194,8 @@
             foreach (var application in page)
             {
                 var vacancy = vacancySummaries[application.VacancyId];
-                var employer = employers[vacancyOwnerRelationships[vacancy.VacancyOwnerRelationshipId].EmployerId];
                 application.VacancyReferenceNumber = vacancy.VacancyReferenceNumber;
-                application.EmployerLocation = employer.Address.Town;
+                application.EmployerLocation = vacancy.EmployerLocation;
                 application.AnonymousLinkData = _encryptionService.Encrypt(new AnonymisedApplicationLink(application.ApplicationId, _dateTimeService.TwoWeeksFromUtcNow));
             }
 
@@ -250,14 +251,26 @@
 
         #region Helpers
 
-        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application)
+        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, VacancyViewModel vacancyDetail)
         {
+            var webSettings = _configurationService.Get<CommonWebConfiguration>();
+            var domainUrl = webSettings.SiteDomainName;
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
-            viewModel.Vacancy.EmployerName = employer.Name;
+            viewModel.Vacancy.EmployerName = employer.FullName;
+            viewModel.NextStepsUrl = string.Format($"https://{domainUrl}/nextsteps");
+            viewModel.UnSuccessfulReason = application.UnsuccessfulReason;
+            viewModel.UnsuccessfulDateTime = application.UnsuccessfulDateTime;
+            viewModel.CandidateId = application.CandidateId;
+            viewModel.UnsuccessfulReason = application.UnsuccessfulReason;
+            viewModel.ApplicationStatus = application.Status;
+            viewModel.Title = application.Vacancy.Title;
+            viewModel.EmployerName = application.Vacancy.EmployerName;
+            viewModel.ProviderName = vacancyDetail.Provider.TradingName;
+            viewModel.Contact = vacancyDetail.Contact;
 
             return viewModel;
         }
@@ -265,11 +278,11 @@
         private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId, false);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(vacancy.VacancyOwnerRelationshipId, false);  // Closed vacancies can certainly have non-current vacancy parties
+            var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
-            viewModel.Vacancy.EmployerName = employer.Name;
+            viewModel.Vacancy.EmployerName = employer.FullName;
 
             return viewModel;
         }

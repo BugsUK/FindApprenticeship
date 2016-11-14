@@ -5,7 +5,7 @@
     using Locations;
     using Reference;
 
-    public class VacancySummary : IMinimalVacancyDetails
+    public class VacancySummary
     {
         public int VacancyId { get; set; }
         public int VacancyOwnerRelationshipId { get; set; }
@@ -14,15 +14,13 @@
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string WorkingWeek { get; set; }
-        public Wage Wage { get; set; }
         public string ExpectedDuration { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
         public DateTime? ClosingDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }
-        public int OwnerPartyId { get; set; }
         public bool? OfflineVacancy { get; set; }
-        public int OfflineApplicationClickThroughCount { get; set; }
+        public int NoOfOfflineApplicants { get; set; }
         public DateTime? DateSubmitted { get; set; }
         public DateTime? DateFirstSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }
@@ -45,10 +43,11 @@
         public VacancyType VacancyType { get; set; }
         public DateTime? UpdatedDateTime { get; set; }
         public PostalAddress Address { get; set; }
-        public int ProviderId { get; set; }
-
+        public int ContractOwnerId { get; set; }
+        public int OriginalContractOwnerId { get; set; }
         public RegionalTeam RegionalTeam { get; set; }
         public VacancyLocationType VacancyLocationType { get; set; }
+        public int EmployerId { get; set; }
 
         public DateTime LiveClosingDate
         {
@@ -71,7 +70,14 @@
         }
 
         public string EmployerName { get; set; }
+        public string EmployerLocation { get; set; }
 
-        public int? ApplicationOrClickThroughCount { get; set; }
+        public int NewApplicationCount { get; set; }
+		public int ApplicantCount { get; set; }
+		
+        public string ProviderTradingName { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public Wage Wage { get; set; }
     }
 }

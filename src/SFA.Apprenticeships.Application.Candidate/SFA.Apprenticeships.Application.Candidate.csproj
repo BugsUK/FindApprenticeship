@@ -97,7 +97,6 @@
     <Compile Include="CandidateApplicationService.cs" />
     <Compile Include="CandidateSearchService.cs" />
     <Compile Include="CandidateService.cs" />
-    <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="Strategies\Candidates\GetCandidateSummariesStrategy.cs" />
     <Compile Include="Strategies\Candidates\IGetCandidateSummariesStrategy.cs" />
     <Compile Include="Strategies\Candidates\ISearchCandidatesStrategy.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Strategies\Candidates\SearchCandidatesStrategy.cs" />
     <Compile Include="Strategies\Candidates\SetUserStatusPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\GetCandidateVacancyDetailStrategy.cs" />
-    <Compile Include="SaveCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\GetCandidateApprenticeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\SubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\GetCandidateByIdStrategy.cs" />
@@ -167,8 +165,6 @@
     <Compile Include="Strategies\UnsubscribeStrategy.cs" />
     <Compile Include="Strategies\UpdateUsernameStrategy.cs" />
     <Compile Include="Strategies\VerifyMobileStrategy.cs" />
-    <Compile Include="SubmitApprenticeshipApplicationRequest.cs" />
-    <Compile Include="SubmitTraineeshipApplicationRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">

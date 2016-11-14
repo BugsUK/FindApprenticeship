@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyStatus
 {
     public static class VacancyStatusMediatorCodes
     {

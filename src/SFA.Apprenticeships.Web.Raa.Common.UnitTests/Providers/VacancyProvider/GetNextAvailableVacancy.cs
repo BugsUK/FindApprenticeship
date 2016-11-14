@@ -6,6 +6,7 @@
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -22,8 +23,10 @@
             var providerService = new Mock<IProviderService>();
             VacancySummary vacancySummary = null;
 
+            int total;
+
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total))
                 .Returns(new List<VacancySummary>());
 
             vacancyLockingService.Setup(
@@ -54,8 +57,10 @@
             var providerService = new Mock<IProviderService>();
             var vacancySummary = new VacancySummary { VacancyReferenceNumber = vacancyReferenceNumber };
 
+            int total;
+
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(It.IsAny<VacancySummaryByStatusQuery>(), out total))
                 .Returns(new List<VacancySummary>());
 
             vacancyLockingService.Setup(

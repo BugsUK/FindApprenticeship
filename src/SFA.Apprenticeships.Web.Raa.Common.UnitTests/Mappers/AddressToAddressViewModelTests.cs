@@ -1,13 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Mappers
 {
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
     using Common.Mappers;
     using Domain.Entities.Raa.Locations;
     using FluentAssertions;
     using NUnit.Framework;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]

@@ -4,6 +4,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     public interface IProviderQAProvider
     {
-        VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel);
+        VacancyOwnerRelationshipViewModel ConfirmVacancyOwnerRelationship(VacancyOwnerRelationshipViewModel viewModel);
     }
 }

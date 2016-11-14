@@ -35,6 +35,17 @@
             return await cursor;
         }
 
+        public User GetUser(Guid userGuid)
+        {
+            var options = new FindOptions<User>
+            {
+                Projection = GetUserProjection()
+            };
+            var filter = Builders<User>.Filter.Eq(a => a.Id, userGuid);
+            var cursor = _database.GetCollection<User>(CollectionName).FindSync(filter, options);
+            return cursor.Single();
+        }
+
         private static ProjectionDefinition<User> GetUserProjection()
         {
             return Builders<User>.Projection

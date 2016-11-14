@@ -31,18 +31,20 @@
         MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(
             int vacancyReferenceNumber);
 
-        MediatorResponse<VacancyPartyViewModel> GetEmployerInformation(int vacancyReferenceNumber,
+        MediatorResponse<VacancyOwnerRelationshipViewModel> GetEmployerInformation(int vacancyReferenceNumber,
             bool? useEmployerLocation);
 
         MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel);
+
+        MediatorResponse<NewVacancyViewModel> UpdateOfflineVacancyType(NewVacancyViewModel viewModel);
 
         MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
         MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(
             VacancyRequirementsProspectsViewModel viewModel);
 
-        MediatorResponse<VacancyPartyViewModel> UpdateEmployerInformation(
-            VacancyPartyViewModel viewModel);
+        MediatorResponse<VacancyOwnerRelationshipViewModel> UpdateEmployerInformation(
+            VacancyOwnerRelationshipViewModel viewModel);
 
         MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int vacancyReferenceNumber);
 

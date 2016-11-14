@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
+    using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class MyApprenticeshipApplicationViewModel
     {
         public MyApprenticeshipApplicationViewModel()
-        {    
+        {
         }
 
         public MyApprenticeshipApplicationViewModel(ApprenticeshipApplicationSummary applicationSummary)
@@ -16,7 +16,7 @@
             VacancyId = applicationSummary.LegacyVacancyId;
             Title = applicationSummary.Title;
             EmployerName = applicationSummary.EmployerName;
-            
+            UnsuccessfulDateTime = applicationSummary.UnsuccessfulDateTime;
             UnsuccessfulReason = applicationSummary.UnsuccessfulReason;
             ApplicationStatus = applicationSummary.Status;
             VacancyStatus = applicationSummary.VacancyStatus;
@@ -82,5 +82,11 @@
         public DateTime DateUpdated { get; set; }
 
         public string UnsuccessfulReason { get; set; }
+
+        public DateTime UnsuccessfulDateTime { get; set; }
+
+        // Provider details
+        public string ProviderName { get; set; }
+        public string Contact { get; set; }
     }
 }

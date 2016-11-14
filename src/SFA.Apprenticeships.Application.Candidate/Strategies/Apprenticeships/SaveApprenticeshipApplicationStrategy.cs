@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Applications;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
     public class SaveApprenticeshipApplicationStrategy : ISaveApprenticeshipApplicationStrategy

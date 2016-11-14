@@ -1,24 +1,44 @@
-﻿using FluentValidation;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Provider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Provider
 {
-    public class ProviderSiteSearchViewModelValidator : AbstractValidator<ProviderSiteSearchViewModel>
+    using Constants.ViewModels;
+    using FluentValidation;
+    using ViewModels.Provider;
+
+    public class ProviderSiteSearchViewModelClientValidator : AbstractValidator<ProviderSiteSearchViewModel>
     {
-        public ProviderSiteSearchViewModelValidator()
+        public ProviderSiteSearchViewModelClientValidator()
         {
-            AddEmployerReferenceRules();
+            this.AddCommonRules();
+            this.AddClientRules();
+        }
+    }
+
+    public class ProviderSiteSearchViewModelServerValidator : AbstractValidator<ProviderSiteSearchViewModel>
+    {
+        public ProviderSiteSearchViewModelServerValidator()
+        {
+            this.AddCommonRules();
+            this.AddServerRules();
+        }
+    }
+
+    internal static class ProviderSiteSearchViewModelValidatorRules
+    {
+        internal static void AddCommonRules(this AbstractValidator<ProviderSiteSearchViewModel> validator)
+        {
+
         }
 
-        private void AddEmployerReferenceRules()
+        internal static void AddClientRules(this AbstractValidator<ProviderSiteSearchViewModel> validator)
         {
-            RuleFor(m => m.EmployerReferenceNumber)
-                .NotEmpty()
-                .When(m => m.SiteSearchMode == ProviderSiteSearchMode.EmployerReferenceNumber)
-                .WithMessage(ProviderSiteSearchViewModelMessages.EmployerReferenceNumberMessages.RequiredErrorText)
-                .Matches("^\\s*\\d+\\s*$")
-                .When(m => m.SiteSearchMode == ProviderSiteSearchMode.EmployerReferenceNumber)
-                .WithMessage(ProviderSiteSearchViewModelMessages.EmployerReferenceNumberMessages.MustBeNumericText);
+
+        }
+
+        internal static void AddServerRules(this AbstractValidator<ProviderSiteSearchViewModel> validator)
+        {
+            validator.RuleFor(x => x)
+                .Must(x => !string.IsNullOrEmpty(x.Id) || !string.IsNullOrEmpty(x.EdsUrn) || !string.IsNullOrEmpty(x.Name) || !x.PerformSearch)
+                .WithMessage(ProviderSiteSearchViewModelMessages.NoSearchCriteriaErrorText);
         }
     }
 }

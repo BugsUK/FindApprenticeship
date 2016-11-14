@@ -1,4 +1,6 @@
-﻿MERGE INTO [Reference].[StandardSector] AS Target 
+﻿SET IDENTITY_INSERT [Reference].[StandardSector] ON;
+
+MERGE INTO [Reference].[StandardSector] AS Target 
 USING (VALUES 
   (1, N'Actuarial', 1), 
   (2, N'Aerospace', 17), 
@@ -57,7 +59,11 @@ USING (VALUES
   (55,N'Papermaking',7),
   (56,N'Project Management',1),
   (57,N'Public Sector',20),
-  (58,N'Travel',13)
+  (58,N'Travel',13),
+  (59,N'Bus, Coach and HGV',17),
+  (60,N'Furniture',17),
+  (61,N'Groundsmanship',1),
+  (62,N'Media',1)
 ) 
 AS Source (StandardSectorId, FullName, ApprenticeshipOccupationId) 
 ON Target.StandardSectorId = Source.StandardSectorId 
@@ -71,3 +77,5 @@ VALUES (StandardSectorId, FullName, ApprenticeshipOccupationId)
 -- delete rows that are in the target but not the source 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
+
+SET IDENTITY_INSERT [Reference].[StandardSector] OFF;

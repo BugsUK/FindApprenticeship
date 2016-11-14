@@ -556,17 +556,17 @@
 
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
             {
-                new Category(1, "SSAT1.1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(1, "SSAT1.1", "1", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "FW.1_1", "1_1", CategoryType.Framework),
-                    new Category(2, "FW.1_2", "1_2", CategoryType.Framework)
+                    new Category(1, "FW.1_1", "1_1", CategoryType.Framework, CategoryStatus.Active),
+                    new Category(2, "FW.1_2", "1_2", CategoryType.Framework, CategoryStatus.Active)
                 }
                     ),
-                new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1,
+                new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active,
                     new List<Category>
                     {
-                        new Category(1, "FW.2_1", "2_1", CategoryType.Framework),
-                        new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
+                        new Category(1, "FW.2_1", "2_1", CategoryType.Framework, CategoryStatus.Active),
+                        new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework, CategoryStatus.Active)
                     }
                     )
             });
@@ -625,17 +625,17 @@
 
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
             {
-                new Category(1, "SSAT1.1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(1, "SSAT1.1", "1", CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active, new List<Category>
                 {
-                    new Category(1, "FW.1_1", "1_1", CategoryType.Framework),
-                    new Category(2, "FW.1_2", "1_2", CategoryType.Framework)
+                    new Category(1, "FW.1_1", "1_1", CategoryType.Framework, CategoryStatus.Active),
+                    new Category(2, "FW.1_2", "1_2", CategoryType.Framework, CategoryStatus.Active)
                 }
                     ),
-                new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1,
+                new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, CategoryStatus.Active,
                     new List<Category>
                     {
-                        new Category(1, "FW.2_1", "2_1", CategoryType.Framework),
-                        new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
+                        new Category(1, "FW.2_1", "2_1", CategoryType.Framework, CategoryStatus.Active),
+                        new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework, CategoryStatus.Active)
                     }
                     )
             });

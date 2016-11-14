@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Configuration
 {
-    public class ManageWebConfiguration
+    using Web.Common.Configuration;
+
+    public class ManageWebConfiguration : AnalyticsConfiguration
     {
         public string AuthorisationGroupClaim { get; set; }
     }

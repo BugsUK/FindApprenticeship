@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Vacancy/EmployerInformation.cshtml")]
-    public partial class EmployerInformation : System.Web.Mvc.WebViewPage<VacancyPartyViewModel>
+    public partial class EmployerInformation : System.Web.Mvc.WebViewPage<VacancyOwnerRelationshipViewModel>
     {
         public EmployerInformation()
         {
@@ -98,7 +98,7 @@ WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n  
             #line hidden
             
             #line 23 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-Write(Html.DisplayFor(m => m, VacancyPartyViewModel.PartialView));
+Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
 
             
             #line default

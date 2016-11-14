@@ -87,6 +87,10 @@
   <ItemGroup>
     <Compile Include="Entities\ApplicationStatusChanged.cs" />
     <Compile Include="Entities\ApplicationStatusSummary.cs" />
+    <Compile Include="Entities\ApplicationUpdate.cs" />
+    <Compile Include="Entities\ApplicationUpdateType.cs" />
+    <Compile Include="Entities\ApprenticeshipApplicationUpdate.cs" />
+    <Compile Include="Entities\TraineeshipApplicationUpdate.cs" />
     <Compile Include="Entities\VacancyStatusSummary.cs" />
     <Compile Include="Extensions\ApplicationStatusSummaryExtensions.cs" />
     <Compile Include="Extensions\ApprenticeshipApplicationDetailExtension.cs" />
@@ -101,7 +105,9 @@
     <Compile Include="Strategies\IApplicationVacancyUpdater.cs" />
     <Compile Include="Strategies\Traineeships\GetApplicationForReviewStrategy.cs" />
     <Compile Include="Strategies\Traineeships\IGetApplicationForReviewStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\ISetApplicationStatusStrategy.cs" />
     <Compile Include="Strategies\Traineeships\IUpdateApplicationNotesStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\SetApplicationStatusStrategy.cs" />
     <Compile Include="Strategies\Traineeships\UpdateApplicationNotesStrategy.cs" />
     <Compile Include="TraineeshipApplicationService.cs" />
     <Compile Include="ApprenticeshipApplicationService.cs" />

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
     using System.Web.Routing;
@@ -180,6 +181,16 @@
             }
 
             return "";
+        }
+
+        public static IHtmlString EscapeHtmlEncoding(HtmlHelper html, IHtmlString originalString)
+        {
+            return EscapeHtmlEncoding(html, originalString.ToString());
+        }
+
+        public static IHtmlString EscapeHtmlEncoding(HtmlHelper html, string originalString)
+        {
+            return html.Raw(originalString?.Replace("&amp;", "\u0026").Replace("&#39;", "\u0027").Replace("&nbsp;", "\u00A0"));
         }
 
         #endregion
@@ -433,14 +444,19 @@
         {
             var expressionText = ExpressionHelper.GetExpressionText(expression);
             var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
-            var fullyQualifiedName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
-            if (!helper.ViewData.ModelState.IsValidField(fullyQualifiedName) && helper.ViewData.ModelState.ContainsKey(fullyQualifiedName))
+            var propertyName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
+            return GetValidationType(helper, propertyName);
+        }
+
+        public static ValidationType GetValidationType<TModel>(this HtmlHelper<TModel> helper, string propertyName)
+        {
+            if (!helper.ViewData.ModelState.IsValidField(propertyName) && helper.ViewData.ModelState.ContainsKey(propertyName))
             {
-                if (helper.ViewData.ModelState[fullyQualifiedName].Errors.Any(e => e.GetType() == typeof(ModelError)))
+                if (helper.ViewData.ModelState[propertyName].Errors.Any(e => e.GetType() == typeof(ModelError)))
                 {
                     return ValidationType.Error;
                 }
-                if (helper.ViewData.ModelState[fullyQualifiedName].Errors.Any(e => e.GetType() == typeof(ModelWarning)))
+                if (helper.ViewData.ModelState[propertyName].Errors.Any(e => e.GetType() == typeof(ModelWarning)))
                 {
                     return ValidationType.Warning;
                 }

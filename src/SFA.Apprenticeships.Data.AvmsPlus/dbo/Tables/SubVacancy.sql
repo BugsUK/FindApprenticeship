@@ -10,3 +10,10 @@
     CONSTRAINT [uq_idx_subVacancy] UNIQUE NONCLUSTERED ([VacancyId] ASC, [AllocatedApplicationId] ASC)
 );
 
+GO
+CREATE NONCLUSTERED INDEX [nci_wi_SubVacancy_B595B0A6C60C23A2AA8ACE078660BCDC] ON [dbo].[SubVacancy]
+([AllocatedApplicationId] ASC)
+INCLUDE ([ILRNumber],[StartDate],[VacancyId])
+
+
+GO

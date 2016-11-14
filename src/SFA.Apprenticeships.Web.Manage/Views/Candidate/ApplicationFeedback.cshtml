@@ -1,0 +1,79 @@
+﻿@using System.Diagnostics
+@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
+
+@{
+    ViewBag.Title = "Candidate Application Feedback";
+}
+
+<div class="grid-wrapper">
+    <section class="grid grid-2-3">
+        <div class="inner-block-padr">
+            <h1 class="heading-xlarge">Your feedback (@Model.ApplicantDetails.Name)</h1>
+            @{
+                var reason = string.IsNullOrWhiteSpace(Model.UnsuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnsuccessfulReason;
+            }
+            <div class="form-group">
+                <div class="detail-content qa-comment">
+                    <div class="blocklabel-single-container">@reason</div>
+                    <br />
+                    <span class="form-prepopped font-xsmall">
+                        Sent @(Model.UnsuccessfulDateTime.HasValue ? Model.UnsuccessfulDateTime.Value.ToString("dd MMM yyyy") : "")
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="grid grid-1-3 gov-border grey-background">
+        <br />
+        <div class="inner-block">
+            <div class="hgroup-small">
+                <h2 class="heading-medium">@Model.Title</h2>
+                <p class="subtitle">@Model.EmployerName</p>
+                <br />
+                <p class="font-xsmall">
+                    @Html.RouteLink("View my application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = Model.ApplicationSelection.ApplicationId })
+                </p>
+                <br />
+            </div>
+        </div>
+    </section>
+
+    <section class="section-border grid-wrapper" id="provider-info">
+        <div class="grid grid-2-3">
+            <h2 class="heading-large">Provider details</h2>
+            
+                <div class="grid-wrapper">
+                    <div class="text grid grid-1-2">
+                        <h3 class="bold-small">Training provider</h3>
+                        <p id="vacancy-provider-name">@Model.ProviderName</p>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Contact))
+                    {
+                        <div class="text grid grid-1-2" style="padding-left: 30px;">
+                            <h3 class="bold-small">Contact</h3>
+                            <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
+                        </div>
+                    }
+                </div>
+            
+        </div>
+    </section>
+
+
+    <section class="grid grid-2-3">
+        <div class="inner-block-padr">
+            <h2 class="heading-large">Next steps</h2>
+            <p>If you require further information please contact the training provider.</p>
+            <p>
+                For advice on how to ensure your application has a better chance of being
+                successful 
+            </p>
+            <br />
+            <br />
+            @Html.RouteLink("Return to my applications", ManagementRouteNames.ViewCandidate, new { id = Model.ApplicantDetails.CandidateId }, new { @class = "button" })
+        </div>
+    </section>
+</div>

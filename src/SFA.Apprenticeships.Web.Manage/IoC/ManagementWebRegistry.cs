@@ -37,6 +37,11 @@
     using Mediators.Reporting;
     using Raa.Common.Providers;
     using Application.Interfaces;
+    using Application.Interfaces.Security;
+    using Application.Vacancy;
+    using Infrastructure.Security;
+    using Raa.Common.Mediators.Admin;
+    using Raa.Common.ViewModels.Application;
 
     public class ManagementWebRegistry : Registry
     {
@@ -64,10 +69,16 @@
         {
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
             For<IVacancyQAProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
+            For<IVacancyPostingProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
             For<IGeoCodingProvider>().Use<GeoCodingProvider>();
+            For<IEncryptionProvider>().Use<AES256Provider>();
+            For<IProviderProvider>().Use<ProviderProvider>();
+            For<IApiUserProvider>().Use<ApiUserProvider>();
+            For<IProviderUserProvider>().Use<ProviderUserProvider>();
+            For<IEmployerProvider>().Use<EmployerProvider>();
         }
 
         private void RegisterServices()
@@ -82,6 +93,8 @@
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
+            For<IEncryptionService<AnonymisedApplicationLink>>().Use<CryptographyService<AnonymisedApplicationLink>>();
+            For<IVacancySummaryService>().Use<VacancySummaryService>();
         }
 
         private void RegisterStrategies()
@@ -106,7 +119,7 @@
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
-            For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<ISearchEmployersStrategy>().Use<SearchEmployersStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
 
@@ -114,6 +127,8 @@
             For<IGetReleaseNotesStrategy>().Use<GetReleaseNotesStrategy>();
 
             For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
+
+            For<Application.UserAccount.Strategies.ProviderUserAccount.ISubmitContactMessageStrategy>().Use<Application.UserAccount.Strategies.ProviderUserAccount.SubmitContactMessageStrategy>();
         }
 
         private void RegisterMediators()
@@ -123,6 +138,7 @@
             For<IVacancyMediator>().Use<VacancyMediator>();
             For<IReportingMediator>().Use<ReportingMediator>();
             For<IInformationRadiatorMediator>().Use<InformationRadiatorMediator>();
+            For<IAdminMediator>().Use<AdminMediator>();
         }
 
         private void RegisterRepositories()

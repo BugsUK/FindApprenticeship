@@ -7,10 +7,14 @@
     {
         List<VacancyLocation> GetVacancyLocations(int vacancyId);
 
-        List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations);
+        List<VacancyLocation> GetVacancyLocationsByReferenceNumber(int vacancyReferenceNumber);
+
+        List<VacancyLocation> CreateVacancyLocations(List<VacancyLocation> vacancyLocations);
+
+        List<VacancyLocation> UpdateVacancyLocations(List<VacancyLocation> vacancyLocations);
 
         void DeleteVacancyLocationsFor(int vacancyId);
 
-        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
+        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyOwnerRelationshipIds);
     }
 }

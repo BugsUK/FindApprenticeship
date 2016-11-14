@@ -4,36 +4,41 @@
 @{
     ViewBag.Title = "Archive";
 }
-<section>
-    <div class="grid-wrapper">
-        <div class="grid grid-2-3">
-            <h1 id="heading" class="heading-xlarge">
-                <span>Archive vacancy</span>
-            </h1>
-        </div>
-    </div>
-</section>
 
-    @if (Model.HasOutstandingActions)
-    {
-        <p>You can only archive this vacancy once you have given all applicants an outcome</p>
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})" class="button">Return to applications</a>
-    }
-    else
-    {
+@if (Model.HasOutstandingActions)
+{
+    <h1 id="heading" class="heading-xlarge">Are you ready to archive this vacancy?</h1>
+    <p>
+        You can only archive this vacancy once all positions have been filled and responses sent to all candidates.</p>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Respond to remaining candidates</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Return to applications</a>
+}
+else
+{
+    <section>
+        <div class="grid-wrapper">
+            <div class="grid grid-2-3">
+                <h1 id="heading" class="heading-xlarge">
+                    <span>Archive vacancy</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+
         <p>This vacancy will now be stored in your archive</p>
 
-        using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmArchiveVacancy, FormMethod.Post))
-        {
-             @Html.HiddenFor(m => m.VacancyId)
-             @Html.HiddenFor(m => m.HasOutstandingActions)
-             @Html.HiddenFor(m => m.VacancyReferenceNumber)
+    using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmArchiveVacancy, FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.VacancyId)
+        @Html.HiddenFor(m => m.HasOutstandingActions)
+        @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
-             <section>
-                 <div class="form-group">
-                     <button type="submit" class="button">Confirm</button>
-                     <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Cancel</a>
-                 </div>
-             </section>
-         }
+        <section>
+            <div class="form-group">
+                <button type="submit" class="button">Confirm</button>
+                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})">Cancel</a>
+            </div>
+        </section>
     }
+}
+

@@ -159,17 +159,19 @@
     <Compile Include="Converters\ApprenticeshipVacancyConverterTests.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverterTests.cs" />
     <Compile Include="Mappers\AddressToAddressViewModelTests.cs" />
+    <Compile Include="Mappers\ApiUserMappersTest.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyDatesViewModelMapperTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyViewModelMapperTests.cs" />
     <Compile Include="Mappers\DateTimeToDateViewModelMapperTests.cs" />
     <Compile Include="Mappers\GeoPointToGeoPointViewModelTests.cs" />
+    <Compile Include="Mappers\ProviderMappersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\GeoCodingProvider\GeoCodingProviderTests.cs" />
     <Compile Include="Providers\LocationsProvider\LocationsTests.cs" />
     <Compile Include="Providers\LocationsProvider\TestBase.cs" />
     <Compile Include="Providers\ProviderProvider\CreateVacancyTests.cs" />
     <Compile Include="Providers\ProviderProvider\GetTests.cs" />
-    <Compile Include="Providers\ProviderProvider\GetVacancyPartyViewModelsTests.cs" />
+    <Compile Include="Providers\ProviderProvider\GetVacancyOwnerRelationshipViewModelsTests.cs" />
     <Compile Include="Providers\ProviderProvider\TestBase.cs" />
     <Compile Include="Providers\ProviderUser\ProviderUserProviderBuilder.cs" />
     <Compile Include="Providers\ProviderUser\ProviderUserProviderTests.cs" />
@@ -200,11 +202,13 @@
     <Compile Include="Providers\VacancyStatusChange\ArchiveVacancyTests.cs" />
     <Compile Include="Validators\Samples.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelClientValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\NewVacancyViewModelOfflineServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelServerValidatorTests.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetailsOfflineTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\RequirementsProspectsTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetailsTests.cs" />
@@ -227,6 +231,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
       <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>

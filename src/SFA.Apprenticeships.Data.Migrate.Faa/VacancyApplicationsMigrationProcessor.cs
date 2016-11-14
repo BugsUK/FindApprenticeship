@@ -75,10 +75,6 @@
         {
             _logService.Warn($"ExecuteFullSync on {_vacancyApplicationsUpdater.CollectionName} collection with LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
 
-            //TODO: These deletes would have to be done outside of this class as it affects traineeships and apprenticeships at the same time
-            //_genericSyncRespository.DeleteAll(_applicationHistoryTable);
-            //_genericSyncRespository.DeleteAll(_applicationTable);
-
             _logService.Info("Loading Vacancy Ids");
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");

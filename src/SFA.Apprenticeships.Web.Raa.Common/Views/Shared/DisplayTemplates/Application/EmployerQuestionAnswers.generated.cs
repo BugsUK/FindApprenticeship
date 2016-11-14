@@ -92,7 +92,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                                                                   Write(Html.Raw(Model.Vacancy.FirstQuestion));
+                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Vacancy.FirstQuestion));
 
             
             #line default
@@ -135,23 +135,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 824), Tuple.Create("\"", 909)
-, Tuple.Create(Tuple.Create("", 832), Tuple.Create("form-label", 832), true)
-, Tuple.Create(Tuple.Create(" ", 842), Tuple.Create("text", 843), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 898), Tuple.Create("\"", 983)
+, Tuple.Create(Tuple.Create("", 906), Tuple.Create("form-label", 906), true)
+, Tuple.Create(Tuple.Create(" ", 916), Tuple.Create("text", 917), true)
             
             #line 16 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-, Tuple.Create(Tuple.Create(" ", 847), Tuple.Create<System.Object, System.Int32>(Model.Vacancy.SecondQuestion.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 921), Tuple.Create<System.Object, System.Int32>(Model.Vacancy.SecondQuestion.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 848), false)
+, 922), false)
 );
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                                                                    Write(Html.Raw(Model.Vacancy.SecondQuestion));
+                                                                                                     Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Vacancy.SecondQuestion));
 
             
             #line default

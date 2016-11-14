@@ -20,7 +20,7 @@
 
             var apprenticeshipVacancy = new Vacancy
             {
-                OwnerPartyId = 42,
+                VacancyOwnerRelationshipId = 42,
                 IsEmployerLocationMainApprenticeshipLocation = true
             };
 
@@ -49,7 +49,7 @@
 
             var apprenticeshipVacancy = new Vacancy
             {
-                OwnerPartyId = 42,
+                VacancyOwnerRelationshipId = 42,
                 IsEmployerLocationMainApprenticeshipLocation = true
             };
 
@@ -77,7 +77,7 @@
 
             var apprenticeshipVacancy = new Vacancy
             {
-                OwnerPartyId = 42,
+                VacancyOwnerRelationshipId = 42,
                 IsEmployerLocationMainApprenticeshipLocation = true,
                 SubmissionCount = 2
             };

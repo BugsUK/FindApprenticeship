@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 {
+    using CuttingEdge.Conditions;
     using Web.Common.Constants;
 
     public class VacancyViewModelMessages
@@ -69,9 +70,8 @@
             public const string HoursPerWeekShouldBeGreaterThan16 = "The paid hours per week must be more than 16";
         }
 
-        public static class WageType
+        public static class WageClassification
         {
-            public const string LabelText = "Wage";
             public const string RequiredErrorText = "Select a wage";
         }
 
@@ -83,6 +83,11 @@
             public const string RequiredErrorText = "Enter an amount for wage";
             public const string WageLessThanMinimum = "The wage should not be less than the National Minimum Wage for apprentices";
             public const string WageLessThanMinimum1StOct2016 = "The wage should not be less then the new National Minimum Wage for apprentices effective from 1 Oct 2016";
+        }
+
+        public static class CustomWageType
+        {
+            public const string RequiredErrorText = "Select a custom wage type";
         }
 
         public static class WageComment
@@ -291,7 +296,7 @@
         {
             public const string LabelText = "Enter the web address candidates should use to apply for this vacancy";
             public const string RequiredErrorText = "Enter a valid website address";
-            public const string TooLongErrorText = "The website address must not be more than 100 characters";
+            public const string TooLongErrorText = "The website address must not be more than 256 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The website address " + Whitelists.FreetextWhitelist.ErrorText;
             public const string ErrorUriText = "Enter a valid website address";
@@ -438,6 +443,28 @@
             public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListInvalidCharacterErrorText = "The expected duration " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
             public const string WhiteListInvalidTagErrorText = "The expected duration " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
+        }
+
+        public static class AmountLower
+        {
+            public const string EnterLowestFigure = "Enter the lowest figure for the wage range";
+        }
+
+        public static class AmountUpper
+        {
+            public const string EnterHighestFigure = "Enter a the highest figure for the wage range";
+            public const string EnterWageRange = "Enter a valid wage range";
+        }
+
+        public static class PresetText
+        {
+            public const string RequiredErrorText = "Select a wage description";
+        }
+
+        public static class WageTypeReason
+        {
+            public const string RequiredErrorText = "Enter a reason why you need to use a text description";
+            public const string TooLongErrorText = "Your reason must not be more than 240 characters";
         }
     }
 }

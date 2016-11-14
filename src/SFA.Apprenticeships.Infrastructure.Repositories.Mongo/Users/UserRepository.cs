@@ -12,6 +12,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain.Interfaces.Messaging;
 
     public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
     {
@@ -100,16 +101,21 @@
             _logger.Debug("Deleted MongoUser with Id={0}", id);
         }
 
-        public void SoftDelete(User entity)
+        public Guid SoftDelete(User entity)
         {
+            var deletedUserId = Guid.Empty;
+
             //Check if there is another, existing user with the same username that has already been soft deleted
             var mongoEntity = Collection.Find(Query.And(Query.EQ("Username", entity.Username.ToLower()), Query.EQ("Status", UserStatuses.PendingDeletion))).SingleOrDefault();
-            if (mongoEntity != null)
+            if (mongoEntity != null && mongoEntity.Id != entity.EntityId)
             {
                 //Fully delete existing user
                 Delete(mongoEntity.Id);
+                deletedUserId = mongoEntity.Id;
             }
             Save(entity);
+
+            return deletedUserId;
         }
 
         public User Save(User entity)

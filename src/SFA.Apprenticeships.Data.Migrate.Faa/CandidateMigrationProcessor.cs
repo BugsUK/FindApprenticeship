@@ -56,8 +56,8 @@
             _candidateUserRepository = new CandidateUserRepository(configurationService, _logService);
             _userRepository = new UserRepository(configurationService, logService);
 
-            var persistentConfig = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
-            _anonymiseData = persistentConfig.AnonymiseData;
+            var configuration = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
+            _anonymiseData = configuration.AnonymiseData;
         }
 
         public void Process(CancellationToken cancellationToken)

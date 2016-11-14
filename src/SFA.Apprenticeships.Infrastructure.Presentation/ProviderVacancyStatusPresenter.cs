@@ -7,8 +7,8 @@
         public static bool IsStateReadOnly(this VacancyStatus status)
         {
             return status == VacancyStatus.Submitted || status == VacancyStatus.Live ||
-                   status == VacancyStatus.ReservedForQA || status == VacancyStatus.Closed || 
-                   status == VacancyStatus.Withdrawn || status == VacancyStatus.Completed || 
+                   status == VacancyStatus.ReservedForQA || status == VacancyStatus.Closed ||
+                   status == VacancyStatus.Withdrawn || status == VacancyStatus.Completed ||
                    status == VacancyStatus.PostedInError;
         }
 
@@ -20,7 +20,7 @@
 
         public static bool IsStateReviewable(this VacancyStatus status)
         {
-            return status == VacancyStatus.Submitted || status == VacancyStatus.ReservedForQA || 
+            return status == VacancyStatus.Submitted || status == VacancyStatus.ReservedForQA ||
                    status == VacancyStatus.Referred;
         }
 
@@ -45,12 +45,6 @@
                    status == VacancyStatus.Completed || status == VacancyStatus.Withdrawn;
         }
 
-        public static bool CanShowVacancyReferencenumber(this VacancyStatus status)
-        {
-            return status == VacancyStatus.Live || status == VacancyStatus.Closed ||
-                   status == VacancyStatus.Completed || status == VacancyStatus.Withdrawn;
-        }
-
         public static bool CanManageVacancyDates(this VacancyStatus status)
         {
             return status == VacancyStatus.Live || status == VacancyStatus.Closed;
@@ -68,7 +62,12 @@
 
         public static bool CanArchiveVacancy(this VacancyStatus status)
         {
-            return status == VacancyStatus.Live || status == VacancyStatus.Closed;
+            return status == VacancyStatus.Closed;
+        }
+
+        public static bool CanBulkDecline(this VacancyStatus status, int totalNumberOfApplications)
+        {
+            return totalNumberOfApplications > 0 && (status == VacancyStatus.Live || status == VacancyStatus.Closed || status == VacancyStatus.Completed);
         }
     }
 }

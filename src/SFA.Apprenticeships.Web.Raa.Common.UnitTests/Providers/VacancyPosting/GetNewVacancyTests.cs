@@ -13,10 +13,10 @@
     {
         private const int ProviderSiteId = 1;
         private const int EmployerId = 2;
-        private const int VacancyPartyId = 4;
+        private const int VacancyOwnerRelationshipId = 4;
         private static readonly Guid VacancyGuid = Guid.NewGuid();
 
-        private static readonly VacancyParty VacancyParty = new VacancyParty
+        private static readonly VacancyOwnerRelationship VacancyOwnerRelationship = new VacancyOwnerRelationship
         {
             ProviderSiteId = ProviderSiteId,
             EmployerId = EmployerId
@@ -26,9 +26,9 @@
         public void SetUp()
         {
             MockProviderService
-                .Setup(mock => mock.GetVacancyParty(VacancyPartyId, true))
-                .Returns(VacancyParty);
-            MockEmployerService.Setup(s => s.GetEmployer(VacancyParty.EmployerId, true))
+                .Setup(mock => mock.GetVacancyOwnerRelationship(VacancyOwnerRelationshipId, true))
+                .Returns(VacancyOwnerRelationship);
+            MockEmployerService.Setup(s => s.GetEmployer(VacancyOwnerRelationship.EmployerId, true))
                 .Returns(new Fixture().Build<Employer>().Create());
         }
 
@@ -39,15 +39,15 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(VacancyPartyId, VacancyGuid, null);
+            var viewModel = provider.GetNewVacancyViewModel(VacancyOwnerRelationshipId, VacancyGuid, null);
 
             // Assert.
             MockProviderService.Verify(mock =>
-                mock.GetVacancyParty(VacancyPartyId, true), Times.Once);
+                mock.GetVacancyOwnerRelationship(VacancyOwnerRelationshipId, true), Times.Once);
             MockEmployerService.Verify(s => s.GetEmployer(EmployerId, true), Times.Once);
 
             viewModel.Should().NotBeNull();
-            viewModel.OwnerParty.ProviderSiteId.Should().Be(ProviderSiteId);
+            viewModel.VacancyOwnerRelationship.ProviderSiteId.Should().Be(ProviderSiteId);
         }
     }
 }

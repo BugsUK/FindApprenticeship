@@ -93,9 +93,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-        <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>    
+    </Compile>
+    <Compile Include="Consumers\FaaMigrationControlQueueConsumer.cs" />
+    <Compile Include="IoC\JobsRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
@@ -151,6 +153,18 @@
       <Project>{a8bfd333-2d6b-4d91-b544-97c269212b06}</Project>
       <Name>SFA.Apprenticeships.Data.Migrate.Faa</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
+      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">
+      <Project>{4fe5e4be-91df-49c6-b6cd-9b69fcd0c0fe}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
+      <Project>{bb161a54-ef1a-4611-8296-9a0be69b4587}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
@@ -163,9 +177,6 @@
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
       <Name>SFA.Infrastructure</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -4,6 +4,7 @@
     using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
+    using Common.Extensions;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Domain.Entities.Raa;
@@ -56,7 +57,7 @@
         [HttpPost]
         public ActionResult DownloadApplicationsReceived(ApplicationsReceivedParameters parameters)
         {
-            var response = _reportMediator.GetApplicationsReceived(parameters, User.Identity.Name);
+            var response = _reportMediator.GetApplicationsReceived(parameters, User.Identity.Name, User.GetUkprn());
             return File(response.ViewModel, "text/csv", "ApplicationsReceived.csv");
         }
 
@@ -89,7 +90,7 @@
         [HttpPost]
         public ActionResult DownloadCandidatesWithApplications(CandidatesWithApplicationsParameters parameters)
         {
-            var response = _reportMediator.GetCandidatesWithApplications(parameters, User.Identity.Name);
+            var response = _reportMediator.GetCandidatesWithApplications(parameters, User.Identity.Name, User.GetUkprn());
             return File(response.ViewModel, "text/csv", "CandidatesWithApplications.csv");
         }
     }

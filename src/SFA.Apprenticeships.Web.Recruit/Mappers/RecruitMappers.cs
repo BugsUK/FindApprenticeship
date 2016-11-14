@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mappers
 {
     using Domain.Entities.Applications;
+    using Domain.Entities.Communication;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
     using Infrastructure.Presentation;
     using Raa.Common.Mappers;
     using Raa.Common.ViewModels.Application;
-
-    using Domain.Entities.Communication;
     using ViewModels.Home;
 
     public class RecruitMappers : RaaCommonWebMappers
@@ -21,7 +20,7 @@
                 .ForMember(v => v.EmployerName, opt => opt.Ignore())
                 .ForMember(v => v.EmployerGeoPoint, opt => opt.Ignore())
                 .ForMember(v => v.NewApplicationsCount, opt => opt.Ignore())
-                .ForMember(v => v.ViewedApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.InProgressApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.SuccessfulApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.UnsuccessfulApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.ApplicationSummaries, opt => opt.Ignore());

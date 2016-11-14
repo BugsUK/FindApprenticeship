@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System.Security.Claims;
-    using System.Web;
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -12,16 +10,17 @@
     using Constants;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Reference;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Mediators.AgencyUser;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
     using Raa.Common.ViewModels.Vacancy;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System.Security.Claims;
+    using System.Web;
+    using System.Web.Mvc;
     using ViewModels;
-    using SFA.Infrastructure.Interfaces;
+
     public class AgencyUserController : ManagementControllerBase
     {
         private readonly IAgencyUserMediator _agencyUserMediator;
@@ -60,7 +59,12 @@
                     var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
                     if (returnUrl.IsValidReturnUrl())
                     {
-                        return Redirect(Server.UrlDecode(returnUrl));
+                        var decodedUrl = Server.UrlDecode(returnUrl);
+                        if (decodedUrl != null)
+                        {
+                            decodedUrl = decodedUrl.Replace("&amp;", "&");
+                            return Redirect(decodedUrl.Replace("&amp;", "&"));
+                        }
                     }
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
 
@@ -139,12 +143,18 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult ChangeTeam(RegionalTeam regionalTeam, DashboardVacancySummaryFilterTypes filterType, string provider)
+        public ActionResult ChangeTeam(RegionalTeam regionalTeam, VacanciesSummaryFilterTypes filterType, string searchString, ManageVacancySearchMode searchMode)
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
-            _agencyUserMediator.SaveAgencyUser(claimsPrincipal, new AgencyUserViewModel {RegionalTeam = regionalTeam});
+            _agencyUserMediator.SaveAgencyUser(claimsPrincipal, new AgencyUserViewModel { RegionalTeam = regionalTeam });
 
-            return RedirectToRoute(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel {FilterType = filterType, Mode = DashboardVacancySummariesMode.Review, Provider = provider });
+            return RedirectToRoute(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = filterType,
+                Mode = DashboardVacancySummariesMode.Review,
+                SearchString = searchString,
+                SearchMode = searchMode
+            });
         }
     }
 }

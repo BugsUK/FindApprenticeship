@@ -133,3 +133,35 @@ input[type="search"]::-webkit-search-decoration {
 
 @-o-viewport {
   width: device-width; }
+
+ .grey-background {
+     background: #F8F8F8;
+ }
+
+ ul.applications-summary.bulk-response{
+     width:200%
+ }
+
+ #triple li  { width:33.333%;}
+ .three-column ul{       
+  overflow:hidden;  
+ }
+
+ .three-column li{      
+  float:left;  
+ }
+
+ .select2-container .select2-choice{
+     background:#F8F8F8
+ }
+
+ .close-icon{
+     content:"\f057";
+     position: absolute;
+    right: 50px;
+    top: 10px;
+    z-index: 2;
+    color: #BFC1C3;
+    font-size:16px;
+ }
+

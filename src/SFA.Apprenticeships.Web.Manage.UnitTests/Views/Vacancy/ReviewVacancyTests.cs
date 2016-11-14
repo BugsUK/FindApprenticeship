@@ -12,6 +12,7 @@
     using Manage.Views.Vacancy;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -59,7 +60,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    OwnerParty = new VacancyPartyViewModel()
+                    VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -99,7 +100,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    OwnerParty = new VacancyPartyViewModel()
+                    VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -139,7 +140,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    OwnerParty = new VacancyPartyViewModel()
+                    VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -158,12 +159,12 @@
             view.GetElementbyId("btnReject").Should().NotBeNull("Should exists a return to dashboard button");
         }
 
-        [TestCase(WageType.NationalMinimum, 30, "&#163;116.10 - &#163;201.00")]
-        [TestCase(WageType.NationalMinimum, 37.5, "&#163;145.13 - &#163;251.25")]
-        [TestCase(WageType.ApprenticeshipMinimum, 20, "&#163;66.00")]
-        [TestCase(WageType.ApprenticeshipMinimum, 16, "&#163;52.80")]
-        [TestCase(WageType.ApprenticeshipMinimum, 37.5, "&#163;123.75")]
-        public void ShouldShowWageText(WageType wagetype, decimal hoursPerWeek, string expectedDisplayText)
+        [TestCase(WageType.NationalMinimum, WageClassification.NationalMinimum, 30, "&#163;116.10 - &#163;201.00")]
+        [TestCase(WageType.NationalMinimum, WageClassification.NationalMinimum, 37.5, "&#163;145.13 - &#163;251.25")]
+        [TestCase(WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, 20, "&#163;66.00")]
+        [TestCase(WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, 16, "&#163;52.80")]
+        [TestCase(WageType.ApprenticeshipMinimum, WageClassification.ApprenticeshipMinimum, 37.5, "&#163;123.75")]
+        public void ShouldShowWageText(WageType wagetype, WageClassification classification, decimal hoursPerWeek, string expectedDisplayText)
         {
             var details = new WorkingWeekAndWage();
 
@@ -177,14 +178,14 @@
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
-                        ClosingDate = new DateViewModel(DateTime.Now),
-                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                        ClosingDate = new DateViewModel(new DateTime(2016, 09, 01)),
+                        PossibleStartDate = new DateViewModel(new DateTime(2016, 09, 08))
                     },
-                    Wage = new WageViewModel(wagetype, null, null, WageUnit.NotApplicable, hoursPerWeek)
+                    Wage = new WageViewModel() { Type = wagetype, Classification = classification, Unit = WageUnit.NotApplicable, HoursPerWeek = hoursPerWeek }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    OwnerParty = new VacancyPartyViewModel()
+                    VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -226,11 +227,12 @@
                         ClosingDate = new DateViewModel(DateTime.Now),
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
-                    Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, null)
+                    Wage = new WageViewModel() { Amount = wage, Unit = wageUnit }
+
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    OwnerParty = new VacancyPartyViewModel()
+                    VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -280,7 +282,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    OwnerParty = new VacancyPartyViewModel()
+                    VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -321,11 +323,11 @@
                         PossibleStartDate = new DateViewModel(DateTime.Now)
                     },
                     VacancyType = VacancyType.Apprenticeship,
-                    Wage = new WageViewModel(WageType.Custom, null, null, WageUnit.NotApplicable, (decimal?)hoursPerWeek)
+                    Wage = new WageViewModel() { HoursPerWeek = (decimal?)hoursPerWeek }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    OwnerParty = new VacancyPartyViewModel()
+                    VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {

@@ -183,7 +183,7 @@
         public Candidate GetCandidate(Guid id)
         {
             _logger.Debug("Calling CandidateService to get the user with Id={0}.", id);
-            return _getCandidateByIdStrategy.GetCandidate(id);
+            return _getCandidateByIdStrategy.GetCandidate(id, false);
         }
 
         public Candidate GetCandidate(string username)

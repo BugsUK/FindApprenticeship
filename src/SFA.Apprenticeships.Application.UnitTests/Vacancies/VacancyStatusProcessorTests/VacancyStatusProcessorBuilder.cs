@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.VacancyStatusProcessorTests
 {
     using Apprenticeships.Application.Vacancies;
+    using Apprenticeships.Application.Vacancy;
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
@@ -12,6 +13,7 @@
     {
         private Mock<IVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();
         private Mock<IVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
+        private Mock<IVacancySummaryService> _apprenticeshipVacancySummaryService = new Mock<IVacancySummaryService>();
         private Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
         private Mock<ILogService> _logService = new Mock<ILogService>();
 
@@ -21,7 +23,8 @@
                 _apprenticeshipVacancyReadRepository.Object,
                 _apprenticeshipVacancyWriteRepository.Object,
                 _serviceBus.Object,
-                _logService.Object
+                _logService.Object,
+                _apprenticeshipVacancySummaryService.Object
             );
 
             return processor;
@@ -48,6 +51,12 @@
         public VacancyStatusProcessorBuilder With(Mock<ILogService> mock)
         {
             _logService = mock;
+            return this;
+        }
+
+        public VacancyStatusProcessorBuilder With(Mock<IVacancySummaryService> mock)
+        {
+            _apprenticeshipVacancySummaryService = mock;
             return this;
         }
     }

@@ -14,22 +14,23 @@
 
         ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
 
-        ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel);
-
-        void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes);
+        void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate);
 
         ApplicationSelectionViewModel SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
 
-        ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
+        ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel, string candidateApplicationFeedback);
 
-        ApplicationSelectionViewModel RevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel);
+        ApplicationSelectionViewModel SetStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
+        ApplicationSelectionViewModel SetTraineeshipStateInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         TraineeshipApplicationViewModel GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
 
-        TraineeshipApplicationViewModel GetTraineeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel);
-
-        void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes);
+        void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate);
 
         void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
+        ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelection);
+        ApplicationSelectionViewModel SetTraineeshipStateSubmitted(ApplicationSelectionViewModel applicationSelection);
+        BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
+        BulkDeclineCandidatesViewModel SendBulkUnsuccessfulDecision(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);
     }
 }

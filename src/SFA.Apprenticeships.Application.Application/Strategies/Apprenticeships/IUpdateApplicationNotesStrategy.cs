@@ -4,6 +4,6 @@
 
     public interface IUpdateApplicationNotesStrategy
     {
-        void UpdateApplicationNotes(Guid applicationId, string notes);
+        void UpdateApplicationNotes(Guid applicationId, string notes, bool publishUpdate);
     }
 }

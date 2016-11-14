@@ -1,24 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
-    using System.Globalization;
-    using System.Linq;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
+    using Common.Models.Application;
+    using Constants.Pages;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
-    using Application.Interfaces.Candidates;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Constants.Pages;
-    using ViewModels.Applications;
-    using Common.Models.Application;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using ViewModels.Applications;
     using ViewModels.MyApplications;
     using ViewModels.VacancySearch;
     using ErrorCodes = Domain.Entities.ErrorCodes;
@@ -69,7 +66,6 @@
                 }
 
                 var applicationViewModel = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
-
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)
@@ -479,7 +475,7 @@
 
         private WhatHappensNextApprenticeshipViewModel WhatHappensNextSuggestions(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, Guid candidateId, int vacancyId, string searchReturnUrl)
         {
-            var searchReturnViewModel = ApprenticeshipSearchViewModel.FromSearchUrl(searchReturnUrl) ?? new ApprenticeshipSearchViewModel { WithinDistance = 40, ResultsPerPage = 5, PageNumber = 1 } ;
+            var searchReturnViewModel = ApprenticeshipSearchViewModel.FromSearchUrl(searchReturnUrl) ?? new ApprenticeshipSearchViewModel { WithinDistance = 40, ResultsPerPage = 5, PageNumber = 1 };
             var searchLocation = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipSearchViewModel, Location>(searchReturnViewModel);
 
             var searchParameters = new ApprenticeshipSearchParameters
@@ -563,12 +559,12 @@
         {
             // TODO: why have a patch method like this? should be done in mapper.
             var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
-
+            
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
                 apprenticeshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable;
                 apprenticeshipApplicationViewModel.Status = ApplicationStatuses.ExpiredOrWithdrawn;
-
+                
                 return apprenticeshipApplicationViewModel;
             }
 
@@ -582,6 +578,10 @@
             apprenticeshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
             apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = vacancyDetailViewModel.SupplementaryQuestion1;
             apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
+
+            // add in provider contact details
+            apprenticeshipApplicationViewModel.ProviderName = vacancyDetailViewModel.ProviderName;
+            apprenticeshipApplicationViewModel.Contact = vacancyDetailViewModel.Contact;
 
             return apprenticeshipApplicationViewModel;
         }

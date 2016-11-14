@@ -176,8 +176,6 @@
     <Compile Include="Applications\ApplicationStatusChangedSubscriber.cs" />
     <Compile Include="Applications\ApplicationStatusSummarySubscriber.cs" />
     <Compile Include="Applications\CommunicationHousekeepingRequestSubscriber.cs" />
-    <Compile Include="Applications\SubmitApprenticeshipApplicationRequestSubscriber.cs" />
-    <Compile Include="Applications\SubmitTraineeshipApplicationRequestSubscriber.cs" />
     <Compile Include="Candidates\CandidateAccountHousekeepingSubscriber.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesSubscriber.cs" />
     <Compile Include="Communications\CandidateCommunicationHelper.cs" />

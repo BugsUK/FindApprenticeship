@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using ViewModels.Admin;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -12,7 +13,7 @@
     {
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions);
+        NewVacancyViewModel GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel);
 
@@ -38,6 +39,10 @@
 
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
 
+        List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(int vacancyReferenceNumber);
+
+        List<VacancyLocationAddressViewModel> GetLocationsAddressViewModels(int vacancyId);
+
         VacancyViewModel SubmitVacancy(int vacancyReferenceNumber);
 
         List<SelectListItem> GetSectorsAndFrameworks();
@@ -50,7 +55,7 @@
 
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
-        VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber);
+        VacancyOwnerRelationshipViewModel CloneVacancy(int vacancyReferenceNumber);
 
         LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
 
@@ -64,5 +69,6 @@
 
         void EmptyVacancyLocation(int vacancyReferenceNumber);
         void CreateVacancy(VacancyMinimumData vacancyMinimumData);
+        void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel);
     }
 }

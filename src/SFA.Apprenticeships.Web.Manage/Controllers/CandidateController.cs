@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System;
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
@@ -10,7 +9,8 @@
     using FluentValidation.Mvc;
     using Mediators.Candidate;
     using Raa.Common.ViewModels.Candidate;
-    using Application.Interfaces;
+    using System;
+    using System.Web.Mvc;
 
     public class CandidateController : ManagementControllerBase
     {
@@ -72,6 +72,15 @@
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult Apprenticeship(Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ApplicationFeedback(Guid applicationId)
         {
             var response = _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
 

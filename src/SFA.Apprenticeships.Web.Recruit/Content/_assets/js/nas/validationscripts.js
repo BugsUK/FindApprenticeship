@@ -90,7 +90,7 @@ $(document).ready(function () {
         });
     }
 
-    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn').on('click', function () {
+    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn, .vacancy-filter, .vacancy-order, .search-btn').on('click', function () {
         var $this     = $(this),
             $thisText = $this.text();
 
@@ -101,6 +101,9 @@ $(document).ready(function () {
         }
 
         setTimeout(function () {
+            if ($this.hasClass('no-validation')) {
+                return;
+            }
             if($('.form-group.input-validation-error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
             } else if($('.block-label.input-validation-error').length > 0) {

@@ -9,7 +9,7 @@
 
         public string EdsUrn { get; set; }
 
-        public string Name { get; set; }
+        public string FullName { get; set; }
 
         public string TradingName { get; set; }
 
@@ -22,6 +22,10 @@
         public string ContactDetailsForCandidate { get; set; }
 
         public PostalAddress Address { get; set; }
+
+        public string WebPage { get; set; }
+
+        public EmployerTrainingProviderStatuses TrainingProviderStatus { get; set; }
 
         public IList<ProviderSiteRelationship> ProviderSiteRelationships { get; set; }
     }

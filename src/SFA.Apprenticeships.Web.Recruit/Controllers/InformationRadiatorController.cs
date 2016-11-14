@@ -7,21 +7,27 @@ using System.Web.Mvc;
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using Application.Interfaces;
+    using Application.Vacancy;
+    using Common.Attributes;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using ViewModels;
 
+    [ApplyAnalytics("RecruitWebConfiguration")]
     public class InformationRadiatorController : Controller
     {
         private IVacancyReadRepository _vacancyRepository;
         private ILogService _logService;
+        private IVacancySummaryService _vacancySummaryService;
 
         public InformationRadiatorController(IVacancyReadRepository vacancyRepository,
-            ILogService logService)
+            ILogService logService,
+            IVacancySummaryService vacancySummaryService)
         {
             _vacancyRepository = vacancyRepository;
+            _vacancySummaryService = vacancySummaryService;
             _logService = logService;
         }
 
@@ -34,9 +40,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
             try
             {
-                var result = _vacancyRepository.Find(new ApprenticeshipVacancyQuery()
+                var result = _vacancySummaryService.Find(new ApprenticeshipVacancyQuery()
                 {
-                    CurrentPage = 1,
+                    RequestedPage = 1,
                     PageSize = 1,
                     DesiredStatuses = new List<VacancyStatus>() {VacancyStatus.Live}
                 }, out total);

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Domain.Entities.Raa.Users;
     using Domain.Raa.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Interfaces.Users;
 
     public class UserProfileService : IUserProfileService
@@ -33,6 +34,11 @@
         public IEnumerable<ProviderUser> GetProviderUsers(string ukprn)
         {
             return _providerUserReadRepository.GetAllByUkprn(ukprn);
+        }
+
+        public IEnumerable<ProviderUser> SearchProviderUsers(ProviderUserSearchParameters searchParameters)
+        {
+            return _providerUserReadRepository.Search(searchParameters);
         }
 
         public ProviderUser CreateProviderUser(ProviderUser providerUser)

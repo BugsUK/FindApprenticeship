@@ -19,8 +19,15 @@
         public int VacanciesReviewedTwoDaysAgo { get; set; }
         public int VacanciesReviewedThreeDaysAgo { get; set; }
         public int VacanciesReviewedFourDaysAgo { get; set; }
+        public string VacanciesReviewedTodayColour { get; set; }
+        public string VacanciesReviewedYesterdayColour { get; set; }
+        public string VacanciesReviewedTwoDaysAgoColour { get; set; }
+        public string VacanciesReviewedThreeDaysAgoColour { get; set; }
+        public string VacanciesReviewedFourDaysAgoColour { get; set; }
         public int TotalApplicationsStartedInPastFourWeeks { get; set; }
         public int TotalApplicationsSubmittedInPastFourWeeks { get; set; }
+        public int TotalNewApplicationsInPastFourWeeks { get; set; }
+        public int TotalInProgressApplicationsInPastFourWeeks { get; set; }
         public int TotalUnsuccessfulApplicationsInPastFourWeeks { get; set; }
         public int TotalSuccessfulApplicationsInPastFourWeeks { get; set; }
     }

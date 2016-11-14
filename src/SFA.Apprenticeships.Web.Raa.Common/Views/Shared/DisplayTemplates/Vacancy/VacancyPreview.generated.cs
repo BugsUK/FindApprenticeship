@@ -98,59 +98,23 @@ Write(Html.Partial("DisplayTemplates/Vacancy/_AboutTheEmployer", Model, new View
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
             
-            #line 17 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-Write(Html.Partial("DisplayTemplates/Vacancy/_RequirementsAndProspects", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n");
-
-            
-            #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
- if (!Model.IsCandidateView)
+            #line 16 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+ if (Model.IsManageReviewerView)
 {
     
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-Write(Html.Partial("DisplayTemplates/Vacancy/_QuestionsForCandidates", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
+            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+Write(Html.Partial("DisplayTemplates/Vacancy/_TrainingProvider", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
 
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-                                                                                                                                                   
-}
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
- if (Model.VacancyType == VacancyType.Apprenticeship)
-{
-    
-            
-            #line default
-            #line hidden
-            
-            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-Write(Html.Partial("DisplayTemplates/Vacancy/_AboutTheEmployer", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
                                                                                                                                              
 }
 
@@ -160,7 +124,66 @@ Write(Html.Partial("DisplayTemplates/Vacancy/_AboutTheEmployer", Model, new View
 WriteLiteral("\r\n");
 
             
-            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+Write(Html.Partial("DisplayTemplates/Vacancy/_RequirementsAndProspects", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n");
+
+            
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+ if (!Model.IsCandidateView)
+{
+    
+            
+            #line default
+            #line hidden
+            
+            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+Write(Html.Partial("DisplayTemplates/Vacancy/_QuestionsForCandidates", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+                                                                                                                                                   
+}
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+ if (Model.VacancyType == VacancyType.Apprenticeship)
+{
+    
+            
+            #line default
+            #line hidden
+            
+            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+Write(Html.Partial("DisplayTemplates/Vacancy/_AboutTheEmployer", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+                                                                                                                                             
+}
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
 Write(Html.Partial("DisplayTemplates/Vacancy/_OfflineVacancy", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
 
             
@@ -169,8 +192,24 @@ Write(Html.Partial("DisplayTemplates/Vacancy/_OfflineVacancy", Model, new ViewDa
 WriteLiteral("\r\n\r\n");
 
             
-            #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+            #line 35 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+ if (!Model.IsManageReviewerView)
+{
+    
+            
+            #line default
+            #line hidden
+            
+            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
 Write(Html.Partial("DisplayTemplates/Vacancy/_TrainingProvider", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+                                                                                                                                             
+}
 
             
             #line default
@@ -178,7 +217,7 @@ Write(Html.Partial("DisplayTemplates/Vacancy/_TrainingProvider", Model, new View
 WriteLiteral("\r\n\r\n");
 
             
-            #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+            #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
 Write(Html.Partial("DisplayTemplates/Vacancy/_AboutTraineeships", Model.VacancyType));
 
             

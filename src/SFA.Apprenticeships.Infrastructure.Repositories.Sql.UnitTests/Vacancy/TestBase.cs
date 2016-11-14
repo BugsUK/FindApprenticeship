@@ -20,6 +20,8 @@
             var fixture = new Fixture();
 
             var result = fixture.Build<Vacancy>()
+                .With(v => v.WageUnitId, 1)
+                .With(v => v.WageType, 1)
                 .Create();
 
             return result;

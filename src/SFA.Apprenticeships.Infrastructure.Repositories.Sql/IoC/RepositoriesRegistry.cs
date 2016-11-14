@@ -21,9 +21,9 @@
             For<IGetOpenConnection>().Use<GetOpenConnectionFromConnectionString>().Ctor<string>("connectionString").Is(configuration.ConnectionString);
 
             //Mappers
-            For<IMapper>().Use<ReferenceMappers>().Name = "ReferenceMappers";
-            For<IMapper>().Use<ProviderUserMappers>().Name = "ProviderUserMappers";
-            For<IMapper>().Use<AgencyUserMappers>().Name = "AgencyUserMappers";
+            For<IMapper>().Singleton().Use<ReferenceMappers>().Name = "ReferenceMappers";
+            For<IMapper>().Singleton().Use<ProviderUserMappers>().Name = "ProviderUserMappers";
+            For<IMapper>().Singleton().Use<AgencyUserMappers>().Name = "AgencyUserMappers";
 
             //Repositories
             For<IReferenceRepository>().Use<ReferenceRepository>().Ctor<IMapper>().Named("ReferenceMappers");
@@ -33,6 +33,7 @@
             For<IAgencyUserWriteRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
             For<IReportingRepository>().Use<ReportingRepository>();
             For<IReferenceNumberRepository>().Use<ReferenceNumberRepository>();
+            For<IApiUserRepository>().Use<ApiUserRepository>();
         }
     }
 }

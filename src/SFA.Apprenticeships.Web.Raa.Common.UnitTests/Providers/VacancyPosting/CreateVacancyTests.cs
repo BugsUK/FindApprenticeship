@@ -20,18 +20,18 @@
         private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 3;
-        private const int VacancyPartyId = 4;
+        private const int VacancyOwnerRelationshipId = 4;
 
         private NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber;
 
         private readonly Vacancy _existingVacancy = new Vacancy()
         {
-            OwnerPartyId = 2
+            VacancyOwnerRelationshipId = 2
         };
 
-        private readonly VacancyParty _vacancyParty = new VacancyParty
+        private readonly VacancyOwnerRelationship _vacancyOwnerRelationship = new VacancyOwnerRelationship
         {
-            VacancyPartyId = VacancyPartyId,
+            VacancyOwnerRelationshipId = VacancyOwnerRelationshipId,
             ProviderSiteId = ProviderSiteId,
             EmployerId = EmployerId,
             EmployerDescription = "description"
@@ -44,7 +44,7 @@
             {
                 VacancyReferenceNumber = 1,
                 OfflineVacancy = false,
-                OwnerParty = new VacancyPartyViewModel()
+                VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
             };
 
             MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
@@ -69,11 +69,11 @@
                             }
                     }
                 });
-            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
-                .Returns(_vacancyParty);
-            MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId, true))
-                .Returns(_vacancyParty);
-            MockProviderService.Setup(s => s.GetProvider(Ukprn))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(ProviderSiteId, EdsUrn))
+                .Returns(_vacancyOwnerRelationship);
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(VacancyOwnerRelationshipId, true))
+                .Returns(_vacancyOwnerRelationship);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn, true))
                 .Returns(new Provider());
             MockEmployerService.Setup(s => s.GetEmployer(EmployerId, It.IsAny<bool>())).Returns(new Fixture().Build<Employer>().Create());
 
@@ -87,7 +87,7 @@
             // Arrange.
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>(), true)).Returns(new VacancyParty());
+            MockProviderService.Setup(m => m.GetVacancyOwnerRelationship(It.IsAny<int>(), true)).Returns(new VacancyOwnerRelationship());
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>())).Returns(new Fixture().Create<Employer>());
             
             var provider = GetVacancyPostingProvider();
@@ -117,17 +117,17 @@
             var provider = GetVacancyPostingProvider();
 
             // Act
-            var result = provider.GetNewVacancyViewModel(VacancyPartyId, vacancyGuid, null);
+            var result = provider.GetNewVacancyViewModel(VacancyOwnerRelationshipId, vacancyGuid, null);
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.GetVacancyParty(VacancyPartyId, true), Times.Once);
+            MockProviderService.Verify(s => s.GetVacancyOwnerRelationship(VacancyOwnerRelationshipId, true), Times.Once);
             MockEmployerService.Verify(s => s.GetEmployer(EmployerId, It.IsAny<bool>()), Times.Once);
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
-                        r.OwnerParty.EmployerDescription == _vacancyParty.EmployerDescription &&
-                        r.OwnerParty.ProviderSiteId == ProviderSiteId);
+                        r.VacancyOwnerRelationship.EmployerDescription == _vacancyOwnerRelationship.EmployerDescription &&
+                        r.VacancyOwnerRelationship.ProviderSiteId == ProviderSiteId);
         }
     }
 }

@@ -4,16 +4,12 @@
     {
         public const string RecruitmentHome = "RecruitmentHome";
 
-        // Provider set up
-        public const string ManageProviderSites = "ManageProviderSites";
-        public const string AddProviderSite = "AddProviderSite";
-        public const string EditProviderSite = "EditProviderSite";
-        public const string OnBoardingComplete = "OnBoardingComplete";
-
         // Account set up
         public const string Settings = "Settings";
+        public const string ManageProviderSites = "ManageProviderSites";
         public const string VerifyEmail = "VerifyEmail";
         public const string ResendVerificationCode = "ResendVerificationCode";
+        public const string OnBoardingComplete = "OnBoardingComplete";
         public const string DismissReleaseNotes = "DismissReleaseNotes";
 
         // Authetication
@@ -87,7 +83,7 @@
         public const string ConfirmSuccessfulApprenticeshipApplication = "ConfirmSuccessfulApprenticeshipApplication";
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
         public const string ViewAnonymousApprenticeshipApplication = "ViewAnonymousApprenticeshipApplication";
-        public const string ConfirmRevertToViewed = "ConfirmRevertToViewed";
+        public const string ConfirmRevertToInProgress = "ConfirmRevertToInProgress";
 
         // Traineeships
         public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
@@ -100,8 +96,13 @@
 
         //Admin
         public const string AdminList = "AdminList";
+        public const string AdminProviderUsers = "AdminProviderUsers";
+        public const string AdminViewProviderUser = "AdminViewProviderUser";
         public const string AdminChangeUkprn = "AdminChangeUkprn";
-        public const string ResetUkprn = "ResetUkprn";
+        public const string AdminResetUkprn = "AdminResetUkprn";
+        public const string TransferVacancies = "TransferVacancies";
+        public const string GetVacancies = "GetVacancies";
+        public const string TransferToProvider = "TransferToProvider";
 
         //Candidates
         public const string CandidateSearch = "CandidateSearch";
@@ -111,5 +112,18 @@
 
         //Service status
         public static string InformationRadiator = "InformationRadiator";
+        public static string ChooseProvider = "ChooseProvider";
+        public static string AdminViewProvider = "AdminViewProvider";
+        public static string ConfirmVacancies = "ConfirmVacancies";
+        public static string SearchProvider = "SearchProvider";
+        public static string AdminProviders = "AdminProviders";
+        public static string AdminViewProviderSite = "AdminViewProviderSite";
+        public static string AdminProviderSites = "AdminProviderSites";
+        public static string AdminEditProviderSite = "AdminEditProviderSite";
+        public static string ManageVacanciesTransfers = "ManageVacanciesTransfers";
+        public static string BulkDeclineCandidates = "BulkDeclineCandidates";
+        public static string ConfirmBulkDeclineCandidates = "ConfirmBulkDeclineCandidates";
+        public static string ConfirmBulkUnsuccessfulApprenticeshipApplication = "ConfirmBulkUnsuccessfulApprenticeshipApplication";
+        public static string BulkDeclineCandidatesSearch = "BulkDeclineCandidatesSearch";
     }
 }

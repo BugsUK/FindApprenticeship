@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
-    using System;
     using Domain.Entities.Raa.Vacancies;
+    using System;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
 
@@ -25,15 +25,18 @@
 
         public int NewApplicationsCount { get; set; }
 
-        public int ViewedApplicationsCount { get; set; }
+        public int InProgressApplicationsCount { get; set; }
 
         public int SuccessfulApplicationsCount { get; set; }
 
         public int UnsuccessfulApplicationsCount { get; set; }
 
-        public int TotalNumberOfApplications => NewApplicationsCount + ViewedApplicationsCount + SuccessfulApplicationsCount +
+        public int TotalNumberOfApplications => NewApplicationsCount + InProgressApplicationsCount + SuccessfulApplicationsCount +
                                                 UnsuccessfulApplicationsCount;
+        public int TotalNumberOfApplicationsWithPendingDecisions => NewApplicationsCount + InProgressApplicationsCount;
 
         public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
+
+        public bool HasApplications => TotalNumberOfApplications > 0;
     }
 }

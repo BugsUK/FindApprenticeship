@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Entities.Raa.Users;
+    using Models;
 
     public interface IProviderUserReadRepository
     {
@@ -12,6 +13,8 @@
         IEnumerable<ProviderUser> GetAllByUkprn(string ukprn);
 
         ProviderUser GetByEmail(string email);
+
+        IEnumerable<ProviderUser> Search(ProviderUserSearchParameters searchParameters);
     }
 
     public interface IProviderUserWriteRepository

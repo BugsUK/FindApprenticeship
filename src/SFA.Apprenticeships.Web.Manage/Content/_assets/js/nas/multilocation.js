@@ -8,7 +8,7 @@
 
     ko.validation.registerExtenders();
 
-    var locationAddressItemModel = function (itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4, itemTown, itemPostcode, itemNumberOfPositions, itemUprn, itemProvinceName) {
+    var locationAddressItemModel = function (itemVacancyLocationId, itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4, itemTown, itemPostcode, itemNumberOfPositions, itemUprn, itemProvinceName) {
 
         var self = this;
 
@@ -21,12 +21,13 @@
             return address;
         }, self);
 
+        self.itemVacancyLocationId = ko.observable(itemVacancyLocationId);
         self.itemAddressLine1 = ko.observable(itemAddressLine1);
         self.itemAddressLine2 = ko.observable(itemAddressLine2);
         self.itemAddressLine3 = ko.observable(itemAddressLine3);
         self.itemAddressLine4 = ko.observable(itemAddressLine4);
         self.itemTown = ko.observable(itemTown);
-        
+
         self.itemPostcode = ko.observable(itemPostcode);
         self.itemProvinceName = ko.observable(itemProvinceName);
         self.itemUprn = ko.observable(itemUprn);
@@ -53,10 +54,10 @@
             return self.showAddNewLocationLink() ? "block" : "none";
         }, self);
 
-        self.addNewLocation = function() {
+        self.addNewLocation = function () {
             self.showAddNewLocationLink(false);
         }
-        
+
         self.errors = ko.validation.group(self);
 
         self.addLocationAddress = function (locationAddressItem) {
@@ -66,19 +67,7 @@
         };
 
         self.addLocationAddressByField = function (addressLine1, addressLine2, addressLine3, addressLine4, town, postcode, numberOfPositions, uprn, provinceName) {
-            var specialCities = [];
-            specialCities["London"] = "London";
-            specialCities["York"] = "North Yorkshire";
-
-            if (!provinceName) {
-                if (specialCities[town]) {
-                    provinceName = specialCities[town];
-                } else {
-                    provinceName = "";
-                }
-            }
-
-            var locationAddressItem = new locationAddressItemModel(addressLine1, addressLine2, addressLine3, addressLine4, town, postcode, numberOfPositions, uprn, provinceName);
+            var locationAddressItem = new locationAddressItemModel(0, addressLine1, addressLine2, addressLine3, addressLine4, town, postcode, numberOfPositions, uprn, provinceName);
 
             var found = self.locationAddresses().some(function (el) {
                 return el.itemFriendlyAddress() === locationAddressItem.itemFriendlyAddress();
@@ -96,10 +85,10 @@
                 self.showLocationAddresses(false);
             }
         };
-        
+
         self.getLocationAddresses = function (data) {
             $(data).each(function (index, item) {
-                var locationAddressItem = new locationAddressItemModel(item.Address.AddressLine1, item.Address.AddressLine2, item.Address.AddressLine3, item.Address.AddressLine4, item.Address.Town, item.Address.Postcode, item.NumberOfPositions, item.Address.Uprn, item.Address.County);
+                var locationAddressItem = new locationAddressItemModel(item.VacancyLocationId, item.Address.AddressLine1, item.Address.AddressLine2, item.Address.AddressLine3, item.Address.AddressLine4, item.Address.Town, item.Address.Postcode, item.NumberOfPositions, item.Address.Uprn, item.Address.County);
                 self.addLocationAddress(locationAddressItem);
             });
         };
@@ -107,7 +96,7 @@
         self.addErrors = function (data, modelState) {
             $(data).each(function (dataIndex, dataItem) {
                 var itemModelState = $(modelState).filter(function (filterIndex) { return stringStartsWith(modelState[filterIndex].Key, "Addresses[" + dataIndex + "]") });
-                
+
                 $(itemModelState).each(function (index, item) {
                     var field = item.Key.split(".")[1];
                     if (field === "NumberOfPositions") {

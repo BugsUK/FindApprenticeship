@@ -1,0 +1,46 @@
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Manage.Constants
+@model List<SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne>
+@{
+    ViewBag.Title = "Standards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 id="heading" class="heading-xlarge">Standards</h1>
+
+@Html.RouteLink("Download Standards", ManagementRouteNames.AdminStandardsCsv)
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>SSAT1</th>
+        <th>Standard Sector</th>
+        <th>Standard</th>
+    </tr>
+
+    @foreach (var standardSector in Model.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
+    {
+        var ssat1 = Model.Single(s => s.Id == standardSector.ApprenticeshipOccupationId);
+
+        foreach (var standard in standardSector.Standards.OrderBy(s => s.Name))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => ssat1.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => standardSector.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => standard.Name)
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+

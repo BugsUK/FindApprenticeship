@@ -36,7 +36,7 @@
 
                 var vacancy = fixture
                     .Build<Domain.Entities.Raa.Vacancies.Vacancy>()
-                    .With(each => each.Wage, new Wage(WageType.NationalMinimum, 0, string.Empty, WageUnit.NotApplicable, 0))
+                    .With(each => each.Wage, new Wage(WageType.NationalMinimum, 0, null, null, string.Empty, WageUnit.NotApplicable, 0, null))
                     .Create();
 
                 var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
@@ -72,6 +72,7 @@
                 detail.Wage.Should().Be(vacancy.Wage);
                 detail.Wage.Unit.Should().Be(WageUnit.Weekly);
                 detail.Wage.Type.Should().Be(vacancy.Wage.Type);
+                detail.Wage.ReasonForType.Should().Be(vacancy.Wage.ReasonForType);
 
                 detail.WorkingWeek.Should().Be(vacancy.WorkingWeek);
 
@@ -86,7 +87,7 @@
                 detail.Created.Should().Be(vacancy.CreatedDateTime);
                 detail.VacancyStatus.Should().Be(vacancy.Status.GetVacancyStatuses());
                 detail.TrainingType.Should().Be(vacancy.TrainingType.GetTrainingType());
-                detail.EmployerName.Should().Be(employer.Name);
+                detail.EmployerName.Should().Be(employer.FullName);
                 detail.AnonymousEmployerName.Should().Be(vacancy.EmployerAnonymousName);
                 detail.EmployerDescription.Should().Be(vacancy.EmployerDescription);
                 detail.EmployerWebsite.Should().Be(vacancy.EmployerWebsiteUrl);

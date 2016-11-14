@@ -1,0 +1,77 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser.ProviderUserSearchResultsViewModel
+
+@{
+    ViewBag.Title = "Provider Users";
+}
+
+@if (string.IsNullOrEmpty(Model.ProviderName))
+{
+    <h1 id="heading" class="heading-xlarge">Provider Users</h1>
+}
+else
+{
+    <h1 id="heading" class="heading-xlarge">Provider Users for @Model.ProviderName</h1>
+}
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminProviderUsers))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="form-group">
+
+        @Html.FormTextFor(m => m.SearchViewModel.Username, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
+        @Html.FormTextFor(m => m.SearchViewModel.Name, controlHtmlAttributes: new { type = "text" })
+        @Html.FormTextFor(m => m.SearchViewModel.Email, controlHtmlAttributes: new { type = "text" })
+        @Html.FormCheckBoxFor(m => m.SearchViewModel.AllUnverifiedEmails)
+
+        <div class="form-group">
+            <button id="search-provider-users-button" type="submit" class="button" name="SearchProviderUsersAction" value="SearchProviderUsers">Search Provider Users</button>
+        </div>
+    </div>
+
+    if (Model.ProviderUsers != null && Model.ProviderUsers.Count > 0)
+    {
+        <div class="grid-wrapper">
+            <div class="grid grid-1-1">
+                <table>
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>UKPRN</th>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Email Verified</th>
+                            <th>Phone Number</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var providerUser in Model.ProviderUsers)
+                        {
+                            <tr>
+                                <td>@providerUser.Ukprn</td>
+                                <td>@providerUser.Username</td>
+                                <td>@providerUser.Fullname</td>
+                                <td>@providerUser.EmailAddress</td>
+                                <td>@providerUser.EmailAddressVerified</td>
+                                <td>@providerUser.PhoneNumber</td>
+                                <td>@Html.RouteLink("View", RecruitmentRouteNames.AdminViewProviderUser, new { providerUser.ProviderUserId })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}

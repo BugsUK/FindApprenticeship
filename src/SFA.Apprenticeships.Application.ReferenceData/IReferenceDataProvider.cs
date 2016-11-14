@@ -7,6 +7,7 @@
     public interface IReferenceDataProvider
     {
         IEnumerable<Category> GetCategories();
+        IEnumerable<Category> GetCategories(params CategoryStatus[] statuses);
 
         Category GetSubCategoryByName(string subCategoryName);
 
@@ -19,6 +20,8 @@
         IEnumerable<Category> GetFrameworks();
 
         IEnumerable<Sector> GetSectors();
+
+        IEnumerable<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes();
 
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
     }

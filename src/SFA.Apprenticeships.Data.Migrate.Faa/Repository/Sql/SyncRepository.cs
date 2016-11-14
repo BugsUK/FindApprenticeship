@@ -22,7 +22,7 @@
             {
                 LastSyncVersion = databaseSyncParams.LastSyncVersion
             };
-            
+
             //SQL doesn't store the "kind" property for DateTime and this is required for correct comparison to MongoDB DateTimes
             if (databaseSyncParams.ApprenticeshipLastCreatedDate.HasValue)
             {

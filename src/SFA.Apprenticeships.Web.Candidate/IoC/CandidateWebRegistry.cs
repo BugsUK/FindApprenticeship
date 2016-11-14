@@ -120,6 +120,7 @@
             For<IOrganisationService>().Use<OrganisationService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IEmployerCommunicationService>().Use<EmployerCommunicationService>();
+            For<IVacancySummaryService>().Use<VacancySummaryService>();
         }
 
         private void RegisterStrategies()
@@ -188,7 +189,7 @@
             For<IGetByIdStrategy>().Use<GetByIdStrategy>();
             For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
-            For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<ISearchEmployersStrategy>().Use<SearchEmployersStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
             For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();

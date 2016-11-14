@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Provider
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
@@ -33,26 +34,32 @@
             {
                 ukprn = ukprnoverride;
             }
+            else if (_currentUserService.IsInRole(Roles.Admin))
+            {
+                //This is to fix the anonymous view issue when impersonating
+                return;
+            }
             var provider = _providerService.GetProvider(ukprn);
             var vacancyId = vacancy.VacancyId;
-            var providerId = vacancy.ProviderId;
-            var providerSiteId = vacancy.VacancyManagerId;
-
+            var contractOwnerId = vacancy.ContractOwnerId;
+            
             if (provider == null)
             {
-                var message = $"Provider user '{_currentUserService.CurrentUserName}' signed in with invalid UKPRN '{ukprn}' attempted to view Vacancy Id '{vacancyId}' for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
+                var message = $"Provider user '{_currentUserService.CurrentUserName}' signed in with invalid UKPRN '{ukprn}' attempted to view Vacancy Id '{vacancyId}' for Contract Owner Id '{contractOwnerId}', Vacancy Manager Id '{vacancy.VacancyManagerId}' and Delivery Organisation Id '{vacancy.DeliveryOrganisationId}'";
 
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, ErrorCodes.ProviderVacancyAuthorisation.InvalidUkprn);
             }
 
-            if (provider.ProviderId == providerId)
+            if (provider.ProviderId == contractOwnerId)
             {
                 return;
             }
 
+            var providerSiteIds = new List<int?> {vacancy.VacancyManagerId, vacancy.DeliveryOrganisationId};
+
             // Fall back to Provider Site Id as the assigned provider for a vacancy could be a sub-contractor.
-            if (providerSiteId.HasValue)
+            foreach (var providerSiteId in providerSiteIds.Where(id => id.HasValue))
             {
                 var providerSite = _providerService.GetProviderSite(providerSiteId.Value);
 
@@ -69,7 +76,7 @@
                 }
             }
 
-            var errorMessage = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view Vacancy Id '{vacancyId}' for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
+            var errorMessage = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view Vacancy Id '{vacancyId}' for Contract Owner Id '{contractOwnerId}', Vacancy Manager Id '{vacancy.VacancyManagerId}' and Delivery Organisation Id '{vacancy.DeliveryOrganisationId}'";
 
             throw new Domain.Entities.Exceptions.CustomException(
                 errorMessage, ErrorCodes.ProviderVacancyAuthorisation.Failed);

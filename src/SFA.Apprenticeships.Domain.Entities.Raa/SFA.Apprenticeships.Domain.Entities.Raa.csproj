@@ -81,6 +81,10 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Api\ApiBusinessCategory.cs" />
+    <Compile Include="Api\ApiEmployeeType.cs" />
+    <Compile Include="Api\ApiEndpoint.cs" />
+    <Compile Include="Api\ApiUser.cs" />
     <Compile Include="ICreatableEntity.cs" />
     <Compile Include="IUpdatableEntity.cs" />
     <Compile Include="Locations\GeoPoint.cs" />
@@ -88,19 +92,22 @@
     <Compile Include="Locations\PostalAddress.cs" />
     <Compile Include="Locations\VacancyLocation.cs" />
     <Compile Include="Parties\Employer.cs" />
-    <Compile Include="Parties\MinimalEmployerDetails.cs" />
     <Compile Include="Parties\Provider.cs" />
     <Compile Include="Parties\ProviderSite.cs" />
     <Compile Include="Parties\ProviderSiteRelationship.cs" />
-    <Compile Include="Parties\VacancyParty.cs" />
+    <Compile Include="Parties\ProviderSiteRelationshipTypes.cs" />
+    <Compile Include="Parties\EmployerTrainingProviderStatuses.cs" />
+    <Compile Include="Parties\VacancyOwnerRelationship.cs" />
     <Compile Include="Parties\EmployerEqualityComparer.cs" />
-    <Compile Include="Parties\VacancyPartyEqualityComparer.cs" />
+    <Compile Include="Parties\VacancyOwnerRelationshipEqualityComparer.cs" />
     <Compile Include="Parties\VerifiedOrganisationSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reference\County.cs" />
     <Compile Include="Reference\Framework.cs" />
+    <Compile Include="Reference\FrameworkStatusType.cs" />
     <Compile Include="Reference\LocalAuthority.cs" />
     <Compile Include="Reference\Occupation.cs" />
+    <Compile Include="Reference\OccupationStatusType.cs" />
     <Compile Include="Reference\Region.cs" />
     <Compile Include="Reference\RegionalTeam.cs" />
     <Compile Include="Reference\RegionalTeamMapper.cs" />
@@ -112,10 +119,11 @@
     <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\ProviderUserStatus.cs" />
     <Compile Include="Users\Role.cs" />
-    <Compile Include="Vacancies\IVacancyIdStatusAndClosingDate.cs" />
     <Compile Include="Vacancies\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\Duration.cs" />
     <Compile Include="Vacancies\DurationType.cs" />
+    <Compile Include="Vacancies\StandardSubjectAreaTierOne.cs" />
+    <Compile Include="Vacancies\OfflineVacancyType.cs" />
     <Compile Include="Vacancies\VacancyLocationType.cs" />
     <Compile Include="Vacancies\VacancySource.cs" />
     <Compile Include="Vacancies\VacancyStatus.cs" />

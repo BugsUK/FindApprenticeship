@@ -9,14 +9,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         MediatorResponse<ApprenticeshipApplicationViewModel> Review(ApplicationSelectionViewModel applicationSelectionViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ReviewRevertToViewed(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ReviewSaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
+        MediatorResponse<ApprenticeshipApplicationViewModel> ReviewRevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
+        MediatorResponse<ApprenticeshipApplicationViewModel> ReviewSetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
+        MediatorResponse<ApprenticeshipApplicationViewModel> PromoteToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApplicationSelectionViewModel> SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
+        MediatorResponse<ApprenticeshipApplicationViewModel> SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApplicationSelectionViewModel> SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel);
-        MediatorResponse<ApplicationSelectionViewModel> RevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel);
+        MediatorResponse<ApprenticeshipApplicationViewModel> SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel applicationSelectionViewModel);
+        MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
+        MediatorResponse<ApplicationSelectionViewModel> RevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> View(string application);
     }
 }

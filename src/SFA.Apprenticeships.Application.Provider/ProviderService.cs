@@ -1,38 +1,44 @@
 ﻿namespace SFA.Apprenticeships.Application.Provider
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories.Models;
     using Interfaces;
     using Interfaces.Employers;
     using Interfaces.Generic;
     using Interfaces.Providers;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
     public class ProviderService : IProviderService
     {
         private readonly IEmployerService _employerService;
         private readonly ILogService _logService;
         private readonly IProviderReadRepository _providerReadRepository;
+        private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
-        private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
-        private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
+        private readonly IProviderSiteWriteRepository _providerSiteWriteRepository;
+        private readonly IVacancyOwnerRelationshipReadRepository _vacancyOwnerRelationshipReadRepository;
+        private readonly IVacancyOwnerRelationshipWriteRepository _vacancyOwnerRelationshipWriteRepository;
 
         public ProviderService(IProviderReadRepository providerReadRepository,
             IProviderSiteReadRepository providerSiteReadRepository,
-            IVacancyPartyReadRepository vacancyPartyReadRepository,
-            IVacancyPartyWriteRepository vacancyPartyWriteRepository,
-            ILogService logService, IEmployerService employerService)
+            IVacancyOwnerRelationshipReadRepository vacancyOwnerRelationshipReadRepository,
+            IVacancyOwnerRelationshipWriteRepository vacancyOwnerRelationshipWriteRepository,
+            ILogService logService, IEmployerService employerService, IProviderWriteRepository providerWriteRepository,
+            IProviderSiteWriteRepository providerSiteWriteRepository)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
-            _vacancyPartyReadRepository = vacancyPartyReadRepository;
-            _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
+            _vacancyOwnerRelationshipReadRepository = vacancyOwnerRelationshipReadRepository;
+            _vacancyOwnerRelationshipWriteRepository = vacancyOwnerRelationshipWriteRepository;
             _logService = logService;
             _employerService = employerService;
+            _providerWriteRepository = providerWriteRepository;
+            _providerSiteWriteRepository = providerSiteWriteRepository;
         }
 
         public Provider GetProvider(int providerId)
@@ -40,18 +46,23 @@
             return _providerReadRepository.GetById(providerId);
         }
 
-        public Provider GetProvider(string ukprn)
+        public Provider GetProvider(string ukprn, bool errorIfNotFound = true)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
 
             _logService.Debug("Calling ProviderReadRepository to get provider with UKPRN='{0}'.", ukprn);
 
-            return _providerReadRepository.GetByUkprn(ukprn);
+            return _providerReadRepository.GetByUkprn(ukprn, errorIfNotFound);
         }
 
         public IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds)
         {
             return _providerReadRepository.GetByIds(providerIds);
+        }
+
+        public IEnumerable<Provider> SearchProviders(ProviderSearchParameters searchParameters)
+        {
+            return _providerReadRepository.Search(searchParameters);
         }
 
         public ProviderSite GetProviderSite(int providerSiteId)
@@ -97,22 +108,27 @@
         public IEnumerable<ProviderSite> GetOwnedProviderSites(int providerId)
         {
             var providerSites = _providerSiteReadRepository.GetByProviderId(providerId);
-            return providerSites.Where(ps => ps.ProviderSiteRelationships.Any(psr => psr.ProviderId == providerId && psr.ProviderSiteRelationShipTypeId == 1));
+            return providerSites.Where(ps => ps.ProviderSiteRelationships.Any(psr => psr.ProviderId == providerId && psr.ProviderSiteRelationShipTypeId == ProviderSiteRelationshipTypes.Owner));
         }
 
-        public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
+        public IEnumerable<ProviderSite> SearchProviderSites(ProviderSiteSearchParameters searchParameters)
         {
-            return _vacancyPartyReadRepository.GetByIds(new[] {vacancyPartyId}, currentOnly).FirstOrDefault();
+            return _providerSiteReadRepository.Search(searchParameters);
         }
 
-        public IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds,
+        public VacancyOwnerRelationship GetVacancyOwnerRelationship(int vacancyOwnerRelationshipId, bool currentOnly = true)
+        {
+            return _vacancyOwnerRelationshipReadRepository.GetByIds(new[] { vacancyOwnerRelationshipId }, currentOnly).FirstOrDefault();
+        }
+
+        public IReadOnlyDictionary<int, VacancyOwnerRelationship> GetVacancyOwnerRelationships(IEnumerable<int> vacancyOwnerRelationshipIds,
             bool currentOnly = true)
         {
             return
-                _vacancyPartyReadRepository.GetByIds(vacancyPartyIds, currentOnly).ToDictionary(vp => vp.VacancyPartyId);
+                _vacancyOwnerRelationshipReadRepository.GetByIds(vacancyOwnerRelationshipIds, currentOnly).ToDictionary(vp => vp.VacancyOwnerRelationshipId);
         }
 
-        public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
+        public VacancyOwnerRelationship GetVacancyOwnerRelationship(int providerSiteId, string edsUrn)
         {
             Condition.Requires(providerSiteId);
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
@@ -122,17 +138,32 @@
             var employer = _employerService.GetEmployer(edsUrn);
 
             _logService.Debug(
-                "Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
+                "Calling VacancyOwnerRelationshipReadRepository to get vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
                 providerSiteId, employer.EmployerId);
 
-            var vacancyParty =
-                _vacancyPartyReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employer.EmployerId) ??
-                new VacancyParty {ProviderSiteId = providerSiteId, EmployerId = employer.EmployerId};
+            var vacancyOwnerRelationship =
+                _vacancyOwnerRelationshipReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employer.EmployerId) ??
+                new VacancyOwnerRelationship { ProviderSiteId = providerSiteId, EmployerId = employer.EmployerId };
 
-            return vacancyParty;
+            return vacancyOwnerRelationship;
         }
 
-        public bool IsADeletedVacancyParty(int providerSiteId, string edsUrn)
+        public VacancyOwnerRelationship GetVacancyOwnerRelationship(int employerId, int providerSiteId)
+        {
+            Condition.Requires(providerSiteId);
+            Condition.Requires(employerId);
+
+            _logService.Debug(
+                $"Calling VacancyOwnerRelationshipReadRepository to get vacancy party for provider site with Id='{providerSiteId}' and employer with Id='{employerId}'.");
+
+            var vacancyOwnerRelationship =
+                _vacancyOwnerRelationshipReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employerId) ??
+                new VacancyOwnerRelationship { ProviderSiteId = providerSiteId, EmployerId = employerId };
+
+            return vacancyOwnerRelationship;
+        }
+
+        public bool IsADeletedVacancyOwnerRelationship(int providerSiteId, string edsUrn)
         {
             Condition.Requires(providerSiteId);
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
@@ -142,13 +173,13 @@
             var employer = _employerService.GetEmployer(edsUrn);
 
             _logService.Debug(
-                "Calling VacancyPartyReadRepository to check if the vacancy party has been deleted for provider site with Id='{0}' and employer with Id='{1}'.",
+                "Calling VacancyOwnerRelationshipReadRepository to check if the vacancy party has been deleted for provider site with Id='{0}' and employer with Id='{1}'.",
                 providerSiteId, employer.EmployerId);
 
-            return _vacancyPartyReadRepository.IsADeletedVacancyParty(providerSiteId, employer.EmployerId);
+            return _vacancyOwnerRelationshipReadRepository.IsADeletedVacancyOwnerRelationship(providerSiteId, employer.EmployerId);
         }
 
-        public void ResurrectVacancyParty(int providerSiteId, string edsUrn)
+        public void ResurrectVacancyOwnerRelationship(int providerSiteId, string edsUrn)
         {
             Condition.Requires(providerSiteId);
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
@@ -158,49 +189,84 @@
             var employer = _employerService.GetEmployer(edsUrn);
 
             _logService.Debug(
-                "Calling VacancyPartyWriteRepository to resurrect the vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
+                "Calling VacancyOwnerRelationshipWriteRepository to resurrect the vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
                 providerSiteId, employer.EmployerId);
 
-            _vacancyPartyWriteRepository.ResurrectVacancyParty(providerSiteId, employer.EmployerId);
+            _vacancyOwnerRelationshipWriteRepository.ResurrectVacancyOwnerRelationship(providerSiteId, employer.EmployerId);
         }
 
-        public VacancyParty SaveVacancyParty(VacancyParty vacancyParty)
+        public VacancyOwnerRelationship SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship)
         {
-            return _vacancyPartyWriteRepository.Save(vacancyParty);
+            return _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship);
         }
 
-        public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
+        public IEnumerable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(int providerSiteId)
         {
-            return _vacancyPartyReadRepository.GetByProviderSiteId(providerSiteId);
+            return _vacancyOwnerRelationshipReadRepository.GetByProviderSiteId(providerSiteId);
         }
 
-        public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)
+        public Pageable<VacancyOwnerRelationship> GetVacancyOwnerRelationships(EmployerSearchRequest request, int currentPage, int pageSize)
         {
             var results = GetVacancyParties(request);
 
-            var pageable = new Pageable<VacancyParty>
+            var pageable = new Pageable<VacancyOwnerRelationship>
             {
                 CurrentPage = currentPage
             };
 
             var resultCount = results.Count;
 
-            pageable.Page = results.Skip((currentPage - 1)*pageSize).Take(pageSize).ToList();
+            pageable.Page = results.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             pageable.ResultsCount = resultCount;
-            pageable.TotalNumberOfPages = resultCount/pageSize + 1;
+            pageable.TotalNumberOfPages = resultCount / pageSize + 1;
 
             return pageable;
         }
 
-        private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
+        public Provider CreateProvider(Provider provider)
+        {
+            return _providerWriteRepository.Create(provider);
+        }
+
+        public Provider SaveProvider(Provider provider)
+        {
+            return _providerWriteRepository.Update(provider);
+        }
+
+        public ProviderSite CreateProviderSite(ProviderSite providerSite)
+        {
+            return _providerSiteWriteRepository.Create(providerSite);
+        }
+
+        public ProviderSite SaveProviderSite(ProviderSite providerSite)
+        {
+            return _providerSiteWriteRepository.Update(providerSite);
+        }
+
+        public ProviderSiteRelationship GetProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            return _providerSiteReadRepository.GetProviderSiteRelationship(providerSiteRelationshipId);
+        }
+
+        public ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship)
+        {
+            return _providerSiteWriteRepository.Create(providerSiteRelationship);
+        }
+
+        public void DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            _providerSiteWriteRepository.DeleteProviderSiteRelationship(providerSiteRelationshipId);
+        }
+
+        private List<VacancyOwnerRelationship> GetVacancyParties(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();
 
             _logService.Debug(
-                "Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{0}'.",
+                "Calling VacancyOwnerRelationshipReadRepository to get vacancy party for provider site with Id='{0}'.",
                 request.ProviderSiteId);
 
-            var vacancyParties = _vacancyPartyReadRepository.GetByProviderSiteId(request.ProviderSiteId).ToList();
+            var vacancyParties = _vacancyOwnerRelationshipReadRepository.GetByProviderSiteId(request.ProviderSiteId).ToList();
 
             if (request.IsQuery)
             {
@@ -213,12 +279,12 @@
                 else if (request.IsNameAndLocationQuery)
                 {
                     employers = employers.Where(employer =>
-                        employer.Name.ToLower().Contains(request.Name.ToLower()) &&
+                        employer.FullName.ToLower().Contains(request.Name.ToLower()) &&
                         IsMatchingAddress(request, employer));
                 }
                 else if (request.IsNameQuery)
                 {
-                    employers = employers.Where(e => e.Name.ToLower().Contains(request.Name.ToLower()));
+                    employers = employers.Where(e => e.FullName.ToLower().Contains(request.Name.ToLower()));
                 }
                 else if (request.IsLocationQuery)
                 {

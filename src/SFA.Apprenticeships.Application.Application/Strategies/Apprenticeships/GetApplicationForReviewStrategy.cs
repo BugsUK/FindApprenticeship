@@ -19,12 +19,6 @@
         {
             var application = _apprenticeshipApplicationReadRepository.Get(applicationId);
 
-            if (application.Status == ApplicationStatuses.Submitted || application.Status == ApplicationStatuses.InProgress)
-            {
-                application.SetStateInProgress();
-                application = _apprenticeshipApplicationWriteRepository.Save(application);
-            }
-
             return application;
         }
     }

@@ -29,7 +29,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = provider.ProviderId,
+                ContractOwnerId = provider.ProviderId,
                 VacancyManagerId = providerSiteId
             };
 
@@ -45,7 +45,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(provider);
 
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
@@ -70,7 +70,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = otherProviderId,
+                ContractOwnerId = otherProviderId,
                 VacancyManagerId = providerSiteId
             };
 
@@ -90,7 +90,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(provider);
 
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
@@ -116,7 +116,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = subContractorProviderId,
+                ContractOwnerId = subContractorProviderId,
                 VacancyManagerId = providerSiteId
             };
 
@@ -132,7 +132,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(provider);
 
             mockProviderService.Setup(mock => mock
@@ -168,7 +168,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = otherProviderId,
+                ContractOwnerId = otherProviderId,
                 VacancyManagerId = providerSiteId
             };
 
@@ -184,7 +184,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(provider);
 
             mockProviderService.Setup(mock => mock
@@ -216,7 +216,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = 1,
+                ContractOwnerId = 1,
                 VacancyManagerId = 2
             };
 
@@ -232,7 +232,7 @@
                 .Returns(ukprn);
 
             mockProviderService.Setup(mock => mock
-                .GetProvider(ukprn))
+                .GetProvider(ukprn, true))
                 .Returns(default(Provider));
 
             var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
@@ -255,7 +255,7 @@
 
             var vacancy = new Vacancy
             {
-                ProviderId = providerId,
+                ContractOwnerId = providerId,
                 VacancyManagerId = providerSiteId
             };
 

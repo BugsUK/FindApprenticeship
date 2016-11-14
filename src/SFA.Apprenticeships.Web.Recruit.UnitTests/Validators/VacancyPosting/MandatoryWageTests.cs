@@ -22,13 +22,13 @@
     {
         private const string RuleSet = RuleSets.Errors;
 
-        private VacancySummaryViewModelServerValidator _validator;
+        private VacancySummaryViewModelDatesServerValidator _validator;
         private VacancyViewModelValidator _aggregateValidator;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new VacancySummaryViewModelServerValidator();
+            _validator = new VacancySummaryViewModelDatesServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
         }
 
@@ -45,7 +45,7 @@
         {
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek),
+                Wage = new WageViewModel() { Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = wage, Unit = wageUnit, HoursPerWeek = hoursPerWeek },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     PossibleStartDate = new DateViewModel(new DateTime(2016, 9, 30))
@@ -92,7 +92,7 @@
             //After 1st of october 2016 the National Minimum Wage for Apprentices increases to £3.40/hour
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-				Wage = new WageViewModel(WageType.Custom, wage, null, wageUnit, hoursPerWeek),
+				Wage = new WageViewModel() { Classification = WageClassification.Custom, CustomType = CustomWageType.Fixed, Amount = wage, Unit = wageUnit, HoursPerWeek = hoursPerWeek },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     PossibleStartDate = new DateViewModel(new DateTime(2016, 10, 1))
@@ -131,7 +131,7 @@
             //After 1st of october 2016 the National Minimum Wage for Apprentices increases to £3.40/hour
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel(WageType.Custom, 123.45m, null, WageUnit.Weekly, 0),
+                Wage = new WageViewModel() { CustomType = CustomWageType.Fixed, Amount = 123.45m, Unit = WageUnit.Weekly, HoursPerWeek = 0 },
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
                     PossibleStartDate = new DateViewModel(new DateTime(2016, 10, 1))

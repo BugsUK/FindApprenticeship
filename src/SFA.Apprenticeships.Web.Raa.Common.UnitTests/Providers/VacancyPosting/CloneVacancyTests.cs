@@ -23,8 +23,8 @@
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(initialVacancyReferenceNumber))
                 .Returns(GetLiveVacancyWithComments(initialVacancyReferenceNumber, initialVacancyTitle));
             MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
-            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), true))
-                .Returns(new Fixture().Build<VacancyParty>().Create());
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), true))
+                .Returns(new Fixture().Build<VacancyOwnerRelationship>().Create());
             MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>(), It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().Create());
 
@@ -96,7 +96,7 @@
                 DateQAApproved = DateTime.UtcNow.AddHours(-4),
                 Status = VacancyStatus.Live,
                 ClosingDate = DateTime.UtcNow.AddDays(10),
-                OwnerPartyId = 42,
+                VacancyOwnerRelationshipId = 42,
                 EmployerAnonymousName = "Anon Corp"
         };
         }

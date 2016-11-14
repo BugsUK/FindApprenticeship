@@ -19,6 +19,8 @@
     @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
 
+    var currentStatus = "&nbsp;(current status)";
+
     if (Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful)
     {
         var decision = Model.Status == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
@@ -37,14 +39,17 @@
             </p>
         </div>
     }
-
-    <div>
-        <div class="hgroup">
+    <div class="grid-wrapper hgroup">
+        <div class="grid-2-3 grid">
             <h1 class="heading-xlarge med-btm-margin">@Model.Vacancy.Title</h1>
             <p class="subtitle">@Model.Vacancy.EmployerName</p>
-            <!--<p>
-                <a href="live-apprenticeship-summary.html">Apprenticeship summary</a>
-            </p>-->
+        </div>
+        <div class="grid grid-1-3">
+            <div class="page-link hide-nojs">
+                <p>
+                    <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
+                </p>
+            </div>
         </div>
         <div class="grid-wrapper">
             <div class="grid grid-2-3">
@@ -83,8 +88,8 @@
                 {
                     <div class="form-group">
                         <p class="med-btm-margin">
-                            <button type="submit" class="button-link" name="Review" value="ReviewRevertToViewed">
-                                Revert this candidate's application back to viewed
+                            <button type="submit" class="button-link" name="Review" value="ReviewRevertToInProgress">
+                                Revert this candidate's application back to In progress
                             </button>
                         </p>
                     </div>
@@ -96,24 +101,51 @@
             <section>
                 <div class="form-group">
                     <div class="detail-content qa-comment">
+                        <h2 class="heading-large">Decision log</h2>
+                        <p class="heading-medium">Notes (optional)</p>
                         <div class="blocklabel-single-container">
                             @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
                         </div>
+                        <p class="heading-medium">How would you like to assign this candidate's application?</p>
+                        <p>
+                            <label for="application-status-submitted" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new { id = "application-status-submitted" })
+                                New @if (Model.Status == ApplicationStatuses.Submitted)
+                                {
+                                    @Html.Raw(currentStatus)
+                                }
+                            </label>
+                            <br />
+                            <label for="application-status-inprogress" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new { id = "application-status-inprogress" })
+                                In progress @if (Model.Status == ApplicationStatuses.InProgress)
+                                {
+                                    @Html.Raw(currentStatus)
+                                }
+                            </label>
+                            <br />
+                            <label for="application-status-unsuccessful" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Unsuccessful, new { id = "application-status-unsuccessful" })
+                                Unsuccessful
+                            </label>
+                            <br />
+                            <label for="application-status-successful" class="block-label">
+                                @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Successful, new { id = "application-status-successful" })
+                                Successful
+                            </label>
+                        </p>
+                        <p>
+                            <button type="submit" class="button" name="Review" value="ReviewSaveAndContinue">Save and Continue</button>
+                            @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
+                        </p>
                     </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="button" name="Review" value="ReviewSaveAndExit">Save and exit</button>
-
-                    <p class="med-btm-margin">
-                        <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">
-                            Inform this candidate that their application has been unsuccessful
-                        </button>
-                        <button type="submit" class="button-link" name="Review" value="ReviewAppointCandidate">
-                            Confirm this candidate that their application has been successful
-                        </button>
-                    </p>
                 </div>
             </section>
         }
     </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/print")
 }

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories.Models;
 
     /// <summary>
     /// For managing user profiles for users that are authenticated outside the service (ie. SSO). 
@@ -15,6 +16,8 @@
         ProviderUser GetProviderUser(string username);
 
         IEnumerable<ProviderUser> GetProviderUsers(string ukprn);
+
+        IEnumerable<ProviderUser> SearchProviderUsers(ProviderUserSearchParameters searchParameters);
 
         ProviderUser CreateProviderUser(ProviderUser providerUser);
 

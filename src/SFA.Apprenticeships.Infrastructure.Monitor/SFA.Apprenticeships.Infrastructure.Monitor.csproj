@@ -220,7 +220,6 @@
     <Compile Include="Repositories\UserMetricsRepository.cs" />
     <Compile Include="Repositories\TraineeshipMetricsRepository.cs" />
     <Compile Include="Tasks\CheckAzureServiceBus.cs" />
-    <Compile Include="Tasks\CheckUnsentCandidateMessages.cs" />
     <Compile Include="Tasks\SendDailyMetricsEmail.cs" />
     <Compile Include="Tasks\CheckTraineeshipApplicationRepository.cs" />
     <Compile Include="Tasks\CheckUserDirectory.cs" />

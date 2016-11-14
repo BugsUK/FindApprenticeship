@@ -1,16 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
+    using Domain.Entities.Applications;
     using Domain.Entities.Raa;
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
-    using Application.Interfaces;
+    using System;
+    using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -43,9 +45,7 @@
             }
         }
 
-        [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        private ActionResult ReviewAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var response = _apprenticeshipApplicationMediator.ReviewAppointCandidate(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
@@ -74,9 +74,7 @@
             }
         }
 
-        [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        private ActionResult ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             var response = _apprenticeshipApplicationMediator.ReviewRejectCandidate(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
@@ -107,9 +105,9 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewRevertToViewed(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public ActionResult ReviewRevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ReviewRevertToViewed(apprenticeshipApplicationViewModel);
+            var response = _apprenticeshipApplicationMediator.ReviewRevertToInProgress(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -121,15 +119,15 @@
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Error:
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.Error:
                     return View("Review", response.ViewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.FailedValidation:
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToViewed.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ConfirmRevertToViewed, viewModel.ApplicationSelection.RouteValues);
+                case ApprenticeshipApplicationMediatorCodes.ReviewRevertToInProgress.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmRevertToInProgress, viewModel.ApplicationSelection.RouteValues);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -138,9 +136,26 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "Review")]
-        public ActionResult ReviewSaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public ActionResult ReviewSaveAndContinue(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ReviewSaveAndExit(apprenticeshipApplicationViewModel);
+            switch (apprenticeshipApplicationViewModel.Status)
+            {
+                case ApplicationStatuses.Submitted:
+                    return SetToSubmitted(apprenticeshipApplicationViewModel);
+                case ApplicationStatuses.InProgress:
+                    return PromoteToInProgress(apprenticeshipApplicationViewModel);
+                case ApplicationStatuses.Successful:
+                    return ReviewAppointCandidate(apprenticeshipApplicationViewModel);
+                case ApplicationStatuses.Unsuccessful:
+                    return ReviewRejectCandidate(apprenticeshipApplicationViewModel);
+                default:
+                    throw new InvalidOperationException("Invalid status change");
+            }
+        }
+
+        private ActionResult PromoteToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.PromoteToInProgress(apprenticeshipApplicationViewModel);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -152,14 +167,43 @@
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Error:
+                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Error:
                     return View("Review", response.ViewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation:
+                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
+                case ApprenticeshipApplicationMediatorCodes.PromoteToInProgress.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        private ActionResult SetToSubmitted(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ReviewSetToSubmitted(apprenticeshipApplicationViewModel);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message);
+            }
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Error:
+                    return View("Review", response.ViewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
+
+                case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndContinue.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection.RouteValues);
 
                 default:
@@ -188,20 +232,18 @@
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SendSuccessfulDecision")]
-        public ActionResult SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public ActionResult SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel, string applicationIds)
         {
             var response = _apprenticeshipApplicationMediator.SendSuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
-
+            ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
+            {
+                CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + response.ViewModel.ApplicantDetails.Name,
+                VacancyReferenceNumber = response.ViewModel.Vacancy.VacancyReferenceNumber
+            };
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok:
-                    if (response.Message != null)
-                    {
-                        SetUserMessage(response.Message);
-                    }
-
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel.RouteValues);
-
+                    return View("SentDecisionConfirmation", confirmationStatusViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -211,7 +253,6 @@
         public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
-
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
@@ -230,17 +271,16 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "SendUnsuccessfulDecision")]
         public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
-
+            var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel);
+            ConfirmationStatusViewModel confirmationStatusViewModel = new ConfirmationStatusViewModel()
+            {
+                CustomMessage = response.ViewModel.ConfirmationStatusSentMessage + response.ViewModel.ApplicantDetails.Name,
+                VacancyReferenceNumber = response.ViewModel.Vacancy.VacancyReferenceNumber
+            };
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
-                    if (response.Message != null)
-                    {
-                        SetUserMessage(response.Message.Text);
-                    }
-
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel.RouteValues);
+                    return View("SentDecisionConfirmation", confirmationStatusViewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -248,16 +288,16 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmRevertToViewed(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ActionResult ConfirmRevertToInProgress(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmRevertToViewed(applicationSelectionViewModel);
+            var response = _apprenticeshipApplicationMediator.ConfirmRevertToInProgress(applicationSelectionViewModel);
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.Ok:
+                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.Ok:
                     return View(response.ViewModel);
 
-                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToViewed.NoApplicationId:
+                case ApprenticeshipApplicationMediatorCodes.ConfirmRevertToInProgress.NoApplicationId:
                     SetUserMessage(response.Message);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
@@ -267,14 +307,14 @@
         }
 
         [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "RevertToViewed")]
-        public ActionResult RevertToViewed(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "RevertToInProgress")]
+        public ActionResult RevertToInProgress(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.RevertToViewed(apprenticeshipApplicationViewModel.ApplicationSelection);
+            var response = _apprenticeshipApplicationMediator.RevertToInProgress(apprenticeshipApplicationViewModel.ApplicationSelection);
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.RevertToViewed.Ok:
+                case ApprenticeshipApplicationMediatorCodes.RevertToInProgress.Ok:
                     if (response.Message != null)
                     {
                         SetUserMessage(response.Message.Text);

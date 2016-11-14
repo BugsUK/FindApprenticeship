@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Applications
 {
+    using Domain.Entities.Applications;
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Applications;
 
     public interface IApprenticeshipApplicationService : ICommonApplicationService
     {
@@ -16,9 +16,10 @@
 
         void SetSuccessfulDecision(Guid applicationId);
 
-        void SetUnsuccessfulDecision(Guid applicationId);
+        void SetUnsuccessfulDecision(Guid applicationId, string candidateApplicationFeedback);
 
-        void RevertToViewed(Guid applicationId);
+        void SetStateInProgress(Guid applicationId);
+
+        void SetStateSubmitted(Guid applicationId);
     }
 }
- 

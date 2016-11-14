@@ -20,9 +20,19 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
             return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);
         }
 
-        public List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations)
+        public List<VacancyLocation> GetVacancyLocationsByReferenceNumber(int vacancyReferenceNumber)
         {
-            return _vacancyLocationWriteRepository.Save(vacancyLocations);
+            return _vacancyLocationReadRepository.GetForVacancyReferenceNumber(vacancyReferenceNumber);
+        }
+
+        public List<VacancyLocation> CreateVacancyLocations(List<VacancyLocation> vacancyLocations)
+        {
+            return _vacancyLocationWriteRepository.Create(vacancyLocations);
+        }
+
+        public List<VacancyLocation> UpdateVacancyLocations(List<VacancyLocation> vacancyLocations)
+        {
+            return _vacancyLocationWriteRepository.Update(vacancyLocations);
         }
 
         public void DeleteVacancyLocationsFor(int vacancyId)
@@ -30,9 +40,9 @@ namespace SFA.Apprenticeships.Application.VacancyPosting.Strategies
             _vacancyLocationWriteRepository.DeleteFor(vacancyId);
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyOwnerRelationshipIds)
         {
-            return _vacancyLocationReadRepository.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+            return _vacancyLocationReadRepository.GetVacancyLocationsByVacancyIds(vacancyOwnerRelationshipIds);
         }
     }
 }

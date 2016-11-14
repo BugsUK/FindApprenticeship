@@ -103,7 +103,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                    Write(Html.Raw(Model.SupplementaryQuestion1));
+                                                                                                     Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SupplementaryQuestion1));
 
             
             #line default
@@ -116,7 +116,7 @@ WriteLiteral(">");
 
             
             #line 10 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                Write(Html.Raw(Model.CandidateAnswer1));
+                                                 Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.CandidateAnswer1));
 
             
             #line default
@@ -146,23 +146,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 749), Tuple.Create("\"", 834)
-, Tuple.Create(Tuple.Create("", 757), Tuple.Create("form-label", 757), true)
-, Tuple.Create(Tuple.Create(" ", 767), Tuple.Create("text", 768), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 897), Tuple.Create("\"", 982)
+, Tuple.Create(Tuple.Create("", 905), Tuple.Create("form-label", 905), true)
+, Tuple.Create(Tuple.Create(" ", 915), Tuple.Create("text", 916), true)
             
             #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-, Tuple.Create(Tuple.Create(" ", 772), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 920), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 773), false)
+, 921), false)
 );
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                    Write(Html.Raw(Model.SupplementaryQuestion2));
+                                                                                                     Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SupplementaryQuestion2));
 
             
             #line default
@@ -175,7 +175,7 @@ WriteLiteral(">");
 
             
             #line 17 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                Write(Html.Raw(Model.CandidateAnswer2));
+                                                 Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.CandidateAnswer2));
 
             
             #line default

@@ -211,7 +211,7 @@ BEGIN TRY
 		AND (@ManagedBy = '-1' OR TP.ManagingAreaID IN (SELECT LocalAuthorityGroupID FROM dbo.ReportGetChildManagingAreas(@ManagedBy)))
 		and (@Sector = -1 or AO.ApprenticeshipOccupationId = @Sector) 
 		and (@Framework = -1 or AF.ApprenticeshipFrameworkId = @Framework)
-		and (@ProviderSiteID = -1 or TP.ProviderSiteID = @ProviderSIteID)
+		and (@ProviderSiteID = 0 or TP.ProviderSiteID = @ProviderSIteID)
 		and (@Gender = -1 or C.Gender = @Gender)
 		--and (@EthnicOrigin = -1 or C.EthnicOrigin = @EthnicOrigin)
 		AND ((@Ethnicity = '-1') OR (@Ethnicity <> '' AND eth.id IS NOT null))

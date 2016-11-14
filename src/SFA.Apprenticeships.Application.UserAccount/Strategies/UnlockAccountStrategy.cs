@@ -3,7 +3,9 @@
     using System;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Entities;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class UnlockAccountStrategy : IUnlockAccountStrategy
@@ -11,15 +13,17 @@
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly ISendAccountUnlockCodeStrategy _sendAccountUnlockCodeStrategy;
+        private readonly IServiceBus _serviceBus;
 
         public UnlockAccountStrategy(
             IUserReadRepository userReadRepository,
             IUserWriteRepository userWriteRepository,
-            ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy)
+            ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy, IServiceBus serviceBus)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
             _sendAccountUnlockCodeStrategy = sendAccountUnlockCodeStrategy;
+            _serviceBus = serviceBus;
         }
 
         public void UnlockAccount(string username, string accountUnlockCode)
@@ -43,6 +47,7 @@
 
             user.SetStateActive();
             _userWriteRepository.Save(user);
+            _serviceBus.PublishMessage(new CandidateUserUpdate(user.EntityId, CandidateUserUpdateType.Update));
         }
     }
 }

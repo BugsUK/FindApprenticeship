@@ -5,5 +5,6 @@
     public interface IUpdateVacancyStrategy
     {
         Vacancy UpdateVacancy(Vacancy vacancy);
+        Vacancy UpdateVacancyWithNewProvider(Vacancy vacancy);
     }
 }

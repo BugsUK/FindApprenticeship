@@ -185,9 +185,12 @@
   }
 }
 
+.tabbed-nav {
+    border-bottom: 1px solid $grey-2;
+}
+
 .tabbed-tab {
   border: 1px solid transparent;
-  border-bottom: 1px solid $grey-2;
   display: inline-block;
   margin-bottom: -1px;
   margin-right: 1px;
@@ -215,6 +218,7 @@
 
 .tabbed-content {
   border: 1px solid $grey-2;
+  border-top: 0;
   // border-bottom: 0;
   // border-right: 0;
   // border-left: 0;

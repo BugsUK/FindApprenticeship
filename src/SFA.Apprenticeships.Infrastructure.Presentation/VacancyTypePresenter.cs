@@ -9,7 +9,7 @@
             return title;
         }
 
-        public static bool CanArchiveVacancy(this VacancyType vacancyType)
+        public static bool IsApprentcieshipVacancyType(this VacancyType vacancyType)
         {
             return vacancyType == VacancyType.Apprenticeship;
         }

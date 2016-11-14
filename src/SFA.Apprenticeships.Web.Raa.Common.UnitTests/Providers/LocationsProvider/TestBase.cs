@@ -2,6 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvider
 {
+    using Application.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
@@ -9,15 +10,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
-    using Moq;
-    using NUnit.Framework;
+    using Application.Vacancy;
+    using Common.Mappers;
     using Common.Providers;
     using Configuration;
     using Domain.Entities.Raa.Parties;
+    using Moq;
+    using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 
     public abstract class TestBase
@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
         private Mock<IApprenticeshipApplicationService> _mockApprenticeshipApplicationService;
         private Mock<ITraineeshipApplicationService> _mockTraineeshipApplicationService;
         private Mock<IVacancyLockingService> _mockVacancyLockingService;
-        protected Mock<IMapper> MockMapper;
+        //protected Mock<IMapper> MockMapper;
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IEmployerService> MockEmployerService;
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
@@ -37,13 +37,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
         private Mock<IUserProfileService> _mockUserProfileService;
         private Mock<IGeoCodeLookupService> _mockGeoCodeLookupService;
         private Mock<ILocalAuthorityLookupService> _mockLocalAuthorityLookupService;
+        private Mock<IVacancySummaryService> _mockVacancySummaryService;
 
         [SetUp]
         public void SetUpBase()
         {
             _mockLogService = new Mock<ILogService>();
             _mockConfigurationService = new Mock<IConfigurationService>();
-            MockMapper = new Mock<IMapper>();
+            //MockMapper = new Mock<IMapper>();
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
             MockEmployerService = new Mock<IEmployerService>();
@@ -55,7 +56,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
                 .Returns(new Fixture().Build<Employer>().Create());
             _mockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
             _mockConfigurationService.Setup(mcs => mcs.Get<RecruitWebConfiguration>())
-                .Returns(new RecruitWebConfiguration {AutoSaveTimeoutInSeconds = 60});
+                .Returns(new RecruitWebConfiguration { AutoSaveTimeoutInSeconds = 60 });
 
             _mockTimeService = new Mock<IDateTimeService>();
             _mockApprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
@@ -65,6 +66,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
             _mockUserProfileService = new Mock<IUserProfileService>();
             _mockGeoCodeLookupService = new Mock<IGeoCodeLookupService>();
             _mockLocalAuthorityLookupService = new Mock<ILocalAuthorityLookupService>();
+            _mockVacancySummaryService = new Mock<IVacancySummaryService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -76,14 +78,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
                 MockProviderService.Object,
                 MockEmployerService.Object,
                 _mockTimeService.Object,
-                MockMapper.Object,
+                new RaaCommonWebMappers(),
                 _mockApprenticeshipApplicationService.Object,
                 _mockTraineeshipApplicationService.Object,
                 _mockVacancyLockingService.Object,
                 _mockCurrentUserService.Object,
                 _mockUserProfileService.Object,
                 _mockGeoCodeLookupService.Object,
-                _mockLocalAuthorityLookupService.Object);
+                _mockLocalAuthorityLookupService.Object,
+                _mockVacancySummaryService.Object);
         }
     }
 }

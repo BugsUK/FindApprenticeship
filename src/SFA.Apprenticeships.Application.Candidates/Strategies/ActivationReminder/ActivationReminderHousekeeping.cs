@@ -2,19 +2,19 @@
 {
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class ActivationReminderHousekeeping : IHousekeepingChainOfResponsibility
     {
         private readonly IHousekeepingStrategy _strategy;
 
-        public ActivationReminderHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserWriteRepository userWriteRepository, IAuditRepository auditRepository, ILogService logService)
+        public ActivationReminderHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserWriteRepository userWriteRepository, IAuditRepository auditRepository, ILogService logService, IServiceBus serviceBus)
         {
             var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, communicationService);
-            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, auditRepository, logService);
+            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, auditRepository, logService, serviceBus);
             var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
 
             sendAccountRemindersStrategy.SetSuccessor(setPendingDeletionStrategy);

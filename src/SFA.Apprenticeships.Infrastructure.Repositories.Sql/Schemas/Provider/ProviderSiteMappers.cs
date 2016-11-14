@@ -13,9 +13,9 @@
         public override void Initialise()
         {
             Mapper.CreateMap<DatabaseProviderSite, DomainProviderSite>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.FullName))
                 .IgnoreMember(dest => dest.Address)
                 .IgnoreMember(dest => dest.ProviderSiteRelationships)
+                .MapMemberFrom(dest => dest.TrainingProviderStatus, source => source.TrainingProviderStatusTypeId)
                 .AfterMap((source, dest) =>
                 {
                     dest.Address = new DomainPostalAddress
@@ -40,7 +40,6 @@
                 });
 
             Mapper.CreateMap<DomainProviderSite, DatabaseProviderSite>()
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(source => source.Name))
                 .IgnoreMember(dest => dest.CountyId)
                 .IgnoreMember(dest => dest.GeocodeEasting)
                 .IgnoreMember(dest => dest.GeocodeNorthing)
@@ -52,7 +51,11 @@
                 .MapMemberFrom(dest => dest.PostCode, source => source.Address.Postcode)
                 .MapMemberFrom(dest => dest.Town, source => source.Address.Town)
                 .MapMemberFrom(dest => dest.Latitude, source => (decimal)source.Address.GeoPoint.Latitude) // use a converter?
-                .MapMemberFrom(dest => dest.Longitude, source => (decimal)source.Address.GeoPoint.Longitude); // use a converter?
+                .MapMemberFrom(dest => dest.Longitude, source => (decimal)source.Address.GeoPoint.Longitude) // use a converter?
+                .ForMember(dest => dest.OutofDate, opt => opt.UseValue(false))
+                .MapMemberFrom(dest => dest.TrainingProviderStatusTypeId, source => (int)source.TrainingProviderStatus)
+                .ForMember(dest => dest.HideFromSearch, opt => opt.UseValue(false))
+                .ForMember(dest => dest.IsRecruitmentAgency, opt => opt.UseValue(false));
 
 
             Mapper.CreateMap<DatabaseProviderSiteRelationship, DomainProviderSiteRelationship>();

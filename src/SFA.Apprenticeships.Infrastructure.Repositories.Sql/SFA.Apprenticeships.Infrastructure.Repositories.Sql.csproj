@@ -124,23 +124,27 @@
     <Compile Include="Common\IGetOpenConnection.cs" />
     <Compile Include="Common\SqlMapperExtensionsCustom.cs" />
     <Compile Include="Common\TypeExtensions.cs" />
+    <Compile Include="Configuration\ApiConfiguration.cs" />
     <Compile Include="Configuration\SqlConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IoC\RepositoriesRegistry.cs" />
     <Compile Include="Reporting\ReportingRepository.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
+    <Compile Include="Schemas\dbo\ApiUserRepository.cs" />
     <Compile Include="Schemas\dbo\CandidateMappers.cs" />
     <Compile Include="Schemas\dbo\CandidateRepository.cs" />
     <Compile Include="Schemas\dbo\Constants.cs" />
     <Compile Include="Schemas\dbo\DbHelpers.cs" />
     <Compile Include="Schemas\dbo\Entities\CandidateSummary.cs" />
     <Compile Include="Schemas\dbo\Entities\Employer.cs" />
+    <Compile Include="Schemas\dbo\Entities\ExternalSystem.cs" />
+    <Compile Include="Schemas\dbo\Entities\ExternalSystemPermission.cs" />
     <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
     <Compile Include="Schemas\dbo\ReferenceNumberRepository.cs" />
     <Compile Include="Schemas\dbo\ApplicationStatsRepository.cs" />
-    <Compile Include="Schemas\dbo\VacancyPartyMappers.cs" />
-    <Compile Include="Schemas\dbo\VacancyPartyRepository.cs" />
+    <Compile Include="Schemas\dbo\VacancyOwnerRelationshipMappers.cs" />
+    <Compile Include="Schemas\dbo\VacancyOwnerRelationshipRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />
@@ -165,7 +169,9 @@
     <Compile Include="Schemas\Reference\Entities\Standard.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappers.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\IVacancyWage.cs" />
     <Compile Include="Schemas\Vacancy\Entities\PropertyMapItem.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\VacancySummary.cs" />
     <Compile Include="Schemas\Vacancy\VacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyHistory.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />
@@ -177,6 +183,8 @@
     <Compile Include="Schemas\Vacancy\VacancyRepository.cs" />
     <Compile Include="Schemas\Vacancy\Entities\Vacancy.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyLocation.cs" />
+    <Compile Include="Schemas\Vacancy\VacancyRepositoryResources.cs" />
+    <Compile Include="Schemas\Vacancy\VacancySummaryRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

@@ -8,6 +8,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
@@ -21,16 +22,16 @@
         private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 3;
-        private const int VacancyPartyId = 4;
+        private const int VacancyOwnerRelationshipId = 4;
 
         private NewVacancyViewModel _validNewVacancyViewModelSansReferenceNumber;
         private VacancyMinimumData _validVacancyMinimumDataSansReferenceNumber;
         private NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber;
 
 
-        private readonly VacancyParty _vacancyParty = new VacancyParty
+        private readonly VacancyOwnerRelationship _vacancyOwnerRelationship = new VacancyOwnerRelationship
         {
-            VacancyPartyId = VacancyPartyId,
+            VacancyOwnerRelationshipId = VacancyOwnerRelationshipId,
             ProviderSiteId = ProviderSiteId,
             EmployerId = EmployerId,
             EmployerDescription = "description"
@@ -41,14 +42,14 @@
         {
             _validVacancyMinimumDataSansReferenceNumber = new VacancyMinimumData
             {
-                VacancyPartyId = VacancyPartyId
+                VacancyOwnerRelationshipId = VacancyOwnerRelationshipId
             };
 
             _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
             {
-                OwnerParty = new VacancyPartyViewModel()
+                VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                 {
-                    VacancyPartyId = VacancyPartyId,
+                    VacancyOwnerRelationshipId = VacancyOwnerRelationshipId,
                     ProviderSiteId = ProviderSiteId,
                     Employer = new EmployerViewModel
                     {
@@ -62,9 +63,9 @@
 
             _validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel
             {
-                OwnerParty = new VacancyPartyViewModel()
+                VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel()
                 {
-                    VacancyPartyId = VacancyPartyId,
+                    VacancyOwnerRelationshipId = VacancyOwnerRelationshipId,
                     ProviderSiteId = ProviderSiteId,
                     Employer = new EmployerViewModel
                     {
@@ -80,11 +81,11 @@
 
             MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
-            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
-                .Returns(_vacancyParty);
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(ProviderSiteId, EdsUrn))
+                .Returns(_vacancyOwnerRelationship);
                 
-            MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId, true))
-                .Returns(_vacancyParty);
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(VacancyOwnerRelationshipId, true))
+                .Returns(_vacancyOwnerRelationship);
             MockEmployerService.Setup(s => s.GetEmployer(EmployerId, true)).Returns(new Fixture().Build<Employer>().Create());
         }
 
@@ -98,7 +99,7 @@
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>(), It.IsAny<bool>())).Returns(employerWithGeocode);
             MockLocalAuthorityLookupService.Setup(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode)).Returns(localAuthorityCode);
-            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
             MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
 
             var provider = GetVacancyPostingProvider();
@@ -150,7 +151,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(vacancy);
 
-            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 
@@ -191,10 +192,9 @@
                 new VacancyLocation {Address = postalAddress2}
             };
 
-            MockMapper.Setup(
-                m =>
-                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(vacancyLocations);
+            MockMapper.Setup(m => m.Map<VacancyLocationAddressViewModel, VacancyLocation>(locationSearchViewModel.Addresses[0])).Returns(vacancyLocations[0]);
+            MockMapper.Setup(m => m.Map<VacancyLocationAddressViewModel, VacancyLocation>(locationSearchViewModel.Addresses[1])).Returns(vacancyLocations[1]);
+
             MockVacancyPostingService.Setup(v => v.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
 
@@ -202,7 +202,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(vacancy);
 
-            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockProviderService.Setup(s => s.GetProvider(Ukprn, true)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 
@@ -213,7 +213,7 @@
             MockVacancyPostingService.Verify(m => m.UpdateVacancy(It.IsAny<Vacancy>()), Times.Once);
             MockLocalAuthorityLookupService.Verify(m => m.GetLocalAuthorityCode(It.IsAny<string>()), Times.Exactly(2));
             MockVacancyPostingService.Verify(m => m.DeleteVacancyLocationsFor(vacancy.VacancyId));
-            MockVacancyPostingService.Verify(m => m.SaveVacancyLocations(vacancyLocations), Times.Once);
+            MockVacancyPostingService.Verify(m => m.CreateVacancyLocations(It.IsAny<List<VacancyLocation>>()), Times.Once);
         }
     }
 }

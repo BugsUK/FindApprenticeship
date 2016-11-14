@@ -42,7 +42,7 @@
             command.Parameters.Add("dateFrom", SqlDbType.DateTime).Value = fromDate;
             command.Parameters.Add("dateTo", SqlDbType.DateTime).Value = toDate;
             command.Parameters.Add("VacancyStatus", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = 0;
             command.Parameters.Add("RecAgentID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("EmployerID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("rowcount", SqlDbType.Int).Value = 0;
@@ -166,7 +166,7 @@
             command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = region;
             command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
             command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
-            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = 0;
             command.Parameters.Add("LSCInOut", SqlDbType.Int).Value = -1;
             command.Parameters.Add("StartDatePresent", SqlDbType.Int).Value = -1;
             command.Parameters.Add("AgeRange", SqlDbType.Int).Value = ageRange;
@@ -511,9 +511,11 @@
 (SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-3).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-2).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedThreeDaysAgo,
 (SELECT COUNT(DISTINCT VacancyId) FROM VacancyHistory WHERE HistoryDate >= '{midnightToday.AddDays(-4).ToString("yyyy-MM-dd")}' AND HistoryDate < '{midnightToday.AddDays(-3).ToString("yyyy-MM-dd")}' AND VacancyHistoryEventTypeId = 1 AND VacancyHistoryEventSubTypeId IN (2, 3) AND UserName IN (SELECT Username FROM UserProfile.AgencyUser)) as VacanciesReviewedFourDaysAgo,
 (SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') as TotalApplicationsStartedInPastFourWeeks,
-(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId >= 2) as TotalApplicationsSubmittedInPastFourWeeks,
-(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId = 5) as TotalUnsuccessfulApplicationsInPastFourWeeks,
-(SELECT COUNT(DISTINCT(ApplicationId)) FROM ApplicationHistory WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationHistoryEventSubTypeId = 6) as TotalSuccessfulApplicationsInPastFourWeeks";
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId >= 2) as TotalApplicationsSubmittedInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId = 2) as TotalNewApplicationsInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId = 3) as TotalInProgressApplicationsInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId = 5) as TotalUnsuccessfulApplicationsInPastFourWeeks,
+(SELECT COUNT(DISTINCT(ApplicationId)) FROM Application WHERE ApplicationId IN (SELECT ApplicationId FROM ApplicationHistory WHERE ApplicationHistoryEventDate > '{midnightToday.AddDays(-28).ToString("yyyy-MM-dd")}') AND ApplicationStatusTypeId = 6) as TotalSuccessfulApplicationsInPastFourWeeks";
 
             var command = new SqlCommand(sql, (SqlConnection)_getOpenConnection.GetOpenConnection());
 
@@ -541,6 +543,8 @@
                     VacanciesReviewedFourDaysAgo = Convert.ToInt32(reader["VacanciesReviewedFourDaysAgo"]),
                     TotalApplicationsStartedInPastFourWeeks = Convert.ToInt32(reader["TotalApplicationsStartedInPastFourWeeks"]),
                     TotalApplicationsSubmittedInPastFourWeeks = Convert.ToInt32(reader["TotalApplicationsSubmittedInPastFourWeeks"]),
+                    TotalNewApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalNewApplicationsInPastFourWeeks"]),
+                    TotalInProgressApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalInProgressApplicationsInPastFourWeeks"]),
                     TotalUnsuccessfulApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalUnsuccessfulApplicationsInPastFourWeeks"]),
                     TotalSuccessfulApplicationsInPastFourWeeks = Convert.ToInt32(reader["TotalSuccessfulApplicationsInPastFourWeeks"]),
                 };
@@ -568,7 +572,7 @@
             command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = marketMessagesOnly ? 1 : 0;
             command.Parameters.Add("EthnicityID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("GenderID", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = 0;
             command.Parameters.Add("Rowcount", SqlDbType.Int).Value = 0;
             command.Parameters.Add("ManagedBy", SqlDbType.Int).Value = -1;
 

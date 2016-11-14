@@ -27,7 +27,7 @@
                 FurtherVacancyDetailsViewModel = context.Engine.Map<Vacancy, FurtherVacancyDetailsViewModel>(source),
                 VacancyRequirementsProspectsViewModel = context.Engine.Map<Vacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<Vacancy, VacancyQuestionsViewModel>(source),
-                OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
+                OfflineApplicationClickThroughCount = source.NoOfOfflineApplicants,
                 VacancyType = source.VacancyType,
                 Address = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address),
                 VacancySource = source.VacancySource

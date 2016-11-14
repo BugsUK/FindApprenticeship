@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mappers
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
@@ -13,14 +11,20 @@
     using Infrastructure.Common.Mappers;
     using Infrastructure.Presentation;
     using Resolvers;
+    using System;
+    using System.Collections.Generic;
+    using Domain.Entities.Vacancies;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
+    using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
+    using Web.Common.Mappers.Resolvers;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class RaaCommonWebMappers : MapperEngine
     {
@@ -41,8 +45,14 @@
                 .ForMember(dest => dest.ValidationSourceCode, opt => opt.Ignore())
                 .ForMember(dest => dest.ValidationSourceKeyValue, opt => opt.Ignore())
                 .ForMember(dest => dest.DateValidated, opt => opt.Ignore());
-            Mapper.CreateMap<Employer, EmployerViewModel>();
-            Mapper.CreateMap<VacancyParty, VacancyPartyViewModel>()
+            Mapper.CreateMap<Employer, EmployerViewModel>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.EmployerStatus));
+            Mapper.CreateMap<EmployerViewModel, Employer>()
+                .ForMember(dest => dest.EmployerGuid, opt => opt.Ignore())
+                .ForMember(dest => dest.PrimaryContact, opt => opt.Ignore())
+                .ForMember(dest => dest.IsPositiveAboutDisability, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployerStatus, opt => opt.MapFrom(src => src.Status));
+            Mapper.CreateMap<VacancyOwnerRelationship, VacancyOwnerRelationshipViewModel>()
                 .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositions, opt => opt.Ignore())
@@ -54,11 +64,12 @@
                 .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore())
                 .ForMember(dest => dest.Employer, opt => opt.Ignore())
                 .ForMember(dest => dest.IsEmployerAddressValid, opt => opt.Ignore());
-            Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>();
+            Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>()
+                .ForMember(dest => dest.OfflineApplicationUrl, opt => opt.MapFrom(src => src.EmployersWebsite));
             Mapper.CreateMap<VacancyLocationAddressViewModel, VacancyLocation>()
                 .ForMember(dest => dest.VacancyId, opt => opt.Ignore())
-                .ForMember(dest => dest.VacancyLocationId, opt => opt.Ignore())
-                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore());
+                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployersWebsite, opt => opt.MapFrom(src => src.OfflineApplicationUrl));
 
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
             Mapper.CreateMap<DateTime, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
@@ -69,7 +80,7 @@
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
                 .ForMember(dest => dest.Ukprn, opt => opt.Ignore())
-                .ForMember(dest => dest.OwnerParty, opt => opt.Ignore())
+                .ForMember(dest => dest.VacancyOwnerRelationship, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationAddresses, opt => opt.Ignore())
                 .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
 
@@ -81,6 +92,9 @@
                 .ForMember(dest => dest.Sectors, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
                 .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
+
+            Mapper.CreateMap<Wage, WageViewModel>().ConvertUsing<WageToWageViewModelConverter>();
+            Mapper.CreateMap<WageViewModel, Wage>().ConvertUsing<WageViewModelToWageConverter>();
 
             Mapper.CreateMap<Vacancy, FurtherVacancyDetailsViewModel>().ConvertUsing<VacancyToFurtherVacancyDetailsViewModelConverter>();
 
@@ -138,7 +152,14 @@
                 .ForMember(v => v.Qualifications, opt => opt.MapFrom(src => Map<IList<Qualification>, IList<QualificationViewModel>>(src.CandidateInformation.Qualifications)))
                 .ForMember(v => v.WorkExperience, opt => opt.MapFrom(src => Map<IList<WorkExperience>, IList<WorkExperienceViewModel>>(src.CandidateInformation.WorkExperience)))
                 .ForMember(v => v.TrainingCourses, opt => opt.MapFrom(src => Map<IList<TrainingCourse>, IList<TrainingCourseViewModel>>(src.CandidateInformation.TrainingCourses)))
-                .ForMember(v => v.VacancyQuestionAnswers, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, VacancyQuestionAnswersViewModel>(src)));
+                .ForMember(v => v.NextStepsUrl, opt => opt.Ignore())
+                .ForMember(v => v.ConfirmationStatusSentMessage, opt => opt.Ignore())
+                .ForMember(v => v.VacancyQuestionAnswers, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, VacancyQuestionAnswersViewModel>(src)))
+                .ForMember(v => v.ProviderName, opt => opt.Ignore())
+                .ForMember(v => v.ApplicationStatus, opt => opt.Ignore())
+                .ForMember(v => v.EmployerName, opt => opt.Ignore())
+                .ForMember(v => v.Title, opt => opt.Ignore())
+                .ForMember(v => v.Contact, opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>()
                 .ForMember(v => v.ApplicationId, opt => opt.MapFrom(src => src.EntityId))
@@ -183,6 +204,8 @@
                 .ForMember(v => v.WorkExperience, opt => opt.MapFrom(src => Map<IList<WorkExperience>, IList<WorkExperienceViewModel>>(src.CandidateInformation.WorkExperience)))
                 .ForMember(v => v.TrainingCourses, opt => opt.MapFrom(src => Map<IList<TrainingCourse>, IList<TrainingCourseViewModel>>(src.CandidateInformation.TrainingCourses)))
                 .ForMember(v => v.VacancyQuestionAnswers, opt => opt.MapFrom(src => Map<TraineeshipApplicationDetail, VacancyQuestionAnswersViewModel>(src)))
+                .ForMember(v => v.ConfirmationStatusSentMessage, opt => opt.Ignore())
+                .ForMember(v => v.UnSuccessfulReason, opt => opt.Ignore())
                 .ForMember(v => v.SuccessfulDateTime, opt => opt.Ignore())
                 .ForMember(v => v.UnsuccessfulDateTime, opt => opt.Ignore());
 

@@ -29,7 +29,7 @@
         public int? TotalVacanciesPosted { get; set; }
         public string BeingSupportedBy { get; set; }
         public DateTime? LockedForSupportUntil { get; set; }
-        public int? EmployerStatusTypeId { get; set; }
+        public int EmployerStatusTypeId { get; set; }
         public bool DisableAllowed { get; set; }
         public bool TrackingAllowed { get; set; }
     }
