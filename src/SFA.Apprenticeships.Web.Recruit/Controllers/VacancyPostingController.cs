@@ -1057,14 +1057,14 @@
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
             return RedirectToRoute(RecruitmentRouteNames.SearchAddresses, new
             {
-                PostcodeSearch = viewModel.PostcodeSearch,
+                viewModel.PostcodeSearch,
                 ProviderSiteErn = viewModel.ProviderSiteEdsUrn,
                 EdsUrn = viewModel.EmployerEdsUrn,
-                VacancyGuid = viewModel.VacancyGuid,
-                AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
-                Ukprn = viewModel.Ukprn,
-                CurrentPage = viewModel.CurrentPage,
-                TotalNumberOfPages = viewModel.TotalNumberOfPages
+                viewModel.VacancyGuid,
+                viewModel.AdditionalLocationInformation,
+                viewModel.Ukprn,
+                viewModel.CurrentPage,
+                viewModel.TotalNumberOfPages
             });
         }
 
@@ -1212,14 +1212,14 @@
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
             return RedirectToRoute(RecruitmentRouteNames.ShowLocations, new
             {
-                PostcodeSearch = viewModel.PostcodeSearch,
+                viewModel.PostcodeSearch,
                 ProviderSiteErn = viewModel.ProviderSiteEdsUrn,
                 EdsUrn = viewModel.EmployerEdsUrn,
-                VacancyGuid = viewModel.VacancyGuid,
-                AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
-                Ukprn = viewModel.Ukprn,
-                CurrentPage = viewModel.CurrentPage,
-                TotalNumberOfPages = viewModel.TotalNumberOfPages
+                viewModel.VacancyGuid,
+                viewModel.AdditionalLocationInformation,
+                viewModel.Ukprn,
+                viewModel.CurrentPage,
+                viewModel.TotalNumberOfPages
             });
         }
     }

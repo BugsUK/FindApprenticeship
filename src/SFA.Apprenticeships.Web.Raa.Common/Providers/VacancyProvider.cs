@@ -22,12 +22,12 @@
     using Domain.Entities.Vacancies;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
+    using Infrastructure.Raa.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
-    using Infrastructure.Raa.Extensions;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -664,7 +664,7 @@
         public VacancyViewModel GetVacancyById(int vacancyId)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyId);
-            
+
             if (vacancy == null)
                 return null;
 
@@ -984,7 +984,7 @@
                 throw new Exception($"Vacancy Party {vacancy.VacancyOwnerRelationshipId} not found / no longer current");
 
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
-            var result = vacancyOwnerRelationship.Convert(employer,vacancy);
+            var result = vacancyOwnerRelationship.Convert(employer, vacancy);
             result.VacancyGuid = vacancy.VacancyGuid;
 
             return result;
@@ -1176,6 +1176,11 @@
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+            if (!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName))
+            {
+                newVacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
+                newVacancy.EmployerAnonymousName = vacancy.EmployerAnonymousName;
+            }
             if (newVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
             {
                 newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
