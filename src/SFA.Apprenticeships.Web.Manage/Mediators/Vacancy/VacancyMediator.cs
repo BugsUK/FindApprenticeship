@@ -318,15 +318,15 @@
                     vacancy.IsEmployerLocationMainApprenticeshipLocation;
             viewModel.NumberOfPositions = vacancy.NumberOfPositions;
             viewModel.Status = vacancy.Status;
-            viewModel.IsAnonymousEmployer = vacancy.VacancyOwnerRelationship.Employer.IsAnonymousEmployer;
-            if (viewModel.IsAnonymousEmployer.Value)
+            viewModel.IsAnonymousEmployer = vacancy.VacancyOwnerRelationship.IsAnonymousEmployer;
+            if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
             {
                 viewModel.AnonymousEmployerDescription = vacancy.VacancyOwnerRelationship.Employer.FullName;
-                viewModel.AnonymousEmployerReason = vacancy.VacancyOwnerRelationship.Employer.AnonymousEmployerReason;
+                viewModel.AnonymousEmployerReason = vacancy.VacancyOwnerRelationship.AnonymousEmployerReason;
                 viewModel.AnonymousEmployerReasonComment =
-                    vacancy.VacancyOwnerRelationship.Employer.AnonymousEmployerReasonComment;
+                    vacancy.VacancyOwnerRelationship.AnonymousEmployerReasonComment;
                 viewModel.AnonymousEmployerDescriptionComment =
-                    vacancy.VacancyOwnerRelationship.Employer.AnonymousEmployerDescriptionComment;
+                    vacancy.VacancyOwnerRelationship.AnonymousEmployerDescriptionComment;
                 viewModel.EmployerWebsiteUrl = null;
             }
             else
@@ -334,13 +334,13 @@
                 viewModel.EmployerDescriptionComment = vacancy.EmployerDescriptionComment;
                 viewModel.EmployerWebsiteUrlComment = vacancy.EmployerWebsiteUrlComment;
             }
-            
+
             if (vacancy.VacancyReferenceNumber.HasValue)
             {
                 viewModel.VacancyReferenceNumber = vacancy.VacancyReferenceNumber.Value;
             }
 
-            
+
             viewModel.NumberOfPositionsComment = vacancy.NumberOfPositionsComment;
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)
@@ -366,7 +366,7 @@
                 case QAActionResultCode.Ok:
                     return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, result.ViewModel);
                 case QAActionResultCode.InvalidVacancy:
-                    return GetMediatorResponse<T>(VacancyMediatorCodes.UpdateVacancy.InvalidVacancy, default(T),
+                    return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.InvalidVacancy, default(T),
                         VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
                 default:
                     throw new ArgumentOutOfRangeException();

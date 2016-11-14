@@ -38,6 +38,8 @@
 
         public bool? IsAnonymousEmployer { get; set; }
 
+        public string OriginalFullName { get; set; }
+
         [AllowHtml]
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousAboutTheEmployerDescription.LabelText)]
         public string AnonymousAboutTheEmployerDescription { get; set; }

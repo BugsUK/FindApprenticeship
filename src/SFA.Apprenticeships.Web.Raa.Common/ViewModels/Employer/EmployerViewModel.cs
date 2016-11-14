@@ -16,11 +16,5 @@
         public AddressViewModel Address { get; set; }
         [Display(Name = EmployerViewModelMessages.Status.LabelText)]
         public EmployerTrainingProviderStatuses Status { get; set; }
-
-        public string OriginalFullName { get; set; }
-        public bool IsAnonymousEmployer { get; set; }
-        public string AnonymousEmployerReason { get; set; }
-        public string AnonymousEmployerReasonComment { get; set; }
-        public string AnonymousEmployerDescriptionComment { get; set; }
     }
 }

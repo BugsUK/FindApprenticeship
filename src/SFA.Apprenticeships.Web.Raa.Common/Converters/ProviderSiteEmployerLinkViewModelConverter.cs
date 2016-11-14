@@ -21,10 +21,11 @@
             };
             if (!string.IsNullOrWhiteSpace(vacancy?.EmployerAnonymousName))
             {
-                viewModel.Employer.IsAnonymousEmployer = true;
+                viewModel.IsAnonymousEmployer = true;
                 viewModel.Employer.FullName = vacancy.EmployerAnonymousName;
-                viewModel.Employer.OriginalFullName = employer.FullName;
-                viewModel.Employer.AnonymousEmployerReason = vacancy.EmployerAnonymousReason ?? string.Empty;
+                viewModel.OriginalFullName = employer.FullName;
+                viewModel.AnonymousEmployerReason = vacancy.EmployerAnonymousReason ?? string.Empty;                
+                viewModel.AnonymousEmployerDescription = vacancy.EmployerAnonymousName;                
             }
             return viewModel;
         }

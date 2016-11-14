@@ -176,6 +176,16 @@
                 viewModel.EmployerDescriptionComment = existingVacancy.NewVacancyViewModel.EmployerDescriptionComment;
                 viewModel.EmployerWebsiteUrlComment = existingVacancy.NewVacancyViewModel.EmployerWebsiteUrlComment;
                 viewModel.NumberOfPositionsComment = existingVacancy.NewVacancyViewModel.NumberOfPositionsComment;
+
+                var vor = existingVacancy.NewVacancyViewModel.VacancyOwnerRelationship;
+
+                if (vor.IsAnonymousEmployer.HasValue && vor.IsAnonymousEmployer.Value)
+                {
+                    viewModel.IsAnonymousEmployer = true;
+                    viewModel.AnonymousAboutTheEmployerDescription = vor.AnonymousAboutTheEmployerDescription;
+                    viewModel.AnonymousEmployerDescription = vor.AnonymousEmployerDescription;
+                    viewModel.AnonymousEmployerReason = vor.AnonymousEmployerReason;
+                }
             }
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)

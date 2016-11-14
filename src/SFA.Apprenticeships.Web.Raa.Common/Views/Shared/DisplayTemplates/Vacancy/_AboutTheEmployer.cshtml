@@ -14,21 +14,21 @@
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">Employer</h3>
-                    @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.IsAnonymousEmployer)
+                    @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer!=null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
                     {
-                        <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName (@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.OriginalFullName - Set as Anonymous)</p>
+                        <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName (@Model.NewVacancyViewModel.VacancyOwnerRelationship.OriginalFullName - Set as Anonymous)</p>
                         <div class="left-grey-border">
 
                             <h3 class="bold-xsmall">Reason for setting employer as anonymous</h3>
-                            <p class="font-xsmall">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.AnonymousEmployerReason</p>
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.Employer.AnonymousEmployerReason, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReasonComment, Model.EmployerLink))
+                            <p class="font-xsmall">@Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReason</p>
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReason, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReasonComment, Model.EmployerLink))
                         </div>
                     }
                     else
                     {
                         <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
                     }
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.Employer.AnonymousEmployerReason, Model.EmployerLink, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReasonComment))
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReason, Model.EmployerLink, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReasonComment))
                 </div>
             </div>
         </div>

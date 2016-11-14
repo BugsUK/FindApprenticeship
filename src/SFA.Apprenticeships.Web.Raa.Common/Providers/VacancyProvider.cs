@@ -934,8 +934,8 @@
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
-            vacancy.EmployerAnonymousName = null;
-            vacancy.EmployerAnonymousReason = null;
+            vacancy.EmployerAnonymousName = vacancy.EmployerAnonymousName;
+            vacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
             vacancy.OfflineVacancyType = null;
 
             //Comments
@@ -975,7 +975,7 @@
                 throw new Exception($"Vacancy Party {vacancy.VacancyOwnerRelationshipId} not found / no longer current");
 
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
-            var result = vacancyOwnerRelationship.Convert(employer);
+            var result = vacancyOwnerRelationship.Convert(employer,vacancy);
             result.VacancyGuid = vacancy.VacancyGuid;
 
             return result;
