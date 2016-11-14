@@ -404,11 +404,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             };
 
             var sql = $@"{CoreQuery}
-                    JOIN	ProviderSiteRelationship r
-                    ON		r.ProviderSiteId = o.ProviderSiteId
-
                     WHERE	v.VacancyID IN @vacancyIds
-                    AND     r.ProviderSiteRelationshipTypeId = 1
 ";
 
             var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
@@ -432,11 +428,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
             var sql = $@"{CoreQuery}
 
-                    JOIN	ProviderSiteRelationship r
-                    ON		r.ProviderSiteId = o.ProviderSiteId
-
-                    WHERE	r.ProviderSiteRelationshipTypeId = 1
-                    AND     v.VacancyStatusId IN @VacancyStatuses
+                    WHERE	v.VacancyStatusId IN @VacancyStatuses
                     {(!string.IsNullOrEmpty(query.FrameworkCodeName) ? "AND     af.CodeName = @FrameworkCodeName" : "")}
                     {(query.EditedInRaa ? "AND     v.EditedInRaa = 1" : "")}
                     {(query.LiveDate.HasValue ? "AND     dbo.GetLiveDate(v.VacancyId) >= @LiveDate" : "")}
