@@ -99,7 +99,7 @@ declare @vacancyHistory table(
 	
 -- date when vacany became Live	
 insert into @vacancyHistory(vacancyId, historyDate)	
-select vh.VacancyId, max(vh.HistoryDate) 
+select vh.VacancyId, min(vh.HistoryDate) 
 from  dbo.VacancyHistory vh
 join dbo.VacancyStatusType vst on vst.VacancyStatusTypeId = vh.VacancyHistoryEventSubTypeId
 where vh.VacancyHistoryEventTypeID = 1
