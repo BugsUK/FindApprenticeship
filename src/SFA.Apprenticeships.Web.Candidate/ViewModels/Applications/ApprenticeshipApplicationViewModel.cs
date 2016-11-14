@@ -39,6 +39,9 @@
 
         public ApprenticeshipVacancyDetailViewModel VacancyDetail { get; set; }
 
+        public string ProviderName { get; set; }
+        public string Contact { get; set; }
+
         //TODO: Think of a better name
         public bool IsExpiredOrWithdrawn()
         {

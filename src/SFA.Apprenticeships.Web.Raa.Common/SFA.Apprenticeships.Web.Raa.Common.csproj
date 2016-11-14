@@ -693,6 +693,10 @@
       <Project>{83500887-E1B7-46BD-945B-4CC3D0069B6E}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Raa\SFA.Apprenticeships.Infrastructure.Raa.csproj">
+      <Project>{1F4776F3-884B-4B00-BA97-22BFA06C034E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Raa</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>
