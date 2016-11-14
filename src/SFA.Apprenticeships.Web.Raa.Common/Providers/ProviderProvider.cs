@@ -143,8 +143,16 @@
             } 
 
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
-            vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
-            vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
+            if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
+            {
+                vacancyOwnerRelationship.EmployerDescription = viewModel.AnonymousAboutTheEmployerDescription;
+            }
+            else
+            {
+                vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+                vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
+            }
+            
             vacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
 
             var vacancy = GetVacancy(viewModel);
