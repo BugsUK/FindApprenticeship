@@ -67,16 +67,16 @@
             };
 
             var sql = $@"SELECT	v.*,
-                            CASE v.ApplyOutsideNAVMS
- 			                    WHEN 1 THEN 0
-                                ELSE dbo.GetApplicantCount(v.VacancyId) 
-                            END
-                            AS ApplicantCount,
-		                    CASE v.ApplyOutsideNAVMS
- 			                    WHEN 1 THEN 0
-			                    ELSE dbo.GetNewApplicantCount(v.VacancyId)
-		                    END
-		                    AS NewApplicantCount,
+                            --CASE v.ApplyOutsideNAVMS
+ 			                --    WHEN 1 THEN 0
+                            --    ELSE dbo.GetApplicantCount(v.VacancyId) 
+                            --END
+                            --AS ApplicantCount,
+		                    --CASE v.ApplyOutsideNAVMS
+ 			                --    WHEN 1 THEN 0
+			                --    ELSE dbo.GetNewApplicantCount(v.VacancyId)
+		                    --END
+		                    --AS NewApplicantCount,
                             dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
 		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
 		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
