@@ -57,6 +57,18 @@
         }
     }
 
+    public class VacancyLocationTypeResolver : ValueResolver<int?, VacancyLocationType>
+    {
+        protected override VacancyLocationType ResolveCore(int? source)
+        {
+            if (source.HasValue)
+            {
+                return (VacancyLocationType)source.Value;
+            }
+            return VacancyLocationType.Unknown;
+        }
+    }
+
     public class VacancyMappers : MapperEngine
     {
         private string MapExpectedDuration(DomainVacancy vacancy)
@@ -302,7 +314,7 @@
                 .MapMemberFrom(v => v.UpdatedDateTime, v => v.UpdatedDateTime)
                 .MapMemberFrom(v => v.VacancyGuid, v => v.VacancyGuid)
                 .MapMemberFrom(v => v.VacancyId, v => v.VacancyId)
-                .MapMemberFrom(v => v.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
+                .ForMember(v => v.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .MapMemberFrom(v => v.VacancyManagerId, v => v.VacancyManagerID)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, v => v.VacancyOwnerRelationshipId)
                 .MapMemberFrom(v => v.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
@@ -379,7 +391,7 @@
                 .MapMemberFrom(av => av.RegionalTeam, v => v.RegionalTeam)
                 .MapMemberFrom(av => av.TrainingType, v => v.TrainingTypeId)
                 .MapMemberFrom(av => av.UpdatedDateTime, v => v.UpdatedDateTime)
-                .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId)
+                .ForMember(v => v.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerId)
                 .MapMemberFrom(av => av.WorkingWeek, v => v.WorkingWeek)
                 .MapMemberFrom(av => av.ApplicantCount, v => v.ApplicantCount)
