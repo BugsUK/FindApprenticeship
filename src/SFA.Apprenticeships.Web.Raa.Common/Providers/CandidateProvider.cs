@@ -272,7 +272,6 @@
             viewModel.ProviderName = vacancyDetail.Provider.TradingName;
             viewModel.Contact = vacancyDetail.Contact;
 
-            // viewModel.a = application.ApplicationStatusDescription;
             return viewModel;
         }
 
