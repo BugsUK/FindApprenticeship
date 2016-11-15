@@ -472,46 +472,46 @@ WriteAttribute("name", Tuple.Create(" name=\"", 4240), Tuple.Create("\"", 4309)
 
 WriteLiteral("></a>\r\n");
 
-WriteLiteral("                            <h4");
+WriteLiteral("                        <h4");
 
 WriteLiteral(" class=\"bold-small\"");
 
 WriteLiteral(">Will the employer\'s name and address be shown in this vacancy?</h4>\r\n");
 
-WriteLiteral("                            <label");
+WriteLiteral("                        <label");
 
-WriteLiteral(" data-target=\"is-non-anonymous-employer\"");
+WriteLiteral(" data-target=\"is-non-anonymous-employer-panel\"");
 
 WriteLiteral(" for=\"is-non-anonymous-employer\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4543), Tuple.Create("\"", 4590)
-, Tuple.Create(Tuple.Create("", 4551), Tuple.Create("block-label", 4551), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4541), Tuple.Create("\"", 4588)
+, Tuple.Create(Tuple.Create("", 4549), Tuple.Create("block-label", 4549), true)
             
             #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                             , Tuple.Create(Tuple.Create(" ", 4562), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
+                                               , Tuple.Create(Tuple.Create(" ", 4560), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
             
             #line default
             #line hidden
-, 4563), false)
-, Tuple.Create(Tuple.Create(" ", 4589), Tuple.Create("", 4589), true)
+, 4561), false)
+, Tuple.Create(Tuple.Create(" ", 4587), Tuple.Create("", 4587), true)
 );
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                                ");
+WriteLiteral("                            ");
 
             
             #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                           Write(Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "non-anonymous-employer", aria_controls = "non-anonymous-employer" }));
+                       Write(Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "is-non-anonymous-employer", aria_controls = "is-non-anonymous-employer-panel" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                Yes\r\n                            </label>\r\n");
+WriteLiteral("\r\n                            Yes\r\n                        </label>\r\n");
 
-WriteLiteral("                            <label");
+WriteLiteral("                        <label");
 
-WriteLiteral(" data-target=\"is-anonymous-employer\"");
+WriteLiteral(" data-target=\"is-anonymous-employer-panel\"");
 
 WriteLiteral(" for=\"is-anonymous-employer\"");
 
@@ -519,7 +519,7 @@ WriteAttribute("class", Tuple.Create(" class=\"", 4937), Tuple.Create("\"", 4984
 , Tuple.Create(Tuple.Create("", 4945), Tuple.Create("block-label", 4945), true)
             
             #line 73 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                     , Tuple.Create(Tuple.Create(" ", 4956), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
+                                       , Tuple.Create(Tuple.Create(" ", 4956), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
             
             #line default
             #line hidden
@@ -529,17 +529,17 @@ WriteAttribute("class", Tuple.Create(" class=\"", 4937), Tuple.Create("\"", 4984
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                                ");
+WriteLiteral("                            ");
 
             
             #line 74 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                           Write(Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "anonymous-employer", aria_controls = "anonymous-employer" }));
+                       Write(Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "is-anonymous-employer", aria_controls = "is-anonymous-employer-panel" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                No, the employer wants to remain anonymous\r\n   " +
-"                         </label>\r\n");
+WriteLiteral("\r\n                            No, the employer wants to remain anonymous\r\n       " +
+"                 </label>\r\n");
 
             
             #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
@@ -837,7 +837,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </noscript>\r\n    </div>\r\n\r\n" +
 "    <div");
 
-WriteLiteral(" id=\"is-non-anonymous-employer\"");
+WriteLiteral(" id=\"is-non-anonymous-employer-panel\"");
 
 WriteLiteral(" class=\"toggle-content blocklabel-content non-anonymous\"");
 
@@ -891,7 +891,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" id=\"is-anonymous-employer\"");
+WriteLiteral(" id=\"is-anonymous-employer-panel\"");
 
 WriteLiteral(" class=\"toggle-content blocklabel-content anonymous\"");
 
