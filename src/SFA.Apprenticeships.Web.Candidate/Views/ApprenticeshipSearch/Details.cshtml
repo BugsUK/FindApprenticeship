@@ -199,7 +199,7 @@
                                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                         <h3 class="bold-small">Address</h3>
                                         <div itemprop="address">
-                                            <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                                            <p class="small-btm-margin" itemprop="addressLocality" id="anonymous-town">@Model.VacancyAddress.Town</p>
                                         </div>
                                     </div>
                                 }
@@ -242,7 +242,16 @@
                     {
                         <div id="vacancy-map" class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
-                            <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            @if (Model.IsEmployerAnonymous)
+                            {
+                                <div id="anonymous-map">
+                                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/view?center=@Model.VacancyAddress.GeoPoint.Latitude,@Model.VacancyAddress.GeoPoint.Longitude&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                                </div>
+                            }
+                            else
+                            {
+                                <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            }                            
                             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                         </div>
                     }
@@ -346,15 +355,17 @@
 </div>
 
 @section scripts
-{
+{    
     @Scripts.Render("~/bundles/nas/details")
 
     <script>
-    $(function () {
-        initSavedVacancies({
-            saveUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSaveVacancy)',
-            deleteUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDeleteSavedVacancy)'
+        $(function() {
+            initSavedVacancies({
+                saveUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSaveVacancy)',
+                deleteUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDeleteSavedVacancy)'
+            });
         });
-    });
+
     </script>
+
 }
