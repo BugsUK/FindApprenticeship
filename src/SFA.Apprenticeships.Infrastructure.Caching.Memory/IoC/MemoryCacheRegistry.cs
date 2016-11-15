@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Memory.IoC
 {
-    using SFA.Apprenticeships.Application.Interfaces.Caching;
-
+    using Application.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
 
     public class MemoryCacheRegistry : Registry
@@ -10,7 +9,7 @@
 
         public MemoryCacheRegistry()
         {
-            For<ICacheService>().Singleton().Use<AzureRedisCacheService>().Name = MemoryCacheName;
+            For<ICacheService>().Singleton().Use<MemoryCacheService>().Name = MemoryCacheName;
         }
     }
 }

@@ -13,6 +13,9 @@
                 case MemoryCacheRegistry.MemoryCacheName:
                     configurationExpression.AddRegistry<MemoryCacheRegistry>();
                     break;
+                case AzureRedisCacheRegistry.AzureRedisCacheName:
+                    configurationExpression.AddRegistry<AzureRedisCacheRegistry>();
+                    break;
             }            
         }
     }
