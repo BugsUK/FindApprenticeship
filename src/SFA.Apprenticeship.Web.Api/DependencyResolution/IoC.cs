@@ -22,7 +22,6 @@ namespace SFA.Apprenticeship.Web.Api.DependencyResolution {
     using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Provider;
     using Apprenticeships.Application.VacancyPosting.IoC;
-    using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Infrastructure.Azure.ServiceBus.Configuration;
     using Apprenticeships.Infrastructure.Azure.ServiceBus.IoC;
     using Apprenticeships.Infrastructure.Caching.Memory.IoC;
@@ -31,8 +30,6 @@ namespace SFA.Apprenticeship.Web.Api.DependencyResolution {
     using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Postcode.IoC;
-    using Apprenticeships.Infrastructure.Raa.Mappers;
-    using Apprenticeships.Infrastructure.Raa.Strategies;
     using Apprenticeships.Infrastructure.Repositories.Mongo.Applications.IoC;
     using Apprenticeships.Infrastructure.Repositories.Mongo.Employers.IoC;
     using Apprenticeships.Infrastructure.Repositories.Mongo.Providers.IoC;
