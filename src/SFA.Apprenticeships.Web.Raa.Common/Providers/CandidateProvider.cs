@@ -182,12 +182,19 @@
 
             var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
 
+            //Restrict to only the applications for vacancies owned by the logged in user
+            var provider = _providerService.GetProvider(ukprn);
+            var ownedProviderSites = _providerService.GetOwnedProviderSites(provider.ProviderId).Select(ps => ps.ProviderSiteId).ToList();
             var vacancySummaries =
                 _vacancyPostingService.GetVacancySummariesByIds(
-                        candidateApplicationSummaries.Select(a => a.VacancyId).Distinct())
+                    candidateApplicationSummaries.Select(a => a.VacancyId).Distinct())
+                    .Where(
+                        v =>
+                            (v.VacancyManagerId != null && ownedProviderSites.Contains(v.VacancyManagerId.Value)) ||
+                            (v.DeliveryOrganisationId != null &&
+                             ownedProviderSites.Contains(v.DeliveryOrganisationId.Value)))
                     .ToDictionary(v => v.VacancyId, v => v);
-
-            //Restrict to only the applications for vacancies owned by the logged in user
+            
             candidateApplicationSummaries = candidateApplicationSummaries.Where(a => vacancySummaries.ContainsKey(a.VacancyId)).ToList();
 
             var page = GetOrderedApplicationSummaries(searchViewModel.OrderByField, searchViewModel.Order, candidateApplicationSummaries).GetCurrentPage(searchViewModel).ToList();
