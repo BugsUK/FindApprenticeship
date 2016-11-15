@@ -102,6 +102,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AzureRedisCacheService.cs" />
+    <Compile Include="IoC\AzureRedisCacheRegistry.cs" />
     <Compile Include="IoC\MemoryCacheRegistry.cs" />
     <Compile Include="MemoryCacheService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
