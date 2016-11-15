@@ -204,9 +204,7 @@ $(function () {
                         };
 
                         lazyMap.setOptions(lazyOptions);
-                        if (resultMap.isEmployerAnonymous === "False") {
-                            new google.maps.Marker({ position: resultMap.latlng, map: lazyMap, icon: markerIcon });
-                        }                        
+                        new google.maps.Marker({ position: resultMap.latlng, map: lazyMap, icon: markerIcon });
                         resultMap.directionsDisplay.setMap(lazyMap);
                     }
                 });
