@@ -268,28 +268,48 @@
 
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
             _logService.Info($"Retrieved provider user {stopwatch.ElapsedMilliseconds}ms elapsed");
-            var provider = _providerProvider.GetProviderViewModel(ukprn);
-            _logService.Info($"Retrieved provider {stopwatch.ElapsedMilliseconds}ms elapsed");
-            var providerSites = GetProviderSites(ukprn);
-            _logService.Info($"Retrieved provider sites {stopwatch.ElapsedMilliseconds}ms elapsed");
-            var providerSiteId = providerUserViewModel.DefaultProviderSiteId;
-            if (providerSites.All(ps => ps.Value != Convert.ToString(providerUserViewModel.DefaultProviderSiteId)))
-            {
-                providerSiteId = Convert.ToInt32(providerSites.First().Value);
-            }
-            var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerSiteId, vacanciesSummarySearch);
-            _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var viewModel = new HomeViewModel
             {
                 ProviderUserViewModel = providerUserViewModel,
-                ProviderViewModel = provider,
-                ProviderSites = providerSites,
-                CandidateSearch = new CandidateSearchViewModel(),
-                VacanciesSummary = vacanciesSummary
+                CandidateSearch = new CandidateSearchViewModel()
             };
 
-            return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Ok, viewModel);
+            try
+            {
+                var provider = _providerProvider.GetProviderViewModel(ukprn);
+                _logService.Info($"Retrieved provider {stopwatch.ElapsedMilliseconds}ms elapsed");
+                var providerSites = GetProviderSites(ukprn);
+                _logService.Info($"Retrieved provider sites {stopwatch.ElapsedMilliseconds}ms elapsed");
+                var providerSiteId = providerUserViewModel.DefaultProviderSiteId;
+                if (providerSites.All(ps => ps.Value != Convert.ToString(providerUserViewModel.DefaultProviderSiteId)))
+                {
+                    providerSiteId = Convert.ToInt32(providerSites.First().Value);
+                }
+                var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerSiteId, vacanciesSummarySearch);
+                _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
+
+                viewModel.ProviderViewModel = provider;
+                viewModel.ProviderSites = providerSites;
+                viewModel.VacanciesSummary = vacanciesSummary;
+
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Ok, viewModel);
+            }
+            catch (CustomException ex)
+            {
+                if (ex.Code == ProviderServiceCodes.ProviderNotFound)
+                {
+                    _logService.Info(ex.Message);
+                    return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.ProviderNotFound, viewModel);
+                }
+                _logService.Error(ex);
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Error, viewModel, string.Format(HomeViewModelMessages.ProviderNotFound, ukprn), UserMessageLevel.Warning);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error(ex);
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Error, viewModel, string.Format(HomeViewModelMessages.Error, ukprn), UserMessageLevel.Error);
+            }
         }
 
         public MediatorResponse<HomeViewModel> ChangeProviderSite(string username, string ukprn, HomeViewModel viewModel)

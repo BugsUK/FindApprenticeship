@@ -54,6 +54,8 @@
         public static class GetHomeViewModel
         {
             public const string Ok = "ProviderUser.GetHomeViewModel.Ok";
+            public const string ProviderNotFound = "ProviderUser.GetHomeViewModel.ProviderNotFound";
+            public const string Error = "ProviderUser.GetHomeViewModel.Error";
         }
 
         public static class ChangeProviderSite
