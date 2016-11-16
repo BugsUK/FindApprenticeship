@@ -14,7 +14,7 @@
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">Employer</h3>
-                    @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer!=null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                    @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
                     {
                         <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName (@Model.NewVacancyViewModel.VacancyOwnerRelationship.OriginalFullName - Set as Anonymous)</p>
                         <div class="left-grey-border">
@@ -58,7 +58,7 @@
         }
         <div class="@gridClass">
             <div class="inner-block-padr">
-                @if (Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl))
+                @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && !Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value && Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl))
                 {
                     var employerWebsiteUri = new UriBuilder(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl).Uri;
                     <div class="editable-item">
@@ -73,21 +73,29 @@
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                     </div>
                 }
-
                 <div>
                     <div class="inner-block-padr">
                         @if (Model.IsSingleLocation)
                         {
                             <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                 <h3 class="bold-small">Address</h3>
-                                <div itemprop="address">
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine1</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.Town</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.Address.County</p>
-                                    <p class="small-btm-margin" itemprop="postalCode">@Model.Address.Postcode</p>
-                                </div>
+                                @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                                {
+                                    <div itemprop="address">
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.Town</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div itemprop="address">
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine1</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine2</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.Town</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.Address.County</p>
+                                        <p class="small-btm-margin" itemprop="postalCode">@Model.Address.Postcode</p>
+                                    </div>
+                                }
                             </div>
                         }
                         else
@@ -99,15 +107,23 @@
                                         Address
                                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
                                     </h3>
-                                    <div itemprop="address">
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
-                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
-                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.County</p>
-                                        <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
-                                    </div>
-
+                                    @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                                    {
+                                        <div itemprop="address">
+                                            <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div itemprop="address">
+                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
+                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
+                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
+                                            <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
+                                            <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.County</p>
+                                            <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
+                                        </div>
+                                    }
                                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                                 </div>
                             }
@@ -127,7 +143,6 @@
                                                     <col class="t50">
                                                     <col class="t35">
                                                 </colgroup>
-
                                                 <thead>
                                                     <tr>
                                                         <th>
@@ -142,9 +157,18 @@
                                                     @for (var i = 0; i < midIndex; i++)
                                                     {
                                                         var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
-                                                        @Html.DisplayFor(m => locationAddress)
+                                                        if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                                                        {                                                            
+                                                            <tr>
+                                                                <td>@locationAddress.Address.Town</td>
+                                                                <td>@locationAddress.NumberOfPositions</td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DisplayFor(m => locationAddress)
+                                                        }
                                                     }
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -171,7 +195,18 @@
                                                 @for (var i = midIndex; i < Model.NewVacancyViewModel.LocationAddresses.Count; i++)
                                                 {
                                                     var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
-                                                    @Html.DisplayFor(m => locationAddress)
+
+                                                    if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                                                    {
+                                                        <tr>
+                                                            <td>@locationAddress.Address.Town</td>
+                                                            <td>@locationAddress.NumberOfPositions</td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(m => locationAddress)
+                                                    }
                                                 }
 
                                             </tbody>
