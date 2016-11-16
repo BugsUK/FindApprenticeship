@@ -1,18 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
     using Configuration;
     using Converters;
-    using Domain.Entities.Raa.Vacancies;
-    using Application.Interfaces;
     using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Mappers;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using ViewModels.Employer;
     using ViewModels.Provider;
     using Web.Common.Converters;
@@ -62,7 +62,7 @@
                 SearchViewModel = searchViewModel
             };
 
-            if(!searchViewModel.PerformSearch) return viewModel;
+            if (!searchViewModel.PerformSearch) return viewModel;
 
             var searchParameters = new ProviderSearchParameters
             {
@@ -140,7 +140,7 @@
             if (_providerService.IsADeletedVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn))
             {
                 _providerService.ResurrectVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
-            } 
+            }
 
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
             if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
@@ -152,7 +152,7 @@
                 vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
                 vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
             }
-            
+
             vacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
 
             var vacancy = GetVacancy(viewModel);
@@ -165,13 +165,19 @@
                     vacancy.IsEmployerLocationMainApprenticeshipLocation =
                         viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
                 if (viewModel.NumberOfPositions != null) vacancy.NumberOfPositions = viewModel.NumberOfPositions.Value;
+                if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
+                {
+                    vacancy.EmployerAnonymousName = viewModel.AnonymousEmployerDescription;
+                    vacancy.EmployerAnonymousReason = viewModel.AnonymousEmployerReason;
+                    vacancy.EmployerDescription = viewModel.AnonymousAboutTheEmployerDescription;
+                }
 
                 _vacancyPostingService.UpdateVacancy(vacancy);
             }
 
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
             var result = vacancyOwnerRelationship.Convert(employer);
-            
+
             return result;
         }
 
@@ -308,7 +314,7 @@
             providerSite.ContactDetailsForEmployer = viewModel.ContactDetailsForEmployer;
             providerSite.ContactDetailsForCandidate = viewModel.ContactDetailsForCandidate;
             providerSite.TrainingProviderStatus = viewModel.TrainingProviderStatus;
-            if(viewModel.ProviderSiteRelationships != null)
+            if (viewModel.ProviderSiteRelationships != null)
             {
                 foreach (var providerSiteRelationshipViewModel in viewModel.ProviderSiteRelationships)
                 {
