@@ -271,11 +271,6 @@
             viewModel.NextStepsUrl = string.Format($"https://{domainUrl}/nextsteps");
             viewModel.UnSuccessfulReason = application.UnsuccessfulReason;
             viewModel.UnsuccessfulDateTime = application.UnsuccessfulDateTime;
-            viewModel.CandidateId = application.CandidateId;
-            viewModel.UnsuccessfulReason = application.UnsuccessfulReason;
-            viewModel.ApplicationStatus = application.Status;
-            viewModel.Title = application.Vacancy.Title;
-            viewModel.EmployerName = application.Vacancy.EmployerName;
             viewModel.ProviderName = vacancyDetail.Provider.TradingName;
             viewModel.Contact = vacancyDetail.Contact;
 
