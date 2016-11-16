@@ -16,10 +16,10 @@ Param(
     [string]$decryptionKey,
 	
 	[Parameter(Mandatory=$True)]
-    [string]$validationKey
+    [string]$validationKey,
 	
 	[Parameter(Mandatory=$True)]
-    [string]$cacheConnection,
+    [string]$cacheConnection
 )
 
 $TextInfo = (Get-Culture).TextInfo
