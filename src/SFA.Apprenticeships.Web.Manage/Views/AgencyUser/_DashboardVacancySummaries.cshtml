@@ -111,11 +111,15 @@
                                             else
                                             {
                                                 @vacancy.Location.Town<br />
-                                                <div class="hgroup-small">
-                                                    <p class="subtitle">@vacancy.Location.Postcode</p>
-                                                </div>
+                                                if(vacancy.VacancyViewModel !=null && !vacancy.VacancyViewModel.IsEmployerAnonymous)
+                                                {
+                                                    <div class="hgroup-small">
+                                                        <p class="subtitle">@vacancy.Location.Postcode</p>
+                                                    </div>
+                                                }
                                             }
                                         </td>
+
                                         <td class="reactive-header" data-label="Date submitted">
                                             @vacancy.DateSubmitted.ToGmtDate()
                                         </td>

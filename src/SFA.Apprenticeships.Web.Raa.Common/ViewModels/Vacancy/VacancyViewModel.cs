@@ -74,6 +74,9 @@
                                                            && NewVacancyViewModel.LocationAddresses != null
                                                            && NewVacancyViewModel.LocationAddresses.Count() == 1;
 
+        public bool IsEmployerAnonymous => NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null &&
+                                           NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value;
+
         public int NumberOfPositions { get; set; }
 
         public ContactDetailsAndVacancyHistoryViewModel ContactDetailsAndVacancyHistory { get; set; }
