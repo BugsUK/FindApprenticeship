@@ -128,7 +128,25 @@
         {
             var response = _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn(), vacanciesSummarySearch);
 
-            return View(response.ViewModel);
+            ModelState.Clear();
+
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message.Text, response.Message.Level);
+            }
+
+            switch (response.Code)
+            {
+                case ProviderUserMediatorCodes.GetHomeViewModel.ProviderNotFound:
+                case ProviderUserMediatorCodes.GetHomeViewModel.Error:
+                    return View("HomeError", response.ViewModel);
+
+                case ProviderUserMediatorCodes.GetHomeViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]
@@ -191,7 +209,25 @@
         {
             var response = _providerUserMediator.GetSettingsViewModel(User.Identity.Name, User.GetUkprn());
 
-            return View(response.ViewModel);
+            ModelState.Clear();
+
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message.Text, response.Message.Level);
+            }
+
+            switch (response.Code)
+            {
+                case ProviderUserMediatorCodes.GetSettingsViewModel.ProviderNotFound:
+                case ProviderUserMediatorCodes.GetSettingsViewModel.Error:
+                    return View("SettingsError", response.ViewModel);
+
+                case ProviderUserMediatorCodes.GetSettingsViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]

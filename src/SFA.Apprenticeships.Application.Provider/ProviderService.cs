@@ -12,6 +12,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using Domain.Entities.Exceptions;
 
     public class ProviderService : IProviderService
     {
@@ -87,14 +88,14 @@
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
-
+            
             _logService.Debug(
                 "Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
             var provider = _providerReadRepository.GetByUkprn(ukprn);
             if (provider == null)
             {
-                throw new Exception($"Provider cannot be found with ukprn={ukprn}");
+                throw new CustomException(ProviderServiceCodes.ProviderNotFound, $"Provider cannot be found with ukprn={ukprn}");
             }
 
             return _providerSiteReadRepository.GetByProviderId(provider.ProviderId);

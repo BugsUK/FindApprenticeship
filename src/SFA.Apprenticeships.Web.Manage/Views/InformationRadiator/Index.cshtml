@@ -31,7 +31,7 @@
                 <figure class="data">
                     <p class="count">@Model.TotalVacanciesApprovedViaRaa</p>
                     <figcaption>
-                        <h2>of those, total made live (@(Math.Round((double)Model.TotalVacanciesApprovedViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
+                        <h2>of submitted, total made live (@(Math.Round((double)Model.TotalVacanciesApprovedViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
@@ -39,7 +39,7 @@
                 <figure class="data">
                     <p class="count">@Model.TotalVacanciesReferredViaRaa</p>
                     <figcaption>
-                        <h2>of those, total referred at least once (@(Math.Round((double)Model.TotalVacanciesReferredViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
+                        <h2>of submitted, total referred at least once (@(Math.Round((double)Model.TotalVacanciesReferredViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
