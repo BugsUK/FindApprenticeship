@@ -55,6 +55,7 @@ namespace SFA.Apprenticeship.Web.Api.DependencyResolution {
             {
                 c.AddRegistry<DefaultRegistry>();
                 c.AddRegistry<MemoryCacheRegistry>();
+                c.AddRegistry<AzureRedisCacheRegistry>();
                 c.AddRegistry<EmployerRepositoryRegistry>();
                 c.AddRegistry<EmployerDataServicesRegistry>();
                 c.AddRegistry<PostcodeRegistry>();

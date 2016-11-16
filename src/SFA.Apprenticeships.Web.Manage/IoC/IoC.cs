@@ -73,6 +73,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry<ApplicationServicesRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry<MemoryCacheRegistry>();
+                x.AddRegistry<AzureRedisCacheRegistry>();
                 x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<VacancyPostingServiceRegistry>();
                 x.For<IProviderService>().Use<ProviderService>();
