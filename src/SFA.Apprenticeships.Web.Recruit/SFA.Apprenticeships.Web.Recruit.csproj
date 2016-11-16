@@ -350,6 +350,7 @@
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -903,6 +904,7 @@
     <Content Include="Views\Application\ConfirmBulkUnsuccessfulDecision.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_BulkUploadVacancyLinks.cshtml" />
     <Content Include="Views\Application\SentDecisionConfirmation.cshtml" />
+    <Content Include="Views\ProviderUser\SettingsError.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

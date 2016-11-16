@@ -25,7 +25,8 @@
         public static class GetSettingsViewModel
         {
             public const string Ok = "ProviderUser.GetSettingsViewModel.Ok";
-            public const string DoesntExist = "ProviderUser.GetSettingsViewModel.DoesntExist";
+            public const string ProviderNotFound = "ProviderUser.GetSettingsViewModel.ProviderNotFound";
+            public const string Error = "ProviderUser.GetSettingsViewModel.Error";
         }
 
         public static class UpdateUser
