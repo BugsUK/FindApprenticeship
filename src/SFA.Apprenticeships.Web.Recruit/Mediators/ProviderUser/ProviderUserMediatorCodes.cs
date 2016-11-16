@@ -25,7 +25,8 @@
         public static class GetSettingsViewModel
         {
             public const string Ok = "ProviderUser.GetSettingsViewModel.Ok";
-            public const string DoesntExist = "ProviderUser.GetSettingsViewModel.DoesntExist";
+            public const string ProviderNotFound = "ProviderUser.GetSettingsViewModel.ProviderNotFound";
+            public const string Error = "ProviderUser.GetSettingsViewModel.Error";
         }
 
         public static class UpdateUser
@@ -53,6 +54,8 @@
         public static class GetHomeViewModel
         {
             public const string Ok = "ProviderUser.GetHomeViewModel.Ok";
+            public const string ProviderNotFound = "ProviderUser.GetHomeViewModel.ProviderNotFound";
+            public const string Error = "ProviderUser.GetHomeViewModel.Error";
         }
 
         public static class ChangeProviderSite
