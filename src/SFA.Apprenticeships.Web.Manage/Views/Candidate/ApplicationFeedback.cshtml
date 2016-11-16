@@ -12,7 +12,7 @@
         <div class="inner-block-padr">
             <h1 class="heading-xlarge">Your feedback (@Model.ApplicantDetails.Name)</h1>
             @{
-                var reason = string.IsNullOrWhiteSpace(Model.UnsuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnsuccessfulReason;
+                var reason = string.IsNullOrWhiteSpace(Model.UnSuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnSuccessfulReason;
             }
             <div class="form-group">
                 <div class="detail-content qa-comment">
@@ -29,8 +29,8 @@
         <br />
         <div class="inner-block">
             <div class="hgroup-small">
-                <h2 class="heading-medium">@Model.Title</h2>
-                <p class="subtitle">@Model.EmployerName</p>
+                <h2 class="heading-medium">@Model.Vacancy.Title</h2>
+                <p class="subtitle">@Model.Vacancy.EmployerName</p>
                 <br />
                 <p class="font-xsmall">
                     @Html.RouteLink("View my application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = Model.ApplicationSelection.ApplicationId })

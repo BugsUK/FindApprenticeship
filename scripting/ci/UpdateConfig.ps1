@@ -16,7 +16,10 @@ Param(
     [string]$decryptionKey,
 	
 	[Parameter(Mandatory=$True)]
-    [string]$validationKey
+    [string]$validationKey,
+	
+	[Parameter(Mandatory=$True)]
+    [string]$cacheConnection
 )
 
 $TextInfo = (Get-Culture).TextInfo
@@ -39,6 +42,11 @@ $avmsCompatibilityServiceRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeship
 Write-Output "Updating $settingsConfigFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
 $configurationStorageConnectionStringAppSetting = ('<add key="ConfigurationStorageConnectionString" value="' + $configurationStorageConnectionString + '" />')
 (gc $settingsConfigFile) -replace '<add key="ConfigurationStorageConnectionString" value=".*?" />', $configurationStorageConnectionStringAppSetting | sc $settingsConfigFile
+Write-Output "$settingsConfigFile updated"
+
+Write-Output "Updating $settingsConfigFile with CacheConnection: $cacheConnection"
+$cacheConnectionAppSetting = ('<add key="CacheConnection" value="' + $cacheConnection + '" />')
+(gc $settingsConfigFile) -replace '<add key="CacheConnection" value=".*?" />', $cacheConnectionAppSetting | sc $settingsConfigFile
 Write-Output "$settingsConfigFile updated"
 
 Write-Output "Updating $settingsConfigFile with ConfigurationEventHubLogConnectionString: $configurationEventHubLogConnectionString"

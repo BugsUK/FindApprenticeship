@@ -156,9 +156,6 @@
                 .ForMember(v => v.ConfirmationStatusSentMessage, opt => opt.Ignore())
                 .ForMember(v => v.VacancyQuestionAnswers, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, VacancyQuestionAnswersViewModel>(src)))
                 .ForMember(v => v.ProviderName, opt => opt.Ignore())
-                .ForMember(v => v.ApplicationStatus, opt => opt.Ignore())
-                .ForMember(v => v.EmployerName, opt => opt.Ignore())
-                .ForMember(v => v.Title, opt => opt.Ignore())
                 .ForMember(v => v.Contact, opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>()

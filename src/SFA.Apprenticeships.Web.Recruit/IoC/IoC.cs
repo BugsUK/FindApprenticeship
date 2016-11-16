@@ -73,6 +73,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<ApplicationServicesRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
+                x.AddRegistry<AzureRedisCacheRegistry>();
                 x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<ReportingServicesRegistry>();
                 x.AddRegistry<VacancyPostingServiceRegistry>();
