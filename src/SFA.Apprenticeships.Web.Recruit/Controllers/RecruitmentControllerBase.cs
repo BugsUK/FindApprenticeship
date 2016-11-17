@@ -4,8 +4,9 @@
     using Application.Interfaces;
     using Common.Attributes;
     using Common.Constants;
+    using Raa.Common.Configuration;
 
-    [ApplyAnalytics("RecruitWebConfiguration"),
+    [ApplyAnalytics(typeof(RecruitWebConfiguration)),
     AuthorizationData,
     Raa.Common.Attributes.CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None)]

@@ -2,8 +2,9 @@
 {
     using System.Web.Mvc;
     using Common.Attributes;
+    using Raa.Common.Configuration;
 
-    [ApplyAnalytics("RecruitWebConfiguration")]
+    [ApplyAnalytics(typeof(RecruitWebConfiguration))]
     public class ErrorController : Controller
     {
         public ActionResult NotFound()

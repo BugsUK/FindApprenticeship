@@ -36,15 +36,20 @@ namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
 
         public T Get<T>(string key) where T : class
         {
+            return Get(key, typeof(T)) as T;
+        }
+
+        private object Get(string key, Type type)
+        {
             _logger.Debug(GettingItemFromCacheFormat, key);
 
-            var result = default(T);
+            var result = default(object);
 
             var value = Cache.StringGet(key);
             if (value.HasValue)
             {
-                result = JsonConvert.DeserializeObject<T>(value);
-                if (result == null || result.Equals(default(T)))
+                result = JsonConvert.DeserializeObject(value, type);
+                if (result == null || result.Equals(default(object)))
                 {
                     _logger.Debug(ItemNotInCacheFormat, key);
                 }
@@ -111,6 +116,33 @@ namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
             }
         }
 
+        public object Get<TCacheEntry>(TCacheEntry cacheEntry, Func<object> dataFunc, Type type) where TCacheEntry : BaseCacheKey
+        {
+            var cacheKey = cacheEntry.Key(type);
+
+            _logger.Debug(GettingItemFromCacheFormat, cacheKey);
+
+            //MemoryCache is thread safe however only the access is protected. The cache pattern of check then retrieve if null is not protected.
+            //This allows multiple threads to execute the dataFunc uneccessarily. A lock here solves this issue
+            lock (_locker)
+            {
+                var result = Get(cacheKey, type);
+
+                if (result == null)
+                {
+                    result = dataFunc();
+
+                    PutObject(cacheKey, result, cacheEntry.Duration);
+
+                    return result;
+                }
+
+                _logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
+
+                return result;
+            }
+        }
+
         public void PutObject(string cacheKey, object cacheObject, CacheDuration cacheDuration = CacheDuration.CacheDefault)
         {
             _logger.Debug("Storing item with key: {0} in cache with duration: {1}", cacheKey, cacheDuration);
@@ -122,7 +154,9 @@ namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
 
             var cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);
 
-            Cache.StringSet(cacheKey, JsonConvert.SerializeObject(cacheObject), cacheTimeSpan);
+            var value = JsonConvert.SerializeObject(cacheObject);
+
+            Cache.StringSet(cacheKey, value, cacheTimeSpan);
 
             _logger.Debug("Stored item with key: {0} in cache with timespan: {1}", cacheKey, cacheTimeSpan);
         }

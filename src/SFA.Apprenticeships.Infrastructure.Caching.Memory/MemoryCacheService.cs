@@ -3,10 +3,8 @@
     using System;
     using System.Linq;
     using System.Runtime.Caching;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Apprenticeships.Application.Interfaces.Caching;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
+    using Application.Interfaces.Caching;
 
     public class MemoryCacheService : ICacheService
     {
@@ -122,6 +120,32 @@
                     _logger.Debug(ItemNotInCacheFormat, cacheKey);
 
                     result = dataFunc(funcParam1);
+                    Store(cacheKey, result, cacheEntry.Duration);
+                    return result;
+                }
+
+                _logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
+
+                return result;
+            }
+        }
+
+        public object Get<TCacheEntry>(TCacheEntry cacheEntry, Func<object> dataFunc, Type type) where TCacheEntry : BaseCacheKey
+        {
+            var cacheKey = cacheEntry.Key(type);
+
+            _logger.Debug(GettingItemFromCacheFormat, cacheKey);
+
+            //MemoryCache is thread safe however only the access is protected. The cache pattern of check then retrieve if null is not protected.
+            //This allows multiple threads to execute the dataFunc uneccessarily. A lock here solves this issue
+            lock (_locker)
+            {
+                var result = _cache[cacheKey];
+                if (result == null)
+                {
+                    _logger.Debug(ItemNotInCacheFormat, cacheKey);
+
+                    result = dataFunc();
                     Store(cacheKey, result, cacheEntry.Duration);
                     return result;
                 }

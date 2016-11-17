@@ -14,6 +14,9 @@
             where TCacheEntry : BaseCacheKey
             where TResult : class;
 
+        object Get<TCacheEntry>(TCacheEntry cacheEntry, Func<object> dataFunc, Type type)
+            where TCacheEntry : BaseCacheKey;
+
         void PutObject(string cacheKey, object cacheObject, CacheDuration cacheDuration = CacheDuration.CacheDefault);
 
         void Remove<TCacheEntry, TFuncParam1>(TCacheEntry cacheEntry, TFuncParam1 funcParam1)

@@ -6,8 +6,9 @@
     using Constants;
     using Raa.Common.ViewModels.Vacancy;
     using Application.Interfaces;
+    using Raa.Common.Configuration;
 
-    [ApplyAnalytics("ManageWebConfiguration"), 
+    [ApplyAnalytics(typeof(ManageWebConfiguration)), 
     Raa.Common.Attributes.CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None)]
     public abstract class ManagementControllerBase : Common.Controllers.ControllerBase

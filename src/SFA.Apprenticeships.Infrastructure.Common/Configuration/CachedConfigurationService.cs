@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
+    using System;
     using Application.Interfaces;
     using Application.Interfaces.Caching;
 
@@ -17,18 +18,12 @@
 
         public TSettings Get<TSettings>() where TSettings : class
         {
-            var settingName = typeof(TSettings).Name;
-            return Get<TSettings>(settingName);
+            return _cacheService.Get(ConfigurationCacheKey, _configurationService.Get<TSettings>);
         }
 
-        public TSettings Get<TSettings>(string settingName) where TSettings : class
+        public object Get(Type settingsType)
         {
-            return _cacheService.Get(ConfigurationCacheKey, GetFromBase<TSettings>, settingName);
-        }
-
-        private TSettings GetFromBase<TSettings>(string configurationSectionName) where TSettings : class
-        {
-            return _configurationService.Get<TSettings>(configurationSectionName);
+            return _cacheService.Get(ConfigurationCacheKey, () => _configurationService.Get(settingsType), settingsType);
         }
     }
 }
