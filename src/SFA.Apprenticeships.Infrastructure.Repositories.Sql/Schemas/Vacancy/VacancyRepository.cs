@@ -83,7 +83,6 @@
                             e.FullName AS EmployerName,
                             e.EmployerId,
                             e.Town AS EmployerLocation,
-
 		                    af.CodeName AS FrameworkCodeName,
 		                    el.CodeName AS ApprenticeshipLevel,
 		                    ao.CodeName AS SectorCodeName,
@@ -100,7 +99,6 @@
 		                    RC.Value AS ThingsToConsider,
 		                    FP.Value AS FutureProspects,
 		                    OII.Value AS OtherInformation,
-
 		                    TIT.Comments AS TitleComment,
 		                    ALE.Comments AS ApprenticeshipLevelComment,
 		                    CLD.Comments AS ClosingDateComment,
@@ -129,12 +127,13 @@
 		                    WWK.Comments AS WorkingWeekComment,
 		                    LAD.Comments AS LocationAddressesComment,
 		                    ALI.Comments AS AdditionalLocationInformationComment,
-
+                            AED.Comments AS AnonymousEmployerDescriptionComment,
+                            AER.Comments AS AnonymousEmployerReasonComment,
+                            AAE.Comments AS AnonymousAboutTheEmployerComment,
 		                    la.CodeName AS LocalAuthorityCode,
 		                    v.DurationTypeId AS DurationType,
 		                    v.DurationValue AS Duration,
 		                    c.FullName AS County
-
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
@@ -142,7 +141,6 @@
                     ON		o.EmployerId = e.EmployerId
                     JOIN	ProviderSite s
                     ON      s.ProviderSiteId = v.VacancyManagerId
-
                     LEFT OUTER JOIN	ApprenticeshipFramework af
                     ON		af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
                     LEFT OUTER JOIN	ApprenticeshipType AS at
@@ -165,7 +163,6 @@
                     ON		la.LocalAuthorityId = v.LocalAuthorityId
                     LEFT OUTER JOIN County c
                     ON		c.CountyId = v.CountyId
-
                     LEFT OUTER JOIN VacancyTextField TBP ON TBP.VacancyId = v.VacancyId AND TBP.Field = dbo.GetTextFieldId('TBP')
                     LEFT OUTER JOIN VacancyTextField QR ON QR.VacancyId = v.VacancyId AND QR.Field = dbo.GetTextFieldId('QR')
                     LEFT OUTER JOIN VacancyTextField SR ON SR.VacancyId = v.VacancyId AND SR.Field = dbo.GetTextFieldId('SR')
@@ -173,7 +170,6 @@
                     LEFT OUTER JOIN VacancyTextField RC ON RC.VacancyId = v.VacancyId AND RC.Field = dbo.GetTextFieldId('RC')
                     LEFT OUTER JOIN VacancyTextField FP ON FP.VacancyId = v.VacancyId AND FP.Field = dbo.GetTextFieldId('FP')
                     LEFT OUTER JOIN VacancyTextField OII ON OII.VacancyId = v.VacancyId AND OII.Field = dbo.GetTextFieldId('OII')
-
                     LEFT OUTER JOIN VacancyReferralComments TIT ON TIT.VacancyId = v.VacancyId AND TIT.FieldTypeId = dbo.GetCommentFieldId('TIT')
                     LEFT OUTER JOIN VacancyReferralComments ALE ON ALE.VacancyId = v.VacancyId AND ALE.FieldTypeId = dbo.GetCommentFieldId('ALE')
                     LEFT OUTER JOIN VacancyReferralComments CLD ON CLD.VacancyId = v.VacancyId AND CLD.FieldTypeId = dbo.GetCommentFieldId('CLD')
@@ -202,7 +198,9 @@
                     LEFT OUTER JOIN VacancyReferralComments WWK ON WWK.VacancyId = v.VacancyId AND WWK.FieldTypeId = dbo.GetCommentFieldId('WWK')
                     LEFT OUTER JOIN VacancyReferralComments LAD ON LAD.VacancyId = v.VacancyId AND LAD.FieldTypeId = dbo.GetCommentFieldId('LAD')
                     LEFT OUTER JOIN VacancyReferralComments ALI ON ALI.VacancyId = v.VacancyId AND ALI.FieldTypeId = dbo.GetCommentFieldId('ALI')
-
+                    LEFT OUTER JOIN VacancyReferralComments AED ON AED.VacancyId = v.VacancyId AND AED.FieldTypeId = dbo.GetCommentFieldId('AED')
+                    LEFT OUTER JOIN VacancyReferralComments AER ON AER.VacancyId = v.VacancyId AND AER.FieldTypeId = dbo.GetCommentFieldId('AER')
+                    LEFT OUTER JOIN VacancyReferralComments AAE ON AAE.VacancyId = v.VacancyId AND AAE.FieldTypeId = dbo.GetCommentFieldId('AAE')
                     WHERE v.VacancyID = @vacancyId
             ";
 
@@ -651,6 +649,9 @@ when not matched then
             SaveComment(vacancyId, ReferralCommentCodeName.WorkingWeekComment, entity.WorkingWeekComment);
             SaveComment(vacancyId, ReferralCommentCodeName.LocationAddressesComment, entity.LocationAddressesComment);
             SaveComment(vacancyId, ReferralCommentCodeName.AdditionalLocationInformationComment, entity.AdditionalLocationInformationComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.AnonymousEmployerReasonComment, entity.AnonymousEmployerReasonComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.AnonymousAboutTheEmployerComment, entity.AnonymousAboutTheEmployerComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.AnonymousEmployerDescriptionComment, entity.AnonymousEmployerDescriptionComment);
         }
 
         private void SaveComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName, string comment)

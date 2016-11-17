@@ -1470,6 +1470,19 @@
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
 
+            if (viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.HasValue && viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+            {
+                vacancy.EmployerAnonymousReason = viewModel.AnonymousEmployerReason;
+                vacancy.AnonymousEmployerReasonComment =
+                    viewModel.AnonymousEmployerReasonComment;
+                vacancy.EmployerAnonymousName = viewModel.AnonymousEmployerDescription;
+                vacancy.AnonymousEmployerDescriptionComment =
+                    viewModel.AnonymousEmployerDescriptionComment;
+                vacancy.EmployerDescription = viewModel.AnonymousAboutTheEmployerDescription;
+                vacancy.AnonymousAboutTheEmployerComment =
+                    viewModel.AnonymousAboutTheEmployerDescriptionComment;
+            }
+
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                 vacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {

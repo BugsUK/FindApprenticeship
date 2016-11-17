@@ -20,14 +20,14 @@
                         <div class="left-grey-border">
                             <h3 class="bold-xsmall">Reason for setting employer as anonymous</h3>
                             <p class="font-xsmall">@Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReason</p>
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReason, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReasonComment, Model.EmployerLink))
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AnonymousEmployerReason, Model.NewVacancyViewModel.AnonymousEmployerReasonComment, Model.EmployerLink))
                         </div>
                     }
                     else
                     {
                         <p id="vacancy-employer-name" class="@(Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
                     }
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReason, Model.EmployerLink, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousEmployerReasonComment))
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AnonymousEmployerReason, Model.EmployerLink, Model.NewVacancyViewModel.AnonymousEmployerReasonComment))
                 </div>
             </div>
         </div>
@@ -38,10 +38,10 @@
                 <div class="@editableItemClass">
                     <h3 class="bold-small">
                         Description
-                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.EmployerDescription, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
                     </h3>
                     <p id="vacancy-employer-description" class="@Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription))</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                 </div>
             </div>
         </div>
@@ -190,7 +190,7 @@
                                                                 <td>@locationAddress.Address.Town</td>
                                                                 <td>@locationAddress.NumberOfPositions</td>
                                                             </tr>                                                            
-                                                                @if (Model.IsManageReviewerView)
+                                                                if (Model.IsManageReviewerView)
                                                                  {
                                                                      <tr>
                                                                          <td>
@@ -243,7 +243,7 @@
                                                             <td>@locationAddress.Address.Town</td>
                                                             <td style="text-align:right;">@locationAddress.NumberOfPositions</td>
                                                         </tr>
-                                                        @if (Model.IsManageReviewerView)
+                                                        if (Model.IsManageReviewerView)
                                                         {
                                                             <tr>
                                                                 <td>

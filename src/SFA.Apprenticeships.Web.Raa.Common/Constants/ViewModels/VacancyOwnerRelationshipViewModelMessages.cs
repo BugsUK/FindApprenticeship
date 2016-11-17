@@ -93,7 +93,7 @@
 
         public class AnonymousAboutTheEmployerDescriptionComment
         {
-            public const string LabelText = "Employer description comment";
+            public const string LabelText = "About the employer comment";
         }
 
         public class IsAnonymousEmployer

@@ -322,12 +322,11 @@
             if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
             {
                 viewModel.AnonymousEmployerDescription = vacancy.VacancyOwnerRelationship.Employer.FullName;
+                viewModel.AnonymousEmployerDescriptionComment = vacancy.AnonymousEmployerDescriptionComment;
                 viewModel.AnonymousEmployerReason = vacancy.VacancyOwnerRelationship.AnonymousEmployerReason;
-                viewModel.AnonymousEmployerReasonComment =
-                    vacancy.VacancyOwnerRelationship.AnonymousEmployerReasonComment;
-                viewModel.AnonymousEmployerDescriptionComment =
-                    vacancy.VacancyOwnerRelationship.AnonymousEmployerDescriptionComment;
-                viewModel.EmployerWebsiteUrl = null;
+                viewModel.AnonymousEmployerReasonComment = vacancy.AnonymousEmployerReasonComment;
+                viewModel.AnonymousAboutTheEmployerDescription = vacancy.VacancyOwnerRelationship.AnonymousAboutTheEmployerDescription;
+                viewModel.AnonymousAboutTheEmployerDescriptionComment = vacancy.AnonymousAboutTheEmployerDescriptionComment;
             }
             else
             {
@@ -469,6 +468,13 @@
             existingViewModel.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
             existingViewModel.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             existingViewModel.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
+            existingViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
+            existingViewModel.AnonymousEmployerReason = viewModel.AnonymousEmployerReason;
+            existingViewModel.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
+            existingViewModel.AnonymousAboutTheEmployerDescription = viewModel.AnonymousAboutTheEmployerDescription;
+            existingViewModel.AnonymousEmployerReasonComment = viewModel.AnonymousEmployerReasonComment;
+            existingViewModel.AnonymousEmployerDescriptionComment = viewModel.AnonymousEmployerDescriptionComment;
+            existingViewModel.AnonymousAboutTheEmployerDescriptionComment = viewModel.AnonymousAboutTheEmployerDescriptionComment;
 
             if (!validationResult.IsValid)
             {
@@ -476,12 +482,20 @@
             }
 
             _providerQaProvider.ConfirmVacancyOwnerRelationship(viewModel);
+
             existingVacancy.IsEmployerLocationMainApprenticeshipLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation;
             existingVacancy.NumberOfPositions = viewModel.NumberOfPositions;
             existingVacancy.VacancyGuid = viewModel.VacancyGuid;
             existingVacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
             existingVacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             existingVacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
+            existingVacancy.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
+            existingVacancy.AnonymousEmployerReason = viewModel.AnonymousEmployerReason;
+            existingVacancy.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
+            existingVacancy.AnonymousAboutTheEmployerDescription = viewModel.AnonymousAboutTheEmployerDescription;
+            existingVacancy.AnonymousEmployerReasonComment = viewModel.AnonymousEmployerReasonComment;
+            existingVacancy.AnonymousEmployerDescriptionComment = viewModel.AnonymousEmployerDescriptionComment;
+            existingVacancy.AnonymousAboutTheEmployerDescriptionComment = viewModel.AnonymousAboutTheEmployerDescriptionComment;
 
             _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
 

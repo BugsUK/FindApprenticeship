@@ -59,25 +59,23 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public int? NumberOfPositions { get; set; }
 
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
-
         public string AdditionalLocationInformation { get; set; }
-
         public bool ComeFromPreview { get; set; }
-
+        public string EmployerDescription { get; set; }
         public string EmployerDescriptionComment { get; set; }
-
         public string EmployerWebsiteUrlComment { get; set; }
-
         public string LocationAddressesComment { get; set; }
-
         public string NumberOfPositionsComment { get; set; }
-
         public string AdditionalLocationInformationComment { get; set; }
-
         public VacancyType VacancyType { get; set; }
-
         public int AutoSaveTimeoutInSeconds { get; set; }
-
         public VacancySource VacancySource { get; set; }
+        public string AnonymousEmployerDescription { get; set; }
+        public string AnonymousEmployerDescriptionComment { get; set; }
+        public string AnonymousEmployerReason { get; set; }
+        public string AnonymousEmployerReasonComment { get; set; }
+        public string AnonymousAboutTheEmployerDescription { get; set; }
+        public string AnonymousAboutTheEmployerDescriptionComment { get; set; }
+        public bool? IsAnonymousEmployer { get; set; }
     }
 }

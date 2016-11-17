@@ -1,11 +1,11 @@
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using Dapper.Contrib.Extensions;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     [System.ComponentModel.DataAnnotations.Schema.Table("dbo.Vacancy")]
     public class Vacancy : IVacancyWage
@@ -90,6 +90,13 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string EmployerAnonymousName { get; set; }
         public string EmployerAnonymousReason { get; set; }
 
+        [Write(false)]
+        public string AnonymousEmployerDescriptionComment { get; set; }
+        [Write(false)]
+        public string AnonymousEmployerReasonComment { get; set; }
+
+        [Write(false)]
+        public string AnonymousAboutTheEmployerComment { get; set; }
         [Write(false)]
         public string EmployerDescription { get; set; }
         [Write(false)]
@@ -267,7 +274,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         [Column(TypeName = "money")]
         public decimal? WeeklyWage { get; set; }
-        
+
         public string WorkingWeek { get; set; }
 
         [Write(false)]
