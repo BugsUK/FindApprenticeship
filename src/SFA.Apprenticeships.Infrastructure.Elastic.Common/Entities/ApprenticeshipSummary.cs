@@ -75,6 +75,12 @@
         public decimal? WageAmount { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public decimal? WageAmountLowerBound { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public decimal? WageAmountUpperBound { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string WageText { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
