@@ -21,3 +21,11 @@
 .sfa-xlarge-bottom-margin {
     margin-bottom: 30px !important;
 }
+
+.js-enabled .nojs-notice {
+    display: none !important;
+}
+
+iframe, object, embed {
+    max-width: 100%;
+}

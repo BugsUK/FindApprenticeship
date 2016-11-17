@@ -16,6 +16,12 @@
 .sfa-xlarge-bottom-margin {
   margin-bottom: 30px !important; }
 
+.js-enabled .nojs-notice {
+  display: none !important; }
+
+iframe, object, embed {
+  max-width: 100%; }
+
 .button-link {
   font-family: "nta",Arial,sans-serif;
   font-size: 19px;
@@ -770,6 +776,18 @@ hr {
     padding-left: 65px;
     margin-left: -15px; }
 
+.data {
+  margin-top: 0.3125em;
+  margin-bottom: 1.25em; }
+  @media (min-width: 641px) {
+    .data {
+      margin-top: 0.26316em;
+      margin-bottom: 1.05263em; } }
+
+.data-item {
+  display: block;
+  line-height: 1; }
+
 .button {
   background-color: #00823b;
   position: relative;
@@ -1229,7 +1247,7 @@ details {
   margin-top: 10px;
   margin-bottom: 0; }
 
-.inline .form-group .panel-border-narrow {
+.inline .panel-border-narrow {
   margin-top: 10px;
   margin-bottom: 0; }
 
@@ -1349,6 +1367,11 @@ textarea {
   @media (min-width: 641px) {
     .form-control {
       width: 50%; } }
+
+input.form-control,
+textarea.form-control {
+  -webkit-appearance: none;
+  border-radius: 0; }
 
 .form-radio {
   display: block;

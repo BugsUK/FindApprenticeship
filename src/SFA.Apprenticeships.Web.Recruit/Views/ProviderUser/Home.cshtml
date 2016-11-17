@@ -361,7 +361,7 @@
                                                 @HtmlExtensions.EscapeHtmlEncoding(Html, title)
                                                 @if (isOfflineVacancy)
                                                 {
-                                                    <span class="subtitle"><br />(Applications managed externally)</span>
+                                                    <span class="heading-secondary "><br />(Applications managed externally)</span>
                                                 }
                                             </a>
                                         </div>
@@ -381,7 +381,7 @@
                                         {
                                             @vacancy.Location.Town<br />
                                             <div class="hgroup-small">
-                                                <p class="subtitle">@vacancy.Location.Postcode</p>
+                                                <p class="heading-secondary ">@vacancy.Location.Postcode</p>
                                             </div>
                                         }
                                     </td>
@@ -400,7 +400,7 @@
                                                         <span>
                                                             1<br />
                                                         </span>
-                                                        <p class="subtitle">application</p>
+                                                        <p class="heading-secondary ">application</p>
                                                     </div>
 
                                                 }
@@ -410,7 +410,7 @@
                                                         <span>
                                                             @newApplicationCount<br />
                                                         </span>
-                                                        <p class="subtitle">applications</p>
+                                                        <p class="heading-secondary ">applications</p>
                                                     </div>
 
                                                 }
@@ -421,7 +421,7 @@
                                                 {
                                                     <div class="hgroup-small">
                                                         <span>1<br /></span>
-                                                        <p class="subtitle">@unit</p>
+                                                        <p class="heading-secondary ">@unit</p>
                                                     </div>
 
                                                 }
@@ -433,7 +433,7 @@
                                                 {
                                                     <div class="hgroup-small">
                                                         <span>@applicationCount<br /></span>
-                                                        <p class="subtitle">@units</p>
+                                                        <p class="heading-secondary ">@units</p>
                                                     </div>
                                                 }
                                             }
@@ -533,7 +533,7 @@
 
                     <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
                         <label for="page-size" class="heading-small inline">Display results</label>
-                        @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.PageSize, Model.VacanciesSummary.VacanciesSummarySearch.PageSizes, new { id = "page-size" })
+                        @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.PageSize, Model.VacanciesSummary.VacanciesSummarySearch.PageSizes, new { id = "page-size", @class = "form-control" })
                         <noscript>
                             <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
                         </noscript>

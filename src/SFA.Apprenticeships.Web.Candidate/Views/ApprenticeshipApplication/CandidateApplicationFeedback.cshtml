@@ -28,7 +28,7 @@
         <div class="inner-block">
             <div class="hgroup-small">
                 <h2 class="heading-medium">@Model.Title</h2>
-                <p class="subtitle">@Model.EmployerName</p>
+                <p class="heading-secondary ">@Model.EmployerName</p>
                 <br />
                 <p class="font-xsmall">
                     @Html.RouteLink("View my application", CandidateRouteNames.ApprenticeshipView, new { id = Model.VacancyId }, new { @class = "account-link" })

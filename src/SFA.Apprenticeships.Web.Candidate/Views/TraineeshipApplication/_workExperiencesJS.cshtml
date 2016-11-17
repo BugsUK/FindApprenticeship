@@ -41,7 +41,7 @@
                             <div class="form-group no-btm-margin">
                                 <span class="form-hint">Month</span>
 
-                                <select id="work-from" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: fromMonth"></select>
+                                <select class="form-control" id="work-from" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: fromMonth"></select>
 
                             </div>
                             <div class="form-group no-btm-margin" data-bind="parentvalElement: fromYear">
@@ -55,7 +55,7 @@
                             <div class="form-group no-btm-margin">
                                 <span class="form-hint">Month</span>
 
-                                <select id="work-to" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: toMonth,attr:{'disabled':toDateReadonly() }"></select>
+                                <select class="form-control" id="work-to" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: toMonth,attr:{'disabled':toDateReadonly() }"></select>
 
                             </div>
                             <div class="form-group no-btm-margin" data-bind="parentvalElement: toYear">
@@ -150,7 +150,7 @@
                                         <tr>
                                             <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <select title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemFromMonth, attr:{'name':'Candidate.WorkExperience[' + $index() +'].FromMonth'} "></select>
+                                                    <select class="form-control" title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemFromMonth, attr:{'name':'Candidate.WorkExperience[' + $index() +'].FromMonth'} "></select>
 
                                                 </div>
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
@@ -164,7 +164,7 @@
                                             </td>
                                             <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <select title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemToMonth, attr:{'disabled': toItemDateReadonly,'name':'Candidate.WorkExperience[' + $index() +'].ToMonth'}"></select>
+                                                    <select class="form-control" title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemToMonth, attr:{'disabled': toItemDateReadonly,'name':'Candidate.WorkExperience[' + $index() +'].ToMonth'}"></select>
 
                                                 </div>
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">

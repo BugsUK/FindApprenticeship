@@ -178,14 +178,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1390), Tuple.Create("\"", 1404)
+WriteAttribute("for", Tuple.Create(" for=\"", 1388), Tuple.Create("\"", 1402)
             
             #line 27 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                          , Tuple.Create(Tuple.Create("", 1396), Tuple.Create<System.Object, System.Int32>(inputId
+                                                          , Tuple.Create(Tuple.Create("", 1394), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1396), false)
+, 1394), false)
 );
 
 WriteLiteral(">");
@@ -274,14 +274,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2299), Tuple.Create("\"", 2313)
+WriteAttribute("for", Tuple.Create(" for=\"", 2295), Tuple.Create("\"", 2309)
             
             #line 42 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                      , Tuple.Create(Tuple.Create("", 2305), Tuple.Create<System.Object, System.Int32>(inputId
+                                                      , Tuple.Create(Tuple.Create("", 2301), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 2305), false)
+, 2301), false)
 );
 
 WriteLiteral(">");

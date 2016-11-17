@@ -16,7 +16,7 @@
 {
     <div>
         <p>You will not be able to retreive this vacancy once it has been deleted</p>
-        <div class="grid-row grid-1-1">
+        <div class="column-full">
             @foreach (var prop in Model.GetType().GetProperties())
             {
                 var getter = prop.GetGetMethod();

@@ -264,6 +264,8 @@ WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n                                <select");
 
+WriteLiteral(" class=\"form-control\"");
+
 WriteLiteral(" id=\"work-from\"");
 
 WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsValue: \'monthNumber" +
@@ -315,6 +317,8 @@ WriteLiteral(">\r\n                                <span");
 WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n\r\n                                <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" id=\"work-to\"");
 
@@ -632,6 +636,8 @@ WriteLiteral(" data-bind=\"visible: !showEditButton()\"");
 
 WriteLiteral(">\r\n                                                    <select");
 
+WriteLiteral(" class=\"form-control\"");
+
 WriteLiteral(" title=\"From month\"");
 
 WriteLiteral(" data-bind=\"options: $parent.months, optionsText: \'monthName\', optionsValue: \'mon" +
@@ -691,6 +697,8 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 WriteLiteral(" data-bind=\"visible: !showEditButton()\"");
 
 WriteLiteral(">\r\n                                                    <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" title=\"To month\"");
 

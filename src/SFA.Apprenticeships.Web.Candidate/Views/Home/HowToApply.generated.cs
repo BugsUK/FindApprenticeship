@@ -449,6 +449,8 @@ WriteLiteral(" class=\"form-label\"");
 
 WriteLiteral(">Type of qualification</label>\r\n                        <select");
 
+WriteLiteral(" class=\"form-control\"");
+
 WriteLiteral(" id=\"qual-type\"");
 
 WriteLiteral(">\r\n                            <option");
@@ -1484,6 +1486,8 @@ WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n                            <select");
 
+WriteLiteral(" class=\"form-control\"");
+
 WriteLiteral(" name=\"\"");
 
 WriteLiteral(" id=\"work-from\"");
@@ -1577,6 +1581,8 @@ WriteLiteral(">\r\n                            <span");
 WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n                            <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" name=\"\"");
 
@@ -1814,6 +1820,8 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 
 WriteLiteral("><select");
 
+WriteLiteral(" class=\"form-control\"");
+
 WriteLiteral(" class=\"form-control work-month-select\"");
 
 WriteLiteral(" id=\"workFromSelect\"");
@@ -1895,6 +1903,8 @@ WriteLiteral("><div");
 WriteLiteral(" class=\"form-group form-group-compound disabled\"");
 
 WriteLiteral("><select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" class=\"form-control editable-current work-month-select\"");
 
@@ -2124,6 +2134,8 @@ WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n                            <select");
 
+WriteLiteral(" class=\"form-control\"");
+
 WriteLiteral(" name=\"\"");
 
 WriteLiteral(" id=\"training-from\"");
@@ -2217,6 +2229,8 @@ WriteLiteral(">\r\n                            <span");
 WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n                            <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" name=\"\"");
 

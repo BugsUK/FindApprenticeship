@@ -33,7 +33,7 @@
                             <label for="training-history-from-month" class="form-label">From</label>
                             <div class="form-group form-group-compound no-btm-margin">
                                 <span class="form-hint">Month</span>
-                                <select id="training-history-from-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: fromMonth"></select>
+                                <select class="form-control" id="training-history-from-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: fromMonth"></select>
                             </div>
                             <div class="form-group no-btm-margin" data-bind="parentvalElement: fromYear">
                                 <label for="training-history-from-year" class="form-hint">Year</label>
@@ -44,7 +44,7 @@
                             <label for="training-history-to-month" class="form-label">To</label>
                             <div class="form-group form-group-compound no-btm-margin">
                                 <span class="form-hint">Month</span>
-                                <select id="training-history-to-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: toMonth"></select>
+                                <select class="form-control" id="training-history-to-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: toMonth"></select>
                             </div>
                             <div class="form-group form-group-compound no-btm-margin" data-bind="parentvalElement: toYear">
                                 <label for="training-history-to-year" class="form-hint">Year</label>
@@ -129,7 +129,7 @@
                                         <tr>
                                             <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <select title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber', value: itemFromMonth, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].FromMonth'} "></select>
+                                                    <select class="form-control" title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber', value: itemFromMonth, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].FromMonth'} "></select>
                                                 </div>
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
                                                     <input title="From year" type="text" class="form-control" data-bind="value: itemFromYear, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].FromYear'}" pattern="[0-9]*" maxlength="4">
@@ -140,7 +140,7 @@
                                             </td>
                                             <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <select title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber', value: itemToMonth, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].ToMonth'}"></select>
+                                                    <select class="form-control" title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber', value: itemToMonth, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].ToMonth'}"></select>
                                                 </div>
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
                                                     <input title="To year" type="text" class="form-control" data-bind="value: itemToYear, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].ToYear'}" pattern="[0-9]*" maxlength="4">

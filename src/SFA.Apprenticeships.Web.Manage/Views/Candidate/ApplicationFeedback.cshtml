@@ -43,7 +43,7 @@
         <div class="inner-block">
             <div class="hgroup-small">
                 <h2 class="heading-small">@Model.Vacancy.Title</h2>
-                <p class="subtitle">@Model.Vacancy.EmployerName</p>
+                <p class="heading-secondary ">@Model.Vacancy.EmployerName</p>
                 <br />
                 <p>
                     @Html.RouteLink("View my application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = Model.ApplicationSelection.ApplicationId })

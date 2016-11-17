@@ -127,14 +127,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden width-all-3-4 small-btm-margin" }));
+               Write(Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden width-all-3-4 small-btm-margin form-control" }));
 
             
             #line default
             #line hidden
             
             #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-                                                                                                                                                              
+                                                                                                                                                                           
                     
             
             #line default
@@ -262,14 +262,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2180), Tuple.Create("\"", 2271)
+WriteAttribute("href", Tuple.Create(" href=\"", 2193), Tuple.Create("\"", 2284)
             
             #line 37 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2187), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
+, Tuple.Create(Tuple.Create("", 2200), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
             
             #line default
             #line hidden
-, 2187), false)
+, 2200), false)
 );
 
 WriteLiteral(">");
@@ -307,7 +307,7 @@ WriteLiteral("                    ");
 
             
             #line 45 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" }));
+               Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control" }));
 
             
             #line default
@@ -328,7 +328,7 @@ WriteLiteral("                    ");
 
             
             #line 49 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel" }));
+               Write(Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control" }));
 
             
             #line default
@@ -404,14 +404,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4024), Tuple.Create("\"", 4054)
+WriteAttribute("value", Tuple.Create(" value=\"", 4087), Tuple.Create("\"", 4117)
             
             #line 64 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 4032), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 4095), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 4032), false)
+, 4095), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -446,14 +446,14 @@ WriteLiteral(" name=\"LocationType\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4421), Tuple.Create("\"", 4448)
+WriteAttribute("value", Tuple.Create(" value=\"", 4484), Tuple.Create("\"", 4511)
             
             #line 68 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-  , Tuple.Create(Tuple.Create("", 4429), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+  , Tuple.Create(Tuple.Create("", 4492), Tuple.Create<System.Object, System.Int32>(Model.LocationType
             
             #line default
             #line hidden
-, 4429), false)
+, 4492), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n</section>");

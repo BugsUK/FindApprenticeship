@@ -25,7 +25,7 @@
 
     <div class="form-group">
         <label for="contact-subject" class="form-label">Briefly describe your question</label>
-        @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs small-btm-margin select-inject" })
+        @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs small-btm-margin select-inject form-control" })
 
         <div id="changeEmailAddress" class="selfServe panel-indent toggle-content hide-nojs text">
             <p>If you'd like to change your email address visit the <a href="@Url.RouteUrl(RouteNames.UpdateEmail)">update email</a> page. If you're still having problems contact us using this form.</p>

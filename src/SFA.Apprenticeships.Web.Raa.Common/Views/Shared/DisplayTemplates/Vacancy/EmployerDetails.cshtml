@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="grid-row grid-1-1">
+    <div class="column-full">
         <div class="blocklabel-single-container">
             <div class="hide-nojs">
                 <div class="form-group inline clearfix blocklabel-single">
@@ -107,7 +107,7 @@
         </noscript>
     </div>
 
-    <div class="grid-row grid-1-1">
+    <div class="column-full">
         @Html.FormTextFor(model => model.EmployerWebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" })
         @Html.EditorFor(m => m.EmployerWebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.EmployerWebsiteUrlComment))
         @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})

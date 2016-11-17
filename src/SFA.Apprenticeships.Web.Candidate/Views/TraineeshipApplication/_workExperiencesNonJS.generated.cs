@@ -270,7 +270,7 @@ WriteLiteral("                                                    ");
 
             
             #line 78 "..\..\Views\TraineeshipApplication\_workExperiencesNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].FromMonth), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth" }));
+                                               Write(Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].FromMonth), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth", @class = "form-control" }));
 
             
             #line default
@@ -318,7 +318,7 @@ WriteLiteral("                                                    ");
 
             
             #line 90 "..\..\Views\TraineeshipApplication\_workExperiencesNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].ToMonth), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth" }));
+                                               Write(Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].ToMonth), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth", @class = "form-control" }));
 
             
             #line default

@@ -69,24 +69,26 @@ WriteLiteral(" class=\"form-hint text\"");
 WriteLiteral(">\r\n        We need this information to make sure we\'re giving equal opportunities" +
 "\r\n        to all candidates\r\n    </p>\r\n    <select");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 323), Tuple.Create("\"", 357)
+WriteLiteral(" class=\"form-control\"");
+
+WriteAttribute("id", Tuple.Create(" id=\"", 344), Tuple.Create("\"", 378)
             
             #line 9 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
-, Tuple.Create(Tuple.Create("", 328), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.Ethnicity)
+, Tuple.Create(Tuple.Create("", 349), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.Ethnicity)
             
             #line default
             #line hidden
-, 328), false)
+, 349), false)
 );
 
-WriteAttribute("name", Tuple.Create(" name=\"", 358), Tuple.Create("\"", 396)
+WriteAttribute("name", Tuple.Create(" name=\"", 379), Tuple.Create("\"", 417)
             
             #line 9 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
-, Tuple.Create(Tuple.Create("", 365), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Ethnicity)
+, Tuple.Create(Tuple.Create("", 386), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Ethnicity)
             
             #line default
             #line hidden
-, 365), false)
+, 386), false)
 );
 
 WriteLiteral(" class=\"para-btm-margin\"");

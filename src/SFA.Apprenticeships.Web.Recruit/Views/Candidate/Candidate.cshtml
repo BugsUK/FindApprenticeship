@@ -19,7 +19,7 @@
         <h1 class="heading-xlarge" itemprop="title">
             Applications for @Model.ApplicantDetails.Name
         </h1>
-        <p class="subtitle" itemprop="ApplicantId">Applicant ID - @Model.ApplicantDetails.ApplicantId</p>
+        <p class="heading-secondary " itemprop="ApplicantId">Applicant ID - @Model.ApplicantDetails.ApplicantId</p>
     </div>
     <details>
         <summary>Contact details for @Model.ApplicantDetails.Name</summary>
@@ -137,7 +137,7 @@
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.Order)
     <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
         <label for="page-size" class="heading-small inline">Display results</label>
-        @Html.DropDownListFor(m => m.CandidateApplicationsSearch.PageSize, Model.CandidateApplicationsSearch.PageSizes, new {id = "page-size"})
+        @Html.DropDownListFor(m => m.CandidateApplicationsSearch.PageSize, Model.CandidateApplicationsSearch.PageSizes, new {id = "page-size", @class = "form-control" })
         <noscript>
             <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
         </noscript>

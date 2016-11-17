@@ -126,7 +126,7 @@ else
                             }
                         </h2>
 
-                        <p id="posted-date-@vacancy.Id" class="subtitle">
+                        <p id="posted-date-@vacancy.Id" class="heading-secondary ">
                             @vacancy.EmployerName
                             <span class="font-xsmall inl-block">
                                 @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
@@ -173,7 +173,7 @@ else
                                     <li data-show="DisplayDistance" @{if (!Model.VacancySearch.DisplayDistance) { <text> class="toggle-content" </text>      }}>
                                         <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
                                         <div class="detail-content toggle-content hide-nojs">
-                                            <select class="form-control select-mode" name="">
+                                            <select class="form-control" class="form-control select-mode" name="">
                                                 <option value="DRIVING" aria-live="polite">Driving</option>
                                                 <option value="TRANSIT" aria-live="polite">Bus/Train</option>
                                                 <option value="WALKING" aria-live="polite">Walking</option>

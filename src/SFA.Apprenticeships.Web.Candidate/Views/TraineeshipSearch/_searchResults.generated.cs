@@ -346,6 +346,8 @@ WriteLiteral(" class=\"detail-content toggle-content hide-nojs\"");
 
 WriteLiteral(">\r\n                                            <select");
 
+WriteLiteral(" class=\"form-control\"");
+
 WriteLiteral(" class=\"form-control select-mode\"");
 
 WriteLiteral(" name=\"\"");
@@ -430,24 +432,24 @@ WriteLiteral(" class=\"column-one-third map-container hide-nojs small-btm-margin
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5241), Tuple.Create("\"", 5351)
-, Tuple.Create(Tuple.Create("", 5248), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5248), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 5262), Tuple.Create("\"", 5372)
+, Tuple.Create(Tuple.Create("", 5269), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5269), true)
             
             #line 80 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-         , Tuple.Create(Tuple.Create("", 5296), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+         , Tuple.Create(Tuple.Create("", 5317), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 5296), false)
-, Tuple.Create(Tuple.Create("", 5322), Tuple.Create(",", 5322), true)
+, 5317), false)
+, Tuple.Create(Tuple.Create("", 5343), Tuple.Create(",", 5343), true)
             
             #line 80 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 5323), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                    , Tuple.Create(Tuple.Create("", 5344), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 5323), false)
-, Tuple.Create(Tuple.Create("", 5350), Tuple.Create("\'", 5350), true)
+, 5344), false)
+, Tuple.Create(Tuple.Create("", 5371), Tuple.Create("\'", 5371), true)
 );
 
 WriteLiteral(" target=\"_blank\"");

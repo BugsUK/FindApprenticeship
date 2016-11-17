@@ -106,7 +106,7 @@
                                     <span class="clearfix">@Html.Label(WageViewModelMessages.AmountMessages.HelpText)</span>
                                     £
                                     @Html.FormTextFor(m => m.Wage.Amount, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
-                                    @Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits)
+                                    @Html.DropDownListFor(m => m.Wage.Unit, Model.WageUnits, new { @class = "form-control" })
                                 </fieldset>
                             </div>
                             <div id="custom-wage-range-panel" class="toggle-content blocklabel-content">
@@ -117,7 +117,7 @@
                                     @Html.FormTextFor(m => m.Wage.AmountLowerBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12, placeholder = "min"})
                                     &nbsp;to&nbsp;£
                                     @Html.FormTextFor(m => m.Wage.AmountUpperBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12, placeholder = "max"})
-                                    @Html.DropDownListFor(m => m.Wage.RangeUnit, Model.WageUnits)
+                                    @Html.DropDownListFor(m => m.Wage.RangeUnit, Model.WageUnits, new { @class = "form-control" })
                                 </fieldset>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                         @Html.ValidationMessageFor(m => m.Wage.Classification)
                         <div id="preset-text-panel" class="toggle-content blocklabel-content nested-panel-1 clearfix">
                             <fieldset class="nested-panel-2 form-group inline-fixed">
-                                @Html.DropDownListFor(m => m.Wage.PresetText, Model.WageTextPresets)
+                                @Html.DropDownListFor(m => m.Wage.PresetText, Model.WageTextPresets, new { @class = "form-control" })
                             </fieldset>
                             <fieldset class="nested-panel-2 form-group inline-fixed @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Wage.WageTypeReason))">
                                 @Html.Label(WageViewModelMessages.WageTypeReason.LabelText)
@@ -155,7 +155,7 @@
                 <a name="@Html.NameFor(m => m.Duration).ToString().ToLower()"></a>
                 @Html.LabelFor(m => m.Duration, new {@class = "form-label"})
                 @Html.TextBoxFor(m => m.Duration, new {@class = "form-control-large form-control", type = "tel", size = 12})
-                @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
+                @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes, new { @class = "form-control" })
                 @Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration))
             </div>
 

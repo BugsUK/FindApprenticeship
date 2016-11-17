@@ -6,7 +6,7 @@
         We need this information to make sure we're giving equal opportunities
         to all candidates
     </p>
-    <select id="@Html.IdFor(m => m.Ethnicity)" name="@Html.NameFor(m => m.Ethnicity)" class="para-btm-margin">
+    <select class="form-control" id="@Html.IdFor(m => m.Ethnicity)" name="@Html.NameFor(m => m.Ethnicity)" class="para-btm-margin">
         <option value="0"@(Model != null && Model.Ethnicity == 0 ? " selected" : "")>-- Please select --</option>
         <option value="99"@(Model != null && Model.Ethnicity == 99 ? " selected" : "")>Prefer not to say</option>
         <optgroup label="White">

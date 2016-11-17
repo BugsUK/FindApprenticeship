@@ -8,7 +8,7 @@
 }
 @section metatags
 {
-    <meta name="DCS.dcsaut" content="@User.Identity.Name" />   
+    <meta name="DCS.dcsaut" content="@User.Identity.Name" />
     <meta name="WT.sp" content="Manage Apprenticeships" />
 }
 @using (Html.BeginForm(null, "AgencyUser", FormMethod.Post))
@@ -23,7 +23,7 @@
         </div>
         <div class="column-one-half">
             <label class="form-label">Change role</label>
-            @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new {id = "role", @class = "chosen-select column-1-1"})
+            @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new { id = "role", @class = "form-control form-control-3-4" })
             @if (Model.AgencyUser.RoleId != "QA_advisor")
             {
                 @Html.HiddenFor(m => m.AgencyUser.RegionalTeam)
@@ -44,7 +44,7 @@
             </div>
             <div class="column-one-half">
                 <label class="form-label">Change team</label>
-                @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams, new {id = "regional-team", @class = "chosen-select column-1-1"})
+                @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams, new { id = "regional-team", @class = "form-control form-control-3-4" })
                 <noscript>
                     <button class="button" name="DashboardAction" value="ChangeTeam">Change team</button>
                 </noscript>
@@ -54,17 +54,17 @@
             </div>
             <div class="column-one-half">
                 <label class="form-label" style="margin-top: 10px">Provider</label>
-                @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.Provider, new { @class = "grid-row grid-1-1" })
+                @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.Provider, new { @class = "form-control form-control-3-4" })
                 @Html.HiddenFor(m => m.VacancySummaries.SearchViewModel.Mode)
                 <div>
-                    @Html.RouteLink("Clear", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(), new {@class = "button-link", style = "padding-top: 17px; margin-bottom: 0" })
+                    @Html.RouteLink("Clear", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(), new { @class = "button-link", style = "padding-top: 17px; margin-bottom: 0" })
                     <button class="button" style="margin: 10px 0 0 0" name="DashboardAction" value="SearchVacancies">Search vacancies</button>
                 </div>
             </div>
         </div>
 
         <div class="grid-row">
-            <div class="grid-row grid-1-1">
+            <div class="grid-row">
                 <nav class="tabbed-nav">
                     @{
                         var dashboardVacancySummariesSearchViewModel = Model.VacancySummaries.SearchViewModel;
@@ -73,35 +73,34 @@
                         var reviewTitle = !string.IsNullOrEmpty(dashboardVacancySummariesSearchViewModel.Provider) ? dashboardVacancySummariesSearchViewModel.Provider + "'s" : Model.AgencyUser.RegionalTeam.GetTitle();
                     }
 
-                    @Html.RouteLink(reviewTitle + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Review), new {@class = "tabbed-tab no-js" + reviewTabControlClass})
-                    @Html.RouteLink("All teams", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Metrics), new {@class = "tabbed-tab no-js" + metricsTabControlClass})
+                    @Html.RouteLink(reviewTitle + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Review), new { @class = "tabbed-tab no-js" + reviewTabControlClass })
+                    @Html.RouteLink("All teams", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Metrics), new { @class = "tabbed-tab no-js" + metricsTabControlClass })
                 </nav>
             </div>
-        </div>
 
-        <div class="tabbed-content active form-control-3-4 beepboop">
-            @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Review)
-            {
-                @Html.Partial("_DashboardVacancyCounts", Model.VacancySummaries)
-                @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
-            }
-            @if(dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
-            {
-                @Html.Partial("_DashboardTeamMetrics", Model)
-            }
+            <div class="tabbed-content active grid-row">
+                @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Review)
+                {
+                    @Html.Partial("_DashboardVacancyCounts", Model.VacancySummaries)
+                    @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
+                }
+                @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
+                {
+                    @Html.Partial("_DashboardTeamMetrics", Model)
+                }
+            </div>
         </div>
-    }
+                        }
 
-    if(Model.AgencyUser.RoleId == "Helpdesk_advisor")
-    {
-        @Html.Partial("_DashboardHelpDesk")
-    }
-}
+                        if (Model.AgencyUser.RoleId == "Helpdesk_advisor")
+                        {
+                            @Html.Partial("_DashboardHelpDesk")
+                            }
+                        }
 
 <div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
     Loading
 </div>
-
 @section scripts
 {
     @Scripts.Render("~/bundles/dashboard")

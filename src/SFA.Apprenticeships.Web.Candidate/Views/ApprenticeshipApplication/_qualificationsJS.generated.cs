@@ -162,6 +162,8 @@ WriteLiteral(" class=\"form-label\"");
 
 WriteLiteral(">Type of qualification</label>\r\n                        <select");
 
+WriteLiteral(" class=\"form-control\"");
+
 WriteLiteral(" id=\"qual-type\"");
 
 WriteLiteral(" data-bind=\"options: qualificationTypes, optionsCaption: \'Select from list\', opti" +

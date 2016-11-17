@@ -35,7 +35,7 @@ else
                     <li class="search-results__item section-border">
                         <div class="hgroup-medium">
                             <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
-                            <p id="posted-date-@vacancy.Id" class="subtitle">
+                            <p id="posted-date-@vacancy.Id" class="heading-secondary ">
                                 @vacancy.EmployerName<span class="font-xsmall">
                                     (Added @vacancy.PostedDate.ToFriendlyDaysAgo()
                                     <span id="number-of-positions-@vacancy.Id" class="hidden-subcategory">
@@ -59,7 +59,7 @@ else
                                     <li>
                                         <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<span class="summary-style fake-link hide-nojs journey-trigger">Journey time</span>
                                         <div class="detail-content toggle-content hide-nojs">
-                                            <select class="form-control select-mode" name="">
+                                            <select class="form-control" class="form-control select-mode" name="">
                                                 <option value="DRIVING">Driving</option>
                                                 <option value="TRANSIT">Bus/Train</option>
                                                 <option value="WALKING">Walking</option>

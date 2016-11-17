@@ -239,7 +239,7 @@ WriteLiteral(" class=\"heading-medium\"");
 WriteLiteral(">Create another apprenticeship vacancy or traineeship opportunity</h2>\r\n        <" +
 "span");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(">Use a fresh template or continue with a draft</span>\r\n    </div>\r\n    <div");
 
@@ -247,28 +247,28 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2108), Tuple.Create("\"", 2221)
+WriteAttribute("href", Tuple.Create(" href=\"", 2118), Tuple.Create("\"", 2231)
             
             #line 59 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2115), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
+, Tuple.Create(Tuple.Create("", 2125), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
             
             #line default
             #line hidden
-, 2115), false)
+, 2125), false)
 );
 
 WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Start new opportunity or vacancy</a>\r\n    </div>\r\n    <p>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2307), Tuple.Create("\"", 2366)
+WriteAttribute("href", Tuple.Create(" href=\"", 2317), Tuple.Create("\"", 2376)
             
             #line 62 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2314), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 2324), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2314), false)
+, 2324), false)
 );
 
 WriteLiteral(">Return to recruitment home</a>\r\n    </p>\r\n</section>\r\n");

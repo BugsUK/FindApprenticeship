@@ -60,7 +60,7 @@
     if (Model.Candidates != null && Model.Candidates.ResultsCount > 0)
     {
         <div class="grid-row">
-            <div class="grid-row grid-1-1">
+            <div class="column-full">
                 <p class="candidate-results-count">
                     @if (Model.Candidates.ResultsCount == 1)
                     {
@@ -129,7 +129,7 @@
 
                 <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
                     <label for="page-size" class="heading-small inline">Display results</label>
-                    @Html.DropDownListFor(m => m.SearchViewModel.PageSize, Model.SearchViewModel.PageSizes, new {id = "page-size"})
+                    @Html.DropDownListFor(m => m.SearchViewModel.PageSize, Model.SearchViewModel.PageSizes, new {id = "page-size", @class = "form-control" })
                     <noscript>
                         <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
                     </noscript>

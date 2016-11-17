@@ -45,7 +45,7 @@
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.SectorCodeName)))">
                     <a name="@Html.NameFor(m => m.SectorCodeName).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.SectorCodeName)" class="form-label">Traineeship sector</label>
-                    @Html.DropDownListFor(m => m.SectorCodeName, Model.Sectors, new { @class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;" })
+                    @Html.DropDownListFor(m => m.SectorCodeName, Model.Sectors, new { @class = "form-control para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;" })
                     @Html.ValidationMessageFor(m => m.SectorCodeName)
                     @Html.EditorFor(m => m.SectorCodeNameComment, "Comment", Html.GetLabelFor(m => m.SectorCodeNameComment))
                     @Html.ValidationMessageFor(m => m.SectorCodeNameComment)
@@ -108,7 +108,7 @@
                     <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
                         <a name="@Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()"></a>
                         <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
-                        @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;"})
+                        @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "form-control para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;"})
                         @Html.ValidationMessageFor(m => m.FrameworkCodeName)
                         @Html.EditorFor(m => m.FrameworkCodeNameComment, "Comment", Html.GetLabelFor(m => m.FrameworkCodeNameComment))
                         @Html.ValidationMessageFor(m => m.FrameworkCodeNameComment)
@@ -143,7 +143,7 @@
                     <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
                         <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
                         <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
-                        <select name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%; margin-bottom: 15px;">
+                        <select class="form-control" name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%; margin-bottom: 15px;">
                             <option value="">Choose from the list of standards</option>
                             @foreach (var standardGroup in Model.Standards.GroupBy(s => s.Sector))
                             {

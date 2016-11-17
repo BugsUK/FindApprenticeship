@@ -298,7 +298,7 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n                <p");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(" id=\"vacancy-employer\"");
 
@@ -306,7 +306,7 @@ WriteLiteral(">");
 
             
             #line 52 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                                                     Write(Model.VacancyDetail.EmployerName);
+                                                               Write(Model.VacancyDetail.EmployerName);
 
             
             #line default
@@ -326,14 +326,14 @@ WriteLiteral("\r\n            <p");
 
 WriteLiteral(" id=\"vacancy-summary\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2767), Tuple.Create("\"", 2839)
+WriteAttribute("class", Tuple.Create(" class=\"", 2777), Tuple.Create("\"", 2849)
             
             #line 55 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 2775), Tuple.Create<System.Object, System.Int32>(Model.VacancyDetail.Description.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 2785), Tuple.Create<System.Object, System.Int32>(Model.VacancyDetail.Description.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 2775), false)
+, 2785), false)
 );
 
 WriteLiteral(">");
@@ -351,14 +351,14 @@ WriteLiteral(" id=\"appTourSummary\"");
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2934), Tuple.Create("\"", 3027)
+WriteAttribute("href", Tuple.Create(" href=\"", 2944), Tuple.Create("\"", 3037)
             
             #line 57 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 2941), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.VacancyId })
+, Tuple.Create(Tuple.Create("", 2951), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.VacancyId })
             
             #line default
             #line hidden
-, 2941), false)
+, 2951), false)
 );
 
 WriteLiteral(">View apprenticeship</a>\r\n            </p>\r\n        </div>\r\n    </section>\r\n");
@@ -569,30 +569,30 @@ WriteLiteral(" class=\"button-link no-check-for-dirty-form cancel\"");
 
 WriteLiteral(" value=\"Save\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\'", 5317), Tuple.Create("\'", 5502)
-, Tuple.Create(Tuple.Create("", 5327), Tuple.Create("Webtrends.multiTrack({", 5327), true)
-, Tuple.Create(Tuple.Create(" ", 5349), Tuple.Create("element:", 5350), true)
-, Tuple.Create(Tuple.Create(" ", 5358), Tuple.Create("this,", 5359), true)
-, Tuple.Create(Tuple.Create(" ", 5364), Tuple.Create("argsa:", 5365), true)
-, Tuple.Create(Tuple.Create(" ", 5371), Tuple.Create("[\"DCS.dcsuri\",", 5372), true)
-, Tuple.Create(Tuple.Create(" ", 5386), Tuple.Create("\"/apprenticeship/apply/savedraft/", 5387), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\'", 5327), Tuple.Create("\'", 5512)
+, Tuple.Create(Tuple.Create("", 5337), Tuple.Create("Webtrends.multiTrack({", 5337), true)
+, Tuple.Create(Tuple.Create(" ", 5359), Tuple.Create("element:", 5360), true)
+, Tuple.Create(Tuple.Create(" ", 5368), Tuple.Create("this,", 5369), true)
+, Tuple.Create(Tuple.Create(" ", 5374), Tuple.Create("argsa:", 5375), true)
+, Tuple.Create(Tuple.Create(" ", 5381), Tuple.Create("[\"DCS.dcsuri\",", 5382), true)
+, Tuple.Create(Tuple.Create(" ", 5396), Tuple.Create("\"/apprenticeship/apply/savedraft/", 5397), true)
             
             #line 99 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                                                                                                                                                                  , Tuple.Create(Tuple.Create("", 5420), Tuple.Create<System.Object, System.Int32>(Model.VacancyId
+                                                                                                                                                                  , Tuple.Create(Tuple.Create("", 5430), Tuple.Create<System.Object, System.Int32>(Model.VacancyId
             
             #line default
             #line hidden
-, 5420), false)
-, Tuple.Create(Tuple.Create("", 5436), Tuple.Create("\",", 5436), true)
-, Tuple.Create(Tuple.Create(" ", 5438), Tuple.Create("\"WT.dl\",", 5439), true)
-, Tuple.Create(Tuple.Create(" ", 5447), Tuple.Create("\"99\",", 5448), true)
-, Tuple.Create(Tuple.Create(" ", 5453), Tuple.Create("\"WT.ti\",", 5454), true)
-, Tuple.Create(Tuple.Create(" ", 5462), Tuple.Create("\"Apprenticeship", 5463), true)
-, Tuple.Create(Tuple.Create(" ", 5478), Tuple.Create("–", 5479), true)
-, Tuple.Create(Tuple.Create(" ", 5480), Tuple.Create("Save", 5481), true)
-, Tuple.Create(Tuple.Create(" ", 5485), Tuple.Create("Draft", 5486), true)
-, Tuple.Create(Tuple.Create(" ", 5491), Tuple.Create("Form\"]", 5492), true)
-, Tuple.Create(Tuple.Create(" ", 5498), Tuple.Create("});", 5499), true)
+, 5430), false)
+, Tuple.Create(Tuple.Create("", 5446), Tuple.Create("\",", 5446), true)
+, Tuple.Create(Tuple.Create(" ", 5448), Tuple.Create("\"WT.dl\",", 5449), true)
+, Tuple.Create(Tuple.Create(" ", 5457), Tuple.Create("\"99\",", 5458), true)
+, Tuple.Create(Tuple.Create(" ", 5463), Tuple.Create("\"WT.ti\",", 5464), true)
+, Tuple.Create(Tuple.Create(" ", 5472), Tuple.Create("\"Apprenticeship", 5473), true)
+, Tuple.Create(Tuple.Create(" ", 5488), Tuple.Create("–", 5489), true)
+, Tuple.Create(Tuple.Create(" ", 5490), Tuple.Create("Save", 5491), true)
+, Tuple.Create(Tuple.Create(" ", 5495), Tuple.Create("Draft", 5496), true)
+, Tuple.Create(Tuple.Create(" ", 5501), Tuple.Create("Form\"]", 5502), true)
+, Tuple.Create(Tuple.Create(" ", 5508), Tuple.Create("});", 5509), true)
 );
 
 WriteLiteral(">Save</button>\r\n        </p>\r\n");
@@ -628,14 +628,14 @@ WriteLiteral(">Last saved at ");
             #line hidden
 WriteLiteral(" to <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5719), Tuple.Create("\"", 5775)
+WriteAttribute("href", Tuple.Create(" href=\"", 5729), Tuple.Create("\"", 5785)
             
             #line 103 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 5726), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+                                                            , Tuple.Create(Tuple.Create("", 5736), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 5726), false)
+, 5736), false)
 );
 
 WriteLiteral(" title=\"My Applications\"");

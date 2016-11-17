@@ -28,7 +28,7 @@
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
                     @Model.Title
                 </h1>
-                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
+                <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
             </div>
             <div class="grid-row">
                 <div class="column-two-thirds">
@@ -357,7 +357,7 @@
 
             <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
                 <label for="page-size" class="heading-small inline">Display results</label>
-                @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new {id = "page-size"})
+                @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new {id = "page-size", @class = "form-control"})
                 <noscript>
                     <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
                 </noscript>

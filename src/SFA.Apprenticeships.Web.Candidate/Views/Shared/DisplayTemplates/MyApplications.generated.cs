@@ -512,14 +512,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black archive-successful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4854), Tuple.Create("\"", 4953)
+WriteAttribute("href", Tuple.Create(" href=\"", 4852), Tuple.Create("\"", 4951)
             
             #line 82 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                   , Tuple.Create(Tuple.Create("", 4861), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })
+                                                   , Tuple.Create(Tuple.Create("", 4859), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 4861), false)
+, 4859), false)
 );
 
 WriteLiteral("><i");
@@ -1003,14 +1003,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black archive-unsuccessful\"");
 
-WriteAttribute("href", Tuple.Create("\r\n                                                   href=\"", 12194), Tuple.Create("\"", 12343)
+WriteAttribute("href", Tuple.Create("\r\n                                                   href=\"", 12192), Tuple.Create("\"", 12341)
             
             #line 188 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-, Tuple.Create(Tuple.Create("", 12253), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new {id = application.VacancyId})
+, Tuple.Create(Tuple.Create("", 12251), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new {id = application.VacancyId})
             
             #line default
             #line hidden
-, 12253), false)
+, 12251), false)
 );
 
 WriteLiteral(">\r\n                                                    <i");
@@ -1337,29 +1337,29 @@ WriteLiteral(" class=\"ta-center\"");
 
 WriteLiteral(">\r\n                                                <a");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 17666), Tuple.Create("\"", 17690)
-, Tuple.Create(Tuple.Create("", 17671), Tuple.Create("delete-draft-", 17671), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 17662), Tuple.Create("\"", 17686)
+, Tuple.Create(Tuple.Create("", 17667), Tuple.Create("delete-draft-", 17667), true)
             
             #line 268 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-, Tuple.Create(Tuple.Create("", 17684), Tuple.Create<System.Object, System.Int32>(index
+, Tuple.Create(Tuple.Create("", 17680), Tuple.Create<System.Object, System.Int32>(index
             
             #line default
             #line hidden
-, 17684), false)
+, 17680), false)
 );
 
 WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 17759), Tuple.Create("\"", 17857)
+WriteAttribute("href", Tuple.Create(" href=\"", 17755), Tuple.Create("\"", 17853)
             
             #line 268 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                     , Tuple.Create(Tuple.Create("", 17766), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
+                                                                     , Tuple.Create(Tuple.Create("", 17762), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 17766), false)
+, 17762), false)
 );
 
 WriteLiteral("><i");
