@@ -18,12 +18,17 @@
 
         public TSettings Get<TSettings>() where TSettings : class
         {
-            return _cacheService.Get(ConfigurationCacheKey, _configurationService.Get<TSettings>);
+            return _cacheService.Get(ConfigurationCacheKey, GetFromBase<TSettings>, typeof(TSettings).Name);
         }
 
         public object Get(Type settingsType)
         {
             return _cacheService.Get(ConfigurationCacheKey, () => _configurationService.Get(settingsType), settingsType);
+        }
+
+        private TSettings GetFromBase<TSettings>(string configurationSectionName) where TSettings : class
+        {
+            return _configurationService.Get<TSettings>();
         }
     }
 }
