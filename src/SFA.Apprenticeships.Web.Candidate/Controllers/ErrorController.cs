@@ -3,8 +3,9 @@
     using System.Web.Mvc;
     using Common.Attributes;
     using Common.Constants;
+    using Configuration;
 
-    [ApplyAnalytics("CandidateWebConfiguration")]
+    [ApplyAnalytics(typeof(CandidateWebConfiguration))]
     [OutputCache(CacheProfile = CacheProfiles.Long)]
     public class ErrorController : Controller
     {

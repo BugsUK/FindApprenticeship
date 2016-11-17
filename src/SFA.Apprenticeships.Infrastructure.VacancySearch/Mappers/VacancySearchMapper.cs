@@ -35,7 +35,7 @@
     {
         protected override Wage ResolveCore(ApprenticeshipSummary source)
         {
-            return new Wage((WageType)source.WageType, source.WageAmount, null, null, source.WageText, (WageUnit)source.WageUnit, source.HoursPerWeek, null);
+            return new Wage((WageType)source.WageType, source.WageAmount, source.WageAmountLowerBound, source.WageAmountUpperBound, source.WageText, (WageUnit)source.WageUnit, source.HoursPerWeek, null);
         }
     }
 }

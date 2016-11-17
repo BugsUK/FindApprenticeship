@@ -6,12 +6,12 @@
     public class Wage
     {
         [JsonConstructor]
-        public Wage(WageType type, decimal? amount, decimal? lowerBound, decimal? upperBound, string text, WageUnit unit, decimal? hoursPerWeek, string reasonForType)
+        public Wage(WageType type, decimal? amount, decimal? amountLowerBound, decimal? amountUpperBound, string text, WageUnit unit, decimal? hoursPerWeek, string reasonForType)
         {
             Type = type;
             Amount = amount;
-            AmountLowerBound = lowerBound;
-            AmountUpperBound = upperBound;
+            AmountLowerBound = amountLowerBound;
+            AmountUpperBound = amountUpperBound;
             ReasonForType = reasonForType;
             Text = text;
             HoursPerWeek = hoursPerWeek;

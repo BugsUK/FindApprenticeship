@@ -75,6 +75,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             v.WageType,
                             v.WageUnitId,
                             v.WeeklyWage,
+                            v.WageLowerBound,
+                            v.WageUpperBound,
                             v.WageText,
                             v.HoursPerWeek,
                             v.ShortDescription,

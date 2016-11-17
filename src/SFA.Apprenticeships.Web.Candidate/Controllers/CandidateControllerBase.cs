@@ -9,8 +9,9 @@
     using NLog.Contrib;
     using Providers;
     using Application.Interfaces;
+    using Configuration;
 
-    [ApplyAnalytics("CandidateWebConfiguration"),
+    [ApplyAnalytics(typeof(CandidateWebConfiguration)),
     DefaultSessionTimeout,
     CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None),

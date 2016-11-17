@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Service.Vacancy
 {
+    using System;
     using Infrastructure.VacancySearch.Configuration;
     using Application.Interfaces;
 
@@ -17,18 +18,17 @@
         }
         public TSettings Get<TSettings>() where TSettings : class
         {
-            var settingName = typeof(TSettings).Name;
-            return Get<TSettings>(settingName);
-        }
-
-        public TSettings Get<TSettings>(string settingName) where TSettings : class
-        {
-            if (settingName == "SearchFactorConfiguration")
+            if (typeof(TSettings).Name == "SearchFactorConfiguration")
             {
                 return _searchFactorConfiguration as TSettings;
             }
 
-            return _configurationService.Get<TSettings>(settingName);
+            return _configurationService.Get<TSettings>();
+        }
+
+        public object Get(Type settingsType)
+        {
+            return _configurationService.Get(settingsType);
         }
     }
 }
