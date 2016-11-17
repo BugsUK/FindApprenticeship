@@ -75,7 +75,7 @@ WriteLiteral("\r\n");
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) &&
         Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
+        Model.IsEmployerLocationMainApprenticeshipLocation.Value ? "Save and return to Preview" : "Save and continue";
 
             
             #line default
