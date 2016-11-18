@@ -109,7 +109,6 @@
                 .ForMember(v => v.WageTypeReason, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.ReasonForType))
                 .ForMember(v => v.WageUnitId, opt => opt.MapFrom(av => av.Wage == null ? default(int) : av.Wage.Unit == WageUnit.NotApplicable ? default(int) : av.Wage.Unit))
                 .ForMember(v => v.WeeklyWage, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.Amount))
-
                 .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Change domain entity to use an id
                 .IgnoreMember(v => v.ApprenticeshipType)
                 .IgnoreMember(v => v.BeingSupportedBy)
@@ -121,7 +120,6 @@
                 .IgnoreMember(v => v.NewApplicantCount)
                 .IgnoreMember(v => v.SectorId)
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
-
                 .MapMemberFrom(v => v.AdditionalLocationInformation, av => av.AdditionalLocationInformation)
                 .MapMemberFrom(v => v.AdditionalLocationInformationComment, av => av.AdditionalLocationInformationComment)
                 .MapMemberFrom(v => v.AddressLine1, av => av.Address.AddressLine1)
