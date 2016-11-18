@@ -163,7 +163,7 @@
                 {
                     vacancy.EmployerAnonymousName = viewModel.AnonymousEmployerDescription;
                     vacancy.EmployerAnonymousReason = viewModel.AnonymousEmployerReason;
-                    vacancy.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployerDescription;
+                    vacancy.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
                 }
 
                 _vacancyPostingService.UpdateVacancy(vacancy);

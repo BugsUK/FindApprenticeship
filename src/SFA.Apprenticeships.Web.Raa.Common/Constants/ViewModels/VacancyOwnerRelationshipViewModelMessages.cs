@@ -81,7 +81,7 @@
             public const string LabelText = "Reason for setting employer as anonymous comment";
         }
 
-        public class AnonymousAboutTheEmployerDescription
+        public class AnonymousAboutTheEmployer
         {
             public const string LabelText = "About the employer";
             public const string RequiredErrorText = "You must specify something about the employer";

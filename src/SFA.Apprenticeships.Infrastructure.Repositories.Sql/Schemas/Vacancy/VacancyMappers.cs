@@ -240,9 +240,11 @@
                 .MapMemberFrom(v => v.SectorCodeName, v => v.SectorCodeName)
                 .MapMemberFrom(v => v.SectorCodeNameComment, v => v.SectorCodeNameComment)
                 .MapMemberFrom(v => v.StandardIdComment, v => v.StandardIdComment)
-
                 .MapMemberFrom(v => v.AdditionalLocationInformation, v => v.AdditionalLocationInformation)
                 .MapMemberFrom(v => v.AdditionalLocationInformationComment, v => v.AdditionalLocationInformationComment)
+                .MapMemberFrom(v => v.AnonymousAboutTheEmployerComment, av => av.AnonymousAboutTheEmployerComment)
+                .MapMemberFrom(v => v.AnonymousEmployerDescriptionComment, av => av.AnonymousEmployerDescriptionComment)
+                .MapMemberFrom(v => v.AnonymousEmployerReasonComment, av => av.AnonymousEmployerReasonComment)
                 .MapMemberFrom(v => v.ApprenticeshipLevel, v => v.ApprenticeshipLevel)
                 .MapMemberFrom(v => v.ApprenticeshipLevelComment, v => v.ApprenticeshipLevelComment)
                 .MapMemberFrom(v => v.ApprenticeshipLevelComment, v => v.ApprenticeshipLevelComment)

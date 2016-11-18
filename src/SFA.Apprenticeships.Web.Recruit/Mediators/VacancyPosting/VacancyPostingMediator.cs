@@ -182,7 +182,7 @@
                 if (vor.IsAnonymousEmployer.HasValue && vor.IsAnonymousEmployer.Value)
                 {
                     viewModel.IsAnonymousEmployer = true;
-                    viewModel.AnonymousAboutTheEmployerDescription = vor.AnonymousAboutTheEmployerDescription;
+                    viewModel.AnonymousAboutTheEmployer = vor.AnonymousAboutTheEmployer;
                     viewModel.AnonymousEmployerDescription = vor.AnonymousEmployerDescription;
                     viewModel.AnonymousEmployerReason = vor.AnonymousEmployerReason;
                 }
@@ -263,7 +263,7 @@
             {
                 existingViewModel.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
                 existingViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
-                existingViewModel.AnonymousAboutTheEmployerDescription = viewModel.AnonymousAboutTheEmployerDescription;
+                existingViewModel.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
                 existingViewModel.AnonymousEmployerReason = viewModel.AnonymousEmployerReason;
             }
             else
@@ -306,7 +306,7 @@
                 vacancyMinimumData.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
                 vacancyMinimumData.IsAnonymousEmployer = viewModel.IsAnonymousEmployer != null &&
                                                          viewModel.IsAnonymousEmployer.Value;
-                vacancyMinimumData.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployerDescription;
+                vacancyMinimumData.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
             }
             vacancyMinimumData.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             vacancyMinimumData.EmployerDescription = viewModel.EmployerDescription;

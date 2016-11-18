@@ -41,11 +41,11 @@
         public string OriginalFullName { get; set; }
 
         [AllowHtml]
-        [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousAboutTheEmployerDescription.LabelText)]
-        public string AnonymousAboutTheEmployerDescription { get; set; }
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousAboutTheEmployer.LabelText)]
+        public string AnonymousAboutTheEmployer { get; set; }
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousAboutTheEmployerDescriptionComment.LabelText)]
-        public string AnonymousAboutTheEmployerDescriptionComment { get; set; }
+        public string AnonymousAboutTheEmployerComment { get; set; }
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.EmployerWebsiteUrl.LabelText)]
         public string EmployerWebsiteUrl { get; set; }

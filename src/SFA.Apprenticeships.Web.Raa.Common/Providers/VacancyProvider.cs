@@ -1479,9 +1479,9 @@
                 vacancy.EmployerAnonymousName = viewModel.AnonymousEmployerDescription;
                 vacancy.AnonymousEmployerDescriptionComment =
                     viewModel.AnonymousEmployerDescriptionComment;
-                vacancy.EmployerDescription = viewModel.AnonymousAboutTheEmployerDescription;
+                vacancy.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
                 vacancy.AnonymousAboutTheEmployerComment =
-                    viewModel.AnonymousAboutTheEmployerDescriptionComment;
+                    viewModel.AnonymousAboutTheEmployerComment;
             }
 
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&

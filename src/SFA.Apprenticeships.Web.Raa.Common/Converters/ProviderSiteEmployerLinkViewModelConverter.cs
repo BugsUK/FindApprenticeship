@@ -26,7 +26,7 @@
                 viewModel.OriginalFullName = employer.FullName;
                 viewModel.AnonymousEmployerReason = vacancy.EmployerAnonymousReason ?? string.Empty;
                 viewModel.AnonymousEmployerDescription = vacancy.EmployerAnonymousName;
-                viewModel.AnonymousAboutTheEmployerDescription = vacancy.AnonymousAboutTheEmployer;
+                viewModel.AnonymousAboutTheEmployer = vacancy.AnonymousAboutTheEmployer;
             }
             return viewModel;
         }

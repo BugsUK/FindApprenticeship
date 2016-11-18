@@ -41,7 +41,7 @@ USING (VALUES
 	(36, 'ALI', 'ALI', 'Additional Location Information'),
 	(37, 'AED', 'AED', 'Anonymous Employer Description'),
 	(38, 'AER', 'AER', 'Anonymous Employer Reason'),
-	(39, 'AAE', 'AAE', 'About the Anonymous Employer')
+	(39, 'AAE', 'AAE', 'Anonymous About the Employer')
 ) 
 
 AS Source (VacancyReferralCommentsFieldTypeId, CodeName, ShortName, FullName) 

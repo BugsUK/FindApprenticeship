@@ -74,8 +74,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string AnonymousEmployerDescriptionComment { get; set; }
         public string AnonymousEmployerReason { get; set; }
         public string AnonymousEmployerReasonComment { get; set; }
-        public string AnonymousAboutTheEmployerDescription { get; set; }
-        public string AnonymousAboutTheEmployerDescriptionComment { get; set; }
+        public string AnonymousAboutTheEmployer { get; set; }
+        public string AnonymousAboutTheEmployerComment { get; set; }
         public bool? IsAnonymousEmployer { get; set; }
     }
 }

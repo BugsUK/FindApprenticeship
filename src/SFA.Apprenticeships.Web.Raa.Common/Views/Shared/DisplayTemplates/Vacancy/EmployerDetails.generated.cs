@@ -959,7 +959,7 @@ WriteLiteral("            ");
 
             
             #line 152 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-       Write(Html.FormTextAreaFor(m => m.AnonymousAboutTheEmployerDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new { @class = "bold-small" }));
+       Write(Html.FormTextAreaFor(m => m.AnonymousAboutTheEmployer, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
             #line default
@@ -970,7 +970,7 @@ WriteLiteral("            ");
 
             
             #line 153 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-       Write(Html.EditorFor(m => m.AnonymousAboutTheEmployerDescriptionComment, "Comment", Html.GetLabelFor(m => m.AnonymousAboutTheEmployerDescriptionComment)));
+       Write(Html.EditorFor(m => m.AnonymousAboutTheEmployerComment, "Comment", Html.GetLabelFor(m => m.AnonymousAboutTheEmployerComment)));
 
             
             #line default
