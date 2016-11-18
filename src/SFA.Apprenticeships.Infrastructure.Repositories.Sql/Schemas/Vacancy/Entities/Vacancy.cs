@@ -90,6 +90,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string EmployerAnonymousName { get; set; }
         public string EmployerAnonymousReason { get; set; }
 
+        public string AnonymousAboutTheEmployer { get; set; }
+
         [Write(false)]
         public string AnonymousEmployerDescriptionComment { get; set; }
         [Write(false)]

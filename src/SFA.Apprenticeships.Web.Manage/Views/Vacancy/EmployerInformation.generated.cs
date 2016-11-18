@@ -40,12 +40,6 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     #line hidden
     
     #line 3 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-    using SFA.Apprenticeships.Web.Raa.Common.Extensions;
-    
-    #line default
-    #line hidden
-    
-    #line 4 "..\..\Views\Vacancy\EmployerInformation.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
     
     #line default
@@ -64,7 +58,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
 WriteLiteral("\r\n");
 
             
-            #line 6 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 5 "..\..\Views\Vacancy\EmployerInformation.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
@@ -89,7 +83,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 21 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 20 "..\..\Views\Vacancy\EmployerInformation.cshtml"
  using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
 {   
     
@@ -97,14 +91,14 @@ WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n  
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 22 "..\..\Views\Vacancy\EmployerInformation.cshtml"
 Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
 
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 22 "..\..\Views\Vacancy\EmployerInformation.cshtml"
                                                                            
 
 
@@ -128,7 +122,7 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 WriteLiteral(">");
 
             
-            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 25 "..\..\Views\Vacancy\EmployerInformation.cshtml"
                                                                                               Write(saveButtonText);
 
             
@@ -139,7 +133,7 @@ WriteLiteral("</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 27 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
    Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
@@ -148,7 +142,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 29 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 28 "..\..\Views\Vacancy\EmployerInformation.cshtml"
 }
 
             

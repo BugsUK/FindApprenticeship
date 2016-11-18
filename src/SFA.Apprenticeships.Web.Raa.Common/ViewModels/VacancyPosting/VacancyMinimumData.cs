@@ -11,6 +11,7 @@
         public int? NumberOfPositions { get; set; }
         public string EmployerWebsiteUrl { get; set; }
         public string EmployerDescription { get; set; }
+        public string AnonymousAboutTheEmployer { get; set; }
         public string AnonymousEmployerDescription { get; set; }
         public string AnonymousEmployerReason { get; set; }
         public bool IsAnonymousEmployer { get; set; }

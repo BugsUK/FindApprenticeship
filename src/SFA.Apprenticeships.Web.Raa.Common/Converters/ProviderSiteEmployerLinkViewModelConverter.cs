@@ -16,16 +16,17 @@
                 EmployerDescription = vacancyOwnerRelationship.EmployerDescription,
                 EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl,
                 Employer = employer.Convert(),
-                IsEmployerAddressValid = true,
-                AnonymousAboutTheEmployerDescription = vacancyOwnerRelationship.EmployerDescription
+                IsEmployerAddressValid = true
             };
+
             if (!string.IsNullOrWhiteSpace(vacancy?.EmployerAnonymousName))
             {
                 viewModel.IsAnonymousEmployer = true;
                 viewModel.Employer.FullName = vacancy.EmployerAnonymousName;
                 viewModel.OriginalFullName = employer.FullName;
-                viewModel.AnonymousEmployerReason = vacancy.EmployerAnonymousReason ?? string.Empty;                
-                viewModel.AnonymousEmployerDescription = vacancy.EmployerAnonymousName;                
+                viewModel.AnonymousEmployerReason = vacancy.EmployerAnonymousReason ?? string.Empty;
+                viewModel.AnonymousEmployerDescription = vacancy.EmployerAnonymousName;
+                viewModel.AnonymousAboutTheEmployerDescription = vacancy.AnonymousAboutTheEmployer;
             }
             return viewModel;
         }

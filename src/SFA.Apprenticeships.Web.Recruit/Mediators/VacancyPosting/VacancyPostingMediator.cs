@@ -306,13 +306,11 @@
                 vacancyMinimumData.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
                 vacancyMinimumData.IsAnonymousEmployer = viewModel.IsAnonymousEmployer != null &&
                                                          viewModel.IsAnonymousEmployer.Value;
-                vacancyMinimumData.EmployerDescription = viewModel.AnonymousAboutTheEmployerDescription;
+                vacancyMinimumData.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployerDescription;
             }
-            else
-            {
-                vacancyMinimumData.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
-                vacancyMinimumData.EmployerDescription = viewModel.EmployerDescription;
-            }
+            vacancyMinimumData.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+            vacancyMinimumData.EmployerDescription = viewModel.EmployerDescription;
+
             _vacancyPostingProvider.CreateVacancy(vacancyMinimumData);
         }
 

@@ -155,6 +155,7 @@
                 .MapMemberFrom(v => v.DurationValue, av => av.Duration)
                 .MapMemberFrom(v => v.EmployerAnonymousName, av => av.EmployerAnonymousName)
                 .MapMemberFrom(v => v.EmployerAnonymousReason, av => av.EmployerAnonymousReason)
+                .MapMemberFrom(v => v.AnonymousAboutTheEmployer, av => av.AnonymousAboutTheEmployer)
                 .MapMemberFrom(v => v.EmployerDescription, av => av.EmployerDescription)
                 .MapMemberFrom(v => v.EmployerDescriptionComment, av => av.EmployerDescriptionComment)
                 .MapMemberFrom(v => v.EmployersApplicationInstructions, av => av.OfflineApplicationInstructions)

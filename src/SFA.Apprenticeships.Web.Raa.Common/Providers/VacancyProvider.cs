@@ -334,7 +334,8 @@
                 EmployerDescription = vacancyMinimumData.EmployerDescription,
                 EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl,
                 EmployerAnonymousName = vacancyMinimumData.AnonymousEmployerDescription,
-                EmployerAnonymousReason = vacancyMinimumData.AnonymousEmployerReason
+                EmployerAnonymousReason = vacancyMinimumData.AnonymousEmployerReason,
+                AnonymousAboutTheEmployer = vacancyMinimumData.AnonymousAboutTheEmployer
             });
         }
 
