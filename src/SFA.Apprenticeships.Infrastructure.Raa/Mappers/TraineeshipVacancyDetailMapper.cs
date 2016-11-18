@@ -46,6 +46,7 @@
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : vacancy.EmployerAnonymousName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                AnonymousAboutTheEmployer = vacancy.AnonymousAboutTheEmployer,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = vacancy.EmployerDescription,
                 EmployerWebsite = vacancy.EmployerWebsiteUrl,

@@ -169,9 +169,18 @@
                 <div class="grid grid-2-3">
                     <div class="inner-block-padr">
                         <div class="text">
-                            <p id="vacancy-employer-description" class="@Model.EmployerDescription.GetPreserveFormattingCssClass()">
-                                @HtmlExtensions.EscapeHtmlEncoding(Html, Model.EmployerDescription)
-                            </p>
+                            @if (Model.IsEmployerAnonymous)
+                            {
+                                <p id="vacancy-employer-description" class="@Model.EmployerDescription.GetPreserveFormattingCssClass()">
+                                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.EmployerDescription)
+                                </p>
+                            }
+                            else
+                            {
+                                <p id="vacancy-employer-description" class="@Model.EmployerDescription.GetPreserveFormattingCssClass()">
+                                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.EmployerDescription)
+                                </p>
+                            }
                         </div>
                     </div>
                 </div>
