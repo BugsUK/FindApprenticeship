@@ -259,23 +259,26 @@
         {
             var existingViewModel = _providerProvider.GetVacancyOwnerRelationshipViewModel(viewModel.ProviderSiteId,
                 viewModel.Employer.EdsUrn);
-            if (viewModel.IsAnonymousEmployer.HasValue && viewModel.IsAnonymousEmployer.Value)
+            if (existingViewModel != null)
             {
-                existingViewModel.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
-                existingViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
-                existingViewModel.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
-                existingViewModel.AnonymousEmployerReason = viewModel.AnonymousEmployerReason;
-            }
-            else
-            {
-                existingViewModel.EmployerDescription = viewModel.EmployerDescription;
-            }
-            existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+                if (viewModel.IsAnonymousEmployer.HasValue && viewModel.IsAnonymousEmployer.Value)
+                {
+                    existingViewModel.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
+                    existingViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
+                    existingViewModel.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
+                    existingViewModel.AnonymousEmployerReason = viewModel.AnonymousEmployerReason;
+                }
+                else
+                {
+                    existingViewModel.EmployerDescription = viewModel.EmployerDescription;
+                }
+                existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
 
-            existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
-                viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
-            existingViewModel.VacancyGuid = viewModel.VacancyGuid;
+                existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
+                    viewModel.IsEmployerLocationMainApprenticeshipLocation;
+                existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
+                existingViewModel.VacancyGuid = viewModel.VacancyGuid;
+            }            
             return existingViewModel;
         }
 
