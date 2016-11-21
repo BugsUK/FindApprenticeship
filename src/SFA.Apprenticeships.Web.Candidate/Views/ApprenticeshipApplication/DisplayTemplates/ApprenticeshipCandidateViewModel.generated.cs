@@ -71,7 +71,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Full name</p>\r\n");
 
@@ -116,7 +116,7 @@ WriteLiteral(" class=\"form-group date-input\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Date of birth</p>\r\n");
 
@@ -150,7 +150,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <span");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Address</span>\r\n            <ul");
 
@@ -296,7 +296,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Email address</p>\r\n");
 
@@ -330,7 +330,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Phone</p>\r\n");
 

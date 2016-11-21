@@ -3,60 +3,79 @@
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @model ModelStateDictionary
 
-<div id="validation-summary-errors" class='@(Model.HasErrors() ? "validation-summary-errors" : "validation-summary-valid") panel panel-danger' data-valmsg-summary="true">
-    <div class="panel-body">
-        <ul>
-            @foreach (var modelKey in Model.Keys)
-            {
-                var modelState = Model[modelKey];
-
-                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
-                foreach (var modelError in modelState.Errors)
-                {
-                    if (modelError.GetType() == typeof(ModelError))
-                    {
-                        if (elementId == string.Empty)
-                        {
-                            <li>@modelError.ErrorMessage</li>
-                        }
-                        else
-                        {
-                            <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
-                        }
-                    }
-                }
-            }
-        </ul>
-    </div>
-</div>
-
 @{
-    var hasWarnings = Model.HasWarnings();
+var hasWarnings = Model.HasWarnings();
 }
 
-<div id="validation-summary-warnings" class='@(hasWarnings ? "validation-summary-warnings" : "validation-summary-valid") panel panel-warning'>
-    <div class="panel-body">
-        <ul>
-            @foreach (var modelKey in Model.Keys)
+<div class="error-summary @(!Model.HasErrors() ? "sfa-hide" : "")" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+
+    <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+        Message to alert the user to a problem goes here
+    </h1>
+
+    <p>
+        Optional description of the errors and how to correct them
+    </p>
+
+    <ul class="error-summary-list">
+        @foreach (var modelKey in Model.Keys)
+        {
+            var modelState = Model[modelKey];
+
+            var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+            foreach (var modelError in modelState.Errors)
             {
-                var modelState = Model[modelKey];
-                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
-                var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof(ModelError));
-                foreach (var modelError in modelState.Errors)
+                if (modelError.GetType() == typeof(ModelError))
                 {
-                    if (modelError.GetType() == typeof(ModelWarning) && !anyError)
+                    if (elementId == string.Empty)
                     {
-                        if (elementId == string.Empty)
-                        {
-                            <li>@modelError.ErrorMessage</li>
-                        }
-                        else
-                        {
-                            <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
-                        }
+                        <li>@modelError.ErrorMessage</li>
+                    }
+                    else
+                    {
+                        <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
                     }
                 }
             }
-        </ul>
-    </div>
+        }
+    </ul>
+
 </div>
+
+<div class="warning-summary @(!hasWarnings ? "sfa-hide" : "")" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+
+    <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+        Message to alert the user to a problem goes here
+    </h1>
+
+    <p>
+        Optional description of the errors and how to correct them
+    </p>
+
+    <ul class="error-summary-list">
+        @foreach (var modelKey in Model.Keys)
+        {
+            var modelState = Model[modelKey];
+            var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+
+            var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof(ModelError));
+            foreach (var modelError in modelState.Errors)
+            {
+                if (modelError.GetType() == typeof(ModelWarning) && !anyError)
+                {
+                    if (elementId == string.Empty)
+                    {
+                        <li>@modelError.ErrorMessage</li>
+                    }
+                    else
+                    {
+                        <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                    }
+                }
+            }
+        }
+    </ul>
+</div>
+
+
+@Html.Hidden("acceptWarnings", hasWarnings)

@@ -24,7 +24,7 @@
             hintHtmlAttributes: new { @class = "text" })
 
     <div class="form-group">
-        <label for="contact-subject" class="form-label">Briefly describe your question</label>
+        <label for="contact-subject" class="form-label-bold">Briefly describe your question</label>
         @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs small-btm-margin select-inject form-control" })
 
         <div id="changeEmailAddress" class="selfServe panel-indent toggle-content hide-nojs text">

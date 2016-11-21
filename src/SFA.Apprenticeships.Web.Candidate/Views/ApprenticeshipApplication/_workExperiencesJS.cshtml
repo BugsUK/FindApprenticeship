@@ -3,7 +3,7 @@
 <div class="hide-nojs" data-enter-action="#addWorkBtn" data-bind="visible: selectedSection() === 'applyWorkExperience', stopBinding: true">
     <fieldset id="applyWorkExperience" class="fieldset-with-border">
         <legend class="heading-large">Work experience</legend>
-        <p class="hide-nojs form-label text" id="workExpQuestion">Do you have any work experience?</p>
+        <p class="hide-nojs form-label-bold text" id="workExpQuestion">Do you have any work experience?</p>
         <p class="form-hint text" id="appTourWork">
             Please include any work, whether paid or voluntary
         </p>
@@ -21,22 +21,22 @@
             <div id="workexperience-panel" class="toggle-content" data-bind="style: {'display': workExperienceStatus() }" aria-hidden="true">
                 <div id="workexperience-apply" class="clearfix">
                     <div class="form-group form-group-compound" data-bind="parentvalElement: employer">
-                        <label for="work-employer" class="form-label">Employer</label>
+                        <label for="work-employer" class="form-label-bold">Employer</label>
                         <input type="text" class="form-control" id="work-employer" data-bind="value: employer" maxlength="50">
                     </div>
                     <div class="form-group form-group-compound" data-bind="parentvalElement: jobTitle">
-                        <label for="work-title" class="form-label">Job title</label>
+                        <label for="work-title" class="form-label-bold">Job title</label>
                         <input type="text" class="form-control" id="work-title" data-bind="value: jobTitle" maxlength="50">
                     </div>
                     <div class="form-group form-group-compound" data-bind="parentvalElement: mainDuties">
-                        <label for="work-role" class="form-label">Main duties</label>
+                        <label for="work-role" class="form-label-bold">Main duties</label>
                         <textarea rows="3" class="form-control" id="work-role" data-val-length-max="200" data-bind="value: mainDuties"></textarea>
                         <span class="form-hint"><span class="maxchar-count">200</span> <span class="maxchar-text"> characters remaining</span></span>
                         <span class="visuallyhidden aria-limit" aria-live="polite"></span>
                     </div>
                     <div class="form-group inline-fixed validation-message-parent">
                         <div class="form-group form-group-compound error-wrapper vert-align-top no-btm-margin">
-                            <label for="work-from" class="form-label">Started</label>
+                            <label for="work-from" class="form-label-bold">Started</label>
                             <div class="form-group form-group-compound no-btm-margin">
                                 <span class="form-hint">Month</span>
                                 <select class="form-control" id="work-from" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: fromMonth"></select>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="form-group error-wrapper vert-align-top no-btm-margin">
-                            <label for="work-to" class="form-label">Finished</label>
+                            <label for="work-to" class="form-label-bold">Finished</label>
                             <div class="form-group form-group-compound no-btm-margin">
                                 <span class="form-hint">Month</span>
 

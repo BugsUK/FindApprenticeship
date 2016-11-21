@@ -334,7 +334,7 @@ WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"loc-within\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Within</label>\r\n");
 
@@ -355,7 +355,7 @@ WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"apprenticeship-level\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Apprenticeship level</label>\r\n");
 
@@ -375,40 +375,40 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 
 WriteLiteral(">\r\n                        <button");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5741), Tuple.Create("\"", 5804)
-, Tuple.Create(Tuple.Create("", 5749), Tuple.Create("button", 5749), true)
-, Tuple.Create(Tuple.Create(" ", 5755), Tuple.Create("tabbed-element", 5756), true)
-, Tuple.Create(Tuple.Create(" ", 5770), Tuple.Create("searchtab", 5771), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 5751), Tuple.Create("\"", 5814)
+, Tuple.Create(Tuple.Create("", 5759), Tuple.Create("button", 5759), true)
+, Tuple.Create(Tuple.Create(" ", 5765), Tuple.Create("tabbed-element", 5766), true)
+, Tuple.Create(Tuple.Create(" ", 5780), Tuple.Create("searchtab", 5781), true)
             
             #line 82 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 5780), Tuple.Create<System.Object, System.Int32>(keywordTabControlClass
+, Tuple.Create(Tuple.Create(" ", 5790), Tuple.Create<System.Object, System.Int32>(keywordTabControlClass
             
             #line default
             #line hidden
-, 5781), false)
+, 5791), false)
 );
 
 WriteLiteral(" id=\"search-button\"");
 
 WriteLiteral(">Search</button>\r\n                        <button");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5873), Tuple.Create("\"", 5953)
-, Tuple.Create(Tuple.Create("", 5881), Tuple.Create("button", 5881), true)
-, Tuple.Create(Tuple.Create(" ", 5887), Tuple.Create("tabbed-element", 5888), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 5883), Tuple.Create("\"", 5963)
+, Tuple.Create(Tuple.Create("", 5891), Tuple.Create("button", 5891), true)
+, Tuple.Create(Tuple.Create(" ", 5897), Tuple.Create("tabbed-element", 5898), true)
             
             #line 83 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 5902), Tuple.Create<System.Object, System.Int32>(categoriesTabClass
+, Tuple.Create(Tuple.Create(" ", 5912), Tuple.Create<System.Object, System.Int32>(categoriesTabClass
             
             #line default
             #line hidden
-, 5903), false)
+, 5913), false)
             
             #line 83 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 5922), Tuple.Create<System.Object, System.Int32>(categoriesElementControlClass
+, Tuple.Create(Tuple.Create(" ", 5932), Tuple.Create<System.Object, System.Int32>(categoriesElementControlClass
             
             #line default
             #line hidden
-, 5923), false)
+, 5933), false)
 );
 
 WriteLiteral(" id=\"browse-button\"");
@@ -431,23 +431,23 @@ WriteLiteral(">Browse</button>\r\n                        \r\n");
             #line hidden
 WriteLiteral("                            <button");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6127), Tuple.Create("\"", 6213)
-, Tuple.Create(Tuple.Create("", 6135), Tuple.Create("button", 6135), true)
-, Tuple.Create(Tuple.Create(" ", 6141), Tuple.Create("tabbed-element", 6142), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 6137), Tuple.Create("\"", 6223)
+, Tuple.Create(Tuple.Create("", 6145), Tuple.Create("button", 6145), true)
+, Tuple.Create(Tuple.Create(" ", 6151), Tuple.Create("tabbed-element", 6152), true)
             
             #line 87 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 6156), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
+, Tuple.Create(Tuple.Create(" ", 6166), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
             
             #line default
             #line hidden
-, 6157), false)
+, 6167), false)
             
             #line 87 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-       , Tuple.Create(Tuple.Create(" ", 6179), Tuple.Create<System.Object, System.Int32>(savedSearchesElementControlClass
+       , Tuple.Create(Tuple.Create(" ", 6189), Tuple.Create<System.Object, System.Int32>(savedSearchesElementControlClass
             
             #line default
             #line hidden
-, 6180), false)
+, 6190), false)
 );
 
 WriteLiteral(" id=\"run-saved-search-button\"");
@@ -479,22 +479,22 @@ WriteLiteral("                    </div>\r\n\r\n");
             #line hidden
 WriteLiteral("                        <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6415), Tuple.Create("\"", 6494)
-, Tuple.Create(Tuple.Create("", 6423), Tuple.Create("tabbed-element", 6423), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 6425), Tuple.Create("\"", 6504)
+, Tuple.Create(Tuple.Create("", 6433), Tuple.Create("tabbed-element", 6433), true)
             
             #line 93 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 6437), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
+, Tuple.Create(Tuple.Create(" ", 6447), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
             
             #line default
             #line hidden
-, 6438), false)
+, 6448), false)
             
             #line 93 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 6460), Tuple.Create<System.Object, System.Int32>(savedSearchesElementControlClass
+, Tuple.Create(Tuple.Create(" ", 6470), Tuple.Create<System.Object, System.Int32>(savedSearchesElementControlClass
             
             #line default
             #line hidden
-, 6461), false)
+, 6471), false)
 );
 
 WriteLiteral(">\r\n                            You can edit your saved searches in the\r\n");
@@ -519,32 +519,32 @@ WriteLiteral("\r\n                            section.\r\n                      
             #line hidden
 WriteLiteral("\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6839), Tuple.Create("\"", 6964)
-, Tuple.Create(Tuple.Create("", 6847), Tuple.Create("tabbed-element", 6847), true)
-, Tuple.Create(Tuple.Create(" ", 6861), Tuple.Create("disp-block", 6862), true)
-, Tuple.Create(Tuple.Create(" ", 6872), Tuple.Create("form-group", 6873), true)
-, Tuple.Create(Tuple.Create(" ", 6883), Tuple.Create("searchtab", 6884), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 6849), Tuple.Create("\"", 6974)
+, Tuple.Create(Tuple.Create("", 6857), Tuple.Create("tabbed-element", 6857), true)
+, Tuple.Create(Tuple.Create(" ", 6871), Tuple.Create("disp-block", 6872), true)
+, Tuple.Create(Tuple.Create(" ", 6882), Tuple.Create("form-group", 6883), true)
+, Tuple.Create(Tuple.Create(" ", 6893), Tuple.Create("searchtab", 6894), true)
             
             #line 100 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 6893), Tuple.Create<System.Object, System.Int32>(keywordTabControlClass
+, Tuple.Create(Tuple.Create(" ", 6903), Tuple.Create<System.Object, System.Int32>(keywordTabControlClass
             
             #line default
             #line hidden
-, 6894), false)
+, 6904), false)
             
             #line 100 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-                      , Tuple.Create(Tuple.Create(" ", 6917), Tuple.Create<System.Object, System.Int32>(categoriesTabClass
+                      , Tuple.Create(Tuple.Create(" ", 6927), Tuple.Create<System.Object, System.Int32>(categoriesTabClass
             
             #line default
             #line hidden
-, 6918), false)
+, 6928), false)
             
             #line 100 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-                                          , Tuple.Create(Tuple.Create(" ", 6937), Tuple.Create<System.Object, System.Int32>(categoriesTabControlClass
+                                          , Tuple.Create(Tuple.Create(" ", 6947), Tuple.Create<System.Object, System.Int32>(categoriesTabControlClass
             
             #line default
             #line hidden
-, 6938), false)
+, 6948), false)
 );
 
 WriteLiteral(">\r\n");
@@ -590,14 +590,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 7549), Tuple.Create("\"", 7579)
+WriteAttribute("value", Tuple.Create(" value=\"", 7559), Tuple.Create("\"", 7589)
             
             #line 107 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 7557), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 7567), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 7557), false)
+, 7567), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -688,14 +688,14 @@ WriteLiteral(" class=\"list-text\"");
 WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
 "");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8435), Tuple.Create("\'", 8485)
+WriteAttribute("href", Tuple.Create(" href=\'", 8445), Tuple.Create("\'", 8495)
             
             #line 124 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 8442), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 8452), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 8442), false)
+, 8452), false)
 );
 
 WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    <ul");

@@ -3,8 +3,10 @@
 <div class="grid-row">
     <div class="column-two-thirds">
         <div class="hgroup text">
-            <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.Vacancy.NewVacancyViewModel.Title</h1>
-            <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.Vacancy.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
+            <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
+                @Model.Vacancy.NewVacancyViewModel.Title
+                <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.Vacancy.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
+            </h1>
         </div>
     </div>
     <div class="column-one-third">

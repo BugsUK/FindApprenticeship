@@ -87,23 +87,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 352), Tuple.Create("\"", 437)
-, Tuple.Create(Tuple.Create("", 360), Tuple.Create("form-label", 360), true)
-, Tuple.Create(Tuple.Create(" ", 370), Tuple.Create("text", 371), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 352), Tuple.Create("\"", 442)
+, Tuple.Create(Tuple.Create("", 360), Tuple.Create("form-label-bold", 360), true)
+, Tuple.Create(Tuple.Create(" ", 375), Tuple.Create("text", 376), true)
             
             #line 9 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-, Tuple.Create(Tuple.Create(" ", 375), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion1.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 380), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion1.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 376), false)
+, 381), false)
 );
 
 WriteLiteral(">");
 
             
             #line 9 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                     Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SupplementaryQuestion1));
+                                                                                                          Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SupplementaryQuestion1));
 
             
             #line default
@@ -146,23 +146,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 823), Tuple.Create("\"", 908)
-, Tuple.Create(Tuple.Create("", 831), Tuple.Create("form-label", 831), true)
-, Tuple.Create(Tuple.Create(" ", 841), Tuple.Create("text", 842), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 828), Tuple.Create("\"", 918)
+, Tuple.Create(Tuple.Create("", 836), Tuple.Create("form-label-bold", 836), true)
+, Tuple.Create(Tuple.Create(" ", 851), Tuple.Create("text", 852), true)
             
             #line 16 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-, Tuple.Create(Tuple.Create(" ", 846), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 856), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 847), false)
+, 857), false)
 );
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                                                                     Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SupplementaryQuestion2));
+                                                                                                          Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SupplementaryQuestion2));
 
             
             #line default

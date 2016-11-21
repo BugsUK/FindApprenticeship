@@ -58,7 +58,7 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n    <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"gender-label\"");
 

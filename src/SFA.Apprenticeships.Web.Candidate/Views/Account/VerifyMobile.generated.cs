@@ -174,7 +174,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Mobile number</p>\r\n            <span");
 

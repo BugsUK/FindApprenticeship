@@ -87,7 +87,7 @@ WriteAttribute("class", Tuple.Create(" class=\"", 232), Tuple.Create("\"", 285)
 
 WriteLiteral(">\r\n    <span");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"categoryLabelTour\"");
 
@@ -178,14 +178,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1388), Tuple.Create("\"", 1402)
+WriteAttribute("for", Tuple.Create(" for=\"", 1393), Tuple.Create("\"", 1407)
             
             #line 27 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                          , Tuple.Create(Tuple.Create("", 1394), Tuple.Create<System.Object, System.Int32>(inputId
+                                                          , Tuple.Create(Tuple.Create("", 1399), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1394), false)
+, 1399), false)
 );
 
 WriteLiteral(">");
@@ -274,14 +274,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2295), Tuple.Create("\"", 2309)
+WriteAttribute("for", Tuple.Create(" for=\"", 2300), Tuple.Create("\"", 2314)
             
             #line 42 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                      , Tuple.Create(Tuple.Create("", 2301), Tuple.Create<System.Object, System.Int32>(inputId
+                                                      , Tuple.Create(Tuple.Create("", 2306), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 2301), false)
+, 2306), false)
 );
 
 WriteLiteral(">");

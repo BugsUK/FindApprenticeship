@@ -5,11 +5,11 @@
         Education
     </legend>
     <div class="form-group">
-        <label for="school-name" class="form-label">Name of most recent school/college</label>
+        <label for="school-name" class="form-label-bold">Name of most recent school/college</label>
         <span class="form-prepopped" id="school-name">@(Model == null ? "-" : Model.Institution ?? "-")</span>
     </div>
     <div class="inline-fixed">
-        <p class="form-label">Years attended</p>
+        <p class="form-label-bold">Years attended</p>
         <div class="form-group">
             <label for="school-from" class="form-hint">Started</label>
             <span class="form-prepopped" id="school-from">@(Model == null ? "-" : Model.FromYear == 0 ? "-" : Model.FromYear.ToString())</span>

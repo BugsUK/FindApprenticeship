@@ -87,7 +87,7 @@
 
         @Html.FormTextFor(m => m.ProviderUkprn, controlHtmlAttributes: new { type = "tel", size = 8 })
         <div class="form-group">
-            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label"})
+            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label-bold"})
             @Html.DropDownListFor(m => m.ProviderSiteRelationshipType, EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes)), new { @class = "form-control" })
         </div>
 

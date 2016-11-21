@@ -228,7 +228,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"loc-within\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Within</label>\r\n");
 
@@ -297,14 +297,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2814), Tuple.Create("\"", 2844)
+WriteAttribute("value", Tuple.Create(" value=\"", 2819), Tuple.Create("\"", 2849)
             
             #line 47 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2822), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 2827), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 2822), false)
+, 2827), false)
 );
 
 WriteLiteral(" />\r\n\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n    \r\n\r\n</section>");

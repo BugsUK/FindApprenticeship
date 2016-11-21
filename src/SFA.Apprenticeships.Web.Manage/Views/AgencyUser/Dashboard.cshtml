@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="column-one-half">
-            <label class="form-label">Change role</label>
+            <label class="form-label-bold">Change role</label>
             @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new { id = "role", @class = "form-control form-control-3-4" })
             @if (Model.AgencyUser.RoleId != "QA_advisor")
             {
@@ -43,8 +43,8 @@
                 </h2>
             </div>
             <div class="column-one-half">
-                <label class="form-label">Change team</label>
-                @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams, new { id = "regional-team", @class = "form-control form-control-3-4" })
+                <label class="form-label-bold">Change team</label>
+                @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams, new { id = "regional-team", @class = "chosen-select form-control form-control-3-4" })
                 <noscript>
                     <button class="button" name="DashboardAction" value="ChangeTeam">Change team</button>
                 </noscript>
@@ -53,7 +53,7 @@
                 &nbsp;
             </div>
             <div class="column-one-half">
-                <label class="form-label" style="margin-top: 10px">Provider</label>
+                <label class="form-label-bold" style="margin-top: 10px">Provider</label>
                 @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.Provider, new { @class = "form-control form-control-3-4" })
                 @Html.HiddenFor(m => m.VacancySummaries.SearchViewModel.Mode)
                 <div>

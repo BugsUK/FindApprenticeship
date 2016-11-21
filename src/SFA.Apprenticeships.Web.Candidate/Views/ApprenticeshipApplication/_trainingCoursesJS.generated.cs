@@ -73,7 +73,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Training courses</legend>\r\n        <p");
 
-WriteLiteral(" class=\"hide-nojs form-label text\"");
+WriteLiteral(" class=\"hide-nojs form-label-bold text\"");
 
 WriteLiteral(" id=\"trainingCoursesQuestion\"");
 
@@ -159,7 +159,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"training-history-provider\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Provider</label>\r\n                        <input");
 
@@ -183,7 +183,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"training-history-course-title\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Course title</label>\r\n                        <input");
 
@@ -209,7 +209,7 @@ WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"training-history-from-month\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">From</label>\r\n                            <div");
 
@@ -263,7 +263,7 @@ WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"training-history-to-month\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">To</label>\r\n                            <div");
 

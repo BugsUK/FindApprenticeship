@@ -87,7 +87,7 @@ WriteLiteral(" class=\"form-group form-group-day\"");
 
 WriteLiteral(">\r\n                <label");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" for=\"example-dob-day\"");
 
@@ -110,7 +110,7 @@ WriteLiteral(" class=\"form-group form-group-month\"");
 
 WriteLiteral(">\r\n                <label");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" for=\"example-dob-month\"");
 
@@ -133,7 +133,7 @@ WriteLiteral(" class=\"form-group form-group-year\"");
 
 WriteLiteral(">\r\n                <label");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" for=\"example-dob-year\"");
 

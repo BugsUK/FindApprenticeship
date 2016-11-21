@@ -37,11 +37,11 @@
 
         @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
         @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
-        @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.CandidateDescription, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.ContactDetailsForCandidate, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.ContactDetailsForEmployer, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop form-textarea-medium", type = "text" })
-        @Html.LabelFor(m => m.TrainingProviderStatus, new { @class = "form-label" })
+        @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.CandidateDescription, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.ContactDetailsForCandidate, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.ContactDetailsForEmployer, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.LabelFor(m => m.TrainingProviderStatus, new { @class = "form-label-bold" })
         @Html.DropDownListFor(m => m.TrainingProviderStatus, EnumHelper.GetSelectList(typeof(EmployerTrainingProviderStatuses), Model.TrainingProviderStatus), new { @class = "form-control" })
 
     </div>
@@ -97,7 +97,7 @@
 
         @Html.FormTextFor(m => m.ProviderUkprn, controlHtmlAttributes: new { type = "tel", size = 8 })
         <div class="form-group">
-            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label"})
+            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label-bold"})
             @Html.DropDownListFor(m => m.ProviderSiteRelationshipType, EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes)), new { @class = "form-control" })
         </div>
 

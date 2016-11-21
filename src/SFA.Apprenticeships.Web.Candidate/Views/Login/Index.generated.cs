@@ -170,7 +170,7 @@ WriteLiteral("                ");
 
             
             #line 27 "..\..\Views\Login\Index.cshtml"
-           Write(Html.LabelFor(m => m.Password, new { @class = "form-label" }));
+           Write(Html.LabelFor(m => m.Password, new { @class = "form-label-bold" }));
 
             
             #line default
@@ -199,14 +199,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n\r\n                <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1258), Tuple.Create("\'", 1311)
+WriteAttribute("href", Tuple.Create(" href=\'", 1263), Tuple.Create("\'", 1316)
             
             #line 31 "..\..\Views\Login\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1265), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+, Tuple.Create(Tuple.Create("", 1270), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 1265), false)
+, 1270), false)
 );
 
 WriteLiteral(">I can\'t access my account</a></p>\r\n            </div>\r\n");

@@ -3,17 +3,17 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model DashboardVacancySummariesViewModel
 
-<section class="grid-row">
+<section>
     @{
         var filterType = Model.SearchViewModel.FilterType;
     }
-    <p>
+    <p class="column-full">
         @if (filterType != VacanciesSummaryFilterTypes.All)
         {
             <span><a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, VacanciesSummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
         }
     </p>
-    <div class="column-full">
+    <div>
         <div class="column-one-quarter">
             <div class="data">
                 @if (filterType == VacanciesSummaryFilterTypes.SubmittedToday)

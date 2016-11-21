@@ -41,11 +41,11 @@
                 </details>
 
                 <div class="form-group">
-                    <label for="loc-within" class="form-label">Within</label>
+                    <label for="loc-within" class="form-label-bold">Within</label>
                     @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label for="apprenticeship-level" class="form-label">Apprenticeship level</label>
+                    <label for="apprenticeship-level" class="form-label-bold">Apprenticeship level</label>
                     @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control" })
                 </div>
                 <div class="form-group form-group-compound">

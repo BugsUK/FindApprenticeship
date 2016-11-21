@@ -58,7 +58,7 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n    <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"disability-label\"");
 
@@ -149,7 +149,7 @@ WriteLiteral(">\r\n    <label");
 
 WriteLiteral(" for=\"question4\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Is there anything we can do to support your interview?</label>\r\n    <span");
 

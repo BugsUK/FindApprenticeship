@@ -138,7 +138,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"contact-subject\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Briefly describe your question</label>\r\n");
 
@@ -159,14 +159,14 @@ WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
 
 WriteLiteral(">\r\n            <p>If you\'d like to change your email address visit the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1381), Tuple.Create("\"", 1425)
+WriteAttribute("href", Tuple.Create(" href=\"", 1386), Tuple.Create("\"", 1430)
             
             #line 31 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 1388), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.UpdateEmail)
+, Tuple.Create(Tuple.Create("", 1393), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.UpdateEmail)
             
             #line default
             #line hidden
-, 1388), false)
+, 1393), false)
 );
 
 WriteLiteral(">update email</a> page. If you\'re still having problems contact us using this for" +
@@ -178,14 +178,14 @@ WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
 
 WriteLiteral(">\r\n            <p>If you\'ve forgotten your email address visit the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1702), Tuple.Create("\"", 1755)
+WriteAttribute("href", Tuple.Create(" href=\"", 1707), Tuple.Create("\"", 1760)
             
             #line 35 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 1709), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+, Tuple.Create(Tuple.Create("", 1714), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 1709), false)
+, 1714), false)
 );
 
 WriteLiteral(">forgotten email</a> page. If you\'re still having problems contact us using this " +
@@ -198,14 +198,14 @@ WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
 WriteLiteral(">\r\n            <p>If you\'re having trouble signing in to your account visit the <" +
 "a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2037), Tuple.Create("\"", 2090)
+WriteAttribute("href", Tuple.Create(" href=\"", 2042), Tuple.Create("\"", 2095)
             
             #line 39 "..\..\Views\Home\Helpdesk.cshtml"
-      , Tuple.Create(Tuple.Create("", 2044), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+      , Tuple.Create(Tuple.Create("", 2049), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 2044), false)
+, 2049), false)
 );
 
 WriteLiteral(">forgotten password</a> page. If you\'re still having problems contact us using th" +
@@ -217,14 +217,14 @@ WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
 
 WriteLiteral(">\r\n            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2315), Tuple.Create("\"", 2354)
+WriteAttribute("href", Tuple.Create(" href=\"", 2320), Tuple.Create("\"", 2359)
             
             #line 43 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 2322), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn)
+, Tuple.Create(Tuple.Create("", 2327), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn)
             
             #line default
             #line hidden
-, 2322), false)
+, 2327), false)
 );
 
 WriteLiteral(@">Activate your account</a> by signing in. You'll need the email address and password you used to create your account.</p>

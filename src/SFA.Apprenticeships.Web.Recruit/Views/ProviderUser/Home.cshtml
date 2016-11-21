@@ -47,40 +47,40 @@
     @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
 
     <div class="grid-row sfa-large-bottom-margin">
-        <div class="column-two-thirds">
-            <h1 class="heading-xlarge sfa-large-bottom-margin">
+        <div class="column-two-thirds sfa-large-bottom-margin">
+            <h1 class="heading-xlarge sfa-xlarge-bottom-margin">
                 Recruitment home
                 <span class="heading-secondary">@Model.ProviderViewModel.FullName</span>
             </h1>
 
             <button id="new-vacancy-button" type="submit" name="NewVacancyAction" class="button" value="NewVacancy">Create new vacancy</button>
         </div>
-        <div class="column-one-third">
-            <div class="grid-row sfa-medium-bottom-margin">
+        <div class="column-one-third sfa-xlarge-top-margin">
+            <div class="form-group">
                 @if (Model.ProviderSites.Count == 1)
                 {
-                    <p class="form-label">Provider site</p>
+                    <p class="form-label-bold">Provider site</p>
                     Model.ProviderUserViewModel.DefaultProviderSiteId = Convert.ToInt32(Model.ProviderSites[0].Value);
                     @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteId)
                     <p>@Model.ProviderSites[0].Text</p>
                 }
                 else
                 {
-                    <label for="provider-site" class="form-label">Change provider site</label>
+                    <label for="provider-site" class="form-label-bold">Change provider site</label>
                     @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteId, Model.ProviderSites, new { id = "provider-site", @class = "form-control force-full-width" })
                     <noscript>
                         <button class="button" name="ChangeProviderSiteAction" value="ChangeProviderSite">Change provider site</button>
                     </noscript>
                 }
             </div>
-            <div class="grid-row">
-                <p class="no-margins">
+            <ul class="list">
+                <li>
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.ReportList)">Your reports</a>
-                </p>
-                <p class="no-margins">
+                </li>
+                <li>
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.CandidateSearch)">Search candidates</a>
-                </p>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 }
@@ -105,8 +105,8 @@
             @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship).RouteValues, new { @class = "tabbed-tab no-js" + traineeshipsTabControlClass })
         </nav>
 
-        <section class="sfa-xlarge-bottom-margin">
-            <div class="grid-row sfa-medium-bottom-margin">
+        <section class="section-bordered">
+            <div class="grid-row grid-row-padded">
                 <div class="column-one-half">
                     <h2 class="heading-large no-margins">
                         Your @vacanciesLabel
@@ -132,10 +132,9 @@
                     </div>
                 </div>
             </div>
-            <hr class="column-full no-margins" />
         </section>
 
-        <section class="sfa-medium-bottom-margin">
+        <section class="sfa-medium-bottom-padding sfa-xlarge-top-padding section-bordered">
             @{
                 var newApplicationsCount = Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount;
             }
@@ -143,7 +142,7 @@
                 <div class="column-one-quarter">
                     <div class="data">
                         @if (filterType == VacanciesSummaryFilterTypes.Live)
-                        {
+                    {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.LiveCount</h2>
                             <p class="bold-xsmall">Live</p>
                         }
@@ -163,7 +162,7 @@
                         }
 
                         @if (filterType == VacanciesSummaryFilterTypes.NewApplications)
-                        {
+                    {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</h2>
                             <p class="bold-xsmall">@applicationCaption</p>
                         }
@@ -179,7 +178,7 @@
                 <div class="column-one-quarter">
                     <div class="data">
                         @if (filterType == VacanciesSummaryFilterTypes.Rejected)
-                        {
+                    {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.RejectedCount</h2>
                             <p class="bold-xsmall">Referred</p>
                         }
@@ -195,7 +194,7 @@
                 <div class="column-one-quarter">
                     <div class="data">
                         @if (filterType == VacanciesSummaryFilterTypes.ClosingSoon)
-                        {
+                    {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.ClosingSoonCount</h2>
                             <p class="bold-xsmall">Closing soon</p>
                         }
@@ -208,18 +207,20 @@
                         }
                     </div>
                 </div>
+            </div>
+            <div class="grid-row">
                 <div class="column-one-quarter">
                     <div class="data">
                         @if (filterType == VacanciesSummaryFilterTypes.Draft)
                         {
                             <h2 class="bold-xlarge">@Model.VacanciesSummary.DraftCount</h2>
-                            <p class="bol-xsmall">Draft</p>
+                            <p class="bold-xsmall">Draft</p>
                         }
                         else
                         {
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft).RouteValues)" class="vacancy-filter">
                                 <h2 class="bold-xlarge">@Model.VacanciesSummary.DraftCount</h2>
-                                <p class="bol-xsmall">Draft</p>
+                                <p class="bold-xsmall">Draft</p>
                             </a>
                         }
                     </div>
@@ -275,12 +276,11 @@
 
                 </div>
             </div>
-            <hr class="column-full no-margins" />
         </section>
 
         <div class="grid-row">
             <section class="column-full">
-                <table id="vacancies-table">
+                <table id="vacancies-table" class="sfa-table">
                     <colgroup>
                         <col class="t25">
                         <col class="t15">
@@ -502,12 +502,12 @@
                                         }
                                     </td>
                                 </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr><td colspan="6">No results</td></tr>
-                            }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr><td colspan="6">No results</td></tr>
+                                                }
                     </tbody>
                 </table>
             </section>

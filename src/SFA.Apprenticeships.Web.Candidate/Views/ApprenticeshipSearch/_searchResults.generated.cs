@@ -690,7 +690,7 @@ WriteAttribute("id", Tuple.Create(" id=\"", 8077), Tuple.Create("\"", 8105)
 , 8094), false)
 );
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(">\r\n");
 
@@ -738,15 +738,15 @@ WriteLiteral("\r\n");
 
 WriteLiteral("                                    <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 8525), Tuple.Create("\"", 8561)
-, Tuple.Create(Tuple.Create("", 8530), Tuple.Create("number-of-positions-", 8530), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 8535), Tuple.Create("\"", 8571)
+, Tuple.Create(Tuple.Create("", 8540), Tuple.Create("number-of-positions-", 8540), true)
             
             #line 135 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 8550), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+, Tuple.Create(Tuple.Create("", 8560), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 8550), false)
+, 8560), false)
 );
 
 WriteLiteral(" class=\"hidden-subcategory\"");
@@ -859,15 +859,15 @@ WriteLiteral(">\r\n                            <a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 9937), Tuple.Create("\"", 9971)
-, Tuple.Create(Tuple.Create("", 9942), Tuple.Create("save-vacancy-link-", 9942), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 9947), Tuple.Create("\"", 9981)
+, Tuple.Create(Tuple.Create("", 9952), Tuple.Create("save-vacancy-link-", 9952), true)
             
             #line 161 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 9960), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+, Tuple.Create(Tuple.Create("", 9970), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 9960), false)
+, 9970), false)
 );
 
 WriteLiteral(" class=\"hidden fake-link link-unimp save-vacancy-link\"");
@@ -911,15 +911,15 @@ WriteLiteral("                            ");
             #line hidden
 WriteLiteral("\r\n                            <p");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 10351), Tuple.Create("\"", 10381)
-, Tuple.Create(Tuple.Create("", 10356), Tuple.Create("applied-label-", 10356), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 10361), Tuple.Create("\"", 10391)
+, Tuple.Create(Tuple.Create("", 10366), Tuple.Create("applied-label-", 10366), true)
             
             #line 163 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 10370), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+, Tuple.Create(Tuple.Create("", 10380), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 10370), false)
+, 10380), false)
 );
 
 WriteLiteral(" class=\"hidden applied-label\"");
@@ -941,8 +941,8 @@ WriteLiteral("                    <p");
 
 WriteLiteral(" data-show=\"DisplayDescription\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10560), Tuple.Create("\"", 10718)
-, Tuple.Create(Tuple.Create("", 10568), Tuple.Create<System.Object, System.Int32>(new System.Web.WebPages.HelperResult(__razor_attribute_value_writer => {
+WriteAttribute("class", Tuple.Create(" class=\"", 10570), Tuple.Create("\"", 10728)
+, Tuple.Create(Tuple.Create("", 10578), Tuple.Create<System.Object, System.Int32>(new System.Web.WebPages.HelperResult(__razor_attribute_value_writer => {
 
             
             #line 166 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
@@ -971,7 +971,7 @@ WriteLiteralTo(__razor_attribute_value_writer, "toggle-content");
             
             #line default
             #line hidden
-}), 10568), false)
+}), 10578), false)
 );
 
 WriteLiteral(">");
@@ -989,14 +989,14 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10818), Tuple.Create("\"", 10925)
+WriteAttribute("class", Tuple.Create(" class=\"", 10828), Tuple.Create("\"", 10935)
             
             #line 168 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 10826), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "column-two-thirds" : ""
+, Tuple.Create(Tuple.Create("", 10836), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "column-two-thirds" : ""
             
             #line default
             #line hidden
-, 10826), false)
+, 10836), false)
 );
 
 WriteLiteral(">\r\n                            <ul");
@@ -1290,15 +1290,15 @@ WriteLiteral(">\r\n                                        <a");
 
 WriteLiteral(" class=\"inl-block\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 13939), Tuple.Create("\"", 13979)
-, Tuple.Create(Tuple.Create("", 13944), Tuple.Create("positive-about-disabled-", 13944), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 13949), Tuple.Create("\"", 13989)
+, Tuple.Create(Tuple.Create("", 13954), Tuple.Create("positive-about-disabled-", 13954), true)
             
             #line 195 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-        , Tuple.Create(Tuple.Create("", 13968), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+        , Tuple.Create(Tuple.Create("", 13978), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 13968), false)
+, 13978), false)
 );
 
 WriteLiteral(" href=\"https://www.gov.uk/looking-for-work-if-disabled\"");
@@ -1307,14 +1307,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                                            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 14102), Tuple.Create("\"", 14148)
+WriteAttribute("src", Tuple.Create(" src=\"", 14112), Tuple.Create("\"", 14158)
             
             #line 196 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 14108), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-small-2x.png")
+, Tuple.Create(Tuple.Create("", 14118), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-small-2x.png")
             
             #line default
             #line hidden
-, 14108), false)
+, 14118), false)
 );
 
 WriteLiteral(" height=\"30\"");
@@ -1397,24 +1397,24 @@ WriteLiteral(" class=\"column-one-third map-container hide-nojs small-btm-margin
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15265), Tuple.Create("\"", 15375)
-, Tuple.Create(Tuple.Create("", 15272), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 15272), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 15275), Tuple.Create("\"", 15385)
+, Tuple.Create(Tuple.Create("", 15282), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 15282), true)
             
             #line 213 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-        , Tuple.Create(Tuple.Create("", 15320), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+        , Tuple.Create(Tuple.Create("", 15330), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 15320), false)
-, Tuple.Create(Tuple.Create("", 15346), Tuple.Create(",", 15346), true)
+, 15330), false)
+, Tuple.Create(Tuple.Create("", 15356), Tuple.Create(",", 15356), true)
             
             #line 213 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                   , Tuple.Create(Tuple.Create("", 15347), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                   , Tuple.Create(Tuple.Create("", 15357), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 15347), false)
-, Tuple.Create(Tuple.Create("", 15374), Tuple.Create("\'", 15374), true)
+, 15357), false)
+, Tuple.Create(Tuple.Create("", 15384), Tuple.Create("\'", 15384), true)
 );
 
 WriteLiteral(" target=\"_blank\"");

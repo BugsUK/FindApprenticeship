@@ -4,7 +4,7 @@
 
     <fieldset class="fieldset-with-border" id="applyQualifications">
         <legend class="heading-large">Qualifications</legend>
-        <p class="form-label" id="qualificationQuestion">Do you have any qualifications?</p>
+        <p class="form-label-bold" id="qualificationQuestion">Do you have any qualifications?</p>
         <p class="form-hint text" id="appTourQuals">
             If you don't know your results yet, enter your predicted grades. These are grades your teacher expects you to get.
         </p>
@@ -23,29 +23,29 @@
             <div class="clearfix" id="qualEntry">
                 <div class="inline-fixed form-group validation-message-parent">
                     <div class="form-group vert-align-top no-btm-margin" data-bind="parentvalElement:selectedQualification">
-                        <label for="qual-type" class="form-label">Type of qualification</label>
+                        <label for="qual-type" class="form-label-bold">Type of qualification</label>
                         <select class="form-control" id="qual-type" data-bind="options: qualificationTypes, optionsCaption: 'Select from list', optionsText: 'qualificationTypeName', optionsValue: 'qualificationTypeName',value: selectedQualification"></select>
                     </div>
                     <div class="form-group vert-align-top no-btm-margin" data-bind="parentvalElement:year">
-                        <label for="subject-year" class="form-label">Year</label>
+                        <label for="subject-year" class="form-label-bold">Year</label>
                         <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*"
                                id="subject-year" data-bind="value: year">
                     </div>
                     <div class="validation-message-container"></div>
                 </div>
                 <div class="form-group" data-bind="visible: showOtherQualification,parentvalElement:otherQualification">
-                    <label for="other-qual" class="form-label">Name of other qualification</label>
+                    <label for="other-qual" class="form-label-bold">Name of other qualification</label>
                     <input type="text" class="form-control" id="other-qual" data-bind="value: otherQualification" maxlength="100">
 
                 </div>
                 <div class="form-group" data-bind="parentvalElement:subject">
-                    <label for="subject-name" class="form-label">Subject</label>
+                    <label for="subject-name" class="form-label-bold">Subject</label>
                     <input type="text" class="form-control" id="subject-name" data-bind="value: subject" maxlength="50">
 
                 </div>
                 <div class="inline-fixed">
                     <div class="form-group" data-bind="parentvalElement:grade">
-                        <label for="subject-grade" class="form-label">Grade</label>
+                        <label for="subject-grade" class="form-label-bold">Grade</label>
                         <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind="value: grade" maxlength="15">
 
                     </div>

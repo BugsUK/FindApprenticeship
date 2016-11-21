@@ -146,7 +146,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Mechanical Engineer – Precision Toolmaker</h3>\r\n            <span");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(@">R G Engineering</span>
         </div>
@@ -183,7 +183,7 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"first-name\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Full name</label>\r\n            <span");
 
@@ -197,7 +197,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Date of birth</p>\r\n            <span");
 
@@ -211,7 +211,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <span");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Address</span>\r\n            <ul");
 
@@ -249,7 +249,7 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"email-address\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Email address</label>\r\n            <span");
 
@@ -265,7 +265,7 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"tel-number\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Phone</label>\r\n            <span");
 
@@ -291,7 +291,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"school-name\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Name of most recent school or college</label>\r\n        <input");
 
@@ -309,7 +309,7 @@ WriteLiteral(" class=\"inline-fixed\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Years attended</p>\r\n        <div");
 
@@ -319,7 +319,7 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"school-from\"");
 
-WriteLiteral(" class=\"form-label form-hint\"");
+WriteLiteral(" class=\"form-label-bold form-hint\"");
 
 WriteLiteral(">Started</label>\r\n            <input");
 
@@ -341,7 +341,7 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"school-to\"");
 
-WriteLiteral(" class=\"form-label form-hint\"");
+WriteLiteral(" class=\"form-label-bold form-hint\"");
 
 WriteLiteral(">Finished</label>\r\n            <input");
 
@@ -371,7 +371,7 @@ WriteLiteral(" class=\"hide-nojs\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Do you have any qualifications?</p>\r\n        <p");
 
@@ -445,7 +445,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"qual-type\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Type of qualification</label>\r\n                        <select");
 
@@ -516,7 +516,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"subject-year\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Year</label>\r\n                        <input");
 
@@ -538,7 +538,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"other-qual\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Name of other qualification</label>\r\n                    <input");
 
@@ -556,7 +556,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"subject-name\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Subject</label>\r\n                    <input");
 
@@ -578,7 +578,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"subject-grade\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Grade</label>\r\n                        <input");
 
@@ -1334,7 +1334,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Work experience</legend>\r\n    <p");
 
-WriteLiteral(" class=\"hide-nojs form-label text\"");
+WriteLiteral(" class=\"hide-nojs form-label-bold text\"");
 
 WriteLiteral(">Do you have any work experience?</p>\r\n    <p");
 
@@ -1399,7 +1399,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"work-employer\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Employer</label>\r\n                    <input");
 
@@ -1417,7 +1417,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"work-title\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Job title</label>\r\n                    <input");
 
@@ -1435,7 +1435,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"work-role\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Main duties</label>\r\n                    <textarea");
 
@@ -1474,7 +1474,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"work-from\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Started</label>\r\n                        <div");
 
@@ -1570,7 +1570,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"work-to\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Finished</label>\r\n                        <div");
 
@@ -2007,7 +2007,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Training courses</legend>\r\n    <p");
 
-WriteLiteral(" class=\"hide-nojs form-label text\"");
+WriteLiteral(" class=\"hide-nojs form-label-bold text\"");
 
 WriteLiteral(">Have you been on a training course?</p>\r\n    <p");
 
@@ -2072,7 +2072,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"training-employer\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Training provider</label>\r\n                    <input");
 
@@ -2090,7 +2090,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"training-title\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Training course title</label>\r\n                    <input");
 
@@ -2103,7 +2103,7 @@ WriteLiteral(" id=\"training-title\"");
 WriteLiteral(@">
                 </div>
                 <!-- <div class=""form-group form-group-compound"">
-                    <label for=""training-role"" class=""form-label"">What skills did you gain from this course?</label>
+                    <label for=""training-role"" class=""form-label-bold"">What skills did you gain from this course?</label>
                     <span class=""form-hint text"">
                     Try to highlight any skills that might be relevant to this apprenticeship
                     </span>
@@ -2122,7 +2122,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"training-from\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">From</label>\r\n                        <div");
 
@@ -2218,7 +2218,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"training-to\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">To</label>\r\n                        <div");
 
@@ -2372,7 +2372,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"question1\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">What are your main strengths?</label>\r\n        <span");
 
@@ -2420,7 +2420,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"question2\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">What skills would you like to improve during this apprenticeship?</label>\r\n     " +
 "   <span");
@@ -2470,7 +2470,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"question3\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">What are your hobbies and interests?</label>\r\n        <span");
 
@@ -2527,7 +2527,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"add-question1\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"appTourAdditional1\"");
 
@@ -2570,7 +2570,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"add-question2\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"appTourAdditional2\"");
 
@@ -2612,7 +2612,7 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"disability-label\"");
 
@@ -2700,7 +2700,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"question4\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Is there anything we can do to support your interview?</label>\r\n        <span");
 

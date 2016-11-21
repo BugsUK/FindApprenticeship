@@ -55,8 +55,8 @@ $(function () {
             data: data
         }).done(function (response) {
 
-            var main = $(response).find("#main");
-            $("#main").html(main.html());
+            var main = $(response).find("#content");
+            $("#content").html(main.html());
             if (addHistory) {
                 history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
             }

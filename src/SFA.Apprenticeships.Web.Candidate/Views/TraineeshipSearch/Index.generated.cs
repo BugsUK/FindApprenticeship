@@ -71,7 +71,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Find a traineeship</h1>\r\n    <p");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(">Search and apply for a traineeship in England</p>\r\n</div>\r\n<div");
 
@@ -236,14 +236,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1437), Tuple.Create("\"", 1467)
+WriteAttribute("value", Tuple.Create(" value=\"", 1447), Tuple.Create("\"", 1477)
             
             #line 32 "..\..\Views\TraineeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1445), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 1455), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 1445), false)
+, 1455), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -292,14 +292,14 @@ WriteLiteral(" class=\"list-text\"");
 WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
 "");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1867), Tuple.Create("\'", 1917)
+WriteAttribute("href", Tuple.Create(" href=\'", 1877), Tuple.Create("\'", 1927)
             
             #line 42 "..\..\Views\TraineeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1874), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 1884), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 1874), false)
+, 1884), false)
 );
 
 WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    <ul");

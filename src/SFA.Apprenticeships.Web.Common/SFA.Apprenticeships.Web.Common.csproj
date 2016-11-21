@@ -376,6 +376,7 @@
     <None Include="Content\libs\vendor\nanospell\server\license\key.lic" />
     <None Include="Content\libs\vendor\nanospell\server\license\web.config" />
     <None Include="Content\scss\styles.scss" />
+    <None Include="Content\scss\_select2-styles.scss" />
     <None Include="Content\scss\_sfa-custom-layouts.scss" />
     <None Include="Content\scss\_button-links.scss" />
     <None Include="Content\scss\_form-warnings.scss" />

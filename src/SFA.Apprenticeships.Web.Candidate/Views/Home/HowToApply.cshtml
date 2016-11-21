@@ -50,15 +50,15 @@
     <legend class="heading-large">Your details</legend>
     <div class="column-one-third">
         <div class="form-group">
-            <label for="first-name" class="form-label">Full name</label>
+            <label for="first-name" class="form-label-bold">Full name</label>
             <span class="form-prepopped" id="fullNamePre">John Smith</span>
         </div>
         <div class="form-group">
-            <p class="form-label">Date of birth</p>
+            <p class="form-label-bold">Date of birth</p>
             <span class="form-prepopped" id="dobFullPre">12/06/1994</span>
         </div>
         <div class="form-group">
-            <span class="form-label">Address</span>
+            <span class="form-label-bold">Address</span>
             <ul class="list-text form-prepopped">
                 <li id="address1Pre">37 Bolton road</li>
                 <li id="address2Pre"></li>
@@ -70,11 +70,11 @@
     </div>
     <div class="column-one-third">
         <div class="form-group">
-            <label for="email-address" class="form-label">Email address</label>
+            <label for="email-address" class="form-label-bold">Email address</label>
             <span class="form-prepopped" id="emailInputPre">john.smith@email.com</span>
         </div>
         <div class="form-group">
-            <label for="tel-number" class="form-label">Phone</label>
+            <label for="tel-number" class="form-label-bold">Phone</label>
             <span class="form-prepopped" id="phoneInputPre">07954 389421</span>
         </div>
     </div>
@@ -82,18 +82,18 @@
 <fieldset class="fieldset-with-border" id="applyEducation">
     <legend class="heading-large">Education</legend>
     <div class="form-group">
-        <label for="school-name" class="form-label">Name of most recent school or college</label>
+        <label for="school-name" class="form-label-bold">Name of most recent school or college</label>
         <input class="form-control" type="text" id="school-name" autocapitalize="words">
     </div>
     <div class="inline-fixed">
-        <p class="form-label">Years attended</p>
+        <p class="form-label-bold">Years attended</p>
         <div class="form-group">
-            <label for="school-from" class="form-label form-hint">Started</label>
+            <label for="school-from" class="form-label-bold form-hint">Started</label>
             <input type="tel" class="form-control form-control-medium" id="school-from" pattern="[0-9]*"
                     maxlength="4">
         </div>
         <div class="form-group">
-            <label for="school-to" class="form-label form-hint">Finished</label>
+            <label for="school-to" class="form-label-bold form-hint">Finished</label>
             <input type="tel" class="form-control form-control-medium" id="school-to" pattern="[0-9]*"
                     maxlength="4">
         </div>
@@ -102,7 +102,7 @@
 <fieldset class="fieldset-with-border" id="applyQualifications">
     <legend class="heading-large">Qualifications</legend>
     <div class="hide-nojs">
-        <p class="form-label">Do you have any qualifications?</p>
+        <p class="form-label-bold">Do you have any qualifications?</p>
         <p class="form-hint text" id="appTourQuals">
             If you don't know your results yet, enter your predicted grades. These
             are grades your teacher expects you to get.
@@ -121,7 +121,7 @@
             <div class="enter-qualification clearfix">
                 <div class="inline-fixed">
                     <div class="form-group">
-                        <label for="qual-type" class="form-label">Type of qualification</label>
+                        <label for="qual-type" class="form-label-bold">Type of qualification</label>
                         <select class="form-control" id="qual-type">
                             <option value="Select">Select from list</option>
                             <option class="gcse" value="GCSE">GCSE</option>
@@ -135,22 +135,22 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="subject-year" class="form-label">Year</label>
+                        <label for="subject-year" class="form-label-bold">Year</label>
                         <input maxlength="4" type="tel" class="form-control form-control-small" pattern="[0-9]*"
                                 id="subject-year">
                     </div>
                 </div>
                 <div class="other-qual-input form-group toggle-content">
-                    <label for="other-qual" class="form-label">Name of other qualification</label>
+                    <label for="other-qual" class="form-label-bold">Name of other qualification</label>
                     <input type="text" class="form-control" id="other-qual">
                 </div>
                 <div class="form-group form-group-compound">
-                    <label for="subject-name" class="form-label">Subject</label>
+                    <label for="subject-name" class="form-label-bold">Subject</label>
                     <input type="text" class="form-control" id="subject-name">
                 </div>
                 <div class="inline-fixed">
                     <div class="form-group">
-                        <label for="subject-grade" class="form-label">Grade</label>
+                        <label for="subject-grade" class="form-label-bold">Grade</label>
                         <input type="text" class="form-control form-control-medium" id="subject-grade">
                     </div>
                     <div class="form-group">
@@ -202,7 +202,7 @@
 </fieldset>
 <fieldset class="fieldset-with-border" id="applyWorkExperience">
     <legend class="heading-large">Work experience</legend>
-    <p class="hide-nojs form-label text">Do you have any work experience?</p>
+    <p class="hide-nojs form-label-bold text">Do you have any work experience?</p>
     <p class="form-hint text" id="appTourWork">
         Please include any work, whether paid or voluntary.
     </p>
@@ -218,15 +218,15 @@
         <div id="workexperience-panel" class="has-work-experience toggle-content">
             <div class="enter-work clearfix">
                 <div class="form-group form-group-compound">
-                    <label for="work-employer" class="form-label">Employer</label>
+                    <label for="work-employer" class="form-label-bold">Employer</label>
                     <input type="text" class="form-control" id="work-employer">
                 </div>
                 <div class="form-group form-group">
-                    <label for="work-title" class="form-label">Job title</label>
+                    <label for="work-title" class="form-label-bold">Job title</label>
                     <input type="text" class="form-control" id="work-title">
                 </div>
                 <div class="form-group form-group-compound">
-                    <label for="work-role" class="form-label">Main duties</label>
+                    <label for="work-role" class="form-label-bold">Main duties</label>
                     <textarea type="text" rows="3" class="form-control" id="work-role" data-val-length-max="200"></textarea>
                     <span class="form-hint">
                         <span class="maxchar-count">200</span>
@@ -235,7 +235,7 @@
                 </div>
                 <div class="inline-fixed">
                     <div class="form-group form-group-compound">
-                        <label for="work-from" class="form-label">Started</label>
+                        <label for="work-from" class="form-label-bold">Started</label>
                         <div class="form-group form-group-compound">
                             <span class="form-hint">Month</span>
                             <select class="form-control" name="" id="work-from">
@@ -260,7 +260,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="work-to" class="form-label">Finished</label>
+                        <label for="work-to" class="form-label-bold">Finished</label>
                         <div class="form-group form-group-compound">
                             <span class="form-hint">Month</span>
                             <select class="form-control" name="" id="work-to">
@@ -302,7 +302,7 @@
 </fieldset>
 <fieldset class="fieldset-with-border" id="applyTraining">
     <legend class="heading-large">Training courses</legend>
-    <p class="hide-nojs form-label text">Have you been on a training course?</p>
+    <p class="hide-nojs form-label-bold text">Have you been on a training course?</p>
     <p class="form-hint text" id="appTourTraining">
         Include any courses you've received, in or outside of work
     </p>
@@ -318,15 +318,15 @@
         <div id="training-panel" class="has-training toggle-content">
             <div class="enter-training clearfix">
                 <div class="form-group form-group-compound">
-                    <label for="training-employer" class="form-label">Training provider</label>
+                    <label for="training-employer" class="form-label-bold">Training provider</label>
                     <input type="text" class="form-control" id="training-employer">
                 </div>
                 <div class="form-group form-group">
-                    <label for="training-title" class="form-label">Training course title</label>
+                    <label for="training-title" class="form-label-bold">Training course title</label>
                     <input type="text" class="form-control" id="training-title">
                 </div>
                 <!-- <div class="form-group form-group-compound">
-                    <label for="training-role" class="form-label">What skills did you gain from this course?</label>
+                    <label for="training-role" class="form-label-bold">What skills did you gain from this course?</label>
                     <span class="form-hint text">
                     Try to highlight any skills that might be relevant to this apprenticeship
                     </span>
@@ -335,7 +335,7 @@
                 </div> -->
                 <div class="inline-fixed">
                     <div class="form-group form-group-compound">
-                        <label for="training-from" class="form-label">From</label>
+                        <label for="training-from" class="form-label-bold">From</label>
                         <div class="form-group form-group-compound">
                             <span class="form-hint">Month</span>
                             <select class="form-control" name="" id="training-from">
@@ -360,7 +360,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="training-to" class="form-label">To</label>
+                        <label for="training-to" class="form-label-bold">To</label>
                         <div class="form-group form-group-compound">
                             <span class="form-hint">Month</span>
                             <select class="form-control" name="" id="training-to">
@@ -408,7 +408,7 @@
         </details>
     </div>
     <div class="form-group">
-        <label for="question1" class="form-label">What are your main strengths?</label>
+        <label for="question1" class="form-label-bold">What are your main strengths?</label>
         <span class="form-hint text" id="appTourStrengths">Please provide examples of when you've demonstrated your strengths</span>
         <textarea id="question1" class="form-control" rows="4" data-val-length-max="4000"
                     data-value="">I feel that one of my main strengths is that I've got good communication skills. I am captain of my local Rugby team and I constantly have to be confident and constantly communicate with my team members. I've also held the position of customer service assistant on a helpdesk, so I have had to communicate with our customers over the phone on a daily basis.</textarea>
@@ -416,7 +416,7 @@
         <span class="visuallyhidden aria-limit" aria-live="polite"></span>
     </div>
     <div class="form-group">
-        <label for="question2" class="form-label">What skills would you like to improve during this apprenticeship?</label>
+        <label for="question2" class="form-label-bold">What skills would you like to improve during this apprenticeship?</label>
         <span class="form-hint text" id="appTourSkills">Think of what your main duties would be and whether there are skills you'd like to develop</span>
         <textarea id="question2" class="form-control" rows="4" data-val-length-max="4000"
                     data-value="">I would like to improve my knowledge of the latest cutting and colouring techniques being used within the fashion industry and how these could be adapted to suit high street fashion trends.</textarea>
@@ -424,7 +424,7 @@
         <span class="visuallyhidden aria-limit" aria-live="polite"></span>
     </div>
     <div class="form-group">
-        <label for="question3" class="form-label">What are your hobbies and interests?</label>
+        <label for="question3" class="form-label-bold">What are your hobbies and interests?</label>
         <span class="form-hint text" id="appTourHobbies">Remember to include any personal achievements</span>
         <textarea id="question3" class="form-control" rows="4" data-val-length-max="4000"
                     data-value="">I play the piano to a Grade 6 level, I feel that the passion and dedication that I've shown towards learning the piano proves that I could transfer these skills to my apprenticeship. Having to practice every day and seeing the results has been a very rewarding process.</textarea>
@@ -435,21 +435,21 @@
 <fieldset class="fieldset-with-border" id="applyAdditional">
     <legend class="heading-large">Additional questions</legend>
     <div class="form-group">
-        <label for="add-question1" class="form-label" id="appTourAdditional1">Why would you like to become an Apprentice?</label>
+        <label for="add-question1" class="form-label-bold" id="appTourAdditional1">Why would you like to become an Apprentice?</label>
         <textarea id="add-question1" class="form-control" rows="4" data-val-length-max="4000"
                     data-value="">I'd like to become an apprentice so that I can gain the skills and qualities that I need to enjoy a long and successful career. I didn't feel like University was the right route for me, even though I've received offers from 3 Universities.</textarea>
         <span class="form-hint"><span class="maxchar-count">4000</span>  <span class="maxchar-text">characters remaining</span></span>
         <span class="visuallyhidden aria-limit" aria-live="polite"></span>
     </div>
     <div class="form-group">
-        <label for="add-question2" class="form-label" id="appTourAdditional2">Where do you see yourself in three years?</label>
+        <label for="add-question2" class="form-label-bold" id="appTourAdditional2">Where do you see yourself in three years?</label>
         <textarea id="add-question2" class="form-control" rows="4" data-val-length-max="4000"
                     data-value="">In 3 years time I would like to be a team leader, or maybe even assistant manager. As I'm a quick learner I think that this is a realistic target.</textarea>
         <span class="form-hint"><span class="maxchar-count">4000</span>  <span class="maxchar-text">characters remaining</span></span>
         <span class="visuallyhidden aria-limit" aria-live="polite"></span>
     </div>
     <div class="form-group inline clearfix">
-        <p class="form-label" id="disability-label">Do you have a learning difficulty, disability or health problem?</p>
+        <p class="form-label-bold" id="disability-label">Do you have a learning difficulty, disability or health problem?</p>
         <label for="disability-yes" class="block-label">
             <input name="disability" type="radio" id="disability-yes" aria-labelledby="disability-label">Yes
         </label>
@@ -477,7 +477,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="question4" class="form-label">Is there anything we can do to support your interview?</label>
+        <label for="question4" class="form-label-bold">Is there anything we can do to support your interview?</label>
         <span class="form-hint">For example, do you need a signer or information in braille</span>
         <div class="form-group form-group-compound inline">
             <label data-target="support-panel" for="support-yes" class="block-label">

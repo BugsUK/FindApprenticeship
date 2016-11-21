@@ -57,7 +57,7 @@
             @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" }, verified: Model.VerifiedMobile)
 
             <div class="form-group">
-                <p class="form-label">Email</p>
+                <p class="form-label-bold">Email</p>
                 <span class="form-prepopped" id="settings-username">@Model.Username</span>
                 <a id="settings-change-username" class="inl-block" href="@Url.RouteUrl(RouteNames.UpdateEmail)">Change email address</a>
             </div>
@@ -65,7 +65,7 @@
             @if (!string.IsNullOrWhiteSpace(Model.PendingUsername))
             {
                 <div class="form-group">
-                    <p class="form-label">Pending email address</p>
+                    <p class="form-label-bold">Pending email address</p>
                     <span class="form-prepopped" id="settings-pending-username">@Model.PendingUsername</span>
                     <a id="settings-confirm-username" class="inl-block" href="@Url.RouteUrl(RouteNames.VerifyUpdatedEmail)">Verify email address</a>
                 </div>
@@ -148,7 +148,7 @@
         <div class="tabbed-content @savedSearchesTabClass">
             <h2 class="heading-large" id="savedSearchHeading">Saved searches</h2>
             <div class="form-group form-group-compound">
-                <p class="form-label">Receive notifications?</p>
+                <p class="form-label-bold">Receive notifications?</p>
                 <span class="form-hint text">If you don't select an option you won't receive notifications</span>
                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
                 @if (Model.SmsEnabled)
@@ -223,7 +223,7 @@
 
             <div class="form-group">
                 <a id="password"></a>
-                @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                @Html.LabelFor(m => m.Password, new { @class = "form-label-bold" })
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Password, null)
             </div>

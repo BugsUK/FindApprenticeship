@@ -73,7 +73,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Work experience</legend>\r\n        <p");
 
-WriteLiteral(" class=\"hide-nojs form-label text\"");
+WriteLiteral(" class=\"hide-nojs form-label-bold text\"");
 
 WriteLiteral(" id=\"workExpQuestion\"");
 
@@ -159,7 +159,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"work-employer\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Employer</label>\r\n                        <input");
 
@@ -183,7 +183,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"work-title\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Job title</label>\r\n                        <input");
 
@@ -207,7 +207,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"work-role\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Main duties</label>\r\n                        <textarea");
 
@@ -252,7 +252,7 @@ WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"work-from\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Started</label>\r\n                            <div");
 
@@ -306,7 +306,7 @@ WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"work-to\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Finished</label>\r\n                            <div");
 

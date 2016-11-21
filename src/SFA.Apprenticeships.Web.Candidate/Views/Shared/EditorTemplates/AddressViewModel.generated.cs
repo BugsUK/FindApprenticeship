@@ -68,7 +68,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"postcode-search\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Enter your postcode or start typing address</label>\r\n        <input");
 

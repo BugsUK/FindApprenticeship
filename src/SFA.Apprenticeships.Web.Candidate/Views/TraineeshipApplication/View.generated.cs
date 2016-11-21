@@ -121,7 +121,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</h2>\r\n            <p");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(" id=\"vacancy-employer\"");
 
@@ -129,7 +129,7 @@ WriteLiteral(">");
 
             
             #line 25 "..\..\Views\TraineeshipApplication\View.cshtml"
-                                                 Write(Model.VacancyDetail.EmployerName);
+                                                           Write(Model.VacancyDetail.EmployerName);
 
             
             #line default
@@ -178,14 +178,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1328), Tuple.Create("\"", 1384)
+WriteAttribute("href", Tuple.Create(" href=\"", 1338), Tuple.Create("\"", 1394)
             
             #line 35 "..\..\Views\TraineeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1335), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 1345), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 1335), false)
+, 1345), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
@@ -262,14 +262,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2107), Tuple.Create("\"", 2163)
+WriteAttribute("href", Tuple.Create(" href=\"", 2117), Tuple.Create("\"", 2173)
             
             #line 55 "..\..\Views\TraineeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2114), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2124), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2114), false)
+, 2124), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");

@@ -17,8 +17,10 @@
     <div class="grid-row">
         <div class="column-two-thirds">
             <div class="hgroup text">
-                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.Title)</h1>
-                <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
+                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.Title)
+                    <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
+                </h1>
             </div>
         </div>
         <div class="column-one-third">
@@ -124,7 +126,9 @@
             || !string.IsNullOrWhiteSpace(Model.RealityCheck))
          {
              <section class="section-border grid-row" id="course-info">
-                 <h2 class="heading-large">Requirements and prospects</h2>
+                 <div class="column-full">
+                     <h2 class="heading-large">Requirements and prospects</h2>
+                 </div>
                  <div class="column-one-half">
                      <div class="inner-block-padr">
                          <div class="text">
@@ -246,54 +250,56 @@
                 }
             </div>
         </section>
-    <section class="section-border grid-row" id="provider-info">
-        <h2 class="heading-large">Training provider</h2>
-        @if (Model.IsNasProvider)
-        {
-            <p id="vacancy-nas-provider">Training provider selection is currently in progress</p>
-        }
-        else
-        {
-            <div class="column-two-thirds">
-                <div class="inner-block-padr">
-                    <div class="text">
-                        @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
-                        {
-                            <p id="vacancy-training-to-be-provided" class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided))</p>
-                        }
-                        @if (Model.TrainingType == TrainingType.Standards)
-                        {
-                            <h3 class="heading-small">Apprenticeship standard</h3>
-                        }
-                        else
-                        {
-                            <h3 class="heading-small">Apprenticeship framework</h3>
-                        }
-                        <p id="vacancy-framework">@Html.Raw(Model.SubCategory)</p>
+        <section class="section-border grid-row" id="provider-info">
+            <div class="column-full">
+                <h2 class="heading-large">Training provider</h2>
+            </div>
+            @if (Model.IsNasProvider)
+            {
+                <p id="vacancy-nas-provider">Training provider selection is currently in progress</p>
+            }
+            else
+            {
+                <div class="column-two-thirds">
+                    <div class="inner-block-padr">
+                        <div class="text">
+                            @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
+                            {
+                                <p id="vacancy-training-to-be-provided" class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided))</p>
+                            }
+                            @if (Model.TrainingType == TrainingType.Standards)
+                            {
+                                <h3 class="heading-small">Apprenticeship standard</h3>
+                            }
+                            else
+                            {
+                                <h3 class="heading-small">Apprenticeship framework</h3>
+                            }
+                            <p id="vacancy-framework">@Html.Raw(Model.SubCategory)</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="column-one-third">
-                <div class="text">
-                    <h3 class="bold-small">Training provider</h3>
-                    <p id="vacancy-provider-name">@Model.ProviderName</p>
+                <div class="column-one-third">
+                    <div class="text">
+                        <h3 class="bold-small">Training provider</h3>
+                        <p id="vacancy-provider-name">@Model.ProviderName</p>
 
-                    @if (!Model.IsRecruitmentAgencyAnonymous && !string.IsNullOrWhiteSpace(Model.RecruitmentAgency))
+                        @if (!Model.IsRecruitmentAgencyAnonymous && !string.IsNullOrWhiteSpace(Model.RecruitmentAgency))
+                        {
+                            <p id="recruitment-agency-name">Applications for this apprenticeship are being processed by @Model.RecruitmentAgency</p>
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Contact))
                     {
-                        <p id="recruitment-agency-name">Applications for this apprenticeship are being processed by @Model.RecruitmentAgency</p>
+                        <div class="text">
+                            <h3 class="bold-small">Contact</h3>
+                            <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
+                        </div>
                     }
                 </div>
-
-                @if (!string.IsNullOrWhiteSpace(Model.Contact))
-                {
-                    <div class="text">
-                        <h3 class="bold-small">Contact</h3>
-                        <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
-                    </div>
-                }
-            </div>
-        }
-    </section>
+            }
+        </section>
 
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {

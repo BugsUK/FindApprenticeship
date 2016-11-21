@@ -73,7 +73,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Qualifications</legend>\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"qualificationQuestion\"");
 
@@ -154,7 +154,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"qual-type\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Type of qualification</label>\r\n                        <select");
 
@@ -176,7 +176,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"subject-year\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Year</label>\r\n                        <input");
 
@@ -206,7 +206,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"other-qual\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Name of other qualification</label>\r\n                    <input");
 
@@ -230,7 +230,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"subject-name\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Subject</label>\r\n                    <input");
 
@@ -258,7 +258,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"subject-grade\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Grade</label>\r\n                        <input");
 

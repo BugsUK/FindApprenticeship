@@ -79,7 +79,7 @@ WriteLiteral(" class=\"form-group inline-fixed\"");
 
 WriteLiteral(">\r\n        <legend");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Years attended</legend>\r\n");
 

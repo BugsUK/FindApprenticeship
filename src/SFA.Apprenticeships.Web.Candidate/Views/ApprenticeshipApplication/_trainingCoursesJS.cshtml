@@ -3,7 +3,7 @@
 <div class="hide-nojs" data-enter-action="#addTrainingCourseBtn" data-bind=" visible selectedsection()= = ='applyTrainingCourses' , stopbinding true">
     <fieldset id="applyTrainingCourses" class="fieldset-with-border">
         <legend class="heading-large">Training courses</legend>
-        <p class="hide-nojs form-label text" id="trainingCoursesQuestion">Have you been on a training course?</p>
+        <p class="hide-nojs form-label-bold text" id="trainingCoursesQuestion">Have you been on a training course?</p>
         <p class="form-hint text" id="appTourTraining">
             Include any courses you've received, in or outside of work
         </p>
@@ -21,16 +21,16 @@
             <div id="training-history-panel" class="toggle-content" data-bind="style: {'display': trainingCoursesStatus() }" aria-hidden="true">
                 <div id="training-history-apply" class="clearfix">
                     <div class="form-group form-group-compound" data-bind="parentvalElement: provider">
-                        <label for="training-history-provider" class="form-label">Provider</label>
+                        <label for="training-history-provider" class="form-label-bold">Provider</label>
                         <input type="text" class="form-control" id="training-history-provider" data-bind="value: provider" maxlength="50">
                     </div>
                     <div class="form-group form-group-compound" data-bind="parentvalElement: title">
-                        <label for="training-history-course-title" class="form-label">Course title</label>
+                        <label for="training-history-course-title" class="form-label-bold">Course title</label>
                         <input type="text" class="form-control" id="training-history-course-title" data-bind="value: title" maxlength="50">
                     </div>
                     <div class="form-group inline-fixed validation-message-parent">
                         <div class="form-group error-wrapper vert-align-top no-btm-margin">
-                            <label for="training-history-from-month" class="form-label">From</label>
+                            <label for="training-history-from-month" class="form-label-bold">From</label>
                             <div class="form-group form-group-compound no-btm-margin">
                                 <span class="form-hint">Month</span>
                                 <select class="form-control" id="training-history-from-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: fromMonth"></select>
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="form-group error-wrapper vert-align-top no-btm-margin">
-                            <label for="training-history-to-month" class="form-label">To</label>
+                            <label for="training-history-to-month" class="form-label-bold">To</label>
                             <div class="form-group form-group-compound no-btm-margin">
                                 <span class="form-hint">Month</span>
                                 <select class="form-control" id="training-history-to-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: toMonth"></select>

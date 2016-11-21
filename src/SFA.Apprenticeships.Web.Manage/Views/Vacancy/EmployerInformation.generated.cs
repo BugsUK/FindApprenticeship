@@ -113,7 +113,7 @@ Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid-full-column\"");
+WriteLiteral(" class=\"column-full\"");
 
 WriteLiteral(">\r\n        <button");
 

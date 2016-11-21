@@ -116,7 +116,7 @@
             var validationType = GetValidationType(helper, expression);
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             var controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
-            var labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
+            var labelAttributes = MergeAttributes("form-label-bold", labelHtmlAttributes);
             var hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
 
             var validator = helper.ValidationMessageWithSeverityFor(expression, null, validationType);
@@ -282,7 +282,7 @@
 
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             var subContainerAttributes = MergeAttributes("form-group form-group-compound", subContainerHtmlAttributes);
-            var labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
+            var labelAttributes = MergeAttributes("form-label-bold", labelHtmlAttributes);
             
             var yesLabelAttributes = MergeAttributes("block-label" + (value ? " selected" : ""), labelHtmlAttributes);
             var noLabelAttributes = MergeAttributes("block-label" + (!value ? " selected" : ""), labelHtmlAttributes);

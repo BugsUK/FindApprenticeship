@@ -53,7 +53,7 @@
             // Developers are must unlikely to be interested in the un-mimified version of this
             // TODO: Find and add approved CDN
             bundles.Add(new StyleBundle("~/bundles/font-awesome")
-                .Include("~/Content/_assets/css/font-awesome/css/font-awesome.min.css"));
+                .Include("~/Content/_assets/css/font-awesome.min.css"));
         }
     }
 }
