@@ -10,5 +10,21 @@
         public int EmployerId { get; set; }
         public string EmployerDescription { get; set; }
         public string EmployerWebsiteUrl { get; set; }
+
+        public string AnonymousEmployerDescription { get; set; }
+
+        public string AnonymousEmployerDescriptionComment { get; set; }
+
+        public string AnonymousEmployerReason { get; set; }
+
+        public string AnonymousEmployerReasonComment { get; set; }
+
+        public bool? IsAnonymousEmployer { get; set; }
+
+        public string OriginalFullName { get; set; }
+
+        public string AnonymousAboutTheEmployer { get; set; }
+
+        public string AnonymousAboutTheEmployerComment { get; set; }
     }
 }

@@ -944,8 +944,15 @@
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
-            vacancy.EmployerAnonymousName = vacancy.EmployerAnonymousName;
-            vacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
+            if (vacancy.IsAnonymousEmployer != null && vacancy.IsAnonymousEmployer.Value)
+            {
+                vacancy.EmployerAnonymousName = vacancy.EmployerAnonymousName;
+                vacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
+            }
+            else
+            {
+                vacancy.EmployerAnonymousName = vacancy.EmployerAnonymousReason = null;
+            }
             vacancy.OfflineVacancyType = null;
 
             //Comments
