@@ -220,10 +220,11 @@
                 .ForMember(v => v.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .ForMember(v => v.Wage, opt => opt.MapFrom(v => MapWage(v)))
-
+                .IgnoreMember(v => v.AnonymousEmployerDescription)
+                .IgnoreMember(v => v.AnonymousEmployerReason)
+                .IgnoreMember(v => v.IsAnonymousEmployer)
                 .IgnoreMember(v => v.LastEditedById)
                 .IgnoreMember(v => v.ProviderTradingName)
-
                 .MapMemberFrom(v => v.ApplicantCount, v => v.ApplicantCount)
                 .MapMemberFrom(v => v.NewApplicationCount, v => v.NewApplicantCount)
                 .MapMemberFrom(v => v.CreatedByProviderUsername, v => v.CreatedByProviderUsername)
