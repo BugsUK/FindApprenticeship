@@ -88,6 +88,45 @@
             }
         }
 
+        [TestCase(null, false)]
+        [TestCase("", false)]
+        [TestCase("something", true)]
+        [TestCase(MassivleyLong, true)]
+        [TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
+        public void ShouldValidateDescription_ForAnonymousEmployer(
+            string description,
+            bool expectValid)
+        {
+            // Arrange.
+            var viewModel = new VacancyOwnerRelationshipViewModel
+            {
+                AnonymousEmployerDescription = description,
+                IsAnonymousEmployer = true,
+                AnonymousEmployerReason = description,
+                AnonymousAboutTheEmployer = description
+            };
+
+            // Act.
+            var validator = new VacancyOwnerRelationshipViewModelValidator();
+
+            // Assert.
+            if (expectValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(m => m.AnonymousEmployerDescription, viewModel);
+                validator.ShouldNotHaveValidationErrorFor(m => m.AnonymousAboutTheEmployer, viewModel);
+                validator.ShouldNotHaveValidationErrorFor(m => m.AnonymousEmployerReason, viewModel);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(m => m.AnonymousEmployerDescription, viewModel);
+                validator.ShouldHaveValidationErrorFor(m => m.AnonymousAboutTheEmployer, viewModel);
+                validator.ShouldHaveValidationErrorFor(m => m.AnonymousEmployerReason, viewModel);
+            }
+        }
+
         private const string MassivleyLong = "never too long for the validator never too long for the validator " +
                                              "never too long for the validator never too long for the " +
                                              "validator never too long for the validator never too long for" +

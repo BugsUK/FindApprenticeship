@@ -116,7 +116,7 @@
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.GetEmployer.FailedGeoCodeLookup:
                     SetUserMessage(response.Message);
-                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = providerSiteId, vacancyGuid = vacancyGuid, comeFromPreview = comeFromPreview });
+                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId, vacancyGuid, comeFromPreview });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

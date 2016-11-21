@@ -892,7 +892,7 @@
                 TotalNumberOfPages = totalRecords == 0 ? 1 : (int)Math.Ceiling((double)totalRecords / (double)vacanciesSummarySearch.PageSize)
             };
 
-            var viewModel = new VacanciesSummaryViewModel()
+            var viewModel = new VacanciesSummaryViewModel
             {
                 Vacancies = vacancyPage,
                 VacanciesSummarySearch = vacanciesSummarySearch,
