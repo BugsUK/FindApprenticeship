@@ -8,12 +8,12 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Users;
+    using Domain.Entities.Vacancies;
     using Infrastructure.Common.Mappers;
     using Infrastructure.Presentation;
     using Resolvers;
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Vacancies;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
@@ -63,7 +63,15 @@
                 .ForMember(dest => dest.EmployerWebsiteUrlComment, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore())
                 .ForMember(dest => dest.Employer, opt => opt.Ignore())
-                .ForMember(dest => dest.IsEmployerAddressValid, opt => opt.Ignore());
+                .ForMember(dest => dest.IsEmployerAddressValid, opt => opt.Ignore())
+                .ForMember(dest => dest.AnonymousEmployerDescription, src => src.Ignore())
+                .ForMember(dest => dest.AnonymousEmployerDescriptionComment, src => src.Ignore())
+                .ForMember(dest => dest.AnonymousEmployerReason, src => src.Ignore())
+                .ForMember(dest => dest.AnonymousEmployerReasonComment, src => src.Ignore())
+                .ForMember(dest => dest.IsAnonymousEmployer, src => src.Ignore())
+                .ForMember(dest => dest.OriginalFullName, src => src.Ignore())
+                .ForMember(dest => dest.AnonymousAboutTheEmployer, src => src.Ignore())
+                .ForMember(dest => dest.AnonymousAboutTheEmployerComment, src => src.Ignore());
             Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>()
                 .ForMember(dest => dest.OfflineApplicationUrl, opt => opt.MapFrom(src => src.EmployersWebsite));
             Mapper.CreateMap<VacancyLocationAddressViewModel, VacancyLocation>()
@@ -82,7 +90,9 @@
                 .ForMember(dest => dest.Ukprn, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyOwnerRelationship, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationAddresses, opt => opt.Ignore())
-                .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
+                .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore())
+                .ForMember(dest => dest.AnonymousEmployerDescription, src => src.Ignore())
+                .ForMember(dest => dest.AnonymousEmployerReason, src => src.Ignore());
 
             Mapper.CreateMap<Vacancy, TrainingDetailsViewModel>()
                 .ForMember(dest => dest.FrameworkCodeName, opt => opt.MapFrom(src => CategoryPrefixes.GetFrameworkCode(src.FrameworkCodeName)))

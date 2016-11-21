@@ -330,7 +330,7 @@
                 .MapMemberFrom(v => v.WageComment, v => v.WageComment)
                 .MapMemberFrom(v => v.WorkingWeek, v => v.WorkingWeek)
                 .MapMemberFrom(v => v.WorkingWeekComment, v => v.WorkingWeekComment)
-
+                .IgnoreMember(dvl => dvl.IsAnonymousEmployer)
                 .IgnoreMember(dvl => dvl.Address)
 
                 .AfterMap((v, av) =>
@@ -432,8 +432,10 @@
                 .MapMemberFrom(av => av.VacancyOwnerRelationshipId, v => v.VacancyOwnerRelationshipId)
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
                 .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
-
                 .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(dvl => dvl.EmployerAnonymousReason)
+                .IgnoreMember(dvl => dvl.IsAnonymousEmployer)
+                .IgnoreMember(dvl => dvl.AnonymousAboutTheEmployer)
 
                 .AfterMap((v, av) =>
                 {
