@@ -29,8 +29,6 @@
             CategoryCode = vacancySummary.CategoryCode;
             SubCategory = vacancySummary.SubCategory;
             SubCategoryCode = vacancySummary.SubCategoryCode;
-            EmployerAnonymousReason = vacancySummary.EmployerAnonymousReason;
-            AnonymousAboutTheEmployer = vacancySummary.AnonymousAboutTheEmployer;
         }
 
         public int Id { get; set; }
@@ -67,8 +65,5 @@
 
         public string SubCategoryCode { get; set; }
 
-        public string EmployerAnonymousReason { get; set; }
-
-        public string AnonymousAboutTheEmployer { get; set; }
     }
 }

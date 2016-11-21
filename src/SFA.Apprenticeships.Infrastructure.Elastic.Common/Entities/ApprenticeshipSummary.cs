@@ -38,10 +38,6 @@
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public bool IsEmployerAnonymous { get; set; }
-        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string EmployerAnonymousReason { get; set; }
-        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string AnonymousAboutTheEmployer { get; set; }
 
         [ElasticProperty(Type = FieldType.String, Index = FieldIndexOption.Analyzed)]
         public VacancyLocationType VacancyLocationType { get; set; }

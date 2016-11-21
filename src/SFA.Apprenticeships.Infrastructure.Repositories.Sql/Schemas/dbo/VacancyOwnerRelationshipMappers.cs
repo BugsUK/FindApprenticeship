@@ -11,15 +11,8 @@
                 .ForMember(v => v.VacancyOwnerRelationshipGuid, opt => opt.Ignore())
                 .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.VacancyOwnerRelationshipId))
                 .ForMember(v => v.ProviderSiteId, opt => opt.MapFrom(src => src.ProviderSiteID))
-                .ForMember(v => v.EmployerWebsiteUrl, opt => opt.MapFrom(src => src.EmployerWebsite))
-                .ForMember(v => v.AnonymousEmployerDescription, src => src.Ignore())
-                .ForMember(v => v.AnonymousEmployerDescriptionComment, src => src.Ignore())
-                .ForMember(v => v.AnonymousEmployerReason, src => src.Ignore())
-                .ForMember(v => v.AnonymousEmployerReasonComment, src => src.Ignore())
-                .ForMember(v => v.IsAnonymousEmployer, src => src.Ignore())
-                .ForMember(v => v.OriginalFullName, src => src.Ignore())
-                .ForMember(v => v.AnonymousAboutTheEmployer, src => src.Ignore())
-                .ForMember(v => v.AnonymousAboutTheEmployerComment, src => src.Ignore());
+                .ForMember(v => v.EmployerWebsiteUrl, opt => opt.MapFrom(src => src.EmployerWebsite));
+              
 
             Mapper.CreateMap<VacancyOwnerRelationship, Entities.VacancyOwnerRelationship>()
                 .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.VacancyOwnerRelationshipId))

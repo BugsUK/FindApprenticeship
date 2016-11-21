@@ -40,6 +40,7 @@
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
         public string EmployerAnonymousName { get; set; }
         public string EmployerAnonymousReason { get; set; }
+        public bool? IsAnonymousEmployer { get; set; }
         public string AnonymousAboutTheEmployer { get; set; }
         public int? NumberOfPositions { get; set; }
         public VacancyType VacancyType { get; set; }

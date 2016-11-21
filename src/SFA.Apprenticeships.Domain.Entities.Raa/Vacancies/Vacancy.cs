@@ -7,9 +7,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
     {
         public string AdditionalLocationInformation { get; set; }
         public string AdditionalLocationInformationComment { get; set; }
-        public string AnonymousEmployerDescription { get; set; }
-        public string AnonymousEmployerReason { get; set; }
-        public bool? IsAnonymousEmployer { get; set; }
         public string ApprenticeshipLevelComment { get; set; }
         public string ClosingDateComment { get; set; }
         public string ContactDetailsComment { get; set; }
