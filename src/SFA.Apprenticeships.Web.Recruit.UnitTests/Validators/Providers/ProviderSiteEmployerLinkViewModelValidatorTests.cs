@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.Providers
 {
-    using System;
     using Common.UnitTests.Validators;
     using FluentAssertions;
-    using NUnit.Framework;
     using FluentValidation.TestHelper;
+    using NUnit.Framework;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
+    using System;
 
     [TestFixture]
     [Parallelizable]
@@ -70,7 +70,8 @@
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
                 EmployerWebsiteUrl = "http://www.valid.com",
-                EmployerDescription = description
+                EmployerDescription = description,
+                IsAnonymousEmployer = false
             };
 
             // Act.
