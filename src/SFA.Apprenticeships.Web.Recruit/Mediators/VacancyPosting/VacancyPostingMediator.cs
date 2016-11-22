@@ -176,6 +176,16 @@
                 viewModel.EmployerDescriptionComment = existingVacancy.NewVacancyViewModel.EmployerDescriptionComment;
                 viewModel.EmployerWebsiteUrlComment = existingVacancy.NewVacancyViewModel.EmployerWebsiteUrlComment;
                 viewModel.NumberOfPositionsComment = existingVacancy.NewVacancyViewModel.NumberOfPositionsComment;
+
+                var vor = existingVacancy.NewVacancyViewModel.VacancyOwnerRelationship;
+
+                if (vor.IsAnonymousEmployer.HasValue && vor.IsAnonymousEmployer.Value)
+                {
+                    viewModel.IsAnonymousEmployer = true;
+                    viewModel.AnonymousAboutTheEmployer = vor.AnonymousAboutTheEmployer;
+                    viewModel.AnonymousEmployerDescription = vor.AnonymousEmployerDescription;
+                    viewModel.AnonymousEmployerReason = vor.AnonymousEmployerReason;
+                }
             }
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)
@@ -249,12 +259,26 @@
         {
             var existingViewModel = _providerProvider.GetVacancyOwnerRelationshipViewModel(viewModel.ProviderSiteId,
                 viewModel.Employer.EdsUrn);
-            existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
-            existingViewModel.EmployerDescription = viewModel.EmployerDescription;
-            existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
-                viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
-            existingViewModel.VacancyGuid = viewModel.VacancyGuid;
+            if (existingViewModel != null)
+            {
+                if (viewModel.IsAnonymousEmployer.HasValue && viewModel.IsAnonymousEmployer.Value)
+                {
+                    existingViewModel.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
+                    existingViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
+                    existingViewModel.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
+                    existingViewModel.AnonymousEmployerReason = viewModel.AnonymousEmployerReason;
+                }
+                else
+                {
+                    existingViewModel.EmployerDescription = viewModel.EmployerDescription;
+                }
+                existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+
+                existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
+                    viewModel.IsEmployerLocationMainApprenticeshipLocation;
+                existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
+                existingViewModel.VacancyGuid = viewModel.VacancyGuid;
+            }            
             return existingViewModel;
         }
 
@@ -269,17 +293,28 @@
 
         private void CreateNewVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn)
         {
-            _vacancyPostingProvider.CreateVacancy(new VacancyMinimumData
+            var vacancyMinimumData = new VacancyMinimumData
             {
                 IsEmployerLocationMainApprenticeshipLocation =
+                    viewModel.IsEmployerLocationMainApprenticeshipLocation != null &&
                     viewModel.IsEmployerLocationMainApprenticeshipLocation.Value,
                 NumberOfPositions = viewModel.NumberOfPositions,
                 Ukprn = ukprn,
                 VacancyGuid = viewModel.VacancyGuid,
                 VacancyOwnerRelationshipId = viewModel.VacancyOwnerRelationshipId,
-                EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl,
-                EmployerDescription = viewModel.EmployerDescription
-            });
+            };
+            if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
+            {
+                vacancyMinimumData.AnonymousEmployerReason = viewModel.AnonymousEmployerReason;
+                vacancyMinimumData.AnonymousEmployerDescription = viewModel.AnonymousEmployerDescription;
+                vacancyMinimumData.IsAnonymousEmployer = viewModel.IsAnonymousEmployer != null &&
+                                                         viewModel.IsAnonymousEmployer.Value;
+                vacancyMinimumData.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
+            }
+            vacancyMinimumData.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+            vacancyMinimumData.EmployerDescription = viewModel.EmployerDescription;
+
+            _vacancyPostingProvider.CreateVacancy(vacancyMinimumData);
         }
 
         private void UpdateVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn, VacancyViewModel existingVacancy,

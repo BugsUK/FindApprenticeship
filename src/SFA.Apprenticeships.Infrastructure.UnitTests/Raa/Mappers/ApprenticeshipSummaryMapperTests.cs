@@ -1,15 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Raa.Mappers
 {
-    using System;
-    using System.Linq;
+    using Application.Interfaces;
     using FluentAssertions;
     using Infrastructure.Raa.Mappers;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Linq;
 
     [TestFixture]
     [Parallelizable]
@@ -101,7 +99,7 @@
 
             // Assert.
             summary.Should().NotBeNull();
-            summary.EmployerName.Should().Be(anonymised ? string.Empty : employer.FullName);
+            summary.EmployerName.Should().Be(anonymised ? "Anonymous Employer Name" : employer.FullName);
         }
     }
 }

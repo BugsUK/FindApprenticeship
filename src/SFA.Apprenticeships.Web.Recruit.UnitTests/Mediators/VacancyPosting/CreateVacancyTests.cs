@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
-    using System;
     using Apprenticeships.Application.Interfaces.Locations;
     using Common.Constants;
     using Common.Mediators;
@@ -8,18 +7,19 @@
     using Common.ViewModels.Locations;
     using Constants.Messages;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Raa.Vacancies;
-    using Moq;
-    using NUnit.Framework;
-    using Raa.Common.ViewModels.Provider;
-    using Raa.Common.ViewModels.Vacancy;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
+    using Moq;
+    using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Raa.Common.ViewModels.Employer;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
+    using System;
 
     [TestFixture]
     [Parallelizable]
@@ -166,7 +166,7 @@
                 Employer = new EmployerViewModel
                 {
                     EmployerId = 7,
-                }                
+                }
             };
 
             ProviderProvider.Setup(p => p.GetVacancyOwnerRelationshipViewModel(It.IsAny<int>(), It.IsAny<string>()))
@@ -189,7 +189,7 @@
         [Test]
         public void EmptyVacancyIfPreviousStateEmployerLocationIsDifferentFromCurrentStateEmployerLocation()
         {
-            var numberOfPositions = 5;                        
+            var numberOfPositions = 5;
             const string initialVacancyTitle = "title";
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
@@ -199,10 +199,10 @@
                 Employer = new EmployerViewModel
                 {
                     EmployerId = 7
-                },                
+                },
                 EmployerDescription = "Text about Employer Description",
                 VacancyReferenceNumber = AnInt
-            };        
+            };
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(AnInt))
                .Returns(GetLiveVacancyWithComments(AnInt, initialVacancyTitle));
@@ -215,7 +215,7 @@
                  s =>
                      s.UpdateVacancy(It.Is<Vacancy>(v => v.Address == null &&
                          v.NumberOfPositions == null &&
-                         v.NumberOfPositionsComment == null)));            
+                         v.NumberOfPositionsComment == null)));
         }
 
         [Test]
@@ -242,7 +242,8 @@
                 EmployerDescription = employerDescription,
                 EmployerWebsiteUrl = employerWebsiteUrl,
                 VacancyOwnerRelationshipId = vacanyPartyId,
-                VacancyGuid = vacancyGuid
+                VacancyGuid = vacancyGuid,
+                IsAnonymousEmployer = false
             };
 
             ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(viewModel);
@@ -250,7 +251,7 @@
             // Act.
             var mediator = GetMediator();
             mediator.ConfirmEmployer(viewModel, ukprn);
-            
+
             // Assert.
             VacancyPostingProvider.Verify(p => p.CreateVacancy(new VacancyMinimumData
             {
@@ -288,7 +289,8 @@
                 EmployerDescription = employerDescription,
                 EmployerWebsiteUrl = employerWebsiteUrl,
                 VacancyOwnerRelationshipId = vacanyPartyId,
-                VacancyGuid = vacancyGuid
+                VacancyGuid = vacancyGuid,
+                IsAnonymousEmployer = false
             };
 
             ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(viewModel);
@@ -360,21 +362,21 @@
             MockEmployerService.Verify(s => s.GetEmployer(employerId, It.IsAny<bool>()));
             MockProviderService.Verify(s => s.GetProvider(ukprn, true));
             MockLocalAuthorityService.Verify(s => s.GetLocalAuthorityCode(employersPostcode));
-            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => 
-                v.VacancyGuid == vacancyGuid 
-                && v.VacancyReferenceNumber == vacancyReferenceNumber 
-                && v.Title == null 
-                && v.ShortDescription == null 
-                && v.VacancyOwnerRelationshipId == vacancyOwnerRelationshipId 
-                && v.Status == VacancyStatus.Draft 
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v =>
+                v.VacancyGuid == vacancyGuid
+                && v.VacancyReferenceNumber == vacancyReferenceNumber
+                && v.Title == null
+                && v.ShortDescription == null
+                && v.VacancyOwnerRelationshipId == vacancyOwnerRelationshipId
+                && v.Status == VacancyStatus.Draft
                 && v.OfflineVacancy.HasValue == false
-                && v.OfflineApplicationUrl == null 
-                && v.OfflineApplicationInstructions == null 
-                && v.IsEmployerLocationMainApprenticeshipLocation == isEmployerLocationMainApprenticeshipLocation 
-                && v.NumberOfPositions == numberOfPositions 
-                && v.VacancyType == VacancyType.Unknown 
-                && v.Address == address 
-                && v.ContractOwnerId == providerId 
+                && v.OfflineApplicationUrl == null
+                && v.OfflineApplicationInstructions == null
+                && v.IsEmployerLocationMainApprenticeshipLocation == isEmployerLocationMainApprenticeshipLocation
+                && v.NumberOfPositions == numberOfPositions
+                && v.VacancyType == VacancyType.Unknown
+                && v.Address == address
+                && v.ContractOwnerId == providerId
                 && v.LocalAuthorityCode == localAuthorityCode
                 && v.EmployerWebsiteUrl == employerWebsiteUrl
                 && v.EmployerDescription == employerDescription

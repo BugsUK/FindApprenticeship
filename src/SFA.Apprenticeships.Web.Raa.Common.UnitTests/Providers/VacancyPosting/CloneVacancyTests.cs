@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
-    using System;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using System;
 
     [TestFixture]
     [Parallelizable]
@@ -29,7 +29,7 @@
                 .Returns(new Fixture().Build<Employer>().Create());
 
             MockTimeService.Setup(s => s.UtcNow).Returns(dateTimeNow);
-            
+
             var provider = GetVacancyPostingProvider();
 
             provider.CloneVacancy(initialVacancyReferenceNumber);
@@ -98,7 +98,7 @@
                 ClosingDate = DateTime.UtcNow.AddDays(10),
                 VacancyOwnerRelationshipId = 42,
                 EmployerAnonymousName = "Anon Corp"
-        };
+            };
         }
     }
 }

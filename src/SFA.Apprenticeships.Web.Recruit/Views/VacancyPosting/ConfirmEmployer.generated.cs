@@ -75,7 +75,7 @@ WriteLiteral("\r\n");
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) &&
         Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
+        Model.IsEmployerLocationMainApprenticeshipLocation.Value ? "Save and return to Preview" : "Save and continue";
 
             
             #line default
@@ -111,7 +111,7 @@ Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
             #line hidden
             
             #line 25 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                               
+                                                                           
 
 
             
@@ -211,6 +211,10 @@ WriteLiteral(">\r\n        var comeFromPreview = \"");
 WriteLiteral(@""";
 
         $(""#NumberOfPositionsJS"").attr(""id"", ""NumberOfPositions"").attr(""Name"", ""NumberOfPositions"");
+
+        $(""#NonAnonymousEmployerJS"").attr(""id"", ""NonAnonymousEmployer"").attr(""Name"", ""NonAnonymousEmployer"");
+        $(""#AnonymousEmployerJS"").attr(""id"", ""AnonymousEmployer"").attr(""Name"", ""AnonymousEmployer"");
+
         $(""#location-type-main-location"").on('click', function () {
             if (comeFromPreview === ""True"") {
                 $(""#confirmEmployer"").text(""Save and return to Preview"");

@@ -1,20 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
-    using System;
-    using System.Linq.Expressions;
     using AutoMapper;
-    using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
-    using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
-    using DbPostalAddress = Address.Entities.PostalAddress;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using Entities;
     using Infrastructure.Common.Mappers;
     using Presentation;
-    using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
+    using System;
+    using System.Linq.Expressions;
+    using DbPostalAddress = Address.Entities.PostalAddress;
     using DbVacancy = Entities.Vacancy;
-    using DbVacancySummary = Entities.VacancySummary;
     using DbVacancyLocation = Entities.VacancyLocation;
+    using DbVacancySummary = Entities.VacancySummary;
+    using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
+    using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
+    using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class ShortToIntConverter : ValueResolver<short?, int?>
@@ -109,7 +109,6 @@
                 .ForMember(v => v.WageTypeReason, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.ReasonForType))
                 .ForMember(v => v.WageUnitId, opt => opt.MapFrom(av => av.Wage == null ? default(int) : av.Wage.Unit == WageUnit.NotApplicable ? default(int) : av.Wage.Unit))
                 .ForMember(v => v.WeeklyWage, opt => opt.MapFrom(av => av.Wage == null ? null : av.Wage.Amount))
-
                 .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Change domain entity to use an id
                 .IgnoreMember(v => v.ApprenticeshipType)
                 .IgnoreMember(v => v.BeingSupportedBy)
@@ -121,7 +120,6 @@
                 .IgnoreMember(v => v.NewApplicantCount)
                 .IgnoreMember(v => v.SectorId)
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
-
                 .MapMemberFrom(v => v.AdditionalLocationInformation, av => av.AdditionalLocationInformation)
                 .MapMemberFrom(v => v.AdditionalLocationInformationComment, av => av.AdditionalLocationInformationComment)
                 .MapMemberFrom(v => v.AddressLine1, av => av.Address.AddressLine1)
@@ -129,6 +127,9 @@
                 .MapMemberFrom(v => v.AddressLine3, av => av.Address.AddressLine3)
                 .MapMemberFrom(v => v.AddressLine4, av => av.Address.AddressLine4)
                 .MapMemberFrom(v => v.AddressLine5, av => av.Address.AddressLine5)
+                .MapMemberFrom(v => v.AnonymousAboutTheEmployerComment, av => av.AnonymousAboutTheEmployerComment)
+                .MapMemberFrom(v => v.AnonymousEmployerDescriptionComment, av => av.AnonymousEmployerDescriptionComment)
+                .MapMemberFrom(v => v.AnonymousEmployerReasonComment, av => av.AnonymousEmployerReasonComment)
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
                 .MapMemberFrom(v => v.ApplyOutsideNAVMS, av => av.OfflineVacancy)
                 .MapMemberFrom(v => v.ApprenticeshipLevelComment, av => av.ApprenticeshipLevelComment)
@@ -151,6 +152,8 @@
                 .MapMemberFrom(v => v.DurationTypeId, av => av.DurationType)
                 .MapMemberFrom(v => v.DurationValue, av => av.Duration)
                 .MapMemberFrom(v => v.EmployerAnonymousName, av => av.EmployerAnonymousName)
+                .MapMemberFrom(v => v.EmployerAnonymousReason, av => av.EmployerAnonymousReason)
+                .MapMemberFrom(v => v.AnonymousAboutTheEmployer, av => av.AnonymousAboutTheEmployer)
                 .MapMemberFrom(v => v.EmployerDescription, av => av.EmployerDescription)
                 .MapMemberFrom(v => v.EmployerDescriptionComment, av => av.EmployerDescriptionComment)
                 .MapMemberFrom(v => v.EmployersApplicationInstructions, av => av.OfflineApplicationInstructions)
@@ -217,27 +220,27 @@
                 .ForMember(v => v.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .ForMember(v => v.Wage, opt => opt.MapFrom(v => MapWage(v)))
-                
                 .IgnoreMember(v => v.LastEditedById)
                 .IgnoreMember(v => v.ProviderTradingName)
-
                 .MapMemberFrom(v => v.ApplicantCount, v => v.ApplicantCount)
                 .MapMemberFrom(v => v.NewApplicationCount, v => v.NewApplicantCount)
                 .MapMemberFrom(v => v.CreatedByProviderUsername, v => v.CreatedByProviderUsername)
                 .MapMemberFrom(v => v.CreatedDate, v => v.CreatedDate)
                 .MapMemberFrom(v => v.CreatedDateTime, v => v.CreatedDate)
-                .MapMemberFrom(v => v.DateFirstSubmitted , v => v.DateFirstSubmitted)
-                .MapMemberFrom(v => v.DateQAApproved , v => v.DateQAApproved)
+                .MapMemberFrom(v => v.DateFirstSubmitted, v => v.DateFirstSubmitted)
+                .MapMemberFrom(v => v.DateQAApproved, v => v.DateQAApproved)
                 .MapMemberFrom(v => v.DateSubmitted, v => v.DateSubmitted)
-                .MapMemberFrom(v => v.EmployerId , v => v.EmployerId)
-                .MapMemberFrom(v => v.LocalAuthorityCode , v => v.LocalAuthorityCode)
-                .MapMemberFrom(v => v.QAUserName , v => v.QAUserName)
-                .MapMemberFrom(v => v.SectorCodeName , v => v.SectorCodeName)
+                .MapMemberFrom(v => v.EmployerId, v => v.EmployerId)
+                .MapMemberFrom(v => v.LocalAuthorityCode, v => v.LocalAuthorityCode)
+                .MapMemberFrom(v => v.QAUserName, v => v.QAUserName)
+                .MapMemberFrom(v => v.SectorCodeName, v => v.SectorCodeName)
                 .MapMemberFrom(v => v.SectorCodeNameComment, v => v.SectorCodeNameComment)
                 .MapMemberFrom(v => v.StandardIdComment, v => v.StandardIdComment)
-
                 .MapMemberFrom(v => v.AdditionalLocationInformation, v => v.AdditionalLocationInformation)
                 .MapMemberFrom(v => v.AdditionalLocationInformationComment, v => v.AdditionalLocationInformationComment)
+                .MapMemberFrom(v => v.AnonymousAboutTheEmployerComment, av => av.AnonymousAboutTheEmployerComment)
+                .MapMemberFrom(v => v.AnonymousEmployerDescriptionComment, av => av.AnonymousEmployerDescriptionComment)
+                .MapMemberFrom(v => v.AnonymousEmployerReasonComment, av => av.AnonymousEmployerReasonComment)
                 .MapMemberFrom(v => v.ApprenticeshipLevel, v => v.ApprenticeshipLevel)
                 .MapMemberFrom(v => v.ApprenticeshipLevelComment, v => v.ApprenticeshipLevelComment)
                 .MapMemberFrom(v => v.ApprenticeshipLevelComment, v => v.ApprenticeshipLevelComment)
@@ -262,6 +265,7 @@
                 .MapMemberFrom(v => v.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(v => v.EditedInRaa, v => v.EditedInRaa)
                 .MapMemberFrom(v => v.EmployerAnonymousName, v => v.EmployerAnonymousName)
+                .MapMemberFrom(v => v.EmployerAnonymousReason, v => v.EmployerAnonymousReason)
                 .MapMemberFrom(v => v.EmployerDescriptionComment, v => v.EmployerDescriptionComment)
                 .MapMemberFrom(v => v.EmployerLocation, v => v.EmployerLocation)
                 .MapMemberFrom(v => v.EmployerLocation, v => v.EmployerLocation)
@@ -280,6 +284,9 @@
                 .MapMemberFrom(v => v.LongDescriptionComment, v => v.LongDescriptionComment)
                 .MapMemberFrom(v => v.NoOfOfflineApplicants, v => v.NoOfOfflineApplicants)
                 .MapMemberFrom(v => v.NumberOfPositionsComment, v => v.NumberOfPositionsComment)
+                .MapMemberFrom(v => v.EmployerAnonymousName, v => v.EmployerAnonymousName)
+                .MapMemberFrom(v => v.EmployerAnonymousReason, v => v.EmployerAnonymousReason)
+                .MapMemberFrom(v => v.EmployerDescriptionComment, v => v.EmployerDescriptionComment)
                 .MapMemberFrom(v => v.OfflineApplicationInstructions, v => v.EmployersApplicationInstructions)
                 .MapMemberFrom(v => v.OfflineApplicationInstructionsComment, v => v.OfflineApplicationInstructionsComment)
                 .MapMemberFrom(v => v.OfflineApplicationUrl, v => v.EmployersRecruitmentWebsite)
@@ -323,9 +330,9 @@
                 .MapMemberFrom(v => v.WageComment, v => v.WageComment)
                 .MapMemberFrom(v => v.WorkingWeek, v => v.WorkingWeek)
                 .MapMemberFrom(v => v.WorkingWeekComment, v => v.WorkingWeekComment)
-
+                .IgnoreMember(dvl => dvl.IsAnonymousEmployer)
                 .IgnoreMember(dvl => dvl.Address)
-                
+
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
@@ -425,8 +432,10 @@
                 .MapMemberFrom(av => av.VacancyOwnerRelationshipId, v => v.VacancyOwnerRelationshipId)
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
                 .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
-                
                 .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(dvl => dvl.EmployerAnonymousReason)
+                .IgnoreMember(dvl => dvl.IsAnonymousEmployer)
+                .IgnoreMember(dvl => dvl.AnonymousAboutTheEmployer)
 
                 .AfterMap((v, av) =>
                 {
@@ -495,8 +504,8 @@
 
                     if (dbpa.Latitude.HasValue && dbpa.Longitude.HasValue)
                     {
-                        dpa.GeoPoint.Latitude = (double) dbpa.Latitude.Value;
-                        dpa.GeoPoint.Longitude = (double) dbpa.Longitude.Value;
+                        dpa.GeoPoint.Latitude = (double)dbpa.Latitude.Value;
+                        dpa.GeoPoint.Longitude = (double)dbpa.Longitude.Value;
                     }
 
                     if (dbpa.Easting.HasValue && dbpa.Northing.HasValue)
@@ -516,9 +525,9 @@
                 .MapMemberFrom(dbvl => dbvl.AddressLine5, dvl => dvl.Address.AddressLine5)
                 .MapMemberFrom(dbvl => dbvl.PostCode, dvl => dvl.Address.Postcode)
                 .MapMemberFrom(dbvl => dbvl.Town, dvl => dvl.Address.Town)
-                .MapMemberFrom(dbvl => dbvl.Latitude, dvl => (decimal) dvl.Address.GeoPoint.Latitude)
+                .MapMemberFrom(dbvl => dbvl.Latitude, dvl => (decimal)dvl.Address.GeoPoint.Latitude)
                 // use a converter?
-                .MapMemberFrom(dbvl => dbvl.Longitude, dvl => (decimal) dvl.Address.GeoPoint.Longitude)
+                .MapMemberFrom(dbvl => dbvl.Longitude, dvl => (decimal)dvl.Address.GeoPoint.Longitude)
                 .MapMemberFrom(dbvl => dbvl.GeocodeEasting, dvl => dvl.Address.GeoPoint.Easting)
                 .MapMemberFrom(dbvl => dbvl.GeocodeNorthing, dvl => dvl.Address.GeoPoint.Northing)
                 // use a converter?
@@ -541,7 +550,7 @@
                         Town = dbvl.Town
                     };
 
-                    if ((dbvl.Latitude.HasValue && dbvl.Longitude.HasValue) || 
+                    if ((dbvl.Latitude.HasValue && dbvl.Longitude.HasValue) ||
                         (dbvl.GeocodeEasting.HasValue && dbvl.GeocodeNorthing.HasValue))
                     {
                         dvl.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();

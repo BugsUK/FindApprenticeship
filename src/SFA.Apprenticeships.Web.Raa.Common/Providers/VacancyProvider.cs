@@ -22,12 +22,12 @@
     using Domain.Entities.Vacancies;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
+    using Infrastructure.Raa.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
-    using Infrastructure.Raa.Extensions;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -167,7 +167,7 @@
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);
-            viewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer);
+            viewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy);
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
             viewModel.VacancyGuid = vacancy.VacancyGuid;
@@ -332,7 +332,10 @@
                 OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
                 EmployerDescription = vacancyMinimumData.EmployerDescription,
-                EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
+                EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl,
+                EmployerAnonymousName = vacancyMinimumData.AnonymousEmployerDescription,
+                EmployerAnonymousReason = vacancyMinimumData.AnonymousEmployerReason,
+                AnonymousAboutTheEmployer = vacancyMinimumData.AnonymousAboutTheEmployer
             });
         }
 
@@ -662,7 +665,7 @@
         public VacancyViewModel GetVacancyById(int vacancyId)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyId);
-            
+
             if (vacancy == null)
                 return null;
 
@@ -693,7 +696,7 @@
             if (vacancyOwnerRelationship != null)
             {
                 var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);  //Same with employers
-                viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy.EmployerAnonymousName);
+                viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy);
                 var providerSite = _providerService.GetProviderSite(vacancyOwnerRelationship.ProviderSiteId);
                 viewModel.ProviderSite = providerSite.Convert();
 
@@ -889,7 +892,7 @@
                 TotalNumberOfPages = totalRecords == 0 ? 1 : (int)Math.Ceiling((double)totalRecords / (double)vacanciesSummarySearch.PageSize)
             };
 
-            var viewModel = new VacanciesSummaryViewModel()
+            var viewModel = new VacanciesSummaryViewModel
             {
                 Vacancies = vacancyPage,
                 VacanciesSummarySearch = vacanciesSummarySearch,
@@ -941,7 +944,15 @@
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
-            vacancy.EmployerAnonymousName = null;
+            if (vacancy.IsAnonymousEmployer != null && vacancy.IsAnonymousEmployer.Value)
+            {
+                vacancy.EmployerAnonymousName = vacancy.EmployerAnonymousName;
+                vacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
+            }
+            else
+            {
+                vacancy.EmployerAnonymousName = vacancy.EmployerAnonymousReason = null;
+            }
             vacancy.OfflineVacancyType = null;
 
             //Comments
@@ -981,7 +992,7 @@
                 throw new Exception($"Vacancy Party {vacancy.VacancyOwnerRelationshipId} not found / no longer current");
 
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
-            var result = vacancyOwnerRelationship.Convert(employer);
+            var result = vacancyOwnerRelationship.Convert(employer, vacancy);
             result.VacancyGuid = vacancy.VacancyGuid;
 
             return result;
@@ -1173,6 +1184,11 @@
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+            if (!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName))
+            {
+                newVacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
+                newVacancy.EmployerAnonymousName = vacancy.EmployerAnonymousName;
+            }
             if (newVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
             {
                 newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
@@ -1461,6 +1477,19 @@
             vacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
+
+            if (viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.HasValue && viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+            {
+                vacancy.EmployerAnonymousReason = viewModel.AnonymousEmployerReason;
+                vacancy.AnonymousEmployerReasonComment =
+                    viewModel.AnonymousEmployerReasonComment;
+                vacancy.EmployerAnonymousName = viewModel.AnonymousEmployerDescription;
+                vacancy.AnonymousEmployerDescriptionComment =
+                    viewModel.AnonymousEmployerDescriptionComment;
+                vacancy.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
+                vacancy.AnonymousAboutTheEmployerComment =
+                    viewModel.AnonymousAboutTheEmployerComment;
+            }
 
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                 vacancy.IsEmployerLocationMainApprenticeshipLocation.Value)

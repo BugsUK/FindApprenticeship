@@ -12,6 +12,7 @@
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Raa.Common.Constants.ViewModels;
+    using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -19,7 +20,6 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Web.Mvc;
-    using Raa.Common.ViewModels.Employer;
 
     //TODO: Split this class by code region
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -116,7 +116,7 @@
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.GetEmployer.FailedGeoCodeLookup:
                     SetUserMessage(response.Message);
-                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = providerSiteId, vacancyGuid = vacancyGuid, comeFromPreview = comeFromPreview });
+                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId, vacancyGuid, comeFromPreview });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -339,7 +339,7 @@
             {
                 case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
                     return RedirectToRoute(RecruitmentRouteNames.ReviewCreateVacancy,
-                        new {response.ViewModel.VacancyReferenceNumber, response.ViewModel.ComeFromPreview});
+                        new { response.ViewModel.VacancyReferenceNumber, response.ViewModel.ComeFromPreview });
 
                 case VacancyPostingMediatorCodes.CreateVacancy.Ok:
                     return okAction();
@@ -1057,14 +1057,14 @@
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
             return RedirectToRoute(RecruitmentRouteNames.SearchAddresses, new
             {
-                PostcodeSearch = viewModel.PostcodeSearch,
+                viewModel.PostcodeSearch,
                 ProviderSiteErn = viewModel.ProviderSiteEdsUrn,
                 EdsUrn = viewModel.EmployerEdsUrn,
-                VacancyGuid = viewModel.VacancyGuid,
-                AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
-                Ukprn = viewModel.Ukprn,
-                CurrentPage = viewModel.CurrentPage,
-                TotalNumberOfPages = viewModel.TotalNumberOfPages
+                viewModel.VacancyGuid,
+                viewModel.AdditionalLocationInformation,
+                viewModel.Ukprn,
+                viewModel.CurrentPage,
+                viewModel.TotalNumberOfPages
             });
         }
 
@@ -1212,14 +1212,14 @@
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
             return RedirectToRoute(RecruitmentRouteNames.ShowLocations, new
             {
-                PostcodeSearch = viewModel.PostcodeSearch,
+                viewModel.PostcodeSearch,
                 ProviderSiteErn = viewModel.ProviderSiteEdsUrn,
                 EdsUrn = viewModel.EmployerEdsUrn,
-                VacancyGuid = viewModel.VacancyGuid,
-                AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
-                Ukprn = viewModel.Ukprn,
-                CurrentPage = viewModel.CurrentPage,
-                TotalNumberOfPages = viewModel.TotalNumberOfPages
+                viewModel.VacancyGuid,
+                viewModel.AdditionalLocationInformation,
+                viewModel.Ukprn,
+                viewModel.CurrentPage,
+                viewModel.TotalNumberOfPages
             });
         }
     }

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Raa.Mappers
 {
-    using System;
-    using System.Linq;
+    using Application.Interfaces;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Presentation;
@@ -10,9 +9,8 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Linq;
 
     [TestFixture]
     [Parallelizable]
@@ -97,7 +95,7 @@
                 detail.TrainingType.Should().Be(vacancy.TrainingType.GetTrainingType());
                 detail.EmployerName.Should().Be(employer.FullName);
                 detail.AnonymousEmployerName.Should().Be(vacancy.EmployerAnonymousName);
-                detail.EmployerDescription.Should().Be(vacancy.EmployerDescription);
+                detail.EmployerDescription.Should().BeOneOf(vacancy.EmployerDescription, vacancy.AnonymousAboutTheEmployer);
                 detail.EmployerWebsite.Should().Be(vacancy.EmployerWebsiteUrl);
                 detail.ApplyViaEmployerWebsite.Should().Be(vacancy.OfflineVacancy ?? false);
                 detail.VacancyUrl.Should().Be(vacancy.OfflineApplicationUrl);
@@ -179,7 +177,7 @@
             detail.AnonymousEmployerName.Should().Be(anonymousEmployerName);
             detail.IsEmployerAnonymous.Should().Be(anonymised);
         }
-        
+
         [TestCase]
         public void ShouldMapContactDetailsFromProviderSiteContactForCandidatesForVacanciesNotEditedInRaa()
         {

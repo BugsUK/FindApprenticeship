@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
-    using System;
-    using Candidates;
     using Locations;
+    using System;
 
     public abstract class VacancyDetail
     {
@@ -61,6 +60,7 @@
         public string EmployerName { get; set; }
 
         public string AnonymousEmployerName { get; set; }
+        public string AnonymousAboutTheEmployer { get; set; }
 
         public string EmployerDescription { get; set; }
 

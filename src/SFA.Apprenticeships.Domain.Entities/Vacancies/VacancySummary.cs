@@ -1,13 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
-    using System;
     using Locations;
+    using System;
 
     public abstract class VacancySummary
     {
         protected VacancySummary()
         {
-            
+
         }
 
         protected VacancySummary(VacancySummary vacancySummary)
@@ -64,5 +64,6 @@
         public string SubCategory { get; set; }
 
         public string SubCategoryCode { get; set; }
+
     }
 }

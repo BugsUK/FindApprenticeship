@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
+    using Domain.Entities.Raa.Vacancies;
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Raa.Vacancies;
     using VacancyPosting;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
@@ -25,6 +25,7 @@
         public DateTime? DateSubmitted { get; set; }
         public int SubmissionCount { get; set; }
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public bool? IsEmployerAnonymous { get; set; }
         public IList<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
         public int? ParentVacancyId { get; set; }
         public int NewApplicationCount { get; set; }

@@ -59,6 +59,10 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string WageComment { get; set; }
         public string WorkingWeekComment { get; set; }
 
+        public string AnonymousEmployerDescriptionComment { get; set; }
+        public string AnonymousEmployerReasonComment { get; set; }
+        public string AnonymousAboutTheEmployerComment { get; set; }
+
         public object Clone()
         {
             return new Vacancy
@@ -144,7 +148,10 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 Address = Address,
                 ContractOwnerId = ContractOwnerId,
                 OriginalContractOwnerId = OriginalContractOwnerId,
-                EditedInRaa = EditedInRaa
+                EditedInRaa = EditedInRaa,
+                AnonymousEmployerReasonComment = AnonymousEmployerReasonComment,
+                AnonymousEmployerDescriptionComment = AnonymousEmployerDescriptionComment,
+                AnonymousAboutTheEmployerComment = AnonymousAboutTheEmployerComment
             };
         }
 
