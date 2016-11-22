@@ -47,7 +47,8 @@
                     CategoryCode = category.CodeName,
                     Category = category.FullName,
                     SubCategoryCode = subcategory.CodeName,
-                    SubCategory = subcategory.FullName
+                    SubCategory = subcategory.FullName,
+                    AnonymousEmployerName = vacancy.EmployerAnonymousName
                 };
 
                 return summary;

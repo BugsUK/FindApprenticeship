@@ -28,7 +28,8 @@
             Category = vacancySummary.Category;
             CategoryCode = vacancySummary.CategoryCode;
             SubCategory = vacancySummary.SubCategory;
-            SubCategoryCode = vacancySummary.SubCategoryCode;
+            SubCategoryCode = vacancySummary.SubCategoryCode;            
+            AnonymousEmployerName = vacancySummary.AnonymousEmployerName;
         }
 
         public int Id { get; set; }
@@ -54,6 +55,8 @@
         public bool IsPositiveAboutDisability { get; set; }
 
         public bool IsEmployerAnonymous { get; set; }
+
+        public string AnonymousEmployerName { get; set; }
 
         public GeoPoint Location { get; set; }
 
