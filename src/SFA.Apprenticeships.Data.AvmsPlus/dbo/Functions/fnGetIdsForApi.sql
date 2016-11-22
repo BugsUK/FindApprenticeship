@@ -111,6 +111,7 @@ BEGIN
 			LEFT OUTER JOIN dbo.ProviderSite                  DO   ON  DO.ProviderSiteId                     = vac.DeliveryOrganisationId
 			LEFT OUTER JOIN ProviderSiteRelationship          DOR  ON  DOR.ProviderSiteId                    = vac.DeliveryOrganisationID
 			LEFT OUTER JOIN ProviderSiteRelationshipType      DORT ON  DORT.ProviderSiteRelationshipTypeID   = DOR.ProviderSiteRelationshipTypeID
+			LEFT OUTER JOIN County                            CY   ON  CY.CountyId                           = la.CountyId
 		                                                       
 		WHERE   vac.VacancyStatusId = @liveVacancyStatusID
 		AND     lagt.LocalAuthorityGroupTypeName      = 'Region'
@@ -124,9 +125,9 @@ BEGIN
 					OR
 					(     @locationType = 0
 					  AND vac.VacancyLocationTypeId IN (1,2)
-					  AND (vac.CountyId = @countyId   OR @countyId = -1)
-					  AND (vac.Town     = @town       OR @town       IS NULL OR @town = '')
-					  AND (LAG.CodeName = @regionCode OR @regionCode IS NULL OR @regionCode = '')
+					  AND (vac.CountyId = @countyId   OR CY.CountyId = @countyId OR @countyId = -1)
+					  AND (vac.Town     = @town       OR @town           IS NULL OR @town = '')
+					  AND (LAG.CodeName = @regionCode OR @regionCode     IS NULL OR @regionCode = '')
 					)
 				)
 	
