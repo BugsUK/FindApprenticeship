@@ -10,61 +10,60 @@
     <p class="heading-secondary ">Search and apply for an apprenticeship in England</p>
 </div>
 <div class="grid-row" id="searchHome">
-    <div class="grid-row controls-3-4">
-        <section class="column-two-thirds">
-            @using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
+    <section class="column-two-thirds">
+        @using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
             {
-                @Html.Partial("ValidationSummary", ViewData.ModelState)
+            @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-                <nav class="tabbed-nav">
-                    @{
-                        var keywordTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "";
-                        var categoriesTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? " active" : "";
-                        var savedSearchesTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches ? " active" : "";
+            <nav class="tabbed-nav">
+                @{
+                    var keywordTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "";
+                    var categoriesTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? " active" : "";
+                    var savedSearchesTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches ? " active" : "";
 
-                        var anyCategories = Model.Categories != null && Model.Categories.Any();
-                        var categoriesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category && anyCategories ? " active" : "";
-                        var categoriesTabClass = anyCategories ? " browsetab" : "";
+                    var anyCategories = Model.Categories != null && Model.Categories.Any();
+                    var categoriesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category && anyCategories ? " active" : "";
+                    var categoriesTabClass = anyCategories ? " browsetab" : "";
 
-                        var showSavedSearches = Request.IsAuthenticated;
-                        var anySavedSearches = Model.SavedSearches != null && Model.SavedSearches.Any();
-                        var savedSearchesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches && showSavedSearches ? " active" : "";
-                        var savedSearchesTabClass = showSavedSearches ? " savedsearchtab" : "";
+                    var showSavedSearches = Request.IsAuthenticated;
+                    var anySavedSearches = Model.SavedSearches != null && Model.SavedSearches.Any();
+                    var savedSearchesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches && showSavedSearches ? " active" : "";
+                    var savedSearchesTabClass = showSavedSearches ? " savedsearchtab" : "";
 
-                        string elementControlClass = string.Empty;
+                    string elementControlClass = string.Empty;
 
-                        switch (Model.SearchMode)
-                        {
-                            case ApprenticeshipSearchMode.Keyword:
-                                elementControlClass = keywordTabControlClass;
-                                break;
-                            case ApprenticeshipSearchMode.Category:
-                                elementControlClass = categoriesElementControlClass;
-                                break;
-                            case ApprenticeshipSearchMode.SavedSearches:
-                                break;
-                        }
-                    }
-
-                    @Html.RouteLink("Search", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywords-tab-control", @class = "tabbed-tab" + keywordTabControlClass, tab = "#searchtab" })
-                    @Html.RouteLink("Browse", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categories-tab-control", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#browsetab" })
-                    
-                    @if (showSavedSearches)
+                    switch (Model.SearchMode)
                     {
-                        @Html.RouteLink("Saved searches", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.SavedSearches }, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabControlClass, tab = "#savedsearchtab" })
+                        case ApprenticeshipSearchMode.Keyword:
+                            elementControlClass = keywordTabControlClass;
+                            break;
+                        case ApprenticeshipSearchMode.Category:
+                            elementControlClass = categoriesElementControlClass;
+                            break;
+                        case ApprenticeshipSearchMode.SavedSearches:
+                            break;
                     }
-                </nav>
+                }
+
+                @Html.RouteLink("Search", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywords-tab-control", @class = "tabbed-tab" + keywordTabControlClass, tab = "#searchtab" })
+                @Html.RouteLink("Browse", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categories-tab-control", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#browsetab" })
+
+                @if (showSavedSearches)
+                {
+                    @Html.RouteLink("Saved searches", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.SavedSearches }, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabControlClass, tab = "#savedsearchtab" })
+                }
+            </nav>
 
                 <div class="tabbed-content active">
                     @Html.Partial("_categories", Model)
-                    
+
                     @Html.Partial("_savedSearches", Model)
-                    
+
                     @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "form-control refineSearchOption hidden input-withlink__select all-select" })
                     @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element searchtab" + keywordTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
 
                     <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
-                    
+
                     @Html.FormTextFor(m => m.Location, containerHtmlAttributes: new { @class = "tabbed-element searchtab " + keywordTabControlClass + categoriesTabClass + elementControlClass }, hintHtmlAttributes: new { id = "geoLocateContainer" })
 
                     <div class="inline tabbed-element searchtab @keywordTabControlClass @categoriesTabClass @elementControlClass">
@@ -81,7 +80,7 @@
                     <div class="form-group form-group-compound">
                         <button class="button tabbed-element searchtab @keywordTabControlClass" id="search-button">Search</button>
                         <button class="button tabbed-element @categoriesTabClass @categoriesElementControlClass" id="browse-button">Browse</button>
-                        
+
                         @if (anySavedSearches)
                         {
                             <button class="button tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass" id="run-saved-search-button">Run search</button>
@@ -92,7 +91,7 @@
                     {
                         <p class="tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass">
                             You can edit your saved searches in the
-                            @Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new {id = "saved-searches-settings-link"})
+                            @Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new { id = "saved-searches-settings-link" })
                             section.
                         </p>
                     }
@@ -109,34 +108,34 @@
                     @Html.HiddenFor(m => m.ResultsPerPage)
                     @Html.HiddenFor(m => m.SearchMode)
                 </div>
-            }
-        </section>
-        <aside class="column-one-third">
-            <div class="inner-block">
-                <div class="gov-border">
-                    <h2 class="heading-medium">Help</h2>
-                    <ul class="list-text">
-                        <li class="hide-nojs"><a href="#" id="runSearchHelp"><i class="fa fa-question-circle"></i>How to search for an apprenticeship</a> <span class="inl-block">(interactive walkthrough)</span></li>
-                        
-                    </ul>
-                    <ul class="list-text">
-                        <li>0800 015 0400</li>
-                        <li><a href='@Url.RouteUrl(CandidateRouteNames.Helpdesk)'>Contact us</a></li>
-                    </ul>
-                    <ul class="list-text">
-                        <li>
-                            <a href="https://www.gov.uk/apprenticeships-guide" target="_blank">About apprenticeships</a>
-                        </li>
-                        <li>
-                            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link" })
-                        </li>
-                    </ul>
-                    
-                </div>
+                    }
+    </section>
+    <aside class="column-one-third">
+        <div class="inner-block">
+            <div class="gov-border">
+                <h2 class="heading-medium">Help</h2>
+                <ul class="list-text">
+                    <li class="hide-nojs"><a href="#" id="runSearchHelp"><i class="fa fa-question-circle"></i>How to search for an apprenticeship</a> <span class="inl-block">(interactive walkthrough)</span></li>
+
+                </ul>
+                <ul class="list-text">
+                    <li>0800 015 0400</li>
+                    <li><a href='@Url.RouteUrl(CandidateRouteNames.Helpdesk)'>Contact us</a></li>
+                </ul>
+                <ul class="list-text">
+                    <li>
+                        <a href="https://www.gov.uk/apprenticeships-guide" target="_blank">About apprenticeships</a>
+                    </li>
+                    <li>
+                        @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link" })
+                    </li>
+                </ul>
+
             </div>
-        </aside>
-    </div>
+        </div>
+    </aside>
 </div>
+
 
 <ol id="firstSearchTour" class="alwayshidden">
     <li class="startTourGuide" data-id="runSearchHelp" data-button="Start tour">
@@ -219,7 +218,7 @@
 </ol>
 
 @section scripts
-{   
+{
     @Scripts.Render("~/bundles/nas/locationsearch")
 
     <script>
@@ -230,7 +229,7 @@
             latlonhash: '#@(Html.IdFor(m => m.Hash))'
         });
 
-        $(window).on("tabchanged", function(event, data) {
+        $(window).on("tabchanged", function (event, data) {
             switch (data.tab) {
                 case "#searchtab":
                     $("#SearchMode").val("Keyword");
@@ -241,7 +240,7 @@
                 case "#savedsearchtab":
                     $("#SearchMode").val("SavedSearches");
                     break;
-            }            
+            }
         });
     </script>
 

@@ -165,7 +165,7 @@ WriteLiteral(" id=\"locSuggestionsAria\"");
 
 WriteLiteral("></p>\r\n                    <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                        <ul");
 
@@ -191,14 +191,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1551), Tuple.Create("\"", 1627)
+WriteAttribute("href", Tuple.Create(" href=\"", 1564), Tuple.Create("\"", 1640)
             
             #line 27 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 1558), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)
+, Tuple.Create(Tuple.Create("", 1571), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)
             
             #line default
             #line hidden
-, 1558), false)
+, 1571), false)
 );
 
 WriteLiteral(">");
@@ -297,14 +297,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2819), Tuple.Create("\"", 2849)
+WriteAttribute("value", Tuple.Create(" value=\"", 2832), Tuple.Create("\"", 2862)
             
             #line 47 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2827), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 2840), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 2827), false)
+, 2840), false)
 );
 
 WriteLiteral(" />\r\n\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n    \r\n\r\n</section>");

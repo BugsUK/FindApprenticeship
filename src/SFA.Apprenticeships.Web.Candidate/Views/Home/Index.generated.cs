@@ -87,7 +87,7 @@ WriteLiteral(">Use the new service</h2>\r\n            <p>Find and apply for app
 "ngland. You can create a new account if you haven’t got one.</p>\r\n\r\n            " +
 "<div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p>You won’t be able to sign in using your account details fro" +
 "m the original service.</p>\r\n            </div>\r\n\r\n            <div");
@@ -111,7 +111,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Before you start</h2>\r\n\r\n            <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p>The application process is different in <a");
 

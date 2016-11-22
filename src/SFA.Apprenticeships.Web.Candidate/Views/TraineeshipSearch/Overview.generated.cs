@@ -136,7 +136,7 @@ WriteLiteral("></i>\r\n                aged 16 to 24 and qualified below Level 3
 "2>\r\n            <details>\r\n                <summary>More about qualifications</s" +
 "ummary>\r\n                <div");
 
-WriteLiteral(" class=\"panel-indent detail-content\"");
+WriteLiteral(" class=\"panel panel-border-narrow detail-content\"");
 
 WriteLiteral(@">
                     <p>Level 2 qualifications are equivalent to 5 GCSEs (Grades A*-C).</p>
@@ -146,7 +146,7 @@ WriteLiteral(@">
         </div>
         <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(@">
             <p>
@@ -171,14 +171,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"prompt-traineeship-search-link\"");
 
-WriteAttribute("href", Tuple.Create(" href=", 2526), Tuple.Create("", 2584)
+WriteAttribute("href", Tuple.Create(" href=", 2552), Tuple.Create("", 2610)
             
             #line 61 "..\..\Views\TraineeshipSearch\Overview.cshtml"
-, Tuple.Create(Tuple.Create("", 2532), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+, Tuple.Create(Tuple.Create("", 2558), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 2532), false)
+, 2558), false)
 );
 
 WriteLiteral(" class=\"button\"");

@@ -465,18 +465,18 @@ WriteLiteral(">Only answer if the vacancy applications will be managed through a
 
 WriteLiteral(" id=\"offline-panel\"");
 
-WriteLiteral(" class=\"toggle-content panel-indent blocklabel-content\"");
+WriteLiteral(" class=\"toggle-content panel panel-border-narrow blocklabel-content\"");
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 4375), Tuple.Create("\"", 4446)
+WriteAttribute("name", Tuple.Create(" name=\"", 4388), Tuple.Create("\"", 4459)
             
             #line 69 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 4382), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.OfflineApplicationUrl).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 4395), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.OfflineApplicationUrl).ToString().ToLower()
             
             #line default
             #line hidden
-, 4382), false)
+, 4395), false)
 );
 
 WriteLiteral("></a>\r\n                <div");
@@ -507,14 +507,14 @@ WriteLiteral("\r\n\r\n                    <div");
 
 WriteLiteral(" id=\"multiple-offline-application-urls-div\"");
 
-WriteAttribute("style", Tuple.Create(" style=\"", 5408), Tuple.Create("\"", 5440)
+WriteAttribute("style", Tuple.Create(" style=\"", 5421), Tuple.Create("\"", 5453)
             
             #line 79 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 5416), Tuple.Create<System.Object, System.Int32>(offlineMultiUrlDivStyle
+, Tuple.Create(Tuple.Create("", 5429), Tuple.Create<System.Object, System.Int32>(offlineMultiUrlDivStyle
             
             #line default
             #line hidden
-, 5416), false)
+, 5429), false)
 );
 
 WriteLiteral(">\r\n");
@@ -534,14 +534,14 @@ WriteLiteral(" id=\"single-offline-application-url-para\"");
 
 WriteLiteral(" class=\"inline-text\"");
 
-WriteAttribute("style", Tuple.Create(" style=\"", 5601), Tuple.Create("\"", 5635)
+WriteAttribute("style", Tuple.Create(" style=\"", 5614), Tuple.Create("\"", 5648)
             
             #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-               , Tuple.Create(Tuple.Create("", 5609), Tuple.Create<System.Object, System.Int32>(offlineSingleUrlParaStyle
+               , Tuple.Create(Tuple.Create("", 5622), Tuple.Create<System.Object, System.Int32>(offlineSingleUrlParaStyle
             
             #line default
             #line hidden
-, 5609), false)
+, 5622), false)
 );
 
 WriteLiteral(">Alternatively, <button");
@@ -552,14 +552,14 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button-link no-autosave no-validation\"");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 5762), Tuple.Create("\"", 5802)
+WriteAttribute("name", Tuple.Create(" name=\"", 5775), Tuple.Create("\"", 5815)
             
             #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                                                                                                                                                               , Tuple.Create(Tuple.Create("", 5769), Tuple.Create<System.Object, System.Int32>(ViewData["OfflineUrlButtonName"]
+                                                                                                                                                                               , Tuple.Create(Tuple.Create("", 5782), Tuple.Create<System.Object, System.Int32>(ViewData["OfflineUrlButtonName"]
             
             #line default
             #line hidden
-, 5769), false)
+, 5782), false)
 );
 
 WriteLiteral(" value=\"SingleOfflineApplicationUrl\"");
@@ -717,15 +717,15 @@ WriteLiteral(" class=\"location-offline-urls\"");
 
 WriteLiteral(">\r\n                                                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8036), Tuple.Create("\"", 8213)
-, Tuple.Create(Tuple.Create("", 8044), Tuple.Create("form-group", 8044), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 8049), Tuple.Create("\"", 8226)
+, Tuple.Create(Tuple.Create("", 8057), Tuple.Create("form-group", 8057), true)
             
             #line 115 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 8054), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType("LocationAddresses[" + i + "].OfflineApplicationUrl"))
+, Tuple.Create(Tuple.Create(" ", 8067), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType("LocationAddresses[" + i + "].OfflineApplicationUrl"))
             
             #line default
             #line hidden
-, 8055), false)
+, 8068), false)
 );
 
 WriteLiteral(" style=\"margin-bottom: 0\"");
@@ -790,25 +790,25 @@ WriteLiteral("                            </tbody>\r\n                        </
 
 WriteLiteral(" id=\"single-offline-application-url-div\"");
 
-WriteAttribute("style", Tuple.Create(" style=\"", 9339), Tuple.Create("\"", 9372)
+WriteAttribute("style", Tuple.Create(" style=\"", 9352), Tuple.Create("\"", 9385)
             
             #line 129 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 9347), Tuple.Create<System.Object, System.Int32>(offlineSingleUrlDivStyle
+, Tuple.Create(Tuple.Create("", 9360), Tuple.Create<System.Object, System.Int32>(offlineSingleUrlDivStyle
             
             #line default
             #line hidden
-, 9347), false)
+, 9360), false)
 );
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9373), Tuple.Create("\"", 9526)
-, Tuple.Create(Tuple.Create("", 9381), Tuple.Create("form-group", 9381), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9386), Tuple.Create("\"", 9539)
+, Tuple.Create(Tuple.Create("", 9394), Tuple.Create("form-group", 9394), true)
             
             #line 129 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                     , Tuple.Create(Tuple.Create(" ", 9391), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineApplicationUrl))
+                                     , Tuple.Create(Tuple.Create(" ", 9404), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineApplicationUrl))
             
             #line default
             #line hidden
-, 9392), false)
+, 9405), false)
 );
 
 WriteLiteral(">\r\n");
@@ -828,14 +828,14 @@ WriteLiteral(" id=\"multiple-offline-application-urls-para\"");
 
 WriteLiteral(" class=\"inline-text\"");
 
-WriteAttribute("style", Tuple.Create(" style=\"", 9690), Tuple.Create("\"", 9723)
+WriteAttribute("style", Tuple.Create(" style=\"", 9703), Tuple.Create("\"", 9736)
             
             #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                  , Tuple.Create(Tuple.Create("", 9698), Tuple.Create<System.Object, System.Int32>(offlineMultiUrlParaStyle
+                  , Tuple.Create(Tuple.Create("", 9711), Tuple.Create<System.Object, System.Int32>(offlineMultiUrlParaStyle
             
             #line default
             #line hidden
-, 9698), false)
+, 9711), false)
 );
 
 WriteLiteral(">Alternatively, you can <button");
@@ -846,14 +846,14 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button-link no-autosave no-validation\"");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 9861), Tuple.Create("\"", 9901)
+WriteAttribute("name", Tuple.Create(" name=\"", 9874), Tuple.Create("\"", 9914)
             
             #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                                                                                                                                                                            , Tuple.Create(Tuple.Create("", 9868), Tuple.Create<System.Object, System.Int32>(ViewData["OfflineUrlButtonName"]
+                                                                                                                                                                                            , Tuple.Create(Tuple.Create("", 9881), Tuple.Create<System.Object, System.Int32>(ViewData["OfflineUrlButtonName"]
             
             #line default
             #line hidden
-, 9868), false)
+, 9881), false)
 );
 
 WriteLiteral(" value=\"MultipleOfflineApplicationUrls\"");

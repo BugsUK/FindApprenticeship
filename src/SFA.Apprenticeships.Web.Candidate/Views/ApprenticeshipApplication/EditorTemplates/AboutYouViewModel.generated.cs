@@ -80,7 +80,7 @@ WriteLiteral(" aria-expanded=\"false\"");
 
 WriteLiteral(">Help with this section</summary>\r\n            <p");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(" id=\"helpText\"");
 

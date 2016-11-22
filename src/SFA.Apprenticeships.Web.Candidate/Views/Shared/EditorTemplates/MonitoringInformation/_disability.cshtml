@@ -14,7 +14,7 @@
     <div class="text">
         <details class="sfa-medium-bottom-margin">
             <summary>Why we collect this info</summary>
-            <div class="detail-content panel-indent">
+            <div class="detail-content panel panel-border-narrow">
                 <p>
                     Employers who are part of the ‘Positive about disabled
                     people’ scheme will guarantee candidates an interview
@@ -40,7 +40,7 @@
             @Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, new { id = "disability-support-no" }) No
         </label>
     </div>
-    <div id="support-panel" class="panel-indent toggle-content" aria-hidden="true">
+    <div id="support-panel" class="panel panel-border-narrow toggle-content" aria-hidden="true">
         @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" }, labelHtmlAttributes: new { @class = "form-hint text" })
     </div>
 </div>

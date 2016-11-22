@@ -208,7 +208,7 @@ Write(Html.HiddenFor(m => m.EmailAddress));
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"panel-indent text\"");
+WriteLiteral(" class=\"panel panel-border-narrow text\"");
 
 WriteLiteral(">\r\n    <p>\r\n        You must activate your account within 30 days of receiving yo" +
 "ur activation code.\r\n        After 30 days your account will be deleted and you\'" +

@@ -97,7 +97,7 @@ else
             </div>
             <div class="column-two-thirds ta-right ta-left-mob">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" })
+                @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results", @class = "form-control" })
                 <noscript>
                     <button style="float: right; margin-left: 5px;" class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
                 </noscript>

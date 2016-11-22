@@ -155,18 +155,18 @@ WriteLiteral("\r\n\r\n        <div");
 
 WriteLiteral(" id=\"changeEmailAddress\"");
 
-WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
+WriteLiteral(" class=\"selfServe panel panel-border-narrow toggle-content hide-nojs text\"");
 
 WriteLiteral(">\r\n            <p>If you\'d like to change your email address visit the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1386), Tuple.Create("\"", 1430)
+WriteAttribute("href", Tuple.Create(" href=\"", 1399), Tuple.Create("\"", 1443)
             
             #line 31 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 1393), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.UpdateEmail)
+, Tuple.Create(Tuple.Create("", 1406), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.UpdateEmail)
             
             #line default
             #line hidden
-, 1393), false)
+, 1406), false)
 );
 
 WriteLiteral(">update email</a> page. If you\'re still having problems contact us using this for" +
@@ -174,18 +174,18 @@ WriteLiteral(">update email</a> page. If you\'re still having problems contact u
 
 WriteLiteral(" id=\"forgottenEmailAddress\"");
 
-WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
+WriteLiteral(" class=\"selfServe panel panel-border-narrow toggle-content hide-nojs text\"");
 
 WriteLiteral(">\r\n            <p>If you\'ve forgotten your email address visit the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1707), Tuple.Create("\"", 1760)
+WriteAttribute("href", Tuple.Create(" href=\"", 1733), Tuple.Create("\"", 1786)
             
             #line 35 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 1714), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+, Tuple.Create(Tuple.Create("", 1740), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 1714), false)
+, 1740), false)
 );
 
 WriteLiteral(">forgotten email</a> page. If you\'re still having problems contact us using this " +
@@ -193,19 +193,19 @@ WriteLiteral(">forgotten email</a> page. If you\'re still having problems contac
 
 WriteLiteral(" id=\"cantSignIn\"");
 
-WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
+WriteLiteral(" class=\"selfServe panel panel-border-narrow toggle-content hide-nojs text\"");
 
 WriteLiteral(">\r\n            <p>If you\'re having trouble signing in to your account visit the <" +
 "a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2042), Tuple.Create("\"", 2095)
+WriteAttribute("href", Tuple.Create(" href=\"", 2081), Tuple.Create("\"", 2134)
             
             #line 39 "..\..\Views\Home\Helpdesk.cshtml"
-      , Tuple.Create(Tuple.Create("", 2049), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+      , Tuple.Create(Tuple.Create("", 2088), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 2049), false)
+, 2088), false)
 );
 
 WriteLiteral(">forgotten password</a> page. If you\'re still having problems contact us using th" +
@@ -213,18 +213,18 @@ WriteLiteral(">forgotten password</a> page. If you\'re still having problems con
 
 WriteLiteral(" id=\"cantActivate\"");
 
-WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
+WriteLiteral(" class=\"selfServe panel panel-border-narrow toggle-content hide-nojs text\"");
 
 WriteLiteral(">\r\n            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2320), Tuple.Create("\"", 2359)
+WriteAttribute("href", Tuple.Create(" href=\"", 2372), Tuple.Create("\"", 2411)
             
             #line 43 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 2327), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn)
+, Tuple.Create(Tuple.Create("", 2379), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn)
             
             #line default
             #line hidden
-, 2327), false)
+, 2379), false)
 );
 
 WriteLiteral(@">Activate your account</a> by signing in. You'll need the email address and password you used to create your account.</p>

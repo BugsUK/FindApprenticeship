@@ -2349,7 +2349,7 @@ WriteLiteral(" aria-expanded=\"false\"");
 
 WriteLiteral(">Help with this section</summary>\r\n            <p");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(" id=\"helpText\"");
 
@@ -2676,7 +2676,7 @@ WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 WriteLiteral(">\r\n                <summary>Why we collect this info</summary>\r\n                <" +
 "div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(@">
                     <p>
@@ -2749,7 +2749,7 @@ WriteLiteral(">No\r\n            </label>\r\n        </div>\r\n        <div");
 
 WriteLiteral(" id=\"support-panel\"");
 
-WriteLiteral(" class=\"panel-indent toggle-content\"");
+WriteLiteral(" class=\"panel panel-border-narrow toggle-content\"");
 
 WriteLiteral(" aria-hidden=\"true\"");
 

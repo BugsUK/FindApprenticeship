@@ -115,7 +115,7 @@ WriteLiteral(" class=\"font-large fa fa-users\"");
 
 WriteLiteral("></i>What the shortlisters say\r\n    </h3>\r\n    <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -175,7 +175,7 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>Mistakes can spell trouble\r\n    </h3>\r\n    <details>\r\n        <summary>More " +
 "details</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(@">
             <p>
@@ -201,7 +201,7 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>Tailored applications, not mass mailshot\r\n    </h3>\r\n    <details>\r\n        " +
 "<summary>More details</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(@">
             <p>
@@ -227,7 +227,7 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>The perfect apprentice\r\n    </h3>\r\n    <details>\r\n        <summary>More deta" +
 "ils</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n            Employers want an apprentice who’s:\r\n            <ul");
 

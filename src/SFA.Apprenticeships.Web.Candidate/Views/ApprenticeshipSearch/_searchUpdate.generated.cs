@@ -236,7 +236,7 @@ WriteLiteral(" id=\"locSuggestionsAria\"");
 
 WriteLiteral("></p>\r\n                    <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                        <ul");
 
@@ -262,14 +262,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2193), Tuple.Create("\"", 2284)
+WriteAttribute("href", Tuple.Create(" href=\"", 2206), Tuple.Create("\"", 2297)
             
             #line 37 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2200), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
+, Tuple.Create(Tuple.Create("", 2213), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
             
             #line default
             #line hidden
-, 2200), false)
+, 2213), false)
 );
 
 WriteLiteral(">");
@@ -404,14 +404,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4097), Tuple.Create("\"", 4127)
+WriteAttribute("value", Tuple.Create(" value=\"", 4110), Tuple.Create("\"", 4140)
             
             #line 64 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 4105), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 4118), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 4105), false)
+, 4118), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -446,14 +446,14 @@ WriteLiteral(" name=\"LocationType\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4494), Tuple.Create("\"", 4521)
+WriteAttribute("value", Tuple.Create(" value=\"", 4507), Tuple.Create("\"", 4534)
             
             #line 68 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-  , Tuple.Create(Tuple.Create("", 4502), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+  , Tuple.Create(Tuple.Create("", 4515), Tuple.Create<System.Object, System.Int32>(Model.LocationType
             
             #line default
             #line hidden
-, 4502), false)
+, 4515), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n</section>");

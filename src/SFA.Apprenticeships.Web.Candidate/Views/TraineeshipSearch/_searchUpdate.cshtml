@@ -20,7 +20,7 @@
                 <details @(open) class="@(open)@(hidden)form-group form-group-compound" id="locationSuggestions">
                     <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
                     <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
-                    <div class="detail-content panel-indent">
+                    <div class="detail-content panel panel-border-narrow">
                         <ul id="location-suggestions" class="list-text list-max-11">
                             @foreach (var locationSearch in Model.LocationSearches)
                             {

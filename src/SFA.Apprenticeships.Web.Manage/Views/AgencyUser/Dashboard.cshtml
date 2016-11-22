@@ -21,7 +21,7 @@
                 </h1>
             </div>
         </div>
-        <div class="column-one-half">
+        <div class="column-one-half sfa-xlarge-top-margin">
             <label class="form-label-bold">Change role</label>
             @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new { id = "role", @class = "form-control form-control-3-4" })
             @if (Model.AgencyUser.RoleId != "QA_advisor")
