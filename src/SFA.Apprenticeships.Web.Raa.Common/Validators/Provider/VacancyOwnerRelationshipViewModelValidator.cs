@@ -51,7 +51,7 @@
                      VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerDescription.WhiteListInvalidCharacterErrorText)
                  .Must(Common.BeAValidFreeText)
                  .WithMessage(VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerDescription.WhiteListInvalidTagErrorText)
-                 .When(x => x.IsAnonymousEmployer.HasValue && x.IsAnonymousEmployer == true);
+                 .When(IsAnonymousEmployer);
 
             RuleFor(x => x.AnonymousEmployerReason)
                 .NotEmpty()
@@ -61,7 +61,7 @@
                     VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerReason.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerReason.WhiteListInvalidTagErrorText)
-                .When(x => x.IsAnonymousEmployer.HasValue && x.IsAnonymousEmployer == true);
+                .When(IsAnonymousEmployer);
 
             RuleFor(x => x.AnonymousAboutTheEmployer)
                 .NotEmpty()
@@ -71,7 +71,7 @@
                     VacancyOwnerRelationshipViewModelMessages.AnonymousAboutTheEmployer.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.AnonymousAboutTheEmployer.WhiteListInvalidTagErrorText)
-                .When(x => x.IsAnonymousEmployer.HasValue && x.IsAnonymousEmployer == true);
+                .When(IsAnonymousEmployer);
 
         }
 
