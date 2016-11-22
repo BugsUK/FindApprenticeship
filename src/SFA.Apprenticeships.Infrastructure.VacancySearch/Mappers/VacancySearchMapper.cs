@@ -26,6 +26,7 @@
                 .ForMember(d => d.SubCategory, opt => opt.Ignore())
                 .ForMember(d => d.SubCategoryCode, opt => opt.Ignore())
                 .ForMember(d => d.Score, opt => opt.Ignore())
+                .ForMember(d => d.AnonymousEmployerName, opt => opt.Ignore())
                 .ForMember(d => d.Location,
                     opt => opt.ResolveUsing<GeoPointElasticToDomainResolver>().FromMember(src => src.Location));
         }
