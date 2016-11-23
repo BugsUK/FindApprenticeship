@@ -78,8 +78,8 @@ _TeamCity*
 *.dotCover
 
 # NCrunch
-*.ncrunch*
-.*crunch*.local.xml
+# *.ncrunch*
+# .*crunch*.local.xml
 
 # Installshield output folder
 [Ee]xpress/
