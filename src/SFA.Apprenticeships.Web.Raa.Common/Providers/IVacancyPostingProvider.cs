@@ -70,5 +70,6 @@
         void EmptyVacancyLocation(int vacancyReferenceNumber);
         void CreateVacancy(VacancyMinimumData vacancyMinimumData);
         void TransferVacancies(ManageVacancyTransferViewModel vacancyTransferViewModel);
+        FurtherVacancyDetailsViewModel CloseVacancy(FurtherVacancyDetailsViewModel viewModel);
     }
 }

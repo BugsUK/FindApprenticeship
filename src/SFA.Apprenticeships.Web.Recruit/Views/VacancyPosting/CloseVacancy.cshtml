@@ -1,6 +1,4 @@
-﻿@using SFA.Apprenticeships.Web.Common.Extensions
-@using SFA.Apprenticeships.Web.Common.Validators.Extensions
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 @model FurtherVacancyDetailsViewModel
@@ -13,7 +11,7 @@
     Close this vacancy
 </h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.CloseVacancy, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -50,8 +48,7 @@
                 RecruitmentRouteNames.VacancyApplications :
                 RecruitmentRouteNames.PreviewVacancy;
 
-            @Html.RouteLink("Cancel", routeName, viewModel)
-            ;
+            @Html.RouteLink("Cancel", routeName, viewModel)           
         }
     </div>
 }

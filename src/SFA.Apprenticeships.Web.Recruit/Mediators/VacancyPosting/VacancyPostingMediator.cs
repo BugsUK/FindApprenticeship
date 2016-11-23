@@ -278,7 +278,7 @@
                     viewModel.IsEmployerLocationMainApprenticeshipLocation;
                 existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
                 existingViewModel.VacancyGuid = viewModel.VacancyGuid;
-            }            
+            }
             return existingViewModel;
         }
 
@@ -761,6 +761,28 @@
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications, viewModel);
                 case VacancyApplicationsState.Invalid:
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.InvalidState, viewModel);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public FurtherVacancyDetailsViewModel GetCloseVacancyViewModel(int vacancyReferenceNumber)
+        {
+            return _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
+        }
+
+        public MediatorResponse<FurtherVacancyDetailsViewModel> CloseVacancy(
+            FurtherVacancyDetailsViewModel viewModel)
+        {
+            var result = _vacancyPostingProvider.CloseVacancy(viewModel);
+            switch (result.VacancyApplicationsState)
+            {
+                case VacancyApplicationsState.HasApplications:
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.CloseVacancy.UpdatedHasApplications, viewModel);
+                case VacancyApplicationsState.NoApplications:
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.CloseVacancy.UpdatedNoApplications, viewModel);
+                case VacancyApplicationsState.Invalid:
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.CloseVacancy.InvalidState, viewModel);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
