@@ -907,6 +907,7 @@
     <Content Include="Views\Application\SentDecisionConfirmation.cshtml" />
     <Content Include="Views\ProviderUser\SettingsError.cshtml" />
     <Content Include="Views\ProviderUser\HomeError.cshtml" />
+    <Content Include="Views\VacancyPosting\CloseVacancy.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

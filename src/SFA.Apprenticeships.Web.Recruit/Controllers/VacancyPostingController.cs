@@ -1159,6 +1159,21 @@
             }
         }
 
+        [HttpGet]
+        public ActionResult CloseVacancy(int vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetVacancySummaryViewModel.Ok:
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         [HttpPost]
         public ActionResult ManageDates(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
