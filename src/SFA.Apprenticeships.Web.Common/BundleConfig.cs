@@ -8,7 +8,7 @@
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery",
                 "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js").Include(
-                    "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
+                    "~/Content/_assets/js/vendor/jquery-1.11.1.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/fastclick",
                 "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js").Include(

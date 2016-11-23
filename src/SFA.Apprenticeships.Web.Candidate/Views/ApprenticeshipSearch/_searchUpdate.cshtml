@@ -13,7 +13,7 @@
 
                 @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
                 {
-                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden width-all-3-4 small-btm-margin form-control" })
+                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-3-4 small-btm-margin form-control" })
                     @Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
                 }
 
