@@ -19,7 +19,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Write(false)]
         public DateTime? DateSubmitted { get; set; }
 
-        [Write(false)]
         public string AdditionalLocationInformation { get; set; }
 
         [Write(false)]
