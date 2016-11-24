@@ -768,7 +768,10 @@
 
         public FurtherVacancyDetailsViewModel GetCloseVacancyViewModel(int vacancyReferenceNumber)
         {
-            return _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            return new FurtherVacancyDetailsViewModel
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber
+            };
         }
 
         public MediatorResponse<FurtherVacancyDetailsViewModel> CloseVacancy(
@@ -988,6 +991,12 @@
             if (vacancyViewModel.Status == VacancyStatus.Completed)
             {
                 messages.Add(VacancyViewModelMessages.VacancyHasBeenArchived);
+            }
+
+            if (vacancyViewModel.Status == VacancyStatus.Closed)
+            {
+                messages.Add(VacancyViewModelMessages.Closed);
+                //return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
             }
 
             if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())
