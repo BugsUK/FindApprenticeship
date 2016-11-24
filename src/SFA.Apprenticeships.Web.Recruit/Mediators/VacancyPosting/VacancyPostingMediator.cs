@@ -996,7 +996,7 @@
             if (vacancyViewModel.Status == VacancyStatus.Closed)
             {
                 messages.Add(VacancyViewModelMessages.Closed);
-                //return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
             }
 
             if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())
