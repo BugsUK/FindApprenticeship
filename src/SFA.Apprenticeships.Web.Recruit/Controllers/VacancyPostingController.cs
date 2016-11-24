@@ -1159,6 +1159,36 @@
             }
         }
 
+        [HttpGet]
+        public ActionResult CloseVacancy(int vacancyReferenceNumber)
+        {
+            var viewModel = _vacancyPostingMediator.GetCloseVacancyViewModel(vacancyReferenceNumber);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CloseVacancy(FurtherVacancyDetailsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.CloseVacancy(viewModel);
+            ModelState.Clear();
+            SetUserMessage(response.Message);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.CloseVacancy.UpdatedHasApplications:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications,
+                        new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
+                case VacancyPostingMediatorCodes.CloseVacancy.UpdatedNoApplications:
+                    return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
+                        new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
+                case VacancyPostingMediatorCodes.CloseVacancy.InvalidState:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications,
+                        new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         [HttpPost]
         public ActionResult ManageDates(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {

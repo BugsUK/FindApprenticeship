@@ -379,6 +379,32 @@
             }
         }
 
+        public FurtherVacancyDetailsViewModel CloseVacancy(FurtherVacancyDetailsViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            vacancy.ClosingDate = DateTime.Now;
+            vacancy.Status = VacancyStatus.Closed;
+            FurtherVacancyDetailsViewModel result;
+            try
+            {
+                vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
+            }
+            catch (CustomException)
+            {
+                result = _mapper.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy);
+                result.VacancyApplicationsState = VacancyApplicationsState.Invalid;
+                result.AutoSaveTimeoutInSeconds =
+                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+                return result;
+            }
+
+            result = _mapper.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy);
+            result.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
+            result.AutoSaveTimeoutInSeconds =
+                _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+            return result;
+        }
+
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
             return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : CategoryPrefixes.GetOriginalFrameworkCode(trainingDetailsViewModel.FrameworkCodeName);

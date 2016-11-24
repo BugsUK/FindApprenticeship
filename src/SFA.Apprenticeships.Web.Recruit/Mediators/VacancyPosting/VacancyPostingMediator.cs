@@ -278,7 +278,7 @@
                     viewModel.IsEmployerLocationMainApprenticeshipLocation;
                 existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
                 existingViewModel.VacancyGuid = viewModel.VacancyGuid;
-            }            
+            }
             return existingViewModel;
         }
 
@@ -766,6 +766,31 @@
             }
         }
 
+        public FurtherVacancyDetailsViewModel GetCloseVacancyViewModel(int vacancyReferenceNumber)
+        {
+            return new FurtherVacancyDetailsViewModel
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber
+            };
+        }
+
+        public MediatorResponse<FurtherVacancyDetailsViewModel> CloseVacancy(
+            FurtherVacancyDetailsViewModel viewModel)
+        {
+            var result = _vacancyPostingProvider.CloseVacancy(viewModel);
+            switch (result.VacancyApplicationsState)
+            {
+                case VacancyApplicationsState.HasApplications:
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.CloseVacancy.UpdatedHasApplications, viewModel);
+                case VacancyApplicationsState.NoApplications:
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.CloseVacancy.UpdatedNoApplications, viewModel);
+                case VacancyApplicationsState.Invalid:
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.CloseVacancy.InvalidState, viewModel);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         private FurtherVacancyDetailsViewModel MergeVacancyDates(FurtherVacancyDetailsViewModel viewModel)
         {
             var existingViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(viewModel.VacancyReferenceNumber);
@@ -966,6 +991,12 @@
             if (vacancyViewModel.Status == VacancyStatus.Completed)
             {
                 messages.Add(VacancyViewModelMessages.VacancyHasBeenArchived);
+            }
+
+            if (vacancyViewModel.Status == VacancyStatus.Closed)
+            {
+                messages.Add(VacancyViewModelMessages.Closed);
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, messages, UserMessageLevel.Info);
             }
 
             if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())

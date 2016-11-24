@@ -1,19 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
-    using System;
-    using System.Linq;
     using Builders;
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Vacancy;
     using Recruit.Mediators.VacancyPosting;
+    using System;
+    using System.Linq;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
@@ -67,16 +66,19 @@
             //Assert
             if (shouldHaveArchiveMessage)
             {
-                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.VacancyHasBeenArchived+"<br/>"+ VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
+                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.VacancyHasBeenArchived + "<br/>" + VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
             }
             else
             {
-                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
+                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok,
+                    status == VacancyStatus.Closed
+                        ? VacancyViewModelMessages.Closed
+                        : VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
             }
         }
 
         [TestCase(VacancyStatus.Live, true)]
-        [TestCase(VacancyStatus.Closed, true)]
+        [TestCase(VacancyStatus.Closed, false)]
         [TestCase(VacancyStatus.Completed, false)]
         [TestCase(VacancyStatus.Withdrawn, true)]
         public void CanHaveApplications_OneApplicationRouteTest(VacancyStatus status, bool messageShouldBeNull)
@@ -136,13 +138,16 @@
             }
             else
             {
-                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
+                result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok,
+                    status == VacancyStatus.Closed
+                        ? VacancyViewModelMessages.Closed
+                        : VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
             }
-            
+
         }
 
         [TestCase(VacancyStatus.Live, true)]
-        [TestCase(VacancyStatus.Closed, true)]
+        [TestCase(VacancyStatus.Closed, false)]
         [TestCase(VacancyStatus.Completed, false)]
         [TestCase(VacancyStatus.Withdrawn, true)]
         public void CanHaveClickThroughs_OneClickThroughRouteTest(VacancyStatus status, bool messageShouldBeNull)

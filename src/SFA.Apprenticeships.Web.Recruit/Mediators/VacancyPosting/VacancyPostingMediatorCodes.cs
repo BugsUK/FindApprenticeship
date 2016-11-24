@@ -92,7 +92,7 @@
             public const string OnlineVacancyOk = "VacancyPosting.UpdateVacancy.OnlineVacancyOk";
             public const string FailedValidation = "VacancyPosting.UpdateVacancy.FailedValidation";
         }
-        
+
         public static class SubmitVacancy
         {
             public const string SubmitOk = "VacancyPosting.SubmitVacancy.SubmitOk";
@@ -156,6 +156,16 @@
             public const string FailedValidation = "VacancyPosting.ManageDates.FailedValidation";
             public const string FailedCrossFieldValidation = "VacancyPosting.ManageDates.FailedCrossFieldValidation";
             public const string InvalidState = "VacancyPosting.ManageDates.InvalidState";
+        }
+
+        public class CloseVacancy
+        {
+            public const string Ok = "VacancyPosting.CloseVacancy.Ok";
+            public const string UpdatedHasApplications = "VacancyPosting.CloseVacancy.UpdatedHasApplications";
+            public const string UpdatedNoApplications = "VacancyPosting.CloseVacancy.OkNoApplications";
+            public const string FailedValidation = "VacancyPosting.CloseVacancy.FailedValidation";
+            public const string FailedCrossFieldValidation = "VacancyPosting.CloseVacancy.FailedCrossFieldValidation";
+            public const string InvalidState = "VacancyPosting.CloseVacancy.InvalidState";
         }
     }
 }

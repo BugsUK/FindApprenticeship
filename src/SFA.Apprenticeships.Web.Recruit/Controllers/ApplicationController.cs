@@ -31,7 +31,10 @@
         public ActionResult VacancyApplications(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
             var response = _applicationMediator.GetVacancyApplicationsViewModel(vacancyApplicationsSearch);
-
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message.Text, response.Message.Level);
+            }
             switch (response.Code)
             {
                 case ApplicationMediatorCodes.GetVacancyApplicationsViewModel.Ok:
