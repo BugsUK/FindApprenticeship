@@ -98,7 +98,7 @@
 
         public class IsAnonymousEmployer
         {
-            public const string RequiredErrorText = "Select whether the employer name and address be shown in this vacancy";
+            public const string RequiredErrorText = "Select whether the employer name and address should be shown in this vacancy";
         }
     }
 }
