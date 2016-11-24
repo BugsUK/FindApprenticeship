@@ -17,5 +17,10 @@
         {
             public const string RequiredErrorText = "You must select an application";
         }
+
+        public class OptionalMessage
+        {
+            public const string LabelText = "(Optional message)";
+        }
     }
 }

@@ -141,8 +141,9 @@
 
         <section>
             <p>Enter an email address for the person/organisation you would like to share this vacancy's application/s with.</p>
-            @Html.FormTextFor(m => m.RecipientEmailAddress, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-small"})
             <p>They'll receive an email containing a link to the application/s. The link will expire in 2 weeks (@DateTime.UtcNow.AddDays(14).ToString("d MMMM yyyy")).</p>
+            @Html.FormTextFor(m => m.RecipientEmailAddress, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
+           @Html.FormTextAreaFor(m => m.OptionalMessage, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" })
         </section>
 
         <section>
