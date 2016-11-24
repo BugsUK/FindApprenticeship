@@ -59,7 +59,7 @@
                             No, I need to add a different location
                         </label>
                         <div id="location-type-main-location-panel" class="toggle-content blocklabel-content location">
-                            @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" })
+                            @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS"}, labelHtmlAttributes: new {@class = "bold-small"})
                             @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                         </div>
                     }
@@ -72,19 +72,25 @@
                     }
                 </div>
             </div>
+        </div>
+        
+        <div class="blocklabel-single-container">
             <div class="hide-nojs">
-                <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
-                <h4 class="bold-small">Will the employer's name and address be shown in this vacancy?</h4>
-                <label data-target="is-non-anonymous-employer-panel" for="is-non-anonymous-employer" class="block-label @Model.IsAnonymousEmployer ">
-                    @Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "is-non-anonymous-employer", aria_controls = "is-non-anonymous-employer-panel" })
-                    Yes
-                </label>
-                <label data-target="is-anonymous-employer-panel" for="is-anonymous-employer" class="block-label @Model.IsAnonymousEmployer ">
-                    @Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "is-anonymous-employer", aria_controls = "is-anonymous-employer-panel" })
-                    No, the employer wants to remain anonymous
-                </label>
+                <div class="form-group inline clearfix blocklabel-single">
+                    <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
+                    <h4 class="bold-small">Will the employer's name and address be shown in this vacancy?</h4>
+                    <label data-target="is-non-anonymous-employer-panel" for="is-non-anonymous-employer" class="block-label @Model.IsAnonymousEmployer ">
+                        @Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "is-non-anonymous-employer", aria_controls = "is-non-anonymous-employer-panel" })
+                        Yes
+                    </label>
+                    <label data-target="is-anonymous-employer-panel" for="is-anonymous-employer" class="block-label @Model.IsAnonymousEmployer ">
+                        @Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "is-anonymous-employer", aria_controls = "is-anonymous-employer-panel" })
+                        No, the employer wants to remain anonymous
+                    </label>
+                </div>
             </div>
         </div>
+
         <noscript>
             <div class="blocklabel-single-container">
                 <div class="form-group inline clearfix blocklabel-single">
