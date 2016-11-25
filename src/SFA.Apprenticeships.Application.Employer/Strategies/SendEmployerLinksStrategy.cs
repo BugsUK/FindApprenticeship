@@ -24,7 +24,8 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
                     new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle, vacancyTitle),
                     new CommunicationToken(CommunicationTokens.ProviderName, providerName),
                     new CommunicationToken(CommunicationTokens.EmployerApplicationLinks, JsonConvert.SerializeObject(applicationLinks)),
-                    new CommunicationToken(CommunicationTokens.EmployerApplicationLinksExpiry, linkExpiryDateTime.ToString("d MMMM yyyy"))
+                    new CommunicationToken(CommunicationTokens.EmployerApplicationLinksExpiry, linkExpiryDateTime.ToString("d MMMM yyyy")),
+                    new CommunicationToken(CommunicationTokens.OptionalMessage, optionalMessage),
                 });
         }
     }
