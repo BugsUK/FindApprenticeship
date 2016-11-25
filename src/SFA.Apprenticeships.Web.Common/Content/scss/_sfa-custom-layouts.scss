@@ -1,4 +1,6 @@
-﻿.sfa-hide {
+﻿@import "_colours";
+
+.sfa-hide {
     display: none;
 }
 
@@ -10,8 +12,20 @@
     margin: 0 !important;
 }
 
+.sfa-pull-right {
+    float: right;
+}
+
+.sfa-medium-top-margin {
+    margin-top: 10px !important;
+}
+
 .sfa-medium-bottom-margin {
     margin-bottom: 10px !important;
+}
+
+.sfa-medium-right-margin {
+    margin-right: 10px !important;
 }
 
 .sfa-large-bottom-margin {
@@ -24,6 +38,10 @@
 
 .sfa-xlarge-top-margin {
     margin-top: 30px !important;
+}
+
+.sfa-small-top-padding {
+    padding-top: 5px !important;
 }
 
 .sfa-medium-bottom-padding {
@@ -81,4 +99,8 @@ iframe, object, embed {
     p {
         text-decoration: underline;
     }
+}
+
+.secondary-text {
+    color: $secondary-text-colour;
 }

@@ -19,3 +19,11 @@
     margin-right: -1px;
     width: 20px
 }
+
+.summary-style.open:before {
+    content: '▼ '
+}
+
+.toggle-content {
+    display: none
+}

@@ -127,28 +127,28 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-3-4 small-btm-margin form-control" }));
+               Write(Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-auto sfa-medium-bottom-margin" }));
 
             
             #line default
             #line hidden
             
             #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-                                                                                                                                                                                           
+                                                                                                                                                                                       
                     
             
             #line default
             #line hidden
             
             #line 17 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" }));
+               Write(Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" }, controlHtmlAttributes: new { @class = "form-control form-control-4-4" }));
 
             
             #line default
             #line hidden
             
             #line 17 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-                                                                                                                                                                        
+                                                                                                                                                                                                                                                 
                 }
 
             
@@ -164,7 +164,7 @@ WriteLiteral("                    ");
 
             
             #line 21 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "small-btm-margin" }));
+               Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "small-btm-margin" }, controlHtmlAttributes : new { @class = "form-control form-control-4-4" }));
 
             
             #line default
@@ -262,14 +262,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2222), Tuple.Create("\"", 2313)
+WriteAttribute("href", Tuple.Create(" href=\"", 2365), Tuple.Create("\"", 2456)
             
             #line 37 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2229), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
+, Tuple.Create(Tuple.Create("", 2372), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
             
             #line default
             #line hidden
-, 2229), false)
+, 2372), false)
 );
 
 WriteLiteral(">");
@@ -307,7 +307,7 @@ WriteLiteral("                    ");
 
             
             #line 45 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control" }));
+               Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control form-control-auto" }));
 
             
             #line default
@@ -328,7 +328,7 @@ WriteLiteral("                    ");
 
             
             #line 49 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control" }));
+               Write(Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control form-control-auto" }));
 
             
             #line default
@@ -404,14 +404,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4126), Tuple.Create("\"", 4156)
+WriteAttribute("value", Tuple.Create(" value=\"", 4305), Tuple.Create("\"", 4335)
             
             #line 64 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 4134), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 4313), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 4134), false)
+, 4313), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -446,14 +446,14 @@ WriteLiteral(" name=\"LocationType\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4523), Tuple.Create("\"", 4550)
+WriteAttribute("value", Tuple.Create(" value=\"", 4702), Tuple.Create("\"", 4729)
             
             #line 68 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-  , Tuple.Create(Tuple.Create("", 4531), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+  , Tuple.Create(Tuple.Create("", 4710), Tuple.Create<System.Object, System.Int32>(Model.LocationType
             
             #line default
             #line hidden
-, 4531), false)
+, 4710), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n</section>");

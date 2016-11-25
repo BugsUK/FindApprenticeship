@@ -49,12 +49,12 @@ else
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
         <div class="grid-row sfa-medium-bottom-margin">
-            <div class="font-xsmall grid column-one-third">
+            <div class="column-one-half">
                 <div class="width-all-1-3 hide-js inl-block"></div>
                 <div class="inner-block-padr hide-nojs">
                     <details class="no-btm-margin small-top-padding">
-                        <summary>More/less detail</summary>
-                        <div class="detail-content" id="chooseDetails">
+                        <summary><span class="summary">More/less detail</span></summary>
+                        <div class="panel panel-border-narrow" id="chooseDetails">
                             <ul class="list-text list-checkradio">
                                 @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
                                 {
@@ -95,8 +95,8 @@ else
                     </details>
                 </div>
             </div>
-            <div class="column-two-thirds ta-right ta-left-mob">
-                <label for="sort-results" class="heading-medium inline">Sort results</label>
+            <div class="sfa-pull-right">
+                <label for="sort-results" class="heading-medium sfa-medium-right-margin">Sort results</label>
                 @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results", @class = "form-control" })
                 <noscript>
                     <button style="float: right; margin-left: 5px;" class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
@@ -107,9 +107,45 @@ else
     </fieldset>
 
     <ul class="search-results">
+        <li>
+            <div class="grid-row">
+                <div class="column-full">
+                    <h1 class="heading-large no-margins">
+                        <a href="#">Test Title</a>
+                        <span class="heading-secondary">Test heading</span>
+                    </h1>
+                    <p class="font-xsmall no-margins secondary-text">(Added 07 Nov 2016 - 1 position available)</p>
+                    <p>
+                        Test description
+                    </p>
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="column-two-thirds">
+                    <div>
+                        <span class="bold-small">Distance:</span> 1.1 miles
+                        
+                        <a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
+                        <div class="detail-content toggle-content hide-nojs" style="display: block;">
+                            <select class="form-control valid" name="" aria-invalid="false">
+                                <option value="DRIVING" aria-live="polite">Driving</option>
+                                <option value="TRANSIT" aria-live="polite">Bus/Train</option>
+                                <option value="WALKING" aria-live="polite">Walking</option>
+                                <option value="BICYCLING" aria-live="polite">Cycling</option>
+                            </select>
+
+                            <span class="journey-time" aria-live="polite"></span>
+                        </div>
+                    </div>
+                    <div><span class="bold-small">Closing date:</span> 12 Dec 2017</div>
+                    <div><span class="bold-small">Possible start date:</span> 22 Dec 2017</div>
+                </div>
+            </div>
+        </li>
+
         @if (Model.Vacancies != null)
         {
-            var itemPosition = 1 + (Model.PageSize * Model.PrevPage);
+            var itemPosition = 1 + (Model.PageSize*Model.PrevPage);
             foreach (var vacancy in Model.Vacancies)
             {
                 var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/apprenticeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Apprenticeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
@@ -117,9 +153,9 @@ else
                     <div class="hgroup-medium top-align width-all-3-4">
                         <h2 class="heading-medium vacancy-title-link">
                             @(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ?
-                                  Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude, data_is_employer_anonymous = vacancy.IsEmployerAnonymous }) :
-                                  Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker }))
-                            <br />
+                                  Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new {id = vacancy.Id, distance = vacancy.DistanceAsString}, new {@class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude, data_is_employer_anonymous = vacancy.IsEmployerAnonymous}) :
+                                  Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new {id = vacancy.Id, distance = vacancy.DistanceAsString}, new {@class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker}))
+                            <br/>
                             @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
                             {
                                 <span data-show="DisplaySubCategory" class="font-small hidden-subcategory @(Model.VacancySearch.DisplaySubCategory ? "inl-block" : "toggle-content")">@FullNameFormatter.Format(vacancy.SubCategory)</span>
@@ -159,18 +195,25 @@ else
 
                         <div class="top-align ta-right width-all-1-4">
                             <a href="#" id="save-vacancy-link-@vacancy.Id" class="hidden fake-link link-unimp save-vacancy-link" data-vacancy-id="@vacancy.Id" data-application-status="@applicationStatus"><i class="fa"></i></a>
-                            @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = vacancy.Id }, new { @class = "hidden resume-link", @id = "resume-link-" + @vacancy.Id })
-                            <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
+                            @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new {id = vacancy.Id}, new {@class = "hidden resume-link", @id = "resume-link-" + @vacancy.Id})
+                            <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied
+                            </p>
                         </div>
                     }
-                    <p data-show="DisplayDescription" class="@{if (!Model.VacancySearch.DisplayDescription) {<text>toggle-content</text>} else {<text>@vacancy.Description.GetPreserveFormattingCssClass()</text>}}">@vacancy.Description</p>
+                    <p data-show="DisplayDescription" class="@{if (!Model.VacancySearch.DisplayDescription)
+                                                             {<text>toggle-content</text>}
+                                                             else
+                                                             {<text>@vacancy.Description.GetPreserveFormattingCssClass()</text>}}">@vacancy.Description</p>
                     <div class="grid-row">
                         <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "column-two-thirds" : "")">
                             <ul class="list-text no-btm-margin inner-block-padr">
 
                                 @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                                 {
-                                    <li data-show="DisplayDistance" @{if (!Model.VacancySearch.DisplayDistance) { <text> class="toggle-content" </text>      }}>
+                                    <li data-show="DisplayDistance" @{if (!Model.VacancySearch.DisplayDistance)
+                                                                    {
+                                                                        <text> class="toggle-content" </text>
+                                                                    }}>
                                         <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
                                         <div class="detail-content toggle-content hide-nojs">
                                             <select class="form-control" class="form-control select-mode" name="">
@@ -184,10 +227,22 @@ else
                                         </div>
                                     </li>
                                 }
-                                <li data-show="DisplayClosingDate" @{if (!Model.VacancySearch.DisplayClosingDate) { <text> class="toggle-content" </text>      }}><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
-                                <li data-show="DisplayStartDate" @{if (!Model.VacancySearch.DisplayStartDate) { <text> class="toggle-content" </text>      }}><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
-                                <li data-show="DisplayApprenticeshipLevel" @{if (!Model.VacancySearch.DisplayApprenticeshipLevel) { <text> class="toggle-content" </text>      }}><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
-                                <li data-show="DisplayWage" @{if (!Model.VacancySearch.DisplayWage) { <text> class="toggle-content" </text>      }}><b>Wage:</b> @WagePresenter.GetDisplayAmountWithFrequencyPostfix(vacancy.Wage.Type, vacancy.Wage.Amount, vacancy.Wage.AmountLowerBound, vacancy.Wage.AmountUpperBound, vacancy.Wage.Text, vacancy.Wage.Unit, vacancy.Wage.HoursPerWeek, vacancy.StartDate)</li>
+                                <li data-show="DisplayClosingDate" @{if (!Model.VacancySearch.DisplayClosingDate)
+                                                                   {
+                                                                       <text> class="toggle-content" </text>
+                                                                   }}><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
+                                <li data-show="DisplayStartDate" @{if (!Model.VacancySearch.DisplayStartDate)
+                                                                 {
+                                                                     <text> class="toggle-content" </text>
+                                                                 }}><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
+                                <li data-show="DisplayApprenticeshipLevel" @{if (!Model.VacancySearch.DisplayApprenticeshipLevel)
+                                                                           {
+                                                                               <text> class="toggle-content" </text>
+                                                                           }}><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
+                                <li data-show="DisplayWage" @{if (!Model.VacancySearch.DisplayWage)
+                                                            {
+                                                                <text> class="toggle-content" </text>
+                                                            }}><b>Wage:</b> @WagePresenter.GetDisplayAmountWithFrequencyPostfix(vacancy.Wage.Type, vacancy.Wage.Amount, vacancy.Wage.AmountLowerBound, vacancy.Wage.AmountUpperBound, vacancy.Wage.Text, vacancy.Wage.Unit, vacancy.Wage.HoursPerWeek, vacancy.StartDate)</li>
 
                                 @if (vacancy.IsPositiveAboutDisability)
                                 {
@@ -217,7 +272,7 @@ else
                     </div>
 
                 </li>
-                        itemPosition++;
+                itemPosition++;
             }
         }
     </ul>

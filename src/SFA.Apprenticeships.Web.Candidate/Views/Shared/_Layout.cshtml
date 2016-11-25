@@ -118,43 +118,47 @@
                 @Html.Partial("_LoginPartial")
             </p>
         </div>
-        @{
-            var controller = ViewContext.Controller as CandidateControllerBase;
+        
+        <main id="content">
+            @{
+                var controller = ViewContext.Controller as CandidateControllerBase;
 
-            if (controller != null)
-            {
-                var infoMessage = controller.UserData.Pop(UserMessageConstants.InfoMessage);
-                var successMessage = controller.UserData.Pop(UserMessageConstants.SuccessMessage);
-                var warningMessage = controller.UserData.Pop(UserMessageConstants.WarningMessage);
-                var errorMessage = controller.UserData.Pop(UserMessageConstants.ErrorMessage);
+                if (controller != null)
+                {
+                    var infoMessage = controller.UserData.Pop(UserMessageConstants.InfoMessage);
+                    var successMessage = controller.UserData.Pop(UserMessageConstants.SuccessMessage);
+                    var warningMessage = controller.UserData.Pop(UserMessageConstants.WarningMessage);
+                    var errorMessage = controller.UserData.Pop(UserMessageConstants.ErrorMessage);
 
-                if (infoMessage != null)
-                {
-                    <div role="alert" class="panel-info">
-                        <p id="InfoMessageText">@Html.Raw(infoMessage)</p>
-                    </div>
-                }
-                if (successMessage != null)
-                {
-                    <div role="alert" class="panel-success">
-                        <p id="SuccessMessageText"><i class="fa fa-check"></i>@Html.Raw(successMessage)</p>
-                    </div>
-                }
-                if (warningMessage != null)
-                {
-                    <div role="alert" class="panel-warning">
-                        <p id="WarningMessageText">@Html.Raw(warningMessage)</p>
-                    </div>
-                }
-                if (errorMessage != null)
-                {
-                    <div role="alert" class="panel-danger">
-                        <p id="ErrorMessageText">@Html.Raw(errorMessage)</p>
-                    </div>
+                    if (infoMessage != null)
+                    {
+                        <div role="alert" class="panel-info">
+                            <p id="InfoMessageText">@Html.Raw(infoMessage)</p>
+                        </div>
+                    }
+                    if (successMessage != null)
+                    {
+                        <div role="alert" class="panel-success">
+                            <p id="SuccessMessageText"><i class="fa fa-check"></i>@Html.Raw(successMessage)</p>
+                        </div>
+                    }
+                    if (warningMessage != null)
+                    {
+                        <div role="alert" class="panel-warning">
+                            <p id="WarningMessageText">@Html.Raw(warningMessage)</p>
+                        </div>
+                    }
+                    if (errorMessage != null)
+                    {
+                        <div role="alert" class="panel-danger">
+                            <p id="ErrorMessageText">@Html.Raw(errorMessage)</p>
+                        </div>
+                    }
                 }
             }
-        }
-        @RenderBody()
+
+            @RenderBody()
+        </main>
 
         @if (ViewBag.EnableWebTrends == true)
         {
