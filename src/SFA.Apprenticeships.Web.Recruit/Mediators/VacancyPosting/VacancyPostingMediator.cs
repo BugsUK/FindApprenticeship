@@ -186,6 +186,10 @@
                     viewModel.AnonymousEmployerDescription = vor.AnonymousEmployerDescription;
                     viewModel.AnonymousEmployerReason = vor.AnonymousEmployerReason;
                 }
+                else
+                {
+                    viewModel.IsAnonymousEmployer = false;
+                }
             }
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)

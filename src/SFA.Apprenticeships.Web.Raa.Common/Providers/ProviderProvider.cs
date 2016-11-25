@@ -165,6 +165,12 @@
                     vacancy.EmployerAnonymousReason = viewModel.AnonymousEmployerReason;
                     vacancy.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
                 }
+                else
+                {
+                    vacancy.EmployerAnonymousName = null;
+                    vacancy.EmployerAnonymousReason = null;
+                    vacancy.AnonymousAboutTheEmployer = null;
+                }
 
                 _vacancyPostingService.UpdateVacancy(vacancy);
             }

@@ -294,23 +294,23 @@ WriteLiteral("\r\n                        </h3>\r\n");
 
 WriteLiteral("                        <p");
 
-WriteLiteral(" id=\"vacancy-employer-description\"");
+WriteLiteral(" id=\"vacancy-about-the-employer-description\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3115), Tuple.Create("\"", 3232)
+WriteAttribute("class", Tuple.Create(" class=\"", 3125), Tuple.Create("\"", 3242)
             
             #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 3123), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousAboutTheEmployer.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 3133), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousAboutTheEmployer.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 3123), false)
+, 3133), false)
 );
 
 WriteLiteral(">");
 
             
             #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                                                                                                               Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousAboutTheEmployer));
+                                                                                                                                                                                         Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousAboutTheEmployer));
 
             
             #line default
@@ -361,14 +361,14 @@ WriteLiteral("                        <p");
 
 WriteLiteral(" id=\"vacancy-employer-description\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4124), Tuple.Create("\"", 4235)
+WriteAttribute("class", Tuple.Create(" class=\"", 4134), Tuple.Create("\"", 4245)
             
             #line 54 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 4132), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 4142), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerDescription.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 4132), false)
+, 4142), false)
 );
 
 WriteLiteral(">");
@@ -430,14 +430,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5014), Tuple.Create("\"", 5032)
+WriteAttribute("class", Tuple.Create(" class=\"", 5024), Tuple.Create("\"", 5042)
             
             #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 5022), Tuple.Create<System.Object, System.Int32>(gridClass
+, Tuple.Create(Tuple.Create("", 5032), Tuple.Create<System.Object, System.Int32>(gridClass
             
             #line default
             #line hidden
-, 5022), false)
+, 5032), false)
 );
 
 WriteLiteral(">\r\n            <div");
@@ -484,29 +484,29 @@ WriteLiteral("\r\n                        </h3>\r\n                        <a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5973), Tuple.Create("\"", 5999)
+WriteAttribute("href", Tuple.Create(" href=\"", 5983), Tuple.Create("\"", 6009)
             
             #line 80 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 5980), Tuple.Create<System.Object, System.Int32>(employerWebsiteUri
+, Tuple.Create(Tuple.Create("", 5990), Tuple.Create<System.Object, System.Int32>(employerWebsiteUri
             
             #line default
             #line hidden
-, 5980), false)
+, 5990), false)
 );
 
 WriteLiteral("\r\n                           id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                           target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 6102), Tuple.Create("\"", 6215)
+WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 6112), Tuple.Create("\"", 6225)
             
             #line 83 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 6138), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName
+, Tuple.Create(Tuple.Create("", 6148), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName
             
             #line default
             #line hidden
-, 6138), false)
-, Tuple.Create(Tuple.Create(" ", 6207), Tuple.Create("Website", 6208), true)
+, 6148), false)
+, Tuple.Create(Tuple.Create(" ", 6217), Tuple.Create("Website", 6218), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -1634,14 +1634,14 @@ WriteLiteral("                                        ");
 WriteLiteral("\r\n                                    </h3>\r\n                                    " +
 "<p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 24982), Tuple.Create("\"", 25078)
+WriteAttribute("class", Tuple.Create(" class=\"", 24992), Tuple.Create("\"", 25088)
             
             #line 293 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 24990), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 25000), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 24990), false)
+, 25000), false)
 );
 
 WriteLiteral(">");
@@ -1733,24 +1733,24 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 26228), Tuple.Create("\"", 26408)
-, Tuple.Create(Tuple.Create("", 26234), Tuple.Create("https://www.google.com/maps/embed/v1/view?center=", 26234), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 26238), Tuple.Create("\"", 26418)
+, Tuple.Create(Tuple.Create("", 26244), Tuple.Create("https://www.google.com/maps/embed/v1/view?center=", 26244), true)
             
             #line 309 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                        , Tuple.Create(Tuple.Create("", 26283), Tuple.Create<System.Object, System.Int32>(Model.Address.GeoPoint.Latitude
+                                                                        , Tuple.Create(Tuple.Create("", 26293), Tuple.Create<System.Object, System.Int32>(Model.Address.GeoPoint.Latitude
             
             #line default
             #line hidden
-, 26283), false)
-, Tuple.Create(Tuple.Create("", 26315), Tuple.Create(",", 26315), true)
+, 26293), false)
+, Tuple.Create(Tuple.Create("", 26325), Tuple.Create(",", 26325), true)
             
             #line 309 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                                         , Tuple.Create(Tuple.Create("", 26316), Tuple.Create<System.Object, System.Int32>(Model.Address.GeoPoint.Longitude
+                                                                                                         , Tuple.Create(Tuple.Create("", 26326), Tuple.Create<System.Object, System.Int32>(Model.Address.GeoPoint.Longitude
             
             #line default
             #line hidden
-, 26316), false)
-, Tuple.Create(Tuple.Create("", 26349), Tuple.Create("&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26349), true)
+, 26326), false)
+, Tuple.Create(Tuple.Create("", 26359), Tuple.Create("&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26359), true)
 );
 
 WriteLiteral("></iframe>\r\n");
@@ -1774,16 +1774,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 26591), Tuple.Create("\"", 26739)
-, Tuple.Create(Tuple.Create("", 26597), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26597), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 26601), Tuple.Create("\"", 26749)
+, Tuple.Create(Tuple.Create("", 26607), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26607), true)
             
             #line 313 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 26642), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
+                                                                    , Tuple.Create(Tuple.Create("", 26652), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
             
             #line default
             #line hidden
-, 26642), false)
-, Tuple.Create(Tuple.Create("", 26675), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26675), true)
+, 26652), false)
+, Tuple.Create(Tuple.Create("", 26685), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26685), true)
 );
 
 WriteLiteral("></iframe>\r\n");
@@ -1833,16 +1833,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 27327), Tuple.Create("\"", 27501)
-, Tuple.Create(Tuple.Create("", 27333), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 27333), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 27337), Tuple.Create("\"", 27511)
+, Tuple.Create(Tuple.Create("", 27343), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 27343), true)
             
             #line 323 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 27378), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 27388), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
             
             #line default
             #line hidden
-, 27378), false)
-, Tuple.Create(Tuple.Create("", 27437), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 27437), true)
+, 27388), false)
+, Tuple.Create(Tuple.Create("", 27447), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 27447), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
