@@ -42,7 +42,7 @@
                             Description
                             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AnonymousAboutTheEmployer, Model.NewVacancyViewModel.AnonymousAboutTheEmployerComment, Model.EmployerLink))
                         </h3>
-                        <p id="vacancy-employer-description" class="@Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousAboutTheEmployer.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousAboutTheEmployer))</p>
+                        <p id="vacancy-about-the-employer-description" class="@Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousAboutTheEmployer.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.VacancyOwnerRelationship.AnonymousAboutTheEmployer))</p>
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AnonymousAboutTheEmployer, Model.EmployerLink, Model.NewVacancyViewModel.AnonymousAboutTheEmployerComment))
                     }
                     else
