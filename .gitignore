@@ -188,3 +188,4 @@ $RECYCLE.BIN/
 
 *.dgml
 tools/ContactForms/SFA.Apprenticeships.Infrastructure/Communication/Email/SendGridEmailDispatcher_.cs
+src/SFA.Apprenticeships.Web.Common/node_modules/
