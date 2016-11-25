@@ -19,7 +19,7 @@
             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.BasicDetailsLink, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment))
         </div>
         <div class="@editableItemClass grid-row">
-            <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
+            <p class="sfa-no-bottom-margin">This apprenticeship requires you to apply through the employer's website.</p>
             @if (Model.NewVacancyViewModel.OfflineVacancyType == OfflineVacancyType.MultiUrl && Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count > 1)
             {
                 var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1) / 2;

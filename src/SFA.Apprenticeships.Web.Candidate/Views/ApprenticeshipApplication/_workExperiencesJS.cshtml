@@ -35,32 +35,32 @@
                         <span class="visuallyhidden aria-limit" aria-live="polite"></span>
                     </div>
                     <div class="form-group inline-fixed validation-message-parent">
-                        <div class="form-group form-group-compound error-wrapper vert-align-top no-btm-margin">
+                        <div class="form-group form-group-compound error-wrapper vert-align-top sfa-no-bottom-margin">
                             <label for="work-from" class="form-label-bold">Started</label>
-                            <div class="form-group form-group-compound no-btm-margin">
+                            <div class="form-group form-group-compound sfa-no-bottom-margin">
                                 <span class="form-hint">Month</span>
                                 <select class="form-control" id="work-from" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: fromMonth"></select>
                             </div>
-                            <div class="form-group form-group-compound no-btm-margin" data-bind="parentvalElement: fromYear">
+                            <div class="form-group form-group-compound sfa-no-bottom-margin" data-bind="parentvalElement: fromYear">
                                 <label for="work-from-year" class="form-hint">Year</label>
                                 <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
                                        id="work-from-year" data-bind="value: fromYear">
                             </div>
                         </div>
-                        <div class="form-group error-wrapper vert-align-top no-btm-margin">
+                        <div class="form-group error-wrapper vert-align-top sfa-no-bottom-margin">
                             <label for="work-to" class="form-label-bold">Finished</label>
-                            <div class="form-group form-group-compound no-btm-margin">
+                            <div class="form-group form-group-compound sfa-no-bottom-margin">
                                 <span class="form-hint">Month</span>
 
                                 <select class="form-control" id="work-to" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: toMonth,attr:{'disabled':toDateReadonly() }"></select>
 
                             </div>
-                            <div class="form-group form-group-compound no-btm-margin" data-bind="parentvalElement: toYear">
+                            <div class="form-group form-group-compound sfa-no-bottom-margin" data-bind="parentvalElement: toYear">
                                 <label for="work-to-year" class="form-hint">Year</label>
                                 <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
                                        id="work-to-year" data-bind="value: toYear, attr:{'disabled':toDateReadonly() }" />
                             </div>
-                            <div class="form-group form-group-compound no-btm-margin">
+                            <div class="form-group form-group-compound sfa-no-bottom-margin">
                                 <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment" />
                                 <label for="work-current">Current</label>
                             </div>

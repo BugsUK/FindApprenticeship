@@ -22,11 +22,11 @@
         <div id="qualifications-panel" class="toggle-content" data-bind="style: {'display':showQualifications() ? 'block' :'none' }" aria-hidden="true">
             <div class="clearfix" id="qualEntry">
                 <div class="inline-fixed form-group validation-message-parent">
-                    <div class="form-group vert-align-top no-btm-margin" data-bind="parentvalElement:selectedQualification">
+                    <div class="form-group vert-align-top sfa-no-bottom-margin" data-bind="parentvalElement:selectedQualification">
                         <label for="qual-type" class="form-label-bold">Type of qualification</label>
                         <select class="form-control" id="qual-type" data-bind="options: qualificationTypes, optionsCaption: 'Select from list', optionsText: 'qualificationTypeName', optionsValue: 'qualificationTypeName',value: selectedQualification"></select>
                     </div>
-                    <div class="form-group vert-align-top no-btm-margin" data-bind="parentvalElement:year">
+                    <div class="form-group vert-align-top sfa-no-bottom-margin" data-bind="parentvalElement:year">
                         <label for="subject-year" class="form-label-bold">Year</label>
                         <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*"
                                id="subject-year" data-bind="value: year">

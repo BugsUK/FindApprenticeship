@@ -9,7 +9,7 @@
 
 @if (@Model.ApplyViaEmployerWebsite)
 {
-    <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
+    <p class="sfa-no-bottom-margin">This apprenticeship requires you to apply through the employer's website.</p>
 
     if (Model.IsWellFormedVacancyUrl)
     {
@@ -33,7 +33,7 @@ else if (Request.IsAuthenticated)
         {
             if (Model.DateApplied.HasValue)
             {
-                <p id="date-applied" class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+                <p id="date-applied" class="sfa-no-bottom-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
                 <p>@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = Model.Id }, new { @id = "view-application-link" })</p>
             }
 

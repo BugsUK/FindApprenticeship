@@ -8,6 +8,9 @@
 .no-margins {
   margin: 0 !important; }
 
+.sfa-no-bottom-margin {
+  margin-bottom: 0 !important; }
+
 .sfa-pull-right {
   float: right; }
 

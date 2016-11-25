@@ -95,7 +95,7 @@
             <div class="grid-row">
                 <div class="column-one-half">
                     <div class="inner-block-padr">
-                        <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
+                        <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "sfa-no-bottom-margin" : "")">@Model.EmployerName</p>
                         @if (Model.IsWellFormedEmployerWebsiteUrl)
                         {
                             <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>

@@ -178,11 +178,11 @@ WriteLiteral(" class=\"search-results-wrapper grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"hgroup column-full\"");
 
 WriteLiteral(">\r\n        <h1");
 
-WriteLiteral(" class=\"heading-xlarge\"");
+WriteLiteral(" class=\"heading-xlarge sfa-no-bottom-margin\"");
 
 WriteLiteral(">Search results</h1>\r\n        <div");
 
@@ -242,14 +242,14 @@ WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" id=\"receiveSaveSearchAlert\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4640), Tuple.Create("\"", 4822)
+WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4673), Tuple.Create("\"", 4855)
             
             #line 95 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4672), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
+, Tuple.Create(Tuple.Create("", 4705), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
             
             #line default
             #line hidden
-, 4672), false)
+, 4705), false)
 );
 
 WriteLiteral("\r\n                       onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'" +

@@ -91,11 +91,11 @@ WriteLiteral(" class=\"search-results-wrapper grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"hgroup column-full\"");
 
 WriteLiteral(">\r\n        <h1");
 
-WriteLiteral(" class=\"heading-xlarge\"");
+WriteLiteral(" class=\"heading-xlarge sfa-no-bottom-margin\"");
 
 WriteLiteral(">Search results</h1>\r\n        <div");
 
