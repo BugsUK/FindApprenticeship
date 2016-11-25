@@ -56,8 +56,13 @@
 
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
+        public bool? IsNationWideVacancy { get; set; }
+
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsForNationWide.LabelText)]
+        public int? NumberOfPositionsForNationWide { get; set; }
 
         public bool ComeFromPreview { get; set; }
 
@@ -73,6 +78,9 @@
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsComment.LabelText)]
         public string NumberOfPositionsComment { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsForNationWideComment.LabelText)]
+        public string NumberOfPositionsForNationWideComment { get; set; }
 
         public bool IsEmployerAddressValid { get; set; }
     }
