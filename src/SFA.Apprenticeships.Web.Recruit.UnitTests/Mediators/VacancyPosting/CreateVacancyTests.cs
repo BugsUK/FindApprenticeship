@@ -160,7 +160,7 @@
             var numberOfPositions = 5;
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                EmployerApprenticeshipLocation = VacancyLocationOption.Main,
+                EmployerApprenticeshipLocation = VacancyLocationType.SpecificLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -193,7 +193,7 @@
             const string initialVacancyTitle = "title";
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                EmployerApprenticeshipLocation = VacancyLocationOption.Different,
+                EmployerApprenticeshipLocation = VacancyLocationType.MultipleLocations,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -225,7 +225,7 @@
             const string ukprn = "1234";
             var vacancyGuid = Guid.NewGuid();
             const int vacanyPartyId = 1;
-            const VacancyLocationOption employerApprenticeshipLocation = VacancyLocationOption.Main;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             const string employerWebsiteUrl = "www.google.com";
             const string employerDescription = "description";
@@ -272,7 +272,7 @@
             const string ukprn = "1234";
             var vacancyGuid = Guid.NewGuid();
             const int vacanyPartyId = 1;
-            const VacancyLocationOption employerApprenticeshipLocation = VacancyLocationOption.Main;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             const string employerWebsiteUrl = "www.google.com";
             const string employerDescription = "description";
@@ -316,7 +316,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const VacancyLocationOption employerApprenticeshipLocation = VacancyLocationOption.Main;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             var address = new Fixture().Build<PostalAddress>().With(a => a.Postcode, employersPostcode).Create();
             const int providerId = 4;
@@ -372,7 +372,7 @@
                 && v.OfflineVacancy.HasValue == false
                 && v.OfflineApplicationUrl == null
                 && v.OfflineApplicationInstructions == null
-                && v.EmployerApprenticeshipLocation == employerApprenticeshipLocation
+                && v.VacancyLocationType == employerApprenticeshipLocation
                 && v.NumberOfPositions == numberOfPositions
                 && v.VacancyType == VacancyType.Unknown
                 && v.Address == address
@@ -392,7 +392,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const VacancyLocationOption employerApprenticeshipLocation = VacancyLocationOption.Different;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.MultipleLocations;
             int? numberOfPositions = null;
             var address = new Fixture().Build<PostalAddress>().With(a => a.Postcode, employersPostcode).Create();
             const int providerId = 4;
@@ -443,7 +443,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const VacancyLocationOption employerApprenticeshipLocation = VacancyLocationOption.Main;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             var address =
                 new Fixture().Build<PostalAddress>()

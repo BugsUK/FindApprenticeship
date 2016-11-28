@@ -344,7 +344,7 @@
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)
             {
-                viewModel.EmployerApprenticeshipLocation = VacancyLocationOption.Main;
+                viewModel.EmployerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             }
 
             var validationResult = _vacancyOwnerRelationshipViewModelValidator.Validate(vacancy.VacancyOwnerRelationship);
@@ -499,7 +499,7 @@
 
             _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
 
-            if (viewModel.EmployerApprenticeshipLocation == VacancyLocationOption.Main)
+            if (viewModel.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation)
             {
                 _vacancyQaProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
             }

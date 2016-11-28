@@ -58,7 +58,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public VacancySource VacancySource { get; set; }
         public string WageComment { get; set; }
         public string WorkingWeekComment { get; set; }
-
         public string AnonymousEmployerDescriptionComment { get; set; }
         public string AnonymousEmployerReasonComment { get; set; }
         public string AnonymousAboutTheEmployerComment { get; set; }
@@ -131,7 +130,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 FirstQuestionComment = FirstQuestionComment,
                 SecondQuestionComment = SecondQuestionComment,
                 AdditionalLocationInformation = AdditionalLocationInformation,
-                EmployerApprenticeshipLocation = EmployerApprenticeshipLocation,
+                VacancyLocationType = VacancyLocationType,
                 NumberOfPositions = NumberOfPositions,
                 EmployerDescriptionComment = EmployerDescriptionComment,
                 EmployerWebsiteUrlComment = EmployerWebsiteUrlComment,

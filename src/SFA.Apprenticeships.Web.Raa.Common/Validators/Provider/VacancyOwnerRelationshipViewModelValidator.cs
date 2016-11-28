@@ -38,7 +38,7 @@
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.RequiredErrorText)
                 .GreaterThanOrEqualTo(1)
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LengthErrorText)
-                .When(x => x.EmployerApprenticeshipLocation == VacancyLocationOption.Main);
+                .When(x => x.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation);
 
             RuleFor(x => x.IsAnonymousEmployer)
                 .NotNull()

@@ -54,7 +54,7 @@
 
         public Guid VacancyGuid { get; set; }
 
-        public VacancyLocationOption EmployerApprenticeshipLocation { get; set; }
+        public VacancyLocationType EmployerApprenticeshipLocation { get; set; }
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }

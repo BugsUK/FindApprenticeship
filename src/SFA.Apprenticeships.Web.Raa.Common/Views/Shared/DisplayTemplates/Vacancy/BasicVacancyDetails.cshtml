@@ -69,7 +69,7 @@
                 <a name="@Html.NameFor(m => m.OfflineApplicationUrl).ToString().ToLower()"></a>
                 <div class="form-group">
                     @{
-                        var hideOfflineLinks = Model.EmployerApprenticeshipLocation == VacancyLocationOption.Main || Model.LocationAddresses == null || Model.LocationAddresses.Count <= 1;
+                        var hideOfflineLinks = Model.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation || Model.LocationAddresses == null || Model.LocationAddresses.Count <= 1;
                         var offlineMultiUrlParaStyle = hideOfflineLinks || Model.OfflineVacancyType == OfflineVacancyType.MultiUrl ? "display: none;" : null;
                         var offlineSingleUrlParaStyle = hideOfflineLinks || Model.OfflineVacancyType != OfflineVacancyType.MultiUrl ? "display: none;" : null;
                         var offlineMultiUrlDivStyle = Model.OfflineVacancyType == OfflineVacancyType.MultiUrl ? null : "display: none;";

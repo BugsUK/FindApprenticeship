@@ -32,7 +32,7 @@
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
+                .With(x => x.VacancyLocationType, VacancyLocationType.MultipleLocations)
                 .With(x => x.VacancyId, parentVacancyId)
                 .Create();
 
@@ -72,7 +72,7 @@
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
                                 av.Status == VacancyStatus.Live &&
                                 av.ParentVacancyId == parentVacancyId &&
-                                av.EmployerApprenticeshipLocation == VacancyLocationOption.Main &&
+                                av.VacancyLocationType == VacancyLocationType.SpecificLocation &&
                                 av.Address.Postcode == locationAddresses.First().Address.Postcode &&
                                 av.Address.AddressLine1 == locationAddresses.First().Address.AddressLine1 &&
                                 av.Address.AddressLine2 == locationAddresses.First().Address.AddressLine2 &&
@@ -89,8 +89,8 @@
                                                                        && av.Status == VacancyStatus.Live &&
                                                                        av.ParentVacancyId ==
                                                                        parentVacancyId &&
-                                                                       av.EmployerApprenticeshipLocation
-                                                                           == VacancyLocationOption.Main)), Times.Once);
+                                                                       av.VacancyLocationType
+                                                                           == VacancyLocationType.SpecificLocation)), Times.Once);
             }
 
             //save new vacancies with only one of the new addresses and the position count
@@ -123,7 +123,7 @@
             var vacancyReferenceNumber = 1;
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
+                .With(x => x.VacancyLocationType, VacancyLocationType.SpecificLocation)
                 .Create();
 
             var vacanyLockingService = new Mock<IVacancyLockingService>();
@@ -170,7 +170,7 @@
             };
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
+                .With(x => x.VacancyLocationType, VacancyLocationType.SpecificLocation)
                 .With(x => x.Address, address)
                 .Create();
 
@@ -213,7 +213,7 @@
             };
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
+                .With(x => x.VacancyLocationType, VacancyLocationType.SpecificLocation)
                 .With(x => x.Address, address)
                 .Create();
 
@@ -268,7 +268,7 @@
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
+                .With(x => x.VacancyLocationType, VacancyLocationType.MultipleLocations)
                 .With(x => x.VacancyId, parentVacancyId)
                 .Create();
 
@@ -323,7 +323,7 @@
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
+                .With(x => x.VacancyLocationType, VacancyLocationType.MultipleLocations)
                 .With(x => x.VacancyId, parentVacancyId)
                 .Create();
 

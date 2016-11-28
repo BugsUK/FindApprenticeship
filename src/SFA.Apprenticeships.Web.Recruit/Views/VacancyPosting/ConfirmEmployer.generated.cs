@@ -74,7 +74,7 @@ WriteLiteral("\r\n");
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) &&
-            Model.EmployerApprenticeshipLocation == VacancyLocationOption.Main ? "Save and return to Preview" : "Save and continue";
+            Model.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation ? "Save and return to Preview" : "Save and continue";
 
             
             #line default

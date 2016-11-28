@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Views.Shared.DisplayTemplates.Vacancy
 {
-    using System.Collections.Generic;
     using Common.Views.Shared.DisplayTemplates.Vacancy;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
@@ -8,6 +7,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using RazorGenerator.Testing;
+    using System.Collections.Generic;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
@@ -19,7 +19,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
+                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationType.SpecificLocation)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.LocationAddresses, null)
                 .Create();
@@ -39,9 +39,9 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
+                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationType.MultipleLocations)
                 .With(vm => vm.OfflineVacancy, true)
-                .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel> {new VacancyLocationAddressViewModel()})
+                .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel> { new VacancyLocationAddressViewModel() })
                 .Create();
             var details = new BasicVacancyDetails();
 
@@ -61,7 +61,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
+                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationType.MultipleLocations)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.OfflineVacancyType, offlineVacancyType)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>
@@ -87,7 +87,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
+                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationType.MultipleLocations)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.OfflineVacancyType, OfflineVacancyType.MultiUrl)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>

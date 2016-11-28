@@ -54,7 +54,7 @@
                     @if (Model.IsEmployerAddressValid)
                     {
                         <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.EmployerApprenticeshipLocation ">
-                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationOption.Main , new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
+                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationType.SpecificLocation , new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
                             Use the main employer address
                         </label>
                         <br />
@@ -63,12 +63,12 @@
                             @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))                            
                         </div>                        
                         <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.EmployerApprenticeshipLocation ">
-                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationOption.Different , new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
+                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationType.MultipleLocations , new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
                             Add different location(s)
                         </label>
                         <br />
                         <label data-target="location-nation-wide-vacancy-panel" for="location-nation-wide-vacancy" class="block-label @Model.EmployerApprenticeshipLocation ">
-                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationOption.NationWide , new { id = "location-nation-wide-vacancy", aria_controls = "location-nation-wide-vacancy-panel" })
+                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationType.Nationwide , new { id = "location-nation-wide-vacancy", aria_controls = "location-nation-wide-vacancy-panel" })
                             Set as a nationwide vacancy
                         </label>
                         <div id="location-nation-wide-vacancy-panel" class="toggle-content blocklabel-content nationwide left-grey-border">

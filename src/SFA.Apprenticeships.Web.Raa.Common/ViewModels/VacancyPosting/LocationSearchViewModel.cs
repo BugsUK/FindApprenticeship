@@ -47,7 +47,7 @@
 
         public int VacancyReferenceNumber { get; set; }
 
-        public VacancyLocationOption EmployerApprenticeshipLocation { get; set; }
+        public VacancyLocationType EmployerApprenticeshipLocation { get; set; }
 
         public int CurrentPage { get; set; }
 

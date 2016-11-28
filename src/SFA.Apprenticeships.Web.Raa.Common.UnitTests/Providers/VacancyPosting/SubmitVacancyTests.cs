@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
-    using System;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Moq;
     using NUnit.Framework;
+    using System;
 
     [TestFixture]
     [Parallelizable]
@@ -21,14 +21,14 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyOwnerRelationshipId = 42,
-                EmployerApprenticeshipLocation = VacancyLocationOption.Main
+                VacancyLocationType = VacancyLocationType.SpecificLocation
             };
 
             MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
             MockVacancyPostingService.Setup(ps => ps.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>()))
-                .Returns(new ProviderSite {Address = new PostalAddress()});
+                .Returns(new ProviderSite { Address = new PostalAddress() });
             MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(Category.EmptyFramework);
 
             vacancyPostingProvider.SubmitVacancy(referenceNumber);
@@ -50,7 +50,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyOwnerRelationshipId = 42,
-                EmployerApprenticeshipLocation = VacancyLocationOption.Main
+                VacancyLocationType = VacancyLocationType.SpecificLocation
             };
 
             MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
@@ -78,7 +78,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyOwnerRelationshipId = 42,
-                EmployerApprenticeshipLocation = VacancyLocationOption.Main,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
                 SubmissionCount = 2
             };
 

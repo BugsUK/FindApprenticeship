@@ -155,7 +155,7 @@
                 vacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId;
                 vacancy.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
                 vacancy.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
-                vacancy.EmployerApprenticeshipLocation =
+                vacancy.VacancyLocationType =
                         viewModel.EmployerApprenticeshipLocation;
                 if (viewModel.NumberOfPositions != null) vacancy.NumberOfPositions = viewModel.NumberOfPositions.Value;
                 if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)

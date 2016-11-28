@@ -52,7 +52,7 @@
 
             destination.NewVacancyViewModel.AdditionalLocationInformation = source.AdditionalLocationInformation;
             destination.NewVacancyViewModel.EmployerApprenticeshipLocation =
-                source.EmployerApprenticeshipLocation;
+                source.VacancyLocationType;
             destination.NewVacancyViewModel.NumberOfPositions = source.NumberOfPositions;
             destination.NewVacancyViewModel.NumberOfPositionsComment = source.NumberOfPositionsComment;
 

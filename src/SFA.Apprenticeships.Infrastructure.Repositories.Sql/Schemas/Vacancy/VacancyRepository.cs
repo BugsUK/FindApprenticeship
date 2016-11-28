@@ -510,7 +510,7 @@ WHERE  FullName = @CountyFullName",
         private void PopulateVacancyLocationTypeId(DomainVacancy entity, Vacancy dbVacancy)
         {
             // A vacancy is multilocation if IsEmployerAddressMainAddress is set to false
-            var vacancyLocationTypeCodeName = entity.EmployerApprenticeshipLocation == VacancyLocationOption.Main
+            var vacancyLocationTypeCodeName = entity.VacancyLocationType == VacancyLocationType.SpecificLocation
                 ? "STD"
                 : "MUL";
 

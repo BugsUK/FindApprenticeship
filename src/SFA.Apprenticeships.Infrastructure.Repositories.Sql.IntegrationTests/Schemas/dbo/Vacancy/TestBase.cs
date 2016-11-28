@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Schemas.dbo.Vacancy
 {
-    using System;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using System;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
 
     [TestFixture]
@@ -32,7 +32,7 @@
                 .With(av => av.DeliveryOrganisationId, null)
                 .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, Guid.NewGuid().GetHashCode())
-                .With(av => av.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
+                .With(av => av.VacancyLocationType, VacancyLocationType.SpecificLocation)
                 .With(av => av.ParentVacancyId, null)
                 .With(av => av.UpdatedDateTime, null)
                 .With(av => av.RegionalTeam, RegionalTeam.NorthWest)
@@ -44,7 +44,7 @@
                 County = "West Midlands"
             };
 
-            result.LocalAuthorityCode= "00CC";
+            result.LocalAuthorityCode = "00CC";
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
             {
                 result.TrainingType = TrainingType.Frameworks;

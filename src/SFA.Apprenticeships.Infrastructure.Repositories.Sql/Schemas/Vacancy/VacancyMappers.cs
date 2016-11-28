@@ -217,7 +217,7 @@
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
-                .ForMember(v => v.EmployerApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .ForMember(v => v.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .ForMember(v => v.Wage, opt => opt.MapFrom(v => MapWage(v)))
                 .IgnoreMember(v => v.LastEditedById)
@@ -379,7 +379,7 @@
 
             Mapper.CreateMap<DbVacancySummary, VacancySummary>()
                 .ForMember(av => av.Wage, opt => opt.MapFrom(v => MapWage(v)))
-                .ForMember(av => av.EmployerApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .ForMember(av => av.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(v => v.VacancyLocationTypeId))
 
                 .MapMemberFrom(av => av.ContractOwnerId, v => v.ContractOwnerId)
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.DateFirstSubmitted)

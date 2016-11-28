@@ -35,7 +35,7 @@
                 ClosingDate = context.Engine.Map<DateTime?, DateViewModel>(source.ClosingDate),
                 DateSubmitted = source.DateSubmitted,
                 SubmissionCount = source.SubmissionCount,
-                EmployerApprenticeshipLocation = source.EmployerApprenticeshipLocation,
+                EmployerApprenticeshipLocation = source.VacancyLocationType,
                 ParentVacancyId = source.ParentVacancyId,
                 NewApplicationCount = source.NewApplicationCount,
                 ApplicationCount = source.ApplicantCount,

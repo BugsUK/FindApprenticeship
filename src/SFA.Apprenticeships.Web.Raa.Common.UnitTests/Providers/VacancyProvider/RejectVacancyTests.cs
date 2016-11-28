@@ -10,7 +10,6 @@
     using Ploeh.AutoFixture;
 
     using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 
     [TestFixture]
@@ -24,14 +23,14 @@
             var vacancyReferenceNumber = 1;
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
+                .With(x => x.VacancyLocationType, VacancyLocationType.SpecificLocation)
                 .Create();
 
             var vacanyLockingService = new Mock<IVacancyLockingService>();
             var configurationService = new Mock<IConfigurationService>();
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
 
@@ -72,7 +71,7 @@
 
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(vacanyReferenceNumber))
-                .Returns(new Vacancy {VacancyReferenceNumber = vacanyReferenceNumber});
+                .Returns(new Vacancy { VacancyReferenceNumber = vacanyReferenceNumber });
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, It.IsAny<Vacancy>()))
                 .Returns(false);
 

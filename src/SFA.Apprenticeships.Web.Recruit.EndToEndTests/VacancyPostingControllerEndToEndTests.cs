@@ -73,7 +73,7 @@
             var view = result as ViewResult;
             view.Model.Should().BeOfType<VacancyOwnerRelationshipViewModel>();
             var viewModel = view.Model as VacancyOwnerRelationshipViewModel;
-            viewModel.EmployerApprenticeshipLocation.Should().Be(VacancyLocationOption.Main);
+            viewModel.EmployerApprenticeshipLocation.Should().Be(VacancyLocationType.SpecificLocation);
             viewModel.NumberOfPositions.Should().NotHaveValue();
         }
 
@@ -83,7 +83,7 @@
             const int providerSiteId = 101282923;
             const int employerId = 100608868;
             const int numberOfPositions = 5;
-            const VacancyLocationOption employerApprenticeshipLocation = VacancyLocationOption.Main;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             var vacancyGuid = Guid.NewGuid();
             var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, employerApprenticeshipLocation, numberOfPositions, providerSiteId, vacancyGuid);
 
@@ -98,7 +98,7 @@
             vacancyPostingController.ConfirmEmployer(viewModel);
 
             var vacancy = Collection.FindOneById(vacancyGuid);
-            vacancy.EmployerApprenticeshipLocation.Should().Be(VacancyLocationOption.Main);
+            vacancy.VacancyLocationType.Should().Be(VacancyLocationType.SpecificLocation);
             vacancy.NumberOfPositions.Should().Be(numberOfPositions);
         }
 
@@ -108,7 +108,7 @@
             const int providerSiteId = 101282923;
             const int employerId = 100608868;
             // const string ukprn = 
-            const VacancyLocationOption employerApprenticeshipLocation = VacancyLocationOption.Different;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.MultipleLocations;
             var vacancyGuid = Guid.NewGuid();
             var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, employerApprenticeshipLocation, null, providerSiteId, vacancyGuid);
 
@@ -178,7 +178,7 @@
         }
 
         private static VacancyOwnerRelationshipViewModel GetProviderSiteEmployerLinkViewModel(int employerId,
-            VacancyLocationOption employerApprenticeshipLocation, int? numberOfPositions, int providerSiteId,
+            VacancyLocationType employerApprenticeshipLocation, int? numberOfPositions, int providerSiteId,
             Guid vacancyGuid)
         {
             return new VacancyOwnerRelationshipViewModel

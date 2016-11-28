@@ -504,7 +504,7 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyMediatorCodes.UpdateEmployerInformation.Ok:
-                    if (response.ViewModel.EmployerApprenticeshipLocation == VacancyLocationOption.Main)
+                    if (response.ViewModel.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation)
                     {
                         return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
