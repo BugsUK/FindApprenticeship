@@ -1,5 +1,4 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 
@@ -148,7 +147,7 @@
 
         <section>
             <div class="form-group">
-                <button type="submit" class="button">Submit</button>
+                <button type="submit" class="button">Send</button>
                 @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.VacancyReferenceNumber })
             </div>
         </section>
