@@ -1,15 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using Validators.VacancyPosting;
     using Web.Common.ViewModels;
 
-    [Validator(typeof (LocationSearchViewModelClientValidator))]
+    [Validator(typeof(LocationSearchViewModelClientValidator))]
     public class LocationSearchViewModel
     {
         public const string PartialView = "Vacancy/LocationSearch";
@@ -20,7 +20,7 @@
         }
 
         [Display(Name = LocationSearchViewModelMessages.PostCodeSearch.LabelText)]
-        public string PostcodeSearch { get; set; } 
+        public string PostcodeSearch { get; set; }
 
         public PageableViewModel<VacancyLocationAddressViewModel> SearchResultAddresses { get; set; }
 
@@ -36,7 +36,7 @@
 
         public Guid VacancyGuid { get; set; }
 
-        [Display(Name= LocationSearchViewModelMessages.AdditionalLocationInformation.LabelText)]
+        [Display(Name = LocationSearchViewModelMessages.AdditionalLocationInformation.LabelText)]
         public string AdditionalLocationInformation { get; set; }
 
         public string Ukprn { get; set; }
@@ -47,8 +47,8 @@
 
         public int VacancyReferenceNumber { get; set; }
 
-        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
-		
+        public VacancyLocationOption EmployerApprenticeshipLocation { get; set; }
+
         public int CurrentPage { get; set; }
 
         public int TotalNumberOfPages { get; set; }

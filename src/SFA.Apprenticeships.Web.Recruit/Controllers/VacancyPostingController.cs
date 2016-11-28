@@ -178,15 +178,13 @@
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
                     if (viewModel.ComeFromPreview &&
-                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                        response.ViewModel.EmployerApprenticeshipLocation == VacancyLocationOption.Main)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
                     }
 
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.EmployerApprenticeshipLocation == VacancyLocationOption.Main)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { vacancyOwnerRelationshipId = response.ViewModel.VacancyOwnerRelationshipId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }
@@ -228,7 +226,7 @@
                             edsUrn = viewModel.VacancyOwnerRelationship.Employer.EdsUrn,
                             vacancyGuid = viewModel.VacancyGuid,
                             comeFromPreview,
-                            useEmployerLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation
+                            useEmployerLocation = viewModel.EmployerApprenticeshipLocation
                         });
                 case VacancyPostingMediatorCodes.GetNewVacancyViewModel.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
@@ -954,15 +952,13 @@
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
                     if (viewModel.ComeFromPreview &&
-                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                        response.ViewModel.EmployerApprenticeshipLocation == VacancyLocationOption.Main)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
                     }
 
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.EmployerApprenticeshipLocation == VacancyLocationOption.Main)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }

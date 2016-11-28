@@ -21,7 +21,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyOwnerRelationshipId = 42,
-                IsEmployerLocationMainApprenticeshipLocation = true
+                EmployerApprenticeshipLocation = VacancyLocationOption.Main
             };
 
             MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
@@ -50,7 +50,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyOwnerRelationshipId = 42,
-                IsEmployerLocationMainApprenticeshipLocation = true
+                EmployerApprenticeshipLocation = VacancyLocationOption.Main
             };
 
             MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
@@ -78,7 +78,7 @@
             var apprenticeshipVacancy = new Vacancy
             {
                 VacancyOwnerRelationshipId = 42,
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                EmployerApprenticeshipLocation = VacancyLocationOption.Main,
                 SubmissionCount = 2
             };
 

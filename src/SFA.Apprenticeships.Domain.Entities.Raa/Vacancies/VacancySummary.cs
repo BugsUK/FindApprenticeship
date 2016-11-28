@@ -37,7 +37,7 @@
         public int? StandardId { get; set; }
         public string SectorCodeName { get; set; }
         public VacancyStatus Status { get; set; }
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public VacancyLocationOption EmployerApprenticeshipLocation { get; set; }
         public string EmployerAnonymousName { get; set; }
         public string EmployerAnonymousReason { get; set; }
         public bool? IsAnonymousEmployer { get; set; }

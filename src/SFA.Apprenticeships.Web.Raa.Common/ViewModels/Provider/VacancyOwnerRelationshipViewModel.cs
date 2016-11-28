@@ -54,9 +54,7 @@
 
         public Guid VacancyGuid { get; set; }
 
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
-
-        public bool? IsNationWideVacancy { get; set; }
+        public VacancyLocationOption EmployerApprenticeshipLocation { get; set; }
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }

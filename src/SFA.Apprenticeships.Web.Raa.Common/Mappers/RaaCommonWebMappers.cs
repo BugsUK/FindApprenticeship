@@ -53,7 +53,7 @@
                 .ForMember(dest => dest.IsPositiveAboutDisability, opt => opt.Ignore())
                 .ForMember(dest => dest.EmployerStatus, opt => opt.MapFrom(src => src.Status));
             Mapper.CreateMap<VacancyOwnerRelationship, VacancyOwnerRelationshipViewModel>()
-                .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployerApprenticeshipLocation, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositions, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())

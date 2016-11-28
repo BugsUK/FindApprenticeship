@@ -27,19 +27,25 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    
+    #line 2 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Manage;
     
-    #line 2 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+    #line 3 "..\..\Views\Vacancy\EmployerInformation.cshtml"
     using SFA.Apprenticeships.Web.Manage.Constants;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+    #line 4 "..\..\Views\Vacancy\EmployerInformation.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
     
     #line default
@@ -58,12 +64,11 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
 WriteLiteral("\r\n");
 
             
-            #line 5 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 6 "..\..\Views\Vacancy\EmployerInformation.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save" : "Save and continue";
+    var saveButtonText = Model.EmployerApprenticeshipLocation == VacancyLocationOption.Main ? "Save" : "Save and continue";
 
             
             #line default

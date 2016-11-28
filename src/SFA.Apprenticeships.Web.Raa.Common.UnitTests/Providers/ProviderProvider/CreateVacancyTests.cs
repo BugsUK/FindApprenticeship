@@ -55,7 +55,7 @@
                     Address = new AddressViewModel()
                 },
                 VacancyGuid = vacancyGuid,
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                EmployerApprenticeshipLocation = VacancyLocationOption.Main,
                 NumberOfPositions = 4
             });
 
@@ -162,7 +162,7 @@
                     Address = new AddressViewModel()
                 },
                 VacancyGuid = vacancyGuid,
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                EmployerApprenticeshipLocation = VacancyLocationOption.Main,
                 NumberOfPositions = 4
             });
 

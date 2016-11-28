@@ -24,7 +24,7 @@
         public DateViewModel ClosingDate { get; set; }
         public DateTime? DateSubmitted { get; set; }
         public int SubmissionCount { get; set; }
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public VacancyLocationOption EmployerApprenticeshipLocation { get; set; }
         public bool? IsEmployerAnonymous { get; set; }
         public IList<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
         public int? ParentVacancyId { get; set; }

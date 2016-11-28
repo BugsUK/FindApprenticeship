@@ -131,7 +131,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 FirstQuestionComment = FirstQuestionComment,
                 SecondQuestionComment = SecondQuestionComment,
                 AdditionalLocationInformation = AdditionalLocationInformation,
-                IsEmployerLocationMainApprenticeshipLocation = IsEmployerLocationMainApprenticeshipLocation,
+                EmployerApprenticeshipLocation = EmployerApprenticeshipLocation,
                 NumberOfPositions = NumberOfPositions,
                 EmployerDescriptionComment = EmployerDescriptionComment,
                 EmployerWebsiteUrlComment = EmployerWebsiteUrlComment,

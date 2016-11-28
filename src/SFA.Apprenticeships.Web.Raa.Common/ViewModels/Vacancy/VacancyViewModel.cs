@@ -85,7 +85,7 @@
 
         public VacancyType VacancyType { get; set; }
 
-        public bool IsSingleLocation => NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true;
+        public bool IsSingleLocation => NewVacancyViewModel.EmployerApprenticeshipLocation == VacancyLocationOption.Main;
 
         public bool IsCandidateView { get; set; }
 

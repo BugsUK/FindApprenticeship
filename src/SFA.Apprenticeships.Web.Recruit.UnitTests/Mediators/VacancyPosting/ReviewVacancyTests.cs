@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Common.UnitTests.Mediators;
+    using Domain.Entities.Raa.Vacancies;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -18,7 +19,7 @@
 
             VacancyPostingProvider.Setup(p => p.GetNewVacancyViewModel(vacancyReferenceNumber)).Returns(new NewVacancyViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = false,
+                EmployerApprenticeshipLocation = VacancyLocationOption.Different,
                 LocationAddresses = new List<VacancyLocationAddressViewModel>()
             });
 

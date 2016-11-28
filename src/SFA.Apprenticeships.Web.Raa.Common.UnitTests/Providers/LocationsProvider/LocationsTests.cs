@@ -70,7 +70,7 @@
             const string additionalLocationInformation = "additional location information";
             const int numberOfPositions = 4;
 
-            var vacancy = GetVacancy(_vacancyGuid, 1, numberOfPositions, false, additionalLocationInformation);
+            var vacancy = GetVacancy(_vacancyGuid, 1, numberOfPositions, VacancyLocationOption.Different, additionalLocationInformation);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId))
@@ -108,7 +108,7 @@
 
             MockVacancyPostingService.Verify(
                 s =>
-                    s.UpdateVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation &&
+                    s.UpdateVacancy(It.Is<Vacancy>(v => v.EmployerApprenticeshipLocation == locationSearchViewModel.EmployerApprenticeshipLocation &&
                         v.NumberOfPositions == null &&
                         v.LocationAddressesComment == aNewLocationAddressesComment &&
                         v.AdditionalLocationInformation == aNewAdditionalLocationInformation &&
@@ -136,7 +136,7 @@
 
             MockVacancyPostingService.Verify(
                  s =>
-                     s.UpdateVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == null &&
+                     s.UpdateVacancy(It.Is<Vacancy>(v => v.EmployerApprenticeshipLocation == null &&
                          v.NumberOfPositions == null &&
                          v.LocationAddressesComment == null &&
                          v.AdditionalLocationInformation == null &&
@@ -153,10 +153,10 @@
             //Arrange
             int vacancyReferenceNumber = 1;
             var vacancyGuid = Guid.NewGuid();
-            const bool isEmployerLocationMainApprenticeshipLocation = false;
+            const VacancyLocationOption employerApprenticeshipLocation = VacancyLocationOption.Different;
 
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, 
-                vacancyReferenceNumber, 1, isEmployerLocationMainApprenticeshipLocation, 
+                vacancyReferenceNumber, 1, employerApprenticeshipLocation, 
                 null, null, string.Empty);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
@@ -169,7 +169,7 @@
             MockVacancyPostingService.Verify(
                  s =>
                      s.UpdateVacancy(It.Is<Vacancy>(
-                         v => v.IsEmployerLocationMainApprenticeshipLocation == vacancyWithLocationAddresses.Vacancy.IsEmployerLocationMainApprenticeshipLocation &&
+                         v => v.EmployerApprenticeshipLocation == vacancyWithLocationAddresses.Vacancy.EmployerApprenticeshipLocation &&
                          v.NumberOfPositions == vacancyWithLocationAddresses.Vacancy.NumberOfPositions &&
                          v.AdditionalLocationInformation == null &&
                          v.AdditionalLocationInformationComment == vacancyWithLocationAddresses.Vacancy.AdditionalLocationInformationComment)));                        
@@ -186,7 +186,7 @@
             const int numberOfPositions = 4;
             const string additionalLocationInformation = "additional location information";
 
-            var vacancy = GetVacancy(_vacancyGuid, 1, numberOfPositions, false, additionalLocationInformation);
+            var vacancy = GetVacancy(_vacancyGuid, 1, numberOfPositions, VacancyLocationOption.Different, additionalLocationInformation);
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(new List<VacancyLocation>());
@@ -206,8 +206,8 @@
                     s.UpdateVacancy(
                         It.Is<Vacancy>(
                             v =>
-                                v.IsEmployerLocationMainApprenticeshipLocation ==
-                                locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation &&
+                                v.EmployerApprenticeshipLocation ==
+                                locationSearchViewModel.EmployerApprenticeshipLocation &&
                                 v.NumberOfPositions == numberOfPositions)));
 
 
@@ -221,7 +221,7 @@
         {
             var locationSearchViewModel = new LocationSearchViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = false,
+                EmployerApprenticeshipLocation = VacancyLocationOption.Different,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Addresses = new List<VacancyLocationAddressViewModel>
                 {
@@ -251,7 +251,7 @@
             {
                 AdditionalLocationInformation = aNewAdditionalLocationInformation,
                 AdditionalLocationInformationComment = aNewAdditionalLocationInformationComment,
-                IsEmployerLocationMainApprenticeshipLocation = false,
+                EmployerApprenticeshipLocation = VacancyLocationOption.Different,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Addresses = new List<VacancyLocationAddressViewModel>
                 {
@@ -317,10 +317,10 @@
 
         private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber, string additionalLocationInformation)
         {
-            return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, null, null, null, null, additionalLocationInformation);
+            return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, null, VacancyLocationOption.Unknown, null, null, additionalLocationInformation);
         }
 
-        private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber, int? numberOfPositions, bool? isEmployerLocationMainApprenticeshipLocation, string locationAddressesComment, string additionalLocationInformationComment, string additionalLocationInformation)
+        private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber, int? numberOfPositions, VacancyLocationOption employerApprenticeshipLocation, string locationAddressesComment, string additionalLocationInformationComment, string additionalLocationInformation)
         {
             var addresses = new List<VacancyLocation>
             {
@@ -357,7 +357,7 @@
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyGuid = vacancyGuid,
                 NumberOfPositions = numberOfPositions,
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                EmployerApprenticeshipLocation = employerApprenticeshipLocation,
                 LocationAddressesComment = locationAddressesComment,
                 AdditionalLocationInformationComment = additionalLocationInformationComment
             };
@@ -371,7 +371,7 @@
             return vacancyWithLocationAddresses;
         }
 
-        private static Vacancy GetVacancy(Guid vacancyGuid, int vacancyReferenceNumber, int? numberOfPositions, bool? isEmployerLocationMainApprenticeshipLocation, string additionalLocationInformation)
+        private static Vacancy GetVacancy(Guid vacancyGuid, int vacancyReferenceNumber, int? numberOfPositions, VacancyLocationOption employerApprenticeshipLocation, string additionalLocationInformation)
         {
             var vacancy = new Vacancy
             {
@@ -387,7 +387,7 @@
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyGuid = vacancyGuid,
                 NumberOfPositions = numberOfPositions,
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation
+                EmployerApprenticeshipLocation = employerApprenticeshipLocation
             };
 
             return vacancy;

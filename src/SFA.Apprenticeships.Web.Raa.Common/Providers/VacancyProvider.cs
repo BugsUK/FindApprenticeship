@@ -106,13 +106,15 @@
                 return vacancyViewModel;
             }
 
-            return new NewVacancyViewModel
+            var newVacancyModel = new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = vacancyOwnerRelationshipViewModel,
-                IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions,
                 AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
             };
+            if (numberOfPositions.HasValue)
+                newVacancyModel.EmployerApprenticeshipLocation = VacancyLocationOption.Main;
+            return newVacancyModel;
         }
 
         public List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(
@@ -145,8 +147,7 @@
                 return locationAddresses;
             }
 
-            if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
+            if (vacancy.EmployerApprenticeshipLocation == VacancyLocationOption.Different &&
                 vacancy.Address != null)
             {
 
@@ -213,7 +214,7 @@
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
                     Status = vacancy.Status,
                     VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
-                    IsEmployerLocationMainApprenticeshipLocation = false,
+                    EmployerApprenticeshipLocation = VacancyLocationOption.Different,
                     Addresses = new List<VacancyLocationAddressViewModel>(),
                     LocationAddressesComment = vacancy.LocationAddressesComment,
                     AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment,
@@ -229,8 +230,7 @@
                 }
                 else
                 {
-                    if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                    vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false && vacancy.Address != null)
+                    if (vacancy.EmployerApprenticeshipLocation == VacancyLocationOption.Different && vacancy.Address != null)
                     {
                         viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
                         viewModel.Addresses.Add(
@@ -276,10 +276,9 @@
 
             var vacancy = _vacancyPostingService.GetVacancy(vacancyMinimumData.VacancyGuid);
 
-            vacancy.IsEmployerLocationMainApprenticeshipLocation = vacancy.IsEmployerLocationMainApprenticeshipLocation;
+            vacancy.EmployerApprenticeshipLocation = vacancy.EmployerApprenticeshipLocation;
             vacancy.NumberOfPositions = vacancy.NumberOfPositions ?? 0;
-            vacancy.Address = (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                               vacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
+            vacancy.Address = (vacancy.EmployerApprenticeshipLocation == VacancyLocationOption.Main)
                                 ? employer.Address
                                 : null;
             vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
@@ -325,9 +324,9 @@
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId,
                 Status = VacancyStatus.Draft,
-                IsEmployerLocationMainApprenticeshipLocation = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation,
+                EmployerApprenticeshipLocation = vacancyMinimumData.EmployerApprenticeshipLocation,
                 NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
-                Address = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation ? employer.Address : null,
+                Address = vacancyMinimumData.EmployerApprenticeshipLocation == VacancyLocationOption.Main ? employer.Address : null,
                 ContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
@@ -1209,7 +1208,7 @@
             newVacancy.DateQAApproved = approvalTime;
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
-            newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+            newVacancy.EmployerApprenticeshipLocation = VacancyLocationOption.Main;
             if (!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName))
             {
                 newVacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
@@ -1240,8 +1239,7 @@
                     submittedVacancy.Address.GeoPoint = _geoCodingService.GetGeoPointFor(submittedVacancy.Address);
                 }
 
-                if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                    !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
+                if (submittedVacancy.EmployerApprenticeshipLocation == VacancyLocationOption.Different)
                 {
                     var vacancyLocationAddresses = _vacancyPostingService.GetVacancyLocations(submittedVacancy.VacancyId);
 
@@ -1253,7 +1251,7 @@
                         submittedVacancy.Address = vacancyLocation.Address;
                         submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
                         submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
-                        submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+                        submittedVacancy.EmployerApprenticeshipLocation = VacancyLocationOption.Main;
 
                         if (submittedVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
                         {
@@ -1501,8 +1499,8 @@
             //update properties
             vacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             vacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
-            vacancy.IsEmployerLocationMainApprenticeshipLocation =
-                viewModel.IsEmployerLocationMainApprenticeshipLocation;
+            vacancy.EmployerApprenticeshipLocation =
+                viewModel.EmployerApprenticeshipLocation;
 
             if (viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.HasValue && viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
             {
@@ -1517,8 +1515,7 @@
                     viewModel.AnonymousAboutTheEmployerComment;
             }
 
-            if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                vacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
+            if (vacancy.EmployerApprenticeshipLocation == VacancyLocationOption.Main)
             {
                 vacancy.NumberOfPositions = viewModel.NumberOfPositions;
                 vacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
@@ -1616,8 +1613,8 @@
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
-            vacancy.IsEmployerLocationMainApprenticeshipLocation =
-                viewModel.IsEmployerLocationMainApprenticeshipLocation;
+            vacancy.EmployerApprenticeshipLocation =
+                viewModel.EmployerApprenticeshipLocation;
             vacancy.NumberOfPositions = null;
             vacancy.Address = employer.Address;
             vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
@@ -1674,7 +1671,7 @@
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
             if (vacancy != null)
             {
-                vacancy.IsEmployerLocationMainApprenticeshipLocation = null;
+                vacancy.EmployerApprenticeshipLocation = VacancyLocationOption.Unknown;
                 vacancy.NumberOfPositions = null;
                 vacancy.LocationAddressesComment = null;
                 vacancy.AdditionalLocationInformation = null;

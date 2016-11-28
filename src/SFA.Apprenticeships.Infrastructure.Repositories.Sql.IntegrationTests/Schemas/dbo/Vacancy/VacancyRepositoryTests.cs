@@ -343,7 +343,7 @@
             vacancy.Address.Postcode = null;
             vacancy.Address.County = null;
             vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
-            vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
+            vacancy.EmployerApprenticeshipLocation = VacancyLocationOption.Different;
             vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);

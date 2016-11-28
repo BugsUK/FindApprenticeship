@@ -1,12 +1,12 @@
 ﻿@model VacancyOwnerRelationshipViewModel
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save" : "Save and continue";
+    var saveButtonText = Model.EmployerApprenticeshipLocation == VacancyLocationOption.Main ? "Save" : "Save and continue";
 }
 
 <div class="grid-wrapper">

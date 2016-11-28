@@ -19,7 +19,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.LocationAddresses, null)
                 .Create();
@@ -39,7 +39,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel> {new VacancyLocationAddressViewModel()})
                 .Create();
@@ -61,7 +61,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.OfflineVacancyType, offlineVacancyType)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>
@@ -87,7 +87,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.OfflineVacancyType, OfflineVacancyType.MultiUrl)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>

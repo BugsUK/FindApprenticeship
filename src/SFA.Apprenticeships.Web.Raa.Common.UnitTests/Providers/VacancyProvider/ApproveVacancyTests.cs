@@ -1,19 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using Application.Interfaces;
+    using Application.Interfaces.Locations;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Common.Providers;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using Application.Interfaces;
-    using Application.Interfaces.Locations;
-    using Domain.Entities.Exceptions;
+    using System.Collections.Generic;
+    using System.Linq;
     using Web.Common.Configuration;
 
     [TestFixture]
@@ -32,7 +32,7 @@
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
                 .With(x => x.VacancyId, parentVacancyId)
                 .Create();
 
@@ -72,7 +72,7 @@
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
                                 av.Status == VacancyStatus.Live &&
                                 av.ParentVacancyId == parentVacancyId &&
-                                av.IsEmployerLocationMainApprenticeshipLocation.Value &&
+                                av.EmployerApprenticeshipLocation == VacancyLocationOption.Main &&
                                 av.Address.Postcode == locationAddresses.First().Address.Postcode &&
                                 av.Address.AddressLine1 == locationAddresses.First().Address.AddressLine1 &&
                                 av.Address.AddressLine2 == locationAddresses.First().Address.AddressLine2 &&
@@ -89,8 +89,8 @@
                                                                        && av.Status == VacancyStatus.Live &&
                                                                        av.ParentVacancyId ==
                                                                        parentVacancyId &&
-                                                                       av.IsEmployerLocationMainApprenticeshipLocation
-                                                                           .Value)), Times.Once);
+                                                                       av.EmployerApprenticeshipLocation
+                                                                           == VacancyLocationOption.Main)), Times.Once);
             }
 
             //save new vacancies with only one of the new addresses and the position count
@@ -123,7 +123,7 @@
             var vacancyReferenceNumber = 1;
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
                 .Create();
 
             var vacanyLockingService = new Mock<IVacancyLockingService>();
@@ -170,7 +170,7 @@
             };
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
                 .With(x => x.Address, address)
                 .Create();
 
@@ -213,7 +213,7 @@
             };
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
                 .With(x => x.Address, address)
                 .Create();
 
@@ -268,7 +268,7 @@
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
                 .With(x => x.VacancyId, parentVacancyId)
                 .Create();
 
@@ -300,7 +300,7 @@
 
             //Assert
             geocodingService.Verify(s => s.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Exactly(locationAddressCount));
-            
+
         }
 
         [TestCase(1)]
@@ -323,7 +323,7 @@
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Different)
                 .With(x => x.VacancyId, parentVacancyId)
                 .Create();
 
@@ -372,10 +372,10 @@
 
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(vacanyReferenceNumber))
-                .Returns(new Vacancy {VacancyReferenceNumber = vacanyReferenceNumber});
+                .Returns(new Vacancy { VacancyReferenceNumber = vacanyReferenceNumber });
             vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, It.IsAny<Vacancy>()))
                 .Returns(false);
-            
+
             var vacancyProvider =
                 new VacancyProviderBuilder()
                     .With(vacancyPostingService)

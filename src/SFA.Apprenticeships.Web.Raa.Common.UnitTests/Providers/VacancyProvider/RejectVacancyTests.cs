@@ -24,7 +24,7 @@
             var vacancyReferenceNumber = 1;
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(x => x.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
                 .Create();
 
             var vacanyLockingService = new Mock<IVacancyLockingService>();

@@ -52,7 +52,7 @@
                 .With(av => av.DateStartedToQA, null)
                 .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, _vacancyReferenceNumber++)
-                .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(av => av.EmployerApprenticeshipLocation, VacancyLocationOption.Main)
                 .With(av => av.ParentVacancyId, null)
                 .With(av => av.UpdatedDateTime, null)
                 .Create();
