@@ -80,7 +80,8 @@
                 applicationLinks[application.ApplicantID] = link;
             }
 
-            _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks, _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress);
+            _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks,
+                _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress, viewModel.OptionalMessage);
 
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
         }

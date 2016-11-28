@@ -1,9 +1,9 @@
 namespace SFA.Apprenticeships.Application.Employer.Strategies
 {
-    using System;
-    using System.Collections.Generic;
     using Interfaces.Communications;
     using Newtonsoft.Json;
+    using System;
+    using System.Collections.Generic;
 
     public class SendEmployerLinksStrategy : ISendEmployerLinksStrategy
     {
@@ -14,7 +14,8 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
             _communicationService = communicationService;
         }
 
-        public void Send(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress)
+        public void Send(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks,
+            DateTime linkExpiryDateTime, string recipientEmailAddress, string optionalMessage = null)
         {
             _communicationService.SendMessageToEmployer(recipientEmailAddress, MessageTypes.SendEmployerApplicationLinks,
                 new[]
@@ -23,7 +24,8 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
                     new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle, vacancyTitle),
                     new CommunicationToken(CommunicationTokens.ProviderName, providerName),
                     new CommunicationToken(CommunicationTokens.EmployerApplicationLinks, JsonConvert.SerializeObject(applicationLinks)),
-                    new CommunicationToken(CommunicationTokens.EmployerApplicationLinksExpiry, linkExpiryDateTime.ToString("d MMMM yyyy"))
+                    new CommunicationToken(CommunicationTokens.EmployerApplicationLinksExpiry, linkExpiryDateTime.ToString("d MMMM yyyy")),
+                    new CommunicationToken(CommunicationTokens.OptionalMessage, optionalMessage),
                 });
         }
     }

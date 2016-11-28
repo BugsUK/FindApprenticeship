@@ -27,7 +27,8 @@
 
         void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes, bool publishUpdate);
 
-        void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
+        void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks
+            , DateTime linkExpiryDateTime, string recipientEmailAddress, string optionalMessage = null);
         ApplicationSelectionViewModel SetStateSubmitted(ApplicationSelectionViewModel applicationSelection);
         ApplicationSelectionViewModel SetTraineeshipStateSubmitted(ApplicationSelectionViewModel applicationSelection);
         BulkDeclineCandidatesViewModel GetBulkDeclineCandidatesViewModel(BulkDeclineCandidatesViewModel bulkDeclineCandidatesViewModel);

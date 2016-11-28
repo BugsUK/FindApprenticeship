@@ -1,7 +1,7 @@
 namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
-    using System;
     using Application.Interfaces.Communications;
+    using System;
 
     public static class SendGridTokenManager
     {
@@ -47,7 +47,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                     break;
                 case CommunicationTokens.ApplicationId:
                     emailTemplateToken = "Candidate.ApplicationId";
-                    break; 
+                    break;
                 case CommunicationTokens.AccountUnlockCodeExpiryDays:
                     emailTemplateToken = "Candidate.AccountUnlockCodeExpiryDays";
                     break;
@@ -113,6 +113,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                     break;
                 case CommunicationTokens.EmployerApplicationLinksExpiry:
                     emailTemplateToken = "Employer.ApplicationLinksExpiry";
+                    break;
+                case CommunicationTokens.OptionalMessage:
+                    emailTemplateToken = "Provider.OptionalMessage";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(key), key, string.Format("Unknown communication token '{0}'.", key));

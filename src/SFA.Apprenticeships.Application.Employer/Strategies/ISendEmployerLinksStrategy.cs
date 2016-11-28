@@ -5,6 +5,7 @@
 
     public interface ISendEmployerLinksStrategy
     {
-        void Send(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
+        void Send(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks,
+            DateTime linkExpiryDateTime, string recipientEmailAddress, string optionalMessage = null);
     }
 }

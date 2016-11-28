@@ -1,21 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
-    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Elastic.Common.Configuration;
     using Nest;
     using Newtonsoft.Json.Linq;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using ApprenticeshipSummary = Elastic.Common.Entities.ApprenticeshipSummary;
 
     public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>

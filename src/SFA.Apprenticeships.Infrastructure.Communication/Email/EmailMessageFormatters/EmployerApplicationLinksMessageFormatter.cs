@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Application.Interfaces;
     using Application.Interfaces.Communications;
     using Configuration;
     using Newtonsoft.Json;
     using SendGrid;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
     public class EmployerApplicationLinksMessageFormatter : EmailMessageFormatter
     {
@@ -47,6 +47,10 @@
                         token.Value
                     });
             }
+            var bodyMessage =
+                request.Tokens.Single(t => t.Key == CommunicationTokens.OptionalMessage)
+                    .Value.Replace(Environment.NewLine, "<br/>");
+            message.Html = bodyMessage.Insert(bodyMessage.Length, "<hr>");
         }
     }
 }
