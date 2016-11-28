@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace SFA.Apprenticeships.Application.Interfaces.Employers
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Generic;
+    using System;
+    using System.Collections.Generic;
 
     public interface IEmployerService
     {
@@ -17,9 +17,10 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
         IEnumerable<Employer> SearchEmployers(EmployerSearchParameters searchParameters);
         Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
         Employer SaveEmployer(Employer employer);
-        void SendApplicationLinks(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress);
+        void SendApplicationLinks(string vacancyTitle, string providerName, IDictionary<string, string> applicationLinks,
+            DateTime linkExpiryDateTime, string recipientEmailAddress, string optionalMessage = null);
     }
-    
+
     public class EmployerSearchRequest
     {
         public EmployerSearchRequest(int providerSiteId)
@@ -47,10 +48,10 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
             Location = !string.IsNullOrEmpty(location) ? Regex.Replace(location, @"\s+", "") : location;
         }
 
-        private EmployerSearchRequest() {}
+        private EmployerSearchRequest() { }
 
         public int ProviderSiteId { get; private set; }
-        
+
         public string EmployerEdsUrn { get; private set; }
 
         public string Name { get; private set; }
