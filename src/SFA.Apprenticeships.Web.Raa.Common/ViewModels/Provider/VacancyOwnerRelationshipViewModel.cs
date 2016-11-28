@@ -59,8 +59,8 @@
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
 
-        [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsForNationWide.LabelText)]
-        public int? NumberOfPositionsForNationWide { get; set; }
+        //[Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsForNationWide.LabelText)]
+        //public int? NumberOfPositionsForNationWide { get; set; }
 
         public bool ComeFromPreview { get; set; }
 

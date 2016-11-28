@@ -336,7 +336,7 @@ WriteLiteral(" class=\"form-group inline clearfix blocklabel-single\"");
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 2361), Tuple.Create("\"", 2441)
+WriteAttribute("name", Tuple.Create(" name=\"", 2361), Tuple.Create("\"", 2430)
             
             #line 52 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
 , Tuple.Create(Tuple.Create("", 2368), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()
@@ -372,16 +372,16 @@ WriteLiteral(" data-target=\"location-type-main-location-panel\"");
 
 WriteLiteral(" for=\"location-type-main-location\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2714), Tuple.Create("\"", 2772)
-, Tuple.Create(Tuple.Create("", 2722), Tuple.Create("block-label", 2722), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2703), Tuple.Create("\"", 2750)
+, Tuple.Create(Tuple.Create("", 2711), Tuple.Create("block-label", 2711), true)
             
             #line 56 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                                   , Tuple.Create(Tuple.Create(" ", 2733), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
+                                                   , Tuple.Create(Tuple.Create(" ", 2722), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
             
             #line default
             #line hidden
-, 2734), false)
-, Tuple.Create(Tuple.Create(" ", 2771), Tuple.Create("", 2771), true)
+, 2723), false)
+, Tuple.Create(Tuple.Create(" ", 2749), Tuple.Create("", 2749), true)
 );
 
 WriteLiteral(">\r\n");
@@ -437,16 +437,16 @@ WriteLiteral(" data-target=\"location-type-different-location-panel\"");
 
 WriteLiteral(" for=\"location-type-different-location\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3907), Tuple.Create("\"", 3965)
-, Tuple.Create(Tuple.Create("", 3915), Tuple.Create("block-label", 3915), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3874), Tuple.Create("\"", 3921)
+, Tuple.Create(Tuple.Create("", 3882), Tuple.Create("block-label", 3882), true)
             
             #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                                             , Tuple.Create(Tuple.Create(" ", 3926), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
+                                                             , Tuple.Create(Tuple.Create(" ", 3893), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
             
             #line default
             #line hidden
-, 3927), false)
-, Tuple.Create(Tuple.Create(" ", 3964), Tuple.Create("", 3964), true)
+, 3894), false)
+, Tuple.Create(Tuple.Create(" ", 3920), Tuple.Create("", 3920), true)
 );
 
 WriteLiteral(">\r\n");
@@ -471,16 +471,16 @@ WriteLiteral(" data-target=\"location-nation-wide-vacancy-panel\"");
 
 WriteLiteral(" for=\"location-nation-wide-vacancy\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4440), Tuple.Create("\"", 4498)
-, Tuple.Create(Tuple.Create("", 4448), Tuple.Create("block-label", 4448), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4385), Tuple.Create("\"", 4432)
+, Tuple.Create(Tuple.Create("", 4393), Tuple.Create("block-label", 4393), true)
             
             #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                                     , Tuple.Create(Tuple.Create(" ", 4459), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
+                                                     , Tuple.Create(Tuple.Create(" ", 4404), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
             
             #line default
             #line hidden
-, 4460), false)
-, Tuple.Create(Tuple.Create(" ", 4497), Tuple.Create("", 4497), true)
+, 4405), false)
+, Tuple.Create(Tuple.Create(" ", 4431), Tuple.Create("", 4431), true)
 );
 
 WriteLiteral(">\r\n");
@@ -509,7 +509,7 @@ WriteLiteral("                            ");
 
             
             #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                       Write(Html.FormTextFor(model => model.NumberOfPositionsForNationWide, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" }));
+                       Write(Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
             #line default
@@ -520,7 +520,7 @@ WriteLiteral("                            ");
 
             
             #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                       Write(Html.EditorFor(m => m.NumberOfPositionsForNationWideComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsForNationWideComment)));
+                       Write(Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment)));
 
             
             #line default
@@ -542,16 +542,16 @@ WriteLiteral(" data-target=\"location-type-different-location-panel\"");
 
 WriteLiteral(" for=\"location-type-different-location\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5657), Tuple.Create("\"", 5715)
-, Tuple.Create(Tuple.Create("", 5665), Tuple.Create("block-label", 5665), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 5541), Tuple.Create("\"", 5588)
+, Tuple.Create(Tuple.Create("", 5549), Tuple.Create("block-label", 5549), true)
             
             #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                                             , Tuple.Create(Tuple.Create(" ", 5676), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
+                                                             , Tuple.Create(Tuple.Create(" ", 5560), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
             
             #line default
             #line hidden
-, 5677), false)
-, Tuple.Create(Tuple.Create(" ", 5714), Tuple.Create("", 5714), true)
+, 5561), false)
+, Tuple.Create(Tuple.Create(" ", 5587), Tuple.Create("", 5587), true)
 );
 
 WriteLiteral(">\r\n");
@@ -589,14 +589,14 @@ WriteLiteral(" class=\"form-group inline clearfix blocklabel-single\"");
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 6301), Tuple.Create("\"", 6370)
+WriteAttribute("name", Tuple.Create(" name=\"", 6163), Tuple.Create("\"", 6232)
             
             #line 93 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 6308), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 6170), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()
             
             #line default
             #line hidden
-, 6308), false)
+, 6170), false)
 );
 
 WriteLiteral("></a>\r\n                    <h4");
@@ -610,16 +610,16 @@ WriteLiteral(" data-target=\"is-non-anonymous-employer-panel\"");
 
 WriteLiteral(" for=\"is-non-anonymous-employer\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6594), Tuple.Create("\"", 6641)
-, Tuple.Create(Tuple.Create("", 6602), Tuple.Create("block-label", 6602), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 6456), Tuple.Create("\"", 6503)
+, Tuple.Create(Tuple.Create("", 6464), Tuple.Create("block-label", 6464), true)
             
             #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                           , Tuple.Create(Tuple.Create(" ", 6613), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
+                                           , Tuple.Create(Tuple.Create(" ", 6475), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
             
             #line default
             #line hidden
-, 6614), false)
-, Tuple.Create(Tuple.Create(" ", 6640), Tuple.Create("", 6640), true)
+, 6476), false)
+, Tuple.Create(Tuple.Create(" ", 6502), Tuple.Create("", 6502), true)
 );
 
 WriteLiteral(">\r\n");
@@ -640,16 +640,16 @@ WriteLiteral(" data-target=\"is-anonymous-employer-panel\"");
 
 WriteLiteral(" for=\"is-anonymous-employer\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6974), Tuple.Create("\"", 7021)
-, Tuple.Create(Tuple.Create("", 6982), Tuple.Create("block-label", 6982), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 6836), Tuple.Create("\"", 6883)
+, Tuple.Create(Tuple.Create("", 6844), Tuple.Create("block-label", 6844), true)
             
             #line 99 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                   , Tuple.Create(Tuple.Create(" ", 6993), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
+                                   , Tuple.Create(Tuple.Create(" ", 6855), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
             
             #line default
             #line hidden
-, 6994), false)
-, Tuple.Create(Tuple.Create(" ", 7020), Tuple.Create("", 7020), true)
+, 6856), false)
+, Tuple.Create(Tuple.Create(" ", 6882), Tuple.Create("", 6882), true)
 );
 
 WriteLiteral(">\r\n");
@@ -675,14 +675,14 @@ WriteLiteral(" class=\"form-group inline clearfix blocklabel-single\"");
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 7523), Tuple.Create("\"", 7603)
+WriteAttribute("name", Tuple.Create(" name=\"", 7385), Tuple.Create("\"", 7454)
             
             #line 110 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 7530), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 7392), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()
             
             #line default
             #line hidden
-, 7530), false)
+, 7392), false)
 );
 
 WriteLiteral("></a>\r\n                    <h4");
@@ -695,16 +695,16 @@ WriteLiteral(" data-target=\"location-type-main-location-panel\"");
 
 WriteLiteral(" for=\"location-type-main-location\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7808), Tuple.Create("\"", 7866)
-, Tuple.Create(Tuple.Create("", 7816), Tuple.Create("block-label", 7816), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 7659), Tuple.Create("\"", 7706)
+, Tuple.Create(Tuple.Create("", 7667), Tuple.Create("block-label", 7667), true)
             
             #line 113 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                               , Tuple.Create(Tuple.Create(" ", 7827), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
+                                               , Tuple.Create(Tuple.Create(" ", 7678), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
             
             #line default
             #line hidden
-, 7828), false)
-, Tuple.Create(Tuple.Create(" ", 7865), Tuple.Create("", 7865), true)
+, 7679), false)
+, Tuple.Create(Tuple.Create(" ", 7705), Tuple.Create("", 7705), true)
 );
 
 WriteLiteral(">\r\n");
@@ -725,16 +725,16 @@ WriteLiteral(" data-target=\"location-type-different-location-panel\"");
 
 WriteLiteral(" for=\"location-type-different-location\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8270), Tuple.Create("\"", 8328)
-, Tuple.Create(Tuple.Create("", 8278), Tuple.Create("block-label", 8278), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 8099), Tuple.Create("\"", 8146)
+, Tuple.Create(Tuple.Create("", 8107), Tuple.Create("block-label", 8107), true)
             
             #line 117 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                                         , Tuple.Create(Tuple.Create(" ", 8289), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
+                                                         , Tuple.Create(Tuple.Create(" ", 8118), Tuple.Create<System.Object, System.Int32>(Model.VacancyLocationType
             
             #line default
             #line hidden
-, 8290), false)
-, Tuple.Create(Tuple.Create(" ", 8327), Tuple.Create("", 8327), true)
+, 8119), false)
+, Tuple.Create(Tuple.Create(" ", 8145), Tuple.Create("", 8145), true)
 );
 
 WriteLiteral(">\r\n");
@@ -755,14 +755,14 @@ WriteLiteral(" class=\"form-group inline clearfix blocklabel-single\"");
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 8747), Tuple.Create("\"", 8816)
+WriteAttribute("name", Tuple.Create(" name=\"", 8554), Tuple.Create("\"", 8623)
             
             #line 123 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8754), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 8561), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()
             
             #line default
             #line hidden
-, 8754), false)
+, 8561), false)
 );
 
 WriteLiteral("></a>\r\n                    <h4");
@@ -776,16 +776,16 @@ WriteLiteral(" data-target=\"is-anonymous-employer\"");
 
 WriteLiteral(" for=\"is-anonymous-employer\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9028), Tuple.Create("\"", 9075)
-, Tuple.Create(Tuple.Create("", 9036), Tuple.Create("block-label", 9036), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 8835), Tuple.Create("\"", 8882)
+, Tuple.Create(Tuple.Create("", 8843), Tuple.Create("block-label", 8843), true)
             
             #line 126 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                             , Tuple.Create(Tuple.Create(" ", 9047), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
+                             , Tuple.Create(Tuple.Create(" ", 8854), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
             
             #line default
             #line hidden
-, 9048), false)
-, Tuple.Create(Tuple.Create(" ", 9074), Tuple.Create("", 9074), true)
+, 8855), false)
+, Tuple.Create(Tuple.Create(" ", 8881), Tuple.Create("", 8881), true)
 );
 
 WriteLiteral(">\r\n");
@@ -806,16 +806,16 @@ WriteLiteral(" data-target=\"is-non-anonymous-employer\"");
 
 WriteLiteral(" for=\"is-non-anonymous-employer\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9390), Tuple.Create("\"", 9437)
-, Tuple.Create(Tuple.Create("", 9398), Tuple.Create("block-label", 9398), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9197), Tuple.Create("\"", 9244)
+, Tuple.Create(Tuple.Create("", 9205), Tuple.Create("block-label", 9205), true)
             
             #line 130 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-                                     , Tuple.Create(Tuple.Create(" ", 9409), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
+                                     , Tuple.Create(Tuple.Create(" ", 9216), Tuple.Create<System.Object, System.Int32>(Model.IsAnonymousEmployer
             
             #line default
             #line hidden
-, 9410), false)
-, Tuple.Create(Tuple.Create(" ", 9436), Tuple.Create("", 9436), true)
+, 9217), false)
+, Tuple.Create(Tuple.Create(" ", 9243), Tuple.Create("", 9243), true)
 );
 
 WriteLiteral(">\r\n");
@@ -858,14 +858,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10171), Tuple.Create("\"", 10189)
+WriteAttribute("class", Tuple.Create(" class=\"", 9978), Tuple.Create("\"", 9996)
             
             #line 143 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 10179), Tuple.Create<System.Object, System.Int32>(className
+, Tuple.Create(Tuple.Create("", 9986), Tuple.Create<System.Object, System.Int32>(className
             
             #line default
             #line hidden
-, 10179), false)
+, 9986), false)
 );
 
 WriteLiteral(">\r\n                        <h4");

@@ -72,8 +72,8 @@
                             Set as a nationwide vacancy
                         </label>
                         <div id="location-nation-wide-vacancy-panel" class="toggle-content blocklabel-content nationwide left-grey-border">
-                            @Html.FormTextFor(model => model.NumberOfPositionsForNationWide, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" })
-                            @Html.EditorFor(m => m.NumberOfPositionsForNationWideComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsForNationWideComment))
+                            @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" })
+                            @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                         </div>
                     }
                     else
