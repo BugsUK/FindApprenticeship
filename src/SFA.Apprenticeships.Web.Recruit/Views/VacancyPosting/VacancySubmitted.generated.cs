@@ -76,7 +76,7 @@ WriteLiteral(" class=\"success-banner\"");
 
 WriteLiteral(">\r\n    <h1");
 
-WriteLiteral(" class=\"heading-large no-btm-margin\"");
+WriteLiteral(" class=\"heading-large sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n        <i");
 
@@ -247,28 +247,28 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2118), Tuple.Create("\"", 2231)
+WriteAttribute("href", Tuple.Create(" href=\"", 2125), Tuple.Create("\"", 2238)
             
             #line 59 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2125), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
+, Tuple.Create(Tuple.Create("", 2132), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
             
             #line default
             #line hidden
-, 2125), false)
+, 2132), false)
 );
 
 WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Start new opportunity or vacancy</a>\r\n    </div>\r\n    <p>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2317), Tuple.Create("\"", 2376)
+WriteAttribute("href", Tuple.Create(" href=\"", 2324), Tuple.Create("\"", 2383)
             
             #line 62 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2324), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 2331), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2324), false)
+, 2331), false)
 );
 
 WriteLiteral(">Return to recruitment home</a>\r\n    </p>\r\n</section>\r\n");

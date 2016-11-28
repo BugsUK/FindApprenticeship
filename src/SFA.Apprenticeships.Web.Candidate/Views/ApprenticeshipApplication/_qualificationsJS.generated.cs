@@ -150,7 +150,7 @@ WriteLiteral(" class=\"inline-fixed form-group validation-message-parent\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"form-group vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement:selectedQualification\"");
 
@@ -172,7 +172,7 @@ WriteLiteral(" data-bind=\"options: qualificationTypes, optionsCaption: \'Select
 
 WriteLiteral("></select>\r\n                    </div>\r\n                    <div");
 
-WriteLiteral(" class=\"form-group vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement:year\"");
 

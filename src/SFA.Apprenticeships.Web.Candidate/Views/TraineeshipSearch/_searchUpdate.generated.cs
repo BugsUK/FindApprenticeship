@@ -247,7 +247,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                    <button");
 
-WriteLiteral(" class=\"button no-btm-margin\"");
+WriteLiteral(" class=\"button sfa-no-bottom-margin\"");
 
 WriteLiteral(" id=\"search-button\"");
 
@@ -297,14 +297,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2832), Tuple.Create("\"", 2862)
+WriteAttribute("value", Tuple.Create(" value=\"", 2839), Tuple.Create("\"", 2869)
             
             #line 47 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2840), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 2847), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 2840), false)
+, 2847), false)
 );
 
 WriteLiteral(" />\r\n\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n    \r\n\r\n</section>");

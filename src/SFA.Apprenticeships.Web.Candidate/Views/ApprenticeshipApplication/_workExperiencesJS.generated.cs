@@ -245,8 +245,8 @@ WriteLiteral(" class=\"form-group inline-fixed validation-message-parent\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"form-group form-group-compound error-wrapper vert-align-top no-btm-margin" +
-"\"");
+WriteLiteral(" class=\"form-group form-group-compound error-wrapper vert-align-top sfa-no-bottom" +
+"-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
@@ -256,7 +256,7 @@ WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Started</label>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                <span");
 
@@ -273,7 +273,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 
 WriteLiteral("></select>\r\n                            </div>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: fromYear\"");
 
@@ -300,7 +300,7 @@ WriteLiteral(" data-bind=\"value: fromYear\"");
 WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
 "              <div");
 
-WriteLiteral(" class=\"form-group error-wrapper vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group error-wrapper vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
@@ -310,7 +310,7 @@ WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Finished</label>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                <span");
 
@@ -328,7 +328,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 WriteLiteral("></select>\r\n\r\n                            </div>\r\n                            <di" +
 "v");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: toYear\"");
 
@@ -354,7 +354,7 @@ WriteLiteral(" data-bind=\"value: toYear, attr:{\'disabled\':toDateReadonly() }\
 
 WriteLiteral(" />\r\n                            </div>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                <input");
 

@@ -320,7 +320,7 @@ WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n                                <ul");
 
-WriteLiteral(" class=\"list-text no-btm-margin\"");
+WriteLiteral(" class=\"list-text sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                    <li>\r\n                                    " +
 "    <b>Distance:</b> <span");
@@ -432,24 +432,24 @@ WriteLiteral(" class=\"column-one-third map-container hide-nojs small-btm-margin
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5272), Tuple.Create("\"", 5382)
-, Tuple.Create(Tuple.Create("", 5279), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5279), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 5279), Tuple.Create("\"", 5389)
+, Tuple.Create(Tuple.Create("", 5286), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5286), true)
             
             #line 80 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-         , Tuple.Create(Tuple.Create("", 5327), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+         , Tuple.Create(Tuple.Create("", 5334), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 5327), false)
-, Tuple.Create(Tuple.Create("", 5353), Tuple.Create(",", 5353), true)
+, 5334), false)
+, Tuple.Create(Tuple.Create("", 5360), Tuple.Create(",", 5360), true)
             
             #line 80 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 5354), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                    , Tuple.Create(Tuple.Create("", 5361), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 5354), false)
-, Tuple.Create(Tuple.Create("", 5381), Tuple.Create("\'", 5381), true)
+, 5361), false)
+, Tuple.Create(Tuple.Create("", 5388), Tuple.Create("\'", 5388), true)
 );
 
 WriteLiteral(" target=\"_blank\"");
