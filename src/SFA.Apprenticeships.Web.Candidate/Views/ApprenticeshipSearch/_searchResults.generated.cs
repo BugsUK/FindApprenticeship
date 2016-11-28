@@ -1110,10 +1110,81 @@ WriteLiteral(">This apprenticeship has multiple positions across England.</div>\
             
             #line default
             #line hidden
-WriteLiteral("                        </div>\r\n                        \r\n                       " +
-" ");
+WriteLiteral("                        </div>\r\n                        \r\n");
 
-WriteLiteral("\r\n                    </div>\r\n\r\n                    ");
+            
+            #line 200 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 200 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+                         if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            <div");
+
+WriteLiteral(" class=\"hide-tablet hide-nojs\"");
+
+WriteLiteral(">\r\n                                <span");
+
+WriteLiteral(" style=\"margin-left: 0;\"");
+
+WriteLiteral(" class=\"summary-style fake-link mob-map-trigger map-closed\"");
+
+WriteLiteral(">Show/hide map</span>\r\n                            </div>\r\n");
+
+WriteLiteral("                                    <div");
+
+WriteLiteral(" class=\"column-one-third map-container hide-nojs small-btm-margin toggle-content-" +
+"-mob\"");
+
+WriteLiteral(">\r\n                                        <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 13580), Tuple.Create("\"", 13690)
+, Tuple.Create(Tuple.Create("", 13587), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 13587), true)
+            
+            #line 206 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+                , Tuple.Create(Tuple.Create("", 13635), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+            
+            #line default
+            #line hidden
+, 13635), false)
+, Tuple.Create(Tuple.Create("", 13661), Tuple.Create(",", 13661), true)
+            
+            #line 206 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+                                           , Tuple.Create(Tuple.Create("", 13662), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+            
+            #line default
+            #line hidden
+, 13662), false)
+, Tuple.Create(Tuple.Create("", 13689), Tuple.Create("\'", 13689), true)
+);
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(" class=\"map-links fake-link font-xxsmall view-googlemaps\"");
+
+WriteLiteral(">Open map</a>\r\n                                        <div");
+
+WriteLiteral(" class=\"map\"");
+
+WriteLiteral("></div>\r\n                                    </div>\r\n");
+
+            
+            #line 209 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+                        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    </div>\r\n\r\n                    ");
 
 WriteLiteral("\r\n\r\n\r\n                </li>\r\n");
 

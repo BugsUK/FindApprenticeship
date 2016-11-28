@@ -54,9 +54,9 @@
             var document = new ValidationSummaryDocument(view.RenderAsHtml(viewModel));
 
             //Assert
-            document.ErrorsClass.Should().StartWith("validation-summary-errors");
+            document.ErrorsClass.Should().StartWith("error-summary");
             document.ErrorsClass.Should().NotContain("-valid");
-            document.WarningsClass.Should().StartWith("validation-summary-warnings");
+            document.WarningsClass.Should().StartWith("warning-summary");
             document.WarningsClass.Should().NotContain("-valid");
             document.Errors.Count.Should().Be(2);
             document.Warnings.Count.Should().Be(2);

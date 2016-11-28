@@ -54,15 +54,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
         {
 WriteLiteral("<div");
 
-WriteAttribute("class", Tuple.Create(" class=\'", 35), Tuple.Create("\'", 91)
-, Tuple.Create(Tuple.Create("", 43), Tuple.Create("error-summary", 43), true)
+WriteLiteral(" id=\"error-summary\"");
+
+WriteAttribute("class", Tuple.Create(" class=\'", 54), Tuple.Create("\'", 110)
+, Tuple.Create(Tuple.Create("", 62), Tuple.Create("error-summary", 62), true)
             
             #line 3 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 56), Tuple.Create<System.Object, System.Int32>(Model.IsValid ? "sfa-hide" : ""
+, Tuple.Create(Tuple.Create(" ", 75), Tuple.Create<System.Object, System.Int32>(Model.IsValid ? "sfa-hide" : ""
             
             #line default
             #line hidden
-, 57), false)
+, 76), false)
 );
 
 WriteLiteral(" role=\"group\"");
@@ -127,15 +129,15 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                    <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 957), Tuple.Create("\"", 988)
-, Tuple.Create(Tuple.Create("", 964), Tuple.Create("#", 964), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 976), Tuple.Create("\"", 1007)
+, Tuple.Create(Tuple.Create("", 983), Tuple.Create("#", 983), true)
             
             #line 25 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 965), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+, Tuple.Create(Tuple.Create("", 984), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 965), false)
+, 984), false)
 );
 
 WriteLiteral(">");

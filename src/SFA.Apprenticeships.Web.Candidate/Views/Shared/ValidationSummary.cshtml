@@ -1,6 +1,6 @@
 ﻿@model ModelStateDictionary
 
-<div class='error-summary @(Model.IsValid ? "sfa-hide" : "")' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+<div id="error-summary" class='error-summary @(Model.IsValid ? "sfa-hide" : "")' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
     <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
         Message to alert the user to a problem goes here
     </h1>

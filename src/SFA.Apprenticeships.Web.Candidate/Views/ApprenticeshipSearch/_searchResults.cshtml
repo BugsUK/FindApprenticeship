@@ -197,7 +197,7 @@ else
                             }
                         </div>
                         
-                        @*@if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                        @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                         {
                             <div class="hide-tablet hide-nojs">
                                 <span style="margin-left: 0;" class="summary-style fake-link mob-map-trigger map-closed">Show/hide map</span>
@@ -206,7 +206,7 @@ else
                                         <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
                                         <div class="map"></div>
                                     </div>
-                        }*@
+                        }
                     </div>
 
                     @*@if (ViewBag.IsCandidateActivated != null && ViewBag.IsCandidateActivated)
