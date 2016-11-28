@@ -75,6 +75,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             v.WageType,
                             v.WageUnitId,
                             v.WeeklyWage,
+                            v.WageLowerBound,
+                            v.WageUpperBound,
                             v.WageText,
                             v.HoursPerWeek,
                             v.ShortDescription,
@@ -270,6 +272,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                 Skip = query.PageSize * (query.RequestedPage - 1),
                 Take = query.PageSize,
                 Query = query.SearchString,
+                QueryMode = query.SearchMode,
                 VacancyStatuses = query.DesiredStatuses.Select(s => (int)s)
             };
 
@@ -291,6 +294,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                 case VacancySummaryOrderByColumn.SubmissionCount:
                     orderByField = "v.SubmissionCount";
                     break;
+                case VacancySummaryOrderByColumn.VacancyLocation:
+                    orderByField = "v.Town";
+                    break;
             }
 
             if (query.OrderByField == VacancySummaryOrderByColumn.OrderByFilter)
@@ -303,8 +309,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             var sql = $@"{CoreQuery}
 
                     --Text search
-                    WHERE	(((@query IS NULL OR @query = '') {( query.RegionalTeamName != RegionalTeam.Other ? $"AND rt.TeamName = '{query.RegionalTeamName}'" : "" )})
-		                        OR (p.TradingName LIKE '%' + @query + '%')
+                    WHERE	(((@query IS NULL OR @query = '') {(query.RegionalTeamName != RegionalTeam.Other ? $"AND rt.TeamName = '{query.RegionalTeamName}'" : "")})
+		                        OR (p.TradingName LIKE '%' + @query + '%' AND (@QueryMode = '{(int)ManageVacancySearchMode.All}' OR @QueryMode = '{(int)ManageVacancySearchMode.Provider}'))
+                                OR (REPLACE(v.PostCode, ' ', '') LIKE REPLACE(@query, ' ', '') + '%' AND (@QueryMode = '{(int)ManageVacancySearchMode.All}' OR @QueryMode = '{(int)ManageVacancySearchMode.VacancyPostcode}'))
 		                    )
                     AND     v.VacancyStatusId IN @VacancyStatuses
                     {filterSql}
@@ -327,7 +334,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             var sqlParams = new
             {
                 VacancyStatuses = query.DesiredStatuses.Select(s => (int)s),
-                query = query.SearchString
+                query = query.SearchString,
+                QueryMode = query.SearchMode,
             };
 
             var sql = $@"SELECT
@@ -352,7 +360,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                         ON		rt.Id = t.RegionalTeam_Id
                         WHERE   v.VacancyStatusId IN @VacancyStatuses
                         AND  	(((@query IS NULL OR @query = ''))
-		                            OR (p.TradingName LIKE '%' + @query + '%')
+		                            OR (p.TradingName LIKE '%' + @query + '%' AND (@QueryMode = '{(int)ManageVacancySearchMode.All}' OR @QueryMode = '{(int)ManageVacancySearchMode.Provider}'))
+                                    OR (REPLACE(v.PostCode, ' ', '') LIKE REPLACE(@query, ' ', '') + '%' AND (@QueryMode = '{(int)ManageVacancySearchMode.All}' OR @QueryMode = '{(int)ManageVacancySearchMode.VacancyPostcode}'))
 		                        )
                         GROUP BY rt.TeamName, rt.Id
                         ORDER BY rt.Id ASC
@@ -384,7 +393,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
         public VacancySummary GetById(int vacancyId)
         {
-            var summary = GetByIds(new[] {vacancyId});
+            var summary = GetByIds(new[] { vacancyId });
 
             return summary.Any() ? summary.Single() : null;
         }
@@ -397,15 +406,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             };
 
             var sql = $@"{CoreQuery}
-                    JOIN	ProviderSiteRelationship r
-                    ON		r.ProviderSiteId = o.ProviderSiteId
-
                     WHERE	v.VacancyID IN @vacancyIds
-                    AND     r.ProviderSiteRelationshipTypeId = 1
 ";
 
             var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
-            
+
             var mapped = Mapper.Map<IList<DbVacancySummary>, List<VacancySummary>>(vacancies);
 
             return mapped;
@@ -425,11 +430,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
             var sql = $@"{CoreQuery}
 
-                    JOIN	ProviderSiteRelationship r
-                    ON		r.ProviderSiteId = o.ProviderSiteId
-
-                    WHERE	r.ProviderSiteRelationshipTypeId = 1
-                    AND     v.VacancyStatusId IN @VacancyStatuses
+                    WHERE	v.VacancyStatusId IN @VacancyStatuses
                     {(!string.IsNullOrEmpty(query.FrameworkCodeName) ? "AND     af.CodeName = @FrameworkCodeName" : "")}
                     {(query.EditedInRaa ? "AND     v.EditedInRaa = 1" : "")}
                     {(query.LiveDate.HasValue ? "AND     dbo.GetLiveDate(v.VacancyId) >= @LiveDate" : "")}

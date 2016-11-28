@@ -17,6 +17,9 @@
         public const string FutureProspectsComment = "FUT";
         public const string LongDescriptionComment = "FDE";
         public const string NumberOfPositionsComment = "NPO";
+        public const string AnonymousEmployerDescriptionComment = "AED";
+        public const string AnonymousEmployerReasonComment = "AER";
+        public const string AnonymousAboutTheEmployerComment = "AAE";
         public const string OfflineApplicationInstructionsComment = "OAI";
         public const string OfflineApplicationUrlComment = "OAU";
         public const string PersonalQualitiesComment = "PER";

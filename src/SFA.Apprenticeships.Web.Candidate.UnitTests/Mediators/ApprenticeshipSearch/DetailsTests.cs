@@ -1,7 +1,6 @@
 ﻿
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
-    using System;
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
@@ -11,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
     using Domain.Entities.Vacancies;
     using Moq;
     using NUnit.Framework;
+    using System;
 
     [TestFixture]
     [Parallelizable]
@@ -45,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
             };
 
             ApprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            
+
             var response = Mediator.Details(Id, null);
 
             response.AssertMessage(ApprenticeshipSearchMediatorCodes.Details.VacancyHasError, message, UserMessageLevel.Warning, true);

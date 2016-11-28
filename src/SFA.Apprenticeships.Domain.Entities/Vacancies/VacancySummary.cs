@@ -1,13 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
-    using System;
     using Locations;
+    using System;
 
     public abstract class VacancySummary
     {
         protected VacancySummary()
         {
-            
+
         }
 
         protected VacancySummary(VacancySummary vacancySummary)
@@ -28,7 +28,8 @@
             Category = vacancySummary.Category;
             CategoryCode = vacancySummary.CategoryCode;
             SubCategory = vacancySummary.SubCategory;
-            SubCategoryCode = vacancySummary.SubCategoryCode;
+            SubCategoryCode = vacancySummary.SubCategoryCode;            
+            AnonymousEmployerName = vacancySummary.AnonymousEmployerName;
         }
 
         public int Id { get; set; }
@@ -55,6 +56,8 @@
 
         public bool IsEmployerAnonymous { get; set; }
 
+        public string AnonymousEmployerName { get; set; }
+
         public GeoPoint Location { get; set; }
 
         public string Category { get; set; }
@@ -64,5 +67,6 @@
         public string SubCategory { get; set; }
 
         public string SubCategoryCode { get; set; }
+
     }
 }

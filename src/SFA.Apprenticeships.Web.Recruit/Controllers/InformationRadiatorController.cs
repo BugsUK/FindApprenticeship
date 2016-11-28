@@ -8,12 +8,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using Application.Interfaces;
     using Application.Vacancy;
+    using Common.Attributes;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
+    using Raa.Common.Configuration;
     using ViewModels;
 
+    [ApplyAnalytics(typeof(RecruitWebConfiguration))]
     public class InformationRadiatorController : Controller
     {
         private IVacancyReadRepository _vacancyRepository;

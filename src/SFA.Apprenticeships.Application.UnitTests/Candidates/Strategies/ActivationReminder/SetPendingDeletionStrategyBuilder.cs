@@ -4,11 +4,10 @@
     using Apprenticeships.Application.Candidates.Strategies;
     using Apprenticeships.Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
-    using SFA.Infrastructure.Interfaces;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Moq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Interfaces;
 
     public class SetPendingDeletionStrategyBuilder
     {
@@ -16,6 +15,7 @@
         private Mock<IUserWriteRepository> _userWriteRepository;
         private readonly Mock<IAuditRepository> _auditRepository = new Mock<IAuditRepository>();
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
+        private readonly Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
 
         private IHousekeepingStrategy _successor;
 
@@ -29,7 +29,7 @@
 
         public SetPendingDeletionStrategy Build()
         {
-            var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userWriteRepository.Object, _auditRepository.Object, _logService.Object);
+            var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userWriteRepository.Object, _auditRepository.Object, _logService.Object, _serviceBus.Object);
             strategy.SetSuccessor(_successor);
             return strategy;
         }

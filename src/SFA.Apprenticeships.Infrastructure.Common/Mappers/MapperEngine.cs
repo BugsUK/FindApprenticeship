@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.Mappers
 {
+    using Application.Interfaces;
     using AutoMapper;
     using AutoMapper.Mappers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public abstract class MapperEngine : IMapper
     {

@@ -320,6 +320,12 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.AdminDeleteProviderSiteRelationship,
+               url: "admin/providersiterelationship/delete",
+               defaults: new { controller = "Admin", action = "DeleteProviderSiteRelationship" }
+               );
+
+            routes.MapRoute(
                name: ManagementRouteNames.AdminApiUsers,
                url: "admin/apiusers",
                defaults: new { controller = "Admin", action = "ApiUsers" }

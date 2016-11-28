@@ -1,6 +1,5 @@
 ﻿@using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories.Models
 @using SFA.Apprenticeships.Web.Manage.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model DashboardVacancySummariesViewModel
 
@@ -22,23 +21,35 @@
                         <tr>
                             <th>
                                 @{
-                                    var titleNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
-                                    var titleSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldTitle ?
-                                        Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-                                }
-                                <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldTitle, titleNewOrder))">
-                                    <span class="font-black">Title <i class="fa @titleSortClass" aria-hidden="true"></i></span>
-                                </a>
-                            </th>
-                            <th>Type</th>
-                            <th>
-                                @{
                                     var providerNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
                                     var providerSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldProvider ?
                                         Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                                 }
                                 <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldProvider, providerNewOrder))">
-                                    <span class="font-black">Provider <i class="fa @providerSortClass" aria-hidden="true"></i></span>
+                                    <span>Provider <i class="fa @providerSortClass" aria-hidden="true"></i></span>
+                                </a>
+                            </th>
+
+                            <th>
+                                @{
+                                    var titleNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                                    var titleSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldTitle ?
+                                        Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                                }
+                                <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldTitle, titleNewOrder))">
+                                    <span>Vacancy title <i class="fa @titleSortClass" aria-hidden="true"></i></span>
+                                </a>
+                            </th>
+                            <th>Type</th>
+                            <th>
+                                @{
+                                    var vacancyLocationNewOrder = Model.SearchViewModel.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                                    var vacancyLocationSortClass = Model.SearchViewModel.OrderByField == DashboardVacancySummariesSearchViewModel.OrderByFieldVacancyLocation ?
+                                        Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                                }
+                                <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldVacancyLocation, 
+                                        vacancyLocationNewOrder))">
+                                    <span>Vacancy location <i class="fa @vacancyLocationSortClass" aria-hidden="true"></i></span>
                                 </a>
                             </th>
                             <th>
@@ -48,7 +59,7 @@
                                         Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                                 }
                                 <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldDateSubmitted, dateSubmittedNewOrder))">
-                                    <span class="font-black">Date submitted <i class="fa @dateSubmittedSortClass" aria-hidden="true"></i></span>
+                                    <span>Submitted date <i class="fa @dateSubmittedSortClass" aria-hidden="true"></i></span>
                                 </a>
                             </th>
                             <th>
@@ -58,7 +69,7 @@
                                         Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                                 }
                                 <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldClosingDate, closingDateNewOrder))">
-                                    <span class="font-black">Closing date <i class="fa @closingDateSortClass" aria-hidden="true"></i></span>
+                                    <span>Closing date <i class="fa @closingDateSortClass" aria-hidden="true"></i></span>
                                 </a>
                             </th>
                             <th>
@@ -68,41 +79,67 @@
                                         Model.SearchViewModel.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
                                 }
                                 <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummariesSearchViewModel.OrderByFieldSubmissionCount, submissionCountNewOrder))">
-                                    <span class="font-black">Submission count <i class="fa @submissionCountSortClass" aria-hidden="true"></i></span>
+                                    <span>Submission count <i class="fa @submissionCountSortClass" aria-hidden="true"></i></span>
                                 </a>
                             </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var vacancy in Model.Vacancies)
-                        {
-                            <tr>
-                                <td>
-                                    <div class="reactive-title">@HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title)</div>
-                                </td>
-                                <td>
-                                    @vacancy.VacancyType.ToString()
-                                </td>
-                                <td class="reactive-header" data-label="Provider">
-                                    @vacancy.ProviderName
-                                </td>
-                                <td class="reactive-header" data-label="Date submitted">
-                                    @vacancy.DateSubmitted.ToGmtDate()
-                                </td>
-                                <td class="reactive-header" data-label="Closing date">
-                                    @vacancy.ClosingDate.ToFriendlyClosingToday()
-                                </td>
-                                <td class="ta-center reactive-header" data-label="Submission count">
-                                    @vacancy.SubmissionCount
-                                </td>
-                                <td>
-                                    @if (vacancy.CanBeReservedForQaByCurrentUser)
-                                    {
-                                        <a href="@Url.RouteUrl(ManagementRouteNames.ReserveForQA, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Review @vacancy.Title">Review vacancy</a>
-                                    }
-                                </td>
-                            </tr>
+                            @if (Model.Vacancies.Any())
+                            {
+                                foreach (var vacancy in Model.Vacancies)
+                            {
+                                <tr>
+                                        <td class="reactive-header" data-label="Provider">
+                                            @vacancy.ProviderName
+                                        </td>
+                                    <td>
+                                        <div class="reactive-title">@HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title)</div>
+                                    </td>
+                                    <td>
+                                            @vacancy.VacancyType.ToString().Substring(0, 3)
+                                    </td>
+                                        <td>
+                                            @if (vacancy.VacancyViewModel != null && vacancy.VacancyViewModel.LocationAddresses != null && vacancy.VacancyViewModel.LocationAddresses.Count > 1)
+                                            {
+                                                <div class="hgroup-small">
+                                                    <p class="subtitle">Multiple locations</p>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @vacancy.Location.Town<br />
+                                                if(vacancy.VacancyViewModel !=null && !vacancy.VacancyViewModel.IsEmployerAnonymous)
+                                                {
+                                                    <div class="hgroup-small">
+                                                        <p class="subtitle">@vacancy.Location.Postcode</p>
+                                                    </div>
+                                                }
+                                            }
+                                    </td>
+
+                                    <td class="reactive-header" data-label="Date submitted">
+                                        @vacancy.DateSubmitted.ToGmtDate()
+                                    </td>
+                                    <td class="reactive-header" data-label="Closing date">
+                                        @vacancy.ClosingDate.ToFriendlyClosingToday()
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Submission count">
+                                        @vacancy.SubmissionCount
+                                    </td>
+                                    <td>
+                                        @if (vacancy.CanBeReservedForQaByCurrentUser)
+                                        {
+                                                <a href="@Url.RouteUrl(ManagementRouteNames.ReserveForQA, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Review @vacancy.Title">Review</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="6">No results</td></tr>
                         }
                     </tbody>
                 </table>

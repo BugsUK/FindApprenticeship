@@ -50,6 +50,11 @@
             return status == VacancyStatus.Live || status == VacancyStatus.Closed;
         }
 
+        public static bool CanCloseVacancy(this VacancyStatus status)
+        {
+            return status == VacancyStatus.Live;
+        }
+
         public static bool CanWithdrawVacancy(this VacancyStatus status)
         {
             return status == VacancyStatus.Live;

@@ -6,8 +6,8 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Schemas.Vacancy;
-    using Vacancy = Schemas.Vacancy.Entities.Vacancy;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
+    using Vacancy = Schemas.Vacancy.Entities.Vacancy;
 
     [TestFixture]
     [Parallelizable]
@@ -73,7 +73,7 @@
             domainVacancy.Wage.Type.Should().Be(expectedWageType);
         }
 
-        
+
 
         [TestCase("123.4567", "123.46")]
         [TestCase("123.4545", "123.45")]

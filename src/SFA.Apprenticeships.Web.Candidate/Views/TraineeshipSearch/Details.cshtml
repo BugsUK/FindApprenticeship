@@ -26,7 +26,7 @@
             }
             else
             {
-                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id = "lnk-find-traineeship", @class = "page-link" })
+                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "lnk-find-traineeship", @class = "page-link" })
             }
             <p class="page-link hide-nojs">
                 <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
@@ -39,7 +39,7 @@
         <section class=" grid-row">
             <div class="column-two-thirds">
                 <div class="inner-block-padr">
-                    <p class="@Model.Description.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description))</p>
+                    <p class="@Model.Description.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description)</p>
                 </div>
             </div>
             <div class="column-one-third">
@@ -50,9 +50,9 @@
             <h2 class="heading-large">Traineeship details</h2>
             <div class="column-two-thirds">
                 <div class="inner-block-padr">
-                    <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription))</p>
+                    <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription)</p>
                     <h3 class="heading-medium">Training to be provided</h3>
-                    <p class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided))</p>
+                    <p class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided)</p>
                 </div>
             </div>
             <div class="column-one-third">
@@ -71,7 +71,7 @@
                 <h3 class="bold-small">Contact</h3>
                 <p>@Model.Contact</p>
                 <h3 class="bold-small">Traineeship duration</h3>
-                <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
+                <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(Model.ExpectedDuration) ? "Not specified" : Model.ExpectedDuration)</p>
                 <h3 class="bold-small">Possible start date</h3>
                 <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
                 <h3 class="bold-small">Date posted</h3>
@@ -132,7 +132,7 @@
                         <h3 class="bold-small">
                             Additional location information
                         </h3>
-                        <p>@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.AdditionalLocationInformation))</p>
+                        <p>@HtmlExtensions.EscapeHtmlEncoding(Html, Model.AdditionalLocationInformation)</p>
                     </div>
                 }
             </div>
@@ -141,13 +141,13 @@
             <div class="text">
                 <h2 class="heading-large">Desired skills and what this will lead to</h2>
                 <h3 class="heading-small">Desired skills and qualities</h3>
-                <p class="@Model.SkillsRequired.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired))</p>
-                <p class="@Model.PersonalQualities.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities))</p>
+                <p class="@Model.SkillsRequired.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired)</p>
+                <p class="@Model.PersonalQualities.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities)</p>
 
                 @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
         {
                     <h3 class="heading-small">What this will lead to</h3>
-                    <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects))</p>
+                    <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects)</p>
                 }
             </div>
         </section>
@@ -157,7 +157,7 @@
             <section class="grid-row">
                 <div class="text">
                     <h2 class="heading-large">Other information</h2>
-                    <p id="vacany-other-information" class="@Model.OtherInformation.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.OtherInformation))</p>
+                    <p id="vacany-other-information" class="@Model.OtherInformation.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.OtherInformation)</p>
                 </div>
             </section>
         }

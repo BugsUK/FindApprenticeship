@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities
 {
-    using System;
     using Nest;
+    using System;
 
     [ElasticType(Name = "apprenticeship")]
     public class ApprenticeshipSummary : IApprenticeshipVacancySummary
@@ -38,13 +38,15 @@
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public bool IsEmployerAnonymous { get; set; }
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public string AnonymousEmployerName { get; set; }
 
         [ElasticProperty(Type = FieldType.String, Index = FieldIndexOption.Analyzed)]
         public VacancyLocationType VacancyLocationType { get; set; }
 
         [ElasticProperty(Type = FieldType.GeoPoint, Index = FieldIndexOption.Analyzed)]
         public GeoPoint Location { get; set; }
-        
+
         [ElasticProperty(Type = FieldType.String, Index = FieldIndexOption.Analyzed)]
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
@@ -73,6 +75,12 @@
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public decimal? WageAmount { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public decimal? WageAmountLowerBound { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public decimal? WageAmountUpperBound { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string WageText { get; set; }

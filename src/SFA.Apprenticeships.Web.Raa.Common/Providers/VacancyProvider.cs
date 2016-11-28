@@ -22,6 +22,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
+    using Infrastructure.Raa.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -58,6 +59,7 @@
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
+
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -165,7 +167,7 @@
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);
             viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);
-            viewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer);
+            viewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy);
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
             viewModel.VacancyGuid = vacancy.VacancyGuid;
@@ -330,7 +332,10 @@
                 OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
                 EmployerDescription = vacancyMinimumData.EmployerDescription,
-                EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
+                EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl,
+                EmployerAnonymousName = vacancyMinimumData.AnonymousEmployerDescription,
+                EmployerAnonymousReason = vacancyMinimumData.AnonymousEmployerReason,
+                AnonymousAboutTheEmployer = vacancyMinimumData.AnonymousAboutTheEmployer
             });
         }
 
@@ -372,6 +377,32 @@
                 _logService.Error($"Exception occurred while transferring the vacancy:{exception.Message}");
                 throw exception;
             }
+        }
+
+        public FurtherVacancyDetailsViewModel CloseVacancy(FurtherVacancyDetailsViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+            vacancy.ClosingDate = DateTime.Now;
+            vacancy.Status = VacancyStatus.Closed;
+            FurtherVacancyDetailsViewModel result;
+            try
+            {
+                vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
+            }
+            catch (CustomException)
+            {
+                result = _mapper.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy);
+                result.VacancyApplicationsState = VacancyApplicationsState.Invalid;
+                result.AutoSaveTimeoutInSeconds =
+                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+                return result;
+            }
+
+            result = _mapper.Map<Vacancy, FurtherVacancyDetailsViewModel>(vacancy);
+            result.VacancyApplicationsState = GetVacancyApplicationsState(vacancy);
+            result.AutoSaveTimeoutInSeconds =
+                _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+            return result;
         }
 
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
@@ -665,6 +696,8 @@
                 return null;
 
             var viewModel = GetVacancyViewModelFrom(vacancy);
+
+
             return viewModel;
         }
 
@@ -689,17 +722,23 @@
             if (vacancyOwnerRelationship != null)
             {
                 var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, false);  //Same with employers
-                viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy.EmployerAnonymousName);
+                viewModel.NewVacancyViewModel.VacancyOwnerRelationship = vacancyOwnerRelationship.Convert(employer, vacancy);
                 var providerSite = _providerService.GetProviderSite(vacancyOwnerRelationship.ProviderSiteId);
                 viewModel.ProviderSite = providerSite.Convert();
+
+                viewModel.Contact = vacancy.GetContactInformation(providerSite);
             }
+
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
                 ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
                 : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
+
             viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
                 ? viewModel.TrainingDetailsViewModel.SectorCodeName
                 : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName).FullName;
+
             var standard = GetStandard(vacancy.StandardId);
+
             viewModel.StandardName = standard == null ? "" : standard.Name;
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
@@ -879,7 +918,7 @@
                 TotalNumberOfPages = totalRecords == 0 ? 1 : (int)Math.Ceiling((double)totalRecords / (double)vacanciesSummarySearch.PageSize)
             };
 
-            var viewModel = new VacanciesSummaryViewModel()
+            var viewModel = new VacanciesSummaryViewModel
             {
                 Vacancies = vacancyPage,
                 VacanciesSummarySearch = vacanciesSummarySearch,
@@ -931,7 +970,15 @@
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
-            vacancy.EmployerAnonymousName = null;
+            if (vacancy.IsAnonymousEmployer != null && vacancy.IsAnonymousEmployer.Value)
+            {
+                vacancy.EmployerAnonymousName = vacancy.EmployerAnonymousName;
+                vacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
+            }
+            else
+            {
+                vacancy.EmployerAnonymousName = vacancy.EmployerAnonymousReason = null;
+            }
             vacancy.OfflineVacancyType = null;
 
             //Comments
@@ -971,7 +1018,7 @@
                 throw new Exception($"Vacancy Party {vacancy.VacancyOwnerRelationshipId} not found / no longer current");
 
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
-            var result = vacancyOwnerRelationship.Convert(employer);
+            var result = vacancyOwnerRelationship.Convert(employer, vacancy);
             result.VacancyGuid = vacancy.VacancyGuid;
 
             return result;
@@ -993,7 +1040,8 @@
                 RequestedPage = 1,
                 Filter = searchViewModel.FilterType,
                 OrderByField = orderByField,
-                SearchString = searchViewModel.Provider,
+                SearchString = searchViewModel.SearchString,
+                SearchMode = searchViewModel.SearchMode,
                 DesiredStatuses = new[] { VacancyStatus.Submitted, VacancyStatus.ReservedForQA },
                 Order = searchViewModel.Order,
                 RegionalTeamName = regionalTeam
@@ -1004,7 +1052,7 @@
 
             var regionalTeamsMetrics = _vacancyPostingService.GetRegionalTeamsMetrics(query);
 
-            if (string.IsNullOrEmpty(searchViewModel.Provider) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
+            if (string.IsNullOrEmpty(searchViewModel.SearchString) && regionalTeamsMetrics.Sum(s => s.TotalCount) == 0)
             {
                 //No vacancies for current team selection. Redirect to metrics
                 searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
@@ -1012,7 +1060,7 @@
 
             RegionalTeamMetrics currentTeamMetrics = null;
 
-            if (string.IsNullOrEmpty(searchViewModel.Provider))
+            if (string.IsNullOrEmpty(searchViewModel.SearchString))
             {
                 currentTeamMetrics = regionalTeamsMetrics.SingleOrDefault(s => s.RegionalTeam == regionalTeam);
             }
@@ -1140,7 +1188,9 @@
                 QAUserName = vacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = _vacancyLockingService.IsVacancyAvailableToQABy(userName, vacancy),
                 SubmissionCount = vacancy.SubmissionCount,
-                VacancyType = vacancy.VacancyType
+                VacancyType = vacancy.VacancyType,
+                Location = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
+                VacancyViewModel = GetVacancy(vacancy.VacancyGuid)
             };
         }
 
@@ -1160,6 +1210,11 @@
             newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+            if (!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName))
+            {
+                newVacancy.EmployerAnonymousReason = vacancy.EmployerAnonymousReason;
+                newVacancy.EmployerAnonymousName = vacancy.EmployerAnonymousName;
+            }
             if (newVacancy.OfflineVacancyType == OfflineVacancyType.MultiUrl)
             {
                 newVacancy.OfflineApplicationUrl = address.EmployersWebsite;
@@ -1448,6 +1503,19 @@
             vacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
+
+            if (viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.HasValue && viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+            {
+                vacancy.EmployerAnonymousReason = viewModel.AnonymousEmployerReason;
+                vacancy.AnonymousEmployerReasonComment =
+                    viewModel.AnonymousEmployerReasonComment;
+                vacancy.EmployerAnonymousName = viewModel.AnonymousEmployerDescription;
+                vacancy.AnonymousEmployerDescriptionComment =
+                    viewModel.AnonymousEmployerDescriptionComment;
+                vacancy.AnonymousAboutTheEmployer = viewModel.AnonymousAboutTheEmployer;
+                vacancy.AnonymousAboutTheEmployerComment =
+                    viewModel.AnonymousAboutTheEmployerComment;
+            }
 
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                 vacancy.IsEmployerLocationMainApprenticeshipLocation.Value)

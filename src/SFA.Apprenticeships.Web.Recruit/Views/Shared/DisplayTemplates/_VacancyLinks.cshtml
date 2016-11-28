@@ -2,6 +2,14 @@
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyLinksViewModel
 
 <ul class="list">
+
+	@if (Model.Status.CanCloseVacancy())
+	{
+	    <li>
+	        @Html.RouteLink("Close this vacancy", RecruitmentRouteNames.CloseVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+	    </li>
+	}
+
     @if (Model.Status.CanManageVacancyDates())
     {
         <li>

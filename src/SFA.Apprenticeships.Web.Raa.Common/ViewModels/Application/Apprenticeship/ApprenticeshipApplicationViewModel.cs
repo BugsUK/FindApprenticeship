@@ -7,5 +7,7 @@
     public class ApprenticeshipApplicationViewModel : ApplicationViewModel
     {
         public string NextStepsUrl { get; set; }
+        public string ProviderName { get; set; }
+        public string Contact { get; set; }
     }
 }

@@ -33,7 +33,7 @@
             {
                 @Html.Partial(ContactDetailsAndVacancyHistoryViewModel.PartialView, Model.ContactDetailsAndVacancyHistory ?? ContactDetailsAndVacancyHistoryViewModel.EmptyContactDetailsAndVacancyHistory)
                 @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status, Model.ApplicationCount, Model.VacancyType, Model.ApplicationPendingDecisionCount))
-            }            
+            }
         </div>
         <div class="column-two-thirds" style="clear: left">
             <div class="hgroup text @editableItemClass">
@@ -42,11 +42,23 @@
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, Model.BasicDetailsLink))
                     <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
                 </h1>
+                @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null
+                && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                {
+                    <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName (@Model.NewVacancyViewModel.VacancyOwnerRelationship.OriginalFullName - Set as Anonymous)</p>
+                }
+                else
+                {
+                }
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.Title, Model.BasicDetailsLink, Model.NewVacancyViewModel.TitleComment))
             </div>
         </div>
     </div>
 </section>
+
+
+
+
 
 <section>
     <div class="grid-row">

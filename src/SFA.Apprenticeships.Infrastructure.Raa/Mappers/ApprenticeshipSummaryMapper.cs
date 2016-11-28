@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.Mappers
 {
-    using System;
-    using System.Collections.Generic;
+    using Application.Interfaces;
     using Domain.Entities.Extensions;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
@@ -9,10 +8,9 @@
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
-    using Presentation;
+    using System;
+    using System.Collections.Generic;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ApprenticeshipSummaryMapper
     {
@@ -41,7 +39,7 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : string.Empty,
+                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : vacancy.EmployerAnonymousName,
                     ProviderName = provider.TradingName,
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     IsEmployerAnonymous = !string.IsNullOrEmpty(vacancy.EmployerAnonymousName),
@@ -53,7 +51,8 @@
                     CategoryCode = category.CodeName,
                     Category = category.FullName,
                     SubCategoryCode = subcategory.CodeName,
-                    SubCategory = subcategory.FullName
+                    SubCategory = subcategory.FullName,
+                    AnonymousEmployerName = vacancy.EmployerAnonymousName
                 };
 
                 return summary;

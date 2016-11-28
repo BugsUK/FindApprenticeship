@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using Common.Mediators;
-    using System;
-    using System.Collections.Generic;
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
+    using System;
+    using System.Collections.Generic;
 
     public interface IVacancyPostingMediator
     {
@@ -61,7 +61,7 @@
         MediatorResponse<VacancyViewModel> GetPreviewVacancyViewModel(int vacancyReferenceNumber);
 
         MediatorResponse<VacancyOwnerRelationshipViewModel> CloneVacancy(int vacancyReferenceNumber);
-		
+
         MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel newVacancyViewModel, string ukprn);
 
         MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int providerSiteId, int employerId, string ukprn, Guid vacancyGuid, bool? comeFromPreview);
@@ -74,11 +74,13 @@
         MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex);
 
         MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel);
-		
+
         MediatorResponse ClearLocationInformation(Guid vacancyGuid);
-		
+
         MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
 
         MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancyDates(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings);
+        FurtherVacancyDetailsViewModel GetCloseVacancyViewModel(int vacancyReferenceNumber);
+        MediatorResponse<FurtherVacancyDetailsViewModel> CloseVacancy(FurtherVacancyDetailsViewModel viewModel);
     }
 }

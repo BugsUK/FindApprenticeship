@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.Mappers
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Extensions;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
@@ -11,9 +9,9 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Collections.Generic;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
@@ -25,7 +23,7 @@
 
             var subcategory = vacancy.GetSubCategory(categories);
             LogSubCategory(vacancy, logService, subcategory);
-            
+
             var detail = new ApprenticeshipVacancyDetail
             {
                 Id = vacancy.VacancyId,
@@ -54,8 +52,9 @@
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = employer.FullName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                AnonymousAboutTheEmployer = vacancy.AnonymousAboutTheEmployer,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
-                EmployerDescription = vacancy.EmployerDescription,
+                EmployerDescription = string.IsNullOrWhiteSpace(vacancy.AnonymousAboutTheEmployer) ? vacancy.EmployerDescription : vacancy.AnonymousAboutTheEmployer,
                 EmployerWebsite = vacancy.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,

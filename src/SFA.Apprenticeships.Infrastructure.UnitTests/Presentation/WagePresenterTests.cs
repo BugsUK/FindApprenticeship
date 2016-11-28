@@ -16,7 +16,7 @@
         [TestCase(WageUnit.Weekly, WagePresenter.WeeklyWageText)]
         [TestCase(WageUnit.Annually, WagePresenter.AnnualWageText)]
         [TestCase(WageUnit.Monthly, WagePresenter.MonthlyWageText)]
-        [TestCase(WageUnit.NotApplicable, "")]
+        [TestCase(WageUnit.NotApplicable, WagePresenter.WageText)]
         public void ShouldGetHeaderDisplayTextForCustomWageType(WageUnit wageUnit, string expected)
         {
             // Arrange.
@@ -31,7 +31,7 @@
         [TestCase(WageUnit.Weekly, WagePresenter.WeeklyWageText)]
         [TestCase(WageUnit.Monthly, WagePresenter.MonthlyWageText)]
         [TestCase(WageUnit.Annually, WagePresenter.AnnualWageText)]
-        [TestCase(WageUnit.NotApplicable, "")]
+        [TestCase(WageUnit.NotApplicable, WagePresenter.WageText)]
         public void ShouldGetHeaderDisplayTextForWageUnit(WageUnit wageUnit, string expected)
         {
             // Act.

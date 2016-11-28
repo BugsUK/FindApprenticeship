@@ -17,10 +17,8 @@
     <div class="grid-row">
         <div class="column-two-thirds">
             <div class="hgroup text">
-                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
-                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.Title)
-                    <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
-                </h1>
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.Title)</h1>
+                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
             </div>
         </div>
         <div class="column-one-third">
@@ -60,7 +58,7 @@
                 </div>
             </div>
             <div class="column-one-third">
-                @Html.Partial("_Apply", Model, new ViewDataDictionary { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top")})
+                @Html.Partial("_Apply", Model, new ViewDataDictionary {new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top")})
             </div>
         </section>
         <section class="section-border grid-row" id="vacancy-info">
@@ -124,60 +122,66 @@
             || !string.IsNullOrWhiteSpace(Model.QualificationRequired)
             || !string.IsNullOrWhiteSpace(Model.FutureProspects)
             || !string.IsNullOrWhiteSpace(Model.RealityCheck))
-         {
-             <section class="section-border grid-row" id="course-info">
-                 <div class="column-full">
-                     <h2 class="heading-large">Requirements and prospects</h2>
-                 </div>
-                 <div class="column-one-half">
-                     <div class="inner-block-padr">
-                         <div class="text">
-                             @if (!string.IsNullOrWhiteSpace(Model.SkillsRequired))
-                             {
-                                 <h3 class="heading-small">Desired skills</h3>
-                                 <p id="vacancy-skills-required" class="@Model.SkillsRequired.GetPreserveFormattingCssClass()" itemprop="skills">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired))</p>
-                             }
-                             @if (!string.IsNullOrWhiteSpace(Model.PersonalQualities))
-                             {
-                                 <h3 class="heading-small">Personal qualities</h3>
-                                 <p id="vacancy-qualities-required" class="@Model.PersonalQualities.GetPreserveFormattingCssClass()" itemprop="qualities">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities))</p>
-                             }
-                             @if (!string.IsNullOrWhiteSpace(Model.QualificationRequired))
-                             {
-                                 <h3 class="heading-small">Qualifications required</h3>
-                                 <p id="vacancy-qualifications-required" class="@Model.QualificationRequired.GetPreserveFormattingCssClass()" itemprop="qualifications">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.QualificationRequired))</p>
-                             }
+        {
+            <section class="section-border grid-row" id="course-info">
+                <h2 class="heading-large">Requirements and prospects</h2>
+                <div class="column-one-half">
+                    <div class="inner-block-padr">
+                        <div class="text">
+                            @if (!string.IsNullOrWhiteSpace(Model.SkillsRequired))
+                            {
+                                <h3 class="heading-small">Desired skills</h3>
+                                <p id="vacancy-skills-required" class="@Model.SkillsRequired.GetPreserveFormattingCssClass()" itemprop="skills">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired))</p>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.PersonalQualities))
+                            {
+                                <h3 class="heading-small">Personal qualities</h3>
+                                <p id="vacancy-qualities-required" class="@Model.PersonalQualities.GetPreserveFormattingCssClass()" itemprop="qualities">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities))</p>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.QualificationRequired))
+                            {
+                                <h3 class="heading-small">Qualifications required</h3>
+                                <p id="vacancy-qualifications-required" class="@Model.QualificationRequired.GetPreserveFormattingCssClass()" itemprop="qualifications">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.QualificationRequired))</p>
+                            }
 
-                         </div>
-                     </div>
-                 </div>
-                 <div class="column-one-half">
-                     <div class="text">
-                         @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
-                         {
-                             <h3 class="heading-small">Future prospects</h3>
-                             <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()" itemprop="incentives">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects))</p>
-                         }
-                         @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
-                         {
-                             <h3 class="heading-small">Things to consider</h3>
-                             <p id="vacancy-reality-check" class="@Model.RealityCheck.GetPreserveFormattingCssClass()" itemprop="incentives">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.RealityCheck))</p>
-                         }
-                     </div>
-                 </div>
-             </section>
-         }
+                        </div>
+                    </div>
+                </div>
+                <div class="column-one-half">
+                    <div class="text">
+                        @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
+                        {
+                            <h3 class="heading-small">Future prospects</h3>
+                            <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()" itemprop="incentives">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects))</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
+                        {
+                            <h3 class="heading-small">Things to consider</h3>
+                            <p id="vacancy-reality-check" class="@Model.RealityCheck.GetPreserveFormattingCssClass()" itemprop="incentives">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.RealityCheck)</p>
+                        }
+                    </div>
+                </div>
+            </section>
+        }
         <section class="section-border" id="employer-info">
             <h2 class="heading-large">About the employer</h2>
             <div class="grid-row">
                 <div class="column-two-thirds">
                     <div class="inner-block-padr">
-                        @if (!Model.IsEmployerAnonymous)
-                        {
-                            <div class="text">
-                                <p id="vacancy-employer-description" class="@Model.EmployerDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.EmployerDescription))</p>
-                            </div>
-                        }
+                        <div class="text">
+                            @if (Model.IsEmployerAnonymous)
+                            {
+                                <p id="vacancy-employer-description" class="@Model.EmployerDescription.GetPreserveFormattingCssClass()">
+                                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.EmployerDescription)
+                                </p>
+                            }
+                            else
+                            {
+                                <p id="vacancy-employer-description" class="@Model.EmployerDescription.GetPreserveFormattingCssClass()">
+                                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.EmployerDescription)
+                                </p>
+                            }
+                        </div>
                     </div>
                 </div>
                 @if (Model.IsPositiveAboutDisability)
@@ -197,32 +201,47 @@
                         <div class="text">
                             <h3 class="bold-small">Employer</h3>
                             <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "sfa-no-bottom-margin" : "")">@Model.EmployerName</p>
-                            @if (Model.IsWellFormedEmployerWebsiteUrl)
+                            @if (Model.IsEmployerAnonymous)
                             {
-                                <p>
-                                    <a itemprop="url" href="@Model.EmployerWebsite"
-                                       id="vacancy-employer-website"
-                                       target="_blank"
-                                       title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a>
-                                </p>
+                                if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                                {
+                                    <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
+                                        <h3 class="bold-small">Address</h3>
+                                        <div itemprop="address">
+                                            <p class="small-btm-margin" itemprop="addressLocality" id="anonymous-town">@Model.VacancyAddress.Town</p>
+                                        </div>
+                                    </div>
+                                }
                             }
                             else
                             {
-                                <p>@Model.EmployerWebsite</p>
-                            }
-                            @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
-                            {
-                                <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <h3 class="bold-small">Address</h3>
-                                    <div itemprop="address">
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
-                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
-                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
-                                        <p class="small-btm-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                                if (Model.IsWellFormedEmployerWebsiteUrl)
+                                {
+                                    <p>
+                                        <a itemprop="url" href="@Model.EmployerWebsite"
+                                           id="vacancy-employer-website"
+                                           target="_blank"
+                                           title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>@Model.EmployerWebsite</p>
+                                }
+                                if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                                {
+                                    <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
+                                        <h3 class="bold-small">Address</h3>
+                                        <div itemprop="address">
+                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
+                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
+                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
+                                            <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                                            <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
+                                            <p class="small-btm-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             }
                         </div>
                     </div>
@@ -232,7 +251,16 @@
                     {
                         <div id="vacancy-map" class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
-                            <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            @if (Model.IsEmployerAnonymous)
+                            {
+                                <div id="anonymous-map">
+                                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/view?center=@Model.VacancyAddress.GeoPoint.Latitude,@Model.VacancyAddress.GeoPoint.Longitude&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                                </div>
+                            }
+                            else
+                            {
+                                <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            }                            
                             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                         </div>
                     }
@@ -245,14 +273,14 @@
                         <h3 class="bold-small">
                             Additional location information
                         </h3>
-                        <p>@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.AdditionalLocationInformation))</p>
+                        <p>@HtmlExtensions.EscapeHtmlEncoding(Html, Model.AdditionalLocationInformation)</p>
                     </div>
                 }
             </div>
         </section>
         <section class="section-border grid-row" id="provider-info">
             <div class="column-full">
-                <h2 class="heading-large">Training provider</h2>
+        <h2 class="heading-large">Training provider</h2>
             </div>
             @if (Model.IsNasProvider)
             {
@@ -300,7 +328,6 @@
                 </div>
             }
         </section>
-
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {
             <section id="other-information" class="section-border">
@@ -312,9 +339,8 @@
                 </div>
             </section>
         }
-
         if (Model.ApplyViaEmployerWebsite && !string.IsNullOrWhiteSpace(Model.ApplicationInstructions))
-        {      
+        {
             <section id="application-instructions-container" class="section-border">
                 <h2 class="heading-large">Employer's Application Instructions</h2>
                 <div class="text">
@@ -322,7 +348,6 @@
                 </div>
             </section>
         }
-        
         if (!Model.ApplyViaEmployerWebsite && !Request.IsAuthenticated)
         {
             <section id="before-apply">
@@ -332,25 +357,26 @@
                 </div>
             </section>
         }
-
         <section>
             <div class="form-group">
-                @Html.Partial("_Apply", Model, new ViewDataDictionary() { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Bottom")})
+                @Html.Partial("_Apply", Model, new ViewDataDictionary() {new KeyValuePair<string, object>("AnalyticsButtonPosition", "Bottom")})
             </div>
         </section>
     }
 </div>
 
 @section scripts
-{
+{    
     @Scripts.Render("~/bundles/nas/details")
 
     <script>
-    $(function () {
-        initSavedVacancies({
-            saveUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSaveVacancy)',
-            deleteUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDeleteSavedVacancy)'
+        $(function() {
+            initSavedVacancies({
+                saveUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSaveVacancy)',
+                deleteUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDeleteSavedVacancy)'
+            });
         });
-    });
+
     </script>
+
 }

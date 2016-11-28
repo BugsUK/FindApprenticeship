@@ -23,6 +23,7 @@
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;
     using ViewModels.Candidate;
+    using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
 
@@ -41,8 +42,9 @@
         private readonly IConfigurationService _configurationService;
         private readonly IEncryptionService<AnonymisedApplicationLink> _encryptionService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly IVacancyQAProvider _vacancyQaProvider;
 
-        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService, IConfigurationService configurationService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService)
+        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService, IConfigurationService configurationService, IEncryptionService<AnonymisedApplicationLink> encryptionService, IDateTimeService dateTimeService, IVacancyQAProvider vacancyQaProvider)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
@@ -50,6 +52,7 @@
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
             _vacancyPostingService = vacancyPostingService;
+            _vacancyQaProvider = vacancyQaProvider;
             _providerService = providerService;
             _employerService = employerService;
             _logService = logService;
@@ -154,7 +157,10 @@
         public ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId)
         {
             var application = _apprenticeshipApplicationService.GetApplication(applicationId);
-            var viewModel = ConvertToApprenticeshipApplicationViewModel(application);
+
+            var vacancyDetail = _vacancyQaProvider.GetVacancyById(application.Vacancy.Id);
+
+            var viewModel = ConvertToApprenticeshipApplicationViewModel(application, vacancyDetail);
             return viewModel;
         }
 
@@ -176,12 +182,19 @@
 
             var candidateApplicationSummaries = apprenticeshipApplicationSummaries.Union(traineeshipApplicationSummaries).Where(a => a.Status >= ApplicationStatuses.Submitted).ToList();
 
+            //Restrict to only the applications for vacancies owned by the logged in user
+            var provider = _providerService.GetProvider(ukprn);
+            var ownedProviderSites = _providerService.GetOwnedProviderSites(provider.ProviderId).Select(ps => ps.ProviderSiteId).ToList();
             var vacancySummaries =
                 _vacancyPostingService.GetVacancySummariesByIds(
-                        candidateApplicationSummaries.Select(a => a.VacancyId).Distinct())
+                    candidateApplicationSummaries.Select(a => a.VacancyId).Distinct())
+                    .Where(
+                        v =>
+                            (v.VacancyManagerId != null && ownedProviderSites.Contains(v.VacancyManagerId.Value)) ||
+                            (v.DeliveryOrganisationId != null &&
+                             ownedProviderSites.Contains(v.DeliveryOrganisationId.Value)))
                     .ToDictionary(v => v.VacancyId, v => v);
-
-            //Restrict to only the applications for vacancies owned by the logged in user
+            
             candidateApplicationSummaries = candidateApplicationSummaries.Where(a => vacancySummaries.ContainsKey(a.VacancyId)).ToList();
 
             var page = GetOrderedApplicationSummaries(searchViewModel.OrderByField, searchViewModel.Order, candidateApplicationSummaries).GetCurrentPage(searchViewModel).ToList();
@@ -245,7 +258,7 @@
 
         #region Helpers
 
-        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application)
+        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, VacancyViewModel vacancyDetail)
         {
             var webSettings = _configurationService.Get<CommonWebConfiguration>();
             var domainUrl = webSettings.SiteDomainName;
@@ -258,6 +271,9 @@
             viewModel.NextStepsUrl = string.Format($"https://{domainUrl}/nextsteps");
             viewModel.UnSuccessfulReason = application.UnsuccessfulReason;
             viewModel.UnsuccessfulDateTime = application.UnsuccessfulDateTime;
+            viewModel.ProviderName = vacancyDetail.Provider.TradingName;
+            viewModel.Contact = vacancyDetail.Contact;
+
             return viewModel;
         }
 

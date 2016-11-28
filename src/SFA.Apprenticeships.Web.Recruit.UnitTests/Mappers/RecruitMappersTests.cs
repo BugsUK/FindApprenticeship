@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mappers
 {
+    using Application.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using Domain.Entities.Raa.Vacancies;
@@ -8,8 +9,6 @@
     using Ploeh.AutoFixture;
     using Raa.Common.ViewModels.Application;
     using Recruit.Mappers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
     using ViewModels.Home;
 
     [TestFixture]

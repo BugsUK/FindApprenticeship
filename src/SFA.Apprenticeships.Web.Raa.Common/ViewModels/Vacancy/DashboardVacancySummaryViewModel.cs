@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using System;
     using Domain.Entities.Raa.Vacancies;
+    using System;
+    using Web.Common.ViewModels.Locations;
 
     public class DashboardVacancySummaryViewModel
     {
@@ -20,7 +21,7 @@
         public DateTime? DateFirstSubmitted { get; set; }
 
         public DateTime? DateStartedToQA { get; set; }
-        
+
         public string QAUserName { get; set; }
 
         public bool CanBeReservedForQaByCurrentUser { get; set; }
@@ -28,5 +29,7 @@
         public int SubmissionCount { get; set; }
 
         public VacancyType VacancyType { get; set; }
+        public AddressViewModel Location { get; set; }
+        public VacancyViewModel VacancyViewModel { get; set; }
     }
 }

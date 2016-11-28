@@ -12,6 +12,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using Domain.Entities.Exceptions;
 
     public class ProviderService : IProviderService
     {
@@ -87,14 +88,14 @@
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
-
+            
             _logService.Debug(
                 "Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
             var provider = _providerReadRepository.GetByUkprn(ukprn);
             if (provider == null)
             {
-                throw new Exception($"Provider cannot be found with ukprn={ukprn}");
+                throw new CustomException(ProviderServiceCodes.ProviderNotFound, $"Provider cannot be found with ukprn={ukprn}");
             }
 
             return _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
@@ -243,9 +244,19 @@
             return _providerSiteWriteRepository.Update(providerSite);
         }
 
+        public ProviderSiteRelationship GetProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            return _providerSiteReadRepository.GetProviderSiteRelationship(providerSiteRelationshipId);
+        }
+
         public ProviderSiteRelationship CreateProviderSiteRelationship(ProviderSiteRelationship providerSiteRelationship)
         {
             return _providerSiteWriteRepository.Create(providerSiteRelationship);
+        }
+
+        public void DeleteProviderSiteRelationship(int providerSiteRelationshipId)
+        {
+            _providerSiteWriteRepository.DeleteProviderSiteRelationship(providerSiteRelationshipId);
         }
 
         private List<VacancyOwnerRelationship> GetVacancyParties(EmployerSearchRequest request)

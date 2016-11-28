@@ -124,7 +124,12 @@
                         </div>
                         @if (!string.IsNullOrEmpty(searchString))
                         {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null).RouteValues)" class="vacancy-filter reset-search"><i class="fa fa-crosshairs" aria-hidden="true"></i><span>Reset search</span></a>
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome,
+                                         new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, filterType, null)
+                                             .RouteValues)" class="vacancy-filter reset-search close-icon">
+                                <i class="fa fa-times-circle" aria-hidden="true">
+                                </i><span>Reset search</span>
+                            </a>
                         }
                         <button id="search-vacancies-button" type="submit" class="button search-btn no-margins" name="SearchVacanciesAction" value="SearchVacancies">
                             <i class="icon icon-search"></i><span>Search</span>
@@ -370,19 +375,23 @@
                                         @vacancy.EmployerName
                                     </td>
                                     <td class="vac-ref-number" data-label="Location">
+                        @vacancy.Location.Town<br />
                                         @if (vacancy.ParentVacancyId != null && vacancy.Status == VacancyStatus.Live)
                                         {
-
-                                            @vacancy.Location.Town<br />
-                                            @vacancy.Location.Postcode
-                                            @vacancy.Location.AddressLineEllipsis
+                            if (vacancy.IsEmployerAnonymous != null && vacancy.IsEmployerAnonymous.Value)
+                            {
+                            @vacancy.Location.Postcode
+                            @vacancy.Location.AddressLineEllipsis
+                            }
                                         }
                                         else
-                                        {
-                                            @vacancy.Location.Town<br />
-                                            <div class="hgroup-small">
+                        {
+                            if (vacancy.IsEmployerAnonymous != null && vacancy.IsEmployerAnonymous.Value)
+                            {
+                            <div class="hgroup-small">
                                                 <p class="heading-secondary ">@vacancy.Location.Postcode</p>
-                                            </div>
+                            </div>
+                            }
                                         }
                                     </td>
                                     <td data-label="Number of applications">

@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Candidates
 {
+    using Application.Interfaces;
     using Domain.Entities.Candidates;
     using FluentAssertions;
     using Mongo.Candidates.Entities;
     using Mongo.Candidates.Mappers;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class CandidateMappersTests

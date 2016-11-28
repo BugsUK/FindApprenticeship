@@ -292,7 +292,7 @@
             }
             var viewModel = new FurtherVacancyDetailsViewModel
             {
-                Wage = new WageViewModel() { Classification = wageClassification, Amount = wage, Unit = wageClassification == WageClassification.Custom ? WageUnit.Weekly : WageUnit.NotApplicable, HoursPerWeek = 37.5m }
+                Wage = new WageViewModel() { Classification = wageClassification, CustomType = wageClassification == WageClassification.Custom ? CustomWageType.Fixed : CustomWageType.NotApplicable, Amount = wage, Unit = wageClassification == WageClassification.Custom ? WageUnit.Weekly : WageUnit.NotApplicable, HoursPerWeek = 37.5m }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

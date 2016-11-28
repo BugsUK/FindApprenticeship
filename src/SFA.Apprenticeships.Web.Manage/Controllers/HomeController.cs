@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System;
-    using System.Web;
-    using SFA.Infrastructure.Interfaces;
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Common.Constants;
     using Common.Framework;
     using Raa.Common.Constants.Pages;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
 
     public class HomeController : ManagementControllerBase
     {

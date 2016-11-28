@@ -41,32 +41,21 @@
     <section class="section-border grid-row" id="provider-info">
         <div class="column-two-thirds">
             <h2 class="heading-large">Provider details</h2>
-            @if (Model.IsNasProvider)
-            {
-                <p id="vacancy-nas-provider">Training provider selection is currently in progress</p>
-            }
-            else
-            {
+            
                 <div class="grid-row">
-                    <div class="text column-1-2">
-                        <h3 class="bold-small">Training provider</h3>
-                        <p id="vacancy-provider-name">@Model.ProviderName</p>
-
-                        @if (!Model.IsRecruitmentAgencyAnonymous && !string.IsNullOrWhiteSpace(Model.RecruitmentAgency))
-                        {
-                            <p id="recruitment-agency-name">Applications for this apprenticeship are being processed by @Model.RecruitmentAgency</p>
-                        }
-                    </div>
-
-                    @if (!string.IsNullOrWhiteSpace(Model.Contact))
-                    {
-                        <div class="text column-1-2" style="padding-left: 30px;">
-                            <h3 class="bold-small">Contact</h3>
-                            <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
-                        </div>
-                    }
+                    <div class="text column-one-half">
+                    <h3 class="bold-small">Training provider</h3>
+                    <p id="vacancy-provider-name">@Model.ProviderName</p>
                 </div>
-            }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Contact))
+                {
+                        <div class="text column-one-half" style="padding-left: 30px;">
+                        <h3 class="bold-small">Contact</h3>
+                        <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
+                    </div>
+                }
+            </div>
         </div>
     </section>
 

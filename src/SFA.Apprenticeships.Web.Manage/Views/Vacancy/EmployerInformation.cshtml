@@ -1,6 +1,5 @@
 ﻿@model VacancyOwnerRelationshipViewModel
 @using SFA.Apprenticeships.Web.Manage.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 
 @{
@@ -32,6 +31,11 @@
     <script type="text/javascript">
 
         $("#NumberOfPositionsJS").attr("id", "NumberOfPositions").attr("Name", "NumberOfPositions");
+
+        $("#NonAnonymousEmployerJS").attr("id", "NonAnonymousEmployer").attr("Name", "NonAnonymousEmployer");
+        $("#AnonymousEmployerJS").attr("id", "AnonymousEmployer").attr("Name", "AnonymousEmployer");
+        
+
         $("#location-type-main-location").on('click', function () {
                 $("#confirmEmployer").text("Save");
         });

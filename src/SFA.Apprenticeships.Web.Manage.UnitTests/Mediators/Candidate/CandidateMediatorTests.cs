@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Candidate
 {
+    using Application.Interfaces.Candidates;
     using Common.UnitTests.Mediators;
     using Manage.Mediators.Candidate;
     using Manage.Providers;
@@ -15,7 +16,7 @@
     {
         private Mock<ICandidateProvider> _candidateProvider;
         private ICandidateMediator _mediator;
-        
+
         [SetUp]
         public void SetUp()
         {
