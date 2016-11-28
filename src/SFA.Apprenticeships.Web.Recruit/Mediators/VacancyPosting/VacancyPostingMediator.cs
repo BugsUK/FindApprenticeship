@@ -168,8 +168,8 @@
 
             if (existingVacancy != null)
             {
-                viewModel.EmployerApprenticeshipLocation =
-                    existingVacancy.NewVacancyViewModel.EmployerApprenticeshipLocation;
+                viewModel.VacancyLocationType =
+                    existingVacancy.NewVacancyViewModel.VacancyLocationType;
                 viewModel.NumberOfPositions = existingVacancy.NewVacancyViewModel.NumberOfPositions;
                 viewModel.Status = existingVacancy.Status;
                 viewModel.VacancyReferenceNumber = existingVacancy.VacancyReferenceNumber;
@@ -194,7 +194,7 @@
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)
             {
-                viewModel.EmployerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
+                viewModel.VacancyLocationType = VacancyLocationType.SpecificLocation;
             }
 
             try
@@ -203,7 +203,7 @@
                     GeoCodeAddressResult.InvalidAddress)
                 {
                     viewModel.IsEmployerAddressValid = false;
-                    viewModel.EmployerApprenticeshipLocation = VacancyLocationType.MultipleLocations;
+                    viewModel.VacancyLocationType = VacancyLocationType.MultipleLocations;
 
                     return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress,
                         viewModel, VacancyOwnerRelationshipViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
@@ -278,8 +278,8 @@
                 }
                 existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
 
-                existingViewModel.EmployerApprenticeshipLocation =
-                    viewModel.EmployerApprenticeshipLocation;
+                existingViewModel.VacancyLocationType =
+                    viewModel.VacancyLocationType;
                 existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
                 existingViewModel.VacancyGuid = viewModel.VacancyGuid;
             }
@@ -290,7 +290,7 @@
             VacancyOwnerRelationshipViewModel newViewModel)
         {
             newViewModel.VacancyGuid = viewModel.VacancyGuid;
-            newViewModel.EmployerApprenticeshipLocation = viewModel.EmployerApprenticeshipLocation;
+            newViewModel.VacancyLocationType = viewModel.VacancyLocationType;
             newViewModel.NumberOfPositions = viewModel.NumberOfPositions;
             newViewModel.VacancyReferenceNumber = viewModel.VacancyReferenceNumber;
         }
@@ -300,7 +300,7 @@
             var vacancyMinimumData = new VacancyMinimumData
             {
                 EmployerApprenticeshipLocation =
-                    viewModel.EmployerApprenticeshipLocation,
+                    viewModel.VacancyLocationType,
                 NumberOfPositions = viewModel.NumberOfPositions,
                 Ukprn = ukprn,
                 VacancyGuid = viewModel.VacancyGuid,
@@ -323,14 +323,14 @@
         private void UpdateVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn, VacancyViewModel existingVacancy,
             VacancyViewModel vacancyPreviousState)
         {
-            if (viewModel.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation)
+            if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation)
             {
                 _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
 
                 var vacancyData = new VacancyMinimumData
                 {
                     EmployerApprenticeshipLocation =
-                        viewModel.EmployerApprenticeshipLocation,
+                        viewModel.VacancyLocationType,
                     NumberOfPositions = viewModel.NumberOfPositions,
                     Ukprn = ukprn,
                     VacancyGuid = viewModel.VacancyGuid,
@@ -348,8 +348,8 @@
 
             var changedFromSameLocationAsEmployerToDifferentLocation =
                 vacancyPreviousState != null &&
-                viewModel.EmployerApprenticeshipLocation == VacancyLocationType.MultipleLocations &&
-                vacancyPreviousState.NewVacancyViewModel.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation;
+                viewModel.VacancyLocationType == VacancyLocationType.MultipleLocations &&
+                vacancyPreviousState.NewVacancyViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation;
 
             if (changedFromSameLocationAsEmployerToDifferentLocation /*|| employerHasChanged*/)
             {
@@ -455,7 +455,7 @@
             var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
             viewModel.ComeFromPreview = comeFromPreview ?? false;
 
-            if (viewModel.EmployerApprenticeshipLocation == VacancyLocationType.MultipleLocations &&
+            if (viewModel.VacancyLocationType == VacancyLocationType.MultipleLocations &&
                 !viewModel.LocationAddresses.Any())
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.LocationNotSet, viewModel);

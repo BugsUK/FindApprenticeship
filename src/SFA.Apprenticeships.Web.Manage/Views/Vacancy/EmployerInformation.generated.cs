@@ -68,7 +68,7 @@ WriteLiteral("\r\n");
   
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = Model.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation ? "Save" : "Save and continue";
+    var saveButtonText = Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save" : "Save and continue";
 
             
             #line default

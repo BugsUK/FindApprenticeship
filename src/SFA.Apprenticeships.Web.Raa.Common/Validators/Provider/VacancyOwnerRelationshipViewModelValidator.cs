@@ -29,7 +29,7 @@
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.EmployerWebsiteUrl.ErrorUriText)
                 .When(x => !string.IsNullOrEmpty(x.EmployerWebsiteUrl));
 
-            RuleFor(x => x.EmployerApprenticeshipLocation)
+            RuleFor(x => x.VacancyLocationType)
                 .NotNull()
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.IsEmployerLocationMainApprenticeshipLocation.RequiredErrorText);
 
@@ -38,7 +38,7 @@
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.RequiredErrorText)
                 .GreaterThanOrEqualTo(1)
                 .WithMessage(VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LengthErrorText)
-                .When(x => x.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation);
+                .When(x => x.VacancyLocationType == VacancyLocationType.SpecificLocation);
 
             RuleFor(x => x.IsAnonymousEmployer)
                 .NotNull()

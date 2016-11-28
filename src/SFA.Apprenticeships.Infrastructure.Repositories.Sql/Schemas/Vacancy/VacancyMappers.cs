@@ -119,7 +119,7 @@
                 .IgnoreMember(v => v.MaxNumberofApplications)
                 .IgnoreMember(v => v.NewApplicantCount)
                 .IgnoreMember(v => v.SectorId)
-                .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
+                .MapMemberFrom(v => v.VacancyLocationTypeId, av => av.VacancyLocationType) // DB Lookup                
                 .MapMemberFrom(v => v.AdditionalLocationInformation, av => av.AdditionalLocationInformation)
                 .MapMemberFrom(v => v.AdditionalLocationInformationComment, av => av.AdditionalLocationInformationComment)
                 .MapMemberFrom(v => v.AddressLine1, av => av.Address.AddressLine1)
@@ -206,7 +206,7 @@
                 .MapMemberFrom(v => v.VacancyId, av => av.VacancyId)
                 .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.VacancyOwnerRelationshipId)
-                .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)
+                .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)                
                 .MapMemberFrom(v => v.VacancySourceId, av => av.VacancySource)
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyTypeId, av => av.VacancyType)

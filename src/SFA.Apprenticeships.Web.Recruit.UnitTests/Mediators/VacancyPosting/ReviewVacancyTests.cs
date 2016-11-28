@@ -19,7 +19,7 @@
 
             VacancyPostingProvider.Setup(p => p.GetNewVacancyViewModel(vacancyReferenceNumber)).Returns(new NewVacancyViewModel
             {
-                EmployerApprenticeshipLocation = VacancyLocationType.MultipleLocations,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
                 LocationAddresses = new List<VacancyLocationAddressViewModel>()
             });
 

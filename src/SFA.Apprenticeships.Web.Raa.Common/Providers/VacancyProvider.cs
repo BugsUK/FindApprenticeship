@@ -113,7 +113,7 @@
                 AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
             };
             if (numberOfPositions.HasValue)
-                newVacancyModel.EmployerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
+                newVacancyModel.VacancyLocationType = VacancyLocationType.SpecificLocation;
             return newVacancyModel;
         }
 
@@ -1500,7 +1500,7 @@
             vacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             vacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
             vacancy.VacancyLocationType =
-                viewModel.EmployerApprenticeshipLocation;
+                viewModel.VacancyLocationType;
 
             if (viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.HasValue && viewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
             {

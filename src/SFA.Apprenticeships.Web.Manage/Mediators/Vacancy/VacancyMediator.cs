@@ -314,8 +314,8 @@
             var vacancy = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
             var viewModel = vacancy.VacancyOwnerRelationship;
-            viewModel.EmployerApprenticeshipLocation =
-                    vacancy.EmployerApprenticeshipLocation;
+            viewModel.VacancyLocationType =
+                    vacancy.VacancyLocationType;
             viewModel.NumberOfPositions = vacancy.NumberOfPositions;
             viewModel.Status = vacancy.Status;
             viewModel.IsAnonymousEmployer = vacancy.VacancyOwnerRelationship.IsAnonymousEmployer;
@@ -344,7 +344,7 @@
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)
             {
-                viewModel.EmployerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
+                viewModel.VacancyLocationType = VacancyLocationType.SpecificLocation;
             }
 
             var validationResult = _vacancyOwnerRelationshipViewModelValidator.Validate(vacancy.VacancyOwnerRelationship);
@@ -462,7 +462,7 @@
             var existingViewModel = existingVacancy.VacancyOwnerRelationship;
             existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             existingViewModel.EmployerDescription = viewModel.EmployerDescription;
-            existingViewModel.EmployerApprenticeshipLocation = viewModel.EmployerApprenticeshipLocation;
+            existingViewModel.VacancyLocationType = viewModel.VacancyLocationType;
             existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
             existingViewModel.VacancyGuid = viewModel.VacancyGuid;
             existingViewModel.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
@@ -483,7 +483,7 @@
 
             _providerQaProvider.ConfirmVacancyOwnerRelationship(viewModel);
 
-            existingVacancy.EmployerApprenticeshipLocation = viewModel.EmployerApprenticeshipLocation;
+            existingVacancy.VacancyLocationType = viewModel.VacancyLocationType;
             existingVacancy.NumberOfPositions = viewModel.NumberOfPositions;
             existingVacancy.VacancyGuid = viewModel.VacancyGuid;
             existingVacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
@@ -499,7 +499,7 @@
 
             _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
 
-            if (viewModel.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation)
+            if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation)
             {
                 _vacancyQaProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
             }

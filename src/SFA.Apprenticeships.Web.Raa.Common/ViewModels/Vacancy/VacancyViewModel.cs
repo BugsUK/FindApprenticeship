@@ -85,7 +85,7 @@
 
         public VacancyType VacancyType { get; set; }
 
-        public bool IsSingleLocation => NewVacancyViewModel.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation;
+        public bool IsSingleLocation => NewVacancyViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation;
 
         public bool IsCandidateView { get; set; }
 

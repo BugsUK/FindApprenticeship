@@ -73,7 +73,7 @@
             var view = result as ViewResult;
             view.Model.Should().BeOfType<VacancyOwnerRelationshipViewModel>();
             var viewModel = view.Model as VacancyOwnerRelationshipViewModel;
-            viewModel.EmployerApprenticeshipLocation.Should().Be(VacancyLocationType.SpecificLocation);
+            viewModel.VacancyLocationType.Should().Be(VacancyLocationType.SpecificLocation);
             viewModel.NumberOfPositions.Should().NotHaveValue();
         }
 
@@ -199,7 +199,7 @@
                     FullName = "some employer",
                     EmployerId = employerId
                 },
-                EmployerApprenticeshipLocation = employerApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = providerSiteId,
                 VacancyGuid = vacancyGuid

@@ -19,7 +19,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationType.SpecificLocation)
+                .With(vm => vm.VacancyLocationType, VacancyLocationType.SpecificLocation)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.LocationAddresses, null)
                 .Create();
@@ -39,7 +39,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationType.MultipleLocations)
+                .With(vm => vm.VacancyLocationType, VacancyLocationType.MultipleLocations)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel> { new VacancyLocationAddressViewModel() })
                 .Create();
@@ -61,7 +61,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationType.MultipleLocations)
+                .With(vm => vm.VacancyLocationType, VacancyLocationType.MultipleLocations)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.OfflineVacancyType, offlineVacancyType)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>
@@ -87,7 +87,7 @@
         {
             //Arrange
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.EmployerApprenticeshipLocation, VacancyLocationType.MultipleLocations)
+                .With(vm => vm.VacancyLocationType, VacancyLocationType.MultipleLocations)
                 .With(vm => vm.OfflineVacancy, true)
                 .With(vm => vm.OfflineVacancyType, OfflineVacancyType.MultiUrl)
                 .With(vm => vm.LocationAddresses, new List<VacancyLocationAddressViewModel>

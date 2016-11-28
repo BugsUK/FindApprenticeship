@@ -49,12 +49,12 @@
         <div class="blocklabel-single-container">
             <div class="hide-nojs">
                 <div class="form-group inline clearfix blocklabel-single">
-                    <a name="@Html.NameFor(m => m.EmployerApprenticeshipLocation).ToString().ToLower()"></a>
+                    <a name="@Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()"></a>
                     <h4 class="bold-small">Vacancy location options</h4>
                     @if (Model.IsEmployerAddressValid)
                     {
-                        <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.EmployerApprenticeshipLocation ">
-                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationType.SpecificLocation , new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
+                        <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.VacancyLocationType ">
+                            @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.SpecificLocation , new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
                             Use the main employer address
                         </label>
                         <br />
@@ -62,13 +62,13 @@
                             @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" })
                             @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))                            
                         </div>                        
-                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.EmployerApprenticeshipLocation ">
-                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationType.MultipleLocations , new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
+                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.VacancyLocationType ">
+                            @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.MultipleLocations , new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
                             Add different location(s)
                         </label>
                         <br />
-                        <label data-target="location-nation-wide-vacancy-panel" for="location-nation-wide-vacancy" class="block-label @Model.EmployerApprenticeshipLocation ">
-                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, VacancyLocationType.Nationwide , new { id = "location-nation-wide-vacancy", aria_controls = "location-nation-wide-vacancy-panel" })
+                        <label data-target="location-nation-wide-vacancy-panel" for="location-nation-wide-vacancy" class="block-label @Model.VacancyLocationType ">
+                            @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.Nationwide , new { id = "location-nation-wide-vacancy", aria_controls = "location-nation-wide-vacancy-panel" })
                             Set as a nationwide vacancy
                         </label>
                         <div id="location-nation-wide-vacancy-panel" class="toggle-content blocklabel-content nationwide left-grey-border">
@@ -78,8 +78,8 @@
                     }
                     else
                     {
-                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.EmployerApprenticeshipLocation ">
-                            @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, false, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
+                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.VacancyLocationType ">
+                            @Html.RadioButtonFor(m => m.VacancyLocationType, false, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
                             Yes, but I need to complete the full address
                         </label>
                     }
@@ -107,15 +107,15 @@
         <noscript>
             <div class="blocklabel-single-container">
                 <div class="form-group inline clearfix blocklabel-single">
-                    <a name="@Html.NameFor(m => m.EmployerApprenticeshipLocation).ToString().ToLower()"></a>
+                    <a name="@Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()"></a>
                     <h4 class="bold-small">Is this address the vacancy location?</h4>
 
-                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.EmployerApprenticeshipLocation ">
-                        @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, true, new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
+                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.VacancyLocationType ">
+                        @Html.RadioButtonFor(m => m.VacancyLocationType, true, new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
                         Yes, this will be the vacancy location
                     </label>
-                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.EmployerApprenticeshipLocation ">
-                        @Html.RadioButtonFor(m => m.EmployerApprenticeshipLocation, false, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
+                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.VacancyLocationType ">
+                        @Html.RadioButtonFor(m => m.VacancyLocationType, false, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
                         No, I need to add a different location
                     </label>
                 </div>

@@ -160,7 +160,7 @@
             var numberOfPositions = 5;
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                EmployerApprenticeshipLocation = VacancyLocationType.SpecificLocation,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -181,7 +181,7 @@
             var mediator = GetMediator();
 
             var result = mediator.ConfirmEmployer(viewModel, Ukprn);
-            result.ViewModel.EmployerApprenticeshipLocation.Should()
+            result.ViewModel.VacancyLocationType.Should()
                 .Be(true);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
         }
@@ -193,7 +193,7 @@
             const string initialVacancyTitle = "title";
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                EmployerApprenticeshipLocation = VacancyLocationType.MultipleLocations,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -232,7 +232,7 @@
 
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                EmployerApprenticeshipLocation = employerApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -279,7 +279,7 @@
 
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                EmployerApprenticeshipLocation = employerApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
