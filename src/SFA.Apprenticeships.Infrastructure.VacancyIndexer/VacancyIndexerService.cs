@@ -27,6 +27,7 @@
             IElasticsearchClientFactory elasticsearchClientFactory)
         {
             _logger = logger;
+            ;
             _configurationService = configurationService;
             _mapper = mapper;
             _elasticsearchClientFactory = elasticsearchClientFactory;

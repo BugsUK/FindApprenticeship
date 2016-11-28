@@ -410,6 +410,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
             {
                 return GetMediatorResponse<MyApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.CandidateApplicationFeedback.Error, null, ApplicationPageMessages.ViewApplicationFailed, UserMessageLevel.Warning);
             }
+
+            apprenticeshipApplication.ProviderName = model.ProviderName;
+            apprenticeshipApplication.Contact = model.Contact;
+
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.CandidateApplicationFeedback.Ok, apprenticeshipApplication);
         }
 

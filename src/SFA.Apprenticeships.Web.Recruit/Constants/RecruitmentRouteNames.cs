@@ -56,6 +56,7 @@
         public const string AutoSaveLocations = "AutoSaveLocations";
         public const string ShowLocations = "ShowLocations";
         public const string ManageDates = "ManageDates";
+        public const string CloseVacancy = "CloseVacancy";
         public const string AutoSaveManageDates = "AutoSaveManageDates";
         public const string ArchiveVacancy = "Archive";
         public const string ConfirmArchiveVacancy = "ConfirmArchive";

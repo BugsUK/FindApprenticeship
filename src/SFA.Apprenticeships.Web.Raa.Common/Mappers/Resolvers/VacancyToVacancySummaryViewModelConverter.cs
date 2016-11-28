@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
 {
-    using System;
     using AutoMapper;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using System;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
@@ -38,7 +38,8 @@
                 IsEmployerLocationMainApprenticeshipLocation = source.IsEmployerLocationMainApprenticeshipLocation,
                 ParentVacancyId = source.ParentVacancyId,
                 NewApplicationCount = source.NewApplicationCount,
-                ApplicationCount = source.ApplicantCount
+                ApplicationCount = source.ApplicantCount,
+                IsEmployerAnonymous = string.IsNullOrWhiteSpace(source.EmployerAnonymousName) && string.IsNullOrWhiteSpace(source.EmployerAnonymousReason)
             };
 
             return destination;

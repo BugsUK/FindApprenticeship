@@ -26,6 +26,7 @@
                 .ForMember(d => d.SubCategory, opt => opt.Ignore())
                 .ForMember(d => d.SubCategoryCode, opt => opt.Ignore())
                 .ForMember(d => d.Score, opt => opt.Ignore())
+                .ForMember(d => d.AnonymousEmployerName, opt => opt.Ignore())
                 .ForMember(d => d.Location,
                     opt => opt.ResolveUsing<GeoPointElasticToDomainResolver>().FromMember(src => src.Location));
         }
@@ -35,7 +36,7 @@
     {
         protected override Wage ResolveCore(ApprenticeshipSummary source)
         {
-            return new Wage((WageType)source.WageType, source.WageAmount, null, null, source.WageText, (WageUnit)source.WageUnit, source.HoursPerWeek, null);
+            return new Wage((WageType)source.WageType, source.WageAmount, source.WageAmountLowerBound, source.WageAmountUpperBound, source.WageText, (WageUnit)source.WageUnit, source.HoursPerWeek, null);
         }
     }
 }

@@ -4,9 +4,7 @@
     using Attributes;
     using Constants;
     using Domain.Entities.Raa;
-    using Mediators.VacancyPosting;
     using Mediators.VacancyStatus;
-    using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.VacancyStatus;
     using System;
     using System.Web.Mvc;

@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
-    using System;
     using Entities.Vacancies;
     using Locations;
     using Reference;
+    using System;
 
     public class VacancySummary
     {
@@ -39,6 +39,9 @@
         public VacancyStatus Status { get; set; }
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
         public string EmployerAnonymousName { get; set; }
+        public string EmployerAnonymousReason { get; set; }
+        public bool? IsAnonymousEmployer { get; set; }
+        public string AnonymousAboutTheEmployer { get; set; }
         public int? NumberOfPositions { get; set; }
         public VacancyType VacancyType { get; set; }
         public DateTime? UpdatedDateTime { get; set; }
@@ -73,8 +76,8 @@
         public string EmployerLocation { get; set; }
 
         public int NewApplicationCount { get; set; }
-		public int ApplicantCount { get; set; }
-		
+        public int ApplicantCount { get; set; }
+
         public string ProviderTradingName { get; set; }
         public DateTime CreatedDate { get; set; }
 

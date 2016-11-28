@@ -184,14 +184,14 @@ WriteLiteral(">Return to search results</a>\r\n");
             #line hidden
             
             #line 27 "..\..\Views\TraineeshipSearch\Details.cshtml"
-           Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id = "lnk-find-traineeship", @class = "page-link" }));
+           Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "lnk-find-traineeship", @class = "page-link" }));
 
             
             #line default
             #line hidden
             
             #line 27 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                                                                                                              
+                                                                                                                                                             
             }
 
             
@@ -241,21 +241,21 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n                    <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1663), Tuple.Create("\"", 1721)
+WriteAttribute("class", Tuple.Create(" class=\"", 1662), Tuple.Create("\"", 1720)
             
             #line 40 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 1671), Tuple.Create<System.Object, System.Int32>(Model.Description.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 1670), Tuple.Create<System.Object, System.Int32>(Model.Description.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 1671), false)
+, 1670), false)
 );
 
 WriteLiteral(">");
 
             
             #line 40 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                              Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description));
+                                                                             Write(HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description));
 
             
             #line default
@@ -297,21 +297,21 @@ WriteLiteral(">\r\n                    <p");
 
 WriteLiteral(" id=\"vacancy-full-descrpition\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2361), Tuple.Create("\"", 2423)
+WriteAttribute("class", Tuple.Create(" class=\"", 2317), Tuple.Create("\"", 2379)
             
             #line 51 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 2369), Tuple.Create<System.Object, System.Int32>(Model.FullDescription.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 2325), Tuple.Create<System.Object, System.Int32>(Model.FullDescription.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 2369), false)
+, 2325), false)
 );
 
 WriteLiteral(">");
 
             
             #line 51 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                                                                Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription));
+                                                                                                               Write(HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription));
 
             
             #line default
@@ -322,21 +322,21 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Training to be provided</h3>\r\n                    <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2636), Tuple.Create("\"", 2703)
+WriteAttribute("class", Tuple.Create(" class=\"", 2549), Tuple.Create("\"", 2616)
             
             #line 53 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 2644), Tuple.Create<System.Object, System.Int32>(Model.TrainingToBeProvided.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 2557), Tuple.Create<System.Object, System.Int32>(Model.TrainingToBeProvided.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 2644), false)
+, 2557), false)
 );
 
 WriteLiteral(">");
 
             
             #line 53 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                                       Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided));
+                                                                                      Write(HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided));
 
             
             #line default
@@ -436,7 +436,7 @@ WriteLiteral(">");
 
             
             #line 72 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                              Write(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration);
+                                              Write(string.IsNullOrWhiteSpace(Model.ExpectedDuration) ? "Not specified" : Model.ExpectedDuration);
 
             
             #line default
@@ -581,14 +581,14 @@ WriteLiteral(">\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4784), Tuple.Create("\"", 4854)
+WriteAttribute("class", Tuple.Create(" class=\"", 4652), Tuple.Create("\"", 4722)
             
             #line 96 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 4792), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
+, Tuple.Create(Tuple.Create("", 4660), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
             
             #line default
             #line hidden
-, 4792), false)
+, 4660), false)
 );
 
 WriteLiteral(">");
@@ -620,29 +620,29 @@ WriteLiteral("                            <p><a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5024), Tuple.Create("\"", 5053)
+WriteAttribute("href", Tuple.Create(" href=\"", 4892), Tuple.Create("\"", 4921)
             
             #line 99 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 5031), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
+, Tuple.Create(Tuple.Create("", 4899), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
             
             #line default
             #line hidden
-, 5031), false)
+, 4899), false)
 );
 
 WriteLiteral(" id=\"vacancy-employer-website\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 5100), Tuple.Create("\"", 5135)
+WriteAttribute("title", Tuple.Create(" title=\"", 4968), Tuple.Create("\"", 5003)
             
             #line 99 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 5108), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
+                                                    , Tuple.Create(Tuple.Create("", 4976), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
             
             #line default
             #line hidden
-, 5108), false)
-, Tuple.Create(Tuple.Create(" ", 5127), Tuple.Create("Website", 5128), true)
+, 4976), false)
+, Tuple.Create(Tuple.Create(" ", 4995), Tuple.Create("Website", 4996), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -802,29 +802,99 @@ WriteLiteral(" class=\"map-overlay\"");
 
 WriteLiteral(" onclick=\"style.pointerEvents = \'none\'\"");
 
-WriteLiteral("></div>\r\n                        <iframe");
+WriteLiteral("></div>\r\n");
+
+            
+            #line 121 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 121 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                         if (Model.IsEmployerAnonymous)
+                        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            <div");
+
+WriteLiteral(" id=\"anonymous-map\"");
+
+WriteLiteral(">\r\n                                <iframe");
 
 WriteLiteral(" width=\"700\"");
 
 WriteLiteral(" height=\"250\"");
 
-WriteLiteral(" frameborder=\"0\"");
+WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6685), Tuple.Create("\"", 6840)
-, Tuple.Create(Tuple.Create("", 6691), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 6691), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 6707), Tuple.Create("\"", 6901)
+, Tuple.Create(Tuple.Create("", 6713), Tuple.Create("https://www.google.com/maps/embed/v1/view?center=", 6713), true)
             
-            #line 121 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                             , Tuple.Create(Tuple.Create("", 6736), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
+            #line 124 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                                                                                 , Tuple.Create(Tuple.Create("", 6762), Tuple.Create<System.Object, System.Int32>(Model.VacancyAddress.GeoPoint.Latitude
             
             #line default
             #line hidden
-, 6736), false)
-, Tuple.Create(Tuple.Create("", 6776), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 6776), true)
+, 6762), false)
+, Tuple.Create(Tuple.Create("", 6801), Tuple.Create(",", 6801), true)
+            
+            #line 124 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                                                                                                                         , Tuple.Create(Tuple.Create("", 6802), Tuple.Create<System.Object, System.Int32>(Model.VacancyAddress.GeoPoint.Longitude
+            
+            #line default
+            #line hidden
+, 6802), false)
+, Tuple.Create(Tuple.Create("", 6842), Tuple.Create("&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 6842), true)
 );
 
-WriteLiteral("></iframe>\r\n                        <p");
+WriteLiteral("></iframe>\r\n                            </div>\r\n");
+
+            
+            #line 126 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                        }
+                        else
+                        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            <iframe");
+
+WriteLiteral(" width=\"700\"");
+
+WriteLiteral(" height=\"250\"");
+
+WriteLiteral(" title=\"Map of location\"");
+
+WriteLiteral(" style=\"border: 0\"");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 7136), Tuple.Create("\"", 7291)
+, Tuple.Create(Tuple.Create("", 7142), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 7142), true)
+            
+            #line 129 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                                                                         , Tuple.Create(Tuple.Create("", 7187), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
+            
+            #line default
+            #line hidden
+, 7187), false)
+, Tuple.Create(Tuple.Create("", 7227), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 7227), true)
+);
+
+WriteLiteral("></iframe>\r\n");
+
+            
+            #line 130 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                        }                                                
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <p");
 
 WriteLiteral(" class=\"nojs-notice\"");
 
@@ -832,13 +902,13 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "        </div>\r\n                </div>\r\n\r\n");
 
             
-            #line 126 "..\..\Views\TraineeshipSearch\Details.cshtml"
+            #line 135 "..\..\Views\TraineeshipSearch\Details.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 126 "..\..\Views\TraineeshipSearch\Details.cshtml"
+            #line 135 "..\..\Views\TraineeshipSearch\Details.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.AdditionalLocationInformation))
                 {
 
@@ -857,8 +927,8 @@ WriteLiteral(">\r\n                            Additional location information\r
 "       </h3>\r\n                        <p>");
 
             
-            #line 133 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                       Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.AdditionalLocationInformation));
+            #line 142 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                      Write(HtmlExtensions.EscapeHtmlEncoding(Html, Model.AdditionalLocationInformation));
 
             
             #line default
@@ -866,7 +936,7 @@ WriteLiteral(">\r\n                            Additional location information\r
 WriteLiteral("</p>\r\n                    </div>\r\n");
 
             
-            #line 135 "..\..\Views\TraineeshipSearch\Details.cshtml"
+            #line 144 "..\..\Views\TraineeshipSearch\Details.cshtml"
                 }
 
             
@@ -894,42 +964,42 @@ WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">Desired skills and qualities</h3>\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7876), Tuple.Create("\"", 7937)
+WriteAttribute("class", Tuple.Create(" class=\"", 8359), Tuple.Create("\"", 8420)
             
-            #line 142 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 7884), Tuple.Create<System.Object, System.Int32>(Model.SkillsRequired.GetPreserveFormattingCssClass()
+            #line 151 "..\..\Views\TraineeshipSearch\Details.cshtml"
+, Tuple.Create(Tuple.Create("", 8367), Tuple.Create<System.Object, System.Int32>(Model.SkillsRequired.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 7884), false)
+, 8367), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 142 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                             Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired));
+            #line 151 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                                                                            Write(HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired));
 
             
             #line default
             #line hidden
 WriteLiteral("</p>\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8068), Tuple.Create("\"", 8132)
+WriteAttribute("class", Tuple.Create(" class=\"", 8508), Tuple.Create("\"", 8572)
             
-            #line 143 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 8076), Tuple.Create<System.Object, System.Int32>(Model.PersonalQualities.GetPreserveFormattingCssClass()
+            #line 152 "..\..\Views\TraineeshipSearch\Details.cshtml"
+, Tuple.Create(Tuple.Create("", 8516), Tuple.Create<System.Object, System.Int32>(Model.PersonalQualities.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 8076), false)
+, 8516), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 143 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                                Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities));
+            #line 152 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                                                                               Write(HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities));
 
             
             #line default
@@ -937,13 +1007,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n\r\n");
 
             
-            #line 145 "..\..\Views\TraineeshipSearch\Details.cshtml"
+            #line 154 "..\..\Views\TraineeshipSearch\Details.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 145 "..\..\Views\TraineeshipSearch\Details.cshtml"
+            #line 154 "..\..\Views\TraineeshipSearch\Details.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
         {
 
@@ -960,21 +1030,21 @@ WriteLiteral("                    <p");
 
 WriteLiteral(" id=\"vacancy-future-prospects\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8461), Tuple.Create("\"", 8523)
+WriteAttribute("class", Tuple.Create(" class=\"", 8858), Tuple.Create("\"", 8920)
             
-            #line 148 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 8469), Tuple.Create<System.Object, System.Int32>(Model.FutureProspects.GetPreserveFormattingCssClass()
+            #line 157 "..\..\Views\TraineeshipSearch\Details.cshtml"
+, Tuple.Create(Tuple.Create("", 8866), Tuple.Create<System.Object, System.Int32>(Model.FutureProspects.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 8469), false)
+, 8866), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 148 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                                                                Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects));
+            #line 157 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                                                                                                               Write(HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects));
 
             
             #line default
@@ -982,7 +1052,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 149 "..\..\Views\TraineeshipSearch\Details.cshtml"
+            #line 158 "..\..\Views\TraineeshipSearch\Details.cshtml"
                 }
 
             
@@ -991,7 +1061,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("            </div>\r\n        </section>\r\n");
 
             
-            #line 152 "..\..\Views\TraineeshipSearch\Details.cshtml"
+            #line 161 "..\..\Views\TraineeshipSearch\Details.cshtml"
 
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {
@@ -1015,21 +1085,21 @@ WriteLiteral(">Other information</h2>\r\n                    <p");
 
 WriteLiteral(" id=\"vacany-other-information\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8976), Tuple.Create("\"", 9039)
+WriteAttribute("class", Tuple.Create(" class=\"", 9330), Tuple.Create("\"", 9393)
             
-            #line 158 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 8984), Tuple.Create<System.Object, System.Int32>(Model.OtherInformation.GetPreserveFormattingCssClass()
+            #line 167 "..\..\Views\TraineeshipSearch\Details.cshtml"
+, Tuple.Create(Tuple.Create("", 9338), Tuple.Create<System.Object, System.Int32>(Model.OtherInformation.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 8984), false)
+, 9338), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 158 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                                                                 Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.OtherInformation));
+            #line 167 "..\..\Views\TraineeshipSearch\Details.cshtml"
+                                                                                                                Write(HtmlExtensions.EscapeHtmlEncoding(Html, Model.OtherInformation));
 
             
             #line default
@@ -1037,7 +1107,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                </div>\r\n            </section>\r\n");
 
             
-            #line 161 "..\..\Views\TraineeshipSearch\Details.cshtml"
+            #line 170 "..\..\Views\TraineeshipSearch\Details.cshtml"
         }
     }
 

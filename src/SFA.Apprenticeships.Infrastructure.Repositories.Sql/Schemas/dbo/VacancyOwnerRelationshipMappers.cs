@@ -12,6 +12,7 @@
                 .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.VacancyOwnerRelationshipId))
                 .ForMember(v => v.ProviderSiteId, opt => opt.MapFrom(src => src.ProviderSiteID))
                 .ForMember(v => v.EmployerWebsiteUrl, opt => opt.MapFrom(src => src.EmployerWebsite));
+              
 
             Mapper.CreateMap<VacancyOwnerRelationship, Entities.VacancyOwnerRelationship>()
                 .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.VacancyOwnerRelationshipId))

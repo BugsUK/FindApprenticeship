@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 {
-    using CuttingEdge.Conditions;
     using Web.Common.Constants;
 
     public class VacancyViewModelMessages
     {
         public const string NoApplications = "There have not been any applications for this vacancy";
+        public const string Closed = "This vacancy is now closed";
         public const string VacancyHasBeenArchived = "This vacancy has been archived";
         public const string NoClickThroughs = "There have not been any click-throughs to your application page for this vacancy";
         public const string FailedCrossFieldValidation = "Changing the dates has invalidated one or more other properties for this vacancy. Please correct these errors and try again";
@@ -165,8 +165,8 @@
             public const string TooLongErrorText = "The long description must not be more than 4000 characters";
             public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
             public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListInvalidCharacterErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;            
-            public const string WhiteListInvalidTagErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;            
+            public const string WhiteListInvalidCharacterErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
             public const string TraineeshipLabelText = "Work placement description";
             public const string TraineeshipRequiredErrorText = "Enter the work placement description";
             public const string TraineeshipTooLongErrorText = "The work placement description must not be more than 4000 characters";
@@ -431,8 +431,8 @@
         public class EmployerWebsiteUrlComment
         {
             public const string LabelText = "Employer's Website Url comment";
-		}
-		
+        }
+
         public class OfflineVacancy
         {
             public const string RequiredErrorText = "Select whether the vacancy will be managed through the find an apprentice site or not";

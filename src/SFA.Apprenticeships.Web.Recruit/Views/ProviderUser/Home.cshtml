@@ -443,19 +443,23 @@
                         @vacancy.EmployerName
                     </td>
                     <td class="vac-ref-number" data-label="Location">
+                        @vacancy.Location.Town<br />
                         @if (vacancy.ParentVacancyId != null && vacancy.Status == VacancyStatus.Live)
                         {
-
-                            @vacancy.Location.Town<br/>
-                            @vacancy.Location.Postcode
-                            @vacancy.Location.AddressLineEllipsis
+                            if (vacancy.IsEmployerAnonymous != null && vacancy.IsEmployerAnonymous.Value)
+                            {
+                                @vacancy.Location.Postcode
+                                @vacancy.Location.AddressLineEllipsis
+                            }
                         }
                         else
-                        {
-                            @vacancy.Location.Town<br/>
-                            <div class="hgroup-small">
-                                <p class="subtitle">@vacancy.Location.Postcode</p>
-                            </div>
+                        {                            
+                            if (vacancy.IsEmployerAnonymous != null && vacancy.IsEmployerAnonymous.Value)
+                            {
+                                <div class="hgroup-small">
+                                    <p class="subtitle">@vacancy.Location.Postcode</p>
+                                </div>
+                            }
                         }
                     </td>
                     <td data-label="Number of applications">

@@ -1,16 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Attributes
 {
+    using System;
     using System.Web.Mvc;
     using Configuration;
     using Application.Interfaces;
 
     public class ApplyAnalyticsAttribute : ActionFilterAttribute
     {
-        private readonly string _configurationName;
+        private readonly Type _analyticsConfigurationType;
 
-        public ApplyAnalyticsAttribute(string configurationName)
+        public ApplyAnalyticsAttribute(Type analyticsConfigurationType)
         {
-            _configurationName = configurationName;
+            _analyticsConfigurationType = analyticsConfigurationType;
         }
 
         public IConfigurationService ConfigurationService { get; set; }
@@ -23,7 +24,8 @@
                 return;
             }
 
-            var webSettings = ConfigurationService.Get<AnalyticsConfiguration>(_configurationName);
+            var settings = ConfigurationService.Get(_analyticsConfigurationType);
+            var webSettings = (AnalyticsConfiguration)settings;
 
             viewResult.ViewBag.EnableWebTrends = webSettings.EnableWebTrends;
             if (webSettings.EnableWebTrends)

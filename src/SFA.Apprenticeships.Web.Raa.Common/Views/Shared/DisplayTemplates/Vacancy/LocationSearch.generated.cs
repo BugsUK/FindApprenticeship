@@ -898,7 +898,17 @@ WriteLiteral(" for=\"postcode-search\"");
 
 WriteLiteral(" class=\"form-label bold-small\"");
 
-WriteLiteral(">Enter the vacancy location or postcode</label>\r\n            <input");
+WriteLiteral(">Enter the vacancy location or postcode</label>\r\n            <div");
+
+WriteLiteral(" class=\"hgroup-medium\"");
+
+WriteLiteral(">\r\n                <p");
+
+WriteLiteral(" class=\"subtitle\"");
+
+WriteLiteral(">You have chosen for this employer to be anonymous. Only the town or city for eac" +
+"h location will be visible to candidates.</p>\r\n            </div>\r\n            <" +
+"input");
 
 WriteLiteral(" id=\"postcode-search\"");
 
@@ -1127,7 +1137,7 @@ WriteLiteral(">remove location</a>\r\n                    </td>\r\n             
 WriteLiteral("            ");
 
             
-            #line 231 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 234 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment)));
 
             
@@ -1144,7 +1154,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 235 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 238 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
@@ -1155,7 +1165,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 236 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 239 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment)));
 
             

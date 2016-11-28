@@ -150,33 +150,41 @@ $(function () {
 
         for (var i = 0; i < resultMaps.length; i++) {
             var resultMap = resultMaps[i];
-            var myLatLng = new google.maps.LatLng(resultMap.lat, resultMap.lon);
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: summaryMap,
-                animation: google.maps.Animation.DROP,
-                icon: markerIcon,
-                title: resultMap.title
-            });
+            if (resultMap.isEmployerAnonymous === "False") {
+                var myLatLng = new google.maps.LatLng(resultMap.lat, resultMap.lon);
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: summaryMap,
+                    animation: google.maps.Animation.DROP,
+                    icon: markerIcon,
+                    title: resultMap.title
+                });
 
-            marker.resultItem = resultMap.resultItem;
-            resultMap.marker = marker;
+                marker.resultItem = resultMap.resultItem;
+                resultMap.marker = marker;
 
-            google.maps.event.addListener(marker, 'mouseover', function () {
-                this.setIcon(selectedIcon);
-                this.setZIndex(1000);
-            });
+                google.maps.event.addListener(marker,
+                    'mouseover',
+                    function() {
+                        this.setIcon(selectedIcon);
+                        this.setZIndex(1000);
+                    });
 
-            google.maps.event.addListener(marker, 'click', function () {
-                this.setIcon(selectedIcon);
-                this.setZIndex(1000);
-                this.resultItem.scrollIntoView();
-            });
+                google.maps.event.addListener(marker,
+                    'click',
+                    function() {
+                        this.setIcon(selectedIcon);
+                        this.setZIndex(1000);
+                        this.resultItem.scrollIntoView();
+                    });
 
-            google.maps.event.addListener(marker, 'mouseout', function () {
-                this.setIcon(markerIcon);
-                this.setZIndex(0);
-            });
+                google.maps.event.addListener(marker,
+                    'mouseout',
+                    function() {
+                        this.setIcon(markerIcon);
+                        this.setZIndex(0);
+                    });
+            }
         }
     }
 
@@ -204,7 +212,9 @@ $(function () {
                         };
 
                         lazyMap.setOptions(lazyOptions);
-                        new google.maps.Marker({ position: resultMap.latlng, map: lazyMap, icon: markerIcon });
+                        if (resultMap.isEmployerAnonymous === "False") {
+                            new google.maps.Marker({ position: resultMap.latlng, map: lazyMap, icon: markerIcon });
+                        }
                         resultMap.directionsDisplay.setMap(lazyMap);
                     }
                 });

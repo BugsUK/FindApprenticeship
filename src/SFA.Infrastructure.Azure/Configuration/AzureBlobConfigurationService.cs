@@ -9,9 +9,8 @@
     using Microsoft.WindowsAzure.Storage;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Apprenticeships.Application.Interfaces.Caching;
+    using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.Caching;
 
     public class AzureBlobConfigurationService : IConfigurationService
     {
@@ -32,11 +31,21 @@
 
         public TSettings Get<TSettings>() where TSettings : class
         {
-            var settingName = typeof(TSettings).Name;
-            return Get<TSettings>(settingName);
+            var settingsName = typeof(TSettings).Name;
+            var elementJson = Get(settingsName);
+            var tsetting = JsonConvert.DeserializeObject<TSettings>(elementJson);
+            return tsetting;
         }
 
-        public TSettings Get<TSettings>(string settingsName) where TSettings : class
+        public object Get(Type settingsType)
+        {
+            var settingsName = settingsType.Name;
+            var elementJson = Get(settingsName);
+            var tsetting = JsonConvert.DeserializeObject(elementJson, settingsType);
+            return tsetting;
+        }
+
+        private string Get(string settingsName)
         {
             var json = GetJson();
 
@@ -67,8 +76,7 @@
                 throw new Exception($"Error getting {settingsName}", ex);
             }
 
-            var tsetting = JsonConvert.DeserializeObject<TSettings>(elementJson);
-            return tsetting;
+            return elementJson;
         }
 
         private string GetJson()
