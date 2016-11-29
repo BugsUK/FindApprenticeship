@@ -501,7 +501,7 @@ WriteLiteral("        ");
 
             
             #line 86 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-   Write(Html.FormCheckBoxFor(m => m.AcceptSubmit, labelHtmlAttributes: new {@class = "block-label para-btm-margin"}));
+   Write(Html.FormCheckBoxFor(m => m.AcceptSubmit, labelHtmlAttributes: new {@class = "block-label selection-button-checkbox para-btm-margin" }));
 
             
             #line default
@@ -527,14 +527,14 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=", 4747), Tuple.Create("", 4800)
+WriteAttribute("onclick", Tuple.Create(" onclick=", 4774), Tuple.Create("", 4827)
             
             #line 90 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 4756), Tuple.Create<System.Object, System.Int32>(string.Format(AnalyticsTag, "BottomButton")
+, Tuple.Create(Tuple.Create("", 4783), Tuple.Create<System.Object, System.Int32>(string.Format(AnalyticsTag, "BottomButton")
             
             #line default
             #line hidden
-, 4756), false)
+, 4783), false)
 );
 
 WriteLiteral(">Submit application</button>\r\n\r\n");
@@ -568,14 +568,14 @@ WriteLiteral(">Last saved at ");
             #line hidden
 WriteLiteral(" to <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5014), Tuple.Create("\"", 5070)
+WriteAttribute("href", Tuple.Create(" href=\"", 5041), Tuple.Create("\"", 5097)
             
             #line 94 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                                                        , Tuple.Create(Tuple.Create("", 5021), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+                                                        , Tuple.Create(Tuple.Create("", 5048), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 5021), false)
+, 5048), false)
 );
 
 WriteLiteral(" title=\"My Applications\"");

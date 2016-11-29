@@ -344,7 +344,7 @@ WriteLiteral("        ");
 
             
             #line 59 "..\..\Views\Register\Index.cshtml"
-   Write(Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label" }));
+   Write(Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" }));
 
             
             #line default
@@ -360,14 +360,14 @@ WriteLiteral("\r\n    </div>\r\n");
             #line hidden
             
             #line 62 "..\..\Views\Register\Index.cshtml"
-Write(Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label" }));
+Write(Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" }));
 
             
             #line default
             #line hidden
             
             #line 62 "..\..\Views\Register\Index.cshtml"
-                                                                                                                    
+                                                                                                                                              
 
 
             

@@ -117,7 +117,7 @@ WriteLiteral("\r\n                    Yes\r\n                </label>\r\n       
 
 WriteLiteral(" for=\"training-history-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected: !showTrainingCourses()}\"");
 

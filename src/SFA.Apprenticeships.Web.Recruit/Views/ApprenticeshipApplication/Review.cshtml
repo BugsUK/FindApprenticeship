@@ -108,7 +108,7 @@
                         </div>
                         <p class="heading-medium">How would you like to assign this candidate's application?</p>
                         <p>
-                            <label for="application-status-submitted" class="block-label">
+                            <label for="application-status-submitted" class="block-label selection-button-radio">
                                 @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new { id = "application-status-submitted" })
                                 New @if (Model.Status == ApplicationStatuses.Submitted)
                                 {
@@ -116,7 +116,7 @@
                                 }
                             </label>
                             <br />
-                            <label for="application-status-inprogress" class="block-label">
+                            <label for="application-status-inprogress" class="block-label selection-button-radio">
                                 @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new { id = "application-status-inprogress" })
                                 In progress @if (Model.Status == ApplicationStatuses.InProgress)
                                 {
@@ -124,12 +124,12 @@
                                 }
                             </label>
                             <br />
-                            <label for="application-status-unsuccessful" class="block-label">
+                            <label for="application-status-unsuccessful" class="block-label selection-button-radio">
                                 @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Unsuccessful, new { id = "application-status-unsuccessful" })
                                 Unsuccessful
                             </label>
                             <br />
-                            <label for="application-status-successful" class="block-label">
+                            <label for="application-status-successful" class="block-label selection-button-radio">
                                 @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Successful, new { id = "application-status-successful" })
                                 Successful
                             </label>

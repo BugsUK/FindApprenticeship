@@ -92,7 +92,7 @@ WriteLiteral(" data-target=\"qualifications-panel\"");
 
 WriteLiteral(" for=\"qualifications-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected:showQualifications() }\"");
 
@@ -111,7 +111,7 @@ WriteLiteral("\r\n                Yes\r\n\r\n            </label>\r\n           
 
 WriteLiteral(" for=\"qualifications-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected: !showQualifications() }\"");
 

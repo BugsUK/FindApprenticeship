@@ -13,7 +13,7 @@
                     @Html.RadioButtonFor(m => m.Candidate.HasTrainingCourses, true, new { id = "training-history-yes", data_bind = "attr:{'checked': hasTrainingCourses() }", aria_controls = "training-history-panel", aria_expanded = "false", aria_labelledby = "trainingCoursesQuestion" })
                     Yes
                 </label>
-                <label for="training-history-no" class="block-label" data-bind="css: {selected: !showTrainingCourses()}">
+                <label for="training-history-no" class="block-label selection-button-radio" data-bind="css: {selected: !showTrainingCourses()}">
                     @Html.RadioButtonFor(m => m.Candidate.HasTrainingCourses, false, new { id = "training-history-no", data_bind = "attr:{'checked': hasNoTrainingCourses() }", aria_labelledby = "hasNoTrainingCoursesQuestion" })
                     No
                 </label>

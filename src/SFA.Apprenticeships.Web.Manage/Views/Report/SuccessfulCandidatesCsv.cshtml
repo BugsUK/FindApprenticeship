@@ -63,7 +63,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IncludeCandidateIds, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IncludeCandidateIds, htmlAttributes: new { @class = "block-label selection-button-checkbox col-md-2" })
             <div class="col-md-10">
                 @Html.CheckBoxFor(model => model.IncludeCandidateIds)
                 @Html.ValidationMessageFor(model => model.IncludeCandidateIds, "", new { @class = "text-danger" })

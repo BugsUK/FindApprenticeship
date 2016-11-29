@@ -201,14 +201,14 @@ WriteLiteral(">Return to recruitment home</a>\r\n");
             #line hidden
             
             #line 38 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-           Write(Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" }));
+           Write(Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox para-btm-margin" }));
 
             
             #line default
             #line hidden
             
             #line 38 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                                                                                         
+                                                                                                                                                                   
             }
             else
             {
@@ -289,14 +289,14 @@ WriteLiteral("                    <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2176), Tuple.Create("\"", 2235)
+WriteAttribute("href", Tuple.Create(" href=\"", 2202), Tuple.Create("\"", 2261)
             
             #line 56 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 2183), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 2209), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2183), false)
+, 2209), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n                </div>\r\n            </section>\r\n");

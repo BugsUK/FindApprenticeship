@@ -150,10 +150,10 @@
             <div class="form-group form-group-compound">
                 <p class="form-label-bold">Receive notifications?</p>
                 <span class="form-hint text">If you don't select an option you won't receive notifications</span>
-                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
+                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox allowSavedComms" })
                 @if (Model.SmsEnabled)
                 {
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox allowSavedComms" })
                 }
             </div>
 
