@@ -748,7 +748,7 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </p>\r\n        </div>\r\n        \r\n        <main");
 
-WriteLiteral(" id=\"content\"");
+WriteLiteral(" id=\"main\"");
 
 WriteLiteral(">\r\n");
 
@@ -936,24 +936,24 @@ WriteLiteral(" width=\"1\"");
 
 WriteLiteral(" height=\"1\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 9684), Tuple.Create("\"", 9846)
-, Tuple.Create(Tuple.Create("", 9690), Tuple.Create("//stats.matraxis.net/", 9690), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 9681), Tuple.Create("\"", 9843)
+, Tuple.Create(Tuple.Create("", 9687), Tuple.Create("//stats.matraxis.net/", 9687), true)
             
             #line 197 "..\..\Views\Shared\_Layout.cshtml"
-             , Tuple.Create(Tuple.Create("", 9711), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDscId
+             , Tuple.Create(Tuple.Create("", 9708), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDscId
             
             #line default
             #line hidden
-, 9711), false)
-, Tuple.Create(Tuple.Create("", 9734), Tuple.Create("/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcss" +
-"ip=", 9734), true)
+, 9708), false)
+, Tuple.Create(Tuple.Create("", 9731), Tuple.Create("/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcss" +
+"ip=", 9731), true)
             
             #line 197 "..\..\Views\Shared\_Layout.cshtml"
-                                                                                                                        , Tuple.Create(Tuple.Create("", 9818), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDomainName
+                                                                                                                        , Tuple.Create(Tuple.Create("", 9815), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDomainName
             
             #line default
             #line hidden
-, 9818), false)
+, 9815), false)
 );
 
 WriteLiteral(" />\r\n            </noscript>\r\n");
@@ -997,38 +997,38 @@ WriteLiteral(" href=\"/help\"");
 
 WriteLiteral(">Help</a></li>\r\n\r\n                        <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12808), Tuple.Create("\"", 12857)
+WriteAttribute("href", Tuple.Create(" href=\"", 12805), Tuple.Create("\"", 12854)
             
             #line 250 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 12815), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
+, Tuple.Create(Tuple.Create("", 12812), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
             
             #line default
             #line hidden
-, 12815), false)
+, 12812), false)
 );
 
 WriteLiteral(">Privacy and cookies</a></li>\r\n                        <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12919), Tuple.Create("\"", 12969)
+WriteAttribute("href", Tuple.Create(" href=\"", 12916), Tuple.Create("\"", 12966)
             
             #line 251 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 12926), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 12923), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 12926), false)
+, 12923), false)
 );
 
 WriteLiteral(">Contact</a></li>\r\n                    \t<li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13016), Tuple.Create("\"", 13063)
+WriteAttribute("href", Tuple.Create(" href=\"", 13013), Tuple.Create("\"", 13060)
             
             #line 252 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 13023), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
+, Tuple.Create(Tuple.Create("", 13020), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
             
             #line default
             #line hidden
-, 13023), false)
+, 13020), false)
 );
 
 WriteLiteral(">Terms and conditions</a></li>\r\n                        <li>\r\n                   " +
