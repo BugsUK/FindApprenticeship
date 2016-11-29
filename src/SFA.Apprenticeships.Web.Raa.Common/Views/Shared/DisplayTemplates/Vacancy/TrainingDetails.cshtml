@@ -63,12 +63,12 @@
                     </p>
 
                     @* ReSharper disable once Html.IdNotResolved *@
-                    <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label @frameworksSelected">
+                    <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label selection-button-radio @frameworksSelected">
                         @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"})
                         Framework
                     </label>
                     @* ReSharper disable once Html.IdNotResolved *@
-                    <label data-target="training-type-standards-panel" for="training-type-standards" class="block-label @standardsSelected">
+                    <label data-target="training-type-standards-panel" for="training-type-standards" class="block-label selection-button-radio @standardsSelected">
                         @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Standards, new {id = "training-type-standards", aria_controls = "training-type-standards-panel"})
                         Standard
                     </label>
@@ -118,19 +118,19 @@
                         <a name="@Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()"></a>
                         <label class="form-label-bold">Apprenticeship level</label>
                         @* ReSharper disable once Html.IdNotResolved *@
-                        <label for="apprenticeship-level-intermediate" class="block-label">
+                        <label for="apprenticeship-level-intermediate" class="block-label selection-button-radio">
                             @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
-                        <label for="apprenticeship-level-advanced" class="block-label">
+                        <label for="apprenticeship-level-advanced" class="block-label selection-button-radio">
                             @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
-                        <label for="apprenticeship-level-higher" class="block-label">
+                        <label for="apprenticeship-level-higher" class="block-label selection-button-radio">
                             @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
-                        <label for="apprenticeship-level-degree" class="block-label">
+                        <label for="apprenticeship-level-degree" class="block-label selection-button-radio">
                             @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}) Degree
                         </label>
                         @Html.ValidationMessageFor(m => m.ApprenticeshipLevel)

@@ -66,7 +66,7 @@ WriteLiteral(">Are you?</p>\r\n    <label");
 
 WriteLiteral(" for=\"gender-male\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -83,7 +83,7 @@ WriteLiteral(" Male\r\n    </label>\r\n\r\n    <label");
 
 WriteLiteral(" for=\"gender-female\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -100,7 +100,7 @@ WriteLiteral(" Female\r\n    </label>\r\n\r\n    <label");
 
 WriteLiteral(" for=\"gender-other\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -119,7 +119,7 @@ WriteLiteral(" for=\"gender-prefer-not-to-say\"");
 
 WriteLiteral(" id=\"gender-prefer-not-to-say-label\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 

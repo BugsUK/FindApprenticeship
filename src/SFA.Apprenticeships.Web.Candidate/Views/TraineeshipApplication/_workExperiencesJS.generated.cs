@@ -96,7 +96,7 @@ WriteLiteral(" data-target=\"workexperience-panel\"");
 
 WriteLiteral(" for=\"workexp-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected: showWorkExperience()}\"");
 
@@ -115,7 +115,7 @@ WriteLiteral("\r\n                    Yes\r\n                </label>\r\n       
 
 WriteLiteral(" for=\"workexp-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected: !showWorkExperience()}\"");
 

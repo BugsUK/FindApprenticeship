@@ -234,6 +234,7 @@
             var labelAttributes = MergeAttributes("", labelHtmlAttributes);
             var label = new TagBuilder("label");
             label.MergeAttributes(labelAttributes);
+            label.MergeAttribute("class", "block-label selection-button-checkbox");
             label.Attributes.Add("for", helper.ViewData.TemplateInfo.GetFullHtmlFieldId(ExpressionHelper.GetExpressionText(expression)));
             label.InnerHtml = helper.CheckBoxFor(expression, controlAttributes).ToString();
             label.InnerHtml += GetDisplayName(helper, expression, labelText);

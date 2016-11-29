@@ -35,7 +35,7 @@
             if (Model.Status == VacancyStatus.Referred)
             {
                 Model.ResubmitOption = false;
-                @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
+                @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox para-btm-margin" })
             }
             else
             {

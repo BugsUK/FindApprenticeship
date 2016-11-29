@@ -36,11 +36,11 @@
         <a name="@Html.NameFor(m => m.VacancyType).ToString().ToLower()"></a>
         <label class="form-label-bold">Vacancy type</label>
         @* ReSharper disable once Html.IdNotResolved *@
-        <label for="vacancy-type-apprenticeship" class="block-label">
+        <label for="vacancy-type-apprenticeship" class="block-label selection-button-radio">
             @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Apprenticeship, new { id = "vacancy-type-apprenticeship", aria_labelledby = "vacancy-type-label" }) Apprenticeship
         </label>
         @* ReSharper disable once Html.IdNotResolved *@
-        <label for="vacancy-type-traineeship" class="block-label">
+        <label for="vacancy-type-traineeship" class="block-label selection-button-radio">
             @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Traineeship, new { id = "vacancy-type-traineeship", aria_labelledby = "vacancy-type-label" }) Traineeship
         </label>
         @Html.ValidationMessageFor(m => m.VacancyType)
@@ -54,12 +54,12 @@
                     How will candidates apply for this vacancy?
                 </p>
                 @* ReSharper disable once Html.IdNotResolved *@
-                <label for="apprenticeship-online-vacancy" class="block-label" data-target="online-panel" @isApplicationThroughRAAYes>
+                <label for="apprenticeship-online-vacancy" class="block-label selection-button-radio" data-target="online-panel" @isApplicationThroughRAAYes>
                     @Html.RadioButtonFor(model => model.OfflineVacancy, false, new {id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label"}) Candidates will apply on this website
                 </label>
 
                 @* ReSharper disable once Html.IdNotResolved *@
-                <label for="apprenticeship-offline-vacancy" class="block-label" data-target="offline-panel" @isApplicationThroughRAANo>
+                <label for="apprenticeship-offline-vacancy" class="block-label selection-button-radio" data-target="offline-panel" @isApplicationThroughRAANo>
                     @Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel"}) Candidates will apply through an external website
                 </label>
                 @Html.ValidationMessageFor(m => m.OfflineVacancy)

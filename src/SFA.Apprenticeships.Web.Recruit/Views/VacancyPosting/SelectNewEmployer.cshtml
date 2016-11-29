@@ -56,12 +56,12 @@
 
         <div class="form-group inline clearfix blocklabel-single hide-nojs">
             @* ReSharper disable once Html.IdNotResolved *@
-            <label data-target="name-location-search-panel" for="name-location-search" class="block-label @nameAndLocationSearchSelected">
+            <label data-target="name-location-search-panel" for="name-location-search" class="block-label selection-button-radio @nameAndLocationSearchSelected">
                 @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.NameAndLocation, new { id = "name-location-search", aria_controls = "name-location-search-panel" })
                 Name and location
             </label>
             @* ReSharper disable once Html.IdNotResolved *@
-            <label data-target="edsUrn-search-panel" for="edsUrn-search" class="block-label @ernSearchSelected">
+            <label data-target="edsUrn-search-panel" for="edsUrn-search" class="block-label selection-button-radio @ernSearchSelected">
                 @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.EdsUrn, new { id = "edsUrn-search", aria_controls = "edsUrn-search-panel" })
                 ERN
             </label>

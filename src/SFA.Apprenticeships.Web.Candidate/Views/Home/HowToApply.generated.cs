@@ -391,7 +391,7 @@ WriteLiteral(" data-target=\"qualifications-panel\"");
 
 WriteLiteral(" for=\"qualifications-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n                <input checked");
 
@@ -409,7 +409,7 @@ WriteLiteral(">Yes\r\n            </label>\r\n            <label");
 
 WriteLiteral(" for=\"qualifications-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n                <input");
 
@@ -1357,7 +1357,7 @@ WriteLiteral(" data-target=\"workexperience-panel\"");
 
 WriteLiteral(" for=\"workexp-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n                <input checked");
 
@@ -1371,7 +1371,7 @@ WriteLiteral(">Yes\r\n            </label>\r\n            <label");
 
 WriteLiteral(" for=\"workexp-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n                <input");
 
@@ -2030,7 +2030,7 @@ WriteLiteral(" data-target=\"training-panel\"");
 
 WriteLiteral(" for=\"training-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n                <input");
 
@@ -2044,7 +2044,7 @@ WriteLiteral(">Yes\r\n            </label>\r\n            <label");
 
 WriteLiteral(" for=\"training-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n                <input checked");
 
@@ -2621,7 +2621,7 @@ WriteLiteral(">Do you have a learning difficulty, disability or health problem?<
 
 WriteLiteral(" for=\"disability-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n            <input");
 
@@ -2637,7 +2637,7 @@ WriteLiteral(">Yes\r\n        </label>\r\n        <label");
 
 WriteLiteral(" for=\"disability-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n            <input");
 
@@ -2653,7 +2653,7 @@ WriteLiteral(">No\r\n        </label>\r\n        <label");
 
 WriteLiteral(" for=\"disability-prefno\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n            <input");
 
@@ -2717,7 +2717,7 @@ WriteLiteral(" data-target=\"support-panel\"");
 
 WriteLiteral(" for=\"support-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n                <input");
 
@@ -2735,7 +2735,7 @@ WriteLiteral(">Yes\r\n            </label>\r\n            <label");
 
 WriteLiteral(" for=\"support-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n                <input checked");
 

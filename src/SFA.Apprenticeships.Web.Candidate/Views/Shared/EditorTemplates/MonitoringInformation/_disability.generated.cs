@@ -67,7 +67,7 @@ WriteLiteral(">Do you have a learning difficulty, disability or health problem?<
 
 WriteLiteral(" for=\"disability-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -84,7 +84,7 @@ WriteLiteral(" Yes\r\n    </label>\r\n    <label");
 
 WriteLiteral(" for=\"disability-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -101,7 +101,7 @@ WriteLiteral(" No\r\n    </label>\r\n    <label");
 
 WriteLiteral(" for=\"disability-prefer-not-to-say\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -165,7 +165,7 @@ WriteLiteral(" data-target=\"support-panel\"");
 
 WriteLiteral(" for=\"disability-support-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -182,7 +182,7 @@ WriteLiteral(" Yes\r\n        </label>\r\n        <label");
 
 WriteLiteral(" for=\"disability-support-no\"");
 
-WriteLiteral(" class=\"block-label hide-nojs\"");
+WriteLiteral(" class=\"block-label selection-button-radio hide-nojs\"");
 
 WriteLiteral(">\r\n");
 
