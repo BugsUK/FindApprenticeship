@@ -31,9 +31,9 @@
             var document = new ValidationSummaryDocument(view.RenderAsHtml(viewModel));
 
             //Assert
-            document.ErrorsClass.Should().StartWith("validation-summary-valid");
+            document.ErrorsClass.Should().StartWith("error-summary sfa-hide");
             document.ErrorsClass.Should().NotContain("-errors");
-            document.WarningsClass.Should().StartWith("validation-summary-valid");
+            document.WarningsClass.Should().StartWith("warning-summary sfa-hide");
             document.WarningsClass.Should().NotContain("-warnings");
             document.Errors.Count.Should().Be(0);
             document.Warnings.Count.Should().Be(0);
@@ -86,9 +86,9 @@
             var document = new ValidationSummaryDocument(view.RenderAsHtml(viewModel));
 
             //Assert
-            document.ErrorsClass.Should().StartWith("validation-summary-valid");
+            document.ErrorsClass.Should().StartWith("error-summary sfa-hide");
             document.ErrorsClass.Should().NotContain("-errors");
-            document.WarningsClass.Should().StartWith("validation-summary-valid");
+            document.WarningsClass.Should().StartWith("warning-summary sfa-hide");
             document.WarningsClass.Should().NotContain("-warnings");
             document.Errors.Count.Should().Be(0);
             document.Warnings.Count.Should().Be(0);
@@ -112,9 +112,9 @@
             var document = new ValidationSummaryDocument(view.RenderAsHtml(viewModel));
 
             //Assert
-            document.ErrorsClass.Should().StartWith("validation-summary-errors");
+            document.ErrorsClass.Should().StartWith("error-summary");
             document.ErrorsClass.Should().NotContain("-valid");
-            document.WarningsClass.Should().StartWith("validation-summary-warnings");
+            document.WarningsClass.Should().StartWith("warning-summary");
             document.WarningsClass.Should().NotContain("-valid");
             document.Errors.Count.Should().Be(2);
             document.Warnings.Count.Should().Be(2);
