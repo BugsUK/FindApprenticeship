@@ -7,6 +7,8 @@ using Swashbuckle.Application;
 
 namespace SFA.DAS.RAA.Api
 {
+    using Services;
+
     public class SwaggerConfig
     {
         public static void Register()
@@ -58,9 +60,9 @@ namespace SFA.DAS.RAA.Api
                         //    .Description("Basic HTTP Authentication");
                         //
 						// NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
-                        c.ApiKey("api_key")
+                        c.ApiKey(ApiKeyAuthenticationService.ApiKeyKey)
                             .Description("API Key Authentication")
-                            .Name("api_key")
+                            .Name(ApiKeyAuthenticationService.ApiKeyKey)
                             .In("query");
                         //
                         //c.OAuth2("oauth2")
@@ -239,7 +241,7 @@ namespace SFA.DAS.RAA.Api
                         // If your API supports ApiKey, you can override the default values.
                         // "apiKeyIn" can either be "query" or "header"                                                
                         //
-                        c.EnableApiKeySupport("api_key", "query");
+                        c.EnableApiKeySupport(ApiKeyAuthenticationService.ApiKeyKey, "query");
                     });
         }
     }
