@@ -324,9 +324,9 @@
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId,
                 Status = VacancyStatus.Draft,
-                VacancyLocationType = vacancyMinimumData.EmployerApprenticeshipLocation,
+                VacancyLocationType = vacancyMinimumData.VacancyLocationType,
                 NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
-                Address = vacancyMinimumData.EmployerApprenticeshipLocation == VacancyLocationType.SpecificLocation ? employer.Address : null,
+                Address = vacancyMinimumData.VacancyLocationType == VacancyLocationType.SpecificLocation ? employer.Address : null,
                 ContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),

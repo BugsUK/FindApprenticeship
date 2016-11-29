@@ -177,14 +177,17 @@
                     SetUserMessage(response.Message);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
-                    if (viewModel.ComeFromPreview &&
+                    if ((viewModel.ComeFromPreview &&
                         response.ViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation)
+                        || (viewModel.ComeFromPreview &&
+                        response.ViewModel.VacancyLocationType == VacancyLocationType.Nationwide))
                     {
                         return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
                     }
 
-                    if (response.ViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation)
+                    if (response.ViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation ||
+                        response.ViewModel.VacancyLocationType == VacancyLocationType.Nationwide)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { vacancyOwnerRelationshipId = response.ViewModel.VacancyOwnerRelationshipId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }

@@ -299,12 +299,13 @@
         {
             var vacancyMinimumData = new VacancyMinimumData
             {
-                EmployerApprenticeshipLocation =
+                VacancyLocationType =
                     viewModel.VacancyLocationType,
-                NumberOfPositions = viewModel.NumberOfPositions,
+                NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions,
                 Ukprn = ukprn,
                 VacancyGuid = viewModel.VacancyGuid,
-                VacancyOwnerRelationshipId = viewModel.VacancyOwnerRelationshipId,
+                VacancyOwnerRelationshipId = viewModel.VacancyOwnerRelationshipId
             };
             if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
             {
@@ -329,7 +330,7 @@
 
                 var vacancyData = new VacancyMinimumData
                 {
-                    EmployerApprenticeshipLocation =
+                    VacancyLocationType =
                         viewModel.VacancyLocationType,
                     NumberOfPositions = viewModel.NumberOfPositions,
                     Ukprn = ukprn,

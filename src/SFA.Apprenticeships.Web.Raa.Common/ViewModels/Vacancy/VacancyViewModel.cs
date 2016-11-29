@@ -87,6 +87,8 @@
 
         public bool IsSingleLocation => NewVacancyViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation;
 
+        public bool IsNationwideLocation => NewVacancyViewModel.VacancyLocationType == VacancyLocationType.Nationwide;
+
         public bool IsCandidateView { get; set; }
 
         public bool IsManageReviewerView { get; set; }

@@ -59,8 +59,8 @@
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
 
-        //[Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsForNationWide.LabelText)]
-        //public int? NumberOfPositionsForNationWide { get; set; }
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsNationwide.LabelText)]
+        public int? NumberOfPositionsNationwide { get; set; }
 
         public bool ComeFromPreview { get; set; }
 
@@ -78,7 +78,7 @@
         public string NumberOfPositionsComment { get; set; }
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsForNationWideComment.LabelText)]
-        public string NumberOfPositionsForNationWideComment { get; set; }
+        public string NumberOfPositionsNationwideComment { get; set; }
 
         public bool IsEmployerAddressValid { get; set; }
     }

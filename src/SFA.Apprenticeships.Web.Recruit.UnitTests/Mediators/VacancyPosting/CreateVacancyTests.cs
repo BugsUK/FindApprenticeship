@@ -258,7 +258,7 @@
                 Ukprn = ukprn,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacanyPartyId,
-                EmployerApprenticeshipLocation = employerApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 EmployerWebsiteUrl = employerWebsiteUrl,
                 EmployerDescription = employerDescription
@@ -347,7 +347,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                EmployerApprenticeshipLocation = employerApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,
@@ -421,7 +421,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                EmployerApprenticeshipLocation = employerApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,
@@ -476,7 +476,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                EmployerApprenticeshipLocation = employerApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,
