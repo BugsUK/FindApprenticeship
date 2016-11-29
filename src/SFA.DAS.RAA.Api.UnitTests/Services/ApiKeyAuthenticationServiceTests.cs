@@ -1,12 +1,17 @@
 ﻿namespace SFA.DAS.RAA.Api.UnitTests.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Security.Principal;
     using Api.Services;
+    using Entities;
+    using Extensions;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
+    using Repositories;
 
     [TestFixture]
     public class ApiKeyAuthenticationServiceTests
@@ -16,18 +21,127 @@
         private const string ValidProviderApiKey = "PROVIDER";
         private const string ValidEmployerApiKey = "EMPLOYER";
 
+        private readonly RaaApiUser _validApiUser = new RaaApiUser
+        {
+            Name = ValidApiKey,
+            Id = 1,
+            Guid = Guid.NewGuid()
+        };
+
+        private readonly RaaApiUser _validProviderApiUser = new RaaApiUser
+        {
+            Name = ValidProviderApiKey,
+            UserType = RaaApiUserType.Provider,
+            Id = 2,
+            Guid = Guid.NewGuid(),
+            SurrogateId = "10033670"
+        };
+
+        private readonly RaaApiUser _validEmployerApiUser = new RaaApiUser
+        {
+            Name = ValidEmployerApiKey,
+            UserType = RaaApiUserType.Employer,
+            Id = 3,
+            Guid = Guid.NewGuid(),
+            SurrogateId = "228616654"
+        };
+
+        private Mock<IRaaApiUserRepository> _raaApiUserRepository;
+        private IAuthenticationService _authenticationService;
+
+        [SetUp]
+        public void Setup()
+        {
+            _raaApiUserRepository = new Mock<IRaaApiUserRepository>();
+            _raaApiUserRepository.Setup(r => r.GetUser(It.IsAny<string>())).Returns(RaaApiUser.UnknownApiUser);
+            _raaApiUserRepository.Setup(r => r.GetUser(ValidApiKey)).Returns(_validApiUser);
+            _raaApiUserRepository.Setup(r => r.GetUser(ValidProviderApiKey)).Returns(_validProviderApiUser);
+            _raaApiUserRepository.Setup(r => r.GetUser(ValidEmployerApiKey)).Returns(_validEmployerApiUser);
+
+            _authenticationService = new ApiKeyAuthenticationService(_raaApiUserRepository.Object);
+        }
+
         [Test]
         public void NoApiKeyTest()
         {
-            var service = new ApiKeyAuthenticationService();
+            var principal = _authenticationService.Authenticate(new Dictionary<string, string>());
 
-            var principal = service.Authenticate(new Dictionary<string, string>());
-
-            var claimsIdentity = ValidatePrincipal(principal, false);
-            claimsIdentity.Claims.Count().Should().Be(0);
+            ValidatePrincipal(principal, false, 0);
         }
 
-        private static ClaimsIdentity ValidatePrincipal(IPrincipal principal, bool expectedIsAuthenticated)
+        [Test]
+        public void InvalidApiKeyTest()
+        {
+            var claims = new Dictionary<string, string>
+            {
+                { ApiKeyAuthenticationService.ApiKeyKey, InvalidApiKey }
+            };
+            var principal = _authenticationService.Authenticate(claims);
+
+            var claimsIdentity = ValidatePrincipal(principal, false, 3);
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == InvalidApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == RaaApiUser.UnknownApiUser.Name).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.Name.Should().Be(RaaApiUser.UnknownApiUser.Name);
+            var raaApiUser = claimsIdentity.GetRaaApiUser();
+            raaApiUser.Equals(RaaApiUser.UnknownApiUser).Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidApiKeyTest()
+        {
+            var claims = new Dictionary<string, string>
+            {
+                { ApiKeyAuthenticationService.ApiKeyKey, ValidApiKey }
+            };
+            var principal = _authenticationService.Authenticate(claims);
+
+            var claimsIdentity = ValidatePrincipal(principal, true, 3);
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == ValidApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == ValidApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.Name.Should().Be(ValidApiKey);
+            var raaApiUser = claimsIdentity.GetRaaApiUser();
+            raaApiUser.Equals(_validApiUser).Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidProviderApiKeyTest()
+        {
+            var claims = new Dictionary<string, string>
+            {
+                { ApiKeyAuthenticationService.ApiKeyKey, ValidProviderApiKey }
+            };
+            var principal = _authenticationService.Authenticate(claims);
+
+            var claimsIdentity = ValidatePrincipal(principal, true, 3);
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == ValidProviderApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == ValidProviderApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.Name.Should().Be(ValidProviderApiKey);
+            var raaApiUser = claimsIdentity.GetRaaApiUser();
+            raaApiUser.Equals(_validProviderApiUser).Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidEmployerApiKeyTest()
+        {
+            var claims = new Dictionary<string, string>
+            {
+                { ApiKeyAuthenticationService.ApiKeyKey, ValidEmployerApiKey }
+            };
+            var principal = _authenticationService.Authenticate(claims);
+
+            var claimsIdentity = ValidatePrincipal(principal, true, 3);
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == ValidEmployerApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == ValidEmployerApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.Name.Should().Be(ValidEmployerApiKey);
+            var raaApiUser = claimsIdentity.GetRaaApiUser();
+            raaApiUser.Equals(_validEmployerApiUser).Should().BeTrue();
+        }
+
+        private static ClaimsIdentity ValidatePrincipal(IPrincipal principal, bool expectedIsAuthenticated, int expectedClaimsCount)
         {
             principal.Should().NotBeNull();
             principal.Should().BeOfType<ClaimsPrincipal>();
@@ -37,39 +151,8 @@
             identity.Should().BeOfType<ClaimsIdentity>();
             var claimsIdentity = (ClaimsIdentity) identity;
             claimsIdentity.IsAuthenticated.Should().Be(expectedIsAuthenticated);
+            claimsIdentity.Claims.Count().Should().Be(expectedClaimsCount);
             return claimsIdentity;
-        }
-
-        [Test]
-        public void InvalidApiKeyTest()
-        {
-            var service = new ApiKeyAuthenticationService();
-
-            var claims = new Dictionary<string, string>
-            {
-                { ApiKeyAuthenticationService.ApiKeyKey, InvalidApiKey }
-            };
-            var principal = service.Authenticate(claims);
-
-            var claimsIdentity = ValidatePrincipal(principal, false);
-            claimsIdentity.Claims.Count().Should().Be(1);
-            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == InvalidApiKey).Should().BeTrue();
-        }
-
-        [Test]
-        public void ValidApiKeyTest()
-        {
-            var service = new ApiKeyAuthenticationService();
-
-            var claims = new Dictionary<string, string>
-            {
-                { ApiKeyAuthenticationService.ApiKeyKey, ValidApiKey }
-            };
-            var principal = service.Authenticate(claims);
-
-            var claimsIdentity = ValidatePrincipal(principal, true);
-            claimsIdentity.Claims.Count().Should().Be(1);
-            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == InvalidApiKey).Should().BeTrue();
         }
     }
 }

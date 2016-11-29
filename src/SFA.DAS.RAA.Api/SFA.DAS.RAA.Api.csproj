@@ -194,6 +194,9 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\VacancySummaryController.cs" />
+    <Compile Include="Entities\RaaApiUser.cs" />
+    <Compile Include="Entities\RaaApiUserType.cs" />
+    <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
     <Compile Include="Extensions\HttpRequestMessageExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -203,8 +206,10 @@
     </Compile>
     <Compile Include="Handlers\ApiKeyHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IRaaApiUserRepository.cs" />
     <Compile Include="Services\ApiKeyAuthenticationService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Strategies\IAuthenticationStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\sfadasraaapi - FTP.pubxml" />
