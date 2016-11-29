@@ -94,6 +94,7 @@
     <Compile Include="Repositories\IAgencyUserRepository.cs" />
     <Compile Include="Repositories\IApiUserRepository.cs" />
     <Compile Include="Repositories\IProviderRepository.cs" />
+    <Compile Include="Repositories\IRaaApiUserRepository.cs" />
     <Compile Include="Repositories\IVacancyLocationRepository.cs" />
     <Compile Include="Repositories\IVacancyOwnerRelationshipRepository.cs" />
     <Compile Include="Repositories\IVacancyReadRepository.cs" />

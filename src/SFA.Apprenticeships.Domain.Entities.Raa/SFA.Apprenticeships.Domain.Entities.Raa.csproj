@@ -85,6 +85,8 @@
     <Compile Include="Api\ApiEmployeeType.cs" />
     <Compile Include="Api\ApiEndpoint.cs" />
     <Compile Include="Api\ApiUser.cs" />
+    <Compile Include="RaaApi\RaaApiUser.cs" />
+    <Compile Include="RaaApi\RaaApiUserType.cs" />
     <Compile Include="ICreatableEntity.cs" />
     <Compile Include="IUpdatableEntity.cs" />
     <Compile Include="Locations\GeoPoint.cs" />

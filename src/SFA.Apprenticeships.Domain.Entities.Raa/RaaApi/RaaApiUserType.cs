@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.RAA.Api.Entities
+﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.RaaApi
 {
     public enum RaaApiUserType
     {

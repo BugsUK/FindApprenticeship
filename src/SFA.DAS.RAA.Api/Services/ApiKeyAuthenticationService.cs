@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Security.Principal;
+    using Apprenticeships.Domain.Entities.Raa.RaaApi;
+    using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Constants;
-    using Entities;
     using Newtonsoft.Json;
-    using Repositories;
 
     public class ApiKeyAuthenticationService : IAuthenticationService
     {

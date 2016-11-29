@@ -2,17 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Security.Principal;
     using Api.Services;
+    using Apprenticeships.Domain.Entities.Raa.RaaApi;
+    using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Constants;
-    using Entities;
     using Extensions;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Repositories;
 
     [TestFixture]
     public class ApiKeyAuthenticationServiceTests

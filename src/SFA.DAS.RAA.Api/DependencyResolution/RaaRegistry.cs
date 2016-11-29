@@ -1,7 +1,8 @@
 namespace SFA.DAS.RAA.Api.DependencyResolution
 {
     using Services;
-    using StructureMap;
+    using StructureMap.Configuration.DSL;
+    using StructureMap.Graph;
 
     public class RaaRegistry : Registry
     {

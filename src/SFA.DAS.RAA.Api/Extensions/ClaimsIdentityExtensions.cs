@@ -1,7 +1,8 @@
 ﻿namespace SFA.DAS.RAA.Api.Extensions
 {
     using System.Security.Claims;
-    using Entities;
+    using Apprenticeships.Domain.Entities.Raa.Api;
+    using Apprenticeships.Domain.Entities.Raa.RaaApi;
     using Newtonsoft.Json;
 
     public static class ClaimsIdentityExtensions

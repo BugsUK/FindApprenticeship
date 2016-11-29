@@ -11,6 +11,7 @@
     using Schemas.Reference;
     using Schemas.UserProfile;
     using Application.Interfaces;
+    using Schemas.RaaApi;
     using StructureMap.Configuration.DSL;
 
     public class RepositoriesRegistry : Registry
@@ -34,6 +35,7 @@
             For<IReportingRepository>().Use<ReportingRepository>();
             For<IReferenceNumberRepository>().Use<ReferenceNumberRepository>();
             For<IApiUserRepository>().Use<ApiUserRepository>();
+            For<IRaaApiUserRepository>().Use<RaaApiUserRepository>();
         }
     }
 }
