@@ -31,7 +31,7 @@
                 var addAnotherLocationStatus = "";
                 if (ViewData.ModelState.Keys.Contains("PostcodeSearch"))
                 {
-                    className += " input-validation-error";
+                    className += " error";
                     addAnotherLocationStatus = "open";
                 }
             }
@@ -40,7 +40,7 @@
             {
                 <div class="@className">
                     <a name="postcodesearch"></a>
-                    <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
+                    <label class="bold-small form-label-bold" for="PostcodeSearch">Enter the vacancy postcode</label>
                     <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
                     @Html.ValidationMessage("PostcodeSearch")
                 </div>
@@ -51,7 +51,7 @@
                 <details @addAnotherLocationStatus>
                     <summary>Add another location</summary>
                     <div class="@className">
-                        <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
+                        <label class="bold-small form-label-bold" for="PostcodeSearch">Enter the vacancy postcode</label>
                         <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
                         @Html.ValidationMessage("PostcodeSearch")
                     </div>
@@ -62,9 +62,9 @@
 
         @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Page != null && Model.SearchResultAddresses.Page.Any())
         {
-            <div class="form-group grid grid-1-2 scrolling-panel max-height-15">
-                <div class="tabbed-element tab1 active width-all-1-1">
-                    <table class="no-btm-margin">
+            <div class="form-group column-1-2 scrolling-panel max-height-15">
+                <div class="tabbed-element tab1 active form-control-3-4 beepboop">
+                    <table class="sfa-no-bottom-margin">
                         <colgroup>
                             <col class="t70">
                             <col class="t30">
@@ -103,8 +103,8 @@
         {
             <div class="form-group">
                 <a name="locationaddresses"></a>
-                <div class="tabbed-element tab1 active width-all-1-1">
-                    <table class="no-btm-margin grid-3-4">
+                <div class="tabbed-element tab1 active form-control-3-4 beepboop">
+                    <table class="sfa-no-bottom-margin grid-3-4">
                         <colgroup>
                             <col class="t50">
                             <col class="t30">
@@ -158,7 +158,7 @@
             @Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment))
 
             <div class="form-group">
-                @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
+                @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
                 @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
             </div>
         }
@@ -168,7 +168,7 @@
 <div class="hide-nojs" id="locationAddressesTable">
     <div id="address-lookup">
         <div class="form-group form-group-compound" id="addressInputWrapper">
-            <label for="postcode-search" class="form-label bold-small">Enter the vacancy location or postcode</label>
+            <label for="postcode-search" class="form-label-bold bold-small">Enter the vacancy location or postcode</label>
             <div class="hgroup-medium">
                 <p class="subtitle">You have chosen for this employer to be anonymous. Only the town or city for each location will be visible to candidates.</p>
             </div>
@@ -235,7 +235,7 @@
         </div>
 
         <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
-            @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
+            @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
         </div>
     </div>

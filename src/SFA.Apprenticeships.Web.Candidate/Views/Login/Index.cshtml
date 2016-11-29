@@ -7,8 +7,8 @@
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-2">
+<div class="grid-row">
+    <div class="column-one-half">
         @using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post))
         {
             @Html.AntiForgeryToken();
@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <a id="password"></a>
-                @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                @Html.LabelFor(m => m.Password, new { @class = "form-label-bold" })
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
                 @Html.ValidationMessageFor(m => m.Password, null)
 
@@ -46,7 +46,7 @@
             </div>
         }
     </div>
-    <div class="grid grid-1-2">
+    <div class="column-one-half">
         <h2 class="heading-large">New to this service?</h2>
         <div class="text">
             <p>

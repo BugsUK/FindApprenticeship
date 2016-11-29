@@ -46,7 +46,7 @@ window.googleMapsScriptLoaded = function()
 			};
 		},
 
-		apiScriptLoaded	 = false,
+		apiScriptLoaded	 = true,
 		apiScriptLoading = false,
 		$containers		 = $([]),
 
@@ -64,14 +64,14 @@ window.googleMapsScriptLoaded = function()
 
 				if( !apiScriptLoaded && !apiScriptLoading )
 				{
-					$body.append( '<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded' + ( thisOptions.api_key ? ( '&key=' + thisOptions.api_key ) : '' ) + '"></script>' );
+					$body.append( '<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded' + ( thisOptions.api_key ? ( '&client=' + thisOptions.api_key ) : '' ) + '"></script>' );
 					apiScriptLoading = true;
 				}
 
 				if( !apiScriptLoaded ) return true;
 
 				var map = new google.maps.Map( this, { zoom: 15 });
-				if( thisOptions.callback !== false )
+				if (thisOptions && thisOptions.callback !== false)
 					thisOptions.callback( this, map );
 
 				$containers = $containers.not( $this );

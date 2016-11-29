@@ -27,6 +27,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -98,7 +99,7 @@ WriteLiteral("        ");
 
             
             #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.cshtml"
-   Write(Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" }));
 
             
             #line default
@@ -120,7 +121,7 @@ WriteLiteral("        ");
 
             
             #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.cshtml"
-   Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" }));
 
             
             #line default

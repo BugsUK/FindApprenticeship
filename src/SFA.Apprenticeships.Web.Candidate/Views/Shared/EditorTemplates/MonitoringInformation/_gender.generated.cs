@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_gender.cshtml")]
@@ -57,7 +58,7 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n    <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"gender-label\"");
 

@@ -23,20 +23,20 @@
         <input type="hidden" name="@Html.NameFor(m => m.SelectedApplicationIds)" value="@selectedApplicationId" />
     }
 
-    <div class="grid-wrapper">
-        <section class="grid grid-2-3">
+    <div class="grid-row">
+        <section class="column-two-thirds">
             <div class="inner-block-padr">
                 <h1 id="heading" class="heading-xlarge">Select the candidates you would like to make unsucessful</h1>
             </div>
         </section>
-        <section class="grid grid-1-3 gov-border grey-background">
+        <section class="column-one-third gov-border grey-background">
             <br/>
             <div class="inner-block">
                 <div class="hgroup-small">
                     <h2 class="heading-medium">
                         @Model.Title
                     </h2>
-                    <p class="subtitle">
+                    <p class="heading-secondary ">
                         @Model.EmployerName
                     </p>
                     <br/>
@@ -47,8 +47,8 @@
                 </div>
             </div>
         </section>
-        <section class="grid-wrapper">
-            <section class="no-btm-margin" id="applicationsSection">
+        <section class="grid-row">
+            <section class="sfa-no-bottom-margin" id="applicationsSection">
                 @{
                     var filterType = Model.VacancyApplicationsSearch.FilterType;
                 }

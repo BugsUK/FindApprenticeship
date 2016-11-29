@@ -1,4 +1,4 @@
-﻿// provides the matching for location town/city or postcode
+// provides the matching for location town/city or postcode
 (function($) {
     $.fn.locationMatch = function(options) {
         var self = $(this);

@@ -1,7 +1,7 @@
 ﻿@model MonitoringInformationViewModel
 
 <div class="form-group inline clearfix">
-    <p class="form-label" id="gender-label">Are you?</p>
+    <p class="form-label-bold" id="gender-label">Are you?</p>
     <label for="gender-male" class="block-label">
         @Html.RadioButtonFor(m => m.Gender, 1, new { id = "gender-male", aria_labelledby = "gender-label" }) Male
     </label>

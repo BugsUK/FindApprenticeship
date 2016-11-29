@@ -50,7 +50,7 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n        <ul");
 

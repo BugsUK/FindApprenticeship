@@ -59,8 +59,8 @@
 
     if (Model.Candidates != null && Model.Candidates.ResultsCount > 0)
     {
-        <div class="grid-wrapper">
-            <div class="grid grid-1-1">
+        <div class="grid-row">
+            <div class="column-full">
                 <p class="candidate-results-count">
                     @if (Model.Candidates.ResultsCount == 1)
                     {
@@ -121,15 +121,15 @@
 
                 <a href="@prevLink"
                    style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
-                   class="page-navigation__btn previous grid grid-1-3">
+                   class="page-navigation__btn previous grid column-one-third">
                     <i class="arrow-button fa fa-angle-left"></i>
                     <span class="description">Previous <span class="hide-mob">page</span></span>
                     <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
                 </a>
 
-                <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
+                <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
                     <label for="page-size" class="heading-small inline">Display results</label>
-                    @Html.DropDownListFor(m => m.SearchViewModel.PageSize, Model.SearchViewModel.PageSizes, new { id = "page-size" })
+                    @Html.DropDownListFor(m => m.SearchViewModel.PageSize, Model.SearchViewModel.PageSizes, new { id = "page-size", @class = "form-control" })
                     <noscript>
                         <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
                     </noscript>
@@ -137,7 +137,7 @@
 
                 <a href="@nextLink"
                    style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
-                   class="page-navigation__btn next grid grid-1-3">
+                   class="page-navigation__btn next grid column-one-third">
                     <i class="arrow-button fa fa-angle-right"></i>
                     <span class="description">Next <span class="hide-mob">page</span></span>
                     <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>

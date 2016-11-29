@@ -80,7 +80,7 @@ WriteLiteral("\r\n\r\n");
             #line hidden
 WriteLiteral("    <section");
 
-WriteLiteral(" class=\"section-border grid-wrapper\"");
+WriteLiteral(" class=\"section-border grid-row\"");
 
 WriteLiteral(" id=\"provider-info\"");
 
@@ -90,7 +90,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Training provider</h2>\r\n        <div");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n            <div");
 
@@ -362,7 +362,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                    </div>\r\n                </div>\r\n            </div>\r\n        <" +
 "/div>\r\n        <div");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n            <div");
 
@@ -387,15 +387,15 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4182), Tuple.Create("\"", 4213)
-, Tuple.Create(Tuple.Create("", 4190), Tuple.Create("text", 4190), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4185), Tuple.Create("\"", 4216)
+, Tuple.Create(Tuple.Create("", 4193), Tuple.Create("text", 4193), true)
             
             #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4194), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create(" ", 4197), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 4195), false)
+, 4198), false)
 );
 
 WriteLiteral(">\r\n                <h3");

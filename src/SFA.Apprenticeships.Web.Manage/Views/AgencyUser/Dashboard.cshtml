@@ -19,15 +19,15 @@
 }
 @using (Html.BeginForm(null, "AgencyUser", FormMethod.Post))
 {
-    <div class="grid-wrapper">
-        <div class="grid grid-1-2">
+    <div class="grid-row">
+        <div class="column-one-half">
             <div class="inner-block-padr">
                 <h1 class="heading-xlarge">
                     Agency home
                 </h1>
             </div>
         </div>
-        <div class="grid grid-1-2">
+        <div class="column-one-half">
             <h2 class="heading-small">Change role</h2>
             @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new { id = "role", @class = "chosen-select grid grid-1-1" })
             @if (Model.AgencyUser.RoleId != "QA_advisor")
@@ -42,13 +42,13 @@
 
     if (Model.AgencyUser.RoleId == "QA_advisor")
     {
-        <div class="grid-wrapper">
-            <div class="grid grid-1-2">
+        <div class="grid-row">
+            <div class="column-one-half">
                 <h2 class="heading-medium">
                     Review vacancies
                 </h2>
             </div>
-            <div class="grid grid-1-2">
+            <div class="column-one-half">
                 <h2 class="heading-small">Change team</h2>
                 @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams,
                     new { id = "regional-team", @class = "chosen-select grid grid-1-1" })
@@ -56,13 +56,13 @@
                     <button class="button" name="DashboardAction" value="ChangeTeam">Change team</button>
                 </noscript>
             </div>
-            <div class="grid grid-1-2">
+            <div class="column-one-half">
                 &nbsp;
             </div>
-            <div class="grid grid-1-2">
+            <div class="column-one-half">
                 <label class="form-label" style="margin-top: 10px">Search your team's vacancies</label>
                 <div class="search-bar">
-                    @Html.DropDownListFor(m => m.VacancySummaries.SearchViewModel.SearchMode, Model.VacancySummaries.SearchViewModel.SearchModes, new { @class = "grey-background" })
+                    @Html.DropDownListFor(m => m.VacancySummaries.SearchViewModel.SearchMode, Model.VacancySummaries.SearchViewModel.SearchModes, new { @class = "form-control" })
                     <div class="search-input-wrapper">
                         @Html.TextBoxFor(m => m.VacancySummaries.SearchViewModel.SearchString,
                             new
@@ -87,38 +87,37 @@
                 </div>
             </div>
         </div>
-        <div class="grid-wrapper">
-            <div class="grid grid-1-1">
+        <div class="grid-row">
+            <div class="grid-row">
                 <nav class="tabbed-nav">
                     @Html.RouteLink(reviewTitle + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Review), new { @class = "tabbed-tab no-js" + reviewTabControlClass })
                     @Html.RouteLink("All teams", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Metrics), new { @class = "tabbed-tab no-js" + metricsTabControlClass })
                 </nav>
             </div>
-        </div>
 
-        <div class="tabbed-content active width-all-1-1">
-            @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Review)
-            {
-                @Html.Partial("_DashboardVacancyCounts", Model.VacancySummaries)
-                @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
-            }
-            @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
-            {
-                @Html.Partial("_DashboardTeamMetrics", Model)
-            }
+            <div class="tabbed-content active grid-row">
+                @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Review)
+                {
+                    @Html.Partial("_DashboardVacancyCounts", Model.VacancySummaries)
+                    @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
+                }
+            @if(dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
+                {
+                    @Html.Partial("_DashboardTeamMetrics", Model)
+                }
+            </div>
         </div>
-    }
+                        }
 
-    if (Model.AgencyUser.RoleId == "Helpdesk_advisor")
-    {
-        @Html.Partial("_DashboardHelpDesk")
-    }
-}
+    if(Model.AgencyUser.RoleId == "Helpdesk_advisor")
+                        {
+                            @Html.Partial("_DashboardHelpDesk")
+                            }
+                        }
 
 <div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
     Loading
 </div>
-
 @section scripts
 {
     @Scripts.Render("~/bundles/dashboard")

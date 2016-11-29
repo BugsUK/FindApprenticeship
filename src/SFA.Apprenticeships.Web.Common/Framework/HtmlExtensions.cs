@@ -116,7 +116,7 @@
             var validationType = GetValidationType(helper, expression);
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             var controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
-            var labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
+            var labelAttributes = MergeAttributes("form-label-bold", labelHtmlAttributes);
             var hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
 
             var validator = helper.ValidationMessageWithSeverityFor(expression, null, validationType);
@@ -173,7 +173,7 @@
         {
             if (validationType == ValidationType.Error)
             {
-                return HtmlHelper.ValidationInputCssClassName;
+                return Validators.HtmlHelper.ValidationInputCssClassName;
             }
             if (validationType == ValidationType.Warning)
             {
@@ -282,7 +282,7 @@
 
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             var subContainerAttributes = MergeAttributes("form-group form-group-compound", subContainerHtmlAttributes);
-            var labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
+            var labelAttributes = MergeAttributes("form-label-bold", labelHtmlAttributes);
             
             var yesLabelAttributes = MergeAttributes("block-label" + (value ? " selected" : ""), labelHtmlAttributes);
             var noLabelAttributes = MergeAttributes("block-label" + (!value ? " selected" : ""), labelHtmlAttributes);
@@ -442,9 +442,9 @@
 
         public static ValidationType GetValidationType<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
         {
-            var expressionText = ExpressionHelper.GetExpressionText(expression);
-            var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
-            var propertyName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
+            //var expressionText = ExpressionHelper.GetExpressionText(expression);
+            //var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
+            var propertyName = helper.NameFor(expression).ToString(); //string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
             return GetValidationType(helper, propertyName);
         }
 

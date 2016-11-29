@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/Index.cshtml")]
@@ -62,11 +63,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <section");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -86,7 +87,7 @@ WriteLiteral(">Use the new service</h2>\r\n            <p>Find and apply for app
 "ngland. You can create a new account if you haven’t got one.</p>\r\n\r\n            " +
 "<div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p>You won’t be able to sign in using your account details fro" +
 "m the original service.</p>\r\n            </div>\r\n\r\n            <div");
@@ -110,7 +111,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Before you start</h2>\r\n\r\n            <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p>The application process is different in <a");
 
@@ -176,7 +177,7 @@ WriteLiteral(" href=\"https://www.gov.uk/performance/bis-apprenticeship-vacancie
 
 WriteLiteral(">service is performing</a>.</p>\r\n        </div>\r\n    </section>\r\n    <section");
 
-WriteLiteral(" class=\"grid grid-1-3 gov-border\"");
+WriteLiteral(" class=\"column-one-third gov-border\"");
 
 WriteLiteral(">\r\n        <br>\r\n        <h2");
 

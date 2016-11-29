@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication.Disp
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipApplication/DisplayTemplates/EducationViewModel.cshtml")]
@@ -116,18 +117,18 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Name of most recent school/college</p>\r\n        <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 599), Tuple.Create("\"", 653)
+WriteAttribute("id", Tuple.Create(" id=\"", 604), Tuple.Create("\"", 658)
             
             #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 604), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.NameOfMostRecentSchoolCollege)
+, Tuple.Create(Tuple.Create("", 609), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.NameOfMostRecentSchoolCollege)
             
             #line default
             #line hidden
-, 604), false)
+, 609), false)
 );
 
 WriteLiteral(" class=\"form-prepopped\"");
@@ -147,7 +148,7 @@ WriteLiteral(" class=\"inline-fixed\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Years attended</p>\r\n        <div");
 
@@ -159,14 +160,14 @@ WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Started</span>\r\n            <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 942), Tuple.Create("\"", 975)
+WriteAttribute("id", Tuple.Create(" id=\"", 952), Tuple.Create("\"", 985)
             
             #line 22 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 947), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.FromYear)
+, Tuple.Create(Tuple.Create("", 957), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.FromYear)
             
             #line default
             #line hidden
-, 947), false)
+, 957), false)
 );
 
 WriteLiteral(" class=\"form-prepopped\"");
@@ -190,14 +191,14 @@ WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Finished</span>\r\n            <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1166), Tuple.Create("\"", 1197)
+WriteAttribute("id", Tuple.Create(" id=\"", 1176), Tuple.Create("\"", 1207)
             
             #line 26 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 1171), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.ToYear)
+, Tuple.Create(Tuple.Create("", 1181), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.ToYear)
             
             #line default
             #line hidden
-, 1171), false)
+, 1181), false)
 );
 
 WriteLiteral(" class=\"form-prepopped\"");

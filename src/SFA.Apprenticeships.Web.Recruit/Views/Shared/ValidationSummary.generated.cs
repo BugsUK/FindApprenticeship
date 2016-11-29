@@ -55,168 +55,77 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Shared
         }
         public override void Execute()
         {
-WriteLiteral("<div");
-
-WriteLiteral(" id=\"validation-summary-errors\"");
-
-WriteAttribute("class", Tuple.Create(" class=\'", 177), Tuple.Create("\'", 283)
             
             #line 5 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 185), Tuple.Create<System.Object, System.Int32>(Model.HasErrors() ? "validation-summary-errors" : "validation-summary-valid"
-            
-            #line default
-            #line hidden
-, 185), false)
-, Tuple.Create(Tuple.Create(" ", 264), Tuple.Create("panel", 265), true)
-, Tuple.Create(Tuple.Create(" ", 270), Tuple.Create("panel-danger", 271), true)
-);
-
-WriteLiteral(" data-valmsg-summary=\"true\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"panel-body\"");
-
-WriteLiteral(">\r\n        <ul>\r\n");
-
-            
-            #line 8 "..\..\Views\Shared\ValidationSummary.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 8 "..\..\Views\Shared\ValidationSummary.cshtml"
-             foreach (var modelKey in Model.Keys)
-            {
-                var modelState = Model[modelKey];
-
-                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
-                foreach (var modelError in modelState.Errors)
-                {
-                    if (modelError.GetType() == typeof (ModelError))
-                    {
-                        if (elementId == string.Empty)
-                        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                            <li>");
-
-            
-            #line 19 "..\..\Views\Shared\ValidationSummary.cshtml"
-                           Write(modelError.ErrorMessage);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</li>\r\n");
-
-            
-            #line 20 "..\..\Views\Shared\ValidationSummary.cshtml"
-                        }
-                        else
-                        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                            <li><a");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 1001), Tuple.Create("\"", 1032)
-, Tuple.Create(Tuple.Create("", 1008), Tuple.Create("#", 1008), true)
-            
-            #line 23 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 1009), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
-            
-            #line default
-            #line hidden
-, 1009), false)
-);
-
-WriteLiteral(">");
-
-            
-            #line 23 "..\..\Views\Shared\ValidationSummary.cshtml"
-                                                              Write(modelError.ErrorMessage);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a></li>\r\n");
-
-            
-            #line 24 "..\..\Views\Shared\ValidationSummary.cshtml"
-                        }
-                    }
-                }
-            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        </ul>\r\n    </div>\r\n</div>\r\n\r\n");
-
-            
-            #line 32 "..\..\Views\Shared\ValidationSummary.cshtml"
   
-    var hasWarnings = Model.HasWarnings();
+var hasWarnings = Model.HasWarnings();
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" id=\"validation-summary-warnings\"");
+WriteLiteral(" id=\"error-summary\"");
 
-WriteAttribute("class", Tuple.Create(" class=\'", 1280), Tuple.Create("\'", 1383)
+WriteAttribute("class", Tuple.Create(" class=\"", 214), Tuple.Create("\"", 275)
+, Tuple.Create(Tuple.Create("", 222), Tuple.Create("error-summary", 222), true)
             
-            #line 36 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 1288), Tuple.Create<System.Object, System.Int32>(hasWarnings ? "validation-summary-warnings" : "validation-summary-valid"
+            #line 9 "..\..\Views\Shared\ValidationSummary.cshtml"
+, Tuple.Create(Tuple.Create(" ", 235), Tuple.Create<System.Object, System.Int32>(!Model.HasErrors() ? "sfa-hide" : ""
             
             #line default
             #line hidden
-, 1288), false)
-, Tuple.Create(Tuple.Create(" ", 1363), Tuple.Create("panel", 1364), true)
-, Tuple.Create(Tuple.Create(" ", 1369), Tuple.Create("panel-warning", 1370), true)
+, 236), false)
 );
 
-WriteLiteral(">\r\n    <div");
+WriteLiteral(" role=\"group\"");
 
-WriteLiteral(" class=\"panel-body\"");
+WriteLiteral(" aria-labelledby=\"error-summary-heading-example-1\"");
 
-WriteLiteral(">\r\n        <ul>\r\n");
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">\r\n\r\n    <h1");
+
+WriteLiteral(" class=\"heading-medium error-summary-heading\"");
+
+WriteLiteral(" id=\"error-summary-heading-example-1\"");
+
+WriteLiteral(">\r\n        Message to alert the user to a problem goes here\r\n    </h1>\r\n\r\n    <p>" +
+"\r\n        Optional description of the errors and how to correct them\r\n    </p>\r\n" +
+"\r\n    <ul");
+
+WriteLiteral(" class=\"error-summary-list\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 39 "..\..\Views\Shared\ValidationSummary.cshtml"
-            
+            #line 20 "..\..\Views\Shared\ValidationSummary.cshtml"
+        
             
             #line default
             #line hidden
             
-            #line 39 "..\..\Views\Shared\ValidationSummary.cshtml"
-             foreach (var modelKey in Model.Keys)
+            #line 20 "..\..\Views\Shared\ValidationSummary.cshtml"
+         foreach (var modelKey in Model.Keys)
+        {
+            var modelState = Model[modelKey];
+
+            var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+            foreach (var modelError in modelState.Errors)
             {
-                var modelState = Model[modelKey];
-                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
-
-                var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof (ModelError));
-                foreach (var modelError in modelState.Errors)
+                if (modelError.GetType() == typeof(ModelError))
                 {
-                    if (modelError.GetType() == typeof (ModelWarning) && !anyError)
+                    if (elementId == string.Empty)
                     {
-                        if (elementId == string.Empty)
-                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <li>");
+WriteLiteral("                        <li>");
 
             
-            #line 51 "..\..\Views\Shared\ValidationSummary.cshtml"
-                           Write(modelError.ErrorMessage);
+            #line 31 "..\..\Views\Shared\ValidationSummary.cshtml"
+                       Write(modelError.ErrorMessage);
 
             
             #line default
@@ -224,32 +133,32 @@ WriteLiteral("                            <li>");
 WriteLiteral("</li>\r\n");
 
             
-            #line 52 "..\..\Views\Shared\ValidationSummary.cshtml"
-                        }
-                        else
-                        {
+            #line 32 "..\..\Views\Shared\ValidationSummary.cshtml"
+                    }
+                    else
+                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <li><a");
+WriteLiteral("                        <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2203), Tuple.Create("\"", 2234)
-, Tuple.Create(Tuple.Create("", 2210), Tuple.Create("#", 2210), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 1229), Tuple.Create("\"", 1260)
+, Tuple.Create(Tuple.Create("", 1236), Tuple.Create("#", 1236), true)
             
-            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 2211), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+            #line 35 "..\..\Views\Shared\ValidationSummary.cshtml"
+, Tuple.Create(Tuple.Create("", 1237), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 2211), false)
+, 1237), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
-                                                              Write(modelError.ErrorMessage);
+            #line 35 "..\..\Views\Shared\ValidationSummary.cshtml"
+                                                          Write(modelError.ErrorMessage);
 
             
             #line default
@@ -257,28 +166,137 @@ WriteLiteral(">");
 WriteLiteral("</a></li>\r\n");
 
             
-            #line 56 "..\..\Views\Shared\ValidationSummary.cshtml"
-                        }
+            #line 36 "..\..\Views\Shared\ValidationSummary.cshtml"
                     }
                 }
             }
+        }
 
             
             #line default
             #line hidden
-WriteLiteral("        </ul>\r\n");
+WriteLiteral("    </ul>\r\n\r\n</div>\r\n\r\n<div");
 
-WriteLiteral("        ");
+WriteLiteral(" id=\"warning-summary\"");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 1413), Tuple.Create("\"", 1470)
+, Tuple.Create(Tuple.Create("", 1421), Tuple.Create("warning-summary", 1421), true)
+            
+            #line 44 "..\..\Views\Shared\ValidationSummary.cshtml"
+, Tuple.Create(Tuple.Create(" ", 1436), Tuple.Create<System.Object, System.Int32>(!hasWarnings ? "sfa-hide" : ""
+            
+            #line default
+            #line hidden
+, 1437), false)
+);
+
+WriteLiteral(" role=\"group\"");
+
+WriteLiteral(" aria-labelledby=\"error-summary-heading-example-1\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">\r\n\r\n    <h1");
+
+WriteLiteral(" class=\"heading-medium error-summary-heading\"");
+
+WriteLiteral(" id=\"error-summary-heading-example-1\"");
+
+WriteLiteral(">\r\n        Message to alert the user to a problem goes here\r\n    </h1>\r\n\r\n    <p>" +
+"\r\n        Optional description of the errors and how to correct them\r\n    </p>\r\n" +
+"\r\n    <ul");
+
+WriteLiteral(" class=\"error-summary-list\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 61 "..\..\Views\Shared\ValidationSummary.cshtml"
-   Write(Html.Hidden("acceptWarnings", @hasWarnings));
+            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
+         foreach (var modelKey in Model.Keys)
+        {
+            var modelState = Model[modelKey];
+            var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+
+            var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof(ModelError));
+            foreach (var modelError in modelState.Errors)
+            {
+                if (modelError.GetType() == typeof(ModelWarning) && !anyError)
+                {
+                    if (elementId == string.Empty)
+                    {
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>");
+WriteLiteral("                        <li>");
 
+            
+            #line 67 "..\..\Views\Shared\ValidationSummary.cshtml"
+                       Write(modelError.ErrorMessage);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</li>\r\n");
+
+            
+            #line 68 "..\..\Views\Shared\ValidationSummary.cshtml"
+                    }
+                    else
+                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <li><a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 2548), Tuple.Create("\"", 2579)
+, Tuple.Create(Tuple.Create("", 2555), Tuple.Create("#", 2555), true)
+            
+            #line 71 "..\..\Views\Shared\ValidationSummary.cshtml"
+, Tuple.Create(Tuple.Create("", 2556), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+            
+            #line default
+            #line hidden
+, 2556), false)
+);
+
+WriteLiteral(">");
+
+            
+            #line 71 "..\..\Views\Shared\ValidationSummary.cshtml"
+                                                          Write(modelError.ErrorMessage);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a></li>\r\n");
+
+            
+            #line 72 "..\..\Views\Shared\ValidationSummary.cshtml"
+                    }
+                }
+            }
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    </ul>\r\n</div>\r\n\r\n\r\n");
+
+            
+            #line 80 "..\..\Views\Shared\ValidationSummary.cshtml"
+Write(Html.Hidden("acceptWarnings", hasWarnings));
+
+            
+            #line default
+            #line hidden
         }
     }
 }

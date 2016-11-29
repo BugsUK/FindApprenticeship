@@ -13,12 +13,13 @@
     Change vacancy dates
 </h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, 
+                            new RouteValueDictionary () { { "vacancyReferenceNumber", Model.VacancyReferenceNumber }}, 
+                            FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     @Html.HiddenFor(m => m.WarningsHash)
-    @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.Wage.Type)
     @Html.HiddenFor(m => m.Wage.Classification)
     @Html.HiddenFor(m => m.Wage.CustomType)

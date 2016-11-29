@@ -32,11 +32,11 @@
 {
     <button class="button hide-button" type="submit" name="ApplicationAction" value="Apply" tabindex="-1">Apply</button>
     @Html.AntiForgeryToken()
-    <div class="grid-wrapper">
-        <div class="grid grid-2-3">
+    <div class="grid-row">
+        <div class="column-two-thirds">
             <h1 class="heading-xlarge" id="appTourStart">Application form</h1>
         </div>
-        <div class="grid grid-1-3">
+        <div class="column-one-third">
             <div class="page-link hide-nojs">
                 <a href="#" id="runApplyTour"><i class="fa fa-question-circle"></i>How to apply for an apprenticeship</a>
                 <p>(interactive walkthrough)</p>
@@ -49,7 +49,7 @@
                 @Html.HiddenFor(m => m.VacancyDetail.Title)
                 <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
                 @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
-                <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
+                <p class="heading-secondary " id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
             </div>
             @Html.HiddenFor(m => m.VacancyDetail.Description)
             <p id="vacancy-summary" class="@Model.VacancyDetail.Description.GetPreserveFormattingCssClass()">@Model.VacancyDetail.Description</p>

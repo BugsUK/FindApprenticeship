@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
 
     $(document).on('click', '#single-offline-application-url-button', function (e) {
         e.preventDefault();

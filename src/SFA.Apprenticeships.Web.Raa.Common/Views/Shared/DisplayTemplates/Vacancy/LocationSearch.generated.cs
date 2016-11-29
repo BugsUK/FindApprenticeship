@@ -182,7 +182,7 @@ WriteLiteral(">\r\n");
                 var addAnotherLocationStatus = "";
                 if (ViewData.ModelState.Keys.Contains("PostcodeSearch"))
                 {
-                    className += " input-validation-error";
+                    className += " error";
                     addAnotherLocationStatus = "open";
                 }
             
@@ -207,14 +207,14 @@ WriteLiteral("\r\n\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1282), Tuple.Create("\"", 1300)
+WriteAttribute("class", Tuple.Create(" class=\"", 1265), Tuple.Create("\"", 1283)
             
             #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-, Tuple.Create(Tuple.Create("", 1290), Tuple.Create<System.Object, System.Int32>(className
+, Tuple.Create(Tuple.Create("", 1273), Tuple.Create<System.Object, System.Int32>(className
             
             #line default
             #line hidden
-, 1290), false)
+, 1273), false)
 );
 
 WriteLiteral(">\r\n                    <a");
@@ -223,7 +223,7 @@ WriteLiteral(" name=\"postcodesearch\"");
 
 WriteLiteral("></a>\r\n                    <label");
 
-WriteLiteral(" class=\"bold-small form-label\"");
+WriteLiteral(" class=\"bold-small form-label-bold\"");
 
 WriteLiteral(" for=\"PostcodeSearch\"");
 
@@ -287,19 +287,19 @@ WriteLiteral("                <details ");
 WriteLiteral(">\r\n                    <summary>Add another location</summary>\r\n                 " +
 "   <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2005), Tuple.Create("\"", 2023)
+WriteAttribute("class", Tuple.Create(" class=\"", 1993), Tuple.Create("\"", 2011)
             
             #line 53 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-, Tuple.Create(Tuple.Create("", 2013), Tuple.Create<System.Object, System.Int32>(className
+, Tuple.Create(Tuple.Create("", 2001), Tuple.Create<System.Object, System.Int32>(className
             
             #line default
             #line hidden
-, 2013), false)
+, 2001), false)
 );
 
 WriteLiteral(">\r\n                        <label");
 
-WriteLiteral(" class=\"bold-small form-label\"");
+WriteLiteral(" class=\"bold-small form-label-bold\"");
 
 WriteLiteral(" for=\"PostcodeSearch\"");
 
@@ -365,15 +365,15 @@ WriteLiteral("        </div>\r\n\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"form-group grid grid-1-2 scrolling-panel max-height-15\"");
+WriteLiteral(" class=\"form-group column-1-2 scrolling-panel max-height-15\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"tabbed-element tab1 active width-all-1-1\"");
+WriteLiteral(" class=\"tabbed-element tab1 active form-control-3-4 beepboop\"");
 
 WriteLiteral(">\r\n                    <table");
 
-WriteLiteral(" class=\"no-btm-margin\"");
+WriteLiteral(" class=\"sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                        <colgroup>\r\n                            <col");
 
@@ -487,14 +487,14 @@ WriteLiteral(" class=\"button-link use-location-button-link add-location-link\""
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4360), Tuple.Create("\"", 4379)
+WriteAttribute("value", Tuple.Create(" value=\"", 4369), Tuple.Create("\"", 4388)
             
             #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                                     , Tuple.Create(Tuple.Create("", 4368), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                                     , Tuple.Create(Tuple.Create("", 4377), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 4368), false)
+, 4377), false)
 );
 
 WriteLiteral(">add location</button>\r\n                                </td>\r\n                  " +
@@ -544,11 +544,11 @@ WriteLiteral(" name=\"locationaddresses\"");
 
 WriteLiteral("></a>\r\n                <div");
 
-WriteLiteral(" class=\"tabbed-element tab1 active width-all-1-1\"");
+WriteLiteral(" class=\"tabbed-element tab1 active form-control-3-4 beepboop\"");
 
 WriteLiteral(">\r\n                    <table");
 
-WriteLiteral(" class=\"no-btm-margin grid-3-4\"");
+WriteLiteral(" class=\"sfa-no-bottom-margin grid-3-4\"");
 
 WriteLiteral(">\r\n                        <colgroup>\r\n                            <col");
 
@@ -796,14 +796,14 @@ WriteLiteral(" class=\"button-link remove-button-link\"");
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8671), Tuple.Create("\"", 8690)
+WriteAttribute("value", Tuple.Create(" value=\"", 8699), Tuple.Create("\"", 8718)
             
             #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 8679), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                , Tuple.Create(Tuple.Create("", 8707), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 8679), false)
+, 8707), false)
 );
 
 WriteLiteral(">remove location</button>\r\n                                </td>\r\n               " +
@@ -851,7 +851,7 @@ WriteLiteral("                ");
 
             
             #line 161 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-           Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
+           Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
 
             
             #line default
@@ -896,7 +896,7 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"postcode-search\"");
 
-WriteLiteral(" class=\"form-label bold-small\"");
+WriteLiteral(" class=\"form-label-bold bold-small\"");
 
 WriteLiteral(">Enter the vacancy location or postcode</label>\r\n            <div");
 
@@ -1155,7 +1155,7 @@ WriteLiteral("            ");
 
             
             #line 238 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-       Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" }));
+       Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
             #line default

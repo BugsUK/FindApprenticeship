@@ -101,11 +101,11 @@ WriteLiteral(" class=\"grid-3-4 nobreak-print\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"grid-wrapper training-history-item\"");
+WriteLiteral(" class=\"grid-row training-history-item\"");
 
 WriteLiteral(">\r\n\r\n                <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                    <table");
 
@@ -164,7 +164,7 @@ WriteLiteral("</span>\r\n                                </td>\r\n              
 "\r\n                        </tbody>\r\n                    </table>\r\n              " +
 "  </div>\r\n                <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                    <table");
 

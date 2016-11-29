@@ -51,6 +51,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     @Html.Partial("_Scripts")
 </head>
 <body>
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <div class="skiplink-container">
+        <div>
+            <a href="#main" class="skiplink">Skip to main content</a>
+        </div>
+    </div>
+
 @if (ViewBag.EnableGoogleTagManager)
 {
 <!-- Google Tag Manager (noscript) -->
@@ -58,6 +66,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 }
+
     @if (ViewBag.ShowEuCookieDirective == true)
     {
         <div id="global-cookie-message" class="cookie-banner">
@@ -81,43 +90,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     }
 
-    <div class="skiplink-container">
-        <div>
-            <a href="#main" class="skiplink">Skip to main content</a>
-        </div>
-    </div>
-    <header role="banner" class="global-header">
-        <div class="global-header__wrapper">
-            <div class="global-header__logo">
-                <a href="http://gov.uk" title="Go to the GOV.UK homepage" class="govuk-logo">
-                    <img src="@Url.CdnImage("gov.uk_logotype_crown.png")" alt="Crown">GOV.UK
-                </a>
+    <header role="banner" id="global-header" class="with-proposition">
+        <div class="header-wrapper">
+            <div class="header-global">
+                <div class="header-logo">
+                    <a href="https://www.gov.uk" title="Go to the GOV.UK homepage" id="logo" class="content">
+                        <img src="@Url.Content("~/Content/_assets/img/gov.uk_logotype_crown_invert_trans.png")?0.19.0" width="36" height="32" alt=""> GOV.UK
+                    </a>
+                </div>
+
             </div>
-            <div class="global-header__nav">
-                <div class="global-header__title beta" id="headerLinkFAA">
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard)" title="Home">Agency home</a>
+
+            <div class="header-proposition">
+                <div class="content">
+                    <a href="#proposition-links" class="js-header-toggle menu">Menu</a>
+                    <nav id="proposition-menu">
+                        <a id="proposition-name" href="@Url.RouteUrl(ManagementRouteNames.Dashboard)" title="Home">Agency home</a>
+
+                        <ul id="proposition-links">
+                            @*<li><a href="https://www.gov.uk/service-manual/digital-by-default">Digital by Default Service Standard</a></li>
+                                <li><a href="https://www.gov.uk/service-manual/start">Start using the manual</a></li>
+                                <li><a href="https://www.gov.uk/contact/govuk">Feedback</a></li>*@
+                        </ul>
+                    </nav>
                 </div>
             </div>
+
+
         </div>
     </header>
-    <div class="content-container">
-        <div class="fixed-container">
-            <div class="banner-container">
-                <div class="phase-notice gov-border grid-wrapper">
-                    <div class="grid grid-1-2">
-                        <strong class="beta__label">Beta</strong>
-                        @if (Request.IsAuthenticated)
-                        {
-                            <span>This is a new service – your <a rel="external" href="https://www.surveymonkey.co.uk/r/QLQTJQC" target="_blank">feedback</a> helps improve it.</span>
-                        }
-                    </div>
-                    <div class="grid grid-1-2">
-                        @Html.Partial("_LoginPartial")
-                    </div>
-                </div>
-            </div>
+
+    <div id="content" role="main" tabindex="-1">
+        <div id="global-header-bar"></div>
+        <div class="phase-banner-beta grid-row">
+            <p class="column-two-thirds">
+                <strong class="phase-tag">BETA</strong>
+                <span>You can help us improve this app by completing our <a href="https://www.surveymonkey.co.uk/r/2MZRS9H">5 minute survey</a>.</span>
+            </p>
+            <div class="column-one-third">
+                @Html.Partial("_LoginPartial")
+            </div>                        
         </div>
-        <main role="main" id="main">
+        
+        <main id="content">
             @{
                 var controller = ViewContext.Controller as SFA.Apprenticeships.Web.Common.Controllers.ControllerBase;
 
@@ -156,6 +171,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             }
             @RenderBody()
         </main>
+
         @if (ViewBag.EnableWebTrends == true)
         {
             <noscript>
@@ -163,33 +179,85 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </noscript>
         }
     </div>
-    <footer class="gov-border" role="contentinfo">
-        <div class="footer__wrapper">
-            <div class="footer__meta">
-                <ul class="footer__nav" role="navigation">
-                    <li class="small-btm-margin"><a class="bold-medium" href="@Url.RouteUrl(ManagementRouteNames.ContactUs)">Contact us</a></li>
-                    <li class="footer__link"><a href="@Url.RouteUrl(ManagementRouteNames.Privacy)">Privacy and cookies</a></li>
-                    <li class="footer__link"><a href="@Url.RouteUrl(ManagementRouteNames.TermsAndConditions)">Terms and conditions</a></li>
-                    <li class="footer__link">Built by <a href="http://gov.uk/sfa" target="_blank">Skills Funding Agency</a></li>
-                    <li class="footer__ogl hide-print">
-                        <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2"
-                           class="ir ogl-logo">OGL</a>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>,
-                        except where otherwise stated
-                    </li>
-                </ul>
-                <a class="footer__copyright" href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" target="_blank">
-                    <img src="@Url.CdnImage("govuk-crest-2x.png")" width="125" height="102" alt="Crown copyright logo">
-                    <p>&copy; Crown copyright</p>
-                </a>
+    <footer class="group js-footer" id="footer" role="contentinfo">
+        <div class="footer-wrapper">
+            @*<div class="footer-categories">
+                <div class="footer-explore">
+                    <h2>Services and information</h2>
+
+                    <ul>
+                        <li><a href="/browse/benefits">Benefits</a></li>
+                        <li><a href="/browse/births-deaths-marriages">Births, deaths, marriages and care</a></li>
+                        <li><a href="/browse/business">Business and self-employed</a></li>
+                        <li><a href="/browse/childcare-parenting">Childcare and parenting</a></li>
+                        <li><a href="/browse/citizenship">Citizenship and living in the UK</a></li>
+                        <li><a href="/browse/justice">Crime, justice and the law</a></li>
+                        <li><a href="/browse/disabilities">Disabled people</a></li>
+                        <li><a href="/browse/driving">Driving and transport</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/browse/education">Education and learning</a></li>
+                        <li><a href="/browse/employing-people">Employing people</a></li>
+                        <li><a href="/browse/environment-countryside">Environment and countryside</a></li>
+                        <li><a href="/browse/housing-local-services">Housing and local services</a></li>
+                        <li><a href="/browse/tax">Money and tax</a></li>
+                        <li><a href="/browse/abroad">Passports, travel and living abroad</a></li>
+                        <li><a href="/browse/visas-immigration">Visas and immigration</a></li>
+                        <li><a href="/browse/working">Working, jobs and pensions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-inside-government">
+                    <h2>Departments and policy</h2>
+
+                    <ul>
+                        <li><a href="/government/how-government-works">How government works</a></li>
+                        <li><a href="/government/organisations">Departments</a></li>
+                        <li><a href="/government/world">Worldwide</a></li>
+                        <li><a href="/government/policies">Policies</a></li>
+                        <li><a href="/government/publications">Publications</a></li>
+                        <li><a href="/government/announcements">Announcements</a></li>
+                    </ul>
+                </div>
+                <hr>
+            </div>*@
+
+            <div class="footer-meta">
+                <div class="footer-meta-inner">
+                    <h2 class="visuallyhidden">Support links</h2>
+                    <ul>
+                        <li><a href="/help">Help</a></li>
+
+                        <li><a href="@Url.RouteUrl(ManagementRouteNames.Privacy)">Privacy and cookies</a></li>
+                        <li><a href="@Url.RouteUrl(ManagementRouteNames.ContactUs)">Contact</a></li>
+                    	<li><a href="@Url.RouteUrl(ManagementRouteNames.TermsAndConditions)">Terms and conditions</a></li>
+                        <li>
+                            Built by the <a href="https://www.gov.uk/sfa">Skills Funding Agency</a>
+                        </li>
+                    </ul>
+
+
+
+                    <div class="open-government-licence">
+                        <p class="logo">
+                            <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence</a>
+                        </p>
+                        <p>
+                            All content is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
+                        </p>
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    <a href="http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/copyright-and-re-use/crown-copyright/">© Crown copyright</a>
+                </div>
+
                 @Html.Partial("_AboutDisguised")
             </div>
         </div>
-        <div class="toggle-content show-print">
-            <h3 class="heading-small">Contact the Skills Funding Agency helpdesk</h3>
-            <p class="small-btm-margin">Telephone (free): 0800 015 0400</p>
-            <p>Telephone (from mobiles): 02476 826482</p>
-        </div>
     </footer>
+
+    <div id="global-app-error" class="app-error hidden"></div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/vendor")
@@ -198,5 +266,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @Scripts.Render("~/bundles/joyride")
     @Scripts.Render("~/bundles/nas")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

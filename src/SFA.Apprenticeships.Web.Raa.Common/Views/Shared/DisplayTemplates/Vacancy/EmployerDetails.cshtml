@@ -3,7 +3,7 @@
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
-<div class="grid-wrapper">
+<div class="grid-row">
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.ProviderSiteId)
@@ -12,7 +12,7 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ComeFromPreview)
 
-    <div class="grid grid-1-2">
+    <div class="column-one-half">
         <div class="inner-block-padr">
             <h3 class="bold-small">Employer</h3>
             <p class="small-btm-margin">@Model.Employer.FullName</p>
@@ -28,9 +28,7 @@
             <p class="small-btm-margin">@Model.Employer.Address.Postcode</p>
         </div>
     </div>
-    <br />
-    <br />
-    <div class="grid grid-1-2 hide-print">
+    <div class="column-one-half hide-print">
         <div class="ad-details__map">
             <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
 
@@ -45,7 +43,7 @@
     </div>
     <br />
     <br />
-    <div class="grid grid-1-1">
+    <div class="column-full">
         <div class="blocklabel-single-container">
             <div class="hide-nojs">
                 <div class="form-group inline clearfix blocklabel-single">
@@ -137,7 +135,7 @@
                         var className = "form-group";
                         if (ViewData.ModelState.Keys.Contains("NumberOfPositions"))
                         {
-                            className += " input-validation-error";
+                            className += " error";
                         }
                     }
                     <div class="@className">
@@ -152,7 +150,7 @@
     </div>
 
     <div id="is-non-anonymous-employer-panel" class="toggle-content blocklabel-content non-anonymous">
-        <div class="grid grid-1-1">
+        <div class="column-full">
             @Html.FormTextFor(model => model.EmployerWebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.EditorFor(m => m.EmployerWebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.EmployerWebsiteUrlComment))
             @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
@@ -160,7 +158,7 @@
         </div>
     </div>
     <div id="is-anonymous-employer-panel" class="toggle-content blocklabel-content anonymous">
-        <div class="grid grid-1-1">
+        <div class="column-full">
             <div class="hgroup-medium">
                 <p class="subtitle font-small">A brief description of the employer will be needed to replace their name. For example, car manufacturer or clothing retailer. The employer's address will not be visible to candidates. Only the employer's town or city will be shown.</p>
             </div>

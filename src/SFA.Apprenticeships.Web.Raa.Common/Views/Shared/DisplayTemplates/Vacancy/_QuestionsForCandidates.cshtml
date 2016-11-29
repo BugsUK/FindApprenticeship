@@ -8,9 +8,9 @@
 
 @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
 {
-    <section class="section-border grid-wrapper" id="course-info">
-        <h2 class="heading-large">Questions for candidates</h2>
-        <div class="grid grid-1-2">
+    <section class="section-border grid-row" id="course-info">
+        <h2 class="heading-large column-full">Questions for candidates</h2>
+        <div class="column-one-half">
             <div class="inner-block-padr">
                 <div class="text">
                     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))

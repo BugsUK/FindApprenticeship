@@ -343,11 +343,11 @@ WriteLiteral("></fa>Dismiss this message</a>\r\n            </p>\r\n        </di
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -355,7 +355,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">My applications</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <div");
 

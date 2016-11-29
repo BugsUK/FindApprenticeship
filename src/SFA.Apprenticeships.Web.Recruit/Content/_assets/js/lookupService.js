@@ -1,4 +1,4 @@
-﻿// TODO: get 'postcode' messages from C#
+// TODO: get 'postcode' messages from C#
 
 $(document).ready(function () {
 

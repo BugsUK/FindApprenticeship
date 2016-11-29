@@ -158,7 +158,7 @@
             }
         }
 
-        [ElementLocator(Class="field-validation-error")]
+        [ElementLocator(Class="error-rmessage")]
         public IWebElement FieldValidationError { get; set; }
 
         [ElementLocator(Id = "qualification-save-warning")]
@@ -321,7 +321,7 @@
         {
             get
             {
-                return FindElements(By.ClassName("field-validation-error"))
+                return FindElements(By.ClassName("error-rmessage"))
                     .Count(fve => fve.GetCssValue("display") != "none")
                     .ToString(CultureInfo.InvariantCulture);
             }
@@ -338,7 +338,7 @@
         {
             get
             {
-                return FindElements(By.ClassName("field-validation-error"))
+                return FindElements(By.ClassName("error-rmessage"))
                     .Count(fve => fve.GetCssValue("display") != "none")
                     .ToString(CultureInfo.InvariantCulture);
             }
@@ -356,7 +356,7 @@
         {
             get
             {
-                return FindElements(By.ClassName("field-validation-error"))
+                return FindElements(By.ClassName("error-rmessage"))
                     .Count(fve => fve.GetCssValue("display") != "none")
                     .ToString(CultureInfo.InvariantCulture);
             }

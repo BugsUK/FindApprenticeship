@@ -11,8 +11,8 @@
     var editableApprenticeshipLevelClass = (!Model.IsEditable || !editableApprenticeshipLevel) ? "" : "editable-item";
 }
 
-<section class="section-border grid-wrapper" id="vacancy-info">
-    <h2 class="heading-large">
+<section class="section-border grid-row" id="vacancy-info">
+    <h2 class="column-full heading-large">
         @if (Model.VacancyType == VacancyType.Traineeship)
         {
             <span>Traineeship details</span>
@@ -22,7 +22,7 @@
             <span>Apprenticeship summary</span>
         }
     </h2>
-    <div class="grid grid-1-3">
+    <div class="column-one-third">
         <div class="inner-block-padr">
 
             @if (Model.VacancyType == VacancyType.Traineeship)
@@ -140,7 +140,7 @@
             }
         </div>
     </div>
-    <div class="grid grid-2-3">
+    <div class="column-two-thirds">
         <div class="text @editableItemClass" itemprop="responsibilities">
             @if (!Model.IsCandidateView)
             {

@@ -4,11 +4,11 @@
     ViewBag.Title = "Verify your mobile number - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="grid-wrapper">
-    <div class="grid grid-1-2">
+<div class="grid-row">
+    <div class="column-one-half">
         <h1 class="heading-xlarge">Verify your mobile number</h1>
     </div>
-    <div class="grid grid-1-2">
+    <div class="column-one-half">
         <p>
             @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
         </p>
@@ -33,7 +33,7 @@
     <fieldset>
 
         <div class="form-group">
-            <p class="form-label">Mobile number</p>
+            <p class="form-label-bold">Mobile number</p>
             <span class="form-prepopped" id="phoneNumber">@Model.PhoneNumber</span>
             @Html.HiddenFor(m => m.PhoneNumber)
             @Html.HiddenFor(m => m.ReturnUrl)

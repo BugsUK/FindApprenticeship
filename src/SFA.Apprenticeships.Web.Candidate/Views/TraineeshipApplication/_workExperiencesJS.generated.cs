@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/_workExperiencesJS.cshtml")]
@@ -72,7 +73,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Work experience</legend>\r\n        <p");
 
-WriteLiteral(" class=\"hide-nojs form-label text\"");
+WriteLiteral(" class=\"hide-nojs form-label-bold text\"");
 
 WriteLiteral(" id=\"workExpQuestion\"");
 
@@ -156,7 +157,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"work-employer\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Employer</label>\r\n                        <input");
 
@@ -180,7 +181,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"work-title\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Job title</label>\r\n                        <input");
 
@@ -204,7 +205,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"work-role\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Main duties</label>\r\n                        <textarea");
 
@@ -242,23 +243,25 @@ WriteLiteral(" class=\"form-group inline-fixed validation-message-parent\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"form-group error-wrapper vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group error-wrapper vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"work-from\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Started</label>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group no-btm-margin\"");
+WriteLiteral(" class=\"form-group sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n\r\n                                <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" id=\"work-from\"");
 
@@ -268,7 +271,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 WriteLiteral("></select>\r\n\r\n                            </div>\r\n                            <di" +
 "v");
 
-WriteLiteral(" class=\"form-group no-btm-margin\"");
+WriteLiteral(" class=\"form-group sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: fromYear\"");
 
@@ -295,23 +298,25 @@ WriteLiteral(" data-bind=\"value: fromYear\"");
 WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
 "              <div");
 
-WriteLiteral(" class=\"form-group error-wrapper vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group error-wrapper vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"work-to\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Finished</label>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group no-btm-margin\"");
+WriteLiteral(" class=\"form-group sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n\r\n                                <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" id=\"work-to\"");
 
@@ -321,7 +326,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 WriteLiteral("></select>\r\n\r\n                            </div>\r\n                            <di" +
 "v");
 
-WriteLiteral(" class=\"form-group no-btm-margin\"");
+WriteLiteral(" class=\"form-group sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: toYear\"");
 
@@ -347,7 +352,7 @@ WriteLiteral(" data-bind=\"value: toYear, attr:{\'disabled\':toDateReadonly() }\
 
 WriteLiteral(" />\r\n                            </div>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group no-btm-margin\"");
+WriteLiteral(" class=\"form-group sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                <input");
 
@@ -405,7 +410,7 @@ WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" id=\"work-history-item\"");
 
-WriteLiteral(" class=\"grid-wrapper work-history-item\"");
+WriteLiteral(" class=\"grid-row work-history-item\"");
 
 WriteLiteral(">\r\n                            <div");
 
@@ -454,7 +459,7 @@ WriteLiteral(">Remove</i>\r\n                                    </span>\r\n    
 "         </div>\r\n                            </div>\r\n                           " +
 " <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -570,7 +575,7 @@ WriteLiteral(@"></span>
                             </div>
                             <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -628,6 +633,8 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 WriteLiteral(" data-bind=\"visible: !showEditButton()\"");
 
 WriteLiteral(">\r\n                                                    <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" title=\"From month\"");
 
@@ -688,6 +695,8 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 WriteLiteral(" data-bind=\"visible: !showEditButton()\"");
 
 WriteLiteral(">\r\n                                                    <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" title=\"To month\"");
 

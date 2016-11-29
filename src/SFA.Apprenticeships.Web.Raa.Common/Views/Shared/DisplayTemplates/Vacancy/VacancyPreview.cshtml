@@ -8,6 +8,7 @@
 }
 
 @Html.Partial("DisplayTemplates/Vacancy/_VacancyDetails", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+<hr />
 
 @if (Model.VacancyType == VacancyType.Traineeship)
 {
@@ -19,22 +20,28 @@
 }
 
 @Html.Partial("DisplayTemplates/Vacancy/_RequirementsAndProspects", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+<hr />
 
 @if (!Model.IsCandidateView)
 {
     @Html.Partial("DisplayTemplates/Vacancy/_QuestionsForCandidates", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+
 }
 
 @if (Model.VacancyType == VacancyType.Apprenticeship)
 {
     @Html.Partial("DisplayTemplates/Vacancy/_AboutTheEmployer", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+    <hr />
 }
 
 @Html.Partial("DisplayTemplates/Vacancy/_OfflineVacancy", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
 
+<hr/>
+
 @if (!Model.IsManageReviewerView)
 {
     @Html.Partial("DisplayTemplates/Vacancy/_TrainingProvider", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+    <hr />
 }
 
 

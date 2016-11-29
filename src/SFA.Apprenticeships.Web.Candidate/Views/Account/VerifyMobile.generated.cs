@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Account/VerifyMobile.cshtml")]
@@ -62,11 +63,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -74,7 +75,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Verify your mobile number</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <p>\r\n");
 
@@ -173,7 +174,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Mobile number</p>\r\n            <span");
 

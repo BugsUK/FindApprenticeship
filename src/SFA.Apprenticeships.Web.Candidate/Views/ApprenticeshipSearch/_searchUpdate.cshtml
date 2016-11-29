@@ -1,7 +1,7 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
 @model ApprenticeshipSearchViewModel
 
-<section class="grid grid-1-3">
+<section class="column-one-third">
     <div>
         <fieldset class="search-filter">
             <legend class="heading-medium mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
@@ -13,12 +13,12 @@
 
                 @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
                 {
-                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden width-all-3-4 small-btm-margin" })
-                    @Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
+                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-auto sfa-medium-bottom-margin" })
+                    @Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" }, controlHtmlAttributes: new { @class = "form-control form-control-4-4" })
                 }
 
                 <div class="para-btm-margin">
-                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "small-btm-margin" })
+                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "small-btm-margin" }, controlHtmlAttributes : new { @class = "form-control form-control-4-4" })
                     <a href="#" class="geolocater inl-block hide-nojs " id="getLocation">Use current location</a>
                 </div>
                 
@@ -30,7 +30,7 @@
                 <details @(open) class="@(open)@(hidden)form-group form-group-compound" id="locationSuggestions">
                     <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
                     <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
-                    <div class="detail-content panel-indent">
+                    <div class="detail-content panel panel-border-narrow">
                         <ul id="location-suggestions" class="list-text list-max-11">
                             @foreach (var locationSearch in Model.LocationSearches)
                             {
@@ -41,12 +41,12 @@
                 </details>
 
                 <div class="form-group">
-                    <label for="loc-within" class="form-label">Within</label>
-                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" })
+                    <label for="loc-within" class="form-label-bold">Within</label>
+                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control form-control-auto" })
                 </div>
                 <div class="form-group">
-                    <label for="apprenticeship-level" class="form-label">Apprenticeship level</label>
-                    @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel" })
+                    <label for="apprenticeship-level" class="form-label-bold">Apprenticeship level</label>
+                    @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control form-control-auto" })
                 </div>
                 <div class="form-group form-group-compound">
                     <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>

@@ -162,7 +162,7 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n                <p");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(" id=\"vacancy-employer\"");
 
@@ -170,7 +170,7 @@ WriteLiteral(">");
 
             
             #line 19 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-                                                     Write(Model.VacancyDetail.EmployerName);
+                                                               Write(Model.VacancyDetail.EmployerName);
 
             
             #line default
@@ -190,14 +190,14 @@ WriteLiteral("\r\n            <p");
 
 WriteLiteral(" id=\"vacancy-summary\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1135), Tuple.Create("\"", 1207)
+WriteAttribute("class", Tuple.Create(" class=\"", 1145), Tuple.Create("\"", 1217)
             
             #line 22 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1143), Tuple.Create<System.Object, System.Int32>(Model.VacancyDetail.Description.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 1153), Tuple.Create<System.Object, System.Int32>(Model.VacancyDetail.Description.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 1143), false)
+, 1153), false)
 );
 
 WriteLiteral(">");
@@ -211,14 +211,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1282), Tuple.Create("\"", 1372)
+WriteAttribute("href", Tuple.Create(" href=\"", 1292), Tuple.Create("\"", 1382)
             
             #line 24 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1289), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
+, Tuple.Create(Tuple.Create("", 1299), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
             
             #line default
             #line hidden
-, 1289), false)
+, 1299), false)
 );
 
 WriteLiteral(">View traineeship</a>\r\n            </p>\r\n        </div>\r\n    </section>\r\n");

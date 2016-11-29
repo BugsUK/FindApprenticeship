@@ -38,8 +38,8 @@
 
     <h2 class="heading-medium">Provider Site Relationships</h2>
 
-    <div class="grid-wrapper">
-        <div class="grid grid-1-1">
+    <div class="grid-row">
+        <div class="column-full">
             <table>
                 <colgroup>
                     <col>
@@ -87,8 +87,8 @@
 
         @Html.FormTextFor(m => m.ProviderUkprn, controlHtmlAttributes: new { type = "tel", size = 8 })
         <div class="form-group">
-            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label"})
-            @Html.DropDownListFor(m => m.ProviderSiteRelationshipType, EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes)))
+            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label-bold"})
+            @Html.DropDownListFor(m => m.ProviderSiteRelationshipType, EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes)), new { @class = "form-control" })
         </div>
 
         <div class="form-group">

@@ -27,15 +27,15 @@
 
         @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
         @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
-        @Html.LabelFor(m => m.ProviderStatusType, new { @class = "form-label" })
-        @Html.DropDownListFor(m => m.ProviderStatusType, EnumHelper.GetSelectList(typeof(ProviderStatuses), Model.ProviderStatusType))
+        @Html.LabelFor(m => m.ProviderStatusType, new { @class = "form-label-bold" })
+        @Html.DropDownListFor(m => m.ProviderStatusType, EnumHelper.GetSelectList(typeof(ProviderStatuses), Model.ProviderStatusType), new { @class = "form-control" })
 
     </div>
 
     <h2 class="heading-medium">Provider Sites</h2>
 
-    <div class="grid-wrapper">
-        <div class="grid grid-1-1">
+    <div class="grid-row">
+        <div class="column-full">
             <table>
                 <colgroup>
                     <col>

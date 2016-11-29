@@ -54,10 +54,10 @@ else
             </li>
         }
     </ul>
-    <div class="grid-wrapper proto-dashboard">
+    <div class="grid-row proto-dashboard">
         @if (Model.SuccessfulApprenticeshipApplications.Any() || Model.UnsuccessfulApplications.Any() || Model.SubmittedApprenticeshipApplications.Any())
         {
-            <div class="grid grid-1-2">
+            <div class="column-one-half">
                 <div class="inner-block-padr">
                     <section class="clearfix">
                         @if (Model.SuccessfulApprenticeshipApplications.Any())
@@ -154,7 +154,7 @@ else
                             <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
                             if (Model.UnsuccessfulApplications.Any(a => a.ApplicationStatus == ApplicationStatuses.Unsuccessful))
                             {
-                                <div class="panel-indent font-xxsmall" id="candidate-support-message">
+                                <div class="panel panel-border-narrow font-xxsmall" id="candidate-support-message">
                                     <p>Some of your applications have been unsuccessful. Please contact the training provider for further information.</p>                                    
                                 </div>
                             }
@@ -207,7 +207,7 @@ else
                     Model.DraftApprenticeshipApplications.Any() ||
                     Model.CandidateTraineeshipApplications.Any())
         {
-            <div class="grid grid-1-2">
+            <div class="column-one-half">
                 <section class="clearfix">
                     @if (Model.DraftApprenticeshipApplications.Any())
                     {

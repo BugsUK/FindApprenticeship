@@ -1,9 +1,16 @@
 ﻿@model ModelStateDictionary
 
-<div id="validation-summary" class='@(Html.ViewData.ModelState.IsValid ? "validation-summary-valid" : "validation-summary-errors") panel panel-danger' data-valmsg-summary="true">
-    <div class="panel-body">
-        <ul>
-            @foreach (var modelKey in Model.Keys)
+<div id="error-summary" class='error-summary @(Model.IsValid ? "sfa-hide" : "")' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+    <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+        Message to alert the user to a problem goes here
+    </h1>
+
+    <p>
+        Optional description of the errors and how to correct them
+    </p>
+
+    <ul class="error-summary-list">
+        @foreach (var modelKey in Model.Keys)
             {
                 var modelState = Model[modelKey];
                 var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
@@ -11,14 +18,14 @@
                 {
                     if (elementId == string.Empty)
                     {
-                        <li>@modelError.ErrorMessage</li>
-                    }
-                    else
-                    {
-                        <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
-                    }
+                    <li>@modelError.ErrorMessage</li>
+                }
+                else
+                {
+                    <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
                 }
             }
-        </ul>
-    </div>
+        }
+    </ul>
+
 </div>
