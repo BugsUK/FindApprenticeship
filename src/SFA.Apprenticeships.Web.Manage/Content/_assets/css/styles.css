@@ -78,6 +78,16 @@ iframe, object, embed {
 .secondary-text {
   color: #6f777b; }
 
+.search-result {
+  position: relative; }
+
+.save-vacancy {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 10px;
+  margin-top: 10px; }
+
 .button-link {
   font-family: "nta",Arial,sans-serif;
   font-size: 19px;
