@@ -1,5 +1,6 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+@using TrainingType = SFA.Apprenticeships.Domain.Entities.Vacancies.TrainingType
 
 @model ApprenticeshipVacancyDetailViewModel
 
@@ -92,7 +93,7 @@
                     <h3 class="bold-small">Date posted</h3>
                     <p id="vacancy-posted-date">@Model.PostedDate.ToFriendlyDaysAgo()</p>
 
-                    @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && Model.Distance != null)
+                    @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National && Model.Distance != null)
                     {
                         <h3 class="bold-small">Distance</h3>
                         <p id="vacancy-distance">@Model.Distance miles</p>
@@ -103,11 +104,11 @@
                     <h3 class="bold-small">Reference number</h3>
                     <p id="vacancy-reference-id">@Model.VacancyReference</p>
 
-                    @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                    @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
                     {
                         <h3 class="bold-small">Positions</h3>
-                        <p id="number-of-positions">@Model.NumberOfPositions available</p>
-                    }
+                        <p id="number-of-positions">@Model.NumberOfPositions available</p>                        
+                    }                    
                 </div>
             </div>
             <div class="column-two-thirds">
@@ -203,7 +204,7 @@
                             <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "sfa-no-bottom-margin" : "")">@Model.EmployerName</p>
                             @if (Model.IsEmployerAnonymous)
                             {
-                                if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                                if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
                                 {
                                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                         <h3 class="bold-small">Address</h3>
@@ -228,7 +229,7 @@
                                 {
                                     <p>@Model.EmployerWebsite</p>
                                 }
-                                if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                                if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
                                 {
                                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                         <h3 class="bold-small">Address</h3>
@@ -247,7 +248,7 @@
                     </div>
                 </div>
                 <div class="column-one-half hide-print">
-                    @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                    @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
                     {
                         <div id="vacancy-map" class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>

@@ -98,7 +98,7 @@
                     <p id="vacancy-reference-id">@Model.VacancyReferenceNumber.GetVacancyReference()</p>
                 }
             </div>
-            @if (Model.IsSingleLocation)
+            @if (Model.IsSingleLocation || Model.IsNationwideLocation)
             {
                 <div class="@editableItemClass">
                     <h3 class="bold-small">Positions</h3>

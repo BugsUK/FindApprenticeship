@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using System;
+    using System.ComponentModel.DataAnnotations;
     using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Vacancies.TrainingType;
 
@@ -50,7 +50,7 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
-        public ApprenticeshipLocationType VacancyLocationType { get; set; }
+        public ApprenticeshipLocationType ApprenticeshipLocationType { get; set; }
 
         [UIHint("Date")]
         [DataType(DataType.DateTime)]

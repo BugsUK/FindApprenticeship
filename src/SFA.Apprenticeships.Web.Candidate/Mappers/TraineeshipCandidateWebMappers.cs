@@ -66,7 +66,7 @@
                 .ForMember(d => d.IsWellFormedEmployerWebsiteUrl,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
                     .FromMember(src => src.EmployerWebsite))
-                .ForMember(d => d.VacancyLocationType,
+                .ForMember(d => d.ApprenticeshipLocationType,
                     opt => opt.Ignore())
                 .ForMember(d => d.VacancyType,
                     opt => opt.Ignore())
