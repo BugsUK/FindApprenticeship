@@ -6,6 +6,7 @@
     using System.Security.Claims;
     using System.Security.Principal;
     using Api.Services;
+    using Constants;
     using Entities;
     using Extensions;
     using FluentAssertions;
@@ -66,7 +67,7 @@
         {
             var principal = _authenticationService.Authenticate(new Dictionary<string, string>());
 
-            ValidatePrincipal(principal, false, 0);
+            ValidatePrincipal(principal, false);
         }
 
         [Test]
@@ -78,7 +79,10 @@
             };
             var principal = _authenticationService.Authenticate(claims);
 
-            var claimsIdentity = ValidatePrincipal(principal, false, 3);
+            principal.IsInRole(Roles.Provider).Should().BeFalse();
+            principal.IsInRole(Roles.Employer).Should().BeFalse();
+            principal.IsInRole(Roles.Admin).Should().BeFalse();
+            var claimsIdentity = ValidatePrincipal(principal, false);
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == InvalidApiKey).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == RaaApiUser.UnknownApiUser.Name).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
@@ -96,7 +100,10 @@
             };
             var principal = _authenticationService.Authenticate(claims);
 
-            var claimsIdentity = ValidatePrincipal(principal, true, 3);
+            principal.IsInRole(Roles.Provider).Should().BeFalse();
+            principal.IsInRole(Roles.Employer).Should().BeFalse();
+            principal.IsInRole(Roles.Admin).Should().BeFalse();
+            var claimsIdentity = ValidatePrincipal(principal, true);
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == ValidApiKey).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == ValidApiKey).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
@@ -114,7 +121,10 @@
             };
             var principal = _authenticationService.Authenticate(claims);
 
-            var claimsIdentity = ValidatePrincipal(principal, true, 3);
+            principal.IsInRole(Roles.Provider).Should().BeTrue();
+            principal.IsInRole(Roles.Employer).Should().BeFalse();
+            principal.IsInRole(Roles.Admin).Should().BeFalse();
+            var claimsIdentity = ValidatePrincipal(principal, true);
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == ValidProviderApiKey).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == ValidProviderApiKey).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
@@ -132,7 +142,10 @@
             };
             var principal = _authenticationService.Authenticate(claims);
 
-            var claimsIdentity = ValidatePrincipal(principal, true, 3);
+            principal.IsInRole(Roles.Provider).Should().BeFalse();
+            principal.IsInRole(Roles.Employer).Should().BeTrue();
+            principal.IsInRole(Roles.Admin).Should().BeFalse();
+            var claimsIdentity = ValidatePrincipal(principal, true);
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == ValidEmployerApiKey).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == ValidEmployerApiKey).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
@@ -141,7 +154,7 @@
             raaApiUser.Equals(_validEmployerApiUser).Should().BeTrue();
         }
 
-        private static ClaimsIdentity ValidatePrincipal(IPrincipal principal, bool expectedIsAuthenticated, int expectedClaimsCount)
+        private static ClaimsIdentity ValidatePrincipal(IPrincipal principal, bool expectedIsAuthenticated)
         {
             principal.Should().NotBeNull();
             principal.Should().BeOfType<ClaimsPrincipal>();
@@ -151,7 +164,6 @@
             identity.Should().BeOfType<ClaimsIdentity>();
             var claimsIdentity = (ClaimsIdentity) identity;
             claimsIdentity.IsAuthenticated.Should().Be(expectedIsAuthenticated);
-            claimsIdentity.Claims.Count().Should().Be(expectedClaimsCount);
             return claimsIdentity;
         }
     }

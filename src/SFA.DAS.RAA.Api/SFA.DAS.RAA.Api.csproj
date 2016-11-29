@@ -201,6 +201,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Constants\Roles.cs" />
     <Compile Include="Controllers\VacancySummaryController.cs" />
     <Compile Include="DependencyResolution\RaaRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />

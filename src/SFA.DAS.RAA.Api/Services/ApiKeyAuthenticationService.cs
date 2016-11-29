@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Security.Principal;
+    using Constants;
     using Entities;
     using Newtonsoft.Json;
     using Repositories;
@@ -30,7 +31,17 @@
                 var userDataClaim = new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user));
 
                 var identityClaims = new [] { apiKeyClaim, nameClaim, userDataClaim };
-                var claimsIdentity = new ClaimsIdentity(identityClaims, user == RaaApiUser.UnknownApiUser ? null : "ApiKey");
+                var claimsIdentity = new ClaimsIdentity(identityClaims, Equals(user, RaaApiUser.UnknownApiUser) ? null : "ApiKey");
+
+                switch (user.UserType)
+                {
+                    case RaaApiUserType.Provider:
+                        claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Roles.Provider));
+                        break;
+                    case RaaApiUserType.Employer:
+                        claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Roles.Employer));
+                        break;
+                }
 
                 return new ClaimsPrincipal(claimsIdentity);
             }
