@@ -9,7 +9,7 @@
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
-            GlobalConfiguration.Configuration.MessageHandlers.Add(new ApiKeyHandler());
+            //GlobalConfiguration.Configuration.MessageHandlers.Add(new ApiKeyHandler());
 
             Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.InstrumentationKey =
                 System.Web.Configuration.WebConfigurationManager.AppSettings["APPINSIGHTS_INSTRUMENTATIONKEY"];

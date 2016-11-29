@@ -122,6 +122,10 @@
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.1.0\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -132,6 +136,10 @@
     </Reference>
     <Reference Include="StructureMap, Version=4.4.2.472, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StructureMap.4.4.2\lib\net45\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.web.4.0.0.315\lib\net40\StructureMap.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
@@ -191,9 +199,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\StructuremapWebApi.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\VacancySummaryController.cs" />
+    <Compile Include="DependencyResolution\RaaRegistry.cs" />
+    <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
+    <Compile Include="DependencyResolution\StructureMapWebApiDependencyResolver.cs" />
+    <Compile Include="DependencyResolution\StructureMapWebApiDependencyScope.cs" />
     <Compile Include="Entities\RaaApiUser.cs" />
     <Compile Include="Entities\RaaApiUserType.cs" />
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
@@ -207,6 +221,7 @@
     <Compile Include="Handlers\ApiKeyHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRaaApiUserRepository.cs" />
+    <Compile Include="Repositories\RaaApiUserRepository.cs" />
     <Compile Include="Services\ApiKeyAuthenticationService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Strategies\IAuthenticationStrategy.cs" />
