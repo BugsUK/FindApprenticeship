@@ -170,12 +170,22 @@
             {
                 viewModel.VacancyLocationType =
                     existingVacancy.NewVacancyViewModel.VacancyLocationType;
-                viewModel.NumberOfPositions = existingVacancy.NewVacancyViewModel.NumberOfPositions;
+                if (existingVacancy.NewVacancyViewModel.VacancyLocationType == VacancyLocationType.Nationwide)
+                {
+                    viewModel.NumberOfPositionsNationwide = existingVacancy.NewVacancyViewModel.NumberOfPositions;
+                    viewModel.NumberOfPositionsNationwideComment = existingVacancy.NewVacancyViewModel.NumberOfPositionsComment;
+                    viewModel.VacancyLocationType = existingVacancy.NewVacancyViewModel.VacancyLocationType;
+                }
+                else
+                {
+                    viewModel.NumberOfPositions = existingVacancy.NewVacancyViewModel.NumberOfPositions;
+                    viewModel.NumberOfPositionsComment = existingVacancy.NewVacancyViewModel.NumberOfPositionsComment;
+                }
+
                 viewModel.Status = existingVacancy.Status;
                 viewModel.VacancyReferenceNumber = existingVacancy.VacancyReferenceNumber;
                 viewModel.EmployerDescriptionComment = existingVacancy.NewVacancyViewModel.EmployerDescriptionComment;
                 viewModel.EmployerWebsiteUrlComment = existingVacancy.NewVacancyViewModel.EmployerWebsiteUrlComment;
-                viewModel.NumberOfPositionsComment = existingVacancy.NewVacancyViewModel.NumberOfPositionsComment;
 
                 var vor = existingVacancy.NewVacancyViewModel.VacancyOwnerRelationship;
 
