@@ -965,201 +965,135 @@ WriteLiteral(" />\r\n            </noscript>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n\r\n    <footer");
+WriteLiteral("    </div>\r\n    <footer");
 
-WriteLiteral(" class=\"gov-border\"");
+WriteLiteral(" class=\"group js-footer\"");
+
+WriteLiteral(" id=\"footer\"");
 
 WriteLiteral(" role=\"contentinfo\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"footer__wrapper\"");
+WriteLiteral(" class=\"footer-wrapper\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n            ");
 
-WriteLiteral(" class=\"footer__meta\"");
+WriteLiteral("\r\n\r\n            <div");
 
-WriteLiteral(">\r\n                <ul");
+WriteLiteral(" class=\"footer-meta\"");
 
-WriteLiteral(" class=\"footer__nav\"");
+WriteLiteral(">\r\n                <div");
 
-WriteLiteral(">\r\n                    <li");
+WriteLiteral(" class=\"footer-meta-inner\"");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(">\r\n                    <h2");
 
-WriteLiteral(">\r\n                        <a");
+WriteLiteral(" class=\"visuallyhidden\"");
 
-WriteLiteral(" class=\"footer__link bold-medium\"");
+WriteLiteral(">Support links</h2>\r\n                    <ul>\r\n                        <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 10185), Tuple.Create("\'", 10235)
+WriteLiteral(" href=\"/help\"");
+
+WriteLiteral(">Help</a></li>\r\n\r\n                        <li><a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 12808), Tuple.Create("\"", 12857)
             
-            #line 207 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 10192), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
-            
-            #line default
-            #line hidden
-, 10192), false)
-);
-
-WriteLiteral(">Contact us</a>\r\n                        <a");
-
-WriteLiteral(" class=\"footer__link bold-medium\"");
-
-WriteAttribute("href", Tuple.Create(" href=\'", 10312), Tuple.Create("\'", 10362)
-            
-            #line 208 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 10319), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Feedback)
+            #line 250 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 12815), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
             
             #line default
             #line hidden
-, 10319), false)
+, 12815), false)
 );
 
-WriteLiteral(">Give feedback</a>\r\n                    </li>\r\n                    <li");
+WriteLiteral(">Privacy and cookies</a></li>\r\n                        <li><a");
 
-WriteLiteral(" class=\"footer__link\"");
-
-WriteLiteral("><a");
-
-WriteAttribute("href", Tuple.Create(" href=\'", 10457), Tuple.Create("\'", 10506)
+WriteAttribute("href", Tuple.Create(" href=\"", 12919), Tuple.Create("\"", 12969)
             
-            #line 210 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 10464), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
+            #line 251 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 12926), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 10464), false)
+, 12926), false)
 );
 
-WriteLiteral(">Privacy and cookies</a></li>\r\n                    <li");
+WriteLiteral(">Contact</a></li>\r\n                    \t<li><a");
 
-WriteLiteral(" class=\"footer__link\"");
-
-WriteLiteral("><a");
-
-WriteAttribute("href", Tuple.Create(" href=\'", 10585), Tuple.Create("\'", 10632)
+WriteAttribute("href", Tuple.Create(" href=\"", 13016), Tuple.Create("\"", 13063)
             
-            #line 211 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 10592), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
+            #line 252 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 13023), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
             
             #line default
             #line hidden
-, 10592), false)
+, 13023), false)
 );
 
-WriteLiteral(">Terms and conditions</a></li>\r\n                    <li");
+WriteLiteral(">Terms and conditions</a></li>\r\n                        <li>\r\n                   " +
+"         Built by the <a");
 
-WriteLiteral(" class=\"footer__link\"");
+WriteLiteral(" href=\"https://www.gov.uk/sfa\"");
 
-WriteLiteral(">Built by the <a");
+WriteLiteral(">Skills Funding Agency</a>\r\n                        </li>\r\n                    </" +
+"ul>\r\n\r\n\r\n\r\n                    <div");
 
-WriteLiteral(" href=\"http://gov.uk/sfa\"");
+WriteLiteral(" class=\"open-government-licence\"");
 
-WriteLiteral(" target=\"_blank\"");
+WriteLiteral(">\r\n                        <p");
 
-WriteLiteral(">Skills Funding Agency</a></li>\r\n                    <li");
+WriteLiteral(" class=\"logo\"");
 
-WriteLiteral(" class=\"footer__ogl\"");
+WriteLiteral(">\r\n                            <a");
 
-WriteLiteral("><a");
+WriteLiteral(" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" +
+"\"");
 
-WriteLiteral(" href=\"http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2\"");
+WriteLiteral(" rel=\"license\"");
 
-WriteLiteral(" class=\"ir ogl-logo\"");
+WriteLiteral(">Open Government Licence</a>\r\n                        </p>\r\n                     " +
+"   <p>\r\n                            All content is available under the <a");
 
-WriteLiteral(">OGL</a>All content is available under the <a");
+WriteLiteral(" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" +
+"\"");
 
-WriteLiteral(" href=\"http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2\"");
+WriteLiteral(" rel=\"license\"");
 
-WriteLiteral(">Open Government Licence v2.0</a>, except where otherwise stated</li>\r\n          " +
-"      </ul>\r\n                <a");
+WriteLiteral(">Open Government Licence v3.0</a>, except where otherwise stated\r\n               " +
+"         </p>\r\n                    </div>\r\n                </div>\r\n\r\n           " +
+"     <div");
 
-WriteLiteral(" class=\"footer__copyright\"");
+WriteLiteral(" class=\"copyright\"");
 
-WriteLiteral(" href=\"http://www.nationalarchives.gov.uk/information-management/our-services/cro" +
-"wn-copyright.htm\"");
+WriteLiteral(">\r\n                    <a");
 
-WriteLiteral(" target=\"_blank\"");
+WriteLiteral(" href=\"http://www.nationalarchives.gov.uk/information-management/re-using-public-" +
+"sector-information/copyright-and-re-use/crown-copyright/\"");
 
-WriteLiteral(">\r\n                    <img");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 11349), Tuple.Create("\"", 11390)
-            
-            #line 216 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 11355), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("govuk-crest-2x.png")
-            
-            #line default
-            #line hidden
-, 11355), false)
-);
-
-WriteLiteral(" width=\"125\"");
-
-WriteLiteral(" height=\"102\"");
-
-WriteLiteral(" alt=\"Crown copyright logo\"");
-
-WriteLiteral(">\r\n                    <p>&copy; Crown copyright</p>\r\n                </a>\r\n");
+WriteLiteral(">© Crown copyright</a>\r\n                </div>\r\n\r\n");
 
 WriteLiteral("                ");
 
             
-            #line 219 "..\..\Views\Shared\_Layout.cshtml"
+            #line 274 "..\..\Views\Shared\_Layout.cshtml"
            Write(Html.Partial("_AboutDisguised"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n            <div");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n    </footer>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"toggle-content hide-nojs show-print nobreak-print\"");
+WriteLiteral(" id=\"global-app-error\"");
 
-WriteLiteral(">\r\n                <h3");
+WriteLiteral(" class=\"app-error hidden\"");
 
-WriteLiteral(" class=\"heading-small\"");
-
-WriteLiteral(">Contact the Skills Funding Agency helpdesk</h3>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">Telephone (free): 0800 015 0400</p>\r\n            </div>\r\n        </div>\r\n    </f" +
-"ooter>\r\n\r\n");
-
-            
-            #line 228 "..\..\Views\Shared\_Layout.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 228 "..\..\Views\Shared\_Layout.cshtml"
-     if (ViewBag.ShowAbout != null && ViewBag.ShowAbout == true)
-    {
-        
-            
-            #line default
-            #line hidden
-            
-            #line 230 "..\..\Views\Shared\_Layout.cshtml"
-   Write(Html.Partial("_AboutFull"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 230 "..\..\Views\Shared\_Layout.cshtml"
-                                   
-    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    <!-- Placed at the end of the document so the pages load faster -->\r\n");
+WriteLiteral("></div>\r\n\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 234 "..\..\Views\Shared\_Layout.cshtml"
+            #line 281 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/jquery"));
 
             
@@ -1170,7 +1104,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 235 "..\..\Views\Shared\_Layout.cshtml"
+            #line 282 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/fastclick"));
 
             
@@ -1181,7 +1115,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 236 "..\..\Views\Shared\_Layout.cshtml"
+            #line 283 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/underscore"));
 
             
@@ -1195,7 +1129,7 @@ WriteLiteral(">\r\n        if (typeof jQuery === \'undefined\') {\r\n           
 "ateElement(\"script\");\r\n\r\n            e.src = \'");
 
             
-            #line 242 "..\..\Views\Shared\_Layout.cshtml"
+            #line 289 "..\..\Views\Shared\_Layout.cshtml"
                 Write(Url.Content("~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
             
@@ -1217,7 +1151,7 @@ WriteLiteral(@"';
                         url: '");
 
             
-            #line 255 "..\..\Views\Shared\_Layout.cshtml"
+            #line 302 "..\..\Views\Shared\_Layout.cshtml"
                          Write(Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new {isJavascript = true}));
 
             
@@ -1228,13 +1162,13 @@ WriteLiteral("\'\r\n                    });\r\n\r\n                    request.d
 "   });\r\n                });\r\n\r\n");
 
             
-            #line 265 "..\..\Views\Shared\_Layout.cshtml"
+            #line 312 "..\..\Views\Shared\_Layout.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 265 "..\..\Views\Shared\_Layout.cshtml"
+            #line 312 "..\..\Views\Shared\_Layout.cshtml"
              if (ViewBag.SavedAndDraftCount != null)
         {
 
@@ -1246,7 +1180,7 @@ WriteLiteral("            ");
 WriteLiteral("UpdateSavedAndDraftCount(");
 
             
-            #line 267 "..\..\Views\Shared\_Layout.cshtml"
+            #line 314 "..\..\Views\Shared\_Layout.cshtml"
                                   Write(ViewBag.SavedAndDraftCount);
 
             
@@ -1255,7 +1189,7 @@ WriteLiteral("UpdateSavedAndDraftCount(");
 WriteLiteral(");\r\n");
 
             
-            #line 268 "..\..\Views\Shared\_Layout.cshtml"
+            #line 315 "..\..\Views\Shared\_Layout.cshtml"
                                                                                 }
 
             
@@ -1264,13 +1198,13 @@ WriteLiteral(");\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 270 "..\..\Views\Shared\_Layout.cshtml"
+            #line 317 "..\..\Views\Shared\_Layout.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 270 "..\..\Views\Shared\_Layout.cshtml"
+            #line 317 "..\..\Views\Shared\_Layout.cshtml"
              if (ViewBag.ApplicationStatusChangeCount != null)
         {
 
@@ -1282,7 +1216,7 @@ WriteLiteral("            ");
 WriteLiteral("UpdateApplicationStatusChangeCount(");
 
             
-            #line 272 "..\..\Views\Shared\_Layout.cshtml"
+            #line 319 "..\..\Views\Shared\_Layout.cshtml"
                                             Write(ViewBag.ApplicationStatusChangeCount);
 
             
@@ -1291,7 +1225,7 @@ WriteLiteral("UpdateApplicationStatusChangeCount(");
 WriteLiteral(");\r\n");
 
             
-            #line 273 "..\..\Views\Shared\_Layout.cshtml"
+            #line 320 "..\..\Views\Shared\_Layout.cshtml"
                                                                                 }
 
             
@@ -1302,7 +1236,7 @@ WriteLiteral("        });\r\n    </script>\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 277 "..\..\Views\Shared\_Layout.cshtml"
+            #line 324 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/nascript"));
 
             
@@ -1313,7 +1247,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 278 "..\..\Views\Shared\_Layout.cshtml"
+            #line 325 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/vendor"));
 
             
@@ -1324,7 +1258,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 279 "..\..\Views\Shared\_Layout.cshtml"
+            #line 326 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/nas"));
 
             
@@ -1335,7 +1269,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 280 "..\..\Views\Shared\_Layout.cshtml"
+            #line 327 "..\..\Views\Shared\_Layout.cshtml"
 Write(RenderSection("scripts", required: false));
 
             
