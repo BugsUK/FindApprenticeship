@@ -1,5 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Security.Principal;
@@ -24,29 +25,45 @@
             string apiKey;
             if (claims.TryGetValue(ApiKeyKey, out apiKey))
             {
-                var user = _raaApiUserRepository.GetUser(apiKey);
-
                 var apiKeyClaim = new Claim(ClaimTypes.Authentication, apiKey);
-                var nameClaim = new Claim(ClaimTypes.Name, user.Name);
-                var userDataClaim = new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user));
 
-                var identityClaims = new [] { apiKeyClaim, nameClaim, userDataClaim };
-                var claimsIdentity = new ClaimsIdentity(identityClaims, Equals(user, RaaApiUser.UnknownApiUser) ? null : "ApiKey");
-
-                switch (user.UserType)
+                Guid apiKeyGuid;
+                if (Guid.TryParse(apiKey, out apiKeyGuid))
                 {
-                    case RaaApiUserType.Provider:
-                        claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Roles.Provider));
-                        break;
-                    case RaaApiUserType.Employer:
-                        claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Roles.Employer));
-                        break;
+                    var user = _raaApiUserRepository.GetUser(apiKey);
+                    var isUnknownApiUser = Equals(user, RaaApiUser.UnknownApiUser);
+                    var name = isUnknownApiUser ? $"RaaApiUser_UnknownApiKey_{apiKey}" : $"RaaApiUser_ApiKey_{apiKey}";
+
+                    var nameClaim = new Claim(ClaimTypes.Name, name);
+                    var userDataClaim = new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user));
+
+                    var identityClaims = new[] {apiKeyClaim, nameClaim, userDataClaim};
+                    var claimsIdentity = new ClaimsIdentity(identityClaims, isUnknownApiUser ? null : "ApiKey");
+
+                    switch (user.UserType)
+                    {
+                        case RaaApiUserType.Provider:
+                            claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Roles.Provider));
+                            break;
+                        case RaaApiUserType.Employer:
+                            claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Roles.Employer));
+                            break;
+                    }
+
+                    return new ClaimsPrincipal(claimsIdentity);
                 }
 
-                return new ClaimsPrincipal(claimsIdentity);
+                return new ClaimsPrincipal(new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name, $"RaaApiUser_InvalidApiKey_{apiKey}"),
+                    apiKeyClaim
+                }));
             }
 
-            return new ClaimsPrincipal(new ClaimsIdentity());
+            return new ClaimsPrincipal(new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name, "RaaApiUser_MissingApiKey")
+            }));
         }
     }
 }
