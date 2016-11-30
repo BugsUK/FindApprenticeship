@@ -88,23 +88,29 @@
             </div>
         </div>
         <div class="grid-row">
-            <div class="grid-row">
+            <div class="column-full">
                 <nav class="tabbed-nav">
                     @Html.RouteLink(reviewTitle + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Review), new { @class = "tabbed-tab no-js" + reviewTabControlClass })
                     @Html.RouteLink("All teams", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Metrics), new { @class = "tabbed-tab no-js" + metricsTabControlClass })
                 </nav>
             </div>
+            
+            <div class="column-full">
+                <div class="tabbed-content active">
 
-            <div class="tabbed-content active grid-row">
-                @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Review)
-                {
-                    @Html.Partial("_DashboardVacancyCounts", Model.VacancySummaries)
-                    @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
-                }
-            @if(dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
-                {
-                    @Html.Partial("_DashboardTeamMetrics", Model)
-                }
+                    <div class="grid-row">
+                        @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Review)
+                        {
+                            @Html.Partial("_DashboardVacancyCounts", Model.VacancySummaries)
+                            @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
+                        }
+                        @if (dashboardVacancySummariesSearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
+                        {
+                            @Html.Partial("_DashboardTeamMetrics", Model)
+                        }
+                    </div>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
                         }
