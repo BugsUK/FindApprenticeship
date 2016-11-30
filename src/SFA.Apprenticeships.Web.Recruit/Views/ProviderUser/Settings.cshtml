@@ -18,7 +18,7 @@
         </div>
     </div>
 </div>
-<div class="grid-wrapper" id="userInfoPage">
+<div class="grid-row" id="userInfoPage">
     <div class="hgroup">
         <h1 class="heading-xlarge">
             Your contact details
@@ -46,10 +46,10 @@
 
         @Html.FormTextFor(
             m => m.ProviderUserViewModel.PhoneNumber,
-            controlHtmlAttributes: new {@class = "form-label", type = "tel", spellcheck = "false"})
+            controlHtmlAttributes: new {@class = "form-label-bold", type = "tel", spellcheck = "false"})
 
         <div class="form-group">
-            <p class="form-label">Your default provider site</p>
+            <p class="form-label-bold">Your default provider site</p>
             @if (Model.ProviderSites.Count == 1)
             {
                 Model.ProviderUserViewModel.DefaultProviderSiteId = Convert.ToInt32(Model.ProviderSites[0].Value);
@@ -58,7 +58,7 @@
             }
             else
             {
-                @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteId, Model.ProviderSites, "", new { @class = "chosen-select", style="min-width: 50%;", data_placeholder="Please select your default provider site" })
+                @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteId, Model.ProviderSites, "", new { @class = "form-control chosen-select", style="min-width: 50%;", data_placeholder="Please select your default provider site" })
             }
         </div>
 

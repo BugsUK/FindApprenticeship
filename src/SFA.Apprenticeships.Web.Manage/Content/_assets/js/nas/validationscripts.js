@@ -1,4 +1,4 @@
-﻿$(document).ready(function() {
+$(document).ready(function() {
 
     $("form").each(function () {
         var validator = $.data(this, 'validator');
@@ -9,11 +9,11 @@
         var oldErrorFunction = settings.errorPlacement;
         var oldSuccessFunction = settings.success;
         settings.errorPlacement = function (error, element) {
-            $(element).parent().addClass("input-validation-error");
+            $(element).parent().addClass("error");
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
-            $(element).parent().removeClass("input-validation-error");
+            $(element).parent().removeClass("error");
             oldSuccessFunction(label, element);
 
         };
@@ -28,10 +28,10 @@
             $thisParent = $this.closest('.inline-fixed');
 
         setTimeout(function () {    
-            if ($thisParent.find('.field-validation-error').length > 0) {
-                $thisParent.addClass('input-validation-error');
+            if ($thisParent.find('.error-rmessage').length > 0) {
+                $thisParent.addClass('error');
             } else {
-                $thisParent.removeClass('input-validation-error');
+                $thisParent.removeClass('error');
             }
         }, 10);
     });
@@ -90,7 +90,7 @@ $(document).ready(function () {
         });
     }
 
-    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn, .vacancy-filter, .vacancy-order, .search-btn').on('click', function () {
+    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn').on('click', function () {
         var $this     = $(this),
             $thisText = $this.text();
 
@@ -101,12 +101,9 @@ $(document).ready(function () {
         }
 
         setTimeout(function () {
-            if ($this.hasClass('no-validation')) {
-                return;
-            }
-            if($('.form-group.input-validation-error').length > 0) {
+            if($('.form-group.error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
-            } else if($('.block-label.input-validation-error').length > 0) {
+            } else if($('.block-label.error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
             }
             $this.attr('disabled');

@@ -3,7 +3,7 @@
 @using SFA.Apprenticeships.Web.Manage.Constants
 @model SFA.Apprenticeships.Web.Manage.ViewModels.CandidateVacancy
 
-<p id="date-applied" class="no-btm-margin">
+<p id="date-applied" class="sfa-no-bottom-margin">
     @if (Model.Application.Status == ApplicationStatuses.Saved || Model.Application.Status == ApplicationStatuses.Draft)
     {
         <span>Draft created on @Html.DisplayFor(m => m.Application.DateCreated, "Date").</span>

@@ -1,36 +1,39 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyLinksViewModel
 
-@if (Model.Status.CanCloseVacancy())
-{
-    <p class="small-btm-margin">
-        @Html.RouteLink("Close this vacancy", RecruitmentRouteNames.CloseVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
-    </p>
-}
+<ul class="list">
 
-@if (Model.Status.CanManageVacancyDates())
-{
-    <p class="small-btm-margin">
-        @Html.RouteLink("Change vacancy dates", RecruitmentRouteNames.ManageDates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
-    </p>
-}
+	@if (Model.Status.CanCloseVacancy())
+	{
+	    <li>
+	        @Html.RouteLink("Close this vacancy", RecruitmentRouteNames.CloseVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+	    </li>
+	}
 
-@if (Model.Status.CanShareApplications(Model.TotalNumberOfApplications))
-{
-    <p class="small-btm-margin">
-        @Html.RouteLink("Share applications", RecruitmentRouteNames.ShareApplications, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
-    </p>
-}
+    @if (Model.Status.CanManageVacancyDates())
+    {
+        <li>
+            @Html.RouteLink("Change vacancy dates", RecruitmentRouteNames.ManageDates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        </li>
+    }
 
-@if (Model.Status.CanArchiveVacancy() && Model.VacancyType.IsApprentcieshipVacancyType())
-{
-    <p class="small-btm-margin">
-        @Html.RouteLink("Archive vacancy", RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
-    </p>
-}
-@if (Model.Status.CanBulkDecline(Model.TotalNumberOfApplicationsWithPendingDecision) && Model.VacancyType.IsApprentcieshipVacancyType())
-{
-    <p class="small-btm-margin">
-        @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary { { "VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber } }, new Dictionary<string, object> { { "class", "disp-block" } })
-    </p>
-}
+    @if (Model.Status.CanShareApplications(Model.TotalNumberOfApplications))
+    {
+        <li>
+            @Html.RouteLink("Share applications", RecruitmentRouteNames.ShareApplications, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        </li>
+    }
+
+    @if (Model.Status.CanArchiveVacancy() && Model.VacancyType.IsApprentcieshipVacancyType())
+    {
+        <li>
+            @Html.RouteLink("Archive vacancy", RecruitmentRouteNames.ArchiveVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        </li>
+    }
+    @if (Model.Status.CanBulkDecline(Model.TotalNumberOfApplicationsWithPendingDecision) && Model.VacancyType.IsApprentcieshipVacancyType())
+    {
+        <li>
+            @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary { { "VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber } }, new Dictionary<string, object> { { "class", "disp-block" } })
+        </li>
+    }
+</ul>

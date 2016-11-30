@@ -33,7 +33,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Type, new SelectList(Model.TypeList, "Value", "Text"))
+                @Html.DropDownListFor(model => model.Type, new SelectList(Model.TypeList, "Value", "Text"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AgeRange, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.AgeRange, new SelectList(Model.AgeRangeList, "Value", "Text"))
+                @Html.DropDownListFor(model => model.AgeRange, new SelectList(Model.AgeRangeList, "Value", "Text"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AgeRange, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,7 +49,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Region, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Region, new SelectList(Model.RegionList, "Value", "Text"))
+                @Html.DropDownListFor(model => model.Region, new SelectList(Model.RegionList, "Value", "Text"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Region, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,13 +57,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ManagedBy, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.ManagedBy, new SelectList(Model.ManagedByList, "Value", "Text"))
+                @Html.DropDownListFor(model => model.ManagedBy, new SelectList(Model.ManagedByList, "Value", "Text"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ManagedBy, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IncludeCandidateIds, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IncludeCandidateIds, htmlAttributes: new { @class = "block-label selection-button-checkbox col-md-2" })
             <div class="col-md-10">
                 @Html.CheckBoxFor(model => model.IncludeCandidateIds)
                 @Html.ValidationMessageFor(model => model.IncludeCandidateIds, "", new { @class = "text-danger" })

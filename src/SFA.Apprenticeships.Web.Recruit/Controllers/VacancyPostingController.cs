@@ -1190,8 +1190,10 @@
         }
 
         [HttpPost]
-        public ActionResult ManageDates(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
+        public ActionResult ManageDates(int vacancyReferenceNumber, FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
+            viewModel.VacancyReferenceNumber = vacancyReferenceNumber;
+
             var response = _vacancyPostingMediator.UpdateVacancyDates(viewModel, acceptWarnings);
 
             ModelState.Clear();

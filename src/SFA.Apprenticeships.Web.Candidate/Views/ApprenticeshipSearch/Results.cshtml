@@ -82,9 +82,9 @@
     <meta name="WT.oss_r" content="@Model.TotalLocalHits" />
 }
 
-<div class="search-results-wrapper grid-wrapper">
-    <div class="hgroup">
-        <h1 class="heading-xlarge">Search results</h1>
+<div class="search-results-wrapper grid-row">
+    <div class="hgroup column-full">
+        <h1 class="heading-xlarge sfa-no-bottom-margin">Search results</h1>
         <div id="vacancy-result-summary">
             <p id="result-message" class="small-btm-margin">@Html.Raw(resultMessage)</p>
             <p id="national-results-message" class="">@Html.Raw(nationalResultsMessage)</p>
@@ -104,7 +104,7 @@
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);
 
-        <section class="grid grid-2-3">
+        <section class="column-two-thirds">
             <div id="pagedList">
                 @{ Html.RenderPartial("_searchResults", Model); }
             </div>

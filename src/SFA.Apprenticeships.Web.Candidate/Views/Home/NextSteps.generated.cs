@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/NextSteps.cshtml")]
@@ -114,11 +115,11 @@ WriteLiteral(" class=\"font-large fa fa-users\"");
 
 WriteLiteral("></i>What the shortlisters say\r\n    </h3>\r\n    <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -132,7 +133,7 @@ WriteLiteral(@"></i>Good applicants have well-written
         </div>
         <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -142,7 +143,7 @@ WriteLiteral("></i>Your application needs to show that\r\n                you ha
 "why you are applying for the job.\r\n            </p>\r\n        </div>\r\n        <di" +
 "v");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -156,7 +157,7 @@ WriteLiteral(@"></i>Avoid poor spelling, grammar and
         </div>
         <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -174,7 +175,7 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>Mistakes can spell trouble\r\n    </h3>\r\n    <details>\r\n        <summary>More " +
 "details</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(@">
             <p>
@@ -200,7 +201,7 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>Tailored applications, not mass mailshot\r\n    </h3>\r\n    <details>\r\n        " +
 "<summary>More details</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(@">
             <p>
@@ -226,11 +227,11 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>The perfect apprentice\r\n    </h3>\r\n    <details>\r\n        <summary>More deta" +
 "ils</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n            Employers want an apprentice who’s:\r\n            <ul");
 
-WriteLiteral(" class=\"list-bullet med-btm-margin\"");
+WriteLiteral(" class=\"list-bullet sfa-medium-bottom-margin\"");
 
 WriteLiteral(@">
                 <li>reliable</li>

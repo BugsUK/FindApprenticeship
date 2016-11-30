@@ -1,4 +1,4 @@
-﻿// moves html to correct location for refining search without the need
+// moves html to correct location for refining search without the need
 // to make large changes to the control library
 $(document).ready(function () {
 
@@ -22,18 +22,18 @@ $(document).ready(function () {
     }
 
     function setSelectControl(that) {
-        var $this = that,
-            $container = $this.closest('.input-withlink--all-select');
+        //var $this = that,
+        //    $container = $this.closest('.input-withlink--all-select');
 
-        if ($this.val() != "All") {
-            $container.addClass('auto-width');
-            $container.css('padding-left', $this.outerWidth() + 'px');
-            $container.find('input').focus();
-        } else {
-            $container.removeClass('auto-width');
-            $container.css('padding-left', $this.outerWidth() + 'px');
-            $container.find('input').focus();
-        }
+        //if ($this.val() != "All") {
+        //    $container.addClass('auto-width');
+        //    $container.css('padding-left', $this.outerWidth() + 'px');
+        //    $container.find('input').focus();
+        //} else {
+        //    $container.removeClass('auto-width');
+        //    $container.css('padding-left', $this.outerWidth() + 'px');
+        //    $container.find('input').focus();
+        //}
     }
 
     $(document).on('change', '.all-select', function () {

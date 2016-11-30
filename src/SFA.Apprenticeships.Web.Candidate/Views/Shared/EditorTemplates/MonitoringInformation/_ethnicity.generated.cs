@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_ethnicity.cshtml")]
@@ -57,7 +58,7 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n    <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"disability-label\"");
 
@@ -68,24 +69,26 @@ WriteLiteral(" class=\"form-hint text\"");
 WriteLiteral(">\r\n        We need this information to make sure we\'re giving equal opportunities" +
 "\r\n        to all candidates\r\n    </p>\r\n    <select");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 323), Tuple.Create("\"", 357)
+WriteLiteral(" class=\"form-control\"");
+
+WriteAttribute("id", Tuple.Create(" id=\"", 349), Tuple.Create("\"", 383)
             
             #line 9 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
-, Tuple.Create(Tuple.Create("", 328), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.Ethnicity)
+, Tuple.Create(Tuple.Create("", 354), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.Ethnicity)
             
             #line default
             #line hidden
-, 328), false)
+, 354), false)
 );
 
-WriteAttribute("name", Tuple.Create(" name=\"", 358), Tuple.Create("\"", 396)
+WriteAttribute("name", Tuple.Create(" name=\"", 384), Tuple.Create("\"", 422)
             
             #line 9 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
-, Tuple.Create(Tuple.Create("", 365), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Ethnicity)
+, Tuple.Create(Tuple.Create("", 391), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Ethnicity)
             
             #line default
             #line hidden
-, 365), false)
+, 391), false)
 );
 
 WriteLiteral(" class=\"para-btm-margin\"");

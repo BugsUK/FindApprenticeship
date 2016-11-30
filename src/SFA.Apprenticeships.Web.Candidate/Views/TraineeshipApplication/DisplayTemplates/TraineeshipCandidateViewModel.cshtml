@@ -1,21 +1,21 @@
 ﻿@model TraineeshipCandidateViewModel
 
-<section class="section-border grid-wrapper">
+<section class="section-border grid-row">
     <h2 class="heading-large">Your details</h2>
-    <div class="grid grid-1-2">
+    <div class="column-one-half">
         <div class="form-group">
-            <p class="form-label">Full name</p>
+            <p class="form-label-bold">Full name</p>
             @Html.HiddenFor(m => m.FirstName)
             @Html.HiddenFor(m => m.LastName)
             <span id="candidate-fullname" class="form-prepopped">@Html.DisplayFor(model => model.FullName)</span>
         </div>
         <div class="form-group date-input">
-            <p class="form-label">Date of birth</p>
+            <p class="form-label-bold">Date of birth</p>
             @Html.HiddenFor(m => m.DateOfBirth)
             <span id="candidate-dob" class="form-prepopped">@Html.DisplayFor(model => model.DateOfBirth, "Date")</span>
         </div>
         <div class="form-group">
-            <span class="form-label">Address</span>
+            <span class="form-label-bold">Address</span>
             <ul class="list-text form-prepopped">
                 <li id="candidate-address-line1">
                     @Html.HiddenFor(m => m.Address.AddressLine1)
@@ -40,14 +40,14 @@
             </ul>
         </div>
     </div>
-    <div class="grid grid-1-2">
+    <div class="column-one-half">
         <div class="form-group">
-            <p class="form-label">Email address</p>
+            <p class="form-label-bold">Email address</p>
             @Html.HiddenFor(m => m.EmailAddress)
             <span id="candidate-email" class="form-prepopped">@Model.EmailAddress</span>
         </div>
         <div class="form-group">
-            <p class="form-label">Phone</p>
+            <p class="form-label-bold">Phone</p>
             @Html.HiddenFor(m => m.PhoneNumber)
             <span id="candidate-phone" class="form-prepopped">@Model.PhoneNumber</span>
         </div>

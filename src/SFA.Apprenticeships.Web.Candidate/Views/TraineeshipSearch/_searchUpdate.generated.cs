@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
         {
 WriteLiteral("<section");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n    <div>\r\n        <fieldset");
 
@@ -165,7 +165,7 @@ WriteLiteral(" id=\"locSuggestionsAria\"");
 
 WriteLiteral("></p>\r\n                    <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                        <ul");
 
@@ -191,14 +191,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1548), Tuple.Create("\"", 1624)
+WriteAttribute("href", Tuple.Create(" href=\"", 1564), Tuple.Create("\"", 1640)
             
             #line 27 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 1555), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)
+, Tuple.Create(Tuple.Create("", 1571), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)
             
             #line default
             #line hidden
-, 1555), false)
+, 1571), false)
 );
 
 WriteLiteral(">");
@@ -228,7 +228,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"loc-within\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Within</label>\r\n");
 
@@ -236,7 +236,7 @@ WriteLiteral("                    ");
 
             
             #line 35 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" }));
+               Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control" }));
 
             
             #line default
@@ -247,7 +247,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                    <button");
 
-WriteLiteral(" class=\"button no-btm-margin\"");
+WriteLiteral(" class=\"button sfa-no-bottom-margin\"");
 
 WriteLiteral(" id=\"search-button\"");
 
@@ -297,14 +297,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2786), Tuple.Create("\"", 2816)
+WriteAttribute("value", Tuple.Create(" value=\"", 2839), Tuple.Create("\"", 2869)
             
             #line 47 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2794), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 2847), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 2794), false)
+, 2847), false)
 );
 
 WriteLiteral(" />\r\n\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n    \r\n\r\n</section>");

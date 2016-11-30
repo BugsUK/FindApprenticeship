@@ -14,7 +14,7 @@
 
         public static MvcHtmlString ValidationMessageWithSeverityFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string validationMessage, ValidationType validationType)
         {
-            var validationMessageFor = htmlHelper.ValidationMessageFor(expression, validationMessage);
+            var validationMessageFor = htmlHelper.ValidationMessageFor(expression, validationMessage, new { @class = "error-message" });
             
             if (validationType == ValidationType.Warning)
             {

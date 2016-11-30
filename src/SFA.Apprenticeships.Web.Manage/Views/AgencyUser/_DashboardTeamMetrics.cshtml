@@ -2,31 +2,30 @@
 @using SFA.Apprenticeships.Web.Manage.Constants
 @model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-1">
-        <div class="inner-block-padr">
-            <section>
-                <div class="tabbed-element tab1 active width-all-1-1">
-                    <table class="no-btm-margin reactive">
-                        <colgroup>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>Team</th>
-                                <th>Total vacancies</th>
-                                <th>Submitted today</th>
-                                <th>Submitted yesterday</th>
-                                <th>Submitted +48 hours</th>
-                                <th>Resubmitted vacancies</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+<div class="column-full">
+    <div class="inner-block-padr">
+        <section>
+            <div class="tabbed-element tab1 active">
+                <table class="sfa-table">
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Total vacancies</th>
+                            <th>Submitted today</th>
+                            <th>Submitted yesterday</th>
+                            <th>Submitted +48 hours</th>
+                            <th>Resubmitted vacancies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <tr>
                             <td>
                                 <div class="reactive-title">
@@ -74,10 +73,9 @@
                                 </td>
                             </tr>
                         }
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
 </div>

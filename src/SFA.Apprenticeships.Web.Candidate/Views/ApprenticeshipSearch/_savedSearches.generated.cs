@@ -47,6 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipSearch/_savedSearches.cshtml")]
@@ -238,19 +239,19 @@ WriteLiteral("                    </div>\r\n                    \r\n");
             #line hidden
 WriteLiteral("                        <p");
 
-WriteLiteral(" class=\"font-xsmall no-btm-margin\"");
+WriteLiteral(" class=\"font-xsmall sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <b>Apprenticeship level:</b> <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1349), Tuple.Create("\"", 1403)
-, Tuple.Create(Tuple.Create("", 1354), Tuple.Create("saved-search-apprenticeship-level-", 1354), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 1356), Tuple.Create("\"", 1410)
+, Tuple.Create(Tuple.Create("", 1361), Tuple.Create("saved-search-apprenticeship-level-", 1361), true)
             
             #line 29 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                     , Tuple.Create(Tuple.Create("", 1388), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                     , Tuple.Create(Tuple.Create("", 1395), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 1388), false)
+, 1395), false)
 );
 
 WriteLiteral(">");
@@ -289,19 +290,19 @@ WriteLiteral("                    \r\n");
             #line hidden
 WriteLiteral("                        <p");
 
-WriteLiteral(" class=\"font-xsmall no-btm-margin\"");
+WriteLiteral(" class=\"font-xsmall sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <b>Sub-categories:</b> <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1753), Tuple.Create("\"", 1800)
-, Tuple.Create(Tuple.Create("", 1758), Tuple.Create("saved-search-subcategories-", 1758), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 1767), Tuple.Create("\"", 1814)
+, Tuple.Create(Tuple.Create("", 1772), Tuple.Create("saved-search-subcategories-", 1772), true)
             
             #line 36 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-        , Tuple.Create(Tuple.Create("", 1785), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+        , Tuple.Create(Tuple.Create("", 1799), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 1785), false)
+, 1799), false)
 );
 
 WriteLiteral(">");

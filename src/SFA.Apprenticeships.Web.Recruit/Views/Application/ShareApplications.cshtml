@@ -1,5 +1,4 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 
@@ -22,14 +21,14 @@
             <div class="hgroup text">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
                     Select the applications you would like to share
+                    <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
                 </h1>
-                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
             </div>
         </section>
 
-        <section class="no-btm-margin" id="applicationsSection">
+        <section class="sfa-no-bottom-margin" id="applicationsSection">
 
-            <section class="grid-wrapper">
+            <section class="grid-row">
                 <ul class="applications-summary">
                     <li>
                         <figure class="data">
@@ -141,13 +140,14 @@
 
         <section>
             <p>Enter an email address for the person/organisation you would like to share this vacancy's application/s with.</p>
-            @Html.FormTextFor(m => m.RecipientEmailAddress, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-small"})
             <p>They'll receive an email containing a link to the application/s. The link will expire in 2 weeks (@DateTime.UtcNow.AddDays(14).ToString("d MMMM yyyy")).</p>
+            @Html.FormTextFor(m => m.RecipientEmailAddress, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
+            @Html.FormTextAreaFor(m => m.OptionalMessage, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;",data_val_length_max = "350" })
         </section>
 
         <section>
             <div class="form-group">
-                <button type="submit" class="button">Submit</button>
+                <button type="submit" class="button">Send</button>
                 @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.VacancyReferenceNumber })
             </div>
         </section>

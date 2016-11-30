@@ -4,8 +4,8 @@
     ViewBag.Title = "Candidate Application Feedback";
 }
 
-<div class="grid-wrapper">
-    <section class="grid grid-2-3">
+<div class="grid-row">
+    <section class="column-two-thirds">
         <div class="inner-block-padr">
             <h1 class="heading-xlarge">Your feedback</h1>
             @{
@@ -23,12 +23,12 @@
         </div>
     </section>
 
-    <section class="grid grid-1-3 gov-border grey-background">
+    <section class="column-one-third gov-border grey-background">
         <br />
         <div class="inner-block">
             <div class="hgroup-small">
                 <h2 class="heading-medium">@Model.Title</h2>
-                <p class="subtitle">@Model.EmployerName</p>
+                <p class="heading-secondary ">@Model.EmployerName</p>
                 <br />
                 <p class="font-xsmall">
                     @Html.RouteLink("View my application", CandidateRouteNames.ApprenticeshipView, new { id = Model.VacancyId }, new { @class = "account-link" })
@@ -38,19 +38,19 @@
         </div>
     </section>
 
-    <section class="section-border grid-wrapper" id="provider-info">
-        <div class="grid grid-2-3">
+    <section class="section-border grid-row" id="provider-info">
+        <div class="column-two-thirds">
             <h2 class="heading-large">Provider details</h2>
             
-            <div class="grid-wrapper">
-                <div class="text grid grid-1-2">
+                <div class="grid-row">
+                    <div class="text column-one-half">
                     <h3 class="bold-small">Training provider</h3>
                     <p id="vacancy-provider-name">@Model.ProviderName</p>
                 </div>
 
                 @if (!string.IsNullOrWhiteSpace(Model.Contact))
                 {
-                    <div class="text grid grid-1-2" style="padding-left: 30px;">
+                        <div class="text column-one-half" style="padding-left: 30px;">
                         <h3 class="bold-small">Contact</h3>
                         <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
                     </div>
@@ -60,7 +60,7 @@
     </section>
 
 
-    <section class="grid grid-2-3">
+    <section class="column-two-thirds">
         <div class="inner-block-padr">
             <h2 class="heading-large">Next steps</h2>
             <p>If you require further information please contact the training provider.</p>

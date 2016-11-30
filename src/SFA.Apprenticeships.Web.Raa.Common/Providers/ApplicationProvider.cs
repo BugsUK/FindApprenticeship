@@ -341,10 +341,13 @@
             _traineeshipApplicationService.UpdateApplicationNotes(applicationId, notes, publishUpdate);
         }
 
-        public void ShareApplications(int vacancyReferenceNumber, string providerName, IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime, string recipientEmailAddress)
+        public void ShareApplications(int vacancyReferenceNumber, string providerName,
+            IDictionary<string, string> applicationLinks, DateTime linkExpiryDateTime
+            , string recipientEmailAddress, string optionalMessage = null)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            _employerService.SendApplicationLinks(vacancy.Title, providerName, applicationLinks, linkExpiryDateTime, recipientEmailAddress);
+            _employerService.SendApplicationLinks(vacancy.Title, providerName, applicationLinks,
+                linkExpiryDateTime, recipientEmailAddress, optionalMessage);
         }
 
         #region Helpers

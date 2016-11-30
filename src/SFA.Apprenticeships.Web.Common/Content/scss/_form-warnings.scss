@@ -1,0 +1,104 @@
+// Form validation
+// ==========================================================================
+// This is a clone of the _form-errors.scss in the govuk_elements package.
+// error is replaced for warning only and any new versions in the package can
+// be updated into this file by doing a global find and replace. The colour
+// variable is declared in the parent styles.scss file.
+// ==========================================================================
+
+// Use warning to add a blue border to the left of a .form-group
+.warning {
+
+  // Ensure the .warning class is applied to .form-group, otherwise box-sizing(border-box) will need to be used
+  // @include box-sizing(border-box);
+  margin-right: 15px;
+
+  // Form inputs should have a blue border
+  // Add a blue border to .form-controls that are direct descendants
+  > .form-control {
+    border: 4px solid $warning-colour;
+  }
+
+  border-left: 4px solid $warning-colour;
+  padding-left: 10px;
+
+  @include media(tablet) {
+    border-left: 5px solid $warning-colour;
+    padding-left: $gutter-half;
+  }
+
+}
+
+// warning messages should be blue and bold
+.warning-message {
+  @include bold-19;
+  color: $warning-colour;
+
+
+  display: block;
+  clear: both;
+
+  margin: 0;
+  padding: 2px 0;
+}
+
+.form-label-bold .warning-message,
+.form-label-bold .warning-message {
+  padding-top: 4px;
+  padding-bottom: 0;
+}
+
+// Summary of multiple warning messages
+.warning-summary {
+
+  // warning summary has a border on all sides
+  border: 4px solid $warning-colour;
+
+  margin-top: $gutter-half;
+  margin-bottom: $gutter-half;
+
+  padding: $gutter-half 10px;
+
+  @include media(tablet) {
+    border: 5px solid $warning-colour;
+
+    margin-top: $gutter;
+    margin-bottom: $gutter;
+
+    padding: $gutter-two-thirds $gutter-half $gutter-half;
+  }
+
+  @include ie-lte(6) {
+    zoom: 1;
+  }
+
+  // Use the GOV.UK outline focus style
+  &:focus {
+    outline: 3px solid $focus-colour;
+  }
+
+  .warning-summary-heading {
+    margin-top: 0;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  .warning-summary-list {
+    padding-left: 0;
+
+    li {
+
+      @include media(tablet) {
+        margin-bottom: 5px;
+      }
+    }
+
+    a {
+      color: $warning-colour;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+}

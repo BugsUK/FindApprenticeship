@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication.Disp
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipApplication/DisplayTemplates/AboutYouViewModel.cshtml")]
@@ -122,21 +123,21 @@ WriteLiteral("            ");
 
             
             #line 17 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.cshtml"
-       Write(Html.SpanFor(m => m.WhatAreYourStrengths, new { @class = "form-label text" }));
+       Write(Html.SpanFor(m => m.WhatAreYourStrengths, new { @class = "form-label-bold text" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n            <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 619), Tuple.Create("\"", 664)
+WriteAttribute("id", Tuple.Create(" id=\"", 624), Tuple.Create("\"", 669)
             
             #line 18 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 624), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.WhatAreYourStrengths)
+, Tuple.Create(Tuple.Create("", 629), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.WhatAreYourStrengths)
             
             #line default
             #line hidden
-, 624), false)
+, 629), false)
 );
 
 WriteLiteral(" class=\"form-prepopped prewrap\"");
@@ -160,21 +161,21 @@ WriteLiteral("            ");
 
             
             #line 21 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.cshtml"
-       Write(Html.SpanFor(m => m.WhatDoYouFeelYouCouldImprove, new { @class = "form-label text" }));
+       Write(Html.SpanFor(m => m.WhatDoYouFeelYouCouldImprove, new { @class = "form-label-bold text" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n            <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 918), Tuple.Create("\"", 971)
+WriteAttribute("id", Tuple.Create(" id=\"", 928), Tuple.Create("\"", 981)
             
             #line 22 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 923), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.WhatDoYouFeelYouCouldImprove)
+, Tuple.Create(Tuple.Create("", 933), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.WhatDoYouFeelYouCouldImprove)
             
             #line default
             #line hidden
-, 923), false)
+, 933), false)
 );
 
 WriteLiteral(" class=\"form-prepopped prewrap\"");
@@ -198,21 +199,21 @@ WriteLiteral("            ");
 
             
             #line 25 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.cshtml"
-       Write(Html.SpanFor(m => m.WhatAreYourHobbiesInterests, new { @class = "form-label text" }));
+       Write(Html.SpanFor(m => m.WhatAreYourHobbiesInterests, new { @class = "form-label-bold text" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n            <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1232), Tuple.Create("\"", 1284)
+WriteAttribute("id", Tuple.Create(" id=\"", 1247), Tuple.Create("\"", 1299)
             
             #line 26 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 1237), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.WhatAreYourHobbiesInterests)
+, Tuple.Create(Tuple.Create("", 1252), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.WhatAreYourHobbiesInterests)
             
             #line default
             #line hidden
-, 1237), false)
+, 1252), false)
 );
 
 WriteLiteral(" class=\"form-prepopped prewrap\"");

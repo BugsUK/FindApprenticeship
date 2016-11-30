@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/_trainingCoursesJS.cshtml")]
@@ -72,7 +73,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Training courses</legend>\r\n        <p");
 
-WriteLiteral(" class=\"hide-nojs form-label text\"");
+WriteLiteral(" class=\"hide-nojs form-label-bold text\"");
 
 WriteLiteral(" id=\"trainingCoursesQuestion\"");
 
@@ -114,7 +115,7 @@ WriteLiteral("\r\n                    Yes\r\n                </label>\r\n       
 
 WriteLiteral(" for=\"training-history-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected: !showTrainingCourses()}\"");
 
@@ -156,7 +157,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"training-history-provider\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Provider</label>\r\n                        <input");
 
@@ -180,7 +181,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"training-history-course-title\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Course title</label>\r\n                        <input");
 
@@ -200,23 +201,25 @@ WriteLiteral(" class=\"form-group inline-fixed validation-message-parent\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"form-group error-wrapper vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group error-wrapper vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"training-history-from-month\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">From</label>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n                                <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" id=\"training-history-from-month\"");
 
@@ -225,7 +228,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 
 WriteLiteral("></select>\r\n                            </div>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group no-btm-margin\"");
+WriteLiteral(" class=\"form-group sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: fromYear\"");
 
@@ -252,23 +255,25 @@ WriteLiteral(" data-bind=\"value: fromYear\"");
 WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
 "              <div");
 
-WriteLiteral(" class=\"form-group error-wrapper vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group error-wrapper vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"training-history-to-month\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">To</label>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                                <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Month</span>\r\n                                <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" id=\"training-history-to-month\"");
 
@@ -277,7 +282,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 
 WriteLiteral("></select>\r\n                            </div>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: toYear\"");
 
@@ -345,7 +350,7 @@ WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" id=\"training-history-item\"");
 
-WriteLiteral(" class=\"grid-wrapper training-history-item\"");
+WriteLiteral(" class=\"grid-row training-history-item\"");
 
 WriteLiteral(">\r\n                            <div");
 
@@ -394,7 +399,7 @@ WriteLiteral(">Remove</i>\r\n                                    </span>\r\n    
 "         </div>\r\n                            </div>\r\n                           " +
 " <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -491,7 +496,7 @@ WriteLiteral(@"></span>
                             </div>
                             <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -549,6 +554,8 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 WriteLiteral(" data-bind=\"visible: !showEditButton()\"");
 
 WriteLiteral(">\r\n                                                    <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" title=\"From month\"");
 
@@ -609,6 +616,8 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 WriteLiteral(" data-bind=\"visible: !showEditButton()\"");
 
 WriteLiteral(">\r\n                                                    <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" title=\"To month\"");
 

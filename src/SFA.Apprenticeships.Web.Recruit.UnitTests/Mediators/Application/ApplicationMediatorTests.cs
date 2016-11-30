@@ -59,8 +59,8 @@
             mediator.ShareApplications(parameters, mockUrlHelper.Object);
 
             //Assert
-            mockApplicationProvider.Verify(m => m.ShareApplications(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
-            mockApplicationProvider.Verify(m => m.ShareApplications(It.IsAny<int>(), It.IsAny<string>(), It.Is<Dictionary<string, string>>(d => d[applicantId].Equals("THE_URL")), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
+            mockApplicationProvider.Verify(m => m.ShareApplications(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            mockApplicationProvider.Verify(m => m.ShareApplications(It.IsAny<int>(), It.IsAny<string>(), It.Is<Dictionary<string, string>>(d => d[applicantId].Equals("THE_URL")), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             mockUrlHelper.Verify(m => m.RouteUrl(It.IsAny<string>(), It.Is<RouteValueDictionary>(rvd => rvd["application"].ToString().Contains("+"))), Times.Never);
             mockUrlHelper.Verify(m => m.RouteUrl(It.IsAny<string>(), It.Is<RouteValueDictionary>(rvd => rvd["application"].ToString().Contains("/"))), Times.Never);
         }

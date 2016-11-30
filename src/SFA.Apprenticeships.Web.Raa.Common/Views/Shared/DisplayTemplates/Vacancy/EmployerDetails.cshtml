@@ -2,7 +2,7 @@
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
-<div class="grid-wrapper">
+<div class="grid-row">
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.ProviderSiteId)
@@ -11,7 +11,7 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ComeFromPreview)
 
-    <div class="grid grid-1-2">
+    <div class="column-one-half">
         <div class="inner-block-padr">
             <h3 class="bold-small">Employer</h3>
             <p class="small-btm-margin">@Model.Employer.FullName</p>
@@ -27,7 +27,7 @@
             <p class="small-btm-margin">@Model.Employer.Address.Postcode</p>
         </div>
     </div>
-    <div class="grid grid-1-2 hide-print">
+    <div class="column-one-half hide-print">
         <div class="ad-details__map">
             <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
 
@@ -42,7 +42,7 @@
     </div>
     <br />
     <br />
-    <div class="grid grid-1-1">
+    <div class="column-full">
         <div class="blocklabel-single-container">
             <div class="hide-nojs">
                 <div class="form-group inline clearfix blocklabel-single">
@@ -50,11 +50,11 @@
                     <h4 class="bold-small">Is this address the vacancy location?</h4>
                     @if (Model.IsEmployerAddressValid)
                     {
-                        <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                        <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label selection-button-radio @Model.IsEmployerLocationMainApprenticeshipLocation ">
                             @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new {id = "location-type-main-location", aria_controls = "location-type-main-location-panel"})
                             Yes, this will be the vacancy location
                         </label>
-                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label selection-button-radio @Model.IsEmployerLocationMainApprenticeshipLocation ">
                             @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
                             No, I need to add a different location
                         </label>
@@ -65,7 +65,7 @@
                     }
                     else
                     {
-                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label selection-button-radio @Model.IsEmployerLocationMainApprenticeshipLocation ">
                             @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
                             Yes, but I need to complete the full address
                         </label>
@@ -79,11 +79,11 @@
                 <div class="form-group inline clearfix blocklabel-single">
                     <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
                     <h4 class="bold-small">Will the employer's name and address be shown in this vacancy?</h4>
-                    <label data-target="is-non-anonymous-employer-panel" for="is-non-anonymous-employer" class="block-label @Model.IsAnonymousEmployer ">
+                    <label data-target="is-non-anonymous-employer-panel" for="is-non-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
                         @Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "is-non-anonymous-employer", aria_controls = "is-non-anonymous-employer-panel" })
                         Yes
                     </label>
-                    <label data-target="is-anonymous-employer-panel" for="is-anonymous-employer" class="block-label @Model.IsAnonymousEmployer ">
+                    <label data-target="is-anonymous-employer-panel" for="is-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
                         @Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "is-anonymous-employer", aria_controls = "is-anonymous-employer-panel" })
                         No, the employer wants to remain anonymous
                     </label>
@@ -97,11 +97,11 @@
                     <a name="@Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()"></a>
                     <h4 class="bold-small">Is this address the vacancy location?</h4>
 
-                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label selection-button-radio @Model.IsEmployerLocationMainApprenticeshipLocation ">
                         @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
                         Yes, this will be the vacancy location
                     </label>
-                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label selection-button-radio @Model.IsEmployerLocationMainApprenticeshipLocation ">
                         @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
                         No, I need to add a different location
                     </label>
@@ -110,11 +110,11 @@
                     <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
                     <h4 class="bold-small">Will the employer's name and address be shown in this vacancy?</h4>
 
-                    <label data-target="is-anonymous-employer" for="is-anonymous-employer" class="block-label @Model.IsAnonymousEmployer ">
+                    <label data-target="is-anonymous-employer" for="is-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
                         @Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "anonymous-employer", aria_controls = "anonymous-employer" })
                         Yes
                     </label>
-                    <label data-target="is-non-anonymous-employer" for="is-non-anonymous-employer" class="block-label @Model.IsAnonymousEmployer ">
+                    <label data-target="is-non-anonymous-employer" for="is-non-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
                         @Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "non-anonymous-employer", aria_controls = "non-anonymous-employer" })
                         No, the employer wants to remain anonymous
                     </label>
@@ -124,7 +124,7 @@
                         var className = "form-group";
                         if (ViewData.ModelState.Keys.Contains("NumberOfPositions"))
                         {
-                            className += " input-validation-error";
+                            className += " error";
                         }
                     }
                     <div class="@className">
@@ -139,7 +139,7 @@
     </div>
 
     <div id="is-non-anonymous-employer-panel" class="toggle-content blocklabel-content non-anonymous">
-        <div class="grid grid-1-1">
+        <div class="column-full">
             @Html.FormTextFor(model => model.EmployerWebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.EditorFor(m => m.EmployerWebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.EmployerWebsiteUrlComment))
             @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new { @class = "bold-small" })
@@ -147,7 +147,7 @@
         </div>
     </div>
     <div id="is-anonymous-employer-panel" class="toggle-content blocklabel-content anonymous">
-        <div class="grid grid-1-1">
+        <div class="column-full">
             <div class="hgroup-medium">
                 <p class="subtitle font-small">A brief description of the employer will be needed to replace their name. For example, car manufacturer or clothing retailer. The employer's address will not be visible to candidates. Only the employer's town or city will be shown.</p>
             </div>

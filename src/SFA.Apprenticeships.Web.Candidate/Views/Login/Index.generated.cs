@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Login
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Login/Index.cshtml")]
@@ -71,11 +72,11 @@ Write(Html.Partial("ValidationSummary", ViewData.ModelState));
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n");
 
@@ -169,7 +170,7 @@ WriteLiteral("                ");
 
             
             #line 27 "..\..\Views\Login\Index.cshtml"
-           Write(Html.LabelFor(m => m.Password, new { @class = "form-label" }));
+           Write(Html.LabelFor(m => m.Password, new { @class = "form-label-bold" }));
 
             
             #line default
@@ -198,14 +199,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n\r\n                <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1260), Tuple.Create("\'", 1313)
+WriteAttribute("href", Tuple.Create(" href=\'", 1263), Tuple.Create("\'", 1316)
             
             #line 31 "..\..\Views\Login\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1267), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+, Tuple.Create(Tuple.Create("", 1270), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 1267), false)
+, 1270), false)
 );
 
 WriteLiteral(">I can\'t access my account</a></p>\r\n            </div>\r\n");
@@ -259,7 +260,7 @@ WriteLiteral(@">
             #line hidden
 WriteLiteral("    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <h2");
 

@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/_workExperiencesNonJS.cshtml")]
@@ -87,11 +88,11 @@ WriteLiteral("                        <div");
 
 WriteLiteral(" id=\"work-history-item\"");
 
-WriteLiteral(" class=\"grid-wrapper work-history-item\"");
+WriteLiteral(" class=\"grid-row work-history-item\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -207,7 +208,7 @@ WriteLiteral("</td>\r\n                                        </tr>\r\n        
 "         </tbody>\r\n                                </table>\r\n                   " +
 "         </div>\r\n                            <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -269,7 +270,7 @@ WriteLiteral("                                                    ");
 
             
             #line 78 "..\..\Views\TraineeshipApplication\_workExperiencesNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].FromMonth), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth" }));
+                                               Write(Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].FromMonth), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth", @class = "form-control" }));
 
             
             #line default
@@ -317,7 +318,7 @@ WriteLiteral("                                                    ");
 
             
             #line 90 "..\..\Views\TraineeshipApplication\_workExperiencesNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].ToMonth), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth" }));
+                                               Write(Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].ToMonth), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth", @class = "form-control" }));
 
             
             #line default
@@ -374,11 +375,11 @@ WriteLiteral("                        <div");
 
 WriteLiteral(" id=\"work-history-item\"");
 
-WriteLiteral(" class=\"grid-wrapper work-history-item\"");
+WriteLiteral(" class=\"grid-row work-history-item\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -495,7 +496,7 @@ WriteLiteral(@"
                             </div>
                             <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 

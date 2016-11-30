@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Recruit an Apprentice - Create New Vacancy - Add Employer";
 }
-<div class="grid-wrapper">
+<div class="grid-row">
     <div class="hgroup">
         <h1 class="heading-xlarge">
             Search for employer
@@ -16,10 +16,10 @@
             @Html.Partial("ValidationSummary", ViewData.ModelState)
             <div class="form-group inline clearfix blocklabel-single hide-nojs">
                 <p>Search using</p>
-                <label data-target="namesearch-panel" for="namesearch" class="block-label">
+                <label data-target="namesearch-panel" for="namesearch" class="block-label selection-button-radio">
                     <input checked name="@Html.NameFor(m => m.FilterType)" value="NameAndLocation" type="radio" id="namesearch">Name and location
                 </label>
-                <label data-target="edsErnsearch-panel" for="ernsearch" class="block-label">
+                <label data-target="edsErnsearch-panel" for="ernsearch" class="block-label selection-button-radio">
                     <input aria-controls="edsErnsearch-panel" name="@Html.NameFor(m => m.FilterType)" value="EdsUrn" type="radio" id="ernsearch">ERN
                 </label>
             </div>
@@ -40,7 +40,7 @@
 
         <section class="clearfix">
             <h2 class="heading-small">Employers</h2>
-            <div class="grid grid-3-3 scrolling-panel max-height-15">
+            <div class="grid-row grid-3-3 scrolling-panel max-height-15">
                 <table>
                     <colgroup>
                         <col class="t20">

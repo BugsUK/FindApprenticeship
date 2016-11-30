@@ -1,28 +1,30 @@
 ﻿@model SFA.Apprenticeships.Web.Manage.ViewModels.CandidateVacancy
 
-<div class="grid-wrapper">
-    <div class="grid grid-2-3">
+<div class="grid-row">
+    <div class="column-two-thirds">
         <div class="hgroup text">
-            <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.Vacancy.NewVacancyViewModel.Title</h1>
-            <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.Vacancy.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
+            <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
+                @Model.Vacancy.NewVacancyViewModel.Title
+                <p class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.Vacancy.NewVacancyViewModel.VacancyOwnerRelationship.Employer.FullName</p>
+            </h1>
         </div>
     </div>
-    <div class="grid grid-1-3">
+    <div class="column-one-third">
         <p class="page-link hide-nojs">
             <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
         </p>
     </div>
 </div>
 
-<section class="grid-wrapper">
-    <div class="grid grid-2-3">
+<section class="grid-row">
+    <div class="column-two-thirds">
         <div class="inner-block-padr">
             <div class="text" itemprop="description">
                 <p id="vacancy-description">@Model.Vacancy.NewVacancyViewModel.ShortDescription</p>
             </div>
         </div>
     </div>
-    <div class="grid grid-1-3">
+    <div class="column-one-third">
         @Html.Partial("_Apply", Model)
     </div>
 </section>

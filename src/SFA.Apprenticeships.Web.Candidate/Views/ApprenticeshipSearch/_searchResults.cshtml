@@ -48,46 +48,46 @@ else
 {
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
-        <div class="grid-wrapper med-btm-margin">
-            <div class="font-xsmall grid grid-1-3">
+        <div class="grid-row sfa-medium-bottom-margin">
+            <div class="column-one-half">
                 <div class="width-all-1-3 hide-js inl-block"></div>
                 <div class="inner-block-padr hide-nojs">
-                    <details class="no-btm-margin small-top-padding">
-                        <summary>More/less detail</summary>
-                        <div class="detail-content" id="chooseDetails">
+                    <details class="sfa-no-bottom-margin small-top-padding">
+                        <summary><span class="summary">More/less detail</span></summary>
+                        <div class="panel panel-border-narrow" id="chooseDetails">
                             <ul class="list-text list-checkradio">
                                 @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
                                 {
                                     <li>
-                                        <input @{if (Model.VacancySearch.DisplaySubCategory) { <text> checked="checked" </text>   }} type="checkbox" id="DisplaySubCategory">
+                                        <input @{if (Model.VacancySearch.DisplaySubCategory) { <text> checked="checked" </text>    }} type="checkbox" id="DisplaySubCategory">
                                         <label for="DisplaySubCategory">Sub-category</label>
                                     </li>
-                                }
+    }
                                 <li>
-                                    <input @{if (Model.VacancySearch.DisplayDescription) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayDescription">
+                                    <input @{if (Model.VacancySearch.DisplayDescription) { <text> checked="checked" </text>    }} type="checkbox" id="DisplayDescription">
                                     <label for="DisplayDescription">Description</label>
                                 </li>
                                 @if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
                                 {
                                     <li>
-                                        <input @{if (Model.VacancySearch.DisplayDistance) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayDistance">
+                                        <input @{if (Model.VacancySearch.DisplayDistance) { <text> checked="checked" </text>    }} type="checkbox" id="DisplayDistance">
                                         <label for="DisplayDistance">Distance</label>
                                     </li>
-                                }
+    }
                                 <li>
-                                    <input @{if (Model.VacancySearch.DisplayClosingDate) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayClosingDate">
+                                    <input @{if (Model.VacancySearch.DisplayClosingDate) { <text> checked="checked" </text>    }} type="checkbox" id="DisplayClosingDate">
                                     <label for="DisplayClosingDate">Closing date</label>
                                 </li>
                                 <li>
-                                    <input @{if (Model.VacancySearch.DisplayStartDate) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayStartDate">
+                                    <input @{if (Model.VacancySearch.DisplayStartDate) { <text> checked="checked" </text>    }} type="checkbox" id="DisplayStartDate">
                                     <label for="DisplayStartDate">Possible start date</label>
                                 </li>
                                 <li>
-                                    <input @{if (Model.VacancySearch.DisplayApprenticeshipLevel) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayApprenticeshipLevel">
+                                    <input @{if (Model.VacancySearch.DisplayApprenticeshipLevel) { <text> checked="checked" </text>    }} type="checkbox" id="DisplayApprenticeshipLevel">
                                     <label for="DisplayApprenticeshipLevel">Apprenticeship level</label>
                                 </li>
                                 <li>
-                                    <input @{if (Model.VacancySearch.DisplayWage) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayWage">
+                                    <input @{if (Model.VacancySearch.DisplayWage) { <text> checked="checked" </text>    }} type="checkbox" id="DisplayWage">
                                     <label for="DisplayWage">Wage</label>
                                 </li>
                             </ul>
@@ -95,9 +95,9 @@ else
                     </details>
                 </div>
             </div>
-            <div class="grid grid-2-3 ta-right ta-left-mob">
-                <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" })
+            <div class="sfa-pull-right">
+                <label for="sort-results" class="heading-medium sfa-medium-right-margin">Sort results</label>
+                @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results", @class = "form-control" })
                 <noscript>
                     <button style="float: right; margin-left: 5px;" class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
                 </noscript>
@@ -113,128 +113,139 @@ else
             foreach (var vacancy in Model.Vacancies)
             {
                 var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/apprenticeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Apprenticeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
-                <li class="search-results__item section-border">
-                    <div class="hgroup-medium top-align width-all-3-4">
-                        <h2 class="heading-medium vacancy-title-link">
-                            @(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ?
+                <li class="search-result sfa-xlarge-bottom-margin">
+                    <div class="grid-row">
+                        <div class="column-full">
+                            <h1 class="heading-large no-margins">
+                                @(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ?
                                   Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude, data_is_employer_anonymous = vacancy.IsEmployerAnonymous }) :
-                                  Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker }))
-                            <br />
-                            @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
-                            {
-                                <span data-show="DisplaySubCategory" class="font-small hidden-subcategory @(Model.VacancySearch.DisplaySubCategory ? "inl-block" : "toggle-content")">@FullNameFormatter.Format(vacancy.SubCategory)</span>
-                            }
-                        </h2>
+                                      Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker }))
 
-                        <p id="posted-date-@vacancy.Id" class="subtitle">
-                            @vacancy.EmployerName
-                            <span class="font-xsmall inl-block">
+                                @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
+                                {
+                                    <span class="heading-secondary">@FullNameFormatter.Format(vacancy.SubCategory)</span>
+                                }
+
+                                <span class="heading-secondary">@vacancy.EmployerName</span>
+                            </h1>
+                            <p class="font-xsmall no-margins secondary-text">
                                 @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                                 {
-                                    <text>(Added @vacancy.PostedDate.ToFriendlyDaysAgo()</text>
-                                    <span id="number-of-positions-@vacancy.Id" class="hidden-subcategory">
-                                        @if (vacancy.NumberOfPositions == 1)
-                                        {
-                                            <span>- 1 position available)</span>
-                                        }
-                                        else
-                                        {
-                                            <span>- @vacancy.NumberOfPositions positions available)</span>
-                                        }
-                                    </span>
+                                    <span id="posted-date-@vacancy.Id">(Added @vacancy.PostedDate.ToFriendlyDaysAgo()</span>
+                                    <span id="number-of-positions-@vacancy.Id">
+                                    @if (vacancy.NumberOfPositions == 1)
+                                    {   
+                                        <text>- 1 position available)</text>
+                                    }
+                                    else
+                                    {
+                                        <text>- @vacancy.NumberOfPositions positions available)</text>
+                                    }
+                                        </span>
                                 }
                                 else
                                 {
                                     <text>(Added @vacancy.PostedDate.ToFriendlyDaysAgo())</text>
                                 }
-                                
-                            </span>
-                        </p>
+
+                            </p>
+                            <p data-show="DisplayDescription" class="@(!Model.VacancySearch.DisplayDescription ? "toggle-content" : "")">
+                                @vacancy.Description
+                            </p>
+                        </div>
                     </div>
-                    @if (ViewBag.IsCandidateActivated != null && ViewBag.IsCandidateActivated)
-                    {
-                        var applicationStatus = vacancy.CandidateApplicationStatus.HasValue
-                            ? vacancy.CandidateApplicationStatus.ToString()
-                            : "Unsaved";
+                    <div class="grid-row">
+                        <div data-show="DisplayDistance" class="column-two-thirds @(!Model.VacancySearch.DisplayDistance ? "toggle-content" : "")">
+                            @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                            {
+                                <div>
+                                    <span class="bold-small">Distance:</span> @vacancy.DistanceAsString
 
-                        <div class="top-align ta-right width-all-1-4">
-                            <a href="#" id="save-vacancy-link-@vacancy.Id" class="hidden fake-link link-unimp save-vacancy-link" data-vacancy-id="@vacancy.Id" data-application-status="@applicationStatus"><i class="fa"></i></a>
-                            @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = vacancy.Id }, new { @class = "hidden resume-link", @id = "resume-link-" + @vacancy.Id })
-                            <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
+                                    <a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
+                                    <div class="detail-content toggle-content hide-nojs">
+                                        <select class="form-control valid" name="" aria-invalid="false">
+                                            <option value="DRIVING" aria-live="polite">Driving</option>
+                                            <option value="TRANSIT" aria-live="polite">Bus/Train</option>
+                                            <option value="WALKING" aria-live="polite">Walking</option>
+                                            <option value="BICYCLING" aria-live="polite">Cycling</option>
+                                        </select>
+
+                                        <span class="journey-time" aria-live="polite"></span>
+                                    </div>
+                                </div>
+                            }
+                            <div data-show="DisplayClosingDate">
+                                <span class="bold-small @(!Model.VacancySearch.DisplayClosingDate ? "toggle-content" : "")">Closing date:</span> @vacancy.ClosingDate.ToFriendlyClosingWeek()
+                            </div>
+                            <div data-show="DisplayStartDate">
+                                <span class="bold-small @(!Model.VacancySearch.DisplayStartDate ? "toggle-content" : "")">Possible start date:</span> 22 Dec 2017
+                            </div>
+                            <div data-show="DisplayApprenticeshipLevel" class="@(!Model.VacancySearch.DisplayApprenticeshipLevel ? "toggle-content" : "")">
+                                <span class="bold-small">Apprenticeship level:</span> @vacancy.ApprenticeshipLevel
+                            </div>
+                            <div data-show="DisplayWage" class="@(!Model.VacancySearch.DisplayWage ? "toggle-content" : "")">
+                                <span class="bold-small">Wage:</span> @WagePresenter.GetDisplayAmountWithFrequencyPostfix(vacancy.Wage.Type, vacancy.Wage.Amount, vacancy.Wage.AmountLowerBound, vacancy.Wage.AmountUpperBound, vacancy.Wage.Text, vacancy.Wage.Unit, vacancy.Wage.HoursPerWeek, vacancy.StartDate)
+                            </div>
+
+                            @if (vacancy.IsPositiveAboutDisability)
+                            {
+                                <a class="inl-block" id="positive-about-disabled-@vacancy.Id" href="https://www.gov.uk/looking-for-work-if-disabled" target="_blank">
+                                    <img src="@Url.CdnImage("logo-ticks-small-2x.png")" height="30" width="38" alt="Two ticks logo - Positive about disabled people">
+                                </a>
+                            }
+
+                            @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
+                            {
+                                <div id="multiple-positions-nationwide">This apprenticeship has multiple positions across England.</div>
+                            }
                         </div>
-                    }
-                    <p data-show="DisplayDescription" class="@{if (!Model.VacancySearch.DisplayDescription) {<text>toggle-content</text>} else {<text>@vacancy.Description.GetPreserveFormattingCssClass()</text>}}">@vacancy.Description</p>
-                    <div class="grid-wrapper">
-                        <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : "")">
-                            <ul class="list-text no-btm-margin inner-block-padr">
-
-                                @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
-                                {
-                                    <li data-show="DisplayDistance" @{if (!Model.VacancySearch.DisplayDistance) { <text> class="toggle-content" </text>      }}>
-                                        <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
-                                        <div class="detail-content toggle-content hide-nojs">
-                                            <select class="select-mode" name="">
-                                                <option value="DRIVING" aria-live="polite">Driving</option>
-                                                <option value="TRANSIT" aria-live="polite">Bus/Train</option>
-                                                <option value="WALKING" aria-live="polite">Walking</option>
-                                                <option value="BICYCLING" aria-live="polite">Cycling</option>
-                                            </select>
-
-                                            <span class="journey-time" aria-live="polite"></span>
-                                        </div>
-                                    </li>
-                                }
-                                <li data-show="DisplayClosingDate" @{if (!Model.VacancySearch.DisplayClosingDate) { <text> class="toggle-content" </text>      }}><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
-                                <li data-show="DisplayStartDate" @{if (!Model.VacancySearch.DisplayStartDate) { <text> class="toggle-content" </text>      }}><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
-                                <li data-show="DisplayApprenticeshipLevel" @{if (!Model.VacancySearch.DisplayApprenticeshipLevel) { <text> class="toggle-content" </text>      }}><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
-                                <li data-show="DisplayWage" @{if (!Model.VacancySearch.DisplayWage) { <text> class="toggle-content" </text>      }}><b>Wage:</b> @WagePresenter.GetDisplayAmountWithFrequencyPostfix(vacancy.Wage.Type, vacancy.Wage.Amount, vacancy.Wage.AmountLowerBound, vacancy.Wage.AmountUpperBound, vacancy.Wage.Text, vacancy.Wage.Unit, vacancy.Wage.HoursPerWeek, vacancy.StartDate)</li>
-
-                                @if (vacancy.IsPositiveAboutDisability)
-                                {
-                                    <li class="small-btm-margin">
-                                        <a class="inl-block" id="positive-about-disabled-@vacancy.Id" href="https://www.gov.uk/looking-for-work-if-disabled" target="_blank">
-                                            <img src="@Url.CdnImage("logo-ticks-small-2x.png")" height="30" width="38" alt="Two ticks logo - Positive about disabled people">
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
-                                {
-                                    <li id="multiple-positions-nationwide">This apprenticeship has multiple positions across England.</li>
-                                }
-                            </ul>
-                        </div>
+                        
                         @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                         {
                             <div class="hide-tablet hide-nojs">
                                 <span style="margin-left: 0;" class="summary-style fake-link mob-map-trigger map-closed">Show/hide map</span>
                             </div>
-                            <div class="grid grid-1-3 map-container hide-nojs small-btm-margin toggle-content--mob">
-                                <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
-                                <div class="map"></div>
-                            </div>
+                                    <div class="column-one-third map-container hide-nojs small-btm-margin toggle-content--mob">
+                                        <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
+                                        <div class="map"></div>
+                                    </div>
                         }
                     </div>
 
+                    @if (ViewBag.IsCandidateActivated != null && ViewBag.IsCandidateActivated)
+                        {
+                            var applicationStatus = vacancy.CandidateApplicationStatus.HasValue
+                                ? vacancy.CandidateApplicationStatus.ToString()
+                                : "Unsaved";
+
+                            <div class="save-vacancy">
+                                <a href="#" id="save-vacancy-link-@vacancy.Id" class="hidden fake-link link-unimp save-vacancy-link" data-vacancy-id="@vacancy.Id" data-application-status="@applicationStatus"><i class="fa"></i></a>
+                                @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new {id = vacancy.Id}, new {@class = "hidden resume-link", @id = "resume-link-" + @vacancy.Id})
+                                <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied
+                                </p>
+                            </div>
+                        }
+
+
                 </li>
-                        itemPosition++;
+                itemPosition++;
             }
         }
     </ul>
 
-        Html.RenderPartial("_pagination", Model);
+    Html.RenderPartial("_pagination", Model);
 
-        if (Model.TotalLocalHits > 5 || Model.TotalNationalHits > 5)
-        {
-            <div class="form-group">
-                <label for="results-per-page" class="heading-small inline">Display results</label>
-                @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
-                <noscript>
-                    <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
-                </noscript>
-            </div>
+    if (Model.TotalLocalHits > 5 || Model.TotalNationalHits > 5)
+    {
+        <div class="form-group">
+            <label for="results-per-page" class="heading-small inline">Display results</label>
+            @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
+            <noscript>
+                <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
+            </noscript>
+        </div>
         }
-}
+    }
 
 
 @if (Request.IsAjaxRequest())

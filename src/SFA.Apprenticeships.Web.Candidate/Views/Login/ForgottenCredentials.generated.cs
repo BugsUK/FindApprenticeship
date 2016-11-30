@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Login
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Login/ForgottenCredentials.cshtml")]
@@ -112,13 +113,13 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">If you have an account with the old service</h2>\r\n            <p");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 665), Tuple.Create("\"", 717)
-, Tuple.Create(Tuple.Create("", 671), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/img/logo-apprenticeships.png")
-, 671), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 675), Tuple.Create("\"", 727)
+, Tuple.Create(Tuple.Create("", 681), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/img/logo-apprenticeships.png")
+, 681), false)
 );
 
 WriteLiteral(" width=\"133\"");
@@ -134,14 +135,14 @@ WriteLiteral(" align=\"left\"");
 WriteLiteral(" />\r\n                You won\'t be able to sign in using existing \"Apprenticeship " +
 "vacancies\" details.\r\n            </p>\r\n            <p>You must <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1019), Tuple.Create("\"", 1060)
+WriteAttribute("href", Tuple.Create(" href=\"", 1029), Tuple.Create("\"", 1070)
             
             #line 25 "..\..\Views\Login\ForgottenCredentials.cshtml"
-, Tuple.Create(Tuple.Create("", 1026), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.Register)
+, Tuple.Create(Tuple.Create("", 1036), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.Register)
             
             #line default
             #line hidden
-, 1026), false)
+, 1036), false)
 );
 
 WriteLiteral(">create an account</a> to access this new service.</p>\r\n        </div>\r\n    </sec" +
@@ -199,14 +200,14 @@ WriteLiteral(" class=\"heading-medium\"");
 WriteLiteral(">If your account is locked</h2>\r\n    <p>\r\n        If your account is locked and y" +
 "ou’ve been sent a code to unlock it, you\r\n        can <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2087), Tuple.Create("\"", 2126)
+WriteAttribute("href", Tuple.Create(" href=\"", 2097), Tuple.Create("\"", 2136)
             
             #line 49 "..\..\Views\Login\ForgottenCredentials.cshtml"
-, Tuple.Create(Tuple.Create("", 2094), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.Unlock)
+, Tuple.Create(Tuple.Create("", 2104), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.Unlock)
             
             #line default
             #line hidden
-, 2094), false)
+, 2104), false)
 );
 
 WriteLiteral(">enter it</a> now.\r\n    </p>\r\n</div>\r\n\r\n");

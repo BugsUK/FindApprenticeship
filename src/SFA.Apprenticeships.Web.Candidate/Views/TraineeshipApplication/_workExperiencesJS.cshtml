@@ -4,17 +4,17 @@
 
     <fieldset id="applyWorkExperience" class="fieldset-with-border">
         <legend class="heading-large">Work experience</legend>
-        <p class="hide-nojs form-label text" id="workExpQuestion">Do you have any work experience?</p>
+        <p class="hide-nojs form-label-bold text" id="workExpQuestion">Do you have any work experience?</p>
         <p class="form-hint text">
             Please include any work, whether paid or voluntary
         </p>
         <div class="hide-nojs">
             <div class="form-group inline clearfix">
-                <label data-target="workexperience-panel" for="workexp-yes" class="block-label" data-bind="css: {selected: showWorkExperience()}">
+                <label data-target="workexperience-panel" for="workexp-yes" class="block-label selection-button-radio" data-bind="css: {selected: showWorkExperience()}">
                     @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, new { id = "workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }", aria_controls = "workexperience-panel", aria_expanded = "false", aria_labelledby = "workExpQuestion" })
                     Yes
                 </label>
-                <label for="workexp-no" class="block-label" data-bind="css: {selected: !showWorkExperience()}">
+                <label for="workexp-no" class="block-label selection-button-radio" data-bind="css: {selected: !showWorkExperience()}">
                     @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, new { id = "workexp-no", data_bind = "attr:{'checked': hasNoWorkExperience() }", aria_labelledby = "workExpQuestion" })
                     No
                 </label>
@@ -22,48 +22,48 @@
             <div id="workexperience-panel" class="toggle-content" data-bind="style: {'display': workExperienceStatus() }" aria-hidden="true">
                 <div id="workexperience-apply" class="clearfix">
                     <div class="form-group form-group-compound" data-bind="parentvalElement: employer">
-                        <label for="work-employer" class="form-label">Employer</label>
+                        <label for="work-employer" class="form-label-bold">Employer</label>
                         <input type="text" class="form-control" id="work-employer" data-bind="value: employer" maxlength="50">
                     </div>
                     <div class="form-group form-group-compound" data-bind="parentvalElement: jobTitle">
-                        <label for="work-title" class="form-label">Job title</label>
+                        <label for="work-title" class="form-label-bold">Job title</label>
                         <input type="text" class="form-control" id="work-title" data-bind="value: jobTitle" maxlength="50">
                     </div>
                     <div class="form-group form-group-compound" data-bind="parentvalElement: mainDuties">
-                        <label for="work-role" class="form-label">Main duties</label>
+                        <label for="work-role" class="form-label-bold">Main duties</label>
                         <textarea rows="3" class="form-control" id="work-role" data-val-length-max="200" data-bind="value: mainDuties"></textarea>
                         <span class="form-hint"><span class="maxchar-count">200</span> <span class="maxchar-text"> characters remaining</span></span>
                         <span class="visuallyhidden aria-limit" aria-live="polite"></span>
                     </div>
                     <div class="form-group inline-fixed validation-message-parent">
-                        <div class="form-group error-wrapper vert-align-top no-btm-margin">
-                            <label for="work-from" class="form-label">Started</label>
-                            <div class="form-group no-btm-margin">
+                        <div class="form-group error-wrapper vert-align-top sfa-no-bottom-margin">
+                            <label for="work-from" class="form-label-bold">Started</label>
+                            <div class="form-group sfa-no-bottom-margin">
                                 <span class="form-hint">Month</span>
 
-                                <select id="work-from" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: fromMonth"></select>
+                                <select class="form-control" id="work-from" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: fromMonth"></select>
 
                             </div>
-                            <div class="form-group no-btm-margin" data-bind="parentvalElement: fromYear">
+                            <div class="form-group sfa-no-bottom-margin" data-bind="parentvalElement: fromYear">
                                 <label for="work-from-year" class="form-hint">Year</label>
                                 <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
                                        id="work-from-year" data-bind="value: fromYear">
                             </div>
                         </div>
-                        <div class="form-group error-wrapper vert-align-top no-btm-margin">
-                            <label for="work-to" class="form-label">Finished</label>
-                            <div class="form-group no-btm-margin">
+                        <div class="form-group error-wrapper vert-align-top sfa-no-bottom-margin">
+                            <label for="work-to" class="form-label-bold">Finished</label>
+                            <div class="form-group sfa-no-bottom-margin">
                                 <span class="form-hint">Month</span>
 
-                                <select id="work-to" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: toMonth,attr:{'disabled':toDateReadonly() }"></select>
+                                <select class="form-control" id="work-to" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: toMonth,attr:{'disabled':toDateReadonly() }"></select>
 
                             </div>
-                            <div class="form-group no-btm-margin" data-bind="parentvalElement: toYear">
+                            <div class="form-group sfa-no-bottom-margin" data-bind="parentvalElement: toYear">
                                 <label for="work-to-year" class="form-hint">Year</label>
                                 <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
                                        id="work-to-year" data-bind="value: toYear, attr:{'disabled':toDateReadonly() }" />
                             </div>
-                            <div class="form-group no-btm-margin">
+                            <div class="form-group sfa-no-bottom-margin">
                                 <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment" />
                                 <label for="work-current">Current</label>
                             </div>
@@ -78,7 +78,7 @@
 
                 <div id="work-experience-summary" data-bind="foreach: workExperiences">
                     <div class="grid-3-4">
-                        <div id="work-history-item" class="grid-wrapper work-history-item">
+                        <div id="work-history-item" class="grid-row work-history-item">
                             <div class="work-controls">
                                 <div class="work-edit ta-center">
 
@@ -92,7 +92,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="grid grid-1-2">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <colgroup>
                                         <col class="t100">
@@ -125,7 +125,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="grid grid-1-2">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <colgroup>
                                         <col class="t30">
@@ -150,7 +150,7 @@
                                         <tr>
                                             <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <select title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemFromMonth, attr:{'name':'Candidate.WorkExperience[' + $index() +'].FromMonth'} "></select>
+                                                    <select class="form-control" title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemFromMonth, attr:{'name':'Candidate.WorkExperience[' + $index() +'].FromMonth'} "></select>
 
                                                 </div>
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
@@ -164,7 +164,7 @@
                                             </td>
                                             <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <select title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemToMonth, attr:{'disabled': toItemDateReadonly,'name':'Candidate.WorkExperience[' + $index() +'].ToMonth'}"></select>
+                                                    <select class="form-control" title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemToMonth, attr:{'disabled': toItemDateReadonly,'name':'Candidate.WorkExperience[' + $index() +'].ToMonth'}"></select>
 
                                                 </div>
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">

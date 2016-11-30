@@ -72,4 +72,10 @@ CREATE NONCLUSTERED INDEX [idx_Candidate_CandidateStatusTypeID]
 GO
 CREATE NONCLUSTERED INDEX [nci_wi_Candidate_56288E05DCC7E26DF94F5E6F145187EB] 
 	ON [dbo].[Candidate] ([CandidateGuid]) 
-	INCLUDE ([CandidateId], [PersonId]) ;
+	INCLUDE ([CandidateId], [PersonId])
+
+
+GO
+CREATE NONCLUSTERED INDEX [nci_wi_Candidate_0D4CB7EB0FD3FFDABD2799F8E8113533] 
+    ON [dbo].[Candidate]([DateofBirth] ASC)
+    INCLUDE ([AddressLine1],[AddressLine2],[AddressLine3],[AddressLine4],[CandidateGuid],[CountyId],[Latitude],[Longitude],[PersonId],[Postcode],[Town]);

@@ -3,22 +3,21 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model DashboardVacancySummariesViewModel
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-1">
-        <div class="inner-block-padr">
-            <section>
-                <div class="tabbed-element tab1 active width-all-1-1">
-                    <table class="no-btm-margin reactive">
-                        <colgroup>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                        </colgroup>
-                        <thead>
+<div class="column-full">
+    <div class="inner-block-padr">
+        <section>
+            <div >
+                <table class="sfa-table">
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
                         <tr>
                             <th>
                                 @{
@@ -85,22 +84,22 @@
                             </th>
                             <th></th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    </thead>
+                    <tbody>
                             @if (Model.Vacancies.Any())
                             {
                                 foreach (var vacancy in Model.Vacancies)
-                                {
-                                    <tr>
+                            {
+                                <tr>
                                         <td class="reactive-header" data-label="Provider">
                                             @vacancy.ProviderName
                                         </td>
-                                        <td>
-                                            <div class="reactive-title">@HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title)</div>
-                                        </td>
-                                        <td>
+                                    <td>
+                                        <div class="reactive-title">@HtmlExtensions.EscapeHtmlEncoding(Html, vacancy.Title)</div>
+                                    </td>
+                                    <td>
                                             @vacancy.VacancyType.ToString().Substring(0, 3)
-                                        </td>
+                                    </td>
                                         <td>
                                             @if (vacancy.VacancyViewModel != null && vacancy.VacancyViewModel.LocationAddresses != null && vacancy.VacancyViewModel.LocationAddresses.Count > 1)
                                             {
@@ -118,34 +117,33 @@
                                                     </div>
                                                 }
                                             }
-                                        </td>
+                                    </td>
 
-                                        <td class="reactive-header" data-label="Date submitted">
-                                            @vacancy.DateSubmitted.ToGmtDate()
-                                        </td>
-                                        <td class="reactive-header" data-label="Closing date">
-                                            @vacancy.ClosingDate.ToFriendlyClosingToday()
-                                        </td>
-                                        <td class="ta-center reactive-header" data-label="Submission count">
-                                            @vacancy.SubmissionCount
-                                        </td>
-                                        <td>
-                                            @if (vacancy.CanBeReservedForQaByCurrentUser)
-                                            {
+                                    <td class="reactive-header" data-label="Date submitted">
+                                        @vacancy.DateSubmitted.ToGmtDate()
+                                    </td>
+                                    <td class="reactive-header" data-label="Closing date">
+                                        @vacancy.ClosingDate.ToFriendlyClosingToday()
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Submission count">
+                                        @vacancy.SubmissionCount
+                                    </td>
+                                    <td>
+                                        @if (vacancy.CanBeReservedForQaByCurrentUser)
+                                        {
                                                 <a href="@Url.RouteUrl(ManagementRouteNames.ReserveForQA, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Review @vacancy.Title">Review</a>
-                                            }
-                                        </td>
-                                    </tr>
+                                        }
+                                    </td>
+                                </tr>
                                 }
                             }
                             else
                             {
                                 <tr><td colspan="6">No results</td></tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
 </div>

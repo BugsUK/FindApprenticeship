@@ -38,7 +38,7 @@
     <fieldset class="fieldset-with-border">
         <legend class="heading-large">Sign in details</legend>
         <div class="form-group">
-            <p class="form-label">Email address</p>
+            <p class="form-label-bold">Email address</p>
             <span class="form-prepopped hidden linked-input-slave"></span>
             <label class="alwayshidden" for="hiddenUsername"></label>
             <input type="text" class="form-prepopped alwayshidden linked-input-slave" name="username" id="hiddenUsername">
@@ -56,10 +56,10 @@
     </fieldset>
     
     <div class="form-group">
-        @Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label" })
+        @Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" })
     </div>
 
-    @Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label" })
+    @Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" })
 
     <div class="form-group">
         <button id="create-account-btn" class="button">Create account</button>

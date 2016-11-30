@@ -58,7 +58,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"strengths\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">What are your main strengths?</label>\r\n        <span");
 
@@ -83,7 +83,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"improvements\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">What skills would you like to improve during this apprenticeship?</label>\r\n     " +
 "   <span");
@@ -109,7 +109,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"hobbies-and-interests\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">What are your hobbies and interests?</label>\r\n        <span");
 

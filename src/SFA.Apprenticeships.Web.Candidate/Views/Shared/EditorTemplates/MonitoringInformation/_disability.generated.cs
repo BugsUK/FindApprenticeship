@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_disability.cshtml")]
@@ -57,7 +58,7 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n    <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"disability-label\"");
 
@@ -66,7 +67,7 @@ WriteLiteral(">Do you have a learning difficulty, disability or health problem?<
 
 WriteLiteral(" for=\"disability-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -83,7 +84,7 @@ WriteLiteral(" Yes\r\n    </label>\r\n    <label");
 
 WriteLiteral(" for=\"disability-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -100,7 +101,7 @@ WriteLiteral(" No\r\n    </label>\r\n    <label");
 
 WriteLiteral(" for=\"disability-prefer-not-to-say\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -119,11 +120,11 @@ WriteLiteral(" class=\"text\"");
 
 WriteLiteral(">\r\n        <details");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <summary>Why we collect this info</summary>\r\n            <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(@">
                 <p>
@@ -148,7 +149,7 @@ WriteLiteral(">\r\n    <label");
 
 WriteLiteral(" for=\"question4\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Is there anything we can do to support your interview?</label>\r\n    <span");
 
@@ -164,7 +165,7 @@ WriteLiteral(" data-target=\"support-panel\"");
 
 WriteLiteral(" for=\"disability-support-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
@@ -181,7 +182,7 @@ WriteLiteral(" Yes\r\n        </label>\r\n        <label");
 
 WriteLiteral(" for=\"disability-support-no\"");
 
-WriteLiteral(" class=\"block-label hide-nojs\"");
+WriteLiteral(" class=\"block-label selection-button-radio hide-nojs\"");
 
 WriteLiteral(">\r\n");
 
@@ -198,7 +199,7 @@ WriteLiteral(" No\r\n        </label>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" id=\"support-panel\"");
 
-WriteLiteral(" class=\"panel-indent toggle-content\"");
+WriteLiteral(" class=\"panel panel-border-narrow toggle-content\"");
 
 WriteLiteral(" aria-hidden=\"true\"");
 

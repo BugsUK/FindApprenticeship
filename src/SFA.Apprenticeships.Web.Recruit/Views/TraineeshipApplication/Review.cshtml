@@ -39,23 +39,23 @@
         </div>
     }
 
-    <div class="grid-wrapper hgroup">
-        <div class="grid-2-3 grid">
-            <h1 class="heading-xlarge med-btm-margin">@Model.Vacancy.Title</h1>
-            <p class="subtitle">@Model.Vacancy.EmployerName</p>
+    <div class="grid-row hgroup">
+        <div class="column-two-thirds grid">
+            <h1 class="heading-xlarge sfa-medium-bottom-margin">@Model.Vacancy.Title</h1>
+            <p class="heading-secondary ">@Model.Vacancy.EmployerName</p>
         </div>
-        <div class="grid grid-1-3">
+        <div class="column-one-third">
             <div class="page-link hide-nojs">
                 <p>
                     <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
                 </p>
             </div>
         </div>
-        <div class="grid-wrapper">
-            <div class="grid grid-2-3">
+        <div class="grid-row">
+            <div class="column-two-thirds">
                 @Html.DisplayFor(m => m.ApplicantDetails, ApplicantDetailsViewModel.PartialView)
             </div>
-            <div class="grid grid-1-3">
+            <div class="column-one-third">
             </div>
         </div>
         @Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)
@@ -78,11 +78,11 @@
                     <div class="detail-content qa-comment">
                         <p class="heading-medium">Notes (optional)</p>
                         <div class="blocklabel-single-container">
-                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
                         </div>
                         <p class="heading-medium">How would you like to assign this candidate's application?</p>
                         <p>
-                            <label for="application-status-submitted" class="block-label">
+                            <label for="application-status-submitted" class="block-label selection-button-radio">
                                 @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.Submitted, new { id = "application-status-submitted" })
                                 New @if (Model.Status == ApplicationStatuses.Submitted)
                                 {
@@ -90,7 +90,7 @@
                                 }
                             </label>
                             <br />
-                            <label for="application-status-inprogress" class="block-label">
+                            <label for="application-status-inprogress" class="block-label selection-button-radio">
                                 @Html.RadioButtonFor(model => model.Status, ApplicationStatuses.InProgress, new { id = "application-status-inprogress" })
                                 In progress @if (Model.Status == ApplicationStatuses.InProgress)
                                 {
@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <p class="med-btm-margin">
+                    <p class="sfa-medium-bottom-margin">
                         <button type="submit" class="button" name="Review" value="ReviewSaveAndExit">Save and exit</button>
                         @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
                     </p>

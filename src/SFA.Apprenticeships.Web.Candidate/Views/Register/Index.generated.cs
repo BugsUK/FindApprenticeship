@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Register/Index.cshtml")]
@@ -247,7 +248,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Email address</p>\r\n            <span");
 
@@ -273,15 +274,15 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" class=\"inl-block inpage-focus\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2229), Tuple.Create("\"", 2269)
-, Tuple.Create(Tuple.Create("", 2236), Tuple.Create("#", 2236), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2234), Tuple.Create("\"", 2274)
+, Tuple.Create(Tuple.Create("", 2241), Tuple.Create("#", 2241), true)
             
             #line 45 "..\..\Views\Register\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2237), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
+, Tuple.Create(Tuple.Create("", 2242), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
             
             #line default
             #line hidden
-, 2237), false)
+, 2242), false)
 );
 
 WriteLiteral(">Edit your email</a>\r\n        </div>\r\n        \r\n        <div");
@@ -343,7 +344,7 @@ WriteLiteral("        ");
 
             
             #line 59 "..\..\Views\Register\Index.cshtml"
-   Write(Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label" }));
+   Write(Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" }));
 
             
             #line default
@@ -359,14 +360,14 @@ WriteLiteral("\r\n    </div>\r\n");
             #line hidden
             
             #line 62 "..\..\Views\Register\Index.cshtml"
-Write(Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label" }));
+Write(Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" }));
 
             
             #line default
             #line hidden
             
             #line 62 "..\..\Views\Register\Index.cshtml"
-                                                                                                                    
+                                                                                                                                              
 
 
             
