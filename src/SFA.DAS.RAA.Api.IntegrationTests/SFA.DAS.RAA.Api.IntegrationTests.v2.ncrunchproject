@@ -27,5 +27,4 @@
   <IgnoredTests>
     <AllTestsSelector />
   </IgnoredTests>
-  <HiddenWarnings>PreBuildEventDisabled</HiddenWarnings>
 </ProjectConfiguration>
