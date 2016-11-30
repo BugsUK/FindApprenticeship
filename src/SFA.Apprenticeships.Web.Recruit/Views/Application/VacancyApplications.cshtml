@@ -58,16 +58,20 @@
             <div class="panel-indent text">
                 @{
                     var daysTillClose = (Model.ClosingDate - DateTime.UtcNow).Days;
-
-                    if (daysTillClose == 0)
+                    var hoursTillClose = (Model.ClosingDate - DateTime.UtcNow).Hours;
+                    if (daysTillClose == 0 && hoursTillClose == 0)
+                    {
+                        <p>This @vacancyTypeText is closed</p>
+                    }
+                    else if (daysTillClose == 0)
                     {
                         <p>This @vacancyTypeText is closing today</p>
                     }
-                    if (daysTillClose == 1)
+                    else if (daysTillClose == 1)
                     {
                         <p>This @vacancyTypeText is due to close in 1 day</p>
                     }
-                    if (daysTillClose > 1 && daysTillClose <= 5)
+                    else if (daysTillClose > 1 && daysTillClose <= 5)
                     {
                         <p>This @vacancyTypeText is due to close in @daysTillClose days</p>
                     }
