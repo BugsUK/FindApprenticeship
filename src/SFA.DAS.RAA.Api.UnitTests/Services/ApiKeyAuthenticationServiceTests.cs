@@ -159,7 +159,7 @@
             };
             var principal = _authenticationService.Authenticate(claims);
 
-            var expectedName = $"RaaApiUser_ApiKey_{_validProviderApiKey}";
+            var expectedName = $"RaaApiUser_ApiKey_{_validProviderApiKey}_Provider";
             principal.IsInRole(Roles.Provider).Should().BeTrue();
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
@@ -181,7 +181,7 @@
             };
             var principal = _authenticationService.Authenticate(claims);
 
-            var expectedName = $"RaaApiUser_ApiKey_{_validEmployerApiKey}";
+            var expectedName = $"RaaApiUser_ApiKey_{_validEmployerApiKey}_Employer";
             principal.IsInRole(Roles.Provider).Should().BeFalse();
             principal.IsInRole(Roles.Employer).Should().BeTrue();
             principal.IsInRole(Roles.Admin).Should().BeFalse();

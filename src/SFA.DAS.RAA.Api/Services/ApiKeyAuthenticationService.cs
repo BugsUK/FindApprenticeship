@@ -31,25 +31,30 @@
                 if (Guid.TryParse(apiKey, out apiKeyGuid))
                 {
                     var user = _raaApiUserRepository.GetUser(apiKey);
-                    var isUnknownApiUser = Equals(user, RaaApiUser.UnknownApiUser);
-                    var name = isUnknownApiUser ? $"RaaApiUser_UnknownApiKey_{apiKey}" : $"RaaApiUser_ApiKey_{apiKey}";
 
-                    var nameClaim = new Claim(ClaimTypes.Name, name);
                     var userDataClaim = new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user));
 
-                    var identityClaims = new[] {apiKeyClaim, nameClaim, userDataClaim};
-                    var claimsIdentity = new ClaimsIdentity(identityClaims, isUnknownApiUser ? null : "ApiKey");
+                    var identityClaims = new List<Claim> { apiKeyClaim, userDataClaim };
 
+                    var namePostfix = "";
                     switch (user.UserType)
                     {
                         case RaaApiUserType.Provider:
-                            claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Roles.Provider));
+                            identityClaims.Add(new Claim(ClaimTypes.Role, Roles.Provider));
+                            namePostfix = "_Provider";
                             break;
                         case RaaApiUserType.Employer:
-                            claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, Roles.Employer));
+                            identityClaims.Add(new Claim(ClaimTypes.Role, Roles.Employer));
+                            namePostfix = "_Employer";
                             break;
                     }
 
+                    var isUnknownApiUser = Equals(user, RaaApiUser.UnknownApiUser);
+
+                    var name = isUnknownApiUser ? $"RaaApiUser_UnknownApiKey_{apiKey}" : $"RaaApiUser_ApiKey_{apiKey}{namePostfix}";
+                    identityClaims.Add(new Claim(ClaimTypes.Name, name));
+
+                    var claimsIdentity = new ClaimsIdentity(identityClaims, isUnknownApiUser ? null : "ApiKey");
                     return new ClaimsPrincipal(claimsIdentity);
                 }
 
