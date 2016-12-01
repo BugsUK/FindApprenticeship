@@ -17,10 +17,10 @@
     public class ApiKeyAuthenticationServiceTests
     {
         private const string InvalidApiKey = "INVALID";
-        private readonly string _unknownApiKey = Guid.NewGuid().ToString();
-        private readonly string _validApiKey = Guid.NewGuid().ToString();
-        private readonly string _validProviderApiKey = Guid.NewGuid().ToString();
-        private readonly string _validEmployerApiKey = Guid.NewGuid().ToString();
+        private readonly Guid _unknownApiKey = Guid.NewGuid();
+        private readonly Guid _validApiKey = Guid.NewGuid();
+        private readonly Guid _validProviderApiKey = Guid.NewGuid();
+        private readonly Guid _validEmployerApiKey = Guid.NewGuid();
 
         private readonly RaaApiUser _validApiUser = new RaaApiUser
         {
@@ -57,7 +57,7 @@
         public void Setup()
         {
             _raaApiUserRepository = new Mock<IRaaApiUserRepository>();
-            _raaApiUserRepository.Setup(r => r.GetUser(It.IsAny<string>())).Returns(RaaApiUser.UnknownApiUser);
+            _raaApiUserRepository.Setup(r => r.GetUser(It.IsAny<Guid>())).Returns(RaaApiUser.UnknownApiUser);
             _raaApiUserRepository.Setup(r => r.GetUser(_validApiKey)).Returns(_validApiUser);
             _raaApiUserRepository.Setup(r => r.GetUser(_validProviderApiKey)).Returns(_validProviderApiUser);
             _raaApiUserRepository.Setup(r => r.GetUser(_validEmployerApiKey)).Returns(_validEmployerApiUser);
@@ -111,7 +111,7 @@
         {
             var claims = new Dictionary<string, string>
             {
-                { ApiKeyAuthenticationService.ApiKeyKey, _unknownApiKey }
+                { ApiKeyAuthenticationService.ApiKeyKey, _unknownApiKey.ToString() }
             };
             var principal = _authenticationService.Authenticate(claims);
 
@@ -120,7 +120,7 @@
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
             var claimsIdentity = ValidatePrincipal(principal, false);
-            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _unknownApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _unknownApiKey.ToString()).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
             claimsIdentity.Name.Should().Be(expectedName);
@@ -133,7 +133,7 @@
         {
             var claims = new Dictionary<string, string>
             {
-                { ApiKeyAuthenticationService.ApiKeyKey, _validApiKey }
+                { ApiKeyAuthenticationService.ApiKeyKey, _validApiKey.ToString() }
             };
             var principal = _authenticationService.Authenticate(claims);
 
@@ -142,7 +142,7 @@
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
             var claimsIdentity = ValidatePrincipal(principal, true);
-            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validApiKey.ToString()).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
             claimsIdentity.Name.Should().Be(expectedName);
@@ -155,7 +155,7 @@
         {
             var claims = new Dictionary<string, string>
             {
-                { ApiKeyAuthenticationService.ApiKeyKey, _validProviderApiKey }
+                { ApiKeyAuthenticationService.ApiKeyKey, _validProviderApiKey.ToString() }
             };
             var principal = _authenticationService.Authenticate(claims);
 
@@ -164,7 +164,7 @@
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
             var claimsIdentity = ValidatePrincipal(principal, true);
-            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validProviderApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validProviderApiKey.ToString()).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
             claimsIdentity.Name.Should().Be(expectedName);
@@ -177,7 +177,7 @@
         {
             var claims = new Dictionary<string, string>
             {
-                { ApiKeyAuthenticationService.ApiKeyKey, _validEmployerApiKey }
+                { ApiKeyAuthenticationService.ApiKeyKey, _validEmployerApiKey.ToString() }
             };
             var principal = _authenticationService.Authenticate(claims);
 
@@ -186,7 +186,7 @@
             principal.IsInRole(Roles.Employer).Should().BeTrue();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
             var claimsIdentity = ValidatePrincipal(principal, true);
-            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validEmployerApiKey).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validEmployerApiKey.ToString()).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
             claimsIdentity.Name.Should().Be(expectedName);

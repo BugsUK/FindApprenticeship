@@ -30,7 +30,7 @@
                 Guid apiKeyGuid;
                 if (Guid.TryParse(apiKey, out apiKeyGuid))
                 {
-                    var user = _raaApiUserRepository.GetUser(apiKey);
+                    var user = _raaApiUserRepository.GetUser(apiKeyGuid);
 
                     var userDataClaim = new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(user));
 
