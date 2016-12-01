@@ -4,6 +4,7 @@
     using System.Web.Http;
     using Swashbuckle.Swagger.Annotations;
 
+    [Authorize]
     public class VacancySummaryController : ApiController
     {
         [SwaggerOperation("GetAll")]
