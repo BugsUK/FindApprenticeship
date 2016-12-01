@@ -12,7 +12,7 @@ var repo_root = __dirname + '/';
 var govuk_frontend_toolkit_root = repo_root + 'node_modules/govuk_frontend_toolkit/stylesheets'; // 1.
 var govuk_elements_sass_root = repo_root + 'node_modules/govuk-elements-sass/public/sass';       // 2.
 
-var buildDir = './build/';
+var buildDir = './build/';  
 
 var outputPaths = [
     repo_root + '../SFA.Apprenticeships.Web.Recruit/Content/_assets/',

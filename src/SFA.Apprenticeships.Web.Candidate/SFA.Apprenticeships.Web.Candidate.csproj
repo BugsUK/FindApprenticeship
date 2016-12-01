@@ -307,6 +307,7 @@
   <ItemGroup>
     <Content Include="BingSiteAuth.xml" />
     <Content Include="Content\_assets\css\font-awesome.css" />
+    <Content Include="Content\_assets\css\font-awesome.css.map" />
     <Content Include="Content\_assets\css\fonts-ie8.css" />
     <Content Include="Content\_assets\css\fonts.css" />
     <Content Include="Content\_assets\css\fonts\GDSTransportTabular-Bold.eot" />
@@ -327,7 +328,12 @@
     <Content Include="Content\_assets\css\images\open-government-licence.png" />
     <Content Include="Content\_assets\css\images\open-government-licence_2x.png" />
     <Content Include="Content\_assets\css\styles.css" />
+    <Content Include="Content\_assets\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\_assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\_assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\_assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\_assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\_assets\fonts\FontAwesome.otf" />
     <Content Include="Content\_assets\img\accordian-arrow-2x.png" />
     <Content Include="Content\_assets\img\accordian-arrow.png" />
     <Content Include="Content\_assets\img\accordion-arrow-2x.png" />
@@ -474,11 +480,23 @@
     <Content Include="Content\_assets\js\chosen.jquery.js" />
     <Content Include="Content\_assets\js\ckeditor\adapters\jquery.js" />
     <Content Include="Content\_assets\js\ckeditor\build-config.js" />
+    <Content Include="Content\_assets\js\ckeditor\CHANGES.md" />
     <Content Include="Content\_assets\js\ckeditor\ckeditor.js" />
     <Content Include="Content\_assets\js\ckeditor\config.js" />
     <Content Include="Content\_assets\js\ckeditor\contents.css" />
     <Content Include="Content\_assets\js\ckeditor\lang\en.js" />
+    <Content Include="Content\_assets\js\ckeditor\LICENSE.md" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\CHANGES.md" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.json" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.tests.json" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.json" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.tests.json" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\preconditions.json" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\quail.jquery.min.js" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\tests.json" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\tests.min.json" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\wcag2.json" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\LICENSE.md" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\quickfix\de\AddTableCaption.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\quickfix\de\AnchorsMerge.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\quickfix\de\AttributeRename.js" />
@@ -515,6 +533,7 @@
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\quickfix\nl\ParagraphToHeader.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\quickfix\nl\QuickFix.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\quickfix\nl\TableHeaders.js" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\README.md" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\skins\moono\a11ychecker.css" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\skins\moono\images\reload.png" />
     <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\styles\contents.css" />
@@ -534,6 +553,7 @@
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\sample-ckeditor.html" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\sample-multiple.html" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\ajax\asp.net\tinyspell.aspx" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\ajax\asp.net\Web.config" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\ajax\asp\json1.asp" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\ajax\asp\json2.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\ajax\asp\tinyspell.asp" />
@@ -541,6 +561,7 @@
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\ajax\php\spellcheck.php" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\ajax\php\tinyspell.php" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\dictionaries\custom.txt" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\dictionaries\en.dic" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\dictionaries\language-rules\banned-words.txt" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\dictionaries\language-rules\common-mistakes.txt" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\dictionaries\language-rules\enforced-corrections.txt" />
@@ -552,6 +573,8 @@
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\installer\test-cke.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\installer\theme.css" />
     <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\license\EULA.txt" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\license\key.lic" />
+    <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\license\web.config" />
     <Content Include="Content\_assets\js\ckeditor\plugins\pastefromword\filter\default.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\pastefromword\icons\hidpi\pastefromword-rtl.png" />
     <Content Include="Content\_assets\js\ckeditor\plugins\pastefromword\icons\hidpi\pastefromword.png" />
@@ -625,6 +648,7 @@
     <Content Include="Content\_assets\js\ckeditor\plugins\pastefromword\lang\zh-cn.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\pastefromword\lang\zh.js" />
     <Content Include="Content\_assets\js\ckeditor\plugins\pastefromword\plugin.js" />
+    <Content Include="Content\_assets\js\ckeditor\README.md" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\dialog.css" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\dialog_ie.css" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\dialog_ie7.css" />
@@ -648,6 +672,7 @@
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\images\lock-open.png" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\images\lock.png" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\images\refresh.png" />
+    <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\readme.md" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\sample\bootstrapck-sample.html" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\sample\css\bootstrapck-sample.css" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
@@ -674,7 +699,6 @@
     <Content Include="Content\_assets\js\jquery.lazy-load-google-maps.js" />
     <Content Include="Content\_assets\js\jquery.pwstrength.js" />
     <Content Include="Content\_assets\js\jquery.scrollTableBody-1.0.0.js" />
-    <None Include="Content\_assets\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\_assets\js\jquery.validate.js" />
     <Content Include="Content\_assets\js\jquery.validate.min.js" />
     <Content Include="Content\_assets\js\jquery.validate.unobtrusive.custom.js" />
@@ -700,6 +724,7 @@
     <Content Include="Content\_assets\js\nanospell\sample-ckeditor.html" />
     <Content Include="Content\_assets\js\nanospell\sample-multiple.html" />
     <Content Include="Content\_assets\js\nanospell\server\ajax\asp.net\tinyspell.aspx" />
+    <Content Include="Content\_assets\js\nanospell\server\ajax\asp.net\Web.config" />
     <Content Include="Content\_assets\js\nanospell\server\ajax\asp\json1.asp" />
     <Content Include="Content\_assets\js\nanospell\server\ajax\asp\json2.js" />
     <Content Include="Content\_assets\js\nanospell\server\ajax\asp\tinyspell.asp" />
@@ -707,6 +732,8 @@
     <Content Include="Content\_assets\js\nanospell\server\ajax\php\spellcheck.php" />
     <Content Include="Content\_assets\js\nanospell\server\ajax\php\tinyspell.php" />
     <Content Include="Content\_assets\js\nanospell\server\dictionaries\custom.txt" />
+    <Content Include="Content\_assets\js\nanospell\server\dictionaries\en.dic" />
+    <Content Include="Content\_assets\js\nanospell\server\dictionaries\en_uk.dic" />
     <Content Include="Content\_assets\js\nanospell\server\dictionaries\language-rules\banned-words.txt" />
     <Content Include="Content\_assets\js\nanospell\server\dictionaries\language-rules\common-mistakes.txt" />
     <Content Include="Content\_assets\js\nanospell\server\dictionaries\language-rules\enforced-corrections.txt" />
@@ -718,6 +745,8 @@
     <Content Include="Content\_assets\js\nanospell\server\installer\test-cke.js" />
     <Content Include="Content\_assets\js\nanospell\server\installer\theme.css" />
     <Content Include="Content\_assets\js\nanospell\server\license\EULA.txt" />
+    <Content Include="Content\_assets\js\nanospell\server\license\key.lic" />
+    <Content Include="Content\_assets\js\nanospell\server\license\web.config" />
     <Content Include="Content\_assets\js\nas\application\applicationform.js" />
     <Content Include="Content\_assets\js\nas\application\dirtyFormDialog.js" />
     <Content Include="Content\_assets\js\nas\apprenticeships\saveVacancy.js" />
@@ -753,11 +782,23 @@
     <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\adapters\jquery.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\build-config.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\CHANGES.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\ckeditor.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\config.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\contents.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\lang\en.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\LICENSE.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\CHANGES.md" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.tests.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.tests.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\preconditions.json" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\quail.jquery.min.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\tests.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\tests.min.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\wcag2.json" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\LICENSE.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\AddTableCaption.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\AnchorsMerge.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\de\AttributeRename.js" />
@@ -794,6 +835,7 @@
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\ParagraphToHeader.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\QuickFix.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\quickfix\nl\TableHeaders.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\README.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\skins\moono\a11ychecker.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\skins\moono\images\reload.png" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\styles\contents.css" />
@@ -813,6 +855,7 @@
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\sample-ckeditor.html" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\sample-multiple.html" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\ajax\asp.net\tinyspell.aspx" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\ajax\asp.net\Web.config" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\ajax\asp\json1.asp" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\ajax\asp\json2.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\ajax\asp\tinyspell.asp" />
@@ -820,6 +863,7 @@
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\ajax\php\spellcheck.php" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\ajax\php\tinyspell.php" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\dictionaries\custom.txt" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\dictionaries\en.dic" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\dictionaries\language-rules\banned-words.txt" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\dictionaries\language-rules\common-mistakes.txt" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\dictionaries\language-rules\enforced-corrections.txt" />
@@ -831,6 +875,8 @@
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\installer\test-cke.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\installer\theme.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\license\EULA.txt" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\license\key.lic" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\license\web.config" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\filter\default.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\icons\hidpi\pastefromword-rtl.png" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\icons\hidpi\pastefromword.png" />
@@ -904,6 +950,7 @@
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\zh-cn.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\lang\zh.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\plugins\pastefromword\plugin.js" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\README.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog_ie.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\dialog_ie7.css" />
@@ -927,6 +974,7 @@
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\lock-open.png" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\lock.png" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\images\refresh.png" />
+    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\readme.md" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\bootstrapck-sample.html" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\css\bootstrapck-sample.css" />
     <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
@@ -946,7 +994,6 @@
     <Content Include="Content\_assets\js\vendor\jquery.joyride.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="Content\_assets\js\vendor\jquery.scrollTableBody-1.0.0.js" />
-    <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.custom.js" />
@@ -969,6 +1016,7 @@
     <Content Include="Content\_assets\js\vendor\nanospell\sample-ckeditor.html" />
     <Content Include="Content\_assets\js\vendor\nanospell\sample-multiple.html" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp.net\tinyspell.aspx" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp.net\Web.config" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\json1.asp" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\json2.js" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp\tinyspell.asp" />
@@ -976,6 +1024,8 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\php\spellcheck.php" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\php\tinyspell.php" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\custom.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en.dic" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\banned-words.txt" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\common-mistakes.txt" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\language-rules\enforced-corrections.txt" />
@@ -987,6 +1037,8 @@
     <Content Include="Content\_assets\js\vendor\nanospell\server\installer\test-cke.js" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\installer\theme.css" />
     <Content Include="Content\_assets\js\vendor\nanospell\server\license\EULA.txt" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\key.lic" />
+    <Content Include="Content\_assets\js\vendor\nanospell\server\license\web.config" />
     <Content Include="Content\_assets\js\vendor\select2.js" />
     <Content Include="Content\_assets\js\vendor\select2.min.js" />
     <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
@@ -1014,60 +1066,8 @@
     <Content Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
-    <Content Include="Content\_assets\css\font-awesome.css.map" />
-    <Content Include="Content\_assets\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\_assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\_assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\_assets\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\_assets\fonts\FontAwesome.otf" />
-    <Content Include="Content\_assets\js\ckeditor\CHANGES.md" />
-    <Content Include="Content\_assets\js\ckeditor\LICENSE.md" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\CHANGES.md" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.json" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.tests.json" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.json" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.tests.json" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\preconditions.json" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\tests.json" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\tests.min.json" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\libs\quail\wcag2.json" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\LICENSE.md" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\a11ychecker\README.md" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\ajax\asp.net\Web.config" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\dictionaries\en.dic" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\license\key.lic" />
-    <Content Include="Content\_assets\js\ckeditor\plugins\nanospell\server\license\web.config" />
-    <Content Include="Content\_assets\js\ckeditor\README.md" />
-    <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\readme.md" />
-    <Content Include="Content\_assets\js\nanospell\server\ajax\asp.net\Web.config" />
-    <Content Include="Content\_assets\js\nanospell\server\dictionaries\en.dic" />
-    <Content Include="Content\_assets\js\nanospell\server\dictionaries\en_uk.dic" />
-    <Content Include="Content\_assets\js\nanospell\server\license\key.lic" />
-    <Content Include="Content\_assets\js\nanospell\server\license\web.config" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\CHANGES.md" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\LICENSE.md" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\CHANGES.md" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.json" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\508.tests.json" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.json" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\guidelines\wcag.tests.json" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\preconditions.json" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\tests.json" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\tests.min.json" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\libs\quail\wcag2.json" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\LICENSE.md" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\a11ychecker\README.md" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\ajax\asp.net\Web.config" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\dictionaries\en.dic" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\license\key.lic" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\plugins\nanospell\server\license\web.config" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\README.md" />
-    <Content Include="Content\_assets\js\vendor\ckeditor\skins\bootstrapck\readme.md" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\ajax\asp.net\Web.config" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en.dic" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\dictionaries\en_uk.dic" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\license\key.lic" />
-    <Content Include="Content\_assets\js\vendor\nanospell\server\license\web.config" />
+    <None Include="Content\_assets\js\jquery.validate-vsdoc.js" />
+    <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
