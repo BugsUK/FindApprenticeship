@@ -71,7 +71,9 @@
                 .ForMember(dest => dest.IsAnonymousEmployer, src => src.Ignore())
                 .ForMember(dest => dest.OriginalFullName, src => src.Ignore())
                 .ForMember(dest => dest.AnonymousAboutTheEmployer, src => src.Ignore())
-                .ForMember(dest => dest.AnonymousAboutTheEmployerComment, src => src.Ignore());
+                .ForMember(dest => dest.AnonymousAboutTheEmployerComment, src => src.Ignore())
+                .ForMember(dest => dest.NumberOfPositionsNationwide, src => src.Ignore())
+                .ForMember(dest => dest.NumberOfPositionsNationwideComment, src => src.Ignore());
             Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>()
                 .ForMember(dest => dest.OfflineApplicationUrl, opt => opt.MapFrom(src => src.EmployersWebsite));
             Mapper.CreateMap<VacancyLocationAddressViewModel, VacancyLocation>()

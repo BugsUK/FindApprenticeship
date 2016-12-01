@@ -182,8 +182,42 @@
 
             var result = mediator.ConfirmEmployer(viewModel, Ukprn);
             result.ViewModel.VacancyLocationType.Should()
-                .Be(true);
+                .Be(VacancyLocationType.SpecificLocation);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
+        }
+
+        [Test]
+        public void ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError_NationwideVacancy()
+        {
+            var numberOfPositions = 5;
+            var numberOfPositionsNw = 1;
+            var viewModel = new VacancyOwnerRelationshipViewModel
+            {
+                VacancyLocationType = VacancyLocationType.Nationwide,
+                NumberOfPositions = numberOfPositions,
+                NumberOfPositionsNationwide = numberOfPositionsNw,
+                ProviderSiteId = 42,
+                Employer = new EmployerViewModel
+                {
+                    EmployerId = 7,
+                }
+            };
+
+            ProviderProvider.Setup(p => p.GetVacancyOwnerRelationshipViewModel(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(new VacancyOwnerRelationshipViewModel
+                {
+                    Employer = new EmployerViewModel
+                    {
+                        Address = new AddressViewModel()
+                    }
+                });
+
+            var mediator = GetMediator();
+
+            var result = mediator.ConfirmEmployer(viewModel, Ukprn);
+            result.ViewModel.VacancyLocationType.Should()
+                .Be(VacancyLocationType.Nationwide);
+            result.ViewModel.NumberOfPositions.Should().Be(numberOfPositionsNw);
         }
 
         [Test]

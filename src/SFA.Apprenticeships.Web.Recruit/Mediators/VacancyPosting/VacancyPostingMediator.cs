@@ -290,7 +290,8 @@
 
                 existingViewModel.VacancyLocationType =
                     viewModel.VacancyLocationType;
-                existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
+                existingViewModel.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ? viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions;
+
                 existingViewModel.VacancyGuid = viewModel.VacancyGuid;
             }
             return existingViewModel;

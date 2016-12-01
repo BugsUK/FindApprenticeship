@@ -75,6 +75,8 @@
                 .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.VacancyType,
                     opt => opt.Ignore())
+                .ForMember(d => d.ApprenticeshipLocationType,
+                    opt => opt.Ignore())
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
                 .ForMember(d => d.DateApplied,
@@ -88,6 +90,8 @@
 
             Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>()
                 .ForMember(d => d.CandidateApplicationStatus,
+                    opt => opt.Ignore())
+                .ForMember(d => d.VacancyLocationType,
                     opt => opt.Ignore())
                 .ForMember(d => d.Wage, opt => opt.MapFrom(src => src.Wage));
 

@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Mappers
 {
-    using System;
+    using Application.Interfaces;
     using Common.Mappers;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System;
     using ViewModels.Vacancy;
 
     [TestFixture]
@@ -17,7 +15,7 @@
     {
         private IMapper _mapper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             _mapper = new RaaCommonWebMappers();

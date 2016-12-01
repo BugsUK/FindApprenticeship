@@ -11,12 +11,12 @@
     [Parallelizable]
     public class AddressToAddressViewModelTests
     {
-        private IMapper mapper;
+        private IMapper _mapper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
-            mapper = new RaaCommonWebMappers();
+            _mapper = new RaaCommonWebMappers();
         }
 
         [Test]
@@ -44,10 +44,9 @@
                 //Uprn = uprn,
                 Postcode = postcode
             };
-            AddressViewModel destination = null;
 
             //Act
-            destination = mapper.Map<PostalAddress, AddressViewModel>(source);
+            var destination = _mapper.Map<PostalAddress, AddressViewModel>(source);
 
             //Assert
             destination.Should().NotBeNull();
@@ -68,10 +67,8 @@
                 GeoPoint = new GeoPoint() { Latitude = 0D, Longitude = 360D }
             };
 
-            AddressViewModel destination = null;
-
             //Act
-            destination = mapper.Map<PostalAddress, AddressViewModel>(source);
+            var destination = _mapper.Map<PostalAddress, AddressViewModel>(source);
 
             //Assert
             destination.Should().NotBeNull();
