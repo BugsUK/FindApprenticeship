@@ -473,7 +473,6 @@
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="Content\_assets\css\font-awesome.css" />
-    <Content Include="Content\_assets\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\fonts-ie8.css" />
     <Content Include="Content\_assets\css\fonts.css" />
     <Content Include="Content\_assets\css\govuk-template-ie6.css" />
