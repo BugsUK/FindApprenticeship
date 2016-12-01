@@ -56,7 +56,7 @@
                 detail.Id.Should().Be(vacancy.VacancyId);
                 detail.ApprenticeshipLevel.Should().Be(vacancy.ApprenticeshipLevel.GetApprenticeshipLevel());
 
-                detail.VacancyLocationType.Should()
+                detail.ApprenticeshipLocationType.Should()
                     .Be(vacancy.VacancyLocationType == Domain.Entities.Raa.Vacancies.VacancyLocationType.Nationwide
                         ? Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLocationType.National
                         : Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLocationType.NonNational);

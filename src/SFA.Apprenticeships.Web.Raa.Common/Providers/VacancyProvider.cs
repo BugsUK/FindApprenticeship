@@ -1234,7 +1234,7 @@
 
             try
             {
-                if (!submittedVacancy.Address.GeoPoint.IsValid())
+                if (submittedVacancy.Address != null && !submittedVacancy.Address.GeoPoint.IsValid())
                 {
                     submittedVacancy.Address.GeoPoint = _geoCodingService.GetGeoPointFor(submittedVacancy.Address);
                 }

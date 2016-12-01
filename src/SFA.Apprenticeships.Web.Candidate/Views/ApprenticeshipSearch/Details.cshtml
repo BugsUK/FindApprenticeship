@@ -106,8 +106,11 @@
 
                     @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
                     {
-                        <h3 class="bold-small">Positions</h3>
-                        <p id="number-of-positions">@Model.NumberOfPositions available</p>                        
+                        if (Model.VacancyLocationType != VacancyLocationType.Nationwide)
+                        {
+                            <h3 class="bold-small">Positions</h3>
+                            <p id="number-of-positions">@Model.NumberOfPositions available</p>
+                        }
                     }                    
                 </div>
             </div>
@@ -229,7 +232,7 @@
                                 {
                                     <p>@Model.EmployerWebsite</p>
                                 }
-                                if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
+                                if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National && Model.VacancyAddress !=null)
                                 {
                                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                         <h3 class="bold-small">Address</h3>
@@ -248,7 +251,7 @@
                     </div>
                 </div>
                 <div class="column-one-half hide-print">
-                    @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
+                    @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National && Model.VacancyAddress != null)
                     {
                         <div id="vacancy-map" class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>

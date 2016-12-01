@@ -131,7 +131,7 @@
                     Description = vacancyDetails.IsEmployerAnonymous ? vacancyDetails.AnonymousAboutTheEmployer : vacancyDetails.EmployerDescription,
                     NumberOfPositions = vacancyDetails.NumberOfPositions,
                     Location = null, // NOTE: no equivalent in legacy vacancy details.
-                    VacancyLocationType = vacancyDetails.VacancyLocationType,
+                    ApprenticeshipLocationType = vacancyDetails.ApprenticeshipLocationType,
                 },
                 // Populate apprenticeshipApplication template with candidate's most recent information.
                 CandidateInformation = applicationTemplate

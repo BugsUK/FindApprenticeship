@@ -6,7 +6,7 @@
         {
         }
         
-        public ApprenticeshipLocationType VacancyLocationType { get; set; }
+        public ApprenticeshipLocationType ApprenticeshipLocationType { get; set; }
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 

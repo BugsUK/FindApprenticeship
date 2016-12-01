@@ -2,6 +2,7 @@
 {
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Common.Mappers.Resolvers;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
@@ -19,7 +20,6 @@
     using ViewModels.Home;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
-    using Common.Mappers.Resolvers;
 
     public class ApprenticeshipCandidateWebMappers : MapperEngine
     {

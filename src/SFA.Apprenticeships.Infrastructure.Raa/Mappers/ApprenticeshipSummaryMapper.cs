@@ -44,7 +44,7 @@
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     IsEmployerAnonymous = !string.IsNullOrEmpty(vacancy.EmployerAnonymousName),
                     Location = location,
-                    VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
+                    ApprenticeshipLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                     Wage = vacancy.Wage,
                     WorkingWeek = vacancy.WorkingWeek,
