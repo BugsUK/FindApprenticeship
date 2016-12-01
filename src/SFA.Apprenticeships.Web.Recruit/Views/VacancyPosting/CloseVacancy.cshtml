@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 @model FurtherVacancyDetailsViewModel
@@ -7,9 +8,19 @@
     ViewBag.Title = "Recruit an Apprentice - Close Vacancy";
 }
 
-<h1 class="heading-xlarge">
-    Close this vacancy
-</h1>
+@if (Model.VacancyType == VacancyType.Traineeship)
+{
+    <h1 class="heading-xlarge">
+        Close this opportunity
+    </h1>
+}
+else
+{
+    <h1 class="heading-xlarge">
+        Close this vacancy
+    </h1>
+}
+
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.CloseVacancy, FormMethod.Post))
 {
@@ -29,14 +40,34 @@
     @Html.HiddenFor(m => m.Wage.WageTypeReason)
     @Html.HiddenFor(m => m.Wage.HoursPerWeek)
     @Html.HiddenFor(m => m.VacancyDatesViewModel.VacancyStatus)
+    @Html.HiddenFor(m => m.VacancyType)
 
-    <div>
-        Your vacancy will be closed immediately and will no longer be listed on Find<br/>
-        an apprenticeship
-    </div>
+    if (Model.VacancyType == VacancyType.Traineeship)
+    {
+        <div>
+            Your opportunity will be closed immediately and will no longer be listed on Find<br />
+            an traineeship
+        </div>
+    }
+    else
+    {
+        <div>
+            Your vacancy will be closed immediately and will no longer be listed on Find<br />
+            an apprenticeship
+        </div>
+    }
+
     <br/>
     <div class="grid grid-1-2">
-        <button class="button" type="submit">Close vacancy</button>
+        @if (Model.VacancyType == VacancyType.Apprenticeship)
+        {
+            <button class="button" type="submit">Close vacancy</button>
+        }
+        else
+        {
+            <button class="button" type="submit">Close opportunity</button>
+        }
+
 
         @{
             var viewModel = new
@@ -48,7 +79,8 @@
                 RecruitmentRouteNames.VacancyApplications :
                 RecruitmentRouteNames.PreviewVacancy;
 
-            @Html.RouteLink("Cancel", routeName, viewModel)           
+            @Html.RouteLink("Cancel", routeName, viewModel)
         }
     </div>
 }
+

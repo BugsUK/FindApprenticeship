@@ -779,10 +779,7 @@
 
         public FurtherVacancyDetailsViewModel GetCloseVacancyViewModel(int vacancyReferenceNumber)
         {
-            return new FurtherVacancyDetailsViewModel
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber
-            };
+            return _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
         }
 
         public MediatorResponse<FurtherVacancyDetailsViewModel> CloseVacancy(
