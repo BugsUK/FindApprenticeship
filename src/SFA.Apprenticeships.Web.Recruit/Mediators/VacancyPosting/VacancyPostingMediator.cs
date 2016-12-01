@@ -334,7 +334,8 @@
         private void UpdateVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn, VacancyViewModel existingVacancy,
             VacancyViewModel vacancyPreviousState)
         {
-            if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation)
+            if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation
+                || viewModel.VacancyLocationType == VacancyLocationType.Nationwide)
             {
                 _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
 

@@ -87,7 +87,7 @@
                 SubCategory = subcategory.FullName,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
                 EditedInRaa = vacancy.EditedInRaa,
-                AdditionalLocationInformation = vacancy.AdditionalLocationInformation                                
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
             };
 
             return detail;
@@ -103,19 +103,17 @@
 
         private static Address GetVacancyAddress(PostalAddress address)
         {
-            if (address != null)
-                return new Address
-                {
-                    AddressLine1 = address.AddressLine1,
-                    AddressLine2 = address.AddressLine2,
-                    AddressLine3 = address.AddressLine3,
-                    AddressLine4 = address.AddressLine4,
-                    Town = address.Town,
-                    County = address.County,
-                    Postcode = address.Postcode,
-                    GeoPoint = GetGeoPoint(address.GeoPoint)
-                };
-            return null;
+            return new Address
+            {
+                AddressLine1 = address.AddressLine1,
+                AddressLine2 = address.AddressLine2,
+                AddressLine3 = address.AddressLine3,
+                AddressLine4 = address.AddressLine4,
+                Town = address.Town,
+                County = address.County,
+                Postcode = address.Postcode,
+                GeoPoint = GetGeoPoint(address.GeoPoint)
+            };
         }
 
         private static GeoPoint GetGeoPoint(Domain.Entities.Raa.Locations.GeoPoint geoPoint)

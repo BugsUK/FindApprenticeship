@@ -74,7 +74,7 @@
                     }
 
                     <h3 class="bold-small">Working week</h3>
-                    <p id="vacancy-working-week" itemprop="workHours" class="@className">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.WorkingWeek))</p>
+                    <p id="vacancy-working-week" itemprop="workHours" class="@className">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.WorkingWeek)</p>
                     @if (Model.HoursPerWeek.HasValue)
                     {
                         <p id="total-hours-per-week">Total hours per week: @Model.HoursPerWeek</p>
@@ -106,11 +106,8 @@
 
                     @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
                     {
-                        if (Model.VacancyLocationType != VacancyLocationType.Nationwide)
-                        {
-                            <h3 class="bold-small">Positions</h3>
-                            <p id="number-of-positions">@Model.NumberOfPositions available</p>
-                        }
+                        <h3 class="bold-small">Positions</h3>
+                        <p id="number-of-positions">@Model.NumberOfPositions available</p>
                     }                    
                 </div>
             </div>
@@ -232,7 +229,7 @@
                                 {
                                     <p>@Model.EmployerWebsite</p>
                                 }
-                                if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National && Model.VacancyAddress !=null)
+                                if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
                                 {
                                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                         <h3 class="bold-small">Address</h3>
@@ -251,7 +248,7 @@
                     </div>
                 </div>
                 <div class="column-one-half hide-print">
-                    @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National && Model.VacancyAddress != null)
+                    @if (Model.ApprenticeshipLocationType != ApprenticeshipLocationType.National)
                     {
                         <div id="vacancy-map" class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>

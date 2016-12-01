@@ -3,7 +3,6 @@
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
-    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using System;
@@ -123,8 +122,6 @@
         public string QualificationRequired { get; set; }
 
         public string SkillsRequired { get; set; }
-
-        public VacancyLocationType VacancyLocationType { get; set; }
 
         public string FutureProspects { get; set; }
 

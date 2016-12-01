@@ -278,7 +278,8 @@
 
             vacancy.VacancyLocationType = vacancy.VacancyLocationType;
             vacancy.NumberOfPositions = vacancy.NumberOfPositions ?? 0;
-            vacancy.Address = (vacancy.VacancyLocationType == VacancyLocationType.SpecificLocation)
+            vacancy.Address = vacancy.VacancyLocationType == VacancyLocationType.SpecificLocation
+                                || vacancy.VacancyLocationType == VacancyLocationType.Nationwide
                                 ? employer.Address
                                 : null;
             vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
@@ -326,7 +327,9 @@
                 Status = VacancyStatus.Draft,
                 VacancyLocationType = vacancyMinimumData.VacancyLocationType,
                 NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
-                Address = vacancyMinimumData.VacancyLocationType == VacancyLocationType.SpecificLocation ? employer.Address : null,
+                Address = vacancyMinimumData.VacancyLocationType == VacancyLocationType.SpecificLocation
+                || vacancyMinimumData.VacancyLocationType == VacancyLocationType.Nationwide
+                ? employer.Address : null,
                 ContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 OriginalContractOwnerId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
