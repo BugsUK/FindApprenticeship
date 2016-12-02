@@ -1357,7 +1357,7 @@ WriteLiteral("    </ul>\r\n");
             #line hidden
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group sfa-medium-top-margin\"");
 
 WriteLiteral(">\r\n            <label");
 
@@ -1371,7 +1371,7 @@ WriteLiteral("            ");
 
             
             #line 242 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-       Write(Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" }));
+       Write(Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page", @class = "form-control form-control-auto" }));
 
             
             #line default
