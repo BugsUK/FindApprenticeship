@@ -601,7 +601,7 @@ WriteLiteral(" class=\"content\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5667), Tuple.Create("\"", 5756)
+WriteAttribute("src", Tuple.Create(" src=\"", 5667), Tuple.Create("\"", 5749)
             
             #line 112 "..\..\Views\Shared\_Layout.cshtml"
 , Tuple.Create(Tuple.Create("", 5673), Tuple.Create<System.Object, System.Int32>(Url.Content("~/Content/_assets/img/gov.uk_logotype_crown_invert_trans.png")
@@ -609,7 +609,6 @@ WriteAttribute("src", Tuple.Create(" src=\"", 5667), Tuple.Create("\"", 5756)
             #line default
             #line hidden
 , 5673), false)
-, Tuple.Create(Tuple.Create("", 5749), Tuple.Create("?0.19.0", 5749), true)
 );
 
 WriteLiteral(" width=\"36\"");
@@ -657,14 +656,14 @@ WriteLiteral("                            <a");
 
 WriteLiteral(" id=\"proposition-name\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6254), Tuple.Create("\"", 6316)
+WriteAttribute("href", Tuple.Create(" href=\"", 6247), Tuple.Create("\"", 6309)
             
             #line 124 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 6261), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+, Tuple.Create(Tuple.Create("", 6254), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 6261), false)
+, 6254), false)
 );
 
 WriteLiteral(">Find an apprenticeship</a>\r\n");
@@ -682,14 +681,14 @@ WriteLiteral("                            <a");
 
 WriteLiteral(" id=\"proposition-name\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6534), Tuple.Create("\"", 6593)
+WriteAttribute("href", Tuple.Create(" href=\"", 6527), Tuple.Create("\"", 6586)
             
             #line 128 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 6541), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+, Tuple.Create(Tuple.Create("", 6534), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 6541), false)
+, 6534), false)
 );
 
 WriteLiteral(">Find a traineeship</a>\r\n");
@@ -942,24 +941,24 @@ WriteLiteral(" width=\"1\"");
 
 WriteLiteral(" height=\"1\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 9693), Tuple.Create("\"", 9855)
-, Tuple.Create(Tuple.Create("", 9699), Tuple.Create("//stats.matraxis.net/", 9699), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 9686), Tuple.Create("\"", 9848)
+, Tuple.Create(Tuple.Create("", 9692), Tuple.Create("//stats.matraxis.net/", 9692), true)
             
             #line 199 "..\..\Views\Shared\_Layout.cshtml"
-             , Tuple.Create(Tuple.Create("", 9720), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDscId
+             , Tuple.Create(Tuple.Create("", 9713), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDscId
             
             #line default
             #line hidden
-, 9720), false)
-, Tuple.Create(Tuple.Create("", 9743), Tuple.Create("/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcss" +
-"ip=", 9743), true)
+, 9713), false)
+, Tuple.Create(Tuple.Create("", 9736), Tuple.Create("/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcss" +
+"ip=", 9736), true)
             
             #line 199 "..\..\Views\Shared\_Layout.cshtml"
-                                                                                                                        , Tuple.Create(Tuple.Create("", 9827), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDomainName
+                                                                                                                        , Tuple.Create(Tuple.Create("", 9820), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDomainName
             
             #line default
             #line hidden
-, 9827), false)
+, 9820), false)
 );
 
 WriteLiteral(" />\r\n            </noscript>\r\n");
@@ -1003,38 +1002,38 @@ WriteLiteral(" href=\"/help\"");
 
 WriteLiteral(">Help</a></li>\r\n\r\n                        <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12817), Tuple.Create("\"", 12866)
+WriteAttribute("href", Tuple.Create(" href=\"", 12810), Tuple.Create("\"", 12859)
             
             #line 252 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 12824), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
+, Tuple.Create(Tuple.Create("", 12817), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
             
             #line default
             #line hidden
-, 12824), false)
+, 12817), false)
 );
 
 WriteLiteral(">Privacy and cookies</a></li>\r\n                        <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12928), Tuple.Create("\"", 12978)
+WriteAttribute("href", Tuple.Create(" href=\"", 12921), Tuple.Create("\"", 12971)
             
             #line 253 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 12935), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 12928), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 12935), false)
+, 12928), false)
 );
 
 WriteLiteral(">Contact</a></li>\r\n                    \t<li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13025), Tuple.Create("\"", 13072)
+WriteAttribute("href", Tuple.Create(" href=\"", 13018), Tuple.Create("\"", 13065)
             
             #line 254 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 13032), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
+, Tuple.Create(Tuple.Create("", 13025), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
             
             #line default
             #line hidden
-, 13032), false)
+, 13025), false)
 );
 
 WriteLiteral(">Terms and conditions</a></li>\r\n                        <li>\r\n                   " +
