@@ -158,3 +158,25 @@ iframe, object, embed {
         display: none;
     }
 }
+
+
+@include media(0,640px) {
+    .mob-collpanel-trigger:after {
+        content:" ▼";
+        display: inline-block;
+        font-size: 12px;
+        height: 14px;
+        padding-left: 10px;
+        vertical-align: middle
+    }
+
+    .mob-collpanel-trigger.triggered:after {
+        content: " ▲"
+    }
+}
+
+@include media(0,640px) {
+    .mob-collpanel.panel-open {
+        display:block
+    }
+}

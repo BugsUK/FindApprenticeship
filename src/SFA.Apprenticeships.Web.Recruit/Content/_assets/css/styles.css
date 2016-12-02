@@ -116,6 +116,21 @@ iframe, object, embed {
   .toggle-content--mob {
     display: none; } }
 
+@media (max-width: 640px) {
+  .mob-collpanel-trigger:after {
+    content: " ▼";
+    display: inline-block;
+    font-size: 12px;
+    height: 14px;
+    padding-left: 10px;
+    vertical-align: middle; }
+  .mob-collpanel-trigger.triggered:after {
+    content: " ▲"; } }
+
+@media (max-width: 640px) {
+  .mob-collpanel.panel-open {
+    display: block; } }
+
 .button-link {
   font-family: "nta",Arial,sans-serif;
   font-size: 19px;
