@@ -50,7 +50,7 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
-        public ApprenticeshipLocationType ApprenticeshipLocationType { get; set; }
+        public ApprenticeshipLocationType VacancyLocationType { get; set; }
 
         [UIHint("Date")]
         [DataType(DataType.DateTime)]

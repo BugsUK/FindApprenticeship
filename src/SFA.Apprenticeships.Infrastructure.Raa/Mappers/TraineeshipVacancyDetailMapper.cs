@@ -6,6 +6,7 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
@@ -77,7 +78,8 @@
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
-                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
+                TraineeshipLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational
             };
 
             return detail;

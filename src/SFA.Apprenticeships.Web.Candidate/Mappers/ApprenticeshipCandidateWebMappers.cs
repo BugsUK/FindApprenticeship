@@ -75,7 +75,7 @@
                 .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.VacancyType,
                     opt => opt.Ignore())
-                .ForMember(d => d.ApprenticeshipLocationType,
+                .ForMember(d => d.VacancyLocationType,
                     opt => opt.MapFrom(src => src.ApprenticeshipLocationType))
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
