@@ -51,6 +51,8 @@ gulp.task('merge-base', ['clean', 'cleantarget'], function () {
             .pipe(gulp.dest(buildDir + 'img')),
         gulp.src(repo_root + 'Content/libs/**/*')
             .pipe(gulp.dest(buildDir + 'js')),
+        gulp.src(repo_root + 'Content/libs/vendor/ckeditor/**/*')
+            .pipe(gulp.dest(buildDir + 'js/ckeditor')),
         gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/javascripts/**/*')
             .pipe(gulp.dest(buildDir + 'js')));
 });
