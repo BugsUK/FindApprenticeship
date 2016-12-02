@@ -76,7 +76,7 @@
                 .ForMember(d => d.VacancyType,
                     opt => opt.Ignore())
                 .ForMember(d => d.ApprenticeshipLocationType,
-                    opt => opt.Ignore())
+                    opt => opt.MapFrom(src => src.ApprenticeshipLocationType))
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
                 .ForMember(d => d.DateApplied,
@@ -92,7 +92,7 @@
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
                 .ForMember(d => d.VacancyLocationType,
-                    opt => opt.Ignore())
+                    opt => opt.MapFrom(src => src.ApprenticeshipLocationType))
                 .ForMember(d => d.Wage, opt => opt.MapFrom(src => src.Wage));
 
             Mapper.CreateMap<Address, AddressViewModel>()

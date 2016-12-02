@@ -18,7 +18,8 @@
                 .ForMember(d => d.Location,
                     opt => opt.ResolveUsing<GeoPointElasticToDomainResolver>().FromMember(src => src.Location))
                 .ForMember(d => d.Wage,
-                    opt => opt.ResolveUsing<WageElasticToDomainResolver>().FromMember(src => src));
+                    opt => opt.ResolveUsing<WageElasticToDomainResolver>().FromMember(src => src))
+                .ForMember(d => d.ApprenticeshipLocationType, opt => opt.MapFrom(src => src.VacancyLocationType));
 
             Mapper.CreateMap<TraineeshipSummary, TraineeshipSearchResponse>()
                 .ForMember(d => d.Distance, opt => opt.Ignore())

@@ -100,7 +100,7 @@
             </div>
             @if (Model.IsSingleLocation || Model.IsNationwideLocation)
             {
-                if ((!Model.IsManageReviewerView && Model.IsNationwideLocation) || (!Model.IsCandidateView && Model.IsNationwideLocation))
+                if (!Model.IsManageReviewerView && Model.IsNationwideLocation)
                 {
                     <div class="@editableItemClass">
                         <h3 class="bold-small">Positions</h3>
@@ -111,7 +111,7 @@
             }
             else
             {
-                if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+                if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count == 1)
                 {
                     <div class="@editableItemClass">
                         <h3 class="bold-small">Positions</h3>

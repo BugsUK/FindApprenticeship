@@ -17,7 +17,8 @@
                 .ForMember(d => d.WageText, opt => opt.MapFrom(src => src.Wage.Text))
                 .ForMember(d => d.WageUnit, opt => opt.MapFrom(src => src.Wage.Unit))
                 .ForMember(d => d.HoursPerWeek, opt => opt.MapFrom(src => src.Wage.HoursPerWeek))
-                .ForMember(d => d.AnonymousEmployerName, opt => opt.MapFrom(src => src.AnonymousEmployerName));
+                .ForMember(d => d.AnonymousEmployerName, opt => opt.MapFrom(src => src.AnonymousEmployerName))
+                .ForMember(d => d.VacancyLocationType, opt => opt.MapFrom(src => src.ApprenticeshipLocationType));
 
             Mapper.CreateMap<TraineeshipSummaryUpdate, TraineeshipSummary>()
                 .ForMember(d => d.Location,

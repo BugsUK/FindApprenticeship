@@ -1,9 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApprenticeshipVacancyProvider
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Application.Interfaces.Candidates;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Candidate.Mappers;
@@ -14,8 +11,9 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-
     using SFA.Apprenticeships.Application.Interfaces;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     [Parallelizable]
@@ -24,7 +22,7 @@
         private const int PageSize = 10;
 
         private Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _apprenticeshipSearchService;
-        private Mock<ICandidateService> _candidateService; 
+        private Mock<ICandidateService> _candidateService;
         private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
         private Mock<ILogService> _logService;
         private Mock<ICandidateVacancyService> _candidateVacancyService;
@@ -76,8 +74,7 @@
         }
 
         [Test]
-        public void
-            IfItsANationalSearchButThereIsntNationalResuls_TheNonNationalResultsAreReturned()
+        public void IfItsANationalSearchButThereIsntNationalResuls_TheNonNationalResultsAreReturned()
         {
             SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.NonNational);
 

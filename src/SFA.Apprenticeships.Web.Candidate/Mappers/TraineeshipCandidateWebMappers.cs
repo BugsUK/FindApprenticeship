@@ -1,18 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
     using Application.Interfaces.Search;
-    using Domain.Entities.Locations;
     using Application.Interfaces.Vacancies;
     using Common.Mappers.Resolvers;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
+    using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
-    using ViewModels.VacancySearch;
     using ViewModels.Applications;
+    using ViewModels.VacancySearch;
 
     public class TraineeshipCandidateWebMappers : MapperEngine
     {
@@ -89,16 +89,16 @@
                  .ForMember(a => a.AddressLine5, opt => opt.Ignore())
                  .AfterMap((source, dest) =>
                  {
-                var addressLine2 =
-                    AddAddressLine(
-                        AddAddressLine(
-                            AddAddressLine(null, source.AddressLine2), source.AddressLine3), source.AddressLine4);
-                
-                dest.AddressLine1 = source.AddressLine1;
-                dest.AddressLine2 = addressLine2;
-                dest.AddressLine3 = source.Town;
-                dest.AddressLine4 = source.County;
-            });
+                     var addressLine2 =
+                         AddAddressLine(
+                             AddAddressLine(
+                                 AddAddressLine(null, source.AddressLine2), source.AddressLine3), source.AddressLine4);
+
+                     dest.AddressLine1 = source.AddressLine1;
+                     dest.AddressLine2 = addressLine2;
+                     dest.AddressLine3 = source.Town;
+                     dest.AddressLine4 = source.County;
+                 });
 
             Mapper.CreateMap<AddressViewModel, Address>();
 
