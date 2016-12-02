@@ -316,7 +316,16 @@
             var viewModel = vacancy.VacancyOwnerRelationship;
             viewModel.VacancyLocationType =
                     vacancy.VacancyLocationType;
-            viewModel.NumberOfPositions = vacancy.NumberOfPositions;
+            if (vacancy.VacancyLocationType == VacancyLocationType.Nationwide)
+            {
+                viewModel.NumberOfPositionsNationwide = vacancy.NumberOfPositions;
+                viewModel.NumberOfPositionsNationwideComment = vacancy.NumberOfPositionsComment;
+            }
+            else
+            {
+                viewModel.NumberOfPositions = vacancy.NumberOfPositions;
+                viewModel.NumberOfPositionsComment = vacancy.NumberOfPositionsComment;
+            }
             viewModel.Status = vacancy.Status;
             viewModel.IsAnonymousEmployer = vacancy.VacancyOwnerRelationship.IsAnonymousEmployer;
             if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
@@ -330,6 +339,7 @@
             }
             else
             {
+                viewModel.IsAnonymousEmployer = false;
                 viewModel.EmployerDescriptionComment = vacancy.EmployerDescriptionComment;
                 viewModel.EmployerWebsiteUrlComment = vacancy.EmployerWebsiteUrlComment;
             }
@@ -463,9 +473,11 @@
             existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             existingViewModel.EmployerDescription = viewModel.EmployerDescription;
             existingViewModel.VacancyLocationType = viewModel.VacancyLocationType;
-            existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
+            existingViewModel.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions;
             existingViewModel.VacancyGuid = viewModel.VacancyGuid;
-            existingViewModel.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
+            existingViewModel.NumberOfPositionsComment = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwideComment : viewModel.NumberOfPositionsComment;
             existingViewModel.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             existingViewModel.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
             existingViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
@@ -484,9 +496,11 @@
             _providerQaProvider.ConfirmVacancyOwnerRelationship(viewModel);
 
             existingVacancy.VacancyLocationType = viewModel.VacancyLocationType;
-            existingVacancy.NumberOfPositions = viewModel.NumberOfPositions;
+            existingVacancy.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions;
             existingVacancy.VacancyGuid = viewModel.VacancyGuid;
-            existingVacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
+            existingVacancy.NumberOfPositionsComment = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwideComment : viewModel.NumberOfPositionsComment;
             existingVacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             existingVacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
             existingVacancy.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
@@ -499,7 +513,8 @@
 
             _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
 
-            if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation)
+            if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation
+                || viewModel.VacancyLocationType == VacancyLocationType.Nationwide)
             {
                 _vacancyQaProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
             }

@@ -1518,7 +1518,8 @@
                     viewModel.AnonymousAboutTheEmployerComment;
             }
 
-            if (vacancy.VacancyLocationType == VacancyLocationType.SpecificLocation)
+            if (vacancy.VacancyLocationType == VacancyLocationType.SpecificLocation
+                || vacancy.VacancyLocationType == VacancyLocationType.Nationwide)
             {
                 vacancy.NumberOfPositions = viewModel.NumberOfPositions;
                 vacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;

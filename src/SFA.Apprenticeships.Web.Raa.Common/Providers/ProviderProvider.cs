@@ -157,7 +157,9 @@
                 vacancy.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
                 vacancy.VacancyLocationType =
                         viewModel.VacancyLocationType;
-                if (viewModel.NumberOfPositions != null) vacancy.NumberOfPositions = viewModel.NumberOfPositions.Value;
+                vacancy.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide
+                    ? viewModel.NumberOfPositionsNationwide
+                    : viewModel.NumberOfPositions;
                 if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
                 {
                     vacancy.EmployerAnonymousName = viewModel.AnonymousEmployerDescription;

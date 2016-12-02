@@ -164,6 +164,7 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(@">
 
         $(""#NumberOfPositionsJS"").attr(""id"", ""NumberOfPositions"").attr(""Name"", ""NumberOfPositions"");
+        $(""#NumberOfPositionsNWJS"").attr(""id"", ""NumberOfPositionsNationwide"").attr(""Name"", ""NumberOfPositionsNationwide"");
 
         $(""#NonAnonymousEmployerJS"").attr(""id"", ""NonAnonymousEmployer"").attr(""Name"", ""NonAnonymousEmployer"");
         $(""#AnonymousEmployerJS"").attr(""id"", ""AnonymousEmployer"").attr(""Name"", ""AnonymousEmployer"");
