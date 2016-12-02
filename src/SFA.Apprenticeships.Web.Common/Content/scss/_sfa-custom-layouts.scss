@@ -121,6 +121,10 @@ iframe, object, embed {
     margin-top: 10px;
 }
 
+.search-result .map {
+    width: 100%;
+    height: 200px;
+}
 
 @media (min-width: 641px) {
     .search-result .map {
@@ -128,7 +132,29 @@ iframe, object, embed {
     }
 }
 
-.search-result .map {
-    width: 100%;
-    height: 200px;
+.map-container {
+    position: relative
+}
+
+.map-container .view-googlemaps {
+    background: rgba(255,255,255,.8);
+    display: inline-block;
+    padding: 1px 4px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10
+}
+
+.hide-tablet{
+    @include media (tablet){
+        display: none;
+    }
+}
+
+.toggle-content--mob
+{
+    @include media (0,641px){
+        display: none;
+    }
 }
