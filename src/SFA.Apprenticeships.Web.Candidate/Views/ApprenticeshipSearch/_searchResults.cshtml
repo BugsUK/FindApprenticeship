@@ -237,9 +237,9 @@ else
 
     if (Model.TotalLocalHits > 5 || Model.TotalNationalHits > 5)
     {
-        <div class="form-group">
+        <div class="form-group sfa-medium-top-margin">
             <label for="results-per-page" class="heading-small inline">Display results</label>
-            @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
+            @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page", @class = "form-control form-control-auto" })
             <noscript>
                 <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
             </noscript>
