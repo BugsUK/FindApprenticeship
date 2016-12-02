@@ -54,8 +54,6 @@
             // TODO: Find and add approved CDN
             bundles.Add(new StyleBundle("~/bundles/font-awesome")
                 .Include("~/Content/_assets/css/font-awesome.css", new CssRewriteUrlTransform()));
-
-            BundleTable.EnableOptimizations = true;
         }
     }
 }
