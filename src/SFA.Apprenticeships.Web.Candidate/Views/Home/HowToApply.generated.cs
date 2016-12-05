@@ -2828,7 +2828,7 @@ WriteLiteral(">Save</a>\r\n    </p>\r\n    <!--   <p id=\"applicationSaved\">\r\
 
 WriteLiteral(" id=\"appFormTour\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 

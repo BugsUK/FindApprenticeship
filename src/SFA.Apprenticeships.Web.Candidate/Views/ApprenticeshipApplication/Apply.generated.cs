@@ -669,7 +669,7 @@ WriteLiteral(">\r\n    Saved\r\n</div>\r\n\r\n<ol");
 
 WriteLiteral(" id=\"appFormTour\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 

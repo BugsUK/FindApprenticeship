@@ -111,7 +111,7 @@ WriteLiteral(" title=\"Hidden password field\"");
 
 WriteLiteral(" type=\"password\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(" />\r\n");
 
@@ -256,7 +256,7 @@ WriteLiteral(" class=\"form-prepopped hidden linked-input-slave\"");
 
 WriteLiteral("></span>\r\n            <label");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(" for=\"hiddenUsername\"");
 
@@ -264,7 +264,7 @@ WriteLiteral("></label>\r\n            <input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-prepopped alwayshidden linked-input-slave\"");
+WriteLiteral(" class=\"form-prepopped sfa-hide linked-input-slave\"");
 
 WriteLiteral(" name=\"username\"");
 
@@ -274,15 +274,15 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" class=\"inl-block inpage-focus\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2234), Tuple.Create("\"", 2274)
-, Tuple.Create(Tuple.Create("", 2241), Tuple.Create("#", 2241), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2222), Tuple.Create("\"", 2262)
+, Tuple.Create(Tuple.Create("", 2229), Tuple.Create("#", 2229), true)
             
             #line 45 "..\..\Views\Register\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2242), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
+, Tuple.Create(Tuple.Create("", 2230), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
             
             #line default
             #line hidden
-, 2242), false)
+, 2230), false)
 );
 
 WriteLiteral(">Edit your email</a>\r\n        </div>\r\n        \r\n        <div");

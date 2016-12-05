@@ -107,7 +107,7 @@ WriteLiteral(" title=\"Hidden username\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(" />\r\n");
 
@@ -117,7 +117,7 @@ WriteLiteral(" title=\"Hidden password\"");
 
 WriteLiteral(" type=\"password\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(" />\r\n");
 

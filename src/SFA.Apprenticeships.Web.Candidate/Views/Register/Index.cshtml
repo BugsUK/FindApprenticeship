@@ -13,7 +13,7 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     
     //Hidden password input to disable autocomplete
-    <input title="Hidden password field" type="password" class="alwayshidden" />
+    <input title="Hidden password field" type="password" class="sfa-hide" />
 
     <fieldset class="fieldset-with-border">
         <legend class="heading-large">Your details</legend>
@@ -40,8 +40,8 @@
         <div class="form-group">
             <p class="form-label-bold">Email address</p>
             <span class="form-prepopped hidden linked-input-slave"></span>
-            <label class="alwayshidden" for="hiddenUsername"></label>
-            <input type="text" class="form-prepopped alwayshidden linked-input-slave" name="username" id="hiddenUsername">
+            <label class="sfa-hide" for="hiddenUsername"></label>
+            <input type="text" class="form-prepopped sfa-hide linked-input-slave" name="username" id="hiddenUsername">
             <a class="inl-block inpage-focus" href="#@Html.IdFor(m => m.EmailAddress)">Edit your email</a>
         </div>
         
