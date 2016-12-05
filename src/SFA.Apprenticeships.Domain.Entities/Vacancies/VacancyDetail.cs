@@ -53,6 +53,8 @@
 
         public bool EditedInRaa { get; set; }
 
+        public VacancyLocationType VacancyLocationType { get; set; }
+        
         #endregion
 
         #region Employer

@@ -54,10 +54,13 @@
 
         public Guid VacancyGuid { get; set; }
 
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsNationwide.LabelText)]
+        public int? NumberOfPositionsNationwide { get; set; }
 
         public bool ComeFromPreview { get; set; }
 
@@ -73,6 +76,9 @@
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsComment.LabelText)]
         public string NumberOfPositionsComment { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsForNationWideComment.LabelText)]
+        public string NumberOfPositionsNationwideComment { get; set; }
 
         public bool IsEmployerAddressValid { get; set; }
     }

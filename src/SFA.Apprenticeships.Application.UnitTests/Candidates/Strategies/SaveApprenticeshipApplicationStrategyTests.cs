@@ -4,7 +4,7 @@
     using Apprenticeships.Application.Candidate.Strategies.Apprenticeships;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;

@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Common.UnitTests.Mediators;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using NUnit.Framework;
 
     [TestFixture]

@@ -7,7 +7,7 @@
     using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancy;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Raa;
     using StructureMap.Configuration.DSL;

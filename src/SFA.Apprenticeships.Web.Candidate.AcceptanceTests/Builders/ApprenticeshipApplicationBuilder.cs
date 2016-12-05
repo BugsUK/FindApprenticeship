@@ -1,4 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
 
 namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
 {

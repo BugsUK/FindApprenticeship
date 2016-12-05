@@ -10,7 +10,6 @@
     using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using System.Globalization;
@@ -480,7 +479,7 @@
 
             var searchParameters = new ApprenticeshipSearchParameters
             {
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                VacancyLocationType = VacancyLocationType.NonNational,
                 ApprenticeshipLevel = searchReturnViewModel.ApprenticeshipLevel,
                 SortType = VacancySearchSortType.Distance,
                 Location = searchLocation,

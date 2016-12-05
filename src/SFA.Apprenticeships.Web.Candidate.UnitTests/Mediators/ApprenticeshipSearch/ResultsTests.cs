@@ -10,7 +10,7 @@
     using Common.UnitTests.Mediators;
     using Constants;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -101,7 +101,7 @@
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.National,
+                LocationType = VacancyLocationType.National,
                 SortType = originalSortType,
                 SearchAction = SearchAction.LocationTypeChanged,
                 Keywords = AKeyword
@@ -122,7 +122,7 @@
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.National,
+                LocationType = VacancyLocationType.National,
                 SortType = originalSortType,
                 SearchAction = SearchAction.LocationTypeChanged
             };
@@ -142,7 +142,7 @@
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.NonNational,
+                LocationType = VacancyLocationType.NonNational,
                 SortType = originalSortType,
                 SearchAction = SearchAction.LocationTypeChanged,
                 Keywords = AKeyword
@@ -163,7 +163,7 @@
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.NonNational,
+                LocationType = VacancyLocationType.NonNational,
                 SortType = originalSortType,
                 SearchAction = SearchAction.LocationTypeChanged
             };
@@ -229,7 +229,7 @@
             {
                 Keywords = "Blah",
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.National,
+                LocationType = VacancyLocationType.National,
                 SortType = VacancySearchSortType.Distance,
                 SearchAction = SearchAction.LocationTypeChanged
             };
@@ -247,7 +247,7 @@
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.National,
+                LocationType = VacancyLocationType.National,
                 SortType = VacancySearchSortType.Distance,
                 SearchAction = SearchAction.LocationTypeChanged
             };
@@ -277,7 +277,7 @@
             var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
-            response.ViewModel.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
+            response.ViewModel.VacancySearch.LocationType = VacancyLocationType.NonNational;
         }
 
         [Test]
@@ -365,7 +365,7 @@
             ApprenticeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
                 .Callback<ApprenticeshipSearchViewModel>(svm =>
                 {
-                    svm.LocationType = ApprenticeshipLocationType.National;
+                    svm.LocationType = VacancyLocationType.National;
                     _searchSentToSearchProvider = svm;
                 })
                 .Returns<ApprenticeshipSearchViewModel>(
@@ -380,7 +380,7 @@
             {
                 Keywords = AKeyword,
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.NonNational,
+                LocationType = VacancyLocationType.NonNational,
                 Category = "1",
                 SearchMode = ApprenticeshipSearchMode.Category
             };
@@ -389,7 +389,7 @@
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
-            response.ViewModel.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
+            response.ViewModel.VacancySearch.LocationType.Should().Be(VacancyLocationType.National);
         }
 
         [Test]
@@ -398,7 +398,7 @@
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.NonNational,
+                LocationType = VacancyLocationType.NonNational,
                 SortType = VacancySearchSortType.Distance,
                 SearchAction = SearchAction.Search,
                 Keywords = AKeyword
@@ -519,7 +519,7 @@
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.NonNational,
+                LocationType = VacancyLocationType.NonNational,
                 SortType = originalSortType,
                 SearchAction = SearchAction.Sort,
                 Keywords = AKeyword
@@ -575,7 +575,7 @@
             {
                 Keywords = AKeyword,
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.NonNational,
+                LocationType = VacancyLocationType.NonNational,
                 Category = selectedCategoryCode,
                 //Select Sub Categories from a different category than the one selected plus a valid one
                 SubCategories = new[]
@@ -595,7 +595,7 @@
             _searchSentToSearchProvider.Should().NotBeNull();
             _searchSentToSearchProvider.Keywords.Should().BeNullOrEmpty();
             _searchSentToSearchProvider.Location.Should().Be(ACityWithOneSuggestedLocation);
-            _searchSentToSearchProvider.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            _searchSentToSearchProvider.LocationType.Should().Be(VacancyLocationType.NonNational);
             _searchSentToSearchProvider.Categories.Should().NotBeNull();
             _searchSentToSearchProvider.Categories.Count.Should().Be(2);
             _searchSentToSearchProvider.Category.Should().Be(selectedCategoryCode);
@@ -608,7 +608,7 @@
             returnedSearch.Should().NotBeNull();
             returnedSearch.Keywords.Should().Be(AKeyword);
             returnedSearch.Location.Should().Be(ACityWithOneSuggestedLocation);
-            returnedSearch.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            returnedSearch.LocationType.Should().Be(VacancyLocationType.NonNational);
             returnedSearch.Categories.Should().NotBeNull();
             returnedSearch.Categories.Count.Should().Be(2);
             returnedSearch.Category.Should().Be(selectedCategoryCode);
@@ -644,7 +644,7 @@
             {
                 Keywords = AKeyword,
                 Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.NonNational,
+                LocationType = VacancyLocationType.NonNational,
                 Category = selectedCategoryCode,
                 //Select Sub Categories from a different category than the one selected plus a valid one
                 SubCategories = new[]
@@ -664,7 +664,7 @@
             _searchSentToSearchProvider.Should().NotBeNull();
             _searchSentToSearchProvider.Keywords.Should().Be(AKeyword);
             _searchSentToSearchProvider.Location.Should().Be(ACityWithOneSuggestedLocation);
-            _searchSentToSearchProvider.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            _searchSentToSearchProvider.LocationType.Should().Be(VacancyLocationType.NonNational);
             _searchSentToSearchProvider.Categories.Should().BeNull();
             _searchSentToSearchProvider.Category.Should().BeNullOrEmpty();
             _searchSentToSearchProvider.SubCategories.Should().BeNull();
@@ -675,7 +675,7 @@
             returnedSearch.Should().NotBeNull();
             returnedSearch.Keywords.Should().Be(AKeyword);
             returnedSearch.Location.Should().Be(ACityWithOneSuggestedLocation);
-            returnedSearch.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            returnedSearch.LocationType.Should().Be(VacancyLocationType.NonNational);
             returnedSearch.Categories.Should().NotBeNull();
             returnedSearch.Categories.Count.Should().Be(2);
             returnedSearch.Category.Should().Be(selectedCategoryCode);

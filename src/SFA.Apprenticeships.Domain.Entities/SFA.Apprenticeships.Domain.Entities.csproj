@@ -159,7 +159,7 @@
     <Compile Include="Users\UserHelper.cs" />
     <Compile Include="Users\UserStatuses.cs" />
     <Compile Include="Users\UserRoles.cs" />
-    <Compile Include="Vacancies\Apprenticeships\ApprenticeshipLocationType.cs" />
+    <Compile Include="Vacancies\ApprenticeshipLocationType.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipSummary.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSummary.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipLevel.cs" />

@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderProvider
 {
-    using System;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using System;
     using ViewModels.Employer;
     using ViewModels.Provider;
-    using ViewModels.Vacancy;
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
@@ -55,7 +54,7 @@
                     Address = new AddressViewModel()
                 },
                 VacancyGuid = vacancyGuid,
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
                 NumberOfPositions = 4
             });
 
@@ -162,7 +161,7 @@
                     Address = new AddressViewModel()
                 },
                 VacancyGuid = vacancyGuid,
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
                 NumberOfPositions = 4
             });
 

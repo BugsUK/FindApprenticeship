@@ -7,7 +7,7 @@
     using Candidate.Views.ApprenticeshipSearch;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

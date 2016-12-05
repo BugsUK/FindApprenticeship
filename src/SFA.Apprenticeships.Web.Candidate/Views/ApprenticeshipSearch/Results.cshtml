@@ -1,5 +1,5 @@
 ﻿@using SFA.Apprenticeships.Application.Interfaces.Vacancies
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Web.Candidate.Extensions
 
 @model ApprenticeshipSearchResponseViewModel
@@ -9,9 +9,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     //Any copy changes here also need reflected in the resultsSearch.js file.
-    var locationTypeLink = Model.VacancySearch.LocationType == ApprenticeshipLocationType.National 
-            ? Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, new ApprenticeshipSearchViewModel(Model.VacancySearch) {LocationType = ApprenticeshipLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1}) 
-            : Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, new ApprenticeshipSearchViewModel(Model.VacancySearch) {LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, SortType = VacancySearchSortType.Distance, PageNumber = 1});
+    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.National 
+            ? Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, new ApprenticeshipSearchViewModel(Model.VacancySearch) {LocationType = VacancyLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1}) 
+            : Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, new ApprenticeshipSearchViewModel(Model.VacancySearch) {LocationType = VacancyLocationType.National, SearchAction = SearchAction.LocationTypeChanged, SortType = VacancySearchSortType.Distance, PageNumber = 1});
 
     string resultMessage;
     string nationalResultsMessage = "";
@@ -22,7 +22,7 @@
     }
     else if (Model.TotalLocalHits == 1)
     {
-        if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.National)
+        if (Model.VacancySearch.LocationType == VacancyLocationType.National)
         {
             resultMessage = "We've found <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' class='update-results' href=" + locationTypeLink + ">apprenticeship in your selected area</a>.";
         }
@@ -33,7 +33,7 @@
     }
     else
     {
-        if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.National)
+        if (Model.VacancySearch.LocationType == VacancyLocationType.National)
         {
             var message = "We've found <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' class='update-results' href=" + locationTypeLink + ">apprenticeships in your selected area</a>.";
             resultMessage = string.Format(message, Model.TotalLocalHits);
@@ -53,7 +53,7 @@
         }
         else if (Model.TotalNationalHits == 1)
         {
-            if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
+            if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
             {
                 nationalResultsMessage = string.Format("We've also found <a id='nationwideLocationTypeLink' class='update-results' href={0}>1 apprenticeship with positions elsewhere in England</a>.", locationTypeLink);
             }
@@ -64,7 +64,7 @@
         }
         else
         {
-            if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
+            if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
             {
                 nationalResultsMessage = string.Format("We've also found <a id='nationwideLocationTypeLink' class='update-results' href={1}>{0} apprenticeships with positions elsewhere in England</a>.", Model.TotalNationalHits, locationTypeLink);
             }

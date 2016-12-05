@@ -5,17 +5,18 @@
     using Domain.Entities.Vacancies;
     using Entities;
     using Infrastructure.Common.Mappers;
-    using Presentation;
-    using System;
-    using System.Linq.Expressions;
     using DbPostalAddress = Address.Entities.PostalAddress;
     using DbVacancy = Entities.Vacancy;
     using DbVacancyLocation = Entities.VacancyLocation;
     using DbVacancySummary = Entities.VacancySummary;
+    using Presentation;
+    using System;
+    using System.Linq.Expressions;
     using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
 
     public class ShortToIntConverter : ValueResolver<short?, int?>
     {
@@ -119,7 +120,7 @@
                 .IgnoreMember(v => v.MaxNumberofApplications)
                 .IgnoreMember(v => v.NewApplicantCount)
                 .IgnoreMember(v => v.SectorId)
-                .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
+                .MapMemberFrom(v => v.VacancyLocationTypeId, av => av.VacancyLocationType) // DB Lookup                
                 .MapMemberFrom(v => v.AdditionalLocationInformation, av => av.AdditionalLocationInformation)
                 .MapMemberFrom(v => v.AdditionalLocationInformationComment, av => av.AdditionalLocationInformationComment)
                 .MapMemberFrom(v => v.AddressLine1, av => av.Address.AddressLine1)
@@ -206,7 +207,7 @@
                 .MapMemberFrom(v => v.VacancyId, av => av.VacancyId)
                 .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.VacancyOwnerRelationshipId)
-                .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)
+                .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)                
                 .MapMemberFrom(v => v.VacancySourceId, av => av.VacancySource)
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyTypeId, av => av.VacancyType)
@@ -217,7 +218,7 @@
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
-                .ForMember(v => v.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .ForMember(v => v.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .ForMember(v => v.Wage, opt => opt.MapFrom(v => MapWage(v)))
                 .IgnoreMember(v => v.LastEditedById)
@@ -379,7 +380,7 @@
 
             Mapper.CreateMap<DbVacancySummary, VacancySummary>()
                 .ForMember(av => av.Wage, opt => opt.MapFrom(v => MapWage(v)))
-                .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .ForMember(av => av.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(v => v.VacancyLocationTypeId))
 
                 .MapMemberFrom(av => av.ContractOwnerId, v => v.ContractOwnerId)
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.DateFirstSubmitted)

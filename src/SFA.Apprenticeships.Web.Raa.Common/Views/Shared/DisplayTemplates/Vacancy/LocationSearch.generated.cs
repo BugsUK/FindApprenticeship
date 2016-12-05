@@ -140,7 +140,7 @@ WriteLiteral("\r\n");
 
             
             #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-Write(Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation));
+Write(Html.HiddenFor(m => m.EmployerApprenticeshipLocation));
 
             
             #line default

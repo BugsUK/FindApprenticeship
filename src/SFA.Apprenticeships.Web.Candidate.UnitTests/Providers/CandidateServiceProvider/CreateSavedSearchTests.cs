@@ -8,7 +8,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.UnitTests.Builder;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

@@ -10,7 +10,7 @@
     using Domain.Entities.Communication;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;

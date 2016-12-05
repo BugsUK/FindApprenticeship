@@ -1,11 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Schemas.dbo.Vacancy
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Common;
     using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
@@ -13,11 +9,11 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-
     using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
     using Sql.Common;
     using Sql.Schemas.Vacancy;
+    using System;
+    using System.Collections.Generic;
 
     [TestFixture(Category = "Integration")]
     public class VacancyRepositoryTests : TestBase
@@ -57,7 +53,7 @@
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
-             
+
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
 
@@ -70,7 +66,7 @@
             vacancy.VacancyGuid = vacancyGuid;
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Draft;
-                // Changed from PendingQA to Draft because PendingQA is not still in the db
+            // Changed from PendingQA to Draft because PendingQA is not still in the db
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "West Midlands";
@@ -168,7 +164,7 @@
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
-            
+
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
 
@@ -315,7 +311,7 @@
             vacancy2 = writeRepository.Create(vacancy2);
             vacancy3 = writeRepository.Create(vacancy3);
 
-            var vacancies = summaryRepository.GetByIds(new[] {vacancy1.VacancyId, vacancy2.VacancyId, vacancy3.VacancyId});
+            var vacancies = summaryRepository.GetByIds(new[] { vacancy1.VacancyId, vacancy2.VacancyId, vacancy3.VacancyId });
 
             vacancies.Count.Should().Be(3);
             foreach (var vacancySummary in vacancies)
@@ -343,11 +339,11 @@
             vacancy.Address.Postcode = null;
             vacancy.Address.County = null;
             vacancy.VacancyOwnerRelationshipId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
-            vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
+            vacancy.VacancyLocationType = VacancyLocationType.MultipleLocations;
             vacancy.ContractOwnerId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
-            
+
             var vacancyLocations = new List<VacancyLocation>
             {
                 new VacancyLocation
@@ -405,9 +401,9 @@
             vacancy.ExpectedDuration = "2 years";
 
             vacancy.NoOfOfflineApplicants = 0;
-            
+
             vacancy = writeRepository.Create(vacancy);
-            
+
             writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
             writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
             writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
