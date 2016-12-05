@@ -344,7 +344,8 @@
                 {
                     VacancyLocationType =
                         viewModel.VacancyLocationType,
-                    NumberOfPositions = viewModel.NumberOfPositions,
+                    NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                    viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions,
                     Ukprn = ukprn,
                     VacancyGuid = viewModel.VacancyGuid,
                     VacancyOwnerRelationshipId = existingVacancy.NewVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId,
