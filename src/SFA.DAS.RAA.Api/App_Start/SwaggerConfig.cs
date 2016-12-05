@@ -63,7 +63,7 @@ namespace SFA.DAS.RAA.Api
                         c.ApiKey(ApiKeyAuthenticationService.ApiKeyKey)
                             .Description("API Key Authentication")
                             .Name(ApiKeyAuthenticationService.ApiKeyKey)
-                            .In("query");
+                            .In("header");
                         //
                         //c.OAuth2("oauth2")
                         //    .Description("OAuth2 Implicit Grant")
@@ -241,7 +241,7 @@ namespace SFA.DAS.RAA.Api
                         // If your API supports ApiKey, you can override the default values.
                         // "apiKeyIn" can either be "query" or "header"                                                
                         //
-                        c.EnableApiKeySupport(ApiKeyAuthenticationService.ApiKeyKey, "query");
+                        c.EnableApiKeySupport(ApiKeyAuthenticationService.ApiKeyKey, "header");
                     });
         }
     }
