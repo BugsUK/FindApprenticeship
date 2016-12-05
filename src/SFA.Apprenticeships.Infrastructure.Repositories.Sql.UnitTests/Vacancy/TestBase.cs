@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Vacancy
 {
-    using System;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
     using Ploeh.AutoFixture;
-    using Vacancy = Schemas.Vacancy.Entities.Vacancy;
+    using System;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
+    using Vacancy = Schemas.Vacancy.Entities.Vacancy;
     using VacancyLocation = Schemas.Vacancy.Entities.VacancyLocation;
 
     public abstract class TestBase
@@ -52,7 +52,7 @@
                 .With(av => av.DateStartedToQA, null)
                 .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, _vacancyReferenceNumber++)
-                .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(av => av.VacancyLocationType, VacancyLocationType.SpecificLocation)
                 .With(av => av.ParentVacancyId, null)
                 .With(av => av.UpdatedDateTime, null)
                 .Create();

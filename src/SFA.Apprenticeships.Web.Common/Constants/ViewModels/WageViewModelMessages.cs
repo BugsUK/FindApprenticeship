@@ -26,7 +26,7 @@
 
         public static class AmountMessages
         {
-            public const string HelpText = "The wage shold not be less then the National Minimum Wage for apprentices";
+            public const string HelpText = "The wage should not be less then the National Minimum Wage for apprentices";
         }
 
         public static class AmountRangeMessages

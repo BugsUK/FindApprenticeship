@@ -3,7 +3,7 @@ using SFA.Apprenticeships.Web.Common.Mediators;
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
     using System;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using ViewModels.Account;
     using ViewModels.VacancySearch;
 

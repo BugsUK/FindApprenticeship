@@ -58,8 +58,8 @@
 
                 detail.VacancyLocationType.Should()
                     .Be(vacancy.VacancyLocationType == Domain.Entities.Raa.Vacancies.VacancyLocationType.Nationwide
-                        ? Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLocationType.National
-                        : Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLocationType.NonNational);
+                        ? Domain.Entities.Vacancies.VacancyLocationType.National
+                        : Domain.Entities.Vacancies.VacancyLocationType.NonNational);
 
                 detail.VacancyReference.Should().Be(vacancy.VacancyReferenceNumber.GetVacancyReference());
                 detail.Title.Should().Be(vacancy.Title);

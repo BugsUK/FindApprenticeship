@@ -11,7 +11,7 @@
     using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -41,7 +41,7 @@
 
             var viewModel = response.ViewModel;
             viewModel.WithinDistance.Should().Be(5);
-            viewModel.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            viewModel.LocationType.Should().Be(VacancyLocationType.NonNational);
             viewModel.ResultsPerPage.Should().Be(5);
             viewModel.Distances.SelectedValue.Should().Be(null);
             viewModel.ApprenticeshipLevels.Should().NotBeNull();
@@ -117,7 +117,7 @@
             var viewModel = response.ViewModel;
 
             viewModel.WithinDistance.Should().Be(5);
-            viewModel.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            viewModel.LocationType.Should().Be(VacancyLocationType.NonNational);
             viewModel.ResultsPerPage.Should().Be(5);
             viewModel.Distances.SelectedValue.Should().Be(null);
             viewModel.ApprenticeshipLevels.Should().NotBeNull();

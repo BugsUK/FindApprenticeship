@@ -155,10 +155,11 @@
                 vacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId;
                 vacancy.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
                 vacancy.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
-                if (viewModel.IsEmployerLocationMainApprenticeshipLocation != null)
-                    vacancy.IsEmployerLocationMainApprenticeshipLocation =
-                        viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
-                if (viewModel.NumberOfPositions != null) vacancy.NumberOfPositions = viewModel.NumberOfPositions.Value;
+                vacancy.VacancyLocationType =
+                        viewModel.VacancyLocationType;
+                vacancy.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide
+                    ? viewModel.NumberOfPositionsNationwide
+                    : viewModel.NumberOfPositions;
                 if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
                 {
                     vacancy.EmployerAnonymousName = viewModel.AnonymousEmployerDescription;

@@ -280,7 +280,6 @@
     <Compile Include="IoC\WebCommonRegistry.cs" />
     <Compile Include="Models\Application\ApplicationViewModelStatus.cs" />
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
-    <Compile Include="Models\Common\VacancyLocationType.cs" />
     <Compile Include="SiteMap\ISiteMapItem.cs" />
     <Compile Include="Modules\RemoveETagModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -379,6 +378,7 @@
     <None Include="Content\scss\styles.scss" />
     <None Include="Content\scss\_forms.scss" />
     <None Include="Content\scss\_link-styles.scss" />
+    <None Include="Content\scss\_page-nav.scss" />
     <None Include="Content\scss\_select2-styles.scss" />
     <None Include="Content\scss\_sfa-custom-layouts.scss" />
     <None Include="Content\scss\_button-links.scss" />

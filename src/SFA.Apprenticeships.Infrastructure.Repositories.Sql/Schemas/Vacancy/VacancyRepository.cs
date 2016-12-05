@@ -509,10 +509,14 @@ WHERE  FullName = @CountyFullName",
 
         private void PopulateVacancyLocationTypeId(DomainVacancy entity, Vacancy dbVacancy)
         {
+            string vacancyLocationTypeCodeName = string.Empty;
             // A vacancy is multilocation if IsEmployerAddressMainAddress is set to false
-            var vacancyLocationTypeCodeName = entity.IsEmployerLocationMainApprenticeshipLocation.HasValue && entity.IsEmployerLocationMainApprenticeshipLocation.Value
-                ? "STD"
-                : "MUL";
+            if (entity.VacancyLocationType == VacancyLocationType.SpecificLocation)
+                vacancyLocationTypeCodeName = "STD";
+            else if (entity.VacancyLocationType == VacancyLocationType.MultipleLocations)
+                vacancyLocationTypeCodeName = "MUL";
+            else if (entity.VacancyLocationType == VacancyLocationType.Nationwide)
+                vacancyLocationTypeCodeName = "NAT";
 
             dbVacancy.VacancyLocationTypeId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT VacancyLocationTypeId

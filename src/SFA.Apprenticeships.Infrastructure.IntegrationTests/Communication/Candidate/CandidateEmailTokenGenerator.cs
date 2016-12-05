@@ -7,7 +7,7 @@
     using Application.Interfaces.Communications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
 

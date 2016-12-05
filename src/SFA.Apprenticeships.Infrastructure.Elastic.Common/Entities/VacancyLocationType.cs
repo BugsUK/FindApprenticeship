@@ -6,6 +6,6 @@
 
         NonNational,
 
-        National,
+        National
     }
 }

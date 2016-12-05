@@ -1,5 +1,4 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
 
 @model ApprenticeshipSearchResponseViewModel
 
@@ -67,7 +66,7 @@ else
                                     <input @{if (Model.VacancySearch.DisplayDescription) { <text> checked="checked" </text>    }} type="checkbox" id="DisplayDescription">
                                     <label for="DisplayDescription">Description</label>
                                 </li>
-                                @if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
+                                @if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
                                 {
                                     <li>
                                         <input @{if (Model.VacancySearch.DisplayDistance) { <text> checked="checked" </text>    }} type="checkbox" id="DisplayDistance">
@@ -117,7 +116,7 @@ else
                     <div class="grid-row">
                         <div class="column-full">
                             <h1 class="heading-large no-margins">
-                                @(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ?
+                                @(vacancy.VacancyLocationType == VacancyLocationType.NonNational ?
                                   Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude, data_is_employer_anonymous = vacancy.IsEmployerAnonymous }) :
                                       Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker }))
 
@@ -129,7 +128,7 @@ else
                                 <span class="heading-secondary">@vacancy.EmployerName</span>
                             </h1>
                             <p class="font-xsmall no-margins secondary-text">
-                                @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                                @if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                                 {
                                     <span id="posted-date-@vacancy.Id">(Added @vacancy.PostedDate.ToFriendlyDaysAgo()</span>
                                     <span id="number-of-positions-@vacancy.Id">
@@ -156,14 +155,14 @@ else
                     </div>
                     <div class="grid-row">
                         <div data-show="DisplayDistance" class="column-two-thirds @(!Model.VacancySearch.DisplayDistance ? "toggle-content" : "")">
-                            @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                            @if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                             {
                                 <div>
                                     <span class="bold-small">Distance:</span> @vacancy.DistanceAsString
 
                                     <a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
                                     <div class="detail-content toggle-content hide-nojs">
-                                        <select class="form-control valid" name="" aria-invalid="false">
+                                        <select class="form-control valid select-mode" name="" aria-invalid="false">
                                             <option value="DRIVING" aria-live="polite">Driving</option>
                                             <option value="TRANSIT" aria-live="polite">Bus/Train</option>
                                             <option value="WALKING" aria-live="polite">Walking</option>
@@ -194,15 +193,15 @@ else
                                 </a>
                             }
 
-                            @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
+                            @if (vacancy.VacancyLocationType == VacancyLocationType.National)
                             {
                                 <div id="multiple-positions-nationwide">This apprenticeship has multiple positions across England.</div>
                             }
                         </div>
                         
-                        @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                        @if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                         {
-                            <div class="hide-tablet hide-nojs">
+                            <div class="hide-tablet hide-nojs column-two-thirds">
                                 <span style="margin-left: 0;" class="summary-style fake-link mob-map-trigger map-closed">Show/hide map</span>
                             </div>
                                     <div class="column-one-third map-container hide-nojs small-btm-margin toggle-content--mob">
@@ -237,9 +236,9 @@ else
 
     if (Model.TotalLocalHits > 5 || Model.TotalNationalHits > 5)
     {
-        <div class="form-group">
+        <div class="form-group sfa-medium-top-margin">
             <label for="results-per-page" class="heading-small inline">Display results</label>
-            @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
+            @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page", @class = "form-control form-control-auto" })
             <noscript>
                 <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
             </noscript>

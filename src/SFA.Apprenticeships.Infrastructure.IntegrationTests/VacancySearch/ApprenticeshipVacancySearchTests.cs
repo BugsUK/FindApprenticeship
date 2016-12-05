@@ -5,7 +5,7 @@
     using Application.Interfaces.Vacancies;
     using Common.IoC;
     using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Elastic.Common.Configuration;
     using Infrastructure.Elastic.Common.IoC;
@@ -127,7 +127,7 @@
                 PageSize = 5,
                 SearchRadius = 50,
                 SortType = VacancySearchSortType.ClosingDate,
-                VacancyLocationType = ApprenticeshipLocationType.NonNational
+                VacancyLocationType = VacancyLocationType.NonNational
             };
         }
 

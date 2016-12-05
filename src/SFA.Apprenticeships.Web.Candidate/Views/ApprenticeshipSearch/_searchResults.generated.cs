@@ -35,9 +35,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     #line hidden
     
     #line 2 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-    
-    #line default
+#line default
     #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Candidate;
@@ -385,7 +383,7 @@ WriteLiteral(">Description</label>\r\n                                </li>\r\n"
             #line hidden
             
             #line 70 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                 if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
+                                 if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
                                 {
 
             
@@ -627,7 +625,7 @@ WriteLiteral("                                ");
 
             
             #line 120 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                            Write(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ?
+                            Write(vacancy.VacancyLocationType == VacancyLocationType.NonNational ?
                                   Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude, data_is_employer_anonymous = vacancy.IsEmployerAnonymous }) :
                                       Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker }));
 
@@ -699,7 +697,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 132 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                 if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                                 if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                                 {
 
             
@@ -883,7 +881,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 159 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                             if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                             if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                             {
 
             
@@ -914,7 +912,7 @@ WriteLiteral(" class=\"detail-content toggle-content hide-nojs\"");
 
 WriteLiteral(">\r\n                                        <select");
 
-WriteLiteral(" class=\"form-control valid\"");
+WriteLiteral(" class=\"form-control valid select-mode\"");
 
 WriteLiteral(" name=\"\"");
 
@@ -967,15 +965,15 @@ WriteLiteral(" data-show=\"DisplayClosingDate\"");
 
 WriteLiteral(">\r\n                                <span");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11115), Tuple.Create("\"", 11200)
-, Tuple.Create(Tuple.Create("", 11123), Tuple.Create("bold-small", 11123), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11127), Tuple.Create("\"", 11212)
+, Tuple.Create(Tuple.Create("", 11135), Tuple.Create("bold-small", 11135), true)
             
             #line 178 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create(" ", 11133), Tuple.Create<System.Object, System.Int32>(!Model.VacancySearch.DisplayClosingDate ? "toggle-content" : ""
+, Tuple.Create(Tuple.Create(" ", 11145), Tuple.Create<System.Object, System.Int32>(!Model.VacancySearch.DisplayClosingDate ? "toggle-content" : ""
             
             #line default
             #line hidden
-, 11134), false)
+, 11146), false)
 );
 
 WriteLiteral(">Closing date:</span> ");
@@ -993,15 +991,15 @@ WriteLiteral(" data-show=\"DisplayStartDate\"");
 
 WriteLiteral(">\r\n                                <span");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11406), Tuple.Create("\"", 11489)
-, Tuple.Create(Tuple.Create("", 11414), Tuple.Create("bold-small", 11414), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11418), Tuple.Create("\"", 11501)
+, Tuple.Create(Tuple.Create("", 11426), Tuple.Create("bold-small", 11426), true)
             
             #line 181 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create(" ", 11424), Tuple.Create<System.Object, System.Int32>(!Model.VacancySearch.DisplayStartDate ? "toggle-content" : ""
+, Tuple.Create(Tuple.Create(" ", 11436), Tuple.Create<System.Object, System.Int32>(!Model.VacancySearch.DisplayStartDate ? "toggle-content" : ""
             
             #line default
             #line hidden
-, 11425), false)
+, 11437), false)
 );
 
 WriteLiteral(">Possible start date:</span> 22 Dec 2017\r\n                            </div>\r\n   " +
@@ -1009,14 +1007,14 @@ WriteLiteral(">Possible start date:</span> 22 Dec 2017\r\n                      
 
 WriteLiteral(" data-show=\"DisplayApprenticeshipLevel\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11639), Tuple.Create("\"", 11721)
+WriteAttribute("class", Tuple.Create(" class=\"", 11651), Tuple.Create("\"", 11733)
             
             #line 183 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 11647), Tuple.Create<System.Object, System.Int32>(!Model.VacancySearch.DisplayApprenticeshipLevel ? "toggle-content" : ""
+, Tuple.Create(Tuple.Create("", 11659), Tuple.Create<System.Object, System.Int32>(!Model.VacancySearch.DisplayApprenticeshipLevel ? "toggle-content" : ""
             
             #line default
             #line hidden
-, 11647), false)
+, 11659), false)
 );
 
 WriteLiteral(">\r\n                                <span");
@@ -1036,14 +1034,14 @@ WriteLiteral("\r\n                            </div>\r\n                        
 
 WriteLiteral(" data-show=\"DisplayWage\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11933), Tuple.Create("\"", 12000)
+WriteAttribute("class", Tuple.Create(" class=\"", 11945), Tuple.Create("\"", 12012)
             
             #line 186 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 11941), Tuple.Create<System.Object, System.Int32>(!Model.VacancySearch.DisplayWage ? "toggle-content" : ""
+, Tuple.Create(Tuple.Create("", 11953), Tuple.Create<System.Object, System.Int32>(!Model.VacancySearch.DisplayWage ? "toggle-content" : ""
             
             #line default
             #line hidden
-, 11941), false)
+, 11953), false)
 );
 
 WriteLiteral(">\r\n                                <span");
@@ -1079,15 +1077,15 @@ WriteLiteral("                                <a");
 
 WriteLiteral(" class=\"inl-block\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 12503), Tuple.Create("\"", 12543)
-, Tuple.Create(Tuple.Create("", 12508), Tuple.Create("positive-about-disabled-", 12508), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 12515), Tuple.Create("\"", 12555)
+, Tuple.Create(Tuple.Create("", 12520), Tuple.Create("positive-about-disabled-", 12520), true)
             
             #line 192 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 12532), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+, Tuple.Create(Tuple.Create("", 12544), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 12532), false)
+, 12544), false)
 );
 
 WriteLiteral(" href=\"https://www.gov.uk/looking-for-work-if-disabled\"");
@@ -1096,14 +1094,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 12658), Tuple.Create("\"", 12704)
+WriteAttribute("src", Tuple.Create(" src=\"", 12670), Tuple.Create("\"", 12716)
             
             #line 193 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 12664), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-small-2x.png")
+, Tuple.Create(Tuple.Create("", 12676), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-small-2x.png")
             
             #line default
             #line hidden
-, 12664), false)
+, 12676), false)
 );
 
 WriteLiteral(" height=\"30\"");
@@ -1131,7 +1129,7 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 197 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                             if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
+                             if (vacancy.VacancyLocationType == VacancyLocationType.National)
                             {
 
             
@@ -1160,7 +1158,7 @@ WriteLiteral("                        </div>\r\n                        \r\n");
             #line hidden
             
             #line 203 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                         if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                         if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                         {
 
             
@@ -1168,7 +1166,7 @@ WriteLiteral("                        </div>\r\n                        \r\n");
             #line hidden
 WriteLiteral("                            <div");
 
-WriteLiteral(" class=\"hide-tablet hide-nojs\"");
+WriteLiteral(" class=\"hide-tablet hide-nojs column-two-thirds\"");
 
 WriteLiteral(">\r\n                                <span");
 
@@ -1185,24 +1183,24 @@ WriteLiteral(" class=\"column-one-third map-container hide-nojs small-btm-margin
 
 WriteLiteral(">\r\n                                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13759), Tuple.Create("\"", 13869)
-, Tuple.Create(Tuple.Create("", 13766), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 13766), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 13789), Tuple.Create("\"", 13899)
+, Tuple.Create(Tuple.Create("", 13796), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 13796), true)
             
             #line 209 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                , Tuple.Create(Tuple.Create("", 13814), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+                , Tuple.Create(Tuple.Create("", 13844), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 13814), false)
-, Tuple.Create(Tuple.Create("", 13840), Tuple.Create(",", 13840), true)
+, 13844), false)
+, Tuple.Create(Tuple.Create("", 13870), Tuple.Create(",", 13870), true)
             
             #line 209 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                           , Tuple.Create(Tuple.Create("", 13841), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                           , Tuple.Create(Tuple.Create("", 13871), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 13841), false)
-, Tuple.Create(Tuple.Create("", 13868), Tuple.Create("\'", 13868), true)
+, 13871), false)
+, Tuple.Create(Tuple.Create("", 13898), Tuple.Create("\'", 13898), true)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -1252,15 +1250,15 @@ WriteLiteral(">\r\n                                <a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 14587), Tuple.Create("\"", 14621)
-, Tuple.Create(Tuple.Create("", 14592), Tuple.Create("save-vacancy-link-", 14592), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 14617), Tuple.Create("\"", 14651)
+, Tuple.Create(Tuple.Create("", 14622), Tuple.Create("save-vacancy-link-", 14622), true)
             
             #line 222 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 14610), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+, Tuple.Create(Tuple.Create("", 14640), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 14610), false)
+, 14640), false)
 );
 
 WriteLiteral(" class=\"hidden fake-link link-unimp save-vacancy-link\"");
@@ -1304,15 +1302,15 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                                <p");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 15005), Tuple.Create("\"", 15035)
-, Tuple.Create(Tuple.Create("", 15010), Tuple.Create("applied-label-", 15010), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 15035), Tuple.Create("\"", 15065)
+, Tuple.Create(Tuple.Create("", 15040), Tuple.Create("applied-label-", 15040), true)
             
             #line 224 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 15024), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+, Tuple.Create(Tuple.Create("", 15054), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 15024), false)
+, 15054), false)
 );
 
 WriteLiteral(" class=\"hidden applied-label\"");
@@ -1357,7 +1355,7 @@ WriteLiteral("    </ul>\r\n");
             #line hidden
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group sfa-medium-top-margin\"");
 
 WriteLiteral(">\r\n            <label");
 
@@ -1371,7 +1369,7 @@ WriteLiteral("            ");
 
             
             #line 242 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-       Write(Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" }));
+       Write(Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page", @class = "form-control form-control-auto" }));
 
             
             #line default

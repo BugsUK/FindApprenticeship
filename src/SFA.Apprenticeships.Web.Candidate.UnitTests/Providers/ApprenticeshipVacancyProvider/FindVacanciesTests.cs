@@ -1,21 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApprenticeshipVacancyProvider
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Application.Interfaces.Candidates;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-
     using SFA.Apprenticeships.Application.Interfaces;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     [Parallelizable]
@@ -24,7 +21,7 @@
         private const int PageSize = 10;
 
         private Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _apprenticeshipSearchService;
-        private Mock<ICandidateService> _candidateService; 
+        private Mock<ICandidateService> _candidateService;
         private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
         private Mock<ILogService> _logService;
         private Mock<ICandidateVacancyService> _candidateVacancyService;
@@ -42,9 +39,9 @@
         [TestCase]
         public void ShouldFindVacanciesFromCriteria()
         {
-            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.National);
+            SetupReturnOneHundredResultsOfType(VacancyLocationType.National);
 
-            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.National);
+            var search = GetASearchViewModelOfType(VacancyLocationType.National);
 
             var apprenticeshipVacancyProvider = GetApprenticeshipVacancyProvider();
 
@@ -62,36 +59,35 @@
         [Test]
         public void IfThereIsntNonNationalResultsButThereAreNationalResuts_ShouldReturnLocationTypeAsNational()
         {
-            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.National);
+            SetupReturnOneHundredResultsOfType(VacancyLocationType.National);
 
-            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.NonNational);
+            var search = GetASearchViewModelOfType(VacancyLocationType.NonNational);
 
             var apprenticeshipVacancyProvider = GetApprenticeshipVacancyProvider();
 
             var vacancies = apprenticeshipVacancyProvider.FindVacancies(search);
 
-            vacancies.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
+            vacancies.VacancySearch.LocationType.Should().Be(VacancyLocationType.National);
             vacancies.VacancySearch.SortType.Should().NotBe(VacancySearchSortType.Distance);
             vacancies.VacancySearch.SortType.Should().Be(VacancySearchSortType.ClosingDate);
         }
 
         [Test]
-        public void
-            IfItsANationalSearchButThereIsntNationalResuls_TheNonNationalResultsAreReturned()
+        public void IfItsANationalSearchButThereIsntNationalResuls_TheNonNationalResultsAreReturned()
         {
-            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.NonNational);
+            SetupReturnOneHundredResultsOfType(VacancyLocationType.NonNational);
 
-            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.National);
+            var search = GetASearchViewModelOfType(VacancyLocationType.National);
 
             var apprenticeshipVacancyProvider = GetApprenticeshipVacancyProvider();
 
             var vacancies = apprenticeshipVacancyProvider.FindVacancies(search);
 
             vacancies.Vacancies.Should().HaveCount(1);
-            vacancies.Vacancies.First().VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            vacancies.Vacancies.First().VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
         }
 
-        private static ApprenticeshipSearchViewModel GetASearchViewModelOfType(ApprenticeshipLocationType locationType)
+        private static ApprenticeshipSearchViewModel GetASearchViewModelOfType(VacancyLocationType locationType)
         {
             var search = new ApprenticeshipSearchViewModel
             {
@@ -104,13 +100,13 @@
                 LocationType = locationType
             };
 
-            if (locationType == ApprenticeshipLocationType.NonNational)
+            if (locationType == VacancyLocationType.NonNational)
                 search.SortType = VacancySearchSortType.Distance;
 
             return search;
         }
 
-        private void SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType locationType)
+        private void SetupReturnOneHundredResultsOfType(VacancyLocationType locationType)
         {
             _apprenticeshipSearchService.Setup(
                 x => x.Search(It.Is<ApprenticeshipSearchParameters>(asp => asp.VacancyLocationType == locationType))).Returns<ApprenticeshipSearchParameters>(asp => new

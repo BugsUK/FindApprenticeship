@@ -1,12 +1,12 @@
 ﻿@model VacancyOwnerRelationshipViewModel
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save" : "Save and continue";
+    var saveButtonText = Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save" : "Save and continue";
 }
 
 <div class="grid-row">
@@ -31,6 +31,7 @@
     <script type="text/javascript">
 
         $("#NumberOfPositionsJS").attr("id", "NumberOfPositions").attr("Name", "NumberOfPositions");
+        $("#NumberOfPositionsNWJS").attr("id", "NumberOfPositionsNationwide").attr("Name", "NumberOfPositionsNationwide");
 
         $("#NonAnonymousEmployerJS").attr("id", "NonAnonymousEmployer").attr("Name", "NonAnonymousEmployer");
         $("#AnonymousEmployerJS").attr("id", "AnonymousEmployer").attr("Name", "AnonymousEmployer");

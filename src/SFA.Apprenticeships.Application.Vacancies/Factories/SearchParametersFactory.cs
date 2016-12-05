@@ -3,7 +3,7 @@
     using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Interfaces.Vacancies;
 
     public class SearchParametersFactory
@@ -39,7 +39,7 @@
                 SortType = VacancySearchSortType.RecentlyAdded,
                 ApprenticeshipLevel = savedSearch.ApprenticeshipLevel,
 
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                VacancyLocationType = VacancyLocationType.NonNational,
                 SearchField = searchField
             };
 

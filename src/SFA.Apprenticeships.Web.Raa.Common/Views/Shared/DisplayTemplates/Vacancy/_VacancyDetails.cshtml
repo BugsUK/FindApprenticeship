@@ -98,17 +98,20 @@
                     <p id="vacancy-reference-id">@Model.VacancyReferenceNumber.GetVacancyReference()</p>
                 }
             </div>
-            @if (Model.IsSingleLocation)
+            @if (Model.IsSingleLocation || Model.IsNationwideLocation)
             {
-                <div class="@editableItemClass">
-                    <h3 class="bold-small">Positions</h3>
-                    <p id="vacancy-reference-id">@Model.NewVacancyViewModel.NumberOfPositions available</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
-                </div>
+                if (!Model.IsManageReviewerView && Model.IsNationwideLocation)
+                {
+                    <div class="@editableItemClass">
+                        <h3 class="bold-small">Positions</h3>
+                        <p id="vacancy-reference-id">@Model.NewVacancyViewModel.NumberOfPositions available</p>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+                    </div>
+                }
             }
             else
             {
-                if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+                if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count == 1)
                 {
                     <div class="@editableItemClass">
                         <h3 class="bold-small">Positions</h3>

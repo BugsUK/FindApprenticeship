@@ -53,7 +53,7 @@
                 .ForMember(dest => dest.IsPositiveAboutDisability, opt => opt.Ignore())
                 .ForMember(dest => dest.EmployerStatus, opt => opt.MapFrom(src => src.Status));
             Mapper.CreateMap<VacancyOwnerRelationship, VacancyOwnerRelationshipViewModel>()
-                .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
+                .ForMember(dest => dest.VacancyLocationType, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositions, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
@@ -71,7 +71,9 @@
                 .ForMember(dest => dest.IsAnonymousEmployer, src => src.Ignore())
                 .ForMember(dest => dest.OriginalFullName, src => src.Ignore())
                 .ForMember(dest => dest.AnonymousAboutTheEmployer, src => src.Ignore())
-                .ForMember(dest => dest.AnonymousAboutTheEmployerComment, src => src.Ignore());
+                .ForMember(dest => dest.AnonymousAboutTheEmployerComment, src => src.Ignore())
+                .ForMember(dest => dest.NumberOfPositionsNationwide, src => src.Ignore())
+                .ForMember(dest => dest.NumberOfPositionsNationwideComment, src => src.Ignore());
             Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>()
                 .ForMember(dest => dest.OfflineApplicationUrl, opt => opt.MapFrom(src => src.EmployersWebsite));
             Mapper.CreateMap<VacancyLocationAddressViewModel, VacancyLocation>()

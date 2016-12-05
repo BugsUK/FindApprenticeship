@@ -4,7 +4,6 @@
     using AutoMapper;
     using Common.Mappers;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Elastic.Common.Entities;
     using ApprenticeshipSummary = Elastic.Common.Entities.ApprenticeshipSummary;
 

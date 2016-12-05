@@ -1,11 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
-    using System.Collections.Generic;
     using Common.UnitTests.Mediators;
+    using Domain.Entities.Raa.Vacancies;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
+    using System.Collections.Generic;
 
     [TestFixture]
     [Parallelizable]
@@ -18,14 +19,14 @@
 
             VacancyPostingProvider.Setup(p => p.GetNewVacancyViewModel(vacancyReferenceNumber)).Returns(new NewVacancyViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = false,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
                 LocationAddresses = new List<VacancyLocationAddressViewModel>()
             });
 
 
             var mediator = GetMediator();
             var result = mediator.GetNewVacancyViewModel(vacancyReferenceNumber, true, null);
-            
+
             result.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetNewVacancyViewModel.LocationNotSet);
         }
     }

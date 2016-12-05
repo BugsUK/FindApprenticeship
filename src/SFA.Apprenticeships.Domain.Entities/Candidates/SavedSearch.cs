@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
     using System;
-    using Vacancies.Apprenticeships;
+    using Vacancies;
 
     public class SavedSearch : BaseEntity
     {

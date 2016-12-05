@@ -42,7 +42,7 @@
             
             bundles.Add(new StyleBundle("~/Content/_assets/styles/not-ie8")
                 //.Include("~/Content/_assets/css/main.css")
-                .Include("~/Content/_assets/css/govuk-template.css")
+                .Include("~/Content/_assets/css/govuk-template.css", new CssRewriteUrlTransform())
                 .Include("~/Content/_assets/css/styles.css")
                 .Include("~/Content/_assets/css/fonts.css"));
 
@@ -53,7 +53,7 @@
             // Developers are must unlikely to be interested in the un-mimified version of this
             // TODO: Find and add approved CDN
             bundles.Add(new StyleBundle("~/bundles/font-awesome")
-                .Include("~/Content/_assets/css/font-awesome.css"));
+                .Include("~/Content/_assets/css/font-awesome.css", new CssRewriteUrlTransform()));
         }
     }
 }

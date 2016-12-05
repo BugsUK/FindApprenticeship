@@ -2,7 +2,7 @@
 {
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;
@@ -19,7 +19,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.NonNational
+                    LocationType = VacancyLocationType.NonNational
                 },
                 TotalLocalHits = 2,
                 TotalNationalHits = 3
@@ -44,7 +44,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.National
+                    LocationType = VacancyLocationType.National
                 },
                 TotalLocalHits = 2,
                 TotalNationalHits = 3
@@ -69,7 +69,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.NonNational
+                    LocationType = VacancyLocationType.NonNational
                 },
                 TotalLocalHits = 1,
                 TotalNationalHits = 2
@@ -94,7 +94,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.National
+                    LocationType = VacancyLocationType.National
                 },
                 TotalLocalHits = 1,
                 TotalNationalHits = 3
@@ -119,7 +119,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.National //Location type switches to national if no local results were found
+                    LocationType = VacancyLocationType.National //Location type switches to national if no local results were found
                 },
                 TotalLocalHits = 0,
                 TotalNationalHits = 2
@@ -140,7 +140,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.National
+                    LocationType = VacancyLocationType.National
                 },
                 TotalLocalHits = 0,
                 TotalNationalHits = 3
@@ -161,7 +161,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.NonNational
+                    LocationType = VacancyLocationType.NonNational
                 },
                 TotalLocalHits = 2,
                 TotalNationalHits = 1
@@ -186,7 +186,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.National
+                    LocationType = VacancyLocationType.National
                 },
                 TotalLocalHits = 3,
                 TotalNationalHits = 1
@@ -211,7 +211,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.NonNational
+                    LocationType = VacancyLocationType.NonNational
                 },
                 TotalLocalHits = 2,
                 TotalNationalHits = 0
@@ -234,7 +234,7 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.National
+                    LocationType = VacancyLocationType.National
                 },
                 TotalLocalHits = 3,
                 TotalNationalHits = 0

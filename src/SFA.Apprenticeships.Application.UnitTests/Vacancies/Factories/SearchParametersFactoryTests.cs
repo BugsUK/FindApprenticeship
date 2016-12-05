@@ -2,7 +2,7 @@
 {
     using Apprenticeships.Application.Vacancies.Factories;
     using Domain.Entities.UnitTests.Builder;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Interfaces.Vacancies;
     using NUnit.Framework;
@@ -19,7 +19,7 @@
             parameters.PageSize.Should().Be(5);
             parameters.PageNumber.Should().Be(1);
             parameters.SortType.Should().Be(VacancySearchSortType.RecentlyAdded);
-            parameters.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            parameters.VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
         }
 
         [Test]

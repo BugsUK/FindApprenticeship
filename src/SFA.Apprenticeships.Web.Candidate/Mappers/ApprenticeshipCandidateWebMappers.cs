@@ -2,6 +2,7 @@
 {
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Common.Mappers.Resolvers;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
@@ -10,7 +11,6 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
     using ViewModels.Account;
@@ -19,7 +19,6 @@
     using ViewModels.Home;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
-    using Common.Mappers.Resolvers;
 
     public class ApprenticeshipCandidateWebMappers : MapperEngine
     {
@@ -75,6 +74,8 @@
                 .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.VacancyType,
                     opt => opt.Ignore())
+                .ForMember(d => d.VacancyLocationType,
+                    opt => opt.MapFrom(src => src.VacancyLocationType))
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
                 .ForMember(d => d.DateApplied,
@@ -89,6 +90,8 @@
             Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>()
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
+                .ForMember(d => d.VacancyLocationType,
+                    opt => opt.MapFrom(src => src.VacancyLocationType))
                 .ForMember(d => d.Wage, opt => opt.MapFrom(src => src.Wage));
 
             Mapper.CreateMap<Address, AddressViewModel>()

@@ -88,6 +88,49 @@ iframe, object, embed {
   margin-right: 10px;
   margin-top: 10px; }
 
+.search-result .map {
+  width: 100%;
+  height: 200px; }
+
+@media (min-width: 641px) {
+  .search-result .map {
+    height: 125px; } }
+
+.map-container {
+  position: relative; }
+
+.map-container .view-googlemaps {
+  background: rgba(255, 255, 255, 0.8);
+  display: inline-block;
+  padding: 1px 4px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10; }
+
+@media (min-width: 641px) {
+  .hide-tablet {
+    display: none; } }
+
+@media (max-width: 641px) {
+  .toggle-content--mob {
+    display: none; } }
+
+@media (max-width: 640px) {
+  .mob-collpanel-trigger:after {
+    content: " ▼";
+    display: inline-block;
+    font-size: 12px;
+    height: 14px;
+    padding-left: 10px;
+    vertical-align: middle; }
+  .mob-collpanel-trigger.triggered:after {
+    content: " ▲"; } }
+
+@media (max-width: 640px) {
+  .mob-collpanel.panel-open {
+    display: block; } }
+
 .button-link {
   font-family: "nta",Arial,sans-serif;
   font-size: 19px;
@@ -240,6 +283,57 @@ a[rel="external"]:after {
 
 .toggle-content {
   display: none; }
+
+.page-navigation {
+  padding-top: 10px; }
+
+.page-navigation .description {
+  display: block; }
+
+.page-navigation .counter {
+  display: block;
+  font-size: 14px; }
+
+@media (max-width: 640px) {
+  .page-navigation .hide-mob {
+    display: none; } }
+
+.page-navigation__btn {
+  display: inline-block;
+  font-size: 1em;
+  margin-right: -4px;
+  overflow: hidden;
+  padding: 1.2em .6em;
+  text-decoration: none;
+  vertical-align: top;
+  width: 50%; }
+
+.page-navigation__btn .arrow-button {
+  color: #2e358b;
+  float: left;
+  font-size: 3.5em;
+  margin-right: 10px;
+  margin-top: -.2em; }
+
+.page-navigation__btn.previous {
+  text-align: left; }
+
+.page-navigation__btn.next {
+  text-align: right; }
+
+.page-navigation__btn.next .arrow-button {
+  float: right;
+  margin-left: 10px;
+  margin-right: 0; }
+
+.page-navigation__btn:hover {
+  text-decoration: underline; }
+
+.page-navigation__btn:hover .arrow-button {
+  color: #2e8aca; }
+
+.page-navigation__btn:active, .page-navigation__btn:focus {
+  background-color: #f8f8f8; }
 
 .select2-container {
   position: relative !important; }
@@ -2244,7 +2338,7 @@ input[type=number] {
     letter-spacing: 1px;
     text-decoration: none;
     color: #fff;
-    background-color: #d53880; }
+    background-color: #005ea5; }
     @media (min-width: 641px) {
       .phase-banner-alpha .phase-tag {
         font-size: 16px;
@@ -2286,7 +2380,7 @@ input[type=number] {
     letter-spacing: 1px;
     text-decoration: none;
     color: #fff;
-    background-color: #f47738; }
+    background-color: #005ea5; }
     @media (min-width: 641px) {
       .phase-banner-beta .phase-tag {
         font-size: 16px;
