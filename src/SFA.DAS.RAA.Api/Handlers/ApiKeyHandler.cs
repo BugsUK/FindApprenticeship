@@ -3,6 +3,7 @@
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Web;
     using Extensions;
     using Services;
 
@@ -20,6 +21,7 @@
             //Set the current principal based on authentication response
             var principal = _authenticationService.Authenticate(request.GetQueryStrings());
             Thread.CurrentPrincipal = principal;
+            HttpContext.Current.User = principal;
 
             //Allow the request to process further down the pipeline
             var response = await base.SendAsync(request, cancellationToken);

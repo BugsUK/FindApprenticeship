@@ -18,7 +18,7 @@
         public RaaApiUser GetUser(Guid apiKey)
         {
             var raaApiUser =
-                _getOpenConnection.Query<RaaApiUser>("SELECT * FROM [RaaApi].[User] WHERE PrimaryApiKey = @ApiKey OR SecondaryApiKey = @ApiKey",
+                _getOpenConnection.Query<RaaApiUser>("SELECT PrimaryApiKey, SecondaryApiKey, UserTypeId AS UserType, ReferencedEntityId, ReferencedEntityGuid, ReferencedEntitySurrogateId FROM [RaaApi].[User] WHERE PrimaryApiKey = @ApiKey OR SecondaryApiKey = @ApiKey",
                     new { ApiKey = apiKey }).SingleOrDefault();
 
             return raaApiUser ?? RaaApiUser.UnknownApiUser;
