@@ -4,7 +4,6 @@
     using AutoMapper;
     using Common.Mappers;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Elastic.Common.Entities;
     using ApprenticeshipSummary = Elastic.Common.Entities.ApprenticeshipSummary;
 
@@ -18,8 +17,7 @@
                 .ForMember(d => d.Location,
                     opt => opt.ResolveUsing<GeoPointElasticToDomainResolver>().FromMember(src => src.Location))
                 .ForMember(d => d.Wage,
-                    opt => opt.ResolveUsing<WageElasticToDomainResolver>().FromMember(src => src))
-                .ForMember(d => d.ApprenticeshipLocationType, opt => opt.MapFrom(src => src.VacancyLocationType));
+                    opt => opt.ResolveUsing<WageElasticToDomainResolver>().FromMember(src => src));
 
             Mapper.CreateMap<TraineeshipSummary, TraineeshipSearchResponse>()
                 .ForMember(d => d.Distance, opt => opt.Ignore())

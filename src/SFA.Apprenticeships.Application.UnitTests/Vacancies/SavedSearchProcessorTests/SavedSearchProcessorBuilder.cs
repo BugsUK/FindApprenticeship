@@ -2,7 +2,7 @@
 {
     using Apprenticeships.Application.Vacancies;
     using Apprenticeships.Application.Vacancy;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Locations;

@@ -7,7 +7,6 @@
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -40,9 +39,9 @@
         [TestCase]
         public void ShouldFindVacanciesFromCriteria()
         {
-            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.National);
+            SetupReturnOneHundredResultsOfType(VacancyLocationType.National);
 
-            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.National);
+            var search = GetASearchViewModelOfType(VacancyLocationType.National);
 
             var apprenticeshipVacancyProvider = GetApprenticeshipVacancyProvider();
 
@@ -60,15 +59,15 @@
         [Test]
         public void IfThereIsntNonNationalResultsButThereAreNationalResuts_ShouldReturnLocationTypeAsNational()
         {
-            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.National);
+            SetupReturnOneHundredResultsOfType(VacancyLocationType.National);
 
-            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.NonNational);
+            var search = GetASearchViewModelOfType(VacancyLocationType.NonNational);
 
             var apprenticeshipVacancyProvider = GetApprenticeshipVacancyProvider();
 
             var vacancies = apprenticeshipVacancyProvider.FindVacancies(search);
 
-            vacancies.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
+            vacancies.VacancySearch.LocationType.Should().Be(VacancyLocationType.National);
             vacancies.VacancySearch.SortType.Should().NotBe(VacancySearchSortType.Distance);
             vacancies.VacancySearch.SortType.Should().Be(VacancySearchSortType.ClosingDate);
         }
@@ -76,19 +75,19 @@
         [Test]
         public void IfItsANationalSearchButThereIsntNationalResuls_TheNonNationalResultsAreReturned()
         {
-            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.NonNational);
+            SetupReturnOneHundredResultsOfType(VacancyLocationType.NonNational);
 
-            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.National);
+            var search = GetASearchViewModelOfType(VacancyLocationType.National);
 
             var apprenticeshipVacancyProvider = GetApprenticeshipVacancyProvider();
 
             var vacancies = apprenticeshipVacancyProvider.FindVacancies(search);
 
             vacancies.Vacancies.Should().HaveCount(1);
-            vacancies.Vacancies.First().VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            vacancies.Vacancies.First().VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
         }
 
-        private static ApprenticeshipSearchViewModel GetASearchViewModelOfType(ApprenticeshipLocationType locationType)
+        private static ApprenticeshipSearchViewModel GetASearchViewModelOfType(VacancyLocationType locationType)
         {
             var search = new ApprenticeshipSearchViewModel
             {
@@ -101,13 +100,13 @@
                 LocationType = locationType
             };
 
-            if (locationType == ApprenticeshipLocationType.NonNational)
+            if (locationType == VacancyLocationType.NonNational)
                 search.SortType = VacancySearchSortType.Distance;
 
             return search;
         }
 
-        private void SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType locationType)
+        private void SetupReturnOneHundredResultsOfType(VacancyLocationType locationType)
         {
             _apprenticeshipSearchService.Setup(
                 x => x.Search(It.Is<ApprenticeshipSearchParameters>(asp => asp.VacancyLocationType == locationType))).Returns<ApprenticeshipSearchParameters>(asp => new
@@ -115,7 +114,7 @@
                 {
                     new ApprenticeshipSearchResponse
                     {
-                        ApprenticeshipLocationType = locationType,
+                        VacancyLocationType = locationType,
                         //TODO: So many unit tests with so much setup. It's a smell that we're testing a unit and requiring a completely unrelated stub.
                         Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.Weekly, 0, null)
                     }
@@ -127,7 +126,7 @@
                 {
                     new ApprenticeshipSearchResponse
                     {
-                        ApprenticeshipLocationType = locationType,
+                        VacancyLocationType = locationType,
                         Wage = new Wage(WageType.Custom, null, null, null, null, WageUnit.Weekly, 0, null)
                     }
                 }, new List<AggregationResult>(0), asp));

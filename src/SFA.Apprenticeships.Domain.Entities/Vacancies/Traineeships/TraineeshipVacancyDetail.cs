@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships
 {
-    using Apprenticeships;
+    using Vacancies;
 
     public class TraineeshipVacancyDetail : VacancyDetail
     {
-        public ApprenticeshipLocationType TraineeshipLocationType { get; set; }
+
     }
 }

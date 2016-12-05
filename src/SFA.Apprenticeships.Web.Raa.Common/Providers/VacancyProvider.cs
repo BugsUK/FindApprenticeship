@@ -37,7 +37,9 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 

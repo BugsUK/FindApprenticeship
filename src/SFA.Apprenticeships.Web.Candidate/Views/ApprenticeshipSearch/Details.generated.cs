@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using System.Web.WebPages;
     
     #line 1 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     
     #line default
     #line hidden
@@ -568,7 +568,7 @@ WriteLiteral("</p>\r\n\r\n");
             #line hidden
             
             #line 95 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                     if (Model.VacancyLocationType != ApprenticeshipLocationType.National && Model.Distance != null)
+                     if (Model.VacancyLocationType != VacancyLocationType.National && Model.Distance != null)
                     {
 
             
@@ -648,7 +648,7 @@ WriteLiteral("</p>\r\n\r\n");
             #line hidden
             
             #line 106 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                     if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                     if (Model.VacancyLocationType != VacancyLocationType.National)
                     {
 
             
@@ -1255,7 +1255,7 @@ WriteLiteral("</p>\r\n");
             #line 204 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
                              if (Model.IsEmployerAnonymous)
                             {
-                                if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                                if (Model.VacancyLocationType != VacancyLocationType.National)
                                 {
 
             
@@ -1375,7 +1375,7 @@ WriteLiteral("</p>\r\n");
             
             #line 230 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
                                 }
-                                if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                                if (Model.VacancyLocationType != VacancyLocationType.National)
                                 {
 
             
@@ -1513,7 +1513,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 250 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                     if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                     if (Model.VacancyLocationType != VacancyLocationType.National)
                     {
 
             

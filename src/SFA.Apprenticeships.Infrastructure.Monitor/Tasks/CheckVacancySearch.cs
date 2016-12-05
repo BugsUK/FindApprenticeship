@@ -3,7 +3,7 @@
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
 
     public class CheckVacancySearch : IMonitorTask
     {
@@ -29,7 +29,7 @@
                 PageSize = 10,
                 SearchRadius = 10,
                 SortType = VacancySearchSortType.Distance,
-                VacancyLocationType = ApprenticeshipLocationType.National
+                VacancyLocationType = VacancyLocationType.National
             };
 
             _vacancySearchProvider.FindVacancies(parameters);

@@ -5,7 +5,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using System;
@@ -131,7 +131,7 @@
                     Description = vacancyDetails.IsEmployerAnonymous ? vacancyDetails.AnonymousAboutTheEmployer : vacancyDetails.EmployerDescription,
                     NumberOfPositions = vacancyDetails.NumberOfPositions,
                     Location = null, // NOTE: no equivalent in legacy vacancy details.
-                    ApprenticeshipLocationType = vacancyDetails.ApprenticeshipLocationType,
+                    VacancyLocationType = vacancyDetails.VacancyLocationType,
                 },
                 // Populate apprenticeshipApplication template with candidate's most recent information.
                 CandidateInformation = applicationTemplate

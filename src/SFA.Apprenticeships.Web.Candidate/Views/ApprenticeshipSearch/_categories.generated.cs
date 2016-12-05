@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using System.Web.WebPages;
     
     #line 1 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     
     #line default
     #line hidden

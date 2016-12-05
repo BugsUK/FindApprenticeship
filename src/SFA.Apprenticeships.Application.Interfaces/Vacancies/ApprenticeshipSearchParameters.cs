@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Search;
 
     public class ApprenticeshipSearchParameters : VacancySearchParametersBase
@@ -13,7 +13,7 @@
 
         public string[] SubCategoryCodes { get; set; }
 
-        public ApprenticeshipLocationType VacancyLocationType { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
 
         public ApprenticeshipSearchField SearchField { get; set; }
         public override string ToString()

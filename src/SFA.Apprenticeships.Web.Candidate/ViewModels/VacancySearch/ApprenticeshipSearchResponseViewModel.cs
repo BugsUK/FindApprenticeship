@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
 
     public class ApprenticeshipSearchResponseViewModel : ViewModelBase
     {
@@ -48,7 +48,7 @@
                 var pages = 1;
                 if (PageSize <= 0) {return pages;}
 
-                if (VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
+                if (VacancySearch.LocationType == VacancyLocationType.NonNational)
                 {
                     pages = (int)TotalLocalHits / PageSize;
                     if (TotalLocalHits % PageSize > 0) pages++;

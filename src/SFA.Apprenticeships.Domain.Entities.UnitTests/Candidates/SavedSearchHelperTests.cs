@@ -4,7 +4,7 @@
     using Application.Interfaces.Vacancies;
     using Builder;
     using Entities.Candidates;
-    using Entities.Vacancies.Apprenticeships;
+    using Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
 

@@ -14,7 +14,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
 
     [TestFixture, Category("Acceptance")]
     public class VacancyPostingControllerEndToEndTests : RecruitWebEndToEndTestsBase

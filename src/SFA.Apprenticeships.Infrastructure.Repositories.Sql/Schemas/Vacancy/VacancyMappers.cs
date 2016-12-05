@@ -5,17 +5,18 @@
     using Domain.Entities.Vacancies;
     using Entities;
     using Infrastructure.Common.Mappers;
-    using Presentation;
-    using System;
-    using System.Linq.Expressions;
     using DbPostalAddress = Address.Entities.PostalAddress;
     using DbVacancy = Entities.Vacancy;
     using DbVacancyLocation = Entities.VacancyLocation;
     using DbVacancySummary = Entities.VacancySummary;
+    using Presentation;
+    using System;
+    using System.Linq.Expressions;
     using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
 
     public class ShortToIntConverter : ValueResolver<short?, int?>
     {

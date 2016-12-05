@@ -6,13 +6,14 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Extensions;
     using Presentation;
     using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using System.Collections.Generic;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
+    using VacancyLocationType = Domain.Entities.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class ApprenticeshipVacancyDetailMapper
@@ -82,7 +83,7 @@
                 PersonalQualities = vacancy.PersonalQualities,
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
-                ApprenticeshipLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
+                VacancyLocationType = vacancy.VacancyLocationType == Domain.Entities.Raa.Vacancies.VacancyLocationType.Nationwide ? VacancyLocationType.National : VacancyLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),

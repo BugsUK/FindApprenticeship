@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
     using System.Web.WebPages;
     
     #line 1 "..\..\Views\TraineeshipSearch\Details.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     
     #line default
     #line hidden
@@ -552,7 +552,7 @@ WriteLiteral("</p>\r\n");
             #line hidden
             
             #line 85 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                 if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                 if (Model.VacancyLocationType != VacancyLocationType.National)
                 {
 
             
@@ -645,7 +645,7 @@ WriteLiteral("</p>\r\n");
             #line 99 "..\..\Views\TraineeshipSearch\Details.cshtml"
                          if (Model.IsEmployerAnonymous)
                         {
-                            if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                            if (Model.VacancyLocationType != VacancyLocationType.National)
                             {
 
             
@@ -758,7 +758,7 @@ WriteLiteral("</p>\r\n");
             
             #line 121 "..\..\Views\TraineeshipSearch\Details.cshtml"
                             }
-                            if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                            if (Model.VacancyLocationType != VacancyLocationType.National)
                             {
 
             
@@ -887,7 +887,7 @@ WriteLiteral("                    </div>\r\n                </div>\r\n");
             #line hidden
             
             #line 139 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                 if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                 if (Model.VacancyLocationType != VacancyLocationType.National)
                 {
 
             

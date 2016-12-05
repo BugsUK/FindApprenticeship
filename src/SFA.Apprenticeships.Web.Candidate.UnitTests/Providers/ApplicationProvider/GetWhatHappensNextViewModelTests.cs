@@ -14,7 +14,6 @@
     using Domain.Entities.Locations;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Moq;

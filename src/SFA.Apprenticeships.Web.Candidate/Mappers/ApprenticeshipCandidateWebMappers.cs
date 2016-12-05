@@ -11,7 +11,6 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
     using ViewModels.Account;
@@ -76,7 +75,7 @@
                 .ForMember(d => d.VacancyType,
                     opt => opt.Ignore())
                 .ForMember(d => d.VacancyLocationType,
-                    opt => opt.MapFrom(src => src.ApprenticeshipLocationType))
+                    opt => opt.MapFrom(src => src.VacancyLocationType))
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
                 .ForMember(d => d.DateApplied,
@@ -92,7 +91,7 @@
                 .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore())
                 .ForMember(d => d.VacancyLocationType,
-                    opt => opt.MapFrom(src => src.ApprenticeshipLocationType))
+                    opt => opt.MapFrom(src => src.VacancyLocationType))
                 .ForMember(d => d.Wage, opt => opt.MapFrom(src => src.Wage));
 
             Mapper.CreateMap<Address, AddressViewModel>()

@@ -6,13 +6,14 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
     using System;
     using System.Collections.Generic;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
+    using VacancyLocationType = Domain.Entities.Vacancies.VacancyLocationType;
 
     public class TraineeshipVacancyDetailMapper
     {
@@ -79,7 +80,7 @@
                 SkillsRequired = vacancy.DesiredSkills,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
                 AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
-                TraineeshipLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational
+                VacancyLocationType = vacancy.VacancyLocationType == Domain.Entities.Raa.Vacancies.VacancyLocationType.Nationwide ? VacancyLocationType.National : VacancyLocationType.NonNational
             };
 
             return detail;

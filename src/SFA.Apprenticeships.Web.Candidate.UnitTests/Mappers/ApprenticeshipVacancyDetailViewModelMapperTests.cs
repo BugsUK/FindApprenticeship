@@ -3,7 +3,6 @@
     using Candidate.Mappers;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using NUnit.Framework;

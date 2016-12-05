@@ -5,7 +5,6 @@
     using Application.Interfaces.Vacancies;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentValidation;
     using ViewModels.VacancySearch;
 

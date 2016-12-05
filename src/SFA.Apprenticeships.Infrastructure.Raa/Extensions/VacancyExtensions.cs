@@ -8,7 +8,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
-    using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
+    using ApprenticeshipLevel = Domain.Entities.Vacancies.ApprenticeshipLevel;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;

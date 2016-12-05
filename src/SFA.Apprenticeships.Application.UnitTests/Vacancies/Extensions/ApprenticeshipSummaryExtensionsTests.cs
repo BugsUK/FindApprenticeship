@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using Apprenticeships.Application.Vacancies.Extensions;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

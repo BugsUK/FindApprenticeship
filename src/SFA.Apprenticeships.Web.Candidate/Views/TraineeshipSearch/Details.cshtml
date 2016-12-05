@@ -1,4 +1,4 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @model TraineeshipVacancyDetailViewModel
 @{
     ViewBag.Title = Model.Title + " - Find a traineeship";
@@ -82,7 +82,7 @@
                 }
                 <h3 class="bold-small">Reference number</h3>
                 <p id="vacancy-reference-id">@Model.VacancyReference</p>
-                @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                @if (Model.VacancyLocationType != VacancyLocationType.National)
                 {
                     <h3 class="bold-small">Positions</h3>
                     <p id="number-of-positions">@Model.NumberOfPositions available</p>
@@ -98,7 +98,7 @@
                         <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
                         @if (Model.IsEmployerAnonymous)
                         {
-                            if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                            if (Model.VacancyLocationType != VacancyLocationType.National)
                             {
                                 <div itemscope itemtype="http://schema.org/PostalAddress">
                                     <h3 class="bold-small">Address</h3>
@@ -119,7 +119,7 @@
                             {
                                 <p>@Model.EmployerWebsite</p>
                             }
-                            if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                            if (Model.VacancyLocationType != VacancyLocationType.National)
                             {
                                 <div itemscope itemtype="http://schema.org/PostalAddress">
                                     <h3 class="bold-small">Address</h3>
@@ -136,7 +136,7 @@
                         }
                     </div>
                 </div>
-                @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                @if (Model.VacancyLocationType != VacancyLocationType.National)
                 {
                     <div class="grid grid-1-2 hide-print">
                         <div class="ad-details__map">

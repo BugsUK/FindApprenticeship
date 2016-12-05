@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Candidates;
-    using Vacancies.Apprenticeships;
+    using Vacancies;
 
     public class SavedSearchAlert : BaseEntity
     {

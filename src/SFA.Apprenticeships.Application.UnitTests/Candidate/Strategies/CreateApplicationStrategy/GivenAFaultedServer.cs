@@ -3,7 +3,7 @@
     using System;
     using Apprenticeships.Application.Candidate.Strategies.Apprenticeships;
     using Apprenticeships.Application.Vacancy;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;

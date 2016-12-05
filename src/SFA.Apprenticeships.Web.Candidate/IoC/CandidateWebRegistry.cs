@@ -33,7 +33,7 @@
     using Application.Vacancy;
     using Application.Vacancy.SiteMap;
     using Common.Configuration;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
