@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
     using System.Security.Principal;
     using Apprenticeships.Domain.Entities.Raa.RaaApi;
@@ -11,7 +12,7 @@
 
     public class ApiKeyAuthenticationService : IAuthenticationService
     {
-        public const string ApiKeyKey = "api_key";
+        public const string ApiKeyKey = "Authorization";
 
         private readonly IRaaApiUserRepository _raaApiUserRepository;
 
@@ -28,7 +29,7 @@
                 var apiKeyClaim = new Claim(ClaimTypes.Authentication, apiKey);
 
                 Guid apiKeyGuid;
-                if (Guid.TryParse(apiKey, out apiKeyGuid))
+                if (Guid.TryParse(apiKey.Split(' ').Last(), out apiKeyGuid))
                 {
                     var user = _raaApiUserRepository.GetUser(apiKeyGuid);
 
