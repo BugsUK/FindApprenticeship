@@ -93,7 +93,7 @@ WriteLiteral("                    ");
 
             
             #line 12 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-               Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new {@class = "small-btm-margin"}));
+               Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new {@class = "sfa-small-bottom-margin"}));
 
             
             #line default

@@ -164,7 +164,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Contact us</h2>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">Telephone: 0800 015 0400</p>\r\n            <p><a");
 
@@ -197,7 +197,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Elsewhere on the web</h2>\r\n        <p");
 
-WriteLiteral(" class=\"copy-16 small-btm-margin\"");
+WriteLiteral(" class=\"copy-16 sfa-small-bottom-margin\"");
 
 WriteLiteral("><a");
 

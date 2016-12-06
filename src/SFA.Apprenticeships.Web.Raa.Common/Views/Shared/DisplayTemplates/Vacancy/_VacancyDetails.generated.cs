@@ -735,7 +735,7 @@ WriteLiteral("                        <span>None specified. This message will no
             #line hidden
 WriteLiteral("                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -750,7 +750,7 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -765,7 +765,7 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 

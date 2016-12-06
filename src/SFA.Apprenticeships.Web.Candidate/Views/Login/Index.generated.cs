@@ -116,7 +116,7 @@ WriteLiteral(">Sign in</h1>\r\n");
 
 WriteLiteral("            <p");
 
-WriteLiteral(" class=\"hide-tablet\"");
+WriteLiteral(" class=\"sfa-hide-tablet\"");
 
 WriteLiteral(">\r\n");
 
@@ -158,7 +158,7 @@ WriteLiteral(".\r\n            </p>\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group form-group-compound\"");
 
 WriteLiteral(">\r\n                <a");
 
@@ -181,7 +181,7 @@ WriteLiteral("                ");
 
             
             #line 28 "..\..\Views\Login\Index.cshtml"
-           Write(Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" }));
+           Write(Html.ValidationMessageFor(m => m.Password, null));
 
             
             #line default
@@ -192,27 +192,40 @@ WriteLiteral("                ");
 
             
             #line 29 "..\..\Views\Login\Index.cshtml"
-           Write(Html.ValidationMessageFor(m => m.Password, null));
+           Write(Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n                <p><a");
+WriteLiteral("\r\n            </div>\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1263), Tuple.Create("\'", 1316)
             
             #line 31 "..\..\Views\Login\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1270), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+
+
             
             #line default
             #line hidden
-, 1270), false)
+WriteLiteral("            <div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n                <p><a");
+
+WriteAttribute("href", Tuple.Create(" href=\'", 1345), Tuple.Create("\'", 1398)
+            
+            #line 33 "..\..\Views\Login\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 1352), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+            
+            #line default
+            #line hidden
+, 1352), false)
 );
 
 WriteLiteral(">I can\'t access my account</a></p>\r\n            </div>\r\n");
 
             
-            #line 33 "..\..\Views\Login\Index.cshtml"
+            #line 35 "..\..\Views\Login\Index.cshtml"
 
 
             
@@ -228,18 +241,27 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" id=\"sign-in-button\"");
 
-WriteLiteral(">Sign in</button>\r\n                <details");
+WriteLiteral(">Sign in</button>\r\n            </div>\r\n");
 
-WriteLiteral(" class=\"text hide-tablet\"");
+WriteLiteral("            <div");
 
-WriteLiteral(">\r\n                    <summary>Activate your account</summary>\r\n                " +
-"    <div");
+WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(" class=\"detail-content\"");
+WriteLiteral(">\r\n                <details");
+
+WriteLiteral(" class=\"text sfa-hide-tablet\"");
+
+WriteLiteral(">\r\n                    <summary><span");
+
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Activate your account</span></summary>\r\n                    <div");
+
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                        <ol");
 
-WriteLiteral(" class=\"list-number\"");
+WriteLiteral(" class=\"list list-number\"");
 
 WriteLiteral(@">
                             <li>Once you've created an account we'll send you an activation code.</li>
@@ -252,7 +274,7 @@ WriteLiteral(@">
 ");
 
             
-            #line 47 "..\..\Views\Login\Index.cshtml"
+            #line 51 "..\..\Views\Login\Index.cshtml"
         }
 
             
@@ -276,7 +298,7 @@ WriteLiteral(">\r\n            <p>\r\n                If you haven’t used this
 WriteLiteral("                ");
 
             
-            #line 54 "..\..\Views\Login\Index.cshtml"
+            #line 58 "..\..\Views\Login\Index.cshtml"
            Write(Html.ActionLink("create an account", "Index", "Register", null, new { id = "create-account-link", @class = "inl-block" }));
 
             
@@ -285,26 +307,30 @@ WriteLiteral("                ");
 WriteLiteral(", even if you already have an existing account with \"Apprenticeship vacancies\".\r\n" +
 "            </p>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">Creating an account allows you to:</p>\r\n            <ul");
 
-WriteLiteral(" class=\"list-bullet\"");
+WriteLiteral(" class=\"list list-bullet\"");
 
 WriteLiteral(">\r\n                <li>apply for an apprenticeship or traineeship</li>\r\n         " +
 "       <li>track your apprenticeship applications</li>\r\n                <li>rece" +
 "ive alerts about new apprenticeships</li>\r\n            </ul>\r\n        </div>\r\n  " +
 "      <details");
 
-WriteLiteral(" class=\"text hide-mob\"");
+WriteLiteral(" class=\"text sfa-hide-mobile\"");
 
-WriteLiteral(">\r\n            <summary>Activate your account</summary>\r\n            <div");
+WriteLiteral(">\r\n            <summary><span");
 
-WriteLiteral(" class=\"detail-content\"");
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Activate your account</span></summary>\r\n            <div");
+
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <ol");
 
-WriteLiteral(" class=\"list-number\"");
+WriteLiteral(" class=\"list list-number\"");
 
 WriteLiteral(@">
                     <li>Once you've created an account we'll send you an activation code.</li>

@@ -139,7 +139,7 @@ WriteLiteral(" title=\"Hidden password field to stop autocomplete\"");
 
 WriteLiteral(" value=\"\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(" />\r\n");
 
@@ -151,7 +151,7 @@ WriteLiteral(" title=\"Hidden password field to stop autocomplete\"");
 
 WriteLiteral(" value=\"\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(" />\r\n");
 
@@ -183,14 +183,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1463), Tuple.Create("\"", 1533)
+WriteAttribute("href", Tuple.Create(" href=\"", 1455), Tuple.Create("\"", 1525)
             
             #line 33 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-, Tuple.Create(Tuple.Create("", 1470), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
+, Tuple.Create(Tuple.Create("", 1462), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
             
             #line default
             #line hidden
-, 1470), false)
+, 1462), false)
 );
 
 WriteLiteral(" title=\"Resend code\"");

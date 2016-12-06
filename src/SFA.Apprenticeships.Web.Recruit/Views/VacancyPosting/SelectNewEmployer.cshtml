@@ -161,14 +161,14 @@
                style="visibility: @(Model.Employers.CurrentPage == 1 ? "hidden" : "visible")"
                class="page-navigation__btn previous">
                 <i class="arrow-button fa fa-angle-left"></i>
-                <span class="description">Previous <span class="hide-mob">page</span></span>
+                <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
                 <span class="counter">@(Model.Employers.CurrentPage - 1) of @Model.Employers.TotalNumberOfPages</span>
             </a>
             <a href="@nextLink"
                style="visibility: @(Model.Employers.CurrentPage == Model.Employers.TotalNumberOfPages ? "hidden" : "visible")"
                class="page-navigation__btn next">
                 <i class="arrow-button fa fa-angle-right"></i>
-                <span class="description">Next <span class="hide-mob">page</span></span>
+                <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
                 <span class="counter">@(Model.Employers.CurrentPage + 1) of @Model.Employers.TotalNumberOfPages</span>
             </a>
 

@@ -93,19 +93,19 @@
                                 @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
                                 {
                                     <div itemprop="address">
-                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.Town</p>
+                                        <p class="sfa-small-bottom-margin" itemprop="addressLocality">@Model.Address.Town</p>
                                     </div>
                                     if (Model.IsManageReviewerView)
                                     {
                                         <div class="left-grey-border">
                                             <h3 class="bold-xsmall">Hidden full address</h3>
                                             <div itemprop="address">
-                                                <p class="small-btm-margin font-xsmall" itemprop="streetAddress">@Model.Address.AddressLine1</p>
-                                                <p class="small-btm-margin font-xsmall" itemprop="streetAddress">@Model.Address.AddressLine2</p>
-                                                <p class="small-btm-margin font-xsmall" itemprop="streetAddress">@Model.Address.AddressLine3</p>
-                                                <p class="small-btm-margin font-xsmall" itemprop="addressLocality">@Model.Address.Town</p>
-                                                <p class="small-btm-margin font-xsmall" itemprop="addressRegion">@Model.Address.County</p>
-                                                <p class="small-btm-margin font-xsmall" itemprop="postalCode">@Model.Address.Postcode</p>
+                                                <p class="sfa-small-bottom-margin font-xsmall" itemprop="streetAddress">@Model.Address.AddressLine1</p>
+                                                <p class="sfa-small-bottom-margin font-xsmall" itemprop="streetAddress">@Model.Address.AddressLine2</p>
+                                                <p class="sfa-small-bottom-margin font-xsmall" itemprop="streetAddress">@Model.Address.AddressLine3</p>
+                                                <p class="sfa-small-bottom-margin font-xsmall" itemprop="addressLocality">@Model.Address.Town</p>
+                                                <p class="sfa-small-bottom-margin font-xsmall" itemprop="addressRegion">@Model.Address.County</p>
+                                                <p class="sfa-small-bottom-margin font-xsmall" itemprop="postalCode">@Model.Address.Postcode</p>
                                             </div>
                                         </div>
                                     }
@@ -113,12 +113,12 @@
                                 else
                                 {
                                     <div itemprop="address">
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine1</p>
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine2</p>
-                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine3</p>
-                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.Town</p>
-                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.Address.County</p>
-                                        <p class="small-btm-margin" itemprop="postalCode">@Model.Address.Postcode</p>
+                                        <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.Address.AddressLine1</p>
+                                        <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.Address.AddressLine2</p>
+                                        <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.Address.AddressLine3</p>
+                                        <p class="sfa-small-bottom-margin" itemprop="addressLocality">@Model.Address.Town</p>
+                                        <p class="sfa-small-bottom-margin" itemprop="addressRegion">@Model.Address.County</p>
+                                        <p class="sfa-small-bottom-margin" itemprop="postalCode">@Model.Address.Postcode</p>
                                     </div>
                                 }
                             </div>
@@ -127,64 +127,64 @@
                         {
                             if (!Model.IsNationwideLocation)
                             {
-                                if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
-                                {
-                                    <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
-                                        <h3 class="bold-small">
-                                            Address
-                                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
-                                        </h3>
-                                        @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                            if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+                            {
+                                <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
+                                    <h3 class="bold-small">
+                                        Address
+                                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
+                                    </h3>
+                                    @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                                    {
+                                        <div itemprop="address">
+                                            <p class="sfa-small-bottom-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
+                                        </div>
+                                        if (Model.IsManageReviewerView)
                                         {
-                                            <div itemprop="address">
-                                                <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
-                                            </div>
-                                            if (Model.IsManageReviewerView)
-                                            {
-                                                <div class="left-grey-border">
-                                                    <h3 class="bold-xsmall">Hidden full address</h3>
-                                                    <div itemprop="address">
-                                                        <p class="small-btm-margin font-xsmall" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
-                                                        <p class="small-btm-margin font-xsmall" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
-                                                        <p class="small-btm-margin font-xsmall" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
-                                                        <p class="small-btm-margin font-xsmall" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
-                                                        <p class="small-btm-margin font-xsmall" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.County</p>
-                                                        <p class="small-btm-margin font-xsmall" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
-                                                    </div>
+                                            <div class="left-grey-border">
+                                                <h3 class="bold-xsmall">Hidden full address</h3>
+                                                <div itemprop="address">
+                                                    <p class="sfa-small-bottom-margin font-xsmall" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
+                                                    <p class="sfa-small-bottom-margin font-xsmall" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
+                                                    <p class="sfa-small-bottom-margin font-xsmall" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
+                                                    <p class="sfa-small-bottom-margin font-xsmall" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
+                                                    <p class="sfa-small-bottom-margin font-xsmall" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.County</p>
+                                                    <p class="sfa-small-bottom-margin font-xsmall" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
                                                 </div>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <div itemprop="address">
-                                                <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
-                                                <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
-                                                <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
-                                                <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
-                                                <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.County</p>
-                                                <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
                                             </div>
                                         }
-                                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
-                                    </div>
-                                }
-                                else
-                                {
-                                    var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1)/2;
-                                    <p></p>
+                                    }
+                                    else
+                                    {
+                                        <div itemprop="address">
+                                            <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.County</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
+                                        </div>
+                                    }
+                                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                                </div>
+                            }
+                            else
+                            {
+                                var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1) / 2;
+                                <p></p>
                                 <div id="vacancy-address" class="editable-item grid-row" itemscope itemtype="http://schema.org/PostalAddress">
-                                        <h3 class="bold-small">
-                                            Addresses
-                                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
-                                        </h3>
+                                    <h3 class="bold-small">
+                                        Addresses
+                                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
+                                    </h3>
                                     <div class="column-one-half">
-                                            <div class="inner-block-padr">
-                                                <table class="locations-table" id="leftLocationAddressesTable">
-                                                    <colgroup>
-                                                        <col class="t50">
-                                                        <col class="t35">
-                                                    </colgroup>
-                                                    <thead>
+                                        <div class="inner-block-padr">
+                                            <table class="locations-table" id="leftLocationAddressesTable">
+                                                <colgroup>
+                                                    <col class="t50">
+                                                    <col class="t35">
+                                                </colgroup>
+                                                <thead>
                                                     <tr>
                                                         <th>
                                                             <span class="heading-span">Location</span>
@@ -203,21 +203,21 @@
                                                             <tr class="no-btm-border">
                                                                 <td>@locationAddress.Address.Town</td>
                                                                 <td>@locationAddress.NumberOfPositions</td>
-                                                            </tr>
-                                                            if (Model.IsManageReviewerView)
-                                                            {
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="left-grey-border">
-                                                                            <h3 class="bold-xsmall">Hidden full address</h3>
-                                                                            <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
-                                                                            <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
-                                                                            <p class="small-btm-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            }
+                                                            </tr>                                                            
+                                                                if (Model.IsManageReviewerView)
+                                                                 {
+                                                                     <tr>
+                                                                         <td>
+                                                                             <div class="left-grey-border">
+                                                                                 <h3 class="bold-xsmall">Hidden full address</h3>
+                                                                                 <p class="sfa-small-bottom-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
+                                                                                 <p class="sfa-small-bottom-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
+                                                                                 <p class="sfa-small-bottom-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>                                                                                                                                                                  
+                                                                             </div>
+                                                                         </td>
+                                                                         <td></td>
+                                                                     </tr>
+                                                                 }
 
                                                         }
                                                         else
@@ -263,9 +263,9 @@
                                                                     <td>
                                                                         <div class="left-grey-border">
                                                                             <h3 class="bold-xsmall">Hidden full address</h3>
-                                                                            <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
-                                                                            <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
-                                                                            <p class="small-btm-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>
+                                                                        <p class="sfa-small-bottom-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
+                                                                        <p class="sfa-small-bottom-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
+                                                                        <p class="sfa-small-bottom-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>                                                                                                                                                
                                                                         </div>
                                                                     </td>
                                                                     <td></td>

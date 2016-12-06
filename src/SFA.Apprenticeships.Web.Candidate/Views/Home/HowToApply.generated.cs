@@ -2828,7 +2828,7 @@ WriteLiteral(">Save</a>\r\n    </p>\r\n    <!--   <p id=\"applicationSaved\">\r\
 
 WriteLiteral(" id=\"appFormTour\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 
@@ -2858,7 +2858,7 @@ WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n                Before you start your application, print off a copy of anythin" +
 "g that\r\n                might help you, such as:\r\n            </p>\r\n            " +

@@ -720,7 +720,7 @@ WriteLiteral("\r\n                    </li>\r\n                </ul>\r\n\r\n    
 
 WriteLiteral(" id=\"firstSearchTour\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 
@@ -754,7 +754,7 @@ WriteLiteral(">If you know the type of apprenticeship you’re looking for use t
 
 WriteLiteral(" id=\"searchTour\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 
@@ -869,7 +869,7 @@ WriteLiteral(">At any time, quickly return to the search by clicking this link i
 
 WriteLiteral(" id=\"browseTour\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 
@@ -942,7 +942,7 @@ WriteLiteral(">If you want to start with blank fields, you can clear the form wi
 
 WriteLiteral(" id=\"savedSearchTour\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 

@@ -164,7 +164,7 @@ WriteLiteral("                    ");
 
             
             #line 21 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "small-btm-margin" }, controlHtmlAttributes : new { @class = "form-control form-control-4-4" }));
+               Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "sfa-small-bottom-margin" }, controlHtmlAttributes : new { @class = "form-control form-control-4-4" }));
 
             
             #line default

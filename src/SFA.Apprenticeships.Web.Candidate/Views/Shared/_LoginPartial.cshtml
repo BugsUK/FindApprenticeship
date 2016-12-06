@@ -5,8 +5,8 @@
     var controller = ViewContext.Controller as CandidateControllerBase;
     var fullName = (controller != null && controller.UserContext != null) ? controller.UserContext.FullName : string.Empty;
 
-    <div class="account-info" id="bannerSignedIn">
-        <div class="small-btm-margin">
+    <div class="account-info sfa-navigation-items" id="bannerSignedIn">
+        <div class="sfa-small-bottom-margin">
             <span class="your-name" id="bannerUserName">@fullName</span>
             <a id="signout-link" href="@Url.RouteUrl(RouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
@@ -19,7 +19,7 @@
 }
 else
 {
-    <div class="account-info" id="bannerSignedOut">
+    <div class="account-info sfa-navigation-items" id="bannerSignedOut">
         @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
         {
             <a href="@Url.RouteUrl(RouteNames.SignIn, new { ReturnUrl = Request.Url.PathAndQuery })" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>

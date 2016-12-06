@@ -69,7 +69,7 @@
                     @Html.Partial("_wage", Model)
 
                     @{
-                        var className = Model.HoursPerWeek.HasValue ? "small-btm-margin" : "";
+                        var className = Model.HoursPerWeek.HasValue ? "sfa-small-bottom-margin" : "";
                     }
 
                     <h3 class="bold-small">Working week</h3>
@@ -208,7 +208,7 @@
                                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                         <h3 class="bold-small">Address</h3>
                                         <div itemprop="address">
-                                            <p class="small-btm-margin" itemprop="addressLocality" id="anonymous-town">@Model.VacancyAddress.Town</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="addressLocality" id="anonymous-town">@Model.VacancyAddress.Town</p>
                                         </div>
                                     </div>
                                 }
@@ -233,12 +233,12 @@
                                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                         <h3 class="bold-small">Address</h3>
                                         <div itemprop="address">
-                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
-                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
-                                            <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
-                                            <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
-                                            <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
-                                            <p class="small-btm-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
+                                            <p class="sfa-small-bottom-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
                                         </div>
                                     </div>
                                 }

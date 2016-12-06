@@ -9,11 +9,16 @@
         var oldErrorFunction = settings.errorPlacement;
         var oldSuccessFunction = settings.success;
         settings.errorPlacement = function (error, element) {
-            $(element).parent().addClass("error");
+            $(element).removeClass('error');
+
+            if ($(element).parents('.form-date').length === 0)
+                $(element).parent('.form-group').addClass("error");
+            else
+                $(element).parents().form-group
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
-            $(element).parent().removeClass("error");
+            $(element).parent('.form-group').removeClass("error");
             oldSuccessFunction(label, element);
 
         };
@@ -28,7 +33,7 @@
             $thisParent = $this.closest('.inline-fixed');
 
         setTimeout(function () {    
-            if ($thisParent.find('.error-rmessage').length > 0) {
+            if ($thisParent.find('.error-message').length > 0) {
                 $thisParent.addClass('error');
             } else {
                 $thisParent.removeClass('error');

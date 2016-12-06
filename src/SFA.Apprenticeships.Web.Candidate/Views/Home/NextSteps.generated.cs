@@ -277,7 +277,7 @@ WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n<ol");
 
 WriteLiteral(" id=\"newAppChanges\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 

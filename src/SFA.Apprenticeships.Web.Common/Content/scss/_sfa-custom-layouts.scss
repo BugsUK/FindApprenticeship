@@ -1,7 +1,44 @@
 ﻿@import "_colours";
+@import "_conditionals";
+
+
+.sfa-navigation {
+    overflow:hidden;
+    p {
+        display:inline !important;
+    }
+    .sfa-navigation-items {
+        font-size:14px;
+        @include media(tablet){
+            font-size:16px;
+        }
+        @include media(desktop){
+            text-align:right;
+            float:right !important;
+        }
+        span {
+            display:inline;
+        }
+    }
+}
 
 .sfa-hide {
     display: none;
+    &-mobile {
+        @include media(mobile){
+            display:none;
+        }
+    }
+    &-tablet {
+        @include media(tablet){
+            display:none;
+        }
+    }
+    &-desktop {
+        @include media(desktop){
+            display:none;
+        }
+    }
 }
 
 .force-full-width {
@@ -18,6 +55,14 @@
 
 .sfa-pull-right {
     float: right;
+}
+
+.sfa-small-top-margin {
+    margin-top: 5px !important;
+}
+
+.sfa-small-bottom-margin {
+    margin-bottom: 5px !important;
 }
 
 .sfa-medium-top-margin {
@@ -37,11 +82,17 @@
 }
 
 .sfa-xlarge-bottom-margin {
-    margin-bottom: 30px !important;
+    margin-bottom: 15px !important;
+    @include media(tablet){
+        margin-bottom: 30px !important;
+    }
 }
 
 .sfa-xlarge-top-margin {
-    margin-top: 30px !important;
+    margin-top: 15px !important;
+    @include media(tablet){
+        margin-top: 30px !important;
+    }
 }
 
 .sfa-small-top-padding {
@@ -160,7 +211,7 @@ iframe, object, embed {
 }
 
 
-@include media(0,640px) {
+@include media(mobile) {
     .mob-collpanel-trigger:after {
         content:" ▼";
         display: inline-block;
@@ -175,7 +226,7 @@ iframe, object, embed {
     }
 }
 
-@include media(0,640px) {
+@include media(mobile) {
     .mob-collpanel.panel-open {
         display:block
     }

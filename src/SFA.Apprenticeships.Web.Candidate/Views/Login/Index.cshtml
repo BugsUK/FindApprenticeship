@@ -13,7 +13,7 @@
         {
             @Html.AntiForgeryToken();
             <h1 class="heading-large">Sign in</h1>
-            <p class="hide-tablet">
+            <p class="sfa-hide-tablet">
                 @Html.ActionLink("Create an account", controllerName: "Register", actionName: "Index").
             </p>
 
@@ -22,21 +22,25 @@
                 containerHtmlAttributes: new { @class = "form-group-compound" },
                 controlHtmlAttributes: new { @class = "form-control-3-4", type = "email", autofocus = "autofocus", spellcheck = "false" })
 
-            <div class="form-group">
+            <div class="form-group form-group-compound">
                 <a id="password"></a>
                 @Html.LabelFor(m => m.Password, new { @class = "form-label-bold" })
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
                 @Html.ValidationMessageFor(m => m.Password, null)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
+            </div>
 
+            <div class="form-group">
                 <p><a href='@Url.RouteUrl(RouteNames.ForgottenCredentials)'>I can't access my account</a></p>
             </div>
 
             <div class="form-group">
                 <button class="button" id="sign-in-button">Sign in</button>
-                <details class="text hide-tablet">
-                    <summary>Activate your account</summary>
-                    <div class="detail-content">
-                        <ol class="list-number">
+            </div>
+            <div class="form-group">
+                <details class="text sfa-hide-tablet">
+                    <summary><span class="summary">Activate your account</span></summary>
+                    <div class="panel panel-border-narrow">
+                        <ol class="list list-number">
                             <li>Once you've created an account we'll send you an activation code.</li>
                             <li>Sign in using your email address and password.</li>
                             <li>You'll then be asked to enter your activation code.</li>
@@ -53,17 +57,17 @@
                 If you haven’t used this service before you must
                 @Html.ActionLink("create an account", "Index", "Register", null, new { id = "create-account-link", @class = "inl-block" }), even if you already have an existing account with "Apprenticeship vacancies".
             </p>
-            <p class="small-btm-margin">Creating an account allows you to:</p>
-            <ul class="list-bullet">
+            <p class="sfa-small-bottom-margin">Creating an account allows you to:</p>
+            <ul class="list list-bullet">
                 <li>apply for an apprenticeship or traineeship</li>
                 <li>track your apprenticeship applications</li>
                 <li>receive alerts about new apprenticeships</li>
             </ul>
         </div>
-        <details class="text hide-mob">
-            <summary>Activate your account</summary>
-            <div class="detail-content">
-                <ol class="list-number">
+        <details class="text sfa-hide-mobile">
+            <summary><span class="summary">Activate your account</span></summary>
+            <div class="panel panel-border-narrow">
+                <ol class="list list-number">
                     <li>Once you've created an account we'll send you an activation code.</li>
                     <li>Sign in using your email address and password.</li>
                     <li>You'll then be asked to enter your activation code.</li>

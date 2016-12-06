@@ -138,7 +138,7 @@ WriteLiteral(" class=\"bold-small\"");
 
 WriteLiteral(">Employer</h3>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -155,7 +155,7 @@ WriteLiteral(" class=\"bold-small\"");
 
 WriteLiteral(">Address</h3>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -168,7 +168,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -181,7 +181,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -194,7 +194,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -223,7 +223,7 @@ WriteLiteral("</p>\r\n");
             #line hidden
 WriteLiteral("                <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -245,7 +245,7 @@ WriteLiteral("</p>\r\n");
             #line hidden
 WriteLiteral("            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 

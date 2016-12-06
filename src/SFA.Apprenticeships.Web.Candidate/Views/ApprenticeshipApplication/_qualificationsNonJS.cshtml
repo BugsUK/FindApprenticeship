@@ -46,7 +46,7 @@
                                     @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Year")
                                 </td>
                                 <td>
-                                    <div class="small-btm-margin">
+                                    <div class="sfa-small-bottom-margin">
                                         @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Grade, new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 15})
                                         @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Grade") 
                                     </div>
@@ -74,7 +74,7 @@
                                     @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Year")
                                 </td>
                                 <td>
-                                    <div class="small-btm-margin">
+                                    <div class="sfa-small-bottom-margin">
                                         @Html.TextBox("Candidate.Qualifications[" + i + "].Grade", "", new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11})
                                         @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Grade")
                                         
