@@ -160,7 +160,7 @@ iframe, object, embed {
 }
 
 
-@include media(0,640px) {
+@include media(mobile) {
     .mob-collpanel-trigger:after {
         content:" ▼";
         display: inline-block;
@@ -175,7 +175,7 @@ iframe, object, embed {
     }
 }
 
-@include media(0,640px) {
+@include media(mobile) {
     .mob-collpanel.panel-open {
         display:block
     }

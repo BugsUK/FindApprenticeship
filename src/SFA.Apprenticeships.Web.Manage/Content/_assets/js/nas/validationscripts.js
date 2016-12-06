@@ -9,11 +9,13 @@ $(document).ready(function() {
         var oldErrorFunction = settings.errorPlacement;
         var oldSuccessFunction = settings.success;
         settings.errorPlacement = function (error, element) {
-            $(element).parent().addClass("error");
+            $(element).removeClass('error');
+
+            $(element).parents('.form-group').last().addClass("error");
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
-            $(element).parent().removeClass("error");
+            $(element).parents('.form-group').last().removeClass("error");
             oldSuccessFunction(label, element);
 
         };
