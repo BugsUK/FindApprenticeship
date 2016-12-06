@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using System.Web.WebPages;
     
     #line 1 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-    using Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies;
     
     #line default
     #line hidden
@@ -72,17 +72,17 @@ WriteLiteral("\r\n<div");
 
 WriteLiteral(" id=\"categories\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 230), Tuple.Create("\"", 278)
-, Tuple.Create(Tuple.Create("", 238), Tuple.Create("form-group", 238), true)
-, Tuple.Create(Tuple.Create(" ", 248), Tuple.Create("tabbed-element", 249), true)
-, Tuple.Create(Tuple.Create(" ", 263), Tuple.Create("tab2", 264), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 214), Tuple.Create("\"", 262)
+, Tuple.Create(Tuple.Create("", 222), Tuple.Create("form-group", 222), true)
+, Tuple.Create(Tuple.Create(" ", 232), Tuple.Create("tabbed-element", 233), true)
+, Tuple.Create(Tuple.Create(" ", 247), Tuple.Create("tab2", 248), true)
             
             #line 8 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-, Tuple.Create(Tuple.Create(" ", 268), Tuple.Create<System.Object, System.Int32>(divClass
+, Tuple.Create(Tuple.Create(" ", 252), Tuple.Create<System.Object, System.Int32>(divClass
             
             #line default
             #line hidden
-, 269), false)
+, 253), false)
 );
 
 WriteLiteral(">\r\n    \r\n");
@@ -163,14 +163,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1400), Tuple.Create("\"", 1414)
+WriteAttribute("for", Tuple.Create(" for=\"", 1384), Tuple.Create("\"", 1398)
             
             #line 27 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                              , Tuple.Create(Tuple.Create("", 1406), Tuple.Create<System.Object, System.Int32>(inputId
+                                              , Tuple.Create(Tuple.Create("", 1390), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1406), false)
+, 1390), false)
 );
 
 WriteLiteral(">");
@@ -215,14 +215,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral(" sub-categories</summary>\r\n                            <ul");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1638), Tuple.Create("\"", 1661)
+WriteAttribute("id", Tuple.Create(" id=\"", 1622), Tuple.Create("\"", 1645)
             
             #line 30 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 1643), Tuple.Create<System.Object, System.Int32>(subCategoryListId
+, Tuple.Create(Tuple.Create("", 1627), Tuple.Create<System.Object, System.Int32>(subCategoryListId
             
             #line default
             #line hidden
-, 1643), false)
+, 1627), false)
 );
 
 WriteLiteral(" class=\"detail-content copy-16 list-text list-checkradio scrolling-panel max-heig" +
@@ -282,14 +282,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2564), Tuple.Create("\"", 2581)
+WriteAttribute("for", Tuple.Create(" for=\"", 2548), Tuple.Create("\"", 2565)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                            , Tuple.Create(Tuple.Create("", 2570), Tuple.Create<System.Object, System.Int32>(checkboxId
+                                                                            , Tuple.Create(Tuple.Create("", 2554), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 2570), false)
+, 2554), false)
 );
 
 WriteLiteral(">");

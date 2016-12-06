@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     #line hidden
     
     #line 2 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-    using Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies;
     
     #line default
     #line hidden
@@ -158,14 +158,14 @@ WriteLiteral("\r\n    <meta");
 
 WriteLiteral(" name=\"WT.oss_r\"");
 
-WriteAttribute("content", Tuple.Create(" content=\"", 4061), Tuple.Create("\"", 4092)
+WriteAttribute("content", Tuple.Create(" content=\"", 3996), Tuple.Create("\"", 4027)
             
             #line 82 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4071), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
+, Tuple.Create(Tuple.Create("", 4006), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
             
             #line default
             #line hidden
-, 4071), false)
+, 4006), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -242,14 +242,14 @@ WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" id=\"receiveSaveSearchAlert\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4687), Tuple.Create("\"", 4869)
+WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4622), Tuple.Create("\"", 4804)
             
             #line 95 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4719), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
+, Tuple.Create(Tuple.Create("", 4654), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
             
             #line default
             #line hidden
-, 4719), false)
+, 4654), false)
 );
 
 WriteLiteral("\r\n                       onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'" +

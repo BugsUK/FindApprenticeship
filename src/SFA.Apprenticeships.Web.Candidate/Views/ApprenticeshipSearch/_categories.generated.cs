@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using System.Web.WebPages;
     
     #line 1 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-    using Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies;
     
     #line default
     #line hidden
@@ -72,17 +72,17 @@ WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" id=\"categories\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 232), Tuple.Create("\"", 285)
-, Tuple.Create(Tuple.Create("", 240), Tuple.Create("form-group", 240), true)
-, Tuple.Create(Tuple.Create(" ", 250), Tuple.Create("tabbed-element", 251), true)
-, Tuple.Create(Tuple.Create(" ", 265), Tuple.Create("browsetab", 266), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 216), Tuple.Create("\"", 269)
+, Tuple.Create(Tuple.Create("", 224), Tuple.Create("form-group", 224), true)
+, Tuple.Create(Tuple.Create(" ", 234), Tuple.Create("tabbed-element", 235), true)
+, Tuple.Create(Tuple.Create(" ", 249), Tuple.Create("browsetab", 250), true)
             
             #line 9 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-, Tuple.Create(Tuple.Create(" ", 275), Tuple.Create<System.Object, System.Int32>(divClass
+, Tuple.Create(Tuple.Create(" ", 259), Tuple.Create<System.Object, System.Int32>(divClass
             
             #line default
             #line hidden
-, 276), false)
+, 260), false)
 );
 
 WriteLiteral(">\r\n    <span");
@@ -178,14 +178,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1393), Tuple.Create("\"", 1407)
+WriteAttribute("for", Tuple.Create(" for=\"", 1377), Tuple.Create("\"", 1391)
             
             #line 27 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                          , Tuple.Create(Tuple.Create("", 1399), Tuple.Create<System.Object, System.Int32>(inputId
+                                                          , Tuple.Create(Tuple.Create("", 1383), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1399), false)
+, 1383), false)
 );
 
 WriteLiteral(">");
@@ -274,14 +274,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2300), Tuple.Create("\"", 2314)
+WriteAttribute("for", Tuple.Create(" for=\"", 2284), Tuple.Create("\"", 2298)
             
             #line 42 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                      , Tuple.Create(Tuple.Create("", 2306), Tuple.Create<System.Object, System.Int32>(inputId
+                                                      , Tuple.Create(Tuple.Create("", 2290), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 2306), false)
+, 2290), false)
 );
 
 WriteLiteral(">");
