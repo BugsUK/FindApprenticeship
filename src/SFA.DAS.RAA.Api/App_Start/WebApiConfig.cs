@@ -1,12 +1,16 @@
 ﻿namespace SFA.DAS.RAA.Api
 {
     using System.Web.Http;
+    using System.Web.Http.ExceptionHandling;
+    using Handlers;
 
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.EnableSystemDiagnosticsTracing();
+            config.Services.Add(typeof(IExceptionLogger), new AiExceptionLogger());
 
             // Web API routes
             config.MapHttpAttributeRoutes();
