@@ -594,7 +594,7 @@ WriteLiteral(" itemprop=\"address\"");
 
 WriteLiteral(">\r\n                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"addressLocality\"");
 
@@ -631,7 +631,7 @@ WriteLiteral(" itemprop=\"address\"");
 
 WriteLiteral(">\r\n                                                <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -646,7 +646,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -661,7 +661,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -676,7 +676,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"addressLocality\"");
 
@@ -691,7 +691,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"addressRegion\"");
 
@@ -706,7 +706,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"postalCode\"");
 
@@ -738,7 +738,7 @@ WriteLiteral(" itemprop=\"address\"");
 
 WriteLiteral(">\r\n                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -753,7 +753,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -768,7 +768,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -783,7 +783,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"addressLocality\"");
 
@@ -798,7 +798,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"addressRegion\"");
 
@@ -813,7 +813,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"postalCode\"");
 
@@ -895,7 +895,7 @@ WriteLiteral(" itemprop=\"address\"");
 
 WriteLiteral(">\r\n                                            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"addressLocality\"");
 
@@ -932,7 +932,7 @@ WriteLiteral(" itemprop=\"address\"");
 
 WriteLiteral(">\r\n                                                    <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -947,7 +947,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                    <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -962,7 +962,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                    <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -977,7 +977,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                    <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"addressLocality\"");
 
@@ -992,7 +992,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                    <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"addressRegion\"");
 
@@ -1007,7 +1007,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                    <p");
 
-WriteLiteral(" class=\"small-btm-margin font-xsmall\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin font-xsmall\"");
 
 WriteLiteral(" itemprop=\"postalCode\"");
 
@@ -1039,7 +1039,7 @@ WriteLiteral(" itemprop=\"address\"");
 
 WriteLiteral(">\r\n                                            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -1054,7 +1054,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -1069,7 +1069,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -1084,7 +1084,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"addressLocality\"");
 
@@ -1099,7 +1099,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"addressRegion\"");
 
@@ -1114,7 +1114,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"postalCode\"");
 
@@ -1299,7 +1299,7 @@ WriteLiteral(" class=\"bold-xsmall\"");
 WriteLiteral(">Hidden full address</h3>\r\n                                                      " +
 "                           <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -1315,7 +1315,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                                                                           " +
 "      <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -1331,7 +1331,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                                                                           " +
 "      <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"addressLocality\"");
 
@@ -1504,7 +1504,7 @@ WriteLiteral(">Hidden full address</h3>                                         
 "                \r\n                                                              " +
 "          <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -1519,7 +1519,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"streetAddress\"");
 
@@ -1534,7 +1534,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                                                                        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(" itemprop=\"addressLocality\"");
 

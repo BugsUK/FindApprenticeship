@@ -192,7 +192,7 @@ WriteLiteral(">\r\n            <p");
 
 WriteLiteral(" id=\"result-message\"");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">");
 
@@ -236,7 +236,7 @@ WriteLiteral("</p>\r\n");
             #line hidden
 WriteLiteral("                <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n                    <a");
 

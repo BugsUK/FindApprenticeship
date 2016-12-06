@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="grid grid-1-3">
-                    <p class="small-btm-margin">
+                    <p class="sfa-small-bottom-margin">
                         Closing date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
                     </p>
                     @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status, Model.TotalNumberOfApplications, Model.VacancyType,Model.TotalNumberOfApplicationsWithPendingDecisions), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
@@ -355,7 +355,7 @@
                style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
                class="page-navigation__btn previous grid grid-1-3">
                 <i class="arrow-button fa fa-angle-left"></i>
-                <span class="description">Previous <span class="hide-mob">page</span></span>
+                <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
                 <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
             </a>
 
@@ -371,7 +371,7 @@
                style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
                class="page-navigation__btn next grid grid-1-3">
                 <i class="arrow-button fa fa-angle-right"></i>
-                <span class="description">Next <span class="hide-mob">page</span></span>
+                <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
                 <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
             </a>
 

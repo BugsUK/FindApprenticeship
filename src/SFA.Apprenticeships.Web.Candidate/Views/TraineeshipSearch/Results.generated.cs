@@ -103,7 +103,7 @@ WriteLiteral(" id=\"vacancy-result-summary\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">We\'ve found <b");
 

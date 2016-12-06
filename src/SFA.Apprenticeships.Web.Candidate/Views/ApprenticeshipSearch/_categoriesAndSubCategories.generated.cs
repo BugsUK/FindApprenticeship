@@ -335,7 +335,7 @@ WriteLiteral("            <div");
 
 WriteLiteral(" id=\"category-load-failed\"");
 
-WriteLiteral(" class=\"error-rmessage\"");
+WriteLiteral(" class=\"error-message\"");
 
 WriteLiteral(">Category search is currently unavailable. Please try again or use the keyword se" +
 "arch</div>\r\n");

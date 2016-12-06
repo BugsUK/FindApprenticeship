@@ -103,7 +103,7 @@
                         $(item.Value).each(function (valueIndex, valueItem) {
                             var name = item.Key.replace("[", "\\[").replace("]", "\\]").replace(".", "\\.") + "_Error";
                             $("#" + name).text(valueItem);
-                            $("#" + name).removeClass("field-validation-valid").addClass("error-rmessage").show();
+                            $("#" + name).removeClass("field-validation-valid").addClass("error-message").show();
                         });
                     }
                 });
@@ -118,7 +118,7 @@
 
             var span = document.createElement('span');
 
-            span.className = "error-rmessage";
+            span.className = "error-message";
             $(span).attr('aria-live', 'polite');
 
             var inputFormControlParent = $(element).closest(".validation-message-parent").find('.validation-message-container');

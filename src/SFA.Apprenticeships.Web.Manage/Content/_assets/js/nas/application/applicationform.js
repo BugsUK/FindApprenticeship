@@ -1081,7 +1081,7 @@
 
             var span = document.createElement('span');
 
-            span.className = "error-rmessage";
+            span.className = "error-message";
             $(span).attr('aria-live', 'polite');
 
             var inputFormControlParent = $(element).closest(".validation-message-parent").find('.validation-message-container');

@@ -11,11 +11,11 @@
         <h1 class="heading-xlarge">Settings</h1>
     </div>
     <div class="column-one-half">
-        @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link small-btm-margin" })
+        @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link sfa-small-bottom-margin" })
 
         @if (Model!=null && Model.TraineeshipFeature!=null && Model.TraineeshipFeature.ShowTraineeshipsLink)
         {
-            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link small-btm-margin" })
+            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link sfa-small-bottom-margin" })
         }
     </div>
 </div>
@@ -84,7 +84,7 @@
             <div id="accountSettings2">
                 <h3 class="heading-large">How we contact you</h3>
                 <div class="text para-btm-margin">
-                    <p class="small-btm-margin">
+                    <p class="sfa-small-bottom-margin">
                         Choose to be notified by <i class="fa fa-envelope-o no-right-margin"></i> email or <i class="icon-sms"></i> text when:
                     </p>
                     <div class="display-table">

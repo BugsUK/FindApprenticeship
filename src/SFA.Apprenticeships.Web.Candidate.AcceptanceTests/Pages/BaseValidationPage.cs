@@ -61,7 +61,7 @@
             }
         }
 
-        [ElementLocator(Class = "error-rmessage")]
+        [ElementLocator(Class = "error-message")]
         public class ValidationErrorFieldItem : WebElement
         {
             public ValidationErrorFieldItem(ISearchContext parent)

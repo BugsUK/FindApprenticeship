@@ -140,19 +140,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </header>
 
+    <div id="global-header-bar"></div>
+
     <div id="content" role="main" tabindex="-1">
-        <div id="global-header-bar"></div>
-        <div class="phase-banner-beta grid-row">
-            <p class="column-two-thirds">
-                <strong class="phase-tag">BETA</strong>
-                <span>You can help us improve this app by completing our <a href="https://www.surveymonkey.co.uk/r/2MZRS9H">5 minute survey</a>.</span>
-            </p>
-            <p class="column-one-third">
-                @Html.Partial("_LoginPartial")
-            </p>
-        </div>
-        
         <main id="main">
+            <div class="phase-banner sfa-navigation">
+                @Html.Partial("_LoginPartial")
+            </div>
             @{
                 var controller = ViewContext.Controller as CandidateControllerBase;
 

@@ -146,7 +146,7 @@ WriteLiteral("        ");
 
             
             #line 28 "..\..\Views\Home\Helpdesk.cshtml"
-   Write(Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs small-btm-margin select-inject form-control" }));
+   Write(Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs sfa-small-bottom-margin select-inject form-control" }));
 
             
             #line default

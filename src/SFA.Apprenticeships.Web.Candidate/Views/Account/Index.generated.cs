@@ -379,7 +379,7 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <ul");
 
-WriteLiteral(" class=\"list-text small-btm-margin\"");
+WriteLiteral(" class=\"list-text sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n                    <li>");
 

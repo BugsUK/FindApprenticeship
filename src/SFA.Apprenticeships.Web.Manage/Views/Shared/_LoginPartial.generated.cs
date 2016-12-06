@@ -73,7 +73,7 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n            <span");
 

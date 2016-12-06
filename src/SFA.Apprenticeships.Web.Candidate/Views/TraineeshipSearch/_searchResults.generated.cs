@@ -427,7 +427,7 @@ WriteLiteral(" class=\"summary-style fake-link mob-map-trigger map-closed\"");
 WriteLiteral(">Show/hide map</span>\r\n                            </div>\r\n                      " +
 "      <div");
 
-WriteLiteral(" class=\"column-one-third map-container hide-nojs small-btm-margin toggle-content-" +
+WriteLiteral(" class=\"column-one-third map-container hide-nojs sfa-small-bottom-margin toggle-content-" +
 "-mob\"");
 
 WriteLiteral(">\r\n                                <a");

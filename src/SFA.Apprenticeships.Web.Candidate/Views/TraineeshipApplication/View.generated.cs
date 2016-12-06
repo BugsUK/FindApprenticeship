@@ -155,11 +155,11 @@ WriteLiteral(" class=\"column-one-third para-btm-margin\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">This is your submitted application.</p>\r\n        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n            You applied on ");
 

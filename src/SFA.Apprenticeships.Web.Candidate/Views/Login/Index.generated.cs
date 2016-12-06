@@ -285,7 +285,7 @@ WriteLiteral("                ");
 WriteLiteral(", even if you already have an existing account with \"Apprenticeship vacancies\".\r\n" +
 "            </p>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">Creating an account allows you to:</p>\r\n            <ul");
 
@@ -296,7 +296,7 @@ WriteLiteral(">\r\n                <li>apply for an apprenticeship or traineeshi
 "ive alerts about new apprenticeships</li>\r\n            </ul>\r\n        </div>\r\n  " +
 "      <details");
 
-WriteLiteral(" class=\"text hide-mob\"");
+WriteLiteral(" class=\"text sfa-hide-mobile\"");
 
 WriteLiteral(">\r\n            <summary>Activate your account</summary>\r\n            <div");
 
