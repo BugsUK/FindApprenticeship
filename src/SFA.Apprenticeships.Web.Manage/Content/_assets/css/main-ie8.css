@@ -2694,6 +2694,9 @@ ul.applications-summary.bulk-response {
   border-left: 5px solid #BFC1C3;
   padding: 12px 0 1px 15px; }
 
+legend {
+  float: none !important; }
+
 html {
   font-size: 62.5%;
   /* 1 */ }
