@@ -178,14 +178,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1338), Tuple.Create("\"", 1394)
+WriteAttribute("href", Tuple.Create(" href=\"", 1352), Tuple.Create("\"", 1408)
             
             #line 35 "..\..\Views\TraineeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1345), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 1359), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 1345), false)
+, 1359), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
@@ -262,14 +262,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2117), Tuple.Create("\"", 2173)
+WriteAttribute("href", Tuple.Create(" href=\"", 2131), Tuple.Create("\"", 2187)
             
             #line 55 "..\..\Views\TraineeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2124), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2138), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2124), false)
+, 2138), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");

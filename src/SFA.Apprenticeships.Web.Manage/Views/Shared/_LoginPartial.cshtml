@@ -4,6 +4,7 @@
 
 @if (Request.IsAuthenticated)
 {
+    <div class="sfa-navigation-items">
         <div class="sfa-small-bottom-margin">
             <span class="your-name" id="bannerUserName">@User.Identity.Name</span>
             <a id="signout-link" href="@Url.RouteUrl(ManagementRouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
@@ -15,8 +16,11 @@
             }
             <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(ManagementRouteNames.Dashboard)">Agency home</a>
         </div>
+    </div>
 }
 else
 {
-    <a href="@Url.RouteUrl(ManagementRouteNames.SignIn)" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
+    <div class="sfa-navigation-items">
+        <a href="@Url.RouteUrl(ManagementRouteNames.SignIn)" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
+    </div>
 }

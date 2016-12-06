@@ -115,7 +115,7 @@ WriteLiteral(">");
 
             
             #line 18 "..\..\Views\TraineeshipSearch\Results.cshtml"
-                                                                                            Write(Model.TotalHits);
+                                                                                                   Write(Model.TotalHits);
 
             
             #line default

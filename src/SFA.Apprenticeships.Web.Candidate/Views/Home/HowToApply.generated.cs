@@ -71,29 +71,29 @@ WriteLiteral(" class=\"active\"");
 
 WriteLiteral(">\r\n            <span");
 
-WriteLiteral(" class=\"hide-tablet\"");
+WriteLiteral(" class=\"sfa-hide-tablet\"");
 
 WriteLiteral(">Page </span>1<span");
 
-WriteLiteral(" class=\"hide-tablet\"");
+WriteLiteral(" class=\"sfa-hide-tablet\"");
 
 WriteLiteral("> of 3</span>.\r\n            Application form\r\n        </li>\r\n        <li>\r\n      " +
 "      <span");
 
-WriteLiteral(" class=\"hide-tablet\"");
+WriteLiteral(" class=\"sfa-hide-tablet\"");
 
 WriteLiteral(">Page </span>2<span");
 
-WriteLiteral(" class=\"hide-tablet\"");
+WriteLiteral(" class=\"sfa-hide-tablet\"");
 
 WriteLiteral("> of 3</span>.\r\n            Check your application\r\n        </li>\r\n        <li>\r\n" +
 "            <span");
 
-WriteLiteral(" class=\"hide-tablet\"");
+WriteLiteral(" class=\"sfa-hide-tablet\"");
 
 WriteLiteral(">Page </span>3<span");
 
-WriteLiteral(" class=\"hide-tablet\"");
+WriteLiteral(" class=\"sfa-hide-tablet\"");
 
 WriteLiteral("> of 3</span>.\r\n            Submitted\r\n        </li>\r\n    </ul>\r\n</div>\r\n<div");
 
@@ -2864,7 +2864,7 @@ WriteLiteral(">\r\n                Before you start your application, print off 
 "g that\r\n                might help you, such as:\r\n            </p>\r\n            " +
 "<ul");
 
-WriteLiteral(" class=\"list-bullet\"");
+WriteLiteral(" class=\"list list-bullet\"");
 
 WriteLiteral(@">
                 <li>your curriculum vitae (CV)</li>

@@ -244,9 +244,13 @@ WriteLiteral(">\r\n        <h2");
 WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">If you\'ve forgotten your email address</h2>\r\n        <details>\r\n            <sum" +
-"mary>Retrieve your email address</summary>\r\n            <div");
+"mary><span");
 
-WriteLiteral(" class=\"detail-content\"");
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Retrieve your email address</span></summary>\r\n            <div");
+
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p>\r\n                    To retrieve the email address you use" +
 "d to create your account, you\'ll need to verify your mobile number. Enter your n" +
@@ -278,7 +282,6 @@ WriteLiteral(">Send email address</button>\r\n                </div>\r\n        
             
             #line 74 "..\..\Views\Login\ForgottenCredentials.cshtml"
 }
-
             
             #line default
             #line hidden
