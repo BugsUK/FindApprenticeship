@@ -143,25 +143,25 @@ WriteLiteral(" of ");
             #line hidden
 WriteLiteral("</span>\r\n        </a>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1326), Tuple.Create("\"", 1342)
+WriteAttribute("href", Tuple.Create(" href=\"", 1333), Tuple.Create("\"", 1349)
             
             #line 20 "..\..\Views\ApprenticeshipSearch\_pagination.cshtml"
-, Tuple.Create(Tuple.Create("", 1333), Tuple.Create<System.Object, System.Int32>(nextLink
+, Tuple.Create(Tuple.Create("", 1340), Tuple.Create<System.Object, System.Int32>(nextLink
             
             #line default
             #line hidden
-, 1333), false)
+, 1340), false)
 );
 
-WriteAttribute("style", Tuple.Create("\r\n           style=\"", 1343), Tuple.Create("\"", 1440)
-, Tuple.Create(Tuple.Create("", 1363), Tuple.Create("visibility:", 1363), true)
+WriteAttribute("style", Tuple.Create("\r\n           style=\"", 1350), Tuple.Create("\"", 1447)
+, Tuple.Create(Tuple.Create("", 1370), Tuple.Create("visibility:", 1370), true)
             
             #line 21 "..\..\Views\ApprenticeshipSearch\_pagination.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1374), Tuple.Create<System.Object, System.Int32>(Model.VacancySearch.PageNumber == pages ? "hidden" : "visible"
+, Tuple.Create(Tuple.Create(" ", 1381), Tuple.Create<System.Object, System.Int32>(Model.VacancySearch.PageNumber == pages ? "hidden" : "visible"
             
             #line default
             #line hidden
-, 1375), false)
+, 1382), false)
 );
 
 WriteLiteral("\r\n           class=\"page-navigation__btn next column-one-half\"");

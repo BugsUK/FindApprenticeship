@@ -198,7 +198,7 @@ WriteLiteral(">");
 
             
             #line 89 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                                                       Write(Html.Raw(resultMessage));
+                                                              Write(Html.Raw(resultMessage));
 
             
             #line default
@@ -242,14 +242,14 @@ WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" id=\"receiveSaveSearchAlert\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4673), Tuple.Create("\"", 4855)
+WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4687), Tuple.Create("\"", 4869)
             
             #line 95 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4705), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
+, Tuple.Create(Tuple.Create("", 4719), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
             
             #line default
             #line hidden
-, 4705), false)
+, 4719), false)
 );
 
 WriteLiteral("\r\n                       onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'" +

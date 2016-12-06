@@ -231,7 +231,7 @@ WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n            Employers want an apprentice who’s:\r\n            <ul");
 
-WriteLiteral(" class=\"list-bullet sfa-medium-bottom-margin\"");
+WriteLiteral(" class=\"list list-bullet\"");
 
 WriteLiteral(@">
                 <li>reliable</li>

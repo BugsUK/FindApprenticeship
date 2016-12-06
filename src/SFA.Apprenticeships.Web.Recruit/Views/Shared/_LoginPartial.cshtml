@@ -3,20 +3,23 @@
 
 @if (Request.IsAuthenticated)
 {
-    <a id="signout-link" href="@Url.RouteUrl(RecruitmentRouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
-
-    <div>
-        @if (User.IsInRole(Roles.Admin))
-        {
-            <a class="account-link" id="adminLink" href="@Url.RouteUrl(RecruitmentRouteNames.AdminList)">Admin</a>
-        }
-        @if (User.IsInRole(Roles.VerifiedEmail) && (ViewBag.ShowHomeLink == null || ViewBag.ShowHomeLink))
-        {
-            <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Home</a>
-        }
+    <div class="sfa-navigation-items">
+        <a id="signout-link" href="@Url.RouteUrl(RecruitmentRouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
+        <div>
+            @if (User.IsInRole(Roles.Admin))
+            {
+                <a class="account-link" id="adminLink" href="@Url.RouteUrl(RecruitmentRouteNames.AdminList)">Admin</a>
+            }
+            @if (User.IsInRole(Roles.VerifiedEmail) && (ViewBag.ShowHomeLink == null || ViewBag.ShowHomeLink))
+            {
+                <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Home</a>
+            }
+        </div>
     </div>
 }
 else
 {
-    <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
+    <div class="sfa-navigation-items">
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
+    </div>    
 }

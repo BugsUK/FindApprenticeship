@@ -449,7 +449,7 @@ WriteLiteral(">");
 
             
             #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                           Write(Model.TrainingDetailsViewModel.ContactName);
+                                                  Write(Model.TrainingDetailsViewModel.ContactName);
 
             
             #line default
@@ -464,7 +464,7 @@ WriteLiteral(">");
 
             
             #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                           Write(Model.TrainingDetailsViewModel.ContactNumber);
+                                                  Write(Model.TrainingDetailsViewModel.ContactNumber);
 
             
             #line default
@@ -479,7 +479,7 @@ WriteLiteral(">");
 
             
             #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                           Write(Model.TrainingDetailsViewModel.ContactEmail);
+                                                  Write(Model.TrainingDetailsViewModel.ContactEmail);
 
             
             #line default
