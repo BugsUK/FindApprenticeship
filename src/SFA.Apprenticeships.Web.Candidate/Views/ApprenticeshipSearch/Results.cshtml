@@ -86,11 +86,11 @@
     <div class="hgroup column-full">
         <h1 class="heading-xlarge sfa-no-bottom-margin">Search results</h1>
         <div id="vacancy-result-summary">
-            <p id="result-message" class="small-btm-margin">@Html.Raw(resultMessage)</p>
+            <p id="result-message" class="sfa-small-bottom-margin">@Html.Raw(resultMessage)</p>
             <p id="national-results-message" class="">@Html.Raw(nationalResultsMessage)</p>
             @if (!string.IsNullOrEmpty(Model.VacancySearch.Location))
             {
-                <p class="small-btm-margin">
+                <p class="sfa-small-bottom-margin">
                     <a id="receiveSaveSearchAlert" 
                        href="@Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))"
                        onclick="Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/apprenticeships/receivealerts', 'WT.dl', '99', 'WT.ti', 'Search Results Receive Alerts'] })"><i class="fa fa-bell-o"></i>Receive alerts for this search</a>

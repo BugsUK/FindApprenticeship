@@ -395,7 +395,7 @@ WriteLiteral(" maxlength=\"50\"");
 WriteLiteral(" />\r\n                                </td>\r\n                                <td>\r" +
 "\n                                    <div");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n                                        <input");
 

@@ -111,7 +111,7 @@ WriteLiteral(" class=\"description\"");
 
 WriteLiteral(">Previous <span");
 
-WriteLiteral(" class=\"hide-mob\"");
+WriteLiteral(" class=\"sfa-hide-mobile\"");
 
 WriteLiteral(">page</span></span>\r\n            <span");
 
@@ -170,7 +170,7 @@ WriteLiteral(" class=\"description\"");
 
 WriteLiteral(">Next <span");
 
-WriteLiteral(" class=\"hide-mob\"");
+WriteLiteral(" class=\"sfa-hide-mobile\"");
 
 WriteLiteral(">page</span></span>\r\n            <span");
 

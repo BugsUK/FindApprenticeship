@@ -79,7 +79,7 @@ WriteLiteral(" id=\"bannerSignedIn\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n            <span");
 

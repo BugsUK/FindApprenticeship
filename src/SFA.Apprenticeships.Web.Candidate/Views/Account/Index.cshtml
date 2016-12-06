@@ -72,7 +72,7 @@
         <div class="page-link">
             @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
             {
-                <ul class="list-text small-btm-margin">
+                <ul class="list-text sfa-small-bottom-margin">
                     <li>@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new {id = "find-apprenticeship-link", @class = "link-unimp"})</li>
                 </ul>
             }

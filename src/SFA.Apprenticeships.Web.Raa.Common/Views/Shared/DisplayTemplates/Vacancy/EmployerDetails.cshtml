@@ -14,17 +14,17 @@
     <div class="column-one-half">
         <div class="inner-block-padr">
             <h3 class="bold-small">Employer</h3>
-            <p class="small-btm-margin">@Model.Employer.FullName</p>
+            <p class="sfa-small-bottom-margin">@Model.Employer.FullName</p>
             <h3 class="bold-small">Address</h3>
-            <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
-            <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>
-            <p class="small-btm-margin">@Model.Employer.Address.AddressLine3</p>
-            <p class="small-btm-margin">@Model.Employer.Address.Town</p>
+            <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine1</p>
+            <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine2</p>
+            <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine3</p>
+            <p class="sfa-small-bottom-margin">@Model.Employer.Address.Town</p>
             @if (Model.Employer.Address.County != "Please Select...")
             {
-                <p class="small-btm-margin">@Model.Employer.Address.County</p>
+                <p class="sfa-small-bottom-margin">@Model.Employer.Address.County</p>
             }
-            <p class="small-btm-margin">@Model.Employer.Address.Postcode</p>
+            <p class="sfa-small-bottom-margin">@Model.Employer.Address.Postcode</p>
         </div>
     </div>
     <div class="column-one-half hide-print">

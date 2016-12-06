@@ -28,7 +28,7 @@ $(document).ready(function() {
             $thisParent = $this.closest('.inline-fixed');
 
         setTimeout(function () {    
-            if ($thisParent.find('.error-rmessage').length > 0) {
+            if ($thisParent.find('.error-message').length > 0) {
                 $thisParent.addClass('error');
             } else {
                 $thisParent.removeClass('error');

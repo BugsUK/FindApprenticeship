@@ -91,7 +91,7 @@ WriteLiteral("        ");
 
             
             #line 14 "..\..\Views\Account\Settings.cshtml"
-   Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link small-btm-margin" }));
+   Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link sfa-small-bottom-margin" }));
 
             
             #line default
@@ -114,7 +114,7 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 18 "..\..\Views\Account\Settings.cshtml"
-       Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link small-btm-margin" }));
+       Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link sfa-small-bottom-margin" }));
 
             
             #line default
@@ -493,7 +493,7 @@ WriteLiteral(" class=\"text para-btm-margin\"");
 
 WriteLiteral(">\r\n                    <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n                        Choose to be notified by <i");
 

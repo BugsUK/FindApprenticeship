@@ -1180,7 +1180,7 @@ WriteLiteral(">Show/hide map</span>\r\n                            </div>\r\n");
 
 WriteLiteral("                                    <div");
 
-WriteLiteral(" class=\"column-one-third map-container hide-nojs small-btm-margin toggle-content-" +
+WriteLiteral(" class=\"column-one-third map-container hide-nojs sfa-small-bottom-margin toggle-content-" +
 "-mob\"");
 
 WriteLiteral(">\r\n                                        <a");
