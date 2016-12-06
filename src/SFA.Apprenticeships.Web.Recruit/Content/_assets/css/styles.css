@@ -125,6 +125,49 @@ iframe, object, embed {
   margin-right: 10px;
   margin-top: 10px; }
 
+.search-result .map {
+  width: 100%;
+  height: 200px; }
+
+@media (min-width: 641px) {
+  .search-result .map {
+    height: 125px; } }
+
+.map-container {
+  position: relative; }
+
+.map-container .view-googlemaps {
+  background: rgba(255, 255, 255, 0.8);
+  display: inline-block;
+  padding: 1px 4px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10; }
+
+@media (min-width: 641px) {
+  .hide-tablet {
+    display: none; } }
+
+@media (max-width: 641px) {
+  .toggle-content--mob {
+    display: none; } }
+
+@media (max-width: 640px) {
+  .mob-collpanel-trigger:after {
+    content: " ▼";
+    display: inline-block;
+    font-size: 12px;
+    height: 14px;
+    padding-left: 10px;
+    vertical-align: middle; }
+  .mob-collpanel-trigger.triggered:after {
+    content: " ▲"; } }
+
+@media (max-width: 640px) {
+  .mob-collpanel.panel-open {
+    display: block; } }
+
 .govuk-related-items {
   border-top: 10px solid #005ea5;
   padding-top: 5px; }
@@ -317,6 +360,57 @@ a[rel="external"]:after {
 
 .toggle-content {
   display: none; }
+
+.page-navigation {
+  padding-top: 10px; }
+
+.page-navigation .description {
+  display: block; }
+
+.page-navigation .counter {
+  display: block;
+  font-size: 14px; }
+
+@media (max-width: 640px) {
+  .page-navigation .hide-mob {
+    display: none; } }
+
+.page-navigation__btn {
+  display: inline-block;
+  font-size: 1em;
+  margin-right: -4px;
+  overflow: hidden;
+  padding: 1.2em .6em;
+  text-decoration: none;
+  vertical-align: top;
+  width: 50%; }
+
+.page-navigation__btn .arrow-button {
+  color: #2e358b;
+  float: left;
+  font-size: 3.5em;
+  margin-right: 10px;
+  margin-top: -.2em; }
+
+.page-navigation__btn.previous {
+  text-align: left; }
+
+.page-navigation__btn.next {
+  text-align: right; }
+
+.page-navigation__btn.next .arrow-button {
+  float: right;
+  margin-left: 10px;
+  margin-right: 0; }
+
+.page-navigation__btn:hover {
+  text-decoration: underline; }
+
+.page-navigation__btn:hover .arrow-button {
+  color: #2e8aca; }
+
+.page-navigation__btn:active, .page-navigation__btn:focus {
+  background-color: #f8f8f8; }
 
 .select2-container {
   position: relative !important; }
@@ -804,6 +898,82 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx) {
   .select2-search input {
     background-position: 100% -21px !important; } }
+
+.ui-autocomplete {
+  position: absolute;
+  cursor: default; }
+
+* html .ui-autocomplete {
+  width: 1px; }
+
+.ui-menu {
+  list-style: none;
+  padding: 2px;
+  margin: 0;
+  display: block;
+  float: left; }
+
+.ui-menu .ui-menu {
+  margin-top: -3px; }
+
+.ui-menu .ui-menu-item {
+  margin: 0;
+  padding: 0;
+  zoom: 1;
+  float: left;
+  clear: left;
+  width: 100%; }
+
+.ui-menu .ui-menu-item a {
+  text-decoration: none;
+  display: block;
+  padding: .2em .4em;
+  line-height: 1.5;
+  zoom: 1; }
+
+.ui-menu .ui-menu-item a.ui-state-hover, .ui-menu .ui-menu-item a.ui-state-active {
+  font-weight: normal;
+  margin: -1px; }
+
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+.ui-autocomplete {
+  background: #fff;
+  border: 1px solid #bfc1c3;
+  list-style-type: none;
+  max-height: 370px;
+  max-width: 100%;
+  overflow-y: auto; }
+
+.ui-autocomplete .ui-menu-item {
+  cursor: pointer;
+  font-family: "nta",Arial,sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 300;
+  text-transform: none;
+  padding-top: 8px;
+  padding-bottom: 7px; }
+
+@media (max-width: 640px) {
+  .ui-autocomplete .ui-menu-item {
+    font-size: 14px; } }
+
+@media (min-width: 641px) {
+  .ui-autocomplete .ui-menu-item {
+    padding-top: 5px;
+    padding-bottom: 5px; } }
+
+.ui-autocomplete .ui-menu-item a:hover, .ui-autocomplete .ui-menu-item .ui-state-focus {
+  background: #dee0e2; }
 
 .grid-row:after, #content:after, .notice:after, .panel:after, fieldset:after, .form-section:after, .form-group:after, .form-block:after, .breadcrumbs ol:after {
   content: "";

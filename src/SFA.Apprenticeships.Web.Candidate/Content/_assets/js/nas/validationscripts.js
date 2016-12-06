@@ -11,11 +11,14 @@ $(document).ready(function() {
         settings.errorPlacement = function (error, element) {
             $(element).removeClass('error');
 
-            $(element).parents('.form-group').last().addClass("error");
+            if ($(element).parents('.form-date').length === 0)
+                $(element).parent('.form-group').addClass("error");
+            else
+                $(element).parents().form-group
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
-            $(element).parents('.form-group').last().removeClass("error");
+            $(element).parent('.form-group').removeClass("error");
             oldSuccessFunction(label, element);
 
         };
