@@ -163,7 +163,7 @@ else
 
                                     <a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
                                     <div class="detail-content toggle-content hide-nojs">
-                                        <select class="form-control valid" name="" aria-invalid="false">
+                                        <select class="form-control valid select-mode" name="" aria-invalid="false">
                                             <option value="DRIVING" aria-live="polite">Driving</option>
                                             <option value="TRANSIT" aria-live="polite">Bus/Train</option>
                                             <option value="WALKING" aria-live="polite">Walking</option>
@@ -202,7 +202,7 @@ else
                         
                         @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                         {
-                            <div class="sfa-hide-tablet hide-nojs">
+                            <div class="sfa-hide-tablet hide-nojs column-two-thirds">
                                 <span style="margin-left: 0;" class="summary-style fake-link mob-map-trigger map-closed">Show/hide map</span>
                             </div>
                                     <div class="column-one-third map-container hide-nojs sfa-small-bottom-margin toggle-content--mob">
@@ -237,9 +237,9 @@ else
 
     if (Model.TotalLocalHits > 5 || Model.TotalNationalHits > 5)
     {
-        <div class="form-group">
+        <div class="form-group sfa-medium-top-margin">
             <label for="results-per-page" class="heading-small inline">Display results</label>
-            @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
+            @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page", @class = "form-control form-control-auto" })
             <noscript>
                 <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
             </noscript>

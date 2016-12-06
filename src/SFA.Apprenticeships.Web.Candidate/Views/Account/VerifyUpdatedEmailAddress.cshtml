@@ -23,8 +23,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
-    <input type="password" title="Hidden password field to stop autocomplete" value="" class="alwayshidden" />
-    <input type="password" title="Hidden password field to stop autocomplete" value="" class="alwayshidden" />
+    <input type="password" title="Hidden password field to stop autocomplete" value="" class="sfa-hide" />
+    <input type="password" title="Hidden password field to stop autocomplete" value="" class="sfa-hide" />
 
     @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { spellcheck = "false", autofocus = "autofocus", autocomplete = "off" }, labelText: "Enter code", containerHtmlAttributes: new { @class = "form-group-withlink" })
     

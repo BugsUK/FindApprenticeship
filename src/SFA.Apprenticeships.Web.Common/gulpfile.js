@@ -1,4 +1,4 @@
-/// <binding AfterBuild='default' />
+/// <binding AfterBuild='default' Clean='clean, cleantarget' />
 'use strict';
 
 var gulp = require('gulp');
@@ -12,7 +12,7 @@ var repo_root = __dirname + '/';
 var govuk_frontend_toolkit_root = repo_root + 'node_modules/govuk_frontend_toolkit/stylesheets'; // 1.
 var govuk_elements_sass_root = repo_root + 'node_modules/govuk-elements-sass/public/sass';       // 2.
 
-var buildDir = './build/';
+var buildDir = './build/';  
 
 var outputPaths = [
     repo_root + '../SFA.Apprenticeships.Web.Recruit/Content/_assets/',
@@ -47,10 +47,12 @@ gulp.task('merge-base', ['clean', 'cleantarget'], function () {
             .pipe(gulp.dest(buildDir + 'img')),
         gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/stylesheets/**/*')
             .pipe(gulp.dest(buildDir + 'css')),
+        gulp.src(repo_root + 'Content/img/**/*')
+            .pipe(gulp.dest(buildDir + 'img')),
         gulp.src(repo_root + 'Content/libs/**/*')
             .pipe(gulp.dest(buildDir + 'js')),
-        gulp.src(repo_root + 'Content/libs/**/*')
-            .pipe(gulp.dest(buildDir + 'js')),
+        gulp.src(repo_root + 'Content/libs/vendor/ckeditor/**/*')
+            .pipe(gulp.dest(buildDir + 'js/ckeditor')),
         gulp.src(repo_root + 'node_modules/govuk_template_ejs/assets/javascripts/**/*')
             .pipe(gulp.dest(buildDir + 'js')));
 });
@@ -59,9 +61,9 @@ gulp.task('merge-font-awesome', ['clean', 'cleantarget'],
     function() {
         return merge(
             gulp.src([repo_root + 'node_modules/font-awesome/css/**/*', '!' + repo_root + 'node_modules/font-awesome/css/**/*.min.*'])
-            .pipe(gulp.dest(buildDir + 'css')),
-        gulp.src(repo_root + 'node_modules/font-awesome/fonts/**/*')
-            .pipe(gulp.dest(buildDir + 'fonts')));
+                .pipe(gulp.dest(buildDir + 'css')),
+            gulp.src(repo_root + 'node_modules/font-awesome/fonts/**/*')
+                .pipe(gulp.dest(buildDir + 'fonts')));
 });
 
 gulp.task('cleantarget', function () {
