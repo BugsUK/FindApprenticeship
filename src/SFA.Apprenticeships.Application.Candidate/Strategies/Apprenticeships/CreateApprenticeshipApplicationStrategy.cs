@@ -5,7 +5,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using System;

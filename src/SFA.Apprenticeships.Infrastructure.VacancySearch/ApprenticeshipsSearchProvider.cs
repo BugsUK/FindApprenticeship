@@ -4,7 +4,7 @@
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Elastic.Common.Configuration;
     using Nest;
     using Newtonsoft.Json.Linq;
@@ -226,7 +226,7 @@
                         query = query && queryExcludeVacancyIds;
                     }
 
-                    if (parameters.VacancyLocationType != ApprenticeshipLocationType.Unknown)
+                    if (parameters.VacancyLocationType != VacancyLocationType.Unknown)
                     {
                         var queryVacancyLocation = q.Match(m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
 

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     public enum ApprenticeshipSearchMode
     {

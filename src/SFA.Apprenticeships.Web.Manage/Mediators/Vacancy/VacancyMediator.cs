@@ -314,9 +314,18 @@
             var vacancy = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
             var viewModel = vacancy.VacancyOwnerRelationship;
-            viewModel.IsEmployerLocationMainApprenticeshipLocation =
-                    vacancy.IsEmployerLocationMainApprenticeshipLocation;
-            viewModel.NumberOfPositions = vacancy.NumberOfPositions;
+            viewModel.VacancyLocationType =
+                    vacancy.VacancyLocationType;
+            if (vacancy.VacancyLocationType == VacancyLocationType.Nationwide)
+            {
+                viewModel.NumberOfPositionsNationwide = vacancy.NumberOfPositions;
+                viewModel.NumberOfPositionsNationwideComment = vacancy.NumberOfPositionsComment;
+            }
+            else
+            {
+                viewModel.NumberOfPositions = vacancy.NumberOfPositions;
+                viewModel.NumberOfPositionsComment = vacancy.NumberOfPositionsComment;
+            }
             viewModel.Status = vacancy.Status;
             viewModel.IsAnonymousEmployer = vacancy.VacancyOwnerRelationship.IsAnonymousEmployer;
             if (viewModel.IsAnonymousEmployer != null && viewModel.IsAnonymousEmployer.Value)
@@ -330,6 +339,7 @@
             }
             else
             {
+                viewModel.IsAnonymousEmployer = false;
                 viewModel.EmployerDescriptionComment = vacancy.EmployerDescriptionComment;
                 viewModel.EmployerWebsiteUrlComment = vacancy.EmployerWebsiteUrlComment;
             }
@@ -344,7 +354,7 @@
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)
             {
-                viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
+                viewModel.VacancyLocationType = VacancyLocationType.SpecificLocation;
             }
 
             var validationResult = _vacancyOwnerRelationshipViewModelValidator.Validate(vacancy.VacancyOwnerRelationship);
@@ -462,10 +472,12 @@
             var existingViewModel = existingVacancy.VacancyOwnerRelationship;
             existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             existingViewModel.EmployerDescription = viewModel.EmployerDescription;
-            existingViewModel.IsEmployerLocationMainApprenticeshipLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
+            existingViewModel.VacancyLocationType = viewModel.VacancyLocationType;
+            existingViewModel.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions;
             existingViewModel.VacancyGuid = viewModel.VacancyGuid;
-            existingViewModel.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
+            existingViewModel.NumberOfPositionsComment = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwideComment : viewModel.NumberOfPositionsComment;
             existingViewModel.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             existingViewModel.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
             existingViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
@@ -483,10 +495,12 @@
 
             _providerQaProvider.ConfirmVacancyOwnerRelationship(viewModel);
 
-            existingVacancy.IsEmployerLocationMainApprenticeshipLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            existingVacancy.NumberOfPositions = viewModel.NumberOfPositions;
+            existingVacancy.VacancyLocationType = viewModel.VacancyLocationType;
+            existingVacancy.NumberOfPositions = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions;
             existingVacancy.VacancyGuid = viewModel.VacancyGuid;
-            existingVacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
+            existingVacancy.NumberOfPositionsComment = viewModel.VacancyLocationType == VacancyLocationType.Nationwide ?
+                viewModel.NumberOfPositionsNationwideComment : viewModel.NumberOfPositionsComment;
             existingVacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             existingVacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
             existingVacancy.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
@@ -499,7 +513,8 @@
 
             _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
 
-            if (viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue && viewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+            if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation
+                || viewModel.VacancyLocationType == VacancyLocationType.Nationwide)
             {
                 _vacancyQaProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
             }

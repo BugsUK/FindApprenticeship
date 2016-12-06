@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies.Entities
 {
     using System;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
 
     /// <summary>
     /// Adds update reference required for tidy up process

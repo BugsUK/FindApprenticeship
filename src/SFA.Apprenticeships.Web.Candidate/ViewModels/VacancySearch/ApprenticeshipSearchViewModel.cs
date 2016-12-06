@@ -11,7 +11,7 @@
     using Common.Framework;
     using Constants.ViewModels;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentValidation.Attributes;
     using Validators;
 
@@ -69,7 +69,7 @@
         [Display(Name = ApprenticeshipSearchViewModelMessages.LocationMessages.LabelText, Description = ApprenticeshipSearchViewModelMessages.LocationMessages.HintText)]
         public override string Location { get; set; }
 
-        public ApprenticeshipLocationType LocationType { get; set; }
+        public VacancyLocationType LocationType { get; set; }
 
         public IEnumerable<ApprenticeshipSearchViewModel> LocationSearches { get; set; }
 
@@ -173,8 +173,8 @@
                 : VacancySearchSortType.Relevancy;
 
             searchModel.LocationType = queryStringParams.Get("LocationType") != null
-                ? (ApprenticeshipLocationType)Enum.Parse(typeof(ApprenticeshipLocationType), queryStringParams.Get("LocationType"))
-                : ApprenticeshipLocationType.NonNational;
+                ? (VacancyLocationType)Enum.Parse(typeof(VacancyLocationType), queryStringParams.Get("LocationType"))
+                : VacancyLocationType.NonNational;
 
             searchModel.Latitude = queryStringParams.Get("Latitude").GetValueOrNull<double>();
             searchModel.Longitude = queryStringParams.Get("Longitude").GetValueOrNull<double>();

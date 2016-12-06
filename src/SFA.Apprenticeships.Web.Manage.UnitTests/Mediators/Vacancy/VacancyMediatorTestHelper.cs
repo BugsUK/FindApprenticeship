@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
     using Domain.Entities.Vacancies;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
+    using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 

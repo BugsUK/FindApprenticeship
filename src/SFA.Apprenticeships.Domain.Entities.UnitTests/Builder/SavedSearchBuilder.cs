@@ -2,7 +2,7 @@
 {
     using System;
     using Entities.Candidates;
-    using Entities.Vacancies.Apprenticeships;
+    using Entities.Vacancies;
 
     public class SavedSearchBuilder
     {

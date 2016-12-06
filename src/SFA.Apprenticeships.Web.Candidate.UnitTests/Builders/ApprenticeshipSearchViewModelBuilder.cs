@@ -6,7 +6,7 @@
     using Candidate.ViewModels.Account;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
 
     public class ApprenticeshipSearchViewModelBuilder
     {

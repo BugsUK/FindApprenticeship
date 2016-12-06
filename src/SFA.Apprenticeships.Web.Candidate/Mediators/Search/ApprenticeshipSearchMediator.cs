@@ -18,7 +18,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Domain.Entities.Applications;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Infrastructure.VacancySearch.Configuration;
     using Providers;
@@ -86,7 +85,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             var viewModel = new ApprenticeshipSearchViewModel
             {
                 WithinDistance = 5,
-                LocationType = ApprenticeshipLocationType.NonNational,
+                LocationType = VacancyLocationType.NonNational,
                 Location = SplitSearchLocation(lastSearchedLocation, 0),
                 Latitude = SplitSearchLocation(lastSearchedLocation, 1).GetValueOrNull<double>(),
                 Longitude = SplitSearchLocation(lastSearchedLocation, 2).GetValueOrNull<double>(),
@@ -218,9 +217,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             UserDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
             UserDataProvider.Push(CandidateDataItemNames.ApprenticeshipLevel, model.ApprenticeshipLevel.ToString(CultureInfo.InvariantCulture));
             
-            if (model.SearchAction == SearchAction.Search && model.LocationType != ApprenticeshipLocationType.NonNational)
+            if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.NonNational)
             {
-                model.LocationType = ApprenticeshipLocationType.NonNational;
+                model.LocationType = VacancyLocationType.NonNational;
             }
 
             PopulateSortType(model);
@@ -322,10 +321,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
             if (model.SearchAction == SearchAction.Search && results.TotalLocalHits > 0)
             {
-                results.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
+                results.VacancySearch.LocationType = VacancyLocationType.NonNational;
             }
 
-            var isLocalLocationType = results.VacancySearch.LocationType != ApprenticeshipLocationType.National;
+            var isLocalLocationType = results.VacancySearch.LocationType != VacancyLocationType.National;
 
             results.VacancySearch.SortTypes = GetSortTypes(model.SortType, model.Keywords, isLocalLocationType);
 
@@ -532,13 +531,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
         //TODO: Tell don't ask?
         private static void PopulateSortType(ApprenticeshipSearchViewModel model)
         {
-            if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySearchSortType.Relevancy &&
+            if (model.LocationType == VacancyLocationType.NonNational && model.SortType == VacancySearchSortType.Relevancy &&
                 string.IsNullOrWhiteSpace(model.Keywords))
             {
                 model.SortType = VacancySearchSortType.Distance;
             }
 
-            if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
+            if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
                 model.SortType != VacancySearchSortType.ClosingDate && model.SearchAction != SearchAction.Sort)
             {
                 model.SortType = VacancySearchSortType.ClosingDate;
@@ -555,7 +554,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
                 {
                     model.SortType = VacancySearchSortType.Relevancy;
                 }
-                else if (model.LocationType == ApprenticeshipLocationType.National)
+                else if (model.LocationType == VacancyLocationType.National)
                 {
                     // TODO: DEADCODE: added by vgaltes back in Feb.
                     //if (model.SortType != VacancySearchSortType.RecentlyAdded)

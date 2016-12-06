@@ -132,6 +132,7 @@
     <Folder Include="dba" />
     <Folder Include="dba\Tables" />
     <Folder Include="dba\Stored Procedures" />
+    <Folder Include="RaaApi" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -1287,6 +1288,10 @@
     <Build Include="dba\Stored Procedures\ExecuteMaintenance.sql" />
     <Build Include="dba\Stored Procedures\CommandExecute.sql" />
     <Build Include="dba\Stored Procedures\IndexOptimize.sql" />
+    <Build Include="Schemas\RaaApi.sql" />
+    <Build Include="RaaApi\RaaApi.User.sql" />
+    <Build Include="RaaApi\RaaApi.UserType.sql" />
+    <None Include="Scripts\Data\RaaApi.UserType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

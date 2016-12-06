@@ -4,7 +4,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Vacancy;

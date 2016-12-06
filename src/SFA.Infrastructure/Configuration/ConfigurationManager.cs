@@ -26,9 +26,14 @@
         public string TryGetAppSetting(string key)
         {
             Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
+
+            var setting = System.Web.Configuration.WebConfigurationManager.AppSettings[key];
+            if (!string.IsNullOrEmpty(setting))
+                return setting;
+
             var result = Configuration.AppSettings.Settings[key];
 
-            return result != null ? result.Value : null;
+            return result?.Value;
         }
 
         public string ConfigurationFilePath
@@ -67,11 +72,6 @@
         {
             var setting = GetAppSetting(key);
             return (T) Convert.ChangeType(setting, typeof (T));
-        }
-
-        public ConfigurationSection GetSection(string sectionName)
-        {
-            return Configuration.GetSection(sectionName);
         }
     }
 }

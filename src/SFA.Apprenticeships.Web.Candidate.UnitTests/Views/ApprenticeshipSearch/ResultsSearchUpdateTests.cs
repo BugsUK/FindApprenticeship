@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
     using Candidate.Views.ApprenticeshipSearch;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;

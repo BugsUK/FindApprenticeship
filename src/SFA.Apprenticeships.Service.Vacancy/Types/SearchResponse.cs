@@ -2,7 +2,7 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
 {
     using System.Runtime.Serialization;
     using Application.Interfaces.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Infrastructure.VacancySearch.Configuration;
 
     [DataContract(Namespace = "http://candidates.gov.uk")]
