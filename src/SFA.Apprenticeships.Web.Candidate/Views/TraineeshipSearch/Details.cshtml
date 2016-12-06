@@ -1,4 +1,5 @@
-﻿@model TraineeshipVacancyDetailViewModel
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@model TraineeshipVacancyDetailViewModel
 @{
     ViewBag.Title = Model.Title + " - Find a traineeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -59,14 +60,14 @@
                 @if (!Model.IsEmployerAnonymous)
                 {
                     <h3 class="bold-small">Training provider</h3>
-                            <p>@Model.RecruitmentAgency</p>
+                    <p>@Model.RecruitmentAgency</p>
                 }
                 else
                 {
                     <h3 class="bold-small">Training provider</h3>
                     <p>@Model.ProviderName</p>
                 }
-                
+
 
                 <h3 class="bold-small">Contact</h3>
                 <p>@Model.Contact</p>
@@ -84,50 +85,83 @@
 
                 <h3 class="bold-small">Reference number</h3>
                 <p id="vacancy-reference-id">@Model.VacancyReference</p>
-
-                <h3 class="bold-small">Positions</h3>
-                <p id="number-of-positions">@Model.NumberOfPositions available</p>
+                @if (Model.VacancyLocationType != VacancyLocationType.National)
+                {
+                    <h3 class="bold-small">Positions</h3>
+                    <p id="number-of-positions">@Model.NumberOfPositions available</p>
+                }
 
             </div>
         </section>
-        <section class="section-border grid-row" id="vacancy-info">
+        <section class="section-border grid-wrapper" id="vacancy-info">
             <h2 class="heading-large">Employer</h2>
             <div class="grid-row">
                 <div class="column-one-half">
                     <div class="inner-block-padr">
-                        <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "sfa-no-bottom-margin" : "")">@Model.EmployerName</p>
-                        @if (Model.IsWellFormedEmployerWebsiteUrl)
+                        <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
+                        @if (Model.IsEmployerAnonymous)
                         {
-                            <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
+                            if (Model.VacancyLocationType != VacancyLocationType.National)
+                            {
+                                <div itemscope itemtype="http://schema.org/PostalAddress">
+                                    <h3 class="bold-small">Address</h3>
+                                    <div itemprop="address">
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                                    </div>
+                                </div>
+                            }
                         }
                         else
                         {
-                            <p>@Model.EmployerWebsite</p>
+                            if (Model.IsWellFormedEmployerWebsiteUrl)
+                            {
+                                <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>@Model.EmployerWebsite</p>
+                            }
+                            if (Model.VacancyLocationType != VacancyLocationType.National)
+                            {
+                                <div itemscope itemtype="http://schema.org/PostalAddress">
+                                    <h3 class="bold-small">Address</h3>
+                                    <div itemprop="address">
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
+                                        <p class="" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                                    </div>
+                                </div>
+                            }
                         }
-                        <div itemscope itemtype="http://schema.org/PostalAddress">
-                            <h3 class="bold-small">Address</h3>
-                            <div itemprop="address">
-                                <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
-                                <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
-                                <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
-                                <p class="sfa-small-bottom-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
-                                <p class="sfa-small-bottom-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
-                                <p class="" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
+                @if (Model.VacancyLocationType != VacancyLocationType.National)
+                {
                 <div class="column-one-half hide-print">
                     <div class="ad-details__map">
-                        <div class="map-overlay" onclick="style.pointerEvents = 'none'"></div>
-                        <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                    </div>
-                </div>
+                            <div class="map-overlay" onclick="style.pointerEvents = 'none'"></div>
+                            @if (Model.IsEmployerAnonymous)
+                            {
+                                <div id="anonymous-map">
+                                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/view?center=@Model.VacancyAddress.GeoPoint.Latitude,@Model.VacancyAddress.GeoPoint.Longitude&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                                </div>
+                            }
+                            else
+                            {
+                                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            }
 
+                            <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                        </div>
+                    </div>
+                }
                 @if (!string.IsNullOrWhiteSpace(Model.AdditionalLocationInformation))
                 {
-                    <div class="grid-rowtext">
+                    <div class="grid text">
                         <p></p>
                         <h3 class="bold-small">
                             Additional location information
@@ -145,7 +179,7 @@
                 <p class="@Model.PersonalQualities.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities)</p>
 
                 @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
-        {
+                {
                     <h3 class="heading-small">What this will lead to</h3>
                     <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects)</p>
                 }
