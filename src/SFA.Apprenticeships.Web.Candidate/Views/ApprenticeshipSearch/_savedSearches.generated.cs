@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using System.Web.WebPages;
     
     #line 1 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-    using Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies;
     
     #line default
     #line hidden
@@ -72,16 +72,16 @@ WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" id=\"saved-searches\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 241), Tuple.Create("\"", 288)
-, Tuple.Create(Tuple.Create("", 249), Tuple.Create("tabbed-element", 249), true)
-, Tuple.Create(Tuple.Create(" ", 263), Tuple.Create("savedsearchtab", 264), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 225), Tuple.Create("\"", 272)
+, Tuple.Create(Tuple.Create("", 233), Tuple.Create("tabbed-element", 233), true)
+, Tuple.Create(Tuple.Create(" ", 247), Tuple.Create("savedsearchtab", 248), true)
             
             #line 9 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-, Tuple.Create(Tuple.Create(" ", 278), Tuple.Create<System.Object, System.Int32>(divClass
+, Tuple.Create(Tuple.Create(" ", 262), Tuple.Create<System.Object, System.Int32>(divClass
             
             #line default
             #line hidden
-, 279), false)
+, 263), false)
 );
 
 WriteLiteral(">\r\n");
@@ -129,49 +129,49 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"SavedSearchId\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 602), Tuple.Create("\"", 635)
-, Tuple.Create(Tuple.Create("", 607), Tuple.Create("saved-search-", 607), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 586), Tuple.Create("\"", 619)
+, Tuple.Create(Tuple.Create("", 591), Tuple.Create("saved-search-", 591), true)
             
             #line 17 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-, Tuple.Create(Tuple.Create("", 620), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+, Tuple.Create(Tuple.Create("", 604), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 620), false)
+, 604), false)
 );
 
-WriteAttribute("value", Tuple.Create(" value=\"", 636), Tuple.Create("\"", 659)
+WriteAttribute("value", Tuple.Create(" value=\"", 620), Tuple.Create("\"", 643)
             
             #line 17 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                       , Tuple.Create(Tuple.Create("", 644), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                       , Tuple.Create(Tuple.Create("", 628), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 644), false)
+, 628), false)
 );
 
 WriteLiteral(">\r\n                    <div>\r\n                        <label");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 720), Tuple.Create("\"", 759)
-, Tuple.Create(Tuple.Create("", 725), Tuple.Create("saved-search-label-", 725), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 704), Tuple.Create("\"", 743)
+, Tuple.Create(Tuple.Create("", 709), Tuple.Create("saved-search-label-", 709), true)
             
             #line 19 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-, Tuple.Create(Tuple.Create("", 744), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+, Tuple.Create(Tuple.Create("", 728), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 744), false)
+, 728), false)
 );
 
-WriteAttribute("for", Tuple.Create(" for=\"", 760), Tuple.Create("\"", 794)
-, Tuple.Create(Tuple.Create("", 766), Tuple.Create("saved-search-", 766), true)
+WriteAttribute("for", Tuple.Create(" for=\"", 744), Tuple.Create("\"", 778)
+, Tuple.Create(Tuple.Create("", 750), Tuple.Create("saved-search-", 750), true)
             
             #line 19 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-          , Tuple.Create(Tuple.Create("", 779), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+          , Tuple.Create(Tuple.Create("", 763), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 779), false)
+, 763), false)
 );
 
 WriteLiteral(">");
@@ -243,15 +243,15 @@ WriteLiteral(" class=\"font-xsmall sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <b>Apprenticeship level:</b> <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1356), Tuple.Create("\"", 1410)
-, Tuple.Create(Tuple.Create("", 1361), Tuple.Create("saved-search-apprenticeship-level-", 1361), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 1340), Tuple.Create("\"", 1394)
+, Tuple.Create(Tuple.Create("", 1345), Tuple.Create("saved-search-apprenticeship-level-", 1345), true)
             
             #line 29 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                     , Tuple.Create(Tuple.Create("", 1395), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                     , Tuple.Create(Tuple.Create("", 1379), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 1395), false)
+, 1379), false)
 );
 
 WriteLiteral(">");
@@ -294,15 +294,15 @@ WriteLiteral(" class=\"font-xsmall sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <b>Sub-categories:</b> <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1767), Tuple.Create("\"", 1814)
-, Tuple.Create(Tuple.Create("", 1772), Tuple.Create("saved-search-subcategories-", 1772), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 1751), Tuple.Create("\"", 1798)
+, Tuple.Create(Tuple.Create("", 1756), Tuple.Create("saved-search-subcategories-", 1756), true)
             
             #line 36 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-        , Tuple.Create(Tuple.Create("", 1799), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+        , Tuple.Create(Tuple.Create("", 1783), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 1799), false)
+, 1783), false)
 );
 
 WriteLiteral(">");

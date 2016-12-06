@@ -144,8 +144,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div id="content" role="main" tabindex="-1">
         <main id="main">
-            <div class="phase-banner sfa-navigation">
-                @Html.Partial("_LoginPartial")
+            <div class="sfa-navigation-wrapper">
+                <div class="grid-row">
+                    <div class="column-one-half sfa-navigation">
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
             </div>
             @{
                 var controller = ViewContext.Controller as CandidateControllerBase;
