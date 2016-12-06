@@ -2,8 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Web.Http;
+    using Constants;
     using Swashbuckle.Swagger.Annotations;
 
+    [Authorize(Roles = Roles.Provider)]
     public class VacancySummaryController : ApiController
     {
         [SwaggerOperation("GetAll")]

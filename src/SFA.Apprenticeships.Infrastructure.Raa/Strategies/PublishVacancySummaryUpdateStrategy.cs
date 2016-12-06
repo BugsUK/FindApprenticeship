@@ -11,11 +11,12 @@
     using Application.Vacancy;
     using Application.VacancyPosting.Strategies;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class PublishVacancySummaryUpdateStrategy : IPublishVacancySummaryUpdateStrategy
     {

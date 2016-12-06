@@ -6,7 +6,6 @@
     using Apprenticeships.Application.Application.Strategies.Apprenticeships;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;

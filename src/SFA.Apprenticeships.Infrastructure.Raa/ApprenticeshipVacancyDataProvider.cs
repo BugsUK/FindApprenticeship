@@ -6,7 +6,7 @@
     using Application.ReferenceData;
     using Application.Vacancy;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
     using Application.Interfaces;

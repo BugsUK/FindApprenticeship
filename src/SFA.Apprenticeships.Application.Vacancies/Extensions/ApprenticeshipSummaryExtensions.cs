@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
 
     public static class ApprenticeshipSummaryExtensions
     {

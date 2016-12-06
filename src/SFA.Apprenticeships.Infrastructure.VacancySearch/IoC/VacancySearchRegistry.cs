@@ -4,7 +4,7 @@
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Mappers;
 
     using SFA.Apprenticeships.Application.Interfaces;

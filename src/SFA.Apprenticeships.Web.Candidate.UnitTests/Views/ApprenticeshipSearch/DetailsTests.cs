@@ -3,7 +3,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
     using Common.ViewModels.Locations;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using Moq;
@@ -77,7 +77,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                VacancyLocationType = VacancyLocationType.NonNational,
                 Distance = SomeString
             };
 
@@ -94,7 +94,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.NonNational
+                VacancyLocationType = VacancyLocationType.NonNational
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
@@ -110,7 +110,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.National
+                VacancyLocationType = VacancyLocationType.National
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
@@ -265,7 +265,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.NonNational
+                VacancyLocationType = VacancyLocationType.NonNational
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
@@ -283,7 +283,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.National
+                VacancyLocationType = VacancyLocationType.National
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
@@ -301,7 +301,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.NonNational
+                VacancyLocationType = VacancyLocationType.NonNational
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
@@ -319,7 +319,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.National
+                VacancyLocationType = VacancyLocationType.National
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);

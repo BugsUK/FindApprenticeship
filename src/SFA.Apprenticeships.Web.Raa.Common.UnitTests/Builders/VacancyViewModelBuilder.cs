@@ -6,6 +6,7 @@
     using System;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
+    using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 

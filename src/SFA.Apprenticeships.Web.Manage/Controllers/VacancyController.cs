@@ -9,7 +9,6 @@
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
-    using Infrastructure.Presentation;
     using Mediators.Vacancy;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Provider;
@@ -42,7 +41,7 @@
 
             if (response.ViewModel != null)
             {
-                SetLinks(vacancyViewModel);                
+                SetLinks(vacancyViewModel);
             }
 
             ModelState.Clear();
@@ -505,8 +504,8 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyMediatorCodes.UpdateEmployerInformation.Ok:
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation
+                        || response.ViewModel.VacancyLocationType == VacancyLocationType.Nationwide)
                     {
                         return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });

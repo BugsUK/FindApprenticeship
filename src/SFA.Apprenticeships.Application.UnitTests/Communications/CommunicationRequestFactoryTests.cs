@@ -6,7 +6,7 @@
     using Apprenticeships.Application.Communications;
     using Domain.Entities.Communication;
     using Domain.Entities.UnitTests.Builder;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Interfaces.Communications;
     using Newtonsoft.Json;

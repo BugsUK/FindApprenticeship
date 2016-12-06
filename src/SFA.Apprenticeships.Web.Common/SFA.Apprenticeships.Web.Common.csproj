@@ -280,7 +280,6 @@
     <Compile Include="IoC\WebCommonRegistry.cs" />
     <Compile Include="Models\Application\ApplicationViewModelStatus.cs" />
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
-    <Compile Include="Models\Common\VacancyLocationType.cs" />
     <Compile Include="SiteMap\ISiteMapItem.cs" />
     <Compile Include="Modules\RemoveETagModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -377,8 +376,8 @@
     <None Include="Content\libs\vendor\nanospell\server\license\key.lic" />
     <None Include="Content\libs\vendor\nanospell\server\license\web.config" />
     <None Include="Content\scss\styles.scss" />
+    <None Include="Content\scss\_address-service-styles.scss" />
     <None Include="Content\scss\_forms.scss" />
-    <None Include="Content\scss\_govuk-custom.scss" />
     <None Include="Content\scss\_link-styles.scss" />
     <None Include="Content\scss\_page-nav.scss" />
     <None Include="Content\scss\_select2-styles.scss" />

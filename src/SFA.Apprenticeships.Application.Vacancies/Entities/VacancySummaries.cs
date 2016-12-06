@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies.Entities
 {
     using System.Collections.Generic;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
 
     public class VacancySummaries

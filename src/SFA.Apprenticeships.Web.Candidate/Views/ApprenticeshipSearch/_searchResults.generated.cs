@@ -35,9 +35,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     #line hidden
     
     #line 2 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-    
-    #line default
+#line default
     #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Candidate;
@@ -385,7 +383,7 @@ WriteLiteral(">Description</label>\r\n                                </li>\r\n"
             #line hidden
             
             #line 70 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                 if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
+                                 if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
                                 {
 
             
@@ -627,7 +625,7 @@ WriteLiteral("                                ");
 
             
             #line 120 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                            Write(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ?
+                            Write(vacancy.VacancyLocationType == VacancyLocationType.NonNational ?
                                   Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude, data_is_employer_anonymous = vacancy.IsEmployerAnonymous }) :
                                       Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker }));
 
@@ -699,7 +697,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 132 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                 if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                                 if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                                 {
 
             
@@ -883,7 +881,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 159 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                             if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                             if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                             {
 
             
@@ -1131,7 +1129,7 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 197 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                             if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
+                             if (vacancy.VacancyLocationType == VacancyLocationType.National)
                             {
 
             
@@ -1160,7 +1158,7 @@ WriteLiteral("                        </div>\r\n                        \r\n");
             #line hidden
             
             #line 203 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                         if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
+                         if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                         {
 
             

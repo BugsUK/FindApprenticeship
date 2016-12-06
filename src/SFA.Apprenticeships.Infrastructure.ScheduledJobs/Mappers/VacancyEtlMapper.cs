@@ -4,7 +4,7 @@
     using Common.Mappers;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
 
     public class VacancyEtlMapper : MapperEngine

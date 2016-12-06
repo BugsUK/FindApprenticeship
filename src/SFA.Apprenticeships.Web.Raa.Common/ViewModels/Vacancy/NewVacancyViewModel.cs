@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public VacancyStatus Status { get; set; }
 
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
 
         public int? NumberOfPositions { get; set; }
 

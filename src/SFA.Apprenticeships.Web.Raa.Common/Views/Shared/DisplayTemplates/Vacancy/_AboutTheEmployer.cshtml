@@ -125,6 +125,8 @@
                         }
                         else
                         {
+                            if (!Model.IsNationwideLocation)
+                            {
                             if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
                             {
                                 <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
@@ -191,8 +193,8 @@
                                                             <span class="heading-span">Number of positions</span>
                                                         </th>
                                                     </tr>
-                                                </thead>
-                                                <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                                                    </thead>
+                                                    <tbody id="location-addresses" data-bind="foreach: locationAddresses">
                                                     @for (var i = 0; i < midIndex; i++)
                                                     {
                                                         var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
@@ -223,76 +225,76 @@
                                                             @Html.DisplayFor(m => locationAddress)
                                                         }
                                                     }
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
                                     <div class="column-one-half">
-                                        <table class="locations-table" id="rightLocationAddressesTable">
-                                            <colgroup>
-                                                <col class="t50">
-                                                <col class="t35">
-                                            </colgroup>
+                                            <table class="locations-table" id="rightLocationAddressesTable">
+                                                <colgroup>
+                                                    <col class="t50">
+                                                    <col class="t35">
+                                                </colgroup>
 
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        <span class="heading-span">Location</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="heading-span ">Number of positions</span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="location-addresses" data-bind="foreach: locationAddresses">
-                                                @for (var i = midIndex; i < Model.NewVacancyViewModel.LocationAddresses.Count; i++)
-                                                {
-                                                    var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
-
-                                                    if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <span class="heading-span">Location</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="heading-span ">Number of positions</span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                                                    @for (var i = midIndex; i < Model.NewVacancyViewModel.LocationAddresses.Count; i++)
                                                     {
-                                                        <tr class="no-btm-border">
-                                                            <td>@locationAddress.Address.Town</td>
-                                                            <td style="text-align:right;">@locationAddress.NumberOfPositions</td>
-                                                        </tr>
-                                                        if (Model.IsManageReviewerView)
+                                                        var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
+
+                                                        if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
                                                         {
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="left-grey-border">
-                                                                        <h3 class="bold-xsmall">Hidden full address</h3>                                                                        
+                                                            <tr class="no-btm-border">
+                                                                <td>@locationAddress.Address.Town</td>
+                                                                <td style="text-align: right;">@locationAddress.NumberOfPositions</td>
+                                                            </tr>
+                                                            if (Model.IsManageReviewerView)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="left-grey-border">
+                                                                            <h3 class="bold-xsmall">Hidden full address</h3>
                                                                         <p class="sfa-small-bottom-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
                                                                         <p class="sfa-small-bottom-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
                                                                         <p class="sfa-small-bottom-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>                                                                                                                                                
-                                                                    </div>
-                                                                </td>
-                                                                <td></td>
-                                                            </tr>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DisplayFor(m => locationAddress)
                                                         }
                                                     }
-                                                    else
-                                                    {
-                                                        @Html.DisplayFor(m => locationAddress)
-                                                    }
-                                                }
+                                                </tbody>
+                                            </table>
+                                        </div>
 
-                                            </tbody>
-                                        </table>
+                                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                                     </div>
-
-                                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
-                                </div>
-                            }
-                            if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
-                            {
-                                <div class="editable-item">
-                                    <h3 class="bold-small">
-                                        Additional location information
-                                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.NewVacancyViewModel.AdditionalLocationInformationComment, Model.LocationsLink))
-                                    </h3>
-                                    <p class="@Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.AdditionalLocationInformation))</p>
-                                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
-                                </div>
+                                }
+                                if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
+                                {
+                                    <div class="editable-item">
+                                        <h3 class="bold-small">
+                                            Additional location information
+                                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.NewVacancyViewModel.AdditionalLocationInformationComment, Model.LocationsLink))
+                                        </h3>
+                                        <p class="@Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.NewVacancyViewModel.AdditionalLocationInformation))</p>
+                                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                                    </div>
+                                }
                             }
                         }
                     </div>

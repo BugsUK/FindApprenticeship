@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Interfaces.Search;
     using Interfaces.Vacancies;
     using Ploeh.AutoFixture;

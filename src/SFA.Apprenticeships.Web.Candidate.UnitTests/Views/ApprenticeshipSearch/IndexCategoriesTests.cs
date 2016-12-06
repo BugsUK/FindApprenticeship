@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using Candidate.Views.ApprenticeshipSearch;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;

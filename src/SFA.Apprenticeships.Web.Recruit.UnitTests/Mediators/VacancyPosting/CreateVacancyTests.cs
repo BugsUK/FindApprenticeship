@@ -160,7 +160,7 @@
             var numberOfPositions = 5;
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -181,9 +181,43 @@
             var mediator = GetMediator();
 
             var result = mediator.ConfirmEmployer(viewModel, Ukprn);
-            result.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Should()
-                .Be(true);
+            result.ViewModel.VacancyLocationType.Should()
+                .Be(VacancyLocationType.SpecificLocation);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
+        }
+
+        [Test]
+        public void ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError_NationwideVacancy()
+        {
+            var numberOfPositions = 5;
+            var numberOfPositionsNw = 1;
+            var viewModel = new VacancyOwnerRelationshipViewModel
+            {
+                VacancyLocationType = VacancyLocationType.Nationwide,
+                NumberOfPositions = numberOfPositions,
+                NumberOfPositionsNationwide = numberOfPositionsNw,
+                ProviderSiteId = 42,
+                Employer = new EmployerViewModel
+                {
+                    EmployerId = 7,
+                }
+            };
+
+            ProviderProvider.Setup(p => p.GetVacancyOwnerRelationshipViewModel(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(new VacancyOwnerRelationshipViewModel
+                {
+                    Employer = new EmployerViewModel
+                    {
+                        Address = new AddressViewModel()
+                    }
+                });
+
+            var mediator = GetMediator();
+
+            var result = mediator.ConfirmEmployer(viewModel, Ukprn);
+            result.ViewModel.VacancyLocationType.Should()
+                .Be(VacancyLocationType.Nationwide);
+            result.ViewModel.NumberOfPositions.Should().Be(numberOfPositionsNw);
         }
 
         [Test]
@@ -193,7 +227,7 @@
             const string initialVacancyTitle = "title";
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = false,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -225,14 +259,14 @@
             const string ukprn = "1234";
             var vacancyGuid = Guid.NewGuid();
             const int vacanyPartyId = 1;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             const string employerWebsiteUrl = "www.google.com";
             const string employerDescription = "description";
 
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -258,7 +292,7 @@
                 Ukprn = ukprn,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacanyPartyId,
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 EmployerWebsiteUrl = employerWebsiteUrl,
                 EmployerDescription = employerDescription
@@ -272,14 +306,14 @@
             const string ukprn = "1234";
             var vacancyGuid = Guid.NewGuid();
             const int vacanyPartyId = 1;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             const string employerWebsiteUrl = "www.google.com";
             const string employerDescription = "description";
 
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -316,7 +350,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             var address = new Fixture().Build<PostalAddress>().With(a => a.Postcode, employersPostcode).Create();
             const int providerId = 4;
@@ -347,7 +381,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,
@@ -372,7 +406,7 @@
                 && v.OfflineVacancy.HasValue == false
                 && v.OfflineApplicationUrl == null
                 && v.OfflineApplicationInstructions == null
-                && v.IsEmployerLocationMainApprenticeshipLocation == isEmployerLocationMainApprenticeshipLocation
+                && v.VacancyLocationType == employerApprenticeshipLocation
                 && v.NumberOfPositions == numberOfPositions
                 && v.VacancyType == VacancyType.Unknown
                 && v.Address == address
@@ -392,7 +426,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const bool isEmployerLocationMainApprenticeshipLocation = false;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.MultipleLocations;
             int? numberOfPositions = null;
             var address = new Fixture().Build<PostalAddress>().With(a => a.Postcode, employersPostcode).Create();
             const int providerId = 4;
@@ -421,7 +455,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,
@@ -443,7 +477,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             var address =
                 new Fixture().Build<PostalAddress>()
@@ -476,7 +510,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,

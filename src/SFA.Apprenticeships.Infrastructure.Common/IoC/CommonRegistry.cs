@@ -1,11 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
     using SFA.Infrastructure.Interfaces;
-    using Caching.Memory.IoC;
     using Configuration;
     using CurrentUser;
     using DateTime;
-
     using Application.Interfaces;
     using Application.Interfaces.Caching;
     using SFA.Infrastructure.Azure.Configuration;
