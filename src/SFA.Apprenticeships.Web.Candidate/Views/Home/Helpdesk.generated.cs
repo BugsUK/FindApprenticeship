@@ -257,7 +257,7 @@ WriteLiteral("\r\n    </div>\r\n");
             
             #line 53 "..\..\Views\Home\Helpdesk.cshtml"
 Write(Html.FormTextAreaFor(m => m.Details,
-                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", @class = "sfa-small-bottom-margin" },
                 hintHtmlAttributes: new { @class = "text" }));
 
             

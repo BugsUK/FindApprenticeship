@@ -51,7 +51,7 @@
           controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty)
     </div>
     @Html.FormTextAreaFor(m => m.Details,
-                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", @class = "sfa-small-bottom-margin" },
                 hintHtmlAttributes: new { @class = "text" })
     <div class="form-group">
         <button id="send-contact-form-button" class="button">Send</button>
