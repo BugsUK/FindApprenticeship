@@ -143,6 +143,26 @@ i.fa {
 }
 
 /* -------------------------------------------------------------------
+Custom form elements
+------------------------------------------------------------------- */
+
+.sfa-input-auto-width {
+    margin-bottom:5px;
+    @include media(tablet){
+        margin-bottom:0px;
+        width:auto !important;
+    }
+}
+
+
+.browsetab, .searchtab {
+    display: none !important;
+    &.active {
+        display:inline-block !important;
+    }
+}
+
+/* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
 

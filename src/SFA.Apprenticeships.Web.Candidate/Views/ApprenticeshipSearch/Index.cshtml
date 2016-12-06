@@ -61,25 +61,24 @@
 
                 @Html.Partial("_savedSearches", Model)
 
-                @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "form-control refineSearchOption hidden input-withlink__select all-select" })
+                @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "form-control sfa-input-auto-width refineSearchOption" })
                 @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element searchtab" + keywordTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
 
                 <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
 
                 @Html.FormTextFor(m => m.Location, containerHtmlAttributes: new { @class = "tabbed-element searchtab " + keywordTabControlClass + categoriesTabClass + elementControlClass }, hintHtmlAttributes: new { id = "geoLocateContainer" })
-
-                <div class="inline tabbed-element searchtab @keywordTabControlClass @categoriesTabClass @elementControlClass">
-                    <div class="form-group">
-                        <label for="loc-within" class="form-label-bold">Within</label>
-                        @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label for="apprenticeship-level" class="form-label-bold">Apprenticeship level</label>
-                        @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control" })
-                    </div>
+               
+                <div class="form-group tabbed-element searchtab @keywordTabControlClass @categoriesTabClass @elementControlClass">
+                    <label for="loc-within" class="form-label-bold">Within</label>
+                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control" })
                 </div>
 
-                <div class="form-group form-group-compound">
+                <div class="form-group tabbed-element searchtab @keywordTabControlClass @categoriesTabClass @elementControlClass">
+                    <label for="apprenticeship-level" class="form-label-bold">Apprenticeship level</label>
+                    @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control" })
+                </div>
+
+                <div class="form-group">
                     <button class="button tabbed-element searchtab @keywordTabControlClass" id="search-button">Search</button>
                     <button class="button tabbed-element @categoriesTabClass @categoriesElementControlClass" id="browse-button">Browse</button>
 
@@ -115,15 +114,15 @@
     <aside class="column-one-third">
         <div class="govuk-related-items">
             <h2 class="heading-medium">Help</h2>
-            <ul class="list-text">
+            <ul class="list">
                 <li class="hide-nojs"><a href="#" id="runSearchHelp"><i class="fa fa-question-circle"></i>How to search for an apprenticeship</a> <span class="inl-block">(interactive walkthrough)</span></li>
 
             </ul>
-            <ul class="list-text">
+            <ul class="list">
                 <li>0800 015 0400</li>
                 <li><a href='@Url.RouteUrl(CandidateRouteNames.Helpdesk)'>Contact us</a></li>
             </ul>
-            <ul class="list-text">
+            <ul class="list">
                 <li>
                     <a href="https://www.gov.uk/apprenticeships-guide" target="_blank">About apprenticeships</a>
                 </li>
