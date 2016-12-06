@@ -24,7 +24,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "RA-551.feature"
+#line 1 "RA551.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
@@ -66,17 +66,34 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("View swagger homepage")]
-        [NUnit.Framework.CategoryAttribute("RA-551")]
+        [NUnit.Framework.CategoryAttribute("RA551")]
         public virtual void ViewSwaggerHomepage()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("View swagger homepage", new string[] {
-                        "RA-551"});
+                        "RA551"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
  testRunner.When("I request the swagger homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
  testRunner.Then("I should see the swagger homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("View swagger docs")]
+        [NUnit.Framework.CategoryAttribute("RA551")]
+        public virtual void ViewSwaggerDocs()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("View swagger docs", new string[] {
+                        "RA551"});
+#line 12
+this.ScenarioSetup(scenarioInfo);
+#line 13
+ testRunner.When("I request the swagger docs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
+ testRunner.Then("I should see the swagger docs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
