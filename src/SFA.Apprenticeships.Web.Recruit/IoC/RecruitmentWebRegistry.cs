@@ -97,6 +97,7 @@
             For<IVacancyStatusChangeProvider>().Use<VacancyStatusChangeProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
             For<IApiUserProvider>().Use<ApiUserProvider>();
+            For<IVacancyQAProvider>().Use<VacancyProvider>();
         }
 
         private void RegisterServices()
