@@ -74,7 +74,8 @@
 	[EditedInRaa]					   BIT				NOT NULL DEFAULT ((0)),
 	[VacancySourceId]			       INT				NOT NULL DEFAULT ((1)),
 	[OfflineVacancyTypeId]		       INT				NULL,
-	[EmployerAnonymousReason]          NVARCHAR (240)   NULL
+	[EmployerAnonymousReason]          NVARCHAR (240)   NULL,
+	[AnonymousAboutTheEmployer]        NVARCHAR (MAX)   NULL
 	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
