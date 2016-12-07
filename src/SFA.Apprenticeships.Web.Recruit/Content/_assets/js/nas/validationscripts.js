@@ -15,6 +15,7 @@ $(document).ready(function() {
                 $(element).parent('.form-group').addClass("error");
             else
                 $(element).parents('form-group').last().addClass('error');
+
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
