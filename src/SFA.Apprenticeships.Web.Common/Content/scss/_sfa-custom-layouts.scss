@@ -2,25 +2,52 @@
 @import "_conditionals";
 
 
-.sfa-navigation {
+/* -------------------------------------------------------------------
+SFA navigation
+------------------------------------------------------------------- */
+
+.sfa-navigation-wrapper {
     overflow:hidden;
-    p {
-        display:inline !important;
-    }
-    .sfa-navigation-items {
+    padding: 10px 0 8px;
+    border-bottom: 1px solid #bfc1c3;
+    .sfa-navigation {
         font-size:14px;
         @include media(tablet){
-            font-size:16px;
-        }
-        @include media(desktop){
             text-align:right;
             float:right !important;
+            font-size:16px;
         }
-        span {
-            display:inline;
+        .sfa-navigation-items {
+            a{
+                padding:0 5px 0 0;
+                @include media(desktop){
+                    padding:0 0 0 5px;
+                }
+            }
+        }
+        .sfa-user-navigation {
+            margin-bottom:5px;
+            span {
+                padding-right:5px;
+            }
+        }
+    }
+    &.phase-banner {
+        .sfa-navigation {
+            margin-top:10px;
+            @include media(tablet){
+                margin-top:0px;
+            }
+            span {
+                display:inline;
+            }
         }
     }
 }
+
+/* -------------------------------------------------------------------
+Hide element (window size)
+------------------------------------------------------------------- */
 
 .sfa-hide {
     display: none;
@@ -41,21 +68,9 @@
     }
 }
 
-.force-full-width {
-    width: 100% !important;
-}
-
-.no-margins {
-    margin: 0 !important;
-}
-
-.sfa-no-bottom-margin {
-    margin-bottom: 0 !important;
-}
-
-.sfa-pull-right {
-    float: right;
-}
+/* -------------------------------------------------------------------
+Custom margins
+------------------------------------------------------------------- */
 
 .sfa-small-top-margin {
     margin-top: 5px !important;
@@ -95,6 +110,10 @@
     }
 }
 
+/* -------------------------------------------------------------------
+Custom padding
+------------------------------------------------------------------- */
+
 .sfa-small-top-padding {
     padding-top: 5px !important;
 }
@@ -115,6 +134,53 @@
     padding-top: 30px !important;
 }
 
+/* -------------------------------------------------------------------
+Custom Font Awesome
+------------------------------------------------------------------- */
+
+i.fa {
+    margin-right:.3em;
+}
+
+/* -------------------------------------------------------------------
+Custom form elements
+------------------------------------------------------------------- */
+
+.sfa-input-auto-width {
+    margin-bottom:5px;
+    @include media(tablet){
+        margin-bottom:0px;
+        width:auto !important;
+    }
+}
+
+
+.browsetab, .searchtab {
+    display: none !important;
+    &.active {
+        display:inline-block !important;
+    }
+}
+
+/* -------------------------------------------------------------------
+Misc - TO BE ORGANISED
+------------------------------------------------------------------- */
+
+.force-full-width {
+    width: 100% !important;
+}
+
+.no-margins {
+    margin: 0 !important;
+}
+
+.sfa-no-bottom-margin {
+    margin-bottom: 0 !important;
+}
+
+.sfa-pull-right {
+    float: right;
+}
 .js-enabled .nojs-notice {
     display: none !important;
 }
@@ -195,12 +261,6 @@ iframe, object, embed {
     top: 0;
     right: 0;
     z-index: 10
-}
-
-.hide-tablet{
-    @include media (tablet){
-        display: none;
-    }
 }
 
 .toggle-content--mob
