@@ -189,7 +189,7 @@ WriteLiteral("                ");
 
             
             #line 33 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-           Write(Html.TextBoxFor(m => m.Day, new { name = Html.NameFor(m => m).ToString().Replace(".", "_").ToLower(), type = "number", pattern = "[0-9]*", min = "0", max = "31", @class = "form-control" }));
+           Write(Html.TextBoxFor(m => m.Day, new { name = Html.NameFor(m => m).ToString().Replace(".", "_").ToLower(), type = "number", @class = "form-control" }));
 
             
             #line default
@@ -212,7 +212,7 @@ WriteLiteral("                ");
 
             
             #line 38 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-           Write(Html.TextBoxFor(m => m.Month, new { pattern = "[0-9]*", min = "0", max = "12", @class = "form-control" }));
+           Write(Html.TextBoxFor(m => m.Month, new { @class = "form-control" }));
 
             
             #line default
@@ -235,7 +235,7 @@ WriteLiteral("                ");
 
             
             #line 43 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-           Write(Html.TextBoxFor(m => m.Year, new { pattern = "[0-9]*", min = "0", @class = "form-control" }));
+           Write(Html.TextBoxFor(m => m.Year, new { @class = "form-control" }));
 
             
             #line default

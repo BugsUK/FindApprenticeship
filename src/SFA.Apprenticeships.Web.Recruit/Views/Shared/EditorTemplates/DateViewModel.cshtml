@@ -30,17 +30,17 @@
         <div class="form-date">
             <div class="form-group form-group-day">
                 <label class="form-label-bold" for="example-dob-day">Day</label>
-                @Html.TextBoxFor(m => m.Day, new { name = Html.NameFor(m => m).ToString().Replace(".", "_").ToLower(), type = "number", pattern = "[0-9]*", min = "0", max = "31", @class = "form-control" })
+                @Html.TextBoxFor(m => m.Day, new { name = Html.NameFor(m => m).ToString().Replace(".", "_").ToLower(), type = "number", @class = "form-control" })
                 @*<input class="form-control" id="example-dob-day" name="dob-day" type="number" pattern="[0-9]*" min="0" max="31" aria-describedby="example-dob-hint">*@
             </div>
             <div class="form-group form-group-month">
                 <label class="form-label-bold" for="example-dob-month">Month</label>
-                @Html.TextBoxFor(m => m.Month, new { pattern = "[0-9]*", min = "0", max = "12", @class = "form-control" })
+                @Html.TextBoxFor(m => m.Month, new { @class = "form-control" })
                 @*<input class="form-control" id="example-dob-month" name="dob-month" type="number" >*@
             </div>
             <div class="form-group form-group-year">
                 <label class="form-label-bold" for="example-dob-year">Year</label>
-                @Html.TextBoxFor(m => m.Year, new { pattern = "[0-9]*", min = "0", @class = "form-control" })
+                @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
                 @*<input class="form-control" id="example-dob-year" name="dob-year" type="number" >*@
             </div>
         </div>
