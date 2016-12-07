@@ -36,7 +36,6 @@
     [WorkingWeek]                      NVARCHAR (MAX)    NULL,
     [NumberOfViews]                    INT              NULL,
     [EmployerAnonymousName]            NVARCHAR (MAX)   NULL,
-	[EmployerAnonymousReason]          NVARCHAR (240)   NULL,
     [EmployerDescription]              NVARCHAR (MAX)   NULL,
     [EmployersWebsite]                 NVARCHAR (MAX)   NULL,
     [MaxNumberofApplications]          INT              NULL,
@@ -74,7 +73,8 @@
 	[UpdatedDateTime]				   DATETIME			NULL,
 	[EditedInRaa]					   BIT				NOT NULL DEFAULT ((0)),
 	[VacancySourceId]			       INT				NOT NULL DEFAULT ((1)),
-	[OfflineVacancyTypeId]		       INT				NULL
+	[OfflineVacancyTypeId]		       INT				NULL,
+	[EmployerAnonymousReason]          NVARCHAR (240)   NULL
 	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
