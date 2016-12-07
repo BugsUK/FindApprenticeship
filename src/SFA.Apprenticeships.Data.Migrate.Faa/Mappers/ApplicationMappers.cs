@@ -167,6 +167,10 @@
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             var allocatedTo = GetAllocatedTo(unsuccessfulReasonId, apprenticeshipApplication.Notes, sourceApplicationSummary);
             var updateNotes = !string.IsNullOrEmpty(allocatedTo) && apprenticeshipApplication.Notes != allocatedTo;
+            if (!string.IsNullOrEmpty(allocatedTo) && allocatedTo.Length >= 4000)
+            {
+                allocatedTo = allocatedTo.Substring(0, 4000);
+            }
             return new ApplicationWithSubVacancy
             {
                 Application = new Application

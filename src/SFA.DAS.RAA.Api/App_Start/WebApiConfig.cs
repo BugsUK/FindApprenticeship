@@ -2,6 +2,8 @@
 {
     using System.Web.Http;
     using System.Web.Http.ExceptionHandling;
+    using Attributes;
+    using FluentValidation.WebApi;
     using Handlers;
 
     public static class WebApiConfig
@@ -11,6 +13,10 @@
             // Web API configuration and services
             config.EnableSystemDiagnosticsTracing();
             config.Services.Add(typeof(IExceptionLogger), new AiExceptionLogger());
+            config.Filters.Add(new ValidateModelStateFilter());
+
+            // configure FluentValidation model validator provider
+            FluentValidationModelValidatorProvider.Configure(config);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
