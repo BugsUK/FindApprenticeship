@@ -1067,10 +1067,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_ErrorLayout.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\_Layout.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_Layout.generated.cs</LastGenOutput>
-    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ReferenceDataViewModel.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ReferenceDataViewModel.generated.cs</LastGenOutput>
@@ -2073,11 +2070,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_ErrorLayout.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Shared\_Layout.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>_Layout.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_LoginPartial.generated.cs">
       <AutoGen>True</AutoGen>
