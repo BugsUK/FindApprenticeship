@@ -13,11 +13,11 @@
 
                 @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
                 {
-                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-auto sfa-medium-bottom-margin" })
+                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-auto sfa-small-bottom-margin" })
                     @Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" }, controlHtmlAttributes: new { @class = "form-control form-control-4-4" })
                 }
 
-                <div class="para-btm-margin">
+                <div class="form-group">
                     @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "sfa-small-bottom-margin" }, controlHtmlAttributes : new { @class = "form-control form-control-4-4" })
                     <a href="#" class="geolocater inl-block hide-nojs " id="getLocation">Use current location</a>
                 </div>

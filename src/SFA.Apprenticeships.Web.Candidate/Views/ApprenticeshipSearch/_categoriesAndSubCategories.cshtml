@@ -10,7 +10,7 @@
     @{
         if (Model.Categories != null && Model.Categories.Any())
         {
-            <ul id="category-list" class="copy-16 list-text list-checkradio">
+            <ul id="category-list" class="copy-16 list-checkradio">
                 @foreach (var category in Model.Categories)
                 {
                     var inputId = string.Format("category-{0}", category.CodeName.ToLower());
@@ -24,10 +24,13 @@
                     categoryLabelText = string.Format("{0} ({1})", categoryLabelText, category.Count);
 
                     <li>
-                        <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@categoryLabelText</label>
+                        <label for="@inputId">
+                            <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName">
+                            @categoryLabelText
+                        </label>
                         <details @openAttr class="@openAttr">
                             <summary class="copy-16">@subCategories.Count sub-categories</summary>
-                            <ul id="@subCategoryListId" class="detail-content copy-16 list-text list-checkradio scrolling-panel max-height-6ish" style="position: relative;">
+                            <ul id="@subCategoryListId" class="detail-content copy-16 list-checkradio scrolling-panel max-height-6ish" style="position: relative;">
                                 @foreach (var subCategory in subCategories)
                                 {
                                     checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
@@ -37,7 +40,12 @@
 
                                     subcategoryLabelText = string.Format("{0} ({1})", subcategoryLabelText, subCategory.Count);
 
-                                    <li><input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName"><label for="@checkboxId">@subcategoryLabelText</label></li>
+                                    <li>
+                                        <label for="@checkboxId">
+                                            <input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName">
+                                            @subcategoryLabelText
+                                        </label>
+                                    </li>
                                 }
                             </ul>
                         </details>

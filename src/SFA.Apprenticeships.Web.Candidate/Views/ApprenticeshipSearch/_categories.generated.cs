@@ -156,13 +156,13 @@ WriteAttribute("for", Tuple.Create(" for=\"", 1203), Tuple.Create("\"", 1217)
 , 1209), false)
 );
 
-WriteLiteral(" class=\"form-radio\"");
+WriteLiteral(" class=\"form-radio sfa-form-radio\"");
 
 WriteLiteral("><input ");
 
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                           Write(checkedAttr);
+                                                                                          Write(checkedAttr);
 
             
             #line default
@@ -171,7 +171,7 @@ WriteLiteral(" type=\"radio\" name=\"Category\" id=\"");
 
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                         Write(inputId);
+                                                                                                                                        Write(inputId);
 
             
             #line default
@@ -180,7 +180,7 @@ WriteLiteral("\" value=\"");
 
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                                          Write(category.CodeName);
+                                                                                                                                                         Write(category.CodeName);
 
             
             #line default
@@ -189,7 +189,7 @@ WriteLiteral("\">");
 
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                                                              Write(FullNameFormatter.Format(category.FullName));
+                                                                                                                                                                             Write(FullNameFormatter.Format(category.FullName));
 
             
             #line default
@@ -243,23 +243,23 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                            <li>\r\n                                <label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2089), Tuple.Create("\"", 2103)
+WriteAttribute("for", Tuple.Create(" for=\"", 2104), Tuple.Create("\"", 2118)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-, Tuple.Create(Tuple.Create("", 2095), Tuple.Create<System.Object, System.Int32>(inputId
+, Tuple.Create(Tuple.Create("", 2110), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 2095), false)
+, 2110), false)
 );
 
-WriteLiteral(" class=\"form-radio\"");
+WriteLiteral(" class=\"form-radio sfa-form-radio\"");
 
 WriteLiteral("><input ");
 
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                           Write(checkedAttr);
+                                                                                          Write(checkedAttr);
 
             
             #line default
@@ -268,7 +268,7 @@ WriteLiteral(" type=\"radio\" name=\"Category\" id=\"");
 
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                         Write(inputId);
+                                                                                                                                        Write(inputId);
 
             
             #line default
@@ -277,7 +277,7 @@ WriteLiteral("\" value=\"");
 
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                                          Write(category.CodeName);
+                                                                                                                                                         Write(category.CodeName);
 
             
             #line default
@@ -286,7 +286,7 @@ WriteLiteral("\">");
 
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                                                              Write(FullNameFormatter.Format(category.FullName));
+                                                                                                                                                                             Write(FullNameFormatter.Format(category.FullName));
 
             
             #line default
