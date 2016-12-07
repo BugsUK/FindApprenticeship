@@ -124,6 +124,16 @@ Custom form elements
     margin-left: -18px !important; }
 
 /* -------------------------------------------------------------------
+Categories and sub-categories
+------------------------------------------------------------------- */
+ul#category-list li {
+  overflow: hidden; }
+  ul#category-list li details {
+    padding-left: 22px; }
+    ul#category-list li details ul {
+      position: relative; }
+
+/* -------------------------------------------------------------------
 Tabbed content
 ------------------------------------------------------------------- */
 .browsetab, .searchtab {

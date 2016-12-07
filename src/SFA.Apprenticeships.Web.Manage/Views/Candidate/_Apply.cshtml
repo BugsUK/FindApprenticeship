@@ -20,6 +20,6 @@
     </p>
 }
 @Html.RouteLink("Return to candidate's applications", ManagementRouteNames.ViewCandidate, new { id = Model.Application.ApplicantDetails.CandidateId }, new { @class = "inl-block" })
-<p id="vacancy-closing-date" class="copy-16">
+<p id="vacancy-closing-date" class="font-xsmall">
     @(Model.Vacancy.Status == VacancyStatus.Closed ? "Closed on:" : "Closing date:") @Model.Vacancy.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date.ToFriendlyClosingToday()
 </p>

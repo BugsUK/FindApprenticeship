@@ -71,7 +71,7 @@ $(function() {
     }
   });
 
-  $(".block-label").each(function(){
+  $(".block-label, .form-checkbox, .form-radio").each(function () {
     var $target = $(this).attr('data-target');
 
     // Add focus
@@ -89,7 +89,7 @@ $(function() {
   });
 
   // Add/remove selected class
-  $('.block-label').on('click', 'input[type=radio], input[type=checkbox]', function() {
+  $('.block-label, .form-checkbox, .form-radio').on('click', 'input[type=radio], input[type=checkbox]', function () {
     var $this   = $(this),
         $target = $this.parent().attr('data-target');
 

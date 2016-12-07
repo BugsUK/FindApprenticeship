@@ -5,15 +5,15 @@
 @{
     var divClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
 }
-<div id="categories" class="form-group tabbed-element tab2 @divClass">
+<div id="categories" class="form-group tabbed-element tab2 blocklabel-single @divClass">
     
     @{
         if (Model.Categories != null && Model.Categories.Any())
         {
-            <ul id="category-list" class="copy-16 list-checkradio">
+            <ul id="category-list" class="font-xsmall list list-checkradio blocklabel-single-container">
                 @foreach (var category in Model.Categories)
                 {
-                    var inputId = string.Format("category-{0}", category.CodeName.ToLower());
+                    var inputId = string.Format("category-{0}", category.CodeName.ToLower().Replace('.','_'));
                     var subCategories = category.SubCategories.ToList();
                     var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
                     var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
@@ -24,13 +24,13 @@
                     categoryLabelText = string.Format("{0} ({1})", categoryLabelText, category.Count);
 
                     <li>
-                        <label for="@inputId">
-                            <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName">
+                        <label for="@inputId" class="form-checkbox sfa-form-checkbox no-margins" data-target="@(inputId)-details">
+                            <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName" />
                             @categoryLabelText
                         </label>
-                        <details @openAttr class="@openAttr">
-                            <summary class="copy-16">@subCategories.Count sub-categories</summary>
-                            <ul id="@subCategoryListId" class="detail-content copy-16 list-checkradio scrolling-panel max-height-6ish" style="position: relative;">
+                        <details @openAttr class="@openAttr blocklabel-content sfa-hide" id="@(inputId)-details">
+                            <summary><span class="summary">@subCategories.Count sub-categories</span></summary>
+                            <ul id="@subCategoryListId" class="list-checkradio list panel panel-border-narrow">
                                 @foreach (var subCategory in subCategories)
                                 {
                                     checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
@@ -41,7 +41,7 @@
                                     subcategoryLabelText = string.Format("{0} ({1})", subcategoryLabelText, subCategory.Count);
 
                                     <li>
-                                        <label for="@checkboxId">
+                                        <label for="@checkboxId" class="form-checkbox sfa-form-checkbox no-margins">
                                             <input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName">
                                             @subcategoryLabelText
                                         </label>

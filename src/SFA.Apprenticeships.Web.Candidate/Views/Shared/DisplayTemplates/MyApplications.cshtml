@@ -79,7 +79,7 @@ else
                                             </td>
                                             <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
                                             <td class="ta-center">
-                                                <a title="Remove from my applications" class="icon-black archive-successful" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                                <a title="Remove from my applications" class="icon-black archive-successful" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })"><i class="font-xsmall fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                             </td>
                                         </tr>
                                     }
@@ -186,7 +186,7 @@ else
                                             <td class="ta-center">
                                                 <a title="Remove from my applications" class="icon-black archive-unsuccessful"
                                                    href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new {id = application.VacancyId})">
-                                                    <i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span>
+                                                    <i class="font-xsmall fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -265,7 +265,7 @@ else
                                                 }
                                             </td>
                                             <td class="ta-center">
-                                                <a id="delete-draft-@index" title="Remove from my applications" class="icon-black delete-draft" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                                <a id="delete-draft-@index" title="Remove from my applications" class="icon-black delete-draft" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })"><i class="font-xsmall fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                             </td>
                                         </tr>
                                         index++;

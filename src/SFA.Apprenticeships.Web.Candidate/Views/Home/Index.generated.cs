@@ -185,7 +185,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Apprenticeships, 14 to 19 education and training for work</h2>\r\n        <p");
 
-WriteLiteral(" class=\"copy-16\"");
+WriteLiteral(" class=\"font-xsmall\"");
 
 WriteLiteral("><a");
 
@@ -197,7 +197,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Elsewhere on the web</h2>\r\n        <p");
 
-WriteLiteral(" class=\"copy-16 sfa-small-bottom-margin\"");
+WriteLiteral(" class=\"font-xsmall sfa-small-bottom-margin\"");
 
 WriteLiteral("><a");
 
@@ -210,7 +210,7 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">Help with your application</a></p>\r\n        <p");
 
-WriteLiteral(" class=\"copy-16\"");
+WriteLiteral(" class=\"font-xsmall\"");
 
 WriteLiteral("><a");
 

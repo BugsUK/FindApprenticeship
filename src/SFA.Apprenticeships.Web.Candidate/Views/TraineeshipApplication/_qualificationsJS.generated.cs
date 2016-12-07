@@ -499,8 +499,8 @@ WriteLiteral("><a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black remove-qualification-link no-underl" +
-"ine\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black remove-qualification-link no-un" +
+"derline\"");
 
 WriteLiteral(" data-bind=\"click: $root.removeQualification\"");
 

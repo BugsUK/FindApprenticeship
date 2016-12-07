@@ -389,13 +389,13 @@ WriteLiteral("    <p");
 
 WriteLiteral(" id=\"vacancy-closing-date\"");
 
-WriteLiteral(" class=\"copy-16\"");
+WriteLiteral(" class=\"font-xsmall\"");
 
 WriteLiteral(">Closing date: ");
 
             
             #line 62 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-                                                          Write(Model.ClosingDate.ToFriendlyClosingToday());
+                                                              Write(Model.ClosingDate.ToFriendlyClosingToday());
 
             
             #line default

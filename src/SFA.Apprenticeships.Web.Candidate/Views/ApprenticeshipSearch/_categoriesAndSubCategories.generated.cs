@@ -72,17 +72,18 @@ WriteLiteral("\r\n<div");
 
 WriteLiteral(" id=\"categories\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 214), Tuple.Create("\"", 262)
+WriteAttribute("class", Tuple.Create(" class=\"", 214), Tuple.Create("\"", 280)
 , Tuple.Create(Tuple.Create("", 222), Tuple.Create("form-group", 222), true)
 , Tuple.Create(Tuple.Create(" ", 232), Tuple.Create("tabbed-element", 233), true)
 , Tuple.Create(Tuple.Create(" ", 247), Tuple.Create("tab2", 248), true)
+, Tuple.Create(Tuple.Create(" ", 252), Tuple.Create("blocklabel-single", 253), true)
             
             #line 8 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-, Tuple.Create(Tuple.Create(" ", 252), Tuple.Create<System.Object, System.Int32>(divClass
+, Tuple.Create(Tuple.Create(" ", 270), Tuple.Create<System.Object, System.Int32>(divClass
             
             #line default
             #line hidden
-, 253), false)
+, 271), false)
 );
 
 WriteLiteral(">\r\n    \r\n");
@@ -106,7 +107,7 @@ WriteLiteral("            <ul");
 
 WriteLiteral(" id=\"category-list\"");
 
-WriteLiteral(" class=\"copy-16 list-checkradio\"");
+WriteLiteral(" class=\"font-xsmall list list-checkradio blocklabel-single-container\"");
 
 WriteLiteral(">\r\n");
 
@@ -120,7 +121,7 @@ WriteLiteral(">\r\n");
             #line 14 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
                  foreach (var category in Model.Categories)
                 {
-                    var inputId = string.Format("category-{0}", category.CodeName.ToLower());
+                    var inputId = string.Format("category-{0}", category.CodeName.ToLower().Replace('.','_'));
                     var subCategories = category.SubCategories.ToList();
                     var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
                     var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
@@ -136,15 +137,28 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                    <li>\r\n                        <label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1284), Tuple.Create("\"", 1298)
+WriteAttribute("for", Tuple.Create(" for=\"", 1356), Tuple.Create("\"", 1370)
             
             #line 27 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 1290), Tuple.Create<System.Object, System.Int32>(inputId
+, Tuple.Create(Tuple.Create("", 1362), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1290), false)
+, 1362), false)
 );
+
+WriteLiteral(" class=\"form-checkbox sfa-form-checkbox no-margins\"");
+
+WriteLiteral(" data-target=\"");
+
+            
+            #line 27 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                                                          Write(inputId);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("-details\"");
 
 WriteLiteral(">\r\n                            <input ");
 
@@ -173,7 +187,7 @@ WriteLiteral("\" value=\"");
             
             #line default
             #line hidden
-WriteLiteral("\">\r\n");
+WriteLiteral("\" />\r\n");
 
 WriteLiteral("                            ");
 
@@ -202,34 +216,41 @@ WriteLiteral(" class=\"");
             
             #line default
             #line hidden
-WriteLiteral("\">\r\n                            <summary");
+WriteLiteral(" blocklabel-content sfa-hide\" id=\"");
 
-WriteLiteral(" class=\"copy-16\"");
+            
+            #line 31 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                                         Write(inputId);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("-details\">\r\n                            <summary><span");
+
+WriteLiteral(" class=\"summary\"");
 
 WriteLiteral(">");
 
             
             #line 32 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                Write(subCategories.Count);
+                                                      Write(subCategories.Count);
 
             
             #line default
             #line hidden
-WriteLiteral(" sub-categories</summary>\r\n                            <ul");
+WriteLiteral(" sub-categories</span></summary>\r\n                            <ul");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1698), Tuple.Create("\"", 1721)
+WriteAttribute("id", Tuple.Create(" id=\"", 1921), Tuple.Create("\"", 1944)
             
             #line 33 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 1703), Tuple.Create<System.Object, System.Int32>(subCategoryListId
+, Tuple.Create(Tuple.Create("", 1926), Tuple.Create<System.Object, System.Int32>(subCategoryListId
             
             #line default
             #line hidden
-, 1703), false)
+, 1926), false)
 );
 
-WriteLiteral(" class=\"detail-content copy-16 list-checkradio scrolling-panel max-height-6ish\"");
-
-WriteLiteral(" style=\"position: relative;\"");
+WriteLiteral(" class=\"list-checkradio list panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n");
 
@@ -257,15 +278,17 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                    <li>\r\n                                       " +
 " <label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2552), Tuple.Create("\"", 2569)
+WriteAttribute("for", Tuple.Create(" for=\"", 2723), Tuple.Create("\"", 2740)
             
             #line 44 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 2558), Tuple.Create<System.Object, System.Int32>(checkboxId
+, Tuple.Create(Tuple.Create("", 2729), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 2558), false)
+, 2729), false)
 );
+
+WriteLiteral(" class=\"form-checkbox sfa-form-checkbox no-margins\"");
 
 WriteLiteral(">\r\n                                            <input ");
 

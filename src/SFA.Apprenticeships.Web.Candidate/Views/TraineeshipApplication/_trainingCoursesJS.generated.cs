@@ -387,7 +387,8 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral(">\r\n                                        <i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black remove-training-history-item-link\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black remove-training-history-item-li" +
+"nk\"");
 
 WriteLiteral(" data-bind=\"click: $parent.removeTrainingCourse\"");
 
