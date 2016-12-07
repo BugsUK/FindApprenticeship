@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Account/UpdateEmailAddress.cshtml")]
@@ -96,7 +97,7 @@ WriteLiteral(">\r\n    To change your email address we\'ll need to send you a co
 
             
             #line 21 "..\..\Views\Account\UpdateEmailAddress.cshtml"
- using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { autocomplete = "off" }))
+ using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form" autocomplete = "off" }))
 {
     
             

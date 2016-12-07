@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get))
+    @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get, new { id = "traineeship-results-form" }))
     {
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);

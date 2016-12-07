@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Login
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Login/Index.cshtml")]
@@ -87,7 +88,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 12 "..\..\Views\Login\Index.cshtml"
-         using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post))
+         using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post, new { id = "sign-in-form" }))
         {
             
             
@@ -198,14 +199,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n\r\n                <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1260), Tuple.Create("\'", 1313)
+WriteAttribute("href", Tuple.Create(" href=\'", 1289), Tuple.Create("\'", 1342)
             
             #line 31 "..\..\Views\Login\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1267), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+, Tuple.Create(Tuple.Create("", 1296), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 1267), false)
+, 1296), false)
 );
 
 WriteLiteral(">I can\'t access my account</a></p>\r\n            </div>\r\n");

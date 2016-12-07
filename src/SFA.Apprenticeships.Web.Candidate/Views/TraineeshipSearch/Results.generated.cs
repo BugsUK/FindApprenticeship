@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipSearch/Results.cshtml")]
@@ -129,7 +130,7 @@ WriteLiteral("</b> traineeships in your selected area.</p>\r\n        </div>\r\n
             #line hidden
             
             #line 22 "..\..\Views\TraineeshipSearch\Results.cshtml"
-     using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get))
+     using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get, new { id = "traineeship-results-form" }))
     {
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);

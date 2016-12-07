@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/Feedback.cshtml")]
@@ -89,7 +90,7 @@ WriteLiteral(">contact us</a> instead.</p>\r\n</div>\r\n\r\n");
 
             
             #line 14 "..\..\Views\Home\Feedback.cshtml"
- using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post))
+ using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post, new { id = "feedback-form" }))
 {
     
             

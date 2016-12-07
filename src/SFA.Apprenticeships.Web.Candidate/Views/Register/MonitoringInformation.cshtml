@@ -11,7 +11,7 @@
     understand how effective the service is.
 </p>
 
-@using (Html.BeginRouteForm(RouteNames.MonitoringInformation, FormMethod.Post))
+@using (Html.BeginRouteForm(RouteNames.MonitoringInformation, FormMethod.Post, new { id = "monitoring-information-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
