@@ -72,6 +72,12 @@ Custom margins
     .sfa-xlarge-bottom-margin {
       margin-bottom: 30px !important; } }
 
+.sfa-xxlarge-bottom-margin {
+  margin-bottom: 30px !important; }
+  @media (min-width: 641px) {
+    .sfa-xxlarge-bottom-margin {
+      margin-bottom: 60px !important; } }
+
 .sfa-xlarge-top-margin {
   margin-top: 15px !important; }
   @media (min-width: 641px) {
@@ -112,11 +118,32 @@ Custom form elements
       margin-bottom: 0px;
       width: auto !important; } }
 
+.sfa-form-radio, .sfa-form-checkbox {
+  padding-left: 18px; }
+  .sfa-form-radio input, .sfa-form-checkbox input {
+    margin-left: -18px !important; }
+
+/* -------------------------------------------------------------------
+Categories and sub-categories
+------------------------------------------------------------------- */
+ul#category-list li {
+  overflow: hidden; }
+  ul#category-list li details {
+    padding-left: 22px; }
+    ul#category-list li details ul {
+      position: relative; }
+
+/* -------------------------------------------------------------------
+Tabbed content
+------------------------------------------------------------------- */
 .browsetab, .searchtab {
   display: none !important; }
   .browsetab.active, .searchtab.active {
     display: inline-block !important; }
 
+/* -------------------------------------------------------------------
+Custom Typography
+------------------------------------------------------------------- */
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
@@ -128,6 +155,9 @@ Misc - TO BE ORGANISED
 
 .sfa-no-bottom-margin {
   margin-bottom: 0 !important; }
+
+.sfa-align-right {
+  text-align: right; }
 
 .sfa-pull-right {
   float: right; }
@@ -164,7 +194,9 @@ iframe, object, embed {
   color: #6f777b; }
 
 .search-result {
-  position: relative; }
+  position: relative;
+  border-bottom: 1px solid #bfc1c3;
+  padding-bottom: 30px; }
 
 .save-vacancy {
   position: absolute;

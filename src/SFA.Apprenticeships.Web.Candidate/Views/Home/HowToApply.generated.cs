@@ -758,7 +758,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 
@@ -828,7 +828,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 
@@ -898,7 +898,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 
@@ -968,7 +968,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 
@@ -1038,7 +1038,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 
@@ -1108,7 +1108,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 
@@ -1245,7 +1245,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 
@@ -1315,7 +1315,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 
@@ -1715,7 +1715,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black\"");
 
 WriteLiteral("></i><i");
 

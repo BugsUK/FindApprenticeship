@@ -103,6 +103,13 @@ Custom margins
     }
 }
 
+.sfa-xxlarge-bottom-margin {
+    margin-bottom: 30px !important;
+    @include media(tablet){
+        margin-bottom: 60px !important;
+    }
+}
+
 .sfa-xlarge-top-margin {
     margin-top: 15px !important;
     @include media(tablet){
@@ -154,6 +161,32 @@ Custom form elements
     }
 }
 
+.sfa-form-radio, .sfa-form-checkbox {
+    padding-left:18px;
+    input {
+        margin-left:-18px !important;
+    }
+}
+
+/* -------------------------------------------------------------------
+Categories and sub-categories
+------------------------------------------------------------------- */
+
+ul#category-list {
+    li {
+        overflow:hidden;
+        details {
+            padding-left:22px;
+            ul {
+                position:relative;
+            }
+        }
+    }
+}
+
+/* -------------------------------------------------------------------
+Tabbed content
+------------------------------------------------------------------- */
 
 .browsetab, .searchtab {
     display: none !important;
@@ -161,6 +194,11 @@ Custom form elements
         display:inline-block !important;
     }
 }
+
+/* -------------------------------------------------------------------
+Custom Typography
+------------------------------------------------------------------- */
+
 
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
@@ -176,6 +214,10 @@ Misc - TO BE ORGANISED
 
 .sfa-no-bottom-margin {
     margin-bottom: 0 !important;
+}
+
+.sfa-align-right {
+    text-align:right;
 }
 
 .sfa-pull-right {
@@ -228,6 +270,8 @@ iframe, object, embed {
 
 .search-result {
     position: relative;
+    border-bottom: 1px solid $grey-2;
+    padding-bottom:30px;
 }
 
 .save-vacancy {

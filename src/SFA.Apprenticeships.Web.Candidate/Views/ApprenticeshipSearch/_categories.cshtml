@@ -16,19 +16,17 @@
                 var categorySplitCount = categories.Count/2 + categories.Count%2;
 
                 <div class="column-one-half">
-                    <div class="inner-block-padr">
-                        <ul id="category-list-left" class="font-xsmall list-text list-checkradio">
-                            @for (var i = 0; i < categorySplitCount; i++)
-                            {
-                                var category = categories[i];
-                                var inputId = string.Format("category-{0}", category.CodeName.ToLower());
-                                var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
-                                <li>
-                                    <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
-                                </li>
-                            }
-                        </ul>
-                    </div>
+                    <ul id="category-list-left" class="font-xsmall list-text list-checkradio">
+                        @for (var i = 0; i < categorySplitCount; i++)
+                        {
+                            var category = categories[i];
+                            var inputId = string.Format("category-{0}", category.CodeName.ToLower());
+                            var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
+                            <li>
+                                <label for="@inputId" class="form-radio sfa-form-radio"><input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName">@FullNameFormatter.Format(category.FullName)</label>
+                            </li>
+                        }
+                    </ul>
                 </div>
 
                 <div class="column-one-half">
@@ -39,7 +37,7 @@
                             var inputId = string.Format("category-{0}", category.CodeName.ToLower());
                             var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
                             <li>
-                                <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
+                                <label for="@inputId" class="form-radio sfa-form-radio"><input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName">@FullNameFormatter.Format(category.FullName)</label>
                             </li>
                         }
                     </ul>

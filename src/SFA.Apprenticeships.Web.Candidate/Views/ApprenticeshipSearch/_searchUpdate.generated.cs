@@ -127,14 +127,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-auto sfa-medium-bottom-margin" }));
+               Write(Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-auto sfa-small-bottom-margin" }));
 
             
             #line default
             #line hidden
             
             #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-                                                                                                                                                                                       
+                                                                                                                                                                                      
                     
             
             #line default
@@ -156,7 +156,7 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("\r\n                <div");
 
-WriteLiteral(" class=\"para-btm-margin\"");
+WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n");
 
@@ -262,14 +262,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2356), Tuple.Create("\"", 2447)
+WriteAttribute("href", Tuple.Create(" href=\"", 2350), Tuple.Create("\"", 2441)
             
             #line 37 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2363), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
+, Tuple.Create(Tuple.Create("", 2357), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
             
             #line default
             #line hidden
-, 2363), false)
+, 2357), false)
 );
 
 WriteLiteral(">");
@@ -404,14 +404,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4296), Tuple.Create("\"", 4326)
+WriteAttribute("value", Tuple.Create(" value=\"", 4290), Tuple.Create("\"", 4320)
             
             #line 64 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 4304), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 4298), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 4304), false)
+, 4298), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -446,14 +446,14 @@ WriteLiteral(" name=\"LocationType\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4693), Tuple.Create("\"", 4720)
+WriteAttribute("value", Tuple.Create(" value=\"", 4687), Tuple.Create("\"", 4714)
             
             #line 68 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-  , Tuple.Create(Tuple.Create("", 4701), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+  , Tuple.Create(Tuple.Create("", 4695), Tuple.Create<System.Object, System.Int32>(Model.LocationType
             
             #line default
             #line hidden
-, 4701), false)
+, 4695), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n</section>");

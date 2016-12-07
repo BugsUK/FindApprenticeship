@@ -449,7 +449,7 @@ WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral(">\r\n                                        <i");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black remove-work-experience-link\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black remove-work-experience-link\"");
 
 WriteLiteral(" data-bind=\"click: $parent.removeWorkExperience\"");
 

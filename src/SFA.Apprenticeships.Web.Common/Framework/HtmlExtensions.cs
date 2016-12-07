@@ -152,7 +152,7 @@
 
             AddValidationCssClass(validationType, container);
 
-            container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, fieldContent, maxLengthSpan, ariaLimitVisuallyHidden, validationMessage);
+            container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, validationMessage, fieldContent, maxLengthSpan, ariaLimitVisuallyHidden);
 
             return MvcHtmlString.Create(container.ToString());
         }
