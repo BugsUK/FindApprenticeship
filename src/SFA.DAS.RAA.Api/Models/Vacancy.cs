@@ -6,6 +6,7 @@
     [Validator(typeof(VacancyValidator))]
     public class Vacancy
     {
+        public int VacancyId { get; set; }
         public int VacancyReferenceNumber { get; set; }
         public string Title { get; set; }
         public string ShortDescription { get; set; }
