@@ -34,7 +34,6 @@
             }
         }
 
-
         [Then(@"I see the vacancy details for the vacancy with id: (.*)")]
         public void ThenISeeTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {

@@ -1,5 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Hooks
 {
+    using System.Configuration;
     using RestSharp;
     using TechTalk.SpecFlow;
 
@@ -11,7 +12,7 @@
         [BeforeScenario]
         public void BeforeScenario()
         {
-            IRestClient client = new RestClient("http://sfadasraaapi-dev.azurewebsites.net/");
+            IRestClient client = new RestClient(ConfigurationManager.AppSettings["ApiBaseUrl"]);
             ScenarioContext.Current.Set(client);
         }
 

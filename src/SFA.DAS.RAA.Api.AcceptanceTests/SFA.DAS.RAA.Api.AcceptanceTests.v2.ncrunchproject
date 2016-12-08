@@ -24,9 +24,4 @@
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
   <MSTestThreadApartmentState>STA</MSTestThreadApartmentState>
   <BuildProcessArchitecture>x86</BuildProcessArchitecture>
-  <IgnoredTests>
-    <FixtureTestSelector>
-      <FixtureName>SFA.DAS.RAA.Api.AcceptanceTests.Features.RA_551Feature</FixtureName>
-    </FixtureTestSelector>
-  </IgnoredTests>
 </ProjectConfiguration>
