@@ -25,6 +25,8 @@
   <MSTestThreadApartmentState>STA</MSTestThreadApartmentState>
   <BuildProcessArchitecture>x86</BuildProcessArchitecture>
   <IgnoredTests>
-    <AllTestsSelector />
+    <FixtureTestSelector>
+      <FixtureName>SFA.DAS.RAA.Api.AcceptanceTests.Features.RA_551Feature</FixtureName>
+    </FixtureTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>
