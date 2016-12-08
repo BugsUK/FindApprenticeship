@@ -1,11 +1,14 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
+    using System;
+    using System.Net;
     using Constants;
     using Extensions;
     using FluentAssertions;
     using Models;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
+    using RestSharp;
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -20,18 +23,20 @@
             ScenarioContext.Current.Add($"vacancyId: {vacancyId}", vacancy);
 
             var vacancyUri = $"/vacancy/?id={vacancyId}";
-            using (var response = testServer.HttpClient.GetAsync(vacancyUri).Result)
+            var request = new RestRequest(vacancyUri, Method.GET);
+            Guid apiKey;
+            if (ScenarioContext.Current.TryGetValue(ScenarioContextKeys.ApiKey, out apiKey))
             {
-                ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
-                using (var httpContent = response.Content)
-                {
-                    var content = httpContent.ReadAsStringAsync().Result;
-
-                    var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(content);
-
-                    ScenarioContext.Current.Add(vacancyUri, responseVacancy);
-                }
+                ScenarioContext.Current.Remove(ScenarioContextKeys.ApiKey);
+                request.AddHeader(HttpRequestHeader.Authorization.ToString(), apiKey.ToString());
             }
+            var client = ScenarioContext.Current.Get<IRestClient>();
+
+            var response = client.Execute(request);
+            ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
+
+            var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(response.Content);
+            ScenarioContext.Current.Add(vacancyUri, responseVacancy);
         }
 
         [Then(@"I see the vacancy details for the vacancy with id: (.*)")]

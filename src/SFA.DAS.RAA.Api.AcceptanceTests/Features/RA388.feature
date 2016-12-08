@@ -5,6 +5,7 @@
 
 @RA388
 Scenario: Get vacancy details
-	When I request the vacancy details for the vacancy with id: 1
+	When I authorize my request with a Provider API key
+	And I request the vacancy details for the vacancy with id: 1
 	Then The response status is: OK
 	And I see the vacancy details for the vacancy with id: 1

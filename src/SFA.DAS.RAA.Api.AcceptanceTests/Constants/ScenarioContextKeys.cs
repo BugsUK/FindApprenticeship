@@ -2,6 +2,7 @@
 {
     public class ScenarioContextKeys
     {
+        public const string ApiKey = "ApiKey";
         public const string HttpResponseStatusCode = "HttpResponseStatusCode";
     }
 }

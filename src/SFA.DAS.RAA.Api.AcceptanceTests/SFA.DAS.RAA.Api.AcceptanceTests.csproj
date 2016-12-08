@@ -151,6 +151,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Steps\AuthorizationSteps.cs" />
+    <Compile Include="Constants\ApiKeys.cs" />
     <Compile Include="Constants\ScenarioContextKeys.cs" />
     <Compile Include="Extensions\FeatureContextExtensions.cs" />
     <Compile Include="Features\RA388.feature.cs">
