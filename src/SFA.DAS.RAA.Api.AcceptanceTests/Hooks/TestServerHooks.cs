@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TechTalk.SpecFlow;
-
-namespace SFA.DAS.RAA.Api.AcceptanceTests.Hooks
+﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Hooks
 {
+    using Extensions;
+    using Microsoft.Owin.Testing;
+    using TechTalk.SpecFlow;
+
     [Binding]
     public sealed class TestServerHooks
     {
         // For additional details on SpecFlow hooks see http://go.specflow.org/doc-hooks
 
         [BeforeFeature]
-        public void BeforeFeature()
+        public static void BeforeFeature()
         {
-            FeatureContext.Current.TestServer(TestServer.Create<Startup>());
+            var testServer = TestServer.Create<TestStartup>();
+            FeatureContext.Current.TestServer(testServer);
         }
 
         [AfterFeature]
-        public void AfterFeature()
+        public static void AfterFeature()
         {
-            //TODO: implement logic that has to run after executing each scenario
+            var testServer = FeatureContext.Current.TestServer();
+            testServer.Dispose();
         }
     }
 }

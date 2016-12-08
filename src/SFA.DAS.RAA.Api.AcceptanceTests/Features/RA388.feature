@@ -6,4 +6,5 @@
 @RA388
 Scenario: Get vacancy details
 	When I request the vacancy details for the vacancy with id: 1
-	Then I see the vacancy details for the vacancy with id: 1
+	Then The response status is: OK
+	And I see the vacancy details for the vacancy with id: 1

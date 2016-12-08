@@ -76,7 +76,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
  testRunner.When("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
- testRunner.Then("I see the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+ testRunner.And("I see the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
