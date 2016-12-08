@@ -96,7 +96,7 @@ WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n  
 
             
             #line 23 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmEmployer, FormMethod.Post))
+ using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmEmployer, FormMethod.Post, new { id = "confirm-employer-form" }))
 {
     
             

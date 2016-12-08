@@ -15,7 +15,7 @@
     </div>
 </div>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmNewEmployer, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmNewEmployer, FormMethod.Post, new { id = "confirm-new-employer-form" }))
 {
     @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
 

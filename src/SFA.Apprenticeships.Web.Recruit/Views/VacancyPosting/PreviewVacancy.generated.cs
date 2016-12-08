@@ -174,7 +174,7 @@ WriteLiteral(">Return to recruitment home</a>\r\n");
 
     else
     {
-        using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
+        using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post, new { id = "submit-vacancy-form" }))
         {
             
             
@@ -289,14 +289,14 @@ WriteLiteral("                    <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2176), Tuple.Create("\"", 2235)
+WriteAttribute("href", Tuple.Create(" href=\"", 2212), Tuple.Create("\"", 2271)
             
             #line 56 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 2183), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 2219), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2183), false)
+, 2219), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n                </div>\r\n            </section>\r\n");

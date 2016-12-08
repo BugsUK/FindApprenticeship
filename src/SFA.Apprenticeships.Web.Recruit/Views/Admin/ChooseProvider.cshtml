@@ -5,7 +5,7 @@
     ViewBag.Title = "Choose Provider";
 }
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.SearchProvider))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.SearchProvider, FormMethod.Post, new { id = "admin-search-provider-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)               

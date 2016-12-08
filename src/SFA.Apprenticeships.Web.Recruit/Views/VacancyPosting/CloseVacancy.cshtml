@@ -22,7 +22,7 @@ else
 }
 
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.CloseVacancy, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.CloseVacancy, FormMethod.Post, new { id = "close-vacancy-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

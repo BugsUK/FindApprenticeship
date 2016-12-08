@@ -13,7 +13,7 @@
     Change vacancy dates
 </h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, FormMethod.Post, new { id = "manage-vacancy-dates-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

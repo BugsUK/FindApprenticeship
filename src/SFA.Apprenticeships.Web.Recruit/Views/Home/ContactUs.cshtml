@@ -8,7 +8,7 @@
     <h1 class="heading-xlarge">Contact us</h1>
 </div>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ContactUs, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ContactUs, FormMethod.Post, new { id = "contact-us-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.FormTextFor(
