@@ -6,7 +6,7 @@
 
 <h1 id="heading" class="heading-xlarge">Provider Sites</h1>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminProviderSites))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminProviderSites, FormMethod.Post, new { id = "admin-provider-sites-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

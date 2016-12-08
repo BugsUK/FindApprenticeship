@@ -4,7 +4,7 @@
 @using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
-@using (Html.BeginRouteForm(ManagementRouteNames.BasicDetails, FormMethod.Post))
+@using (Html.BeginRouteForm(ManagementRouteNames.BasicDetails, FormMethod.Post, new { id = "vacancy-basic-details-form" }))
 {
     @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new {OfflineUrlButtonName = "BasicDetails"})
 

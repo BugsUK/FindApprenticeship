@@ -84,7 +84,7 @@ WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n  
 
             
             #line 20 "..\..\Views\Vacancy\EmployerInformation.cshtml"
- using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
+ using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post, new { id = "employer-information-form" }))
 {   
     
             

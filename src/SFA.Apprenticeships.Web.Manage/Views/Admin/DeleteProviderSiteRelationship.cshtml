@@ -9,7 +9,7 @@
 
 <p>Are you sure you want to delete the @Model.ProviderSiteRelationshipType provider site relationship between @Model.ProviderFullName (@Model.ProviderTradingName) and @Model.ProviderSiteFullName (@Model.ProviderSiteTradingName) ? </p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminDeleteProviderSiteRelationship))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminDeleteProviderSiteRelationship, FormMethod.Post, new { id = "admin-delete-provider-site-relationship-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

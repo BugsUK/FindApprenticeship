@@ -2,7 +2,7 @@
 @using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
-@using (Html.BeginRouteForm(ManagementRouteNames.Summary, FormMethod.Post))
+@using (Html.BeginRouteForm(ManagementRouteNames.Summary, FormMethod.Post, new { id = "vacancy-summary-form" }))
 {
     @Html.HiddenFor(m => m.AcceptWarnings)
 

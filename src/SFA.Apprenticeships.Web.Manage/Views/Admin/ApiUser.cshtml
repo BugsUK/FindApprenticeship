@@ -8,7 +8,7 @@
 
 <p>@Html.RouteLink("Manage API Users", ManagementRouteNames.AdminApiUsers)</p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditApiUser))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditApiUser, FormMethod.Post, new { id = "admin-edit-api-user-form" }))
 {
     @Html.HiddenFor(m => m.ExternalSystemId)
 

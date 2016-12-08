@@ -8,7 +8,7 @@
 
 <p>@Html.RouteLink("Manage API Users", ManagementRouteNames.AdminApiUsers)</p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateApiUser))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateApiUser, FormMethod.Post, new { id = "admin-create-api-user-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
