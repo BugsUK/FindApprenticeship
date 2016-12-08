@@ -126,12 +126,18 @@ Custom form elements
 /* -------------------------------------------------------------------
 Categories and sub-categories
 ------------------------------------------------------------------- */
-ul#category-list li {
-  overflow: hidden; }
-  ul#category-list li details {
-    padding-left: 22px; }
-    ul#category-list li details ul {
-      position: relative; }
+ul#category-list li details {
+  padding-left: 22px; }
+  ul#category-list li details ul {
+    float: none;
+    max-height: 11em;
+    overflow-y: auto; }
+    @media (min-width: 641px) {
+      ul#category-list li details ul {
+        max-height: 20em; } }
+    @media (min-width: 769px) {
+      ul#category-list li details ul {
+        max-height: 31em; } }
 
 /* -------------------------------------------------------------------
 Tabbed content
@@ -160,7 +166,7 @@ Misc - TO BE ORGANISED
   text-align: right; }
 
 .sfa-pull-right {
-  float: right; }
+  float: right !important; }
 
 .js-enabled .nojs-notice {
   display: none !important; }

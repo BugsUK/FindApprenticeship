@@ -174,11 +174,19 @@ Categories and sub-categories
 
 ul#category-list {
     li {
-        overflow:hidden;
+        //overflow:hidden;
         details {
             padding-left:22px;
             ul {
-                position:relative;
+                float:none;
+                max-height: 11em;
+                overflow-y:auto;
+                @include media(tablet){
+                    max-height: 20em;
+                }
+                @include media(desktop){
+                    max-height:31em;
+                }
             }
         }
     }
@@ -221,7 +229,7 @@ Misc - TO BE ORGANISED
 }
 
 .sfa-pull-right {
-    float: right;
+    float: right !important;
 }
 .js-enabled .nojs-notice {
     display: none !important;
