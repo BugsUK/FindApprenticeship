@@ -4,7 +4,10 @@
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
-@using (Html.BeginRouteForm(Model.Status.CanManageVacancyDates() ? RecruitmentRouteNames.ManageDates : RecruitmentRouteNames.VacancySummary, FormMethod.Post))
+@using (Html.BeginRouteForm(
+    Model.Status.CanManageVacancyDates() ? RecruitmentRouteNames.ManageDates : RecruitmentRouteNames.VacancySummary,
+    new RouteValueDictionary { { "vacancyReferenceNumber", Model.VacancyReferenceNumber } },
+    FormMethod.Post))
 {
     @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
     @Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView)
