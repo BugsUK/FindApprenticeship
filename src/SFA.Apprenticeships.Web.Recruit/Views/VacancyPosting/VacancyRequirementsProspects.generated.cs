@@ -70,7 +70,7 @@ WriteLiteral("\r\n");
 
             
             #line 7 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post))
+ using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post, new { id = "vacancy-requirements-and-prospects-form" }))
 {
     
             

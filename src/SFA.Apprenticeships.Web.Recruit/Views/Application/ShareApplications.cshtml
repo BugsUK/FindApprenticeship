@@ -10,7 +10,7 @@
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ShareApplications, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ShareApplications, FormMethod.Post, new { id = "share-applications-form" }))
 {
     @Html.AntiForgeryToken()
 

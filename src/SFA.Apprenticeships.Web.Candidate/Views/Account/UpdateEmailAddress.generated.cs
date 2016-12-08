@@ -97,7 +97,7 @@ WriteLiteral(">\r\n    To change your email address we\'ll need to send you a co
 
             
             #line 21 "..\..\Views\Account\UpdateEmailAddress.cshtml"
- using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { autocomplete = "off" }))
+ using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form", autocomplete = "off" }))
 {
     
             

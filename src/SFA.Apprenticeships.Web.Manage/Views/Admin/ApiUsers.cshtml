@@ -13,7 +13,7 @@
     </ul>
 </p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminApiUsers))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminApiUsers, FormMethod.Post, new { id = "admin-api-users-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

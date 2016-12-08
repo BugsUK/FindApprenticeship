@@ -9,7 +9,7 @@
 
 <div class="grid-row">
     <div class="column-one-half">
-        @using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post))
+        @using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post, new { id = "sign-in-form" }))
         {
             @Html.AntiForgeryToken();
             <h1 class="heading-large">Sign in</h1>

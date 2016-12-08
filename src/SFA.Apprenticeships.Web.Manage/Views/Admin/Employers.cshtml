@@ -6,7 +6,7 @@
 
 <h1 id="heading" class="heading-xlarge">Employers</h1>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminEmployers))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEmployers, FormMethod.Post, new { id = "admin-employers-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

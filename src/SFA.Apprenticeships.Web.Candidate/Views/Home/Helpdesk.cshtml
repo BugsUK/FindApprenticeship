@@ -9,7 +9,7 @@
     <h1 class="heading-xlarge">Contact us</h1>
 </div>
 
-@using (Html.BeginRouteForm(CandidateRouteNames.Helpdesk, FormMethod.Post))
+@using (Html.BeginRouteForm(CandidateRouteNames.Helpdesk, FormMethod.Post, new { id = "helpdesk-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.FormTextFor(

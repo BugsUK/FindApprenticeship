@@ -7,7 +7,7 @@
 
 <h1 class="heading-xlarge">Create an account</h1>
 
-@using (Html.BeginRouteForm(RouteNames.Register, FormMethod.Post))
+@using (Html.BeginRouteForm(RouteNames.Register, FormMethod.Post, new { id = "register-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

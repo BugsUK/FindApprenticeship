@@ -40,7 +40,7 @@
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-@using (Html.BeginForm(null, "ProviderUser", FormMethod.Post, new { name = "provider-site-form", @class = "sfa-xlarge-bottom-margin" }))
+@using (Html.BeginForm(null, "ProviderUser", FormMethod.Post, new { id = "provider-site-form", name = "provider-site-form", @class = "sfa-xlarge-bottom-margin" }))
 {
     @Html.AntiForgeryToken()
 

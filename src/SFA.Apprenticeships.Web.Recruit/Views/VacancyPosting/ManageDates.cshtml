@@ -15,7 +15,7 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, 
                             new RouteValueDictionary () { { "vacancyReferenceNumber", Model.VacancyReferenceNumber }}, 
-                            FormMethod.Post))
+                            FormMethod.Post, new { id = "manage-vacancy-dates-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

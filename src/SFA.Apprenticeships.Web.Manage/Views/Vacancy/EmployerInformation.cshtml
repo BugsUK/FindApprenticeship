@@ -17,7 +17,7 @@
     </div>
 </div>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
+@using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post, new { id = "employer-information-form" }))
 {   
     @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
 

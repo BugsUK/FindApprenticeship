@@ -69,7 +69,7 @@ WriteLiteral(">Create an account</h1>\r\n\r\n");
 
             
             #line 10 "..\..\Views\Register\Index.cshtml"
- using (Html.BeginRouteForm(RouteNames.Register, FormMethod.Post))
+ using (Html.BeginRouteForm(RouteNames.Register, FormMethod.Post, new { id = "register-form" }))
 {
     
             
@@ -274,15 +274,15 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" class=\"inl-block inpage-focus\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2222), Tuple.Create("\"", 2262)
-, Tuple.Create(Tuple.Create("", 2229), Tuple.Create("#", 2229), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2229), Tuple.Create("\"", 2269)
+, Tuple.Create(Tuple.Create("", 2236), Tuple.Create("#", 2236), true)
             
             #line 45 "..\..\Views\Register\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2230), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
+, Tuple.Create(Tuple.Create("", 2237), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
             
             #line default
             #line hidden
-, 2230), false)
+, 2237), false)
 );
 
 WriteLiteral(">Edit your email</a>\r\n        </div>\r\n        \r\n        <div");

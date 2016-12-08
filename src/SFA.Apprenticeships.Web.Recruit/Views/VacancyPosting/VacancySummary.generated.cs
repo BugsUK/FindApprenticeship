@@ -70,7 +70,7 @@ WriteLiteral("\r\n");
 
             
             #line 7 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
- using (Html.BeginRouteForm(Model.Status.CanManageVacancyDates() ? RecruitmentRouteNames.ManageDates : RecruitmentRouteNames.VacancySummary, FormMethod.Post))
+ using (Html.BeginRouteForm(Model.Status.CanManageVacancyDates() ? RecruitmentRouteNames.ManageDates : RecruitmentRouteNames.VacancySummary, FormMethod.Post, new { id = "vacancy-summary-form" }))
 {
     
             
@@ -161,14 +161,14 @@ WriteLiteral(" class=\"button no-autosave\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1144), Tuple.Create("\"", 1168)
+WriteAttribute("value", Tuple.Create(" value=\"", 1142), Tuple.Create("\"", 1166)
             
             #line 28 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 1152), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                                    , Tuple.Create(Tuple.Create("", 1150), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 1152), false)
+, 1150), false)
 );
 
 WriteLiteral(">");

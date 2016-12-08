@@ -88,7 +88,7 @@ WriteLiteral(" vacancy\r\n</h1>\r\n\r\n");
 
             
             #line 15 "..\..\Views\VacancyManagement\Delete.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post))
+ using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post, new { id = "delete-vacancy-form" }))
 {
 
             

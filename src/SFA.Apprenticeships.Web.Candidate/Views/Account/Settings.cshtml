@@ -20,7 +20,7 @@
     </div>
 </div>
 
-@using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post))
+@using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post, new { id = "settings-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
