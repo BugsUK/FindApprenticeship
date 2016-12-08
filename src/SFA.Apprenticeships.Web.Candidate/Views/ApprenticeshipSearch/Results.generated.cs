@@ -279,7 +279,7 @@ WriteLiteral("        </div>\r\n    </div>\r\n\r\n");
             #line hidden
             
             #line 102 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-     using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipResults, FormMethod.Get))
+     using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipResults, FormMethod.Get, new { id = "apprenticeship-results-form" }))
     {
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);

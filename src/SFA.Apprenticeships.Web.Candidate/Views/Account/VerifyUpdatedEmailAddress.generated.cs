@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Account/VerifyUpdatedEmailAddress.cshtml")]
@@ -96,7 +97,7 @@ WriteLiteral(">\r\n    You\'ve been sent a code to your new email address, enter
 
             
             #line 22 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
- using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {autocomplete = "off"}))
+ using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {id = "verify-updated-email-form", autocomplete = "off"}))
 {
     
             
@@ -182,14 +183,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1463), Tuple.Create("\"", 1533)
+WriteAttribute("href", Tuple.Create(" href=\"", 1497), Tuple.Create("\"", 1567)
             
             #line 33 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-, Tuple.Create(Tuple.Create("", 1470), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
+, Tuple.Create(Tuple.Create("", 1504), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
             
             #line default
             #line hidden
-, 1470), false)
+, 1504), false)
 );
 
 WriteLiteral(" title=\"Resend code\"");

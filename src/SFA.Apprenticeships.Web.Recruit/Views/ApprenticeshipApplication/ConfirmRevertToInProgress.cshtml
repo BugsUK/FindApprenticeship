@@ -6,7 +6,7 @@
     ViewBag.Title = "Recruit an Apprentice - Revert to In progress";
 }
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmRevertToInProgress, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmRevertToInProgress, FormMethod.Post, new { id = "confirm-revert-to-in-progress-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ApplicationSelection.ApplicationId)

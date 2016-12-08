@@ -18,6 +18,7 @@
         public RepositoriesRegistry(SqlConfiguration configuration)
         {
             //Common
+            For<IGetOpenConnection>().Use<GetOpenConnectionFromConnectionString>().Ctor<string>("connectionString").Is(configuration.ReportingConnectionString).Name = "ReportingConnectionString";
             For<IGetOpenConnection>().Use<GetOpenConnectionFromConnectionString>().Ctor<string>("connectionString").Is(configuration.ConnectionString);
 
             //Mappers
@@ -31,7 +32,7 @@
             For<IProviderUserWriteRepository>().Use<ProviderUserRepository>().Ctor<IMapper>().Named("ProviderUserMappers");
             For<IAgencyUserReadRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
             For<IAgencyUserWriteRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
-            For<IReportingRepository>().Use<ReportingRepository>();
+            For<IReportingRepository>().Use<ReportingRepository>().Ctor<IGetOpenConnection>().Named("ReportingConnectionString");
             For<IReferenceNumberRepository>().Use<ReferenceNumberRepository>();
             For<IApiUserRepository>().Use<ApiUserRepository>();
         }

@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Register/MonitoringInformation.cshtml")]
@@ -73,7 +74,7 @@ WriteLiteral(">\r\n    Please give us a little more information about you. This 
 
             
             #line 14 "..\..\Views\Register\MonitoringInformation.cshtml"
- using (Html.BeginRouteForm(RouteNames.MonitoringInformation, FormMethod.Post))
+ using (Html.BeginRouteForm(RouteNames.MonitoringInformation, FormMethod.Post, new { id = "monitoring-information-form" }))
 {
     
             
@@ -176,14 +177,14 @@ WriteLiteral(" id=\"save-continue-button\"");
 
 WriteLiteral(">Save and continue</button>\r\n        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 932), Tuple.Create("\"", 990)
+WriteAttribute("href", Tuple.Create(" href=\"", 976), Tuple.Create("\"", 1034)
             
             #line 25 "..\..\Views\Register\MonitoringInformation.cshtml"
-, Tuple.Create(Tuple.Create("", 939), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SkipMonitoringInformation)
+, Tuple.Create(Tuple.Create("", 983), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SkipMonitoringInformation)
             
             #line default
             #line hidden
-, 939), false)
+, 983), false)
 );
 
 WriteLiteral(" id=\"skip-link\"");

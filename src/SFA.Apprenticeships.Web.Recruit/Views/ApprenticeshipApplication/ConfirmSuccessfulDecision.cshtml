@@ -6,7 +6,7 @@
     ViewBag.Title = "Recruit an Apprentice - Send successful decision";
 }
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, FormMethod.Post, new { id = "confirm-successful-apprenticeship-application-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ApplicationSelection.ApplicationId)

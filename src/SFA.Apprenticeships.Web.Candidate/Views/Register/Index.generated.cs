@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Register/Index.cshtml")]
@@ -68,7 +69,7 @@ WriteLiteral(">Create an account</h1>\r\n\r\n");
 
             
             #line 10 "..\..\Views\Register\Index.cshtml"
- using (Html.BeginRouteForm(RouteNames.Register, FormMethod.Post))
+ using (Html.BeginRouteForm(RouteNames.Register, FormMethod.Post, new { id = "register-form" }))
 {
     
             
@@ -273,15 +274,15 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" class=\"inl-block inpage-focus\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2229), Tuple.Create("\"", 2269)
-, Tuple.Create(Tuple.Create("", 2236), Tuple.Create("#", 2236), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2259), Tuple.Create("\"", 2299)
+, Tuple.Create(Tuple.Create("", 2266), Tuple.Create("#", 2266), true)
             
             #line 45 "..\..\Views\Register\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2237), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
+, Tuple.Create(Tuple.Create("", 2267), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
             
             #line default
             #line hidden
-, 2237), false)
+, 2267), false)
 );
 
 WriteLiteral(">Edit your email</a>\r\n        </div>\r\n        \r\n        <div");

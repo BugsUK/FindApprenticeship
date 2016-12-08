@@ -130,7 +130,7 @@
         <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
     </a>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.SortCandidate))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.SortCandidate, FormMethod.Post, new { id = "sort-candidate-form" }))
 {
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.CandidateGuid)
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.OrderByField)

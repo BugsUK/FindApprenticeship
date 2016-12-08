@@ -27,7 +27,7 @@
 
     else
     {
-        using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
+        using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post, new { id = "submit-vacancy-form" }))
         {
             @Html.HiddenFor(m => m.VacancyReferenceNumber)
 

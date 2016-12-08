@@ -7,7 +7,7 @@
 
 <h1 id="heading" class="heading-xlarge">Provider User</h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminProviderUsers))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminProviderUsers, FormMethod.Post, new { id = "admin-provider-user-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

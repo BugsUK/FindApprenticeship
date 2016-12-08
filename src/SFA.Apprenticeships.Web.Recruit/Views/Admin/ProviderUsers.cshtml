@@ -14,7 +14,7 @@ else
     <h1 id="heading" class="heading-xlarge">Provider Users for @Model.ProviderName</h1>
 }
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminProviderUsers))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminProviderUsers, FormMethod.Post, new { id = "admin-provider-users-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
