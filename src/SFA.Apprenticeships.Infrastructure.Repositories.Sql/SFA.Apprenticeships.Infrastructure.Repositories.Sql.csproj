@@ -145,6 +145,7 @@
     <Compile Include="Schemas\dbo\ApplicationStatsRepository.cs" />
     <Compile Include="Schemas\dbo\VacancyOwnerRelationshipMappers.cs" />
     <Compile Include="Schemas\dbo\VacancyOwnerRelationshipRepository.cs" />
+    <Compile Include="Schemas\Employer\IoC\EmployerRepositoryRegistry.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />

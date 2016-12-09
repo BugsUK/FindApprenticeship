@@ -1,10 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Employers.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Employer.IoC
 {
+    using Application.Interfaces;
     using Domain.Raa.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
-    using Sql.Schemas.dbo;
+    using dbo;
     using StructureMap.Configuration.DSL;
 
     public class EmployerRepositoryRegistry : Registry

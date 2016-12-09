@@ -31,9 +31,9 @@ namespace SFA.Apprenticeship.Web.Api.DependencyResolution {
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Postcode.IoC;
     using Apprenticeships.Infrastructure.Repositories.Mongo.Applications.IoC;
-    using Apprenticeships.Infrastructure.Repositories.Mongo.Employers.IoC;
     using Apprenticeships.Infrastructure.Repositories.Sql.Configuration;
     using Apprenticeships.Infrastructure.Repositories.Sql.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.IoC;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
     using StructureMap;

@@ -278,6 +278,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj">
+      <Project>{dd096f97-415d-4676-9f90-7aee60213f49}</Project>
+      <Name>SFA.Apprenticeships.Application.Employer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

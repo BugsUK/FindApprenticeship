@@ -18,7 +18,6 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using Infrastructure.Repositories.Mongo.Authentication.IoC;
     using Infrastructure.Repositories.Mongo.Candidates.IoC;
     using Infrastructure.Repositories.Mongo.Communication.IoC;
-    using Infrastructure.Repositories.Mongo.Employers.IoC;
     using Infrastructure.Repositories.Mongo.Users.IoC;
     using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.Repositories.Sql.IoC;
@@ -26,6 +25,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
     using Application.Interfaces;
+    using Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Provider.IoC;
     using StructureMap;
     using StructureMap.Web;

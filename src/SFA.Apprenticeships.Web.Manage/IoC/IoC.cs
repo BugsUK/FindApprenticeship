@@ -24,10 +24,10 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Infrastructure.Postcode.IoC;
     using Infrastructure.Repositories.Mongo.Applications.IoC;
     using Infrastructure.Repositories.Mongo.Candidates.IoC;
-    using Infrastructure.Repositories.Mongo.Employers.IoC;
     using Infrastructure.Repositories.Mongo.UserProfiles.IoC;
     using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.Repositories.Sql.IoC;
+    using Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Provider.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
 

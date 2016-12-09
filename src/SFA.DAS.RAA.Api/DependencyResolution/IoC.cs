@@ -1,5 +1,6 @@
 namespace SFA.DAS.RAA.Api.DependencyResolution
 {
+    using Apprenticeships.Application.Employer.IoC;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.VacancyPosting.IoC;
     using Apprenticeships.Infrastructure.Common.Configuration;
@@ -36,7 +37,10 @@ namespace SFA.DAS.RAA.Api.DependencyResolution
 
                 c.AddRegistry<VacancyRepositoryRegistry>();
                 c.AddRegistry<ProviderRepositoryRegistry>();
+                c.AddRegistry<EmployerRepositoryRegistry>();
                 c.AddRegistry<VacancyPostingServiceRegistry>();
+
+                c.AddRegistry<EmployerServiceRegistry>();
 
                 c.AddRegistry<RaaRegistry>();
             });

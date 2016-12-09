@@ -25,12 +25,12 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Mongo.Authentication.IoC;
     using Repositories.Mongo.Candidates.IoC;
     using Repositories.Mongo.Communication.IoC;
-    using Repositories.Mongo.Employers.IoC;
     using Repositories.Mongo.Users.IoC;
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
     using Application.Interfaces;
+    using Repositories.Sql.Schemas.Employer.IoC;
     using Repositories.Sql.Schemas.Provider.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
