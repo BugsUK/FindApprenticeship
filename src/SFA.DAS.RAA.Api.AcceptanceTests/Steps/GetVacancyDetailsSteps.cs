@@ -1,7 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
     using System;
-    using System.Net;
     using System.Net.Http.Headers;
     using Constants;
     using Extensions;
@@ -9,7 +8,6 @@
     using Models;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
-    using RestSharp;
     using TechTalk.SpecFlow;
 
     [Binding]

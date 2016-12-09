@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Http;
+    using Apprenticeships.Application.VacancyPosting.Strategies;
     using Constants;
     using Models;
     using Swashbuckle.Swagger.Annotations;
@@ -9,6 +10,13 @@
     [Authorize(Roles = Roles.Provider)]
     public class VacancyController : ApiController
     {
+        private readonly IGetVacancyStrategies _getVacancyStrategies;
+
+        public VacancyController(IGetVacancyStrategies getVacancyStrategies)
+        {
+            _getVacancyStrategies = getVacancyStrategies;
+        }
+
         [Route("vacancies")]
         [SwaggerOperation("GetAll")]
         public IEnumerable<string> Get()

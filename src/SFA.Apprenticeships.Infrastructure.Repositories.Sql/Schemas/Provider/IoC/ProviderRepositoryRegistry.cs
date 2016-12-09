@@ -1,11 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.IoC
 {
+    using Application.Interfaces;
     using Domain.Raa.Interfaces.Repositories;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
-    using Sql.Schemas.Provider;
-    using Sql.Schemas.dbo;
+    using dbo;
+    using Provider;
     using StructureMap.Configuration.DSL;
 
     public class ProviderRepositoryRegistry : Registry
