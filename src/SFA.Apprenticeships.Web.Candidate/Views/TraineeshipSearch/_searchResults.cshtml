@@ -32,7 +32,7 @@ else
                 foreach (var vacancy in Model.Vacancies)
                 {
                     var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Traineeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
-                    <li class="search-results__item section-border">
+                    <li class="search-results__item sfa-section-bordered">
                         <div class="hgroup-medium">
                             <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
                             <p id="posted-date-@vacancy.Id" class="heading-secondary ">

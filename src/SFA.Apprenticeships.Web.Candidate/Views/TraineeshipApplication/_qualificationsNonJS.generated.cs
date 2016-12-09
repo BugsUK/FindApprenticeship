@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
         {
 WriteLiteral("<noscript>\r\n    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyQualifications\"");
 

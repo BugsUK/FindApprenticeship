@@ -390,7 +390,7 @@ Write(Html.DisplayFor(m => m.Candidate.AboutYou));
             #line hidden
 WriteLiteral("    <section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <h2");
 
@@ -416,15 +416,15 @@ WriteLiteral("                <a");
 
 WriteLiteral(" class=\"icon-with-text\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3568), Tuple.Create("\"", 3688)
+WriteAttribute("href", Tuple.Create(" href=\"", 3574), Tuple.Create("\"", 3694)
             
             #line 66 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 3575), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
+, Tuple.Create(Tuple.Create("", 3581), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
             
             #line default
             #line hidden
-, 3575), false)
-, Tuple.Create(Tuple.Create("", 3659), Tuple.Create("#applyEmployerQuestionAnswers", 3659), true)
+, 3581), false)
+, Tuple.Create(Tuple.Create("", 3665), Tuple.Create("#applyEmployerQuestionAnswers", 3665), true)
 );
 
 WriteLiteral(">\r\n                    <i");
@@ -527,14 +527,14 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=", 4798), Tuple.Create("", 4851)
+WriteAttribute("onclick", Tuple.Create(" onclick=", 4804), Tuple.Create("", 4857)
             
             #line 90 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 4807), Tuple.Create<System.Object, System.Int32>(string.Format(AnalyticsTag, "BottomButton")
+, Tuple.Create(Tuple.Create("", 4813), Tuple.Create<System.Object, System.Int32>(string.Format(AnalyticsTag, "BottomButton")
             
             #line default
             #line hidden
-, 4807), false)
+, 4813), false)
 );
 
 WriteLiteral(">Submit application</button>\r\n\r\n");
@@ -568,14 +568,14 @@ WriteLiteral(">Last saved at ");
             #line hidden
 WriteLiteral(" to <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5065), Tuple.Create("\"", 5121)
+WriteAttribute("href", Tuple.Create(" href=\"", 5071), Tuple.Create("\"", 5127)
             
             #line 94 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                                                        , Tuple.Create(Tuple.Create("", 5072), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+                                                        , Tuple.Create(Tuple.Create("", 5078), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 5072), false)
+, 5078), false)
 );
 
 WriteLiteral(" title=\"My Applications\"");

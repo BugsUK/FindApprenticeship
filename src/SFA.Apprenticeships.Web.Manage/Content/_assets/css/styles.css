@@ -186,7 +186,7 @@ iframe, object, embed {
   padding-top: 30px;
   padding-bottom: 30px; }
 
-.section-bordered {
+.sfa-section-bordered {
   border-bottom: 1px solid #bfc1c3; }
 
 .sfa-table {
@@ -206,7 +206,6 @@ iframe, object, embed {
 
 .search-result {
   position: relative;
-  border-bottom: 1px solid #bfc1c3;
   padding-bottom: 30px; }
 
 .save-vacancy {

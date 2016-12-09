@@ -65,7 +65,7 @@ WriteLiteral(">\r\n    <fieldset");
 
 WriteLiteral(" id=\"applyWorkExperience\"");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <legend");
 

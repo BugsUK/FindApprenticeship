@@ -105,7 +105,7 @@
             @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship).RouteValues, new { @class = "tabbed-tab no-js" + traineeshipsTabControlClass })
         </nav>
 
-        <section class="section-bordered">
+        <section class="sfa-section-bordered">
             <div class="grid-row grid-row-padded">
                 <div class="column-one-half">
                     <h2 class="heading-large no-margins">
@@ -139,7 +139,7 @@
             </div>
         </section>
 
-        <section class="sfa-medium-bottom-padding sfa-xlarge-top-padding section-bordered">
+        <section class="sfa-medium-bottom-padding sfa-xlarge-top-padding sfa-section-bordered">
             @{
                 var newApplicationsCount = Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount;
             }

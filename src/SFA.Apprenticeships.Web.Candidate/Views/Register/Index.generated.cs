@@ -124,7 +124,7 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <legend");
 
@@ -174,7 +174,7 @@ WriteLiteral("\r\n    </fieldset>\r\n");
             #line hidden
 WriteLiteral("    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <legend");
 
@@ -236,7 +236,7 @@ WriteLiteral("\r\n\r\n        </div>\r\n    </fieldset>\r\n");
             #line hidden
 WriteLiteral("    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <legend");
 
@@ -274,15 +274,15 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" class=\"inl-block inpage-focus\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2222), Tuple.Create("\"", 2262)
-, Tuple.Create(Tuple.Create("", 2229), Tuple.Create("#", 2229), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2297), Tuple.Create("\"", 2337)
+, Tuple.Create(Tuple.Create("", 2304), Tuple.Create("#", 2304), true)
             
             #line 45 "..\..\Views\Register\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2230), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
+, Tuple.Create(Tuple.Create("", 2305), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
             
             #line default
             #line hidden
-, 2230), false)
+, 2305), false)
 );
 
 WriteLiteral(">Edit your email</a>\r\n        </div>\r\n        \r\n        <div");

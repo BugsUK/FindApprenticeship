@@ -130,7 +130,7 @@ WriteLiteral(" class=\"fa fa-question-circle\"");
 WriteLiteral("></i>How to apply for an apprenticeship</a>\r\n            <p>(interactive walkthro" +
 "ugh)</p>\r\n        </div>\r\n    </div>\r\n</div>\r\n<section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -165,7 +165,7 @@ WriteLiteral(" href=\"search-details.html\"");
 
 WriteLiteral(">View apprenticeship</a>\r\n        </p>\r\n    </div>\r\n</section>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border grid-row\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered grid-row\"");
 
 WriteLiteral(">\r\n    <legend");
 
@@ -275,7 +275,7 @@ WriteLiteral(" id=\"phoneInputPre\"");
 
 WriteLiteral(">07954 389421</span>\r\n        </div>\r\n    </div>\r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyEducation\"");
 
@@ -357,7 +357,7 @@ WriteLiteral("\r\n                    maxlength=\"4\"");
 
 WriteLiteral(">\r\n        </div>\r\n    </div>\r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyQualifications\"");
 
@@ -1324,7 +1324,7 @@ WriteLiteral(" class=\"visuallyhidden\"");
 WriteLiteral(">Remove</i></i></td></tr></tbody></table></div>\r\n            </div>\r\n        </di" +
 "v>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyWorkExperience\"");
 
@@ -1997,7 +1997,7 @@ WriteLiteral(" class=\"cell-span editable-work work-to-span work-year\"");
 WriteLiteral(">Current</span></td><td></td><td></td></tr></tbody></table></div></div>\r\n        " +
 "    </div>\r\n        </div>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyTraining\"");
 
@@ -2325,7 +2325,7 @@ WriteLiteral(" class=\"training-wrapper grid-3-4\"");
 
 WriteLiteral(">\r\n            </div>\r\n        </div>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyAboutYou\"");
 
@@ -2511,7 +2511,7 @@ WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral("></span>\r\n    </div>\r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyAdditional\"");
 

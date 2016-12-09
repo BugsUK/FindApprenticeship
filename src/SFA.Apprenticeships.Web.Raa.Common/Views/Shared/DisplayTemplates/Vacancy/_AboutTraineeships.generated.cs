@@ -58,7 +58,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
             #line hidden
 WriteLiteral("    <section");
 
-WriteLiteral(" class=\"section-border grid-row\"");
+WriteLiteral(" class=\"sfa-section-bordered grid-row\"");
 
 WriteLiteral(" id=\"about-traineeships\"");
 
