@@ -129,22 +129,24 @@ Categories and sub-categories
 ul#category-list li details {
   padding-left: 22px; }
   ul#category-list li details ul {
-    float: none;
-    max-height: 11em;
-    overflow-y: auto; }
-    @media (min-width: 641px) {
-      ul#category-list li details ul {
-        max-height: 20em; } }
-    @media (min-width: 769px) {
-      ul#category-list li details ul {
-        max-height: 31em; } }
+    float: none; }
+
+.sfa-scrollable {
+  max-height: 11em;
+  overflow-y: auto; }
+  @media (min-width: 641px) {
+    .sfa-scrollable {
+      max-height: 20em; } }
+  @media (min-width: 769px) {
+    .sfa-scrollable {
+      max-height: 31em; } }
 
 /* -------------------------------------------------------------------
 Tabbed content
 ------------------------------------------------------------------- */
-.browsetab, .searchtab {
+.browsetab, .searchtab, .savedsearchtab {
   display: none !important; }
-  .browsetab.active, .searchtab.active {
+  .browsetab.active, .searchtab.active, .savedsearchtab.active {
     display: inline-block !important; }
 
 /* -------------------------------------------------------------------
@@ -153,6 +155,9 @@ Custom Typography
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
+.sfa-disabled {
+  opacity: 0.5; }
+
 .force-full-width {
   width: 100% !important; }
 

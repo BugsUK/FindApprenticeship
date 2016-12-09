@@ -73,9 +73,8 @@ $(function() {
 
   $(".block-label, .form-checkbox, .form-radio").each(function () {
     var $target = $(this).attr('data-target');
-
     // Add focus
-    $(".block-label input").focus(function() {
+    $(this).find("input").focus(function() {
       $("label[for='" + this.id + "']").addClass("add-focus");
       }).blur(function() {
       $("label").removeClass("add-focus");

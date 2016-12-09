@@ -179,16 +179,19 @@ ul#category-list {
             padding-left:22px;
             ul {
                 float:none;
-                max-height: 11em;
-                overflow-y:auto;
-                @include media(tablet){
-                    max-height: 20em;
-                }
-                @include media(desktop){
-                    max-height:31em;
-                }
             }
         }
+    }
+}
+
+.sfa-scrollable {
+    max-height: 11em;
+    overflow-y:auto;
+    @include media(tablet){
+        max-height: 20em;
+    }
+    @include media(desktop){
+        max-height:31em;
     }
 }
 
@@ -196,7 +199,7 @@ ul#category-list {
 Tabbed content
 ------------------------------------------------------------------- */
 
-.browsetab, .searchtab {
+.browsetab, .searchtab, .savedsearchtab {
     display: none !important;
     &.active {
         display:inline-block !important;
@@ -211,6 +214,10 @@ Custom Typography
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
+
+.sfa-disabled {
+    opacity:0.5;
+}
 
 .force-full-width {
     width: 100% !important;

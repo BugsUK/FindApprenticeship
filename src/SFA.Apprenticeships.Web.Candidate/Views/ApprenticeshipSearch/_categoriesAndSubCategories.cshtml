@@ -30,7 +30,7 @@
                         </label>
                         <details @openAttr class="@openAttr blocklabel-content sfa-hide" id="@(inputId)-details">
                             <summary><span class="summary">@subCategories.Count sub-categories</span></summary>
-                            <ul id="@subCategoryListId" class="list-checkradio list panel panel-border-narrow">
+                            <ul id="@subCategoryListId" class="list-checkradio list panel panel-border-narrow sfa-scrollable">
                                 @foreach (var subCategory in subCategories)
                                 {
                                     checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
