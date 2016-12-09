@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Http;
+    using Api.DependencyResolution;
     using Apprenticeships.Domain.Entities.Raa.RaaApi;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Constants;
@@ -10,17 +11,18 @@
     using Owin;
     using Services;
     using UnitTests.Factories;
+    using IoC = DependencyResolution.IoC;
 
     public class TestStartup : Startup
     {
         public override void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
-
+            
             // do your web api, IoC, etc setup here
-            //var container = IoC.Initialize();
+            var container = IoC.Initialize();
 
-            //config.DependencyResolver = new StructureMapWebApiDependencyResolver(container);
+            config.DependencyResolver = new StructureMapWebApiDependencyResolver(container);
 
             var raaApiUserRepository = new Mock<IRaaApiUserRepository>();
             raaApiUserRepository.Setup(r => r.GetUser(It.IsAny<Guid>())).Returns(RaaApiUser.UnknownApiUser);

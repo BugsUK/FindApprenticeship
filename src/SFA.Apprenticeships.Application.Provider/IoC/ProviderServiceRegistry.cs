@@ -1,12 +1,11 @@
-namespace SFA.DAS.RAA.Api.DependencyResolution
+﻿namespace SFA.Apprenticeships.Application.Provider.IoC
 {
-    using Services;
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
 
-    public class RaaRegistry : Registry
+    public class ProviderServiceRegistry : Registry
     {
-        public RaaRegistry()
+        public ProviderServiceRegistry()
         {
             Scan(
                 scan =>
@@ -14,8 +13,6 @@ namespace SFA.DAS.RAA.Api.DependencyResolution
                     scan.TheCallingAssembly();
                     scan.WithDefaultConventions();
                 });
-
-            For<IAuthenticationService>().Use<ApiKeyAuthenticationService>();
         }
     }
 }

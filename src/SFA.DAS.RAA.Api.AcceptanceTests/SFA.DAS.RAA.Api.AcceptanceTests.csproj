@@ -91,6 +91,10 @@
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin.Hosting, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
       <Private>True</Private>
@@ -171,6 +175,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
+    <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Steps\AuthorizationSteps.cs" />
     <Compile Include="Constants\ApiKeys.cs" />
     <Compile Include="Constants\ScenarioContextKeys.cs" />
@@ -230,13 +236,65 @@
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">
+      <Project>{C91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
+      <Name>SFA.Apprenticeships.Application.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj">
+      <Project>{DD096F97-415D-4676-9F90-7AEE60213F49}</Project>
+      <Name>SFA.Apprenticeships.Application.Employer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
+      <Project>{920F5834-459D-4E20-9B17-AAD52D2CC8FE}</Project>
+      <Name>SFA.Apprenticeships.Application.Provider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
+      <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
+      <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
+      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
+      <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
+      <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
+      <Project>{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.WebServices\SFA.Apprenticeships.Infrastructure.WebServices.csproj">
+      <Project>{0D94A2DF-6D5A-4DEC-B6A1-137F3B461B47}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.WebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.DAS.RAA.Api.UnitTests\SFA.DAS.RAA.Api.UnitTests.csproj">
       <Project>{3ca36139-bbdd-4305-b15a-e9500606b672}</Project>
@@ -246,10 +304,12 @@
       <Project>{50961a74-0e1b-490d-99dd-e8f1cd20f6c2}</Project>
       <Name>SFA.DAS.RAA.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1F500137-C8E9-49AA-886E-1922D9D870EB}</Project>
+      <Name>SFA.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DependencyResolution\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
