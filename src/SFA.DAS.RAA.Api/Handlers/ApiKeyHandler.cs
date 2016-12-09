@@ -4,7 +4,6 @@
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Web;
     using Services;
 
     public class ApiKeyHandler : DelegatingHandler
@@ -20,8 +19,7 @@
         {
             //Set the current principal based on authentication response
             var principal = _authenticationService.Authenticate(request.Headers.ToDictionary(h => h.Key, h => string.Join(",", h.Value)));
-            Thread.CurrentPrincipal = principal;
-            HttpContext.Current.User = principal;
+            request.GetRequestContext().Principal = principal;
 
             //Allow the request to process further down the pipeline
             var response = await base.SendAsync(request, cancellationToken);

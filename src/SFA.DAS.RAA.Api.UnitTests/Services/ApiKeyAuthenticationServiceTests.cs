@@ -9,6 +9,7 @@
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Constants;
     using Extensions;
+    using Factories;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -30,25 +31,9 @@
             ReferencedEntityGuid = Guid.NewGuid()
         };
 
-        private readonly RaaApiUser _validProviderApiUser = new RaaApiUser
-        {
-            PrimaryApiKey = Guid.NewGuid(),
-            SecondaryApiKey = Guid.NewGuid(),
-            UserType = RaaApiUserType.Provider,
-            ReferencedEntityId = 2,
-            ReferencedEntityGuid = Guid.NewGuid(),
-            ReferencedEntitySurrogateId = 10033670
-        };
+        private readonly RaaApiUser _validProviderApiUser = RaaApiUserFactory.GetValidProviderApiUser(Guid.NewGuid());
 
-        private readonly RaaApiUser _validEmployerApiUser = new RaaApiUser
-        {
-            PrimaryApiKey = Guid.NewGuid(),
-            SecondaryApiKey = Guid.NewGuid(),
-            UserType = RaaApiUserType.Employer,
-            ReferencedEntityId = 3,
-            ReferencedEntityGuid = Guid.NewGuid(),
-            ReferencedEntitySurrogateId = 228616654
-        };
+        private readonly RaaApiUser _validEmployerApiUser = RaaApiUserFactory.GetValidEmployerApiUser(Guid.NewGuid());
 
         private Mock<IRaaApiUserRepository> _raaApiUserRepository;
         private IAuthenticationService _authenticationService;

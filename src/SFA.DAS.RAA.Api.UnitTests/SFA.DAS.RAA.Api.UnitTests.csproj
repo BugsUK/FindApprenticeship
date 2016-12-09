@@ -70,6 +70,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Factories\RaaApiUserFactory.cs" />
     <Compile Include="Handlers\ApiKeyHandlerTests.cs" />
     <Compile Include="PilotLightTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
