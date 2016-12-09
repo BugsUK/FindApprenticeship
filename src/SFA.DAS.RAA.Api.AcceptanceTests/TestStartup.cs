@@ -15,9 +15,9 @@
     {
         public override void Configuration(IAppBuilder app)
         {
-            // do your web api, IoC, etc setup here
             var config = new HttpConfiguration();
 
+            // do your web api, IoC, etc setup here
             //var container = IoC.Initialize();
 
             //config.DependencyResolver = new StructureMapWebApiDependencyResolver(container);

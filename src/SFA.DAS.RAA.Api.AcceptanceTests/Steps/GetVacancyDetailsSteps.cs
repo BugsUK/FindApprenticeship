@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net;
+    using System.Net.Http.Headers;
     using Constants;
     using Extensions;
     using FluentAssertions;
@@ -19,18 +20,19 @@
         {
             var vacancy = new Fixture().Build<Vacancy>().With(v => v.VacancyId, vacancyId);
             ScenarioContext.Current.Add($"vacancyId: {vacancyId}", vacancy);
+            
+            var httpClient = FeatureContext.Current.TestServer().HttpClient;
 
             var vacancyUri = $"/vacancy/?vacancyId={vacancyId}";
-            var request = new RestRequest(vacancyUri, Method.GET);
+            
             Guid apiKey;
             if (ScenarioContext.Current.TryGetValue(ScenarioContextKeys.ApiKey, out apiKey))
             {
                 ScenarioContext.Current.Remove(ScenarioContextKeys.ApiKey);
-                request.AddHeader(HttpRequestHeader.Authorization.ToString(), apiKey.ToString());
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", apiKey.ToString());
             }
 
-            var testServer = FeatureContext.Current.TestServer();
-            using (var response = testServer.HttpClient.GetAsync(vacancyUri).Result)
+            using (var response = httpClient.GetAsync(vacancyUri).Result)
             {
                 ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
                 using (var httpContent = response.Content)

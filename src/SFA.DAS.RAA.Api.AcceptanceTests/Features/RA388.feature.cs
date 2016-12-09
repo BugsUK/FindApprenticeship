@@ -65,21 +65,38 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         }
         
         [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details without authorization")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        public virtual void GetVacancyDetailsWithoutAuthorization()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details without authorization", new string[] {
+                        "RA388"});
+#line 7
+this.ScenarioSetup(scenarioInfo);
+#line 8
+ testRunner.When("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Get vacancy details")]
         [NUnit.Framework.CategoryAttribute("RA388")]
         public virtual void GetVacancyDetails()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details", new string[] {
                         "RA388"});
-#line 7
+#line 12
 this.ScenarioSetup(scenarioInfo);
-#line 8
+#line 13
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 9
+#line 14
  testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
+#line 15
  testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 11
+#line 16
  testRunner.And("I see the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
