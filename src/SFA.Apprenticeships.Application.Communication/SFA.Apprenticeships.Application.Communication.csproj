@@ -76,6 +76,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -85,6 +93,7 @@
     </Compile>
     <Compile Include="CommunicationService.cs" />
     <Compile Include="EmployerCommunicationService.cs" />
+    <Compile Include="IoC\CommunicationServiceRegistry.cs" />
     <Compile Include="ProviderCommunicationService.cs" />
     <Compile Include="Strategies\ISendEmployerCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendProviderUserCommunicationStrategy.cs" />
