@@ -329,7 +329,8 @@ USING (VALUES
   (359, N'00GG', N'00GG', N'Shropshire', 33),
   (360, N'00HE', N'00HE', N'Cornwall', 6),
   (361, N'00HY', N'00HY', N'Wiltshire', 44),
-  (362, N'00KC', N'00KC', N'Central Bedfordshire', 1)
+  (362, N'00KC', N'00KC', N'Central Bedfordshire', 1),
+  (363, N'00NJ', N'00NJ', N'Flintshire', 48)
 ) 
 AS Source (LocalAuthorityId, CodeName, ShortName, FullName, CountyId) 
 ON Target.LocalAuthorityId = Source.LocalAuthorityId 
