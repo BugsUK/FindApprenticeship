@@ -17,12 +17,10 @@
         [When(@"I request the vacancy details for the vacancy with id: (.*)")]
         public void WhenIRequestTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {
-            var testServer = FeatureContext.Current.TestServer();
-
             var vacancy = new Fixture().Build<Vacancy>().With(v => v.VacancyId, vacancyId);
             ScenarioContext.Current.Add($"vacancyId: {vacancyId}", vacancy);
 
-            var vacancyUri = $"/vacancy/?id={vacancyId}";
+            var vacancyUri = $"/vacancy/?vacancyId={vacancyId}";
             var request = new RestRequest(vacancyUri, Method.GET);
             Guid apiKey;
             if (ScenarioContext.Current.TryGetValue(ScenarioContextKeys.ApiKey, out apiKey))
@@ -30,13 +28,18 @@
                 ScenarioContext.Current.Remove(ScenarioContextKeys.ApiKey);
                 request.AddHeader(HttpRequestHeader.Authorization.ToString(), apiKey.ToString());
             }
-            var client = ScenarioContext.Current.Get<IRestClient>();
 
-            var response = client.Execute(request);
-            ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
-
-            var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(response.Content);
-            ScenarioContext.Current.Add(vacancyUri, responseVacancy);
+            var testServer = FeatureContext.Current.TestServer();
+            using (var response = testServer.HttpClient.GetAsync(vacancyUri).Result)
+            {
+                ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
+                using (var httpContent = response.Content)
+                {
+                    var content = httpContent.ReadAsStringAsync().Result;
+                    var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(content);
+                    ScenarioContext.Current.Add(vacancyUri, responseVacancy);
+                }
+            }
         }
 
         [Then(@"I see the vacancy details for the vacancy with id: (.*)")]

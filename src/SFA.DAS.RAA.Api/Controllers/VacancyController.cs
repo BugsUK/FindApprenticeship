@@ -6,7 +6,7 @@
     using Models;
     using Swashbuckle.Swagger.Annotations;
 
-    [Authorize(Roles = Roles.Provider)]
+    //[Authorize(Roles = Roles.Provider)]
     public class VacancyController : ApiController
     {
         [Route("vacancies")]
