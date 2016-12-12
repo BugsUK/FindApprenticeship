@@ -12,6 +12,7 @@
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
     using TechTalk.SpecFlow;
+    using UnitTests.Factories;
     using DbVacancy = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy;
 
     [Binding]
@@ -20,15 +21,27 @@
         [When(@"I request the vacancy details for the vacancy with id: (.*)")]
         public void WhenIRequestTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {
-            var vacancy = new Fixture().Build<DbVacancy>()
+            var vacancy1 = new Fixture().Build<DbVacancy>()
                 .With(v => v.VacancyId, vacancyId)
                 .With(v => v.VacancyStatusId, (int)VacancyStatus.Live)
+                .With(v => v.ContractOwnerID, RaaApiUserFactory.SkillsFundingAgencyProviderId)
                 .Create();
-            ScenarioContext.Current.Add($"vacancyId: {vacancyId}", vacancy);
+            var vacancy2 = new Fixture().Build<DbVacancy>()
+                .With(v => v.VacancyId, vacancyId)
+                .With(v => v.VacancyStatusId, (int)VacancyStatus.Live)
+                .With(v => v.ContractOwnerID, -1)
+                .Create();
+
+            ScenarioContext.Current.Add("vacancyId: 1", vacancy1);
+            ScenarioContext.Current.Add("vacancyId: 2", vacancy2);
 
             RaaMockFactory.GetMockGetOpenConnection().Setup(
-                m => m.Query<DbVacancy>(VacancyRepository.SelectByIdSql, It.Is<object>(o => o.GetHashCode() == new {vacancyId }.GetHashCode()), null, null))
-                .Returns(new [] { vacancy });
+                m => m.Query<DbVacancy>(VacancyRepository.SelectByIdSql, It.Is<object>(o => o.GetHashCode() == new { vacancyId = 1 }.GetHashCode()), null, null))
+                .Returns(new [] { vacancy1 });
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<DbVacancy>(VacancyRepository.SelectByIdSql, It.Is<object>(o => o.GetHashCode() == new { vacancyId = 2 }.GetHashCode()), null, null))
+                .Returns(new [] { vacancy2 });
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
 

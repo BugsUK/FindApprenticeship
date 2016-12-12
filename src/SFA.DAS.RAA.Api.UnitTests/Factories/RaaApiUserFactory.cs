@@ -5,6 +5,9 @@
 
     public class RaaApiUserFactory
     {
+        public const int SkillsFundingAgencyProviderId = 1170;
+        public const int SkillsFundingAgencyUkprn = 10033670;
+
         public static RaaApiUser GetValidProviderApiUser(Guid primaryApiKey)
         {
             return new RaaApiUser
@@ -12,7 +15,7 @@
                 PrimaryApiKey = primaryApiKey,
                 SecondaryApiKey = Guid.NewGuid(),
                 UserType = RaaApiUserType.Provider,
-                ReferencedEntityId = 1170,
+                ReferencedEntityId = SkillsFundingAgencyProviderId,
                 ReferencedEntityGuid = null,
                 ReferencedEntitySurrogateId = 10033670 //Skills funding agency
             };
