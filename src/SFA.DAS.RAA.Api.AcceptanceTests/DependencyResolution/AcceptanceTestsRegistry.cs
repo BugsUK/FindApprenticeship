@@ -33,8 +33,7 @@
 
             //Normally in the CommonRegistry but need to do manually in acceptance tests due to test version of ConfigurationManager and Service
             For<IDateTimeService>().Use<DateTimeService>();
-            //TODO: Implement this for the new API
-            For<ICurrentUserService>().Use(new Mock<CurrentUserService>().Object);
+            For<ICurrentUserService>().Use<CurrentUserService>();
 
             //TODO: Should be registered in the service the strategy belongs to
             For<IMapper>().Singleton().Use<EmployerMappers>().Name = "EmployerMappers";

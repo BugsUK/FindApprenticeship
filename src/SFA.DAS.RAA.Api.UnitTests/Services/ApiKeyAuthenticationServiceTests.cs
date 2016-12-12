@@ -5,14 +5,16 @@
     using System.Security.Claims;
     using System.Security.Principal;
     using Api.Services;
+    using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.RaaApi;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
-    using Constants;
     using Extensions;
     using Factories;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using ClaimTypes = System.Security.Claims.ClaimTypes;
+    using RaaClaimTypes = Apprenticeships.Domain.Entities.Raa.ClaimTypes;
 
     [TestFixture]
     public class ApiKeyAuthenticationServiceTests
@@ -57,6 +59,7 @@
             var principal = _authenticationService.Authenticate(claims);
 
             var expectedName = $"RaaApiUser_MissingApiKey";
+            principal.IsInRole(Roles.Api).Should().BeFalse();
             principal.IsInRole(Roles.Provider).Should().BeFalse();
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
@@ -64,6 +67,7 @@
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication).Should().BeFalse();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeFalse();
+            claimsIdentity.HasClaim(c => c.Type == RaaClaimTypes.Ukprn).Should().BeFalse();
             claimsIdentity.Name.Should().Be(expectedName);
             var raaApiUser = claimsIdentity.GetRaaApiUser();
             raaApiUser.Equals(RaaApiUser.UnknownApiUser).Should().BeTrue();
@@ -79,6 +83,7 @@
             var principal = _authenticationService.Authenticate(claims);
 
             var expectedName = $"RaaApiUser_InvalidApiKey_{InvalidApiKey}";
+            principal.IsInRole(Roles.Api).Should().BeFalse();
             principal.IsInRole(Roles.Provider).Should().BeFalse();
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
@@ -86,6 +91,7 @@
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == InvalidApiKey).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeFalse();
+            claimsIdentity.HasClaim(c => c.Type == RaaClaimTypes.Ukprn).Should().BeFalse();
             claimsIdentity.Name.Should().Be(expectedName);
             var raaApiUser = claimsIdentity.GetRaaApiUser();
             raaApiUser.Equals(RaaApiUser.UnknownApiUser).Should().BeTrue();
@@ -101,6 +107,7 @@
             var principal = _authenticationService.Authenticate(claims);
 
             var expectedName = $"RaaApiUser_UnknownApiKey_{_unknownApiKey}";
+            principal.IsInRole(Roles.Api).Should().BeFalse();
             principal.IsInRole(Roles.Provider).Should().BeFalse();
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
@@ -108,6 +115,7 @@
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _unknownApiKey.ToString()).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == RaaClaimTypes.Ukprn).Should().BeFalse();
             claimsIdentity.Name.Should().Be(expectedName);
             var raaApiUser = claimsIdentity.GetRaaApiUser();
             raaApiUser.Equals(RaaApiUser.UnknownApiUser).Should().BeTrue();
@@ -123,6 +131,7 @@
             var principal = _authenticationService.Authenticate(claims);
 
             var expectedName = $"RaaApiUser_ApiKey_{_validApiKey}";
+            principal.IsInRole(Roles.Api).Should().BeTrue();
             principal.IsInRole(Roles.Provider).Should().BeFalse();
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
@@ -130,6 +139,7 @@
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validApiKey.ToString()).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == RaaClaimTypes.Ukprn).Should().BeFalse();
             claimsIdentity.Name.Should().Be(expectedName);
             var raaApiUser = claimsIdentity.GetRaaApiUser();
             raaApiUser.Equals(_validApiUser).Should().BeTrue();
@@ -145,6 +155,7 @@
             var principal = _authenticationService.Authenticate(claims);
 
             var expectedName = $"RaaApiUser_ApiKey_{_validProviderApiKey}_Provider";
+            principal.IsInRole(Roles.Api).Should().BeTrue();
             principal.IsInRole(Roles.Provider).Should().BeTrue();
             principal.IsInRole(Roles.Employer).Should().BeFalse();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
@@ -152,6 +163,7 @@
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validProviderApiKey.ToString()).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == RaaClaimTypes.Ukprn && c.Value == _validProviderApiUser.ReferencedEntitySurrogateId.ToString()).Should().BeTrue();
             claimsIdentity.Name.Should().Be(expectedName);
             var raaApiUser = claimsIdentity.GetRaaApiUser();
             raaApiUser.Equals(_validProviderApiUser).Should().BeTrue();
@@ -167,6 +179,7 @@
             var principal = _authenticationService.Authenticate(claims);
 
             var expectedName = $"RaaApiUser_ApiKey_{_validEmployerApiKey}_Employer";
+            principal.IsInRole(Roles.Api).Should().BeTrue();
             principal.IsInRole(Roles.Provider).Should().BeFalse();
             principal.IsInRole(Roles.Employer).Should().BeTrue();
             principal.IsInRole(Roles.Admin).Should().BeFalse();
@@ -174,6 +187,7 @@
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Authentication && c.Value == _validEmployerApiKey.ToString()).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Name && c.Value == expectedName).Should().BeTrue();
             claimsIdentity.HasClaim(c => c.Type == ClaimTypes.UserData).Should().BeTrue();
+            claimsIdentity.HasClaim(c => c.Type == RaaClaimTypes.Ukprn).Should().BeFalse();
             claimsIdentity.Name.Should().Be(expectedName);
             var raaApiUser = claimsIdentity.GetRaaApiUser();
             raaApiUser.Equals(_validEmployerApiUser).Should().BeTrue();

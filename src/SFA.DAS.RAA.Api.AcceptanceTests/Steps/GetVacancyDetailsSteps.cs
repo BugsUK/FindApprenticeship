@@ -66,5 +66,16 @@
             var comparer = new DbVacancyComparer();
             comparer.Equals(vacancy, responseVacancy).Should().BeTrue();
         }
+
+        [Then(@"I do not see the vacancy details for the vacancy with id: (.*)")]
+        public void ThenIDoNotSeeTheVacancyDetailsForTheVacancyWithId(int vacancyId)
+        {
+            var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyId: {vacancyId}");
+            var vacancyUri = string.Format(UriFormats.VacancyUriFormat, vacancyId);
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
+
+            vacancy.Should().NotBeNull();
+            responseVacancy.Should().BeNull();
+        }
     }
 }

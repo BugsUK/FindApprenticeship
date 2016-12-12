@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Http;
-    using Constants;
+    using Apprenticeships.Domain.Entities.Raa;
     using Swashbuckle.Swagger.Annotations;
 
     [Authorize(Roles = Roles.Provider)]

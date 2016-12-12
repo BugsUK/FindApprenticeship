@@ -5,10 +5,12 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Security.Principal;
+    using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.RaaApi;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
-    using Constants;
     using Newtonsoft.Json;
+    using ClaimTypes = System.Security.Claims.ClaimTypes;
+    using RaaClaimTypes = Apprenticeships.Domain.Entities.Raa.ClaimTypes;
 
     public class ApiKeyAuthenticationService : IAuthenticationService
     {
@@ -42,6 +44,7 @@
                     {
                         case RaaApiUserType.Provider:
                             identityClaims.Add(new Claim(ClaimTypes.Role, Roles.Provider));
+                            identityClaims.Add(new Claim(RaaClaimTypes.Ukprn, user.ReferencedEntitySurrogateId.ToString()));
                             namePostfix = "_Provider";
                             break;
                         case RaaApiUserType.Employer:
@@ -51,6 +54,10 @@
                     }
 
                     var isUnknownApiUser = Equals(user, RaaApiUser.UnknownApiUser);
+                    if (!isUnknownApiUser)
+                    {
+                        identityClaims.Add(new Claim(ClaimTypes.Role, Roles.Api));
+                    }
 
                     var name = isUnknownApiUser ? $"RaaApiUser_UnknownApiKey_{apiKey}" : $"RaaApiUser_ApiKey_{apiKey}{namePostfix}";
                     identityClaims.Add(new Claim(ClaimTypes.Name, name));

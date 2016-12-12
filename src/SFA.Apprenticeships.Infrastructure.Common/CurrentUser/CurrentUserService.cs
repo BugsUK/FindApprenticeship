@@ -3,8 +3,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
 
     public class CurrentUserService : ICurrentUserService
     {

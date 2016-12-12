@@ -85,6 +85,7 @@
     <Compile Include="Api\ApiEmployeeType.cs" />
     <Compile Include="Api\ApiEndpoint.cs" />
     <Compile Include="Api\ApiUser.cs" />
+    <Compile Include="ClaimTypes.cs" />
     <Compile Include="RaaApi\RaaApiUser.cs" />
     <Compile Include="RaaApi\RaaApiUserType.cs" />
     <Compile Include="ICreatableEntity.cs" />

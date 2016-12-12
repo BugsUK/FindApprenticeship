@@ -26,3 +26,10 @@ Scenario: Get vacancy details
 	And I request the vacancy details for the vacancy with id: 1
 	Then The response status is: OK
 	And I see the vacancy details for the vacancy with id: 1
+
+@RA388
+Scenario: Get vacancy details for different provider
+	When I authorize my request with a Provider API key
+	And I request the vacancy details for the vacancy with id: 2
+	Then The response status is: Unauthorized
+	And I do not see the vacancy details for the vacancy with id: 2

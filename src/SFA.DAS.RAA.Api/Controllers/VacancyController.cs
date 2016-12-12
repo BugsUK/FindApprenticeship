@@ -3,9 +3,8 @@
     using System.Collections.Generic;
     using System.Web.Http;
     using Apprenticeships.Application.VacancyPosting.Strategies;
+    using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Constants;
-    using Models;
     using Swashbuckle.Swagger.Annotations;
 
     [Authorize(Roles = Roles.Provider)]
