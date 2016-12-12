@@ -378,6 +378,7 @@
     <None Include="Content\scss\styles.scss" />
     <None Include="Content\scss\_address-service-styles.scss" />
     <None Include="Content\scss\_forms.scss" />
+    <None Include="Content\scss\_joyride-styles.scss" />
     <None Include="Content\scss\_link-styles.scss" />
     <None Include="Content\scss\_page-nav.scss" />
     <None Include="Content\scss\_select2-styles.scss" />
