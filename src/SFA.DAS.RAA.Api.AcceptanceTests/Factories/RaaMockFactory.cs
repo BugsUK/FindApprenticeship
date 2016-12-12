@@ -1,14 +1,20 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Factories
 {
+    using System.Collections.Generic;
+    using System.Data;
     using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Domain.Entities.Raa.RaaApi;
     using Apprenticeships.Domain.Interfaces.Messaging;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Apprenticeships.Infrastructure.EmployerDataService.EmployerDataService;
     using Apprenticeships.Infrastructure.Postcode.Configuration;
     using Apprenticeships.Infrastructure.Repositories.Sql.Common;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.RaaApi;
     using Apprenticeships.Infrastructure.WebServices.Wcf;
+    using Constants;
     using Infrastructure.Interfaces;
     using Moq;
+    using UnitTests.Factories;
 
     public class RaaMockFactory
     {
@@ -26,6 +32,7 @@
         private static readonly Mock<IEmployerReadRepository> MockEmployerReadRepository = new Mock<IEmployerReadRepository>();
         private static readonly Mock<IEmployerWriteRepository> MockEmployerWriteRepository = new Mock<IEmployerWriteRepository>();
         private static readonly Mock<IGetOpenConnection> MockGetOpenConnection = new Mock<IGetOpenConnection>();
+        private static readonly Mock<IDbConnection> MockDbConnection = new Mock<IDbConnection>();
         private static readonly Mock<IWcfService<EmployerLookupSoap>> MockEmployerLookupSoapService = new Mock<IWcfService<EmployerLookupSoap>>();
 
         static RaaMockFactory()
@@ -40,6 +47,19 @@
                 FindServiceEndpoint = "http://localhost",
                 RetrieveServiceEndpoint = "http://localhost"
             });
+
+
+            //Setup mock for unkown user
+            MockGetOpenConnection.Setup(m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.IsAny<object>(), null, null)).Returns(new List<RaaApiUser>());
+
+            //Setup mocks for the two valid users
+            MockGetOpenConnection.Setup(
+                m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.ProviderApiKey }.GetHashCode()), null, null))
+                .Returns(new List<RaaApiUser> {RaaApiUserFactory.GetValidProviderApiUser(ApiKeys.ProviderApiKey)});
+
+            MockGetOpenConnection.Setup(
+                m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.EmployerApiKey }.GetHashCode()), null, null))
+                .Returns(new List<RaaApiUser> { RaaApiUserFactory.GetValidEmployerApiUser(ApiKeys.EmployerApiKey) });
         }
 
         public static Mock<IConfigurationService> GetMockConfigurationService() { return MockConfigurationService; }
@@ -56,6 +76,7 @@
         public static Mock<IEmployerReadRepository> GetMockEmployerReadRepository() { return MockEmployerReadRepository; }
         public static Mock<IEmployerWriteRepository> GetMockEmployerWriteRepository() { return MockEmployerWriteRepository; }
         public static Mock<IGetOpenConnection> GetMockGetOpenConnection() { return MockGetOpenConnection; }
+        public static Mock<IDbConnection> GetMockDbConnection() { return MockDbConnection; }
         public static Mock<IWcfService<EmployerLookupSoap>> GetMockEmployerLookupSoapService() { return MockEmployerLookupSoapService; }
 
     }
