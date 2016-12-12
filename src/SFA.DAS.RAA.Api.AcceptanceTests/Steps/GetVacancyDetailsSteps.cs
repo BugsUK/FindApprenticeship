@@ -3,6 +3,7 @@
     using System.Net.Http.Headers;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
+    using Comparers;
     using Constants;
     using Extensions;
     using Factories;
@@ -55,14 +56,15 @@
         [Then(@"I see the vacancy details for the vacancy with id: (.*)")]
         public void ThenISeeTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {
-            var vacancy = ScenarioContext.Current.Get<Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>($"vacancyId: {vacancyId}");
+            var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyId: {vacancyId}");
             var vacancyUri = string.Format(UriFormats.VacancyUriFormat, vacancyId);
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
 
             vacancy.Should().NotBeNull();
             responseVacancy.Should().NotBeNull();
-            
-            vacancy.Equals(responseVacancy).Should().BeTrue();
+
+            var comparer = new DbVacancyComparer();
+            comparer.Equals(vacancy, responseVacancy).Should().BeTrue();
         }
     }
 }

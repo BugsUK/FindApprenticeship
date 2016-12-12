@@ -59,7 +59,7 @@
                             return unit;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(Unit), $"Invalid Wage Unit: {unit}");
+                            throw new ArgumentOutOfRangeException(nameof(WageUnit), $"Invalid Wage Unit: {unit}");
                     }
 
                 case WageType.LegacyWeekly:
