@@ -360,7 +360,7 @@ WriteLiteral(" class=\"training-controls\"");
 
 WriteLiteral(">\r\n                                <div");
 
-WriteLiteral(" class=\"training-edit ta-center\"");
+WriteLiteral(" class=\"training-edit sfa-align-center\"");
 
 WriteLiteral(">\r\n                                    <a");
 
@@ -381,7 +381,7 @@ WriteLiteral(" data-bind=\"ifnot: showEditButton,click: $parent.saveTrainingCour
 WriteLiteral(">Save</a>\r\n                                </div>\r\n                              " +
 "  <div");
 
-WriteLiteral(" class=\"training-delete ta-center\"");
+WriteLiteral(" class=\"training-delete sfa-align-center\"");
 
 WriteLiteral(">\r\n                                    <span");
 

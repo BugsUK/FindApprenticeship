@@ -89,21 +89,21 @@
                     </p>
                     <div class="display-table">
                         <div class="display-table__row va-bottom">
-                            <a href="#" id="emailToggle" title="Email notifications" class="display-table__cell ta-center font-black">
+                            <a href="#" id="emailToggle" title="Email notifications" class="display-table__cell sfa-align-center font-black">
                                 <span class="notification-pulltop"><i class="fa fa-envelope-o no-right-margin"></i></span>
                             </a>
-                            <a href="#" id="textToggle" title="Text notifications" class="display-table__cell ta-center">
+                            <a href="#" id="textToggle" title="Text notifications" class="display-table__cell sfa-align-center">
                                 <i class="icon-sms"></i>
                             </a>
                             <span class="display-table__cell ta-left">
                             </span>
                         </div>
                         <div class="display-table__row">
-                            <span class="display-table__cell ta-center">
+                            <span class="display-table__cell sfa-align-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaEmail,
                                     controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "appStatusLabel", title = "Email notifications when the status of one of your applications changes" })
                             </span>
-                            <span class="display-table__cell ta-center">
+                            <span class="display-table__cell sfa-align-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaText,
                                     controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "appStatusLabel", title = "Text notifications when the status of one of your applications changes" })
                             </span>
@@ -112,11 +112,11 @@
                             </span>
                         </div>
                         <div class="display-table__row">
-                            <span class="display-table__cell ta-center">
+                            <span class="display-table__cell sfa-align-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaEmail,
                                     controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "closingDateStatusLabel", title = "Email notifications when an apprenticeship is approaching its closing date" })
                             </span>
-                            <span class="display-table__cell ta-center">
+                            <span class="display-table__cell sfa-align-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaText,
                                     controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "closingDateStatusLabel", title = "Text notifications when an apprenticeship is approaching its closing date" })
                             </span>
@@ -125,11 +125,11 @@
                             </span>
                         </div>
                         <div class="display-table__row">
-                            <span class="display-table__cell ta-center">
+                            <span class="display-table__cell sfa-align-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaEmail,
                                     controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Email notifications when we send you updates on news and information" })
                             </span>
-                            <span class="display-table__cell ta-center">
+                            <span class="display-table__cell sfa-align-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaText,
                                     controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Text notifications when we send you updates on news and information" })
                             </span>

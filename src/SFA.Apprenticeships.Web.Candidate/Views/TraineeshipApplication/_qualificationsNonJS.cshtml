@@ -51,7 +51,7 @@
                                         @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Grade") 
                                     </div>
                                 </td>
-                                <td class="ta-center">
+                                <td class="sfa-align-center">
                                     @Html.CheckBoxFor(m => Model.Candidate.Qualifications.ToList()[i].IsPredicted, new {@id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted"})
                                 </td>
                             </tr>
@@ -80,7 +80,7 @@
                                         
                                     </div>
                                 </td>
-                                <td class="ta-center">
+                                <td class="sfa-align-center">
                                     @Html.CheckBox("Candidate.Qualifications[" + i + "].IsPredicted", new {@id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted"})
                                 </td>
                             </tr>

@@ -768,7 +768,7 @@ WriteLiteral("                                    ");
             #line hidden
 WriteLiteral("\r\n                                </td>\r\n                                <td");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -796,14 +796,14 @@ WriteLiteral(" class=\"button-link remove-button-link\"");
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8685), Tuple.Create("\"", 8704)
+WriteAttribute("value", Tuple.Create(" value=\"", 8692), Tuple.Create("\"", 8711)
             
             #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 8693), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                , Tuple.Create(Tuple.Create("", 8700), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 8693), false)
+, 8700), false)
 );
 
 WriteLiteral(">remove location</button>\r\n                                </td>\r\n               " +
@@ -1123,7 +1123,7 @@ WriteLiteral(" data-bind=\"value: itemProvinceName, attr:{\'name\':\'Addresses[\
 
 WriteLiteral(">\r\n                    </td>\r\n                    <td");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n                        <a");
 

@@ -742,7 +742,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -750,7 +750,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -812,7 +812,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -820,7 +820,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -882,7 +882,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -890,7 +890,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -952,7 +952,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -960,7 +960,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1022,7 +1022,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1030,7 +1030,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1092,7 +1092,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1100,7 +1100,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1229,7 +1229,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1237,7 +1237,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1299,7 +1299,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1307,7 +1307,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1699,7 +1699,7 @@ WriteLiteral(" class=\"work-controls\"");
 
 WriteLiteral("><div");
 
-WriteLiteral(" class=\"work-edit ta-center\"");
+WriteLiteral(" class=\"work-edit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1707,7 +1707,7 @@ WriteLiteral(" class=\"cell-span fake-link\"");
 
 WriteLiteral(">Edit</span></div><div");
 
-WriteLiteral(" class=\"work-delete ta-center\"");
+WriteLiteral(" class=\"work-delete sfa-align-center\"");
 
 WriteLiteral("><span");
 

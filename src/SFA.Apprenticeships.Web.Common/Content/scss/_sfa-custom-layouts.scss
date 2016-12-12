@@ -45,6 +45,22 @@ SFA navigation
     }
 }
 
+.sfa-list-nav {
+    margin-bottom: 30px;
+    padding: 0;
+    li {
+        list-style: none;
+        margin-bottom: 10px;
+        @include media(tablet) {
+            display:inline-block;
+            margin-right: 30px;
+        }
+        &.toggle-content {
+            display: none;
+        }
+    }
+}
+
 /* -------------------------------------------------------------------
 Hide element (window size)
 ------------------------------------------------------------------- */
@@ -233,6 +249,10 @@ Misc - TO BE ORGANISED
 
 .sfa-align-right {
     text-align:right;
+}
+
+.sfa-align-center {
+    text-align:center;
 }
 
 .sfa-pull-right {

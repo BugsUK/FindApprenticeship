@@ -109,11 +109,11 @@
                                     <input type="hidden" data-bind="value: qualificationPredicted, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].IsPredicted'}" />
                                     <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit qual-year" type="text" data-bind="value: qualificationYear, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Year', 'id':'candidate_qualifications_'+ itemIndex() + '__year','readonly':readOnly() }">
                                 </td>
-                                <td class="ta-center">
+                                <td class="sfa-align-center">
                                     <span data-bind="if: showEditButton, click: $root.editQualification"><a href="#" class="fake-link cell-span edit-qualification-link">Edit</a></span>
                                     <span data-bind="ifnot: showEditButton,click: $root.saveQualificationItem"><a href="#" class="fake-link cell-span save-qualification-link">Save</a></span>
                                 </td>
-                                <td class="ta-center">
+                                <td class="sfa-align-center">
                                     <i class="cell-span" style="padding-top: 7px;"><a href="#" class="font-xsmall fa fa-times-circle icon-black remove-qualification-link no-underline" data-bind="click: $root.removeQualification"><i class="visuallyhidden">Remove this qualification</i></a></i>
                                 </td>
                             </tr>

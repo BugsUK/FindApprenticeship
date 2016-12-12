@@ -519,7 +519,7 @@ WriteLiteral(" id=\"emailToggle\"");
 
 WriteLiteral(" title=\"Email notifications\"");
 
-WriteLiteral(" class=\"display-table__cell ta-center font-black\"");
+WriteLiteral(" class=\"display-table__cell sfa-align-center font-black\"");
 
 WriteLiteral(">\r\n                                <span");
 
@@ -537,7 +537,7 @@ WriteLiteral(" id=\"textToggle\"");
 
 WriteLiteral(" title=\"Text notifications\"");
 
-WriteLiteral(" class=\"display-table__cell ta-center\"");
+WriteLiteral(" class=\"display-table__cell sfa-align-center\"");
 
 WriteLiteral(">\r\n                                <i");
 
@@ -554,7 +554,7 @@ WriteLiteral(" class=\"display-table__row\"");
 
 WriteLiteral(">\r\n                            <span");
 
-WriteLiteral(" class=\"display-table__cell ta-center\"");
+WriteLiteral(" class=\"display-table__cell sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -570,7 +570,7 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                            </span>\r\n                            <span");
 
-WriteLiteral(" class=\"display-table__cell ta-center\"");
+WriteLiteral(" class=\"display-table__cell sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -598,7 +598,7 @@ WriteLiteral(" class=\"display-table__row\"");
 
 WriteLiteral(">\r\n                            <span");
 
-WriteLiteral(" class=\"display-table__cell ta-center\"");
+WriteLiteral(" class=\"display-table__cell sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -614,7 +614,7 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                            </span>\r\n                            <span");
 
-WriteLiteral(" class=\"display-table__cell ta-center\"");
+WriteLiteral(" class=\"display-table__cell sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -642,7 +642,7 @@ WriteLiteral(" class=\"display-table__row\"");
 
 WriteLiteral(">\r\n                            <span");
 
-WriteLiteral(" class=\"display-table__cell ta-center\"");
+WriteLiteral(" class=\"display-table__cell sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -658,7 +658,7 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                            </span>\r\n                            <span");
 
-WriteLiteral(" class=\"display-table__cell ta-center\"");
+WriteLiteral(" class=\"display-table__cell sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -692,15 +692,15 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Save settings</button>\r\n            </div>\r\n        </div>\r\n\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9699), Tuple.Create("\"", 9744)
-, Tuple.Create(Tuple.Create("", 9707), Tuple.Create("tabbed-content", 9707), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9755), Tuple.Create("\"", 9800)
+, Tuple.Create(Tuple.Create("", 9763), Tuple.Create("tabbed-content", 9763), true)
             
             #line 148 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create(" ", 9721), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
+, Tuple.Create(Tuple.Create(" ", 9777), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
             
             #line default
             #line hidden
-, 9722), false)
+, 9778), false)
 );
 
 WriteLiteral(">\r\n            <h2");
@@ -803,14 +803,14 @@ WriteLiteral(" ");
 WriteLiteral(">\r\n                    You currently don\'t have any active saved searches. If you" +
 " <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 10985), Tuple.Create("\"", 11047)
+WriteAttribute("href", Tuple.Create(" href=\"", 11041), Tuple.Create("\"", 11103)
             
             #line 166 "..\..\Views\Account\Settings.cshtml"
-       , Tuple.Create(Tuple.Create("", 10992), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+       , Tuple.Create(Tuple.Create("", 11048), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 10992), false)
+, 11048), false)
 );
 
 WriteLiteral(">set up a saved search</a> we can alert you when we find a suitable apprenticeshi" +
@@ -862,26 +862,26 @@ WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"para-btm-margin saved-search\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 11727), Tuple.Create("\"", 11747)
+WriteAttribute("id", Tuple.Create(" id=\"", 11783), Tuple.Create("\"", 11803)
             
             #line 178 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 11732), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+, Tuple.Create(Tuple.Create("", 11788), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 11732), false)
+, 11788), false)
 );
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11785), Tuple.Create("\"", 11830)
+WriteAttribute("href", Tuple.Create(" href=\"", 11841), Tuple.Create("\"", 11886)
             
             #line 179 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 11792), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
+, Tuple.Create(Tuple.Create("", 11848), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
             
             #line default
             #line hidden
-, 11792), false)
+, 11848), false)
 );
 
 WriteLiteral(" title=\"Run search\"");
@@ -1033,24 +1033,24 @@ WriteLiteral("                                        ");
 WriteLiteral("\r\n                                    </li>\r\n                                    " +
 "<li>\r\n                                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13248), Tuple.Create("\"", 13356)
+WriteAttribute("href", Tuple.Create(" href=\"", 13304), Tuple.Create("\"", 13412)
             
             #line 198 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 13255), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new {id = savedSearch.Id, isJavascript = false})
+, Tuple.Create(Tuple.Create("", 13311), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new {id = savedSearch.Id, isJavascript = false})
             
             #line default
             #line hidden
-, 13255), false)
+, 13311), false)
 );
 
-WriteAttribute("id", Tuple.Create(" id=\"", 13357), Tuple.Create("\"", 13377)
+WriteAttribute("id", Tuple.Create(" id=\"", 13413), Tuple.Create("\"", 13433)
             
             #line 198 "..\..\Views\Account\Settings.cshtml"
-                                                                           , Tuple.Create(Tuple.Create("", 13362), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                                                                           , Tuple.Create(Tuple.Create("", 13418), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 13362), false)
+, 13418), false)
 );
 
 WriteLiteral(" class=\"link-unimp icon-black delete-saved-search-link\"");
@@ -1092,15 +1092,15 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Save settings</button>\r\n                </div>\r\n            </div>\r\n        </di" +
 "v>\r\n\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 13985), Tuple.Create("\"", 14030)
-, Tuple.Create(Tuple.Create("", 13993), Tuple.Create("tabbed-content", 13993), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 14041), Tuple.Create("\"", 14086)
+, Tuple.Create(Tuple.Create("", 14049), Tuple.Create("tabbed-content", 14049), true)
             
             #line 214 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create(" ", 14007), Tuple.Create<System.Object, System.Int32>(deleteAccountTabClass
+, Tuple.Create(Tuple.Create(" ", 14063), Tuple.Create<System.Object, System.Int32>(deleteAccountTabClass
             
             #line default
             #line hidden
-, 14008), false)
+, 14064), false)
 );
 
 WriteLiteral(">\r\n            <h2");

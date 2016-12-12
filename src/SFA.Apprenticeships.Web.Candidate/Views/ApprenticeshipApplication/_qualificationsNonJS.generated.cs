@@ -208,7 +208,7 @@ WriteLiteral("                                        ");
 WriteLiteral(" \r\n                                    </div>\r\n                                </" +
 "td>\r\n                                <td");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -330,7 +330,7 @@ WriteLiteral("\r\n                                        \r\n                  
 "/div>\r\n                                </td>\r\n                                <t" +
 "d");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
