@@ -8,7 +8,7 @@
 
     public class RaaApiUserRepository : IRaaApiUserRepository
     {
-        public static readonly string SelectSql = "SELECT PrimaryApiKey, SecondaryApiKey, UserTypeId AS UserType, ReferencedEntityId, ReferencedEntityGuid, ReferencedEntitySurrogateId FROM [RaaApi].[User] WHERE PrimaryApiKey = @ApiKey OR SecondaryApiKey = @ApiKey";
+        public const string SelectSql = "SELECT PrimaryApiKey, SecondaryApiKey, UserTypeId AS UserType, ReferencedEntityId, ReferencedEntityGuid, ReferencedEntitySurrogateId FROM [RaaApi].[User] WHERE PrimaryApiKey = @ApiKey OR SecondaryApiKey = @ApiKey";
 
         private readonly IGetOpenConnection _getOpenConnection;
 

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Web.Http;
     using Apprenticeships.Application.VacancyPosting.Strategies;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Constants;
     using Models;
     using Swashbuckle.Swagger.Annotations;
@@ -26,9 +27,10 @@
 
         [Route("vacancy")]
         [SwaggerOperation("GetOne")]
-        public IEnumerable<string> Get(int vacancyId)
+        public Vacancy Get(int vacancyId)
         {
-            return new string[] { "value1", "value2" };
+            var vacancy = _getVacancyStrategies.GetVacancyById(vacancyId);
+            return vacancy;
         }
 
         [HttpPost]

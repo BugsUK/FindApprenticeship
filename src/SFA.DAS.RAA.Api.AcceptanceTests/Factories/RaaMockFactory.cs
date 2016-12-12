@@ -54,11 +54,11 @@
             //Setup mocks for the two valid users
             MockGetOpenConnection.Setup(
                 m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.ProviderApiKey }.GetHashCode()), null, null))
-                .Returns(new List<RaaApiUser> {RaaApiUserFactory.GetValidProviderApiUser(ApiKeys.ProviderApiKey)});
+                .Returns(new [] {RaaApiUserFactory.GetValidProviderApiUser(ApiKeys.ProviderApiKey)});
 
             MockGetOpenConnection.Setup(
                 m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.Is<object>(o => o.GetHashCode() == new { ApiKey = ApiKeys.EmployerApiKey }.GetHashCode()), null, null))
-                .Returns(new List<RaaApiUser> { RaaApiUserFactory.GetValidEmployerApiUser(ApiKeys.EmployerApiKey) });
+                .Returns(new [] { RaaApiUserFactory.GetValidEmployerApiUser(ApiKeys.EmployerApiKey) });
         }
 
         public static Mock<IConfigurationService> GetMockConfigurationService() { return MockConfigurationService; }

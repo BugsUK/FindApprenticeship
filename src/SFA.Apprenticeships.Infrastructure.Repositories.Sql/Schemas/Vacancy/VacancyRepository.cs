@@ -7,7 +7,6 @@
     using Entities;
     using Newtonsoft.Json;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
@@ -21,31 +20,20 @@
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IConfigurationService _configurationService;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
         private const string StatusChangeText = "Status Change";
 
-        private readonly Dictionary<string, string> _standardsMap = new Dictionary<string, string>
-        {
-            { "Motor Vehicle Service and Maintenance Technician (light vehicle) (L3)", "Motor Vehicle Service and Maintenance Technician [light vehicle] (L3)" },
-            { "Public Service - Operational delivery officer (Level 3)", "Public Service Operational Delivery Officer"},
-            { "Cyber Security", "Cyber security technologist" },
-            { "Workplace Pensions (Administrator or Consultant)", "Workplace Pensions (Administrator or Consultant)()"},
-            { "Digital & technology solutions professional (Level 6)", "Digital & Technology Solutions Professional – degree apprenticeship"}
-        };
-
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
-            ILogService logger, ICurrentUserService currentUserService, IConfigurationService configurationService)
+            ILogService logger, ICurrentUserService currentUserService)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
             _dateTimeService = dateTimeService;
             _logger = logger;
             _currentUserService = currentUserService;
-            _configurationService = configurationService;
         }
 
         private DomainVacancy GetByMapped(int vacancyId)
@@ -66,145 +54,7 @@
                 vacancyId
             };
 
-            var sql = $@"SELECT	v.*,
-                            --CASE v.ApplyOutsideNAVMS
- 			                --    WHEN 1 THEN 0
-                            --    ELSE dbo.GetApplicantCount(v.VacancyId) 
-                            --END
-                            --AS ApplicantCount,
-		                    --CASE v.ApplyOutsideNAVMS
- 			                --    WHEN 1 THEN 0
-			                --    ELSE dbo.GetNewApplicantCount(v.VacancyId)
-		                    --END
-		                    --AS NewApplicantCount,
-                            dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
-		                    dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
-		                    dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
-                            e.FullName AS EmployerName,
-                            e.EmployerId,
-                            e.Town AS EmployerLocation,
-		                    af.CodeName AS FrameworkCodeName,
-		                    el.CodeName AS ApprenticeshipLevel,
-		                    ao.CodeName AS SectorCodeName,
-		                    dbo.GetCreatedByProviderUsername(v.VacancyId) AS CreatedByProviderUsername,
-		                    dbo.GetDateQAApproved(v.VacancyId) AS DateQAApproved,
-		                    rt.TeamName AS RegionalTeam,
-		                    af.StandardId,
-		                    aq1.Question AS FirstQuestion,
-		                    aq2.Question AS SecondQuestion,
-		                    TBP.Value AS TrainingProvided,
-		                    QR.Value AS DesiredQualifications,
-		                    SR.Value AS DesiredSkills,
-		                    PQ.Value AS PersonalQualities,
-		                    RC.Value AS ThingsToConsider,
-		                    FP.Value AS FutureProspects,
-		                    OII.Value AS OtherInformation,
-		                    TIT.Comments AS TitleComment,
-		                    ALE.Comments AS ApprenticeshipLevelComment,
-		                    CLD.Comments AS ClosingDateComment,
-		                    CDE.Comments AS ContactDetailsComment,
-		                    QUA.Comments AS DesiredQualificationsComment,
-		                    SKL.Comments AS DesiredSkillsComment,
-		                    EAD.Comments AS DurationComment,
-		                    EDE.Comments AS EmployerDescriptionComment,
-		                    EWB.Comments AS EmployerWebsiteUrlComment,
-		                    QU1.Comments AS FirstQuestionComment,
-		                    QU2.Comments AS SecondQuestionComment,
-		                    APF.Comments AS FrameworkCodeNameComment,
-		                    FUT.Comments AS FutureProspectsComment,
-		                    FDE.Comments AS LongDescriptionComment,
-		                    NPO.Comments AS NumberOfPositionsComment,
-		                    OAI.Comments AS OfflineApplicationInstructionsComment,
-		                    OAU.Comments AS OfflineApplicationUrlComment,
-		                    PER.Comments AS PersonalQualitiesComment,
-		                    PSD.Comments AS PossibleStartDateComment,
-		                    APO.Comments AS SectorCodeNameComment,
-		                    SDE.Comments AS ShortDescriptionComment,
-		                    [SID].Comments AS StandardIdComment,
-		                    IOI.Comments AS ThingsToConsiderComment,
-		                    TRP.Comments AS TrainingProvidedComment,
-		                    WWG.Comments AS WageComment,
-		                    WWK.Comments AS WorkingWeekComment,
-		                    LAD.Comments AS LocationAddressesComment,
-		                    ALI.Comments AS AdditionalLocationInformationComment,
-                            AED.Comments AS AnonymousEmployerDescriptionComment,
-                            AER.Comments AS AnonymousEmployerReasonComment,
-                            AAE.Comments AS AnonymousAboutTheEmployerComment,
-		                    la.CodeName AS LocalAuthorityCode,
-		                    v.DurationTypeId AS DurationType,
-		                    v.DurationValue AS Duration,
-		                    c.FullName AS County
-                    FROM	Vacancy v
-                    JOIN	VacancyOwnerRelationship o
-                    ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
-                    JOIN	Employer e
-                    ON		o.EmployerId = e.EmployerId
-                    JOIN	ProviderSite s
-                    ON      s.ProviderSiteId = v.VacancyManagerId
-                    LEFT OUTER JOIN	ApprenticeshipFramework af
-                    ON		af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
-                    LEFT OUTER JOIN	ApprenticeshipType AS at
-                    ON		at.ApprenticeshipTypeId = v.ApprenticeshipType
-                    LEFT OUTER JOIN	Reference.EducationLevel el
-                    ON		el.EducationLevelId = at.EducationLevelId
-                    LEFT OUTER JOIN	ApprenticeshipOccupation ao
-                    ON		v.SectorId = ao.ApprenticeshipOccupationId
-                    LEFT OUTER JOIN Reference.[Standard] rs
-                    ON		rs.FullName = af.FullName
-                    LEFT OUTER JOIN	RegionalTeamMappings t
-                    ON		s.PostCode LIKE t.PostcodeStart + '[0-9]%'
-                    LEFT OUTER JOIN	RegionalTeams rt
-                    ON		rt.Id = t.RegionalTeam_Id
-                    LEFT OUTER JOIN AdditionalQuestion aq1
-                    ON		aq1.VacancyId = v.VacancyId AND aq1.QuestionId = 1
-                    LEFT OUTER JOIN AdditionalQuestion aq2
-                    ON		aq2.VacancyId = v.VacancyId AND aq2.QuestionId = 2
-                    LEFT OUTER JOIN LocalAuthority la
-                    ON		la.LocalAuthorityId = v.LocalAuthorityId
-                    LEFT OUTER JOIN County c
-                    ON		c.CountyId = v.CountyId
-                    LEFT OUTER JOIN VacancyTextField TBP ON TBP.VacancyId = v.VacancyId AND TBP.Field = dbo.GetTextFieldId('TBP')
-                    LEFT OUTER JOIN VacancyTextField QR ON QR.VacancyId = v.VacancyId AND QR.Field = dbo.GetTextFieldId('QR')
-                    LEFT OUTER JOIN VacancyTextField SR ON SR.VacancyId = v.VacancyId AND SR.Field = dbo.GetTextFieldId('SR')
-                    LEFT OUTER JOIN VacancyTextField PQ ON PQ.VacancyId = v.VacancyId AND PQ.Field = dbo.GetTextFieldId('PQ')
-                    LEFT OUTER JOIN VacancyTextField RC ON RC.VacancyId = v.VacancyId AND RC.Field = dbo.GetTextFieldId('RC')
-                    LEFT OUTER JOIN VacancyTextField FP ON FP.VacancyId = v.VacancyId AND FP.Field = dbo.GetTextFieldId('FP')
-                    LEFT OUTER JOIN VacancyTextField OII ON OII.VacancyId = v.VacancyId AND OII.Field = dbo.GetTextFieldId('OII')
-                    LEFT OUTER JOIN VacancyReferralComments TIT ON TIT.VacancyId = v.VacancyId AND TIT.FieldTypeId = dbo.GetCommentFieldId('TIT')
-                    LEFT OUTER JOIN VacancyReferralComments ALE ON ALE.VacancyId = v.VacancyId AND ALE.FieldTypeId = dbo.GetCommentFieldId('ALE')
-                    LEFT OUTER JOIN VacancyReferralComments CLD ON CLD.VacancyId = v.VacancyId AND CLD.FieldTypeId = dbo.GetCommentFieldId('CLD')
-                    LEFT OUTER JOIN VacancyReferralComments CDE ON CDE.VacancyId = v.VacancyId AND CDE.FieldTypeId = dbo.GetCommentFieldId('CDE')
-                    LEFT OUTER JOIN VacancyReferralComments QUA ON QUA.VacancyId = v.VacancyId AND QUA.FieldTypeId = dbo.GetCommentFieldId('QUA')
-                    LEFT OUTER JOIN VacancyReferralComments SKL ON SKL.VacancyId = v.VacancyId AND SKL.FieldTypeId = dbo.GetCommentFieldId('SKL')
-                    LEFT OUTER JOIN VacancyReferralComments EAD ON EAD.VacancyId = v.VacancyId AND EAD.FieldTypeId = dbo.GetCommentFieldId('EAD')
-                    LEFT OUTER JOIN VacancyReferralComments EDE ON EDE.VacancyId = v.VacancyId AND EDE.FieldTypeId = dbo.GetCommentFieldId('EDE')
-                    LEFT OUTER JOIN VacancyReferralComments EWB ON EWB.VacancyId = v.VacancyId AND EWB.FieldTypeId = dbo.GetCommentFieldId('EWB')
-                    LEFT OUTER JOIN VacancyReferralComments QU1 ON QU1.VacancyId = v.VacancyId AND QU1.FieldTypeId = dbo.GetCommentFieldId('QU1')
-                    LEFT OUTER JOIN VacancyReferralComments QU2 ON QU2.VacancyId = v.VacancyId AND QU2.FieldTypeId = dbo.GetCommentFieldId('QU2')
-                    LEFT OUTER JOIN VacancyReferralComments APF ON APF.VacancyId = v.VacancyId AND APF.FieldTypeId = dbo.GetCommentFieldId('APF')
-                    LEFT OUTER JOIN VacancyReferralComments FUT ON FUT.VacancyId = v.VacancyId AND FUT.FieldTypeId = dbo.GetCommentFieldId('FUT')
-                    LEFT OUTER JOIN VacancyReferralComments FDE ON FDE.VacancyId = v.VacancyId AND FDE.FieldTypeId = dbo.GetCommentFieldId('FDE')
-                    LEFT OUTER JOIN VacancyReferralComments NPO ON NPO.VacancyId = v.VacancyId AND NPO.FieldTypeId = dbo.GetCommentFieldId('NPO')
-                    LEFT OUTER JOIN VacancyReferralComments OAI ON OAI.VacancyId = v.VacancyId AND OAI.FieldTypeId = dbo.GetCommentFieldId('OAI')
-                    LEFT OUTER JOIN VacancyReferralComments OAU ON OAU.VacancyId = v.VacancyId AND OAU.FieldTypeId = dbo.GetCommentFieldId('OAU')
-                    LEFT OUTER JOIN VacancyReferralComments PER ON PER.VacancyId = v.VacancyId AND PER.FieldTypeId = dbo.GetCommentFieldId('PER')
-                    LEFT OUTER JOIN VacancyReferralComments PSD ON PSD.VacancyId = v.VacancyId AND PSD.FieldTypeId = dbo.GetCommentFieldId('PSD')
-                    LEFT OUTER JOIN VacancyReferralComments APO ON APO.VacancyId = v.VacancyId AND APO.FieldTypeId = dbo.GetCommentFieldId('APO')
-                    LEFT OUTER JOIN VacancyReferralComments SDE ON SDE.VacancyId = v.VacancyId AND SDE.FieldTypeId = dbo.GetCommentFieldId('SDE')
-                    LEFT OUTER JOIN VacancyReferralComments [SID] ON [SID].VacancyId = v.VacancyId AND [SID].FieldTypeId = dbo.GetCommentFieldId('SID')
-                    LEFT OUTER JOIN VacancyReferralComments IOI ON IOI.VacancyId = v.VacancyId AND IOI.FieldTypeId = dbo.GetCommentFieldId('IOI')
-                    LEFT OUTER JOIN VacancyReferralComments TRP ON TRP.VacancyId = v.VacancyId AND TRP.FieldTypeId = dbo.GetCommentFieldId('TRP')
-                    LEFT OUTER JOIN VacancyReferralComments WWG ON WWG.VacancyId = v.VacancyId AND WWG.FieldTypeId = dbo.GetCommentFieldId('WWG')
-                    LEFT OUTER JOIN VacancyReferralComments WWK ON WWK.VacancyId = v.VacancyId AND WWK.FieldTypeId = dbo.GetCommentFieldId('WWK')
-                    LEFT OUTER JOIN VacancyReferralComments LAD ON LAD.VacancyId = v.VacancyId AND LAD.FieldTypeId = dbo.GetCommentFieldId('LAD')
-                    LEFT OUTER JOIN VacancyReferralComments ALI ON ALI.VacancyId = v.VacancyId AND ALI.FieldTypeId = dbo.GetCommentFieldId('ALI')
-                    LEFT OUTER JOIN VacancyReferralComments AED ON AED.VacancyId = v.VacancyId AND AED.FieldTypeId = dbo.GetCommentFieldId('AED')
-                    LEFT OUTER JOIN VacancyReferralComments AER ON AER.VacancyId = v.VacancyId AND AER.FieldTypeId = dbo.GetCommentFieldId('AER')
-                    LEFT OUTER JOIN VacancyReferralComments AAE ON AAE.VacancyId = v.VacancyId AND AAE.FieldTypeId = dbo.GetCommentFieldId('AAE')
-                    WHERE v.VacancyID = @vacancyId
-            ";
-
-            var vacancy = _getOpenConnection.Query<Vacancy>(sql, sqlParams).SingleOrDefault();
+            var vacancy = _getOpenConnection.Query<Vacancy>(SelectByIdSql, sqlParams).SingleOrDefault();
 
             return vacancy;
         }
@@ -817,5 +667,142 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
 
             return vacancyId;
         }
+
+        public static readonly string SelectByIdSql = $@"SELECT	v.*,
+        --CASE v.ApplyOutsideNAVMS
+ 		--    WHEN 1 THEN 0
+        --    ELSE dbo.GetApplicantCount(v.VacancyId) 
+        --END
+        --AS ApplicantCount,
+		--CASE v.ApplyOutsideNAVMS
+ 		--    WHEN 1 THEN 0
+		--    ELSE dbo.GetNewApplicantCount(v.VacancyId)
+		--END
+		--AS NewApplicantCount,
+        dbo.GetFirstSubmittedDate(v.VacancyID) AS DateFirstSubmitted,
+		dbo.GetSubmittedDate(v.VacancyID) AS DateSubmitted,
+		dbo.GetCreatedDate(v.VacancyID) AS CreatedDate,
+        e.FullName AS EmployerName,
+        e.EmployerId,
+        e.Town AS EmployerLocation,
+		af.CodeName AS FrameworkCodeName,
+		el.CodeName AS ApprenticeshipLevel,
+		ao.CodeName AS SectorCodeName,
+		dbo.GetCreatedByProviderUsername(v.VacancyId) AS CreatedByProviderUsername,
+		dbo.GetDateQAApproved(v.VacancyId) AS DateQAApproved,
+		rt.TeamName AS RegionalTeam,
+		af.StandardId,
+		aq1.Question AS FirstQuestion,
+		aq2.Question AS SecondQuestion,
+		TBP.Value AS TrainingProvided,
+		QR.Value AS DesiredQualifications,
+		SR.Value AS DesiredSkills,
+		PQ.Value AS PersonalQualities,
+		RC.Value AS ThingsToConsider,
+		FP.Value AS FutureProspects,
+		OII.Value AS OtherInformation,
+		TIT.Comments AS TitleComment,
+		ALE.Comments AS ApprenticeshipLevelComment,
+		CLD.Comments AS ClosingDateComment,
+		CDE.Comments AS ContactDetailsComment,
+		QUA.Comments AS DesiredQualificationsComment,
+		SKL.Comments AS DesiredSkillsComment,
+		EAD.Comments AS DurationComment,
+		EDE.Comments AS EmployerDescriptionComment,
+		EWB.Comments AS EmployerWebsiteUrlComment,
+		QU1.Comments AS FirstQuestionComment,
+		QU2.Comments AS SecondQuestionComment,
+		APF.Comments AS FrameworkCodeNameComment,
+		FUT.Comments AS FutureProspectsComment,
+		FDE.Comments AS LongDescriptionComment,
+		NPO.Comments AS NumberOfPositionsComment,
+		OAI.Comments AS OfflineApplicationInstructionsComment,
+		OAU.Comments AS OfflineApplicationUrlComment,
+		PER.Comments AS PersonalQualitiesComment,
+		PSD.Comments AS PossibleStartDateComment,
+		APO.Comments AS SectorCodeNameComment,
+		SDE.Comments AS ShortDescriptionComment,
+		[SID].Comments AS StandardIdComment,
+		IOI.Comments AS ThingsToConsiderComment,
+		TRP.Comments AS TrainingProvidedComment,
+		WWG.Comments AS WageComment,
+		WWK.Comments AS WorkingWeekComment,
+		LAD.Comments AS LocationAddressesComment,
+		ALI.Comments AS AdditionalLocationInformationComment,
+        AED.Comments AS AnonymousEmployerDescriptionComment,
+        AER.Comments AS AnonymousEmployerReasonComment,
+        AAE.Comments AS AnonymousAboutTheEmployerComment,
+		la.CodeName AS LocalAuthorityCode,
+		v.DurationTypeId AS DurationType,
+		v.DurationValue AS Duration,
+		c.FullName AS County
+FROM	Vacancy v
+JOIN	VacancyOwnerRelationship o
+ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+JOIN	Employer e
+ON		o.EmployerId = e.EmployerId
+JOIN	ProviderSite s
+ON      s.ProviderSiteId = v.VacancyManagerId
+LEFT OUTER JOIN	ApprenticeshipFramework af
+ON		af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
+LEFT OUTER JOIN	ApprenticeshipType AS at
+ON		at.ApprenticeshipTypeId = v.ApprenticeshipType
+LEFT OUTER JOIN	Reference.EducationLevel el
+ON		el.EducationLevelId = at.EducationLevelId
+LEFT OUTER JOIN	ApprenticeshipOccupation ao
+ON		v.SectorId = ao.ApprenticeshipOccupationId
+LEFT OUTER JOIN Reference.[Standard] rs
+ON		rs.FullName = af.FullName
+LEFT OUTER JOIN	RegionalTeamMappings t
+ON		s.PostCode LIKE t.PostcodeStart + '[0-9]%'
+LEFT OUTER JOIN	RegionalTeams rt
+ON		rt.Id = t.RegionalTeam_Id
+LEFT OUTER JOIN AdditionalQuestion aq1
+ON		aq1.VacancyId = v.VacancyId AND aq1.QuestionId = 1
+LEFT OUTER JOIN AdditionalQuestion aq2
+ON		aq2.VacancyId = v.VacancyId AND aq2.QuestionId = 2
+LEFT OUTER JOIN LocalAuthority la
+ON		la.LocalAuthorityId = v.LocalAuthorityId
+LEFT OUTER JOIN County c
+ON		c.CountyId = v.CountyId
+LEFT OUTER JOIN VacancyTextField TBP ON TBP.VacancyId = v.VacancyId AND TBP.Field = dbo.GetTextFieldId('TBP')
+LEFT OUTER JOIN VacancyTextField QR ON QR.VacancyId = v.VacancyId AND QR.Field = dbo.GetTextFieldId('QR')
+LEFT OUTER JOIN VacancyTextField SR ON SR.VacancyId = v.VacancyId AND SR.Field = dbo.GetTextFieldId('SR')
+LEFT OUTER JOIN VacancyTextField PQ ON PQ.VacancyId = v.VacancyId AND PQ.Field = dbo.GetTextFieldId('PQ')
+LEFT OUTER JOIN VacancyTextField RC ON RC.VacancyId = v.VacancyId AND RC.Field = dbo.GetTextFieldId('RC')
+LEFT OUTER JOIN VacancyTextField FP ON FP.VacancyId = v.VacancyId AND FP.Field = dbo.GetTextFieldId('FP')
+LEFT OUTER JOIN VacancyTextField OII ON OII.VacancyId = v.VacancyId AND OII.Field = dbo.GetTextFieldId('OII')
+LEFT OUTER JOIN VacancyReferralComments TIT ON TIT.VacancyId = v.VacancyId AND TIT.FieldTypeId = dbo.GetCommentFieldId('TIT')
+LEFT OUTER JOIN VacancyReferralComments ALE ON ALE.VacancyId = v.VacancyId AND ALE.FieldTypeId = dbo.GetCommentFieldId('ALE')
+LEFT OUTER JOIN VacancyReferralComments CLD ON CLD.VacancyId = v.VacancyId AND CLD.FieldTypeId = dbo.GetCommentFieldId('CLD')
+LEFT OUTER JOIN VacancyReferralComments CDE ON CDE.VacancyId = v.VacancyId AND CDE.FieldTypeId = dbo.GetCommentFieldId('CDE')
+LEFT OUTER JOIN VacancyReferralComments QUA ON QUA.VacancyId = v.VacancyId AND QUA.FieldTypeId = dbo.GetCommentFieldId('QUA')
+LEFT OUTER JOIN VacancyReferralComments SKL ON SKL.VacancyId = v.VacancyId AND SKL.FieldTypeId = dbo.GetCommentFieldId('SKL')
+LEFT OUTER JOIN VacancyReferralComments EAD ON EAD.VacancyId = v.VacancyId AND EAD.FieldTypeId = dbo.GetCommentFieldId('EAD')
+LEFT OUTER JOIN VacancyReferralComments EDE ON EDE.VacancyId = v.VacancyId AND EDE.FieldTypeId = dbo.GetCommentFieldId('EDE')
+LEFT OUTER JOIN VacancyReferralComments EWB ON EWB.VacancyId = v.VacancyId AND EWB.FieldTypeId = dbo.GetCommentFieldId('EWB')
+LEFT OUTER JOIN VacancyReferralComments QU1 ON QU1.VacancyId = v.VacancyId AND QU1.FieldTypeId = dbo.GetCommentFieldId('QU1')
+LEFT OUTER JOIN VacancyReferralComments QU2 ON QU2.VacancyId = v.VacancyId AND QU2.FieldTypeId = dbo.GetCommentFieldId('QU2')
+LEFT OUTER JOIN VacancyReferralComments APF ON APF.VacancyId = v.VacancyId AND APF.FieldTypeId = dbo.GetCommentFieldId('APF')
+LEFT OUTER JOIN VacancyReferralComments FUT ON FUT.VacancyId = v.VacancyId AND FUT.FieldTypeId = dbo.GetCommentFieldId('FUT')
+LEFT OUTER JOIN VacancyReferralComments FDE ON FDE.VacancyId = v.VacancyId AND FDE.FieldTypeId = dbo.GetCommentFieldId('FDE')
+LEFT OUTER JOIN VacancyReferralComments NPO ON NPO.VacancyId = v.VacancyId AND NPO.FieldTypeId = dbo.GetCommentFieldId('NPO')
+LEFT OUTER JOIN VacancyReferralComments OAI ON OAI.VacancyId = v.VacancyId AND OAI.FieldTypeId = dbo.GetCommentFieldId('OAI')
+LEFT OUTER JOIN VacancyReferralComments OAU ON OAU.VacancyId = v.VacancyId AND OAU.FieldTypeId = dbo.GetCommentFieldId('OAU')
+LEFT OUTER JOIN VacancyReferralComments PER ON PER.VacancyId = v.VacancyId AND PER.FieldTypeId = dbo.GetCommentFieldId('PER')
+LEFT OUTER JOIN VacancyReferralComments PSD ON PSD.VacancyId = v.VacancyId AND PSD.FieldTypeId = dbo.GetCommentFieldId('PSD')
+LEFT OUTER JOIN VacancyReferralComments APO ON APO.VacancyId = v.VacancyId AND APO.FieldTypeId = dbo.GetCommentFieldId('APO')
+LEFT OUTER JOIN VacancyReferralComments SDE ON SDE.VacancyId = v.VacancyId AND SDE.FieldTypeId = dbo.GetCommentFieldId('SDE')
+LEFT OUTER JOIN VacancyReferralComments [SID] ON [SID].VacancyId = v.VacancyId AND [SID].FieldTypeId = dbo.GetCommentFieldId('SID')
+LEFT OUTER JOIN VacancyReferralComments IOI ON IOI.VacancyId = v.VacancyId AND IOI.FieldTypeId = dbo.GetCommentFieldId('IOI')
+LEFT OUTER JOIN VacancyReferralComments TRP ON TRP.VacancyId = v.VacancyId AND TRP.FieldTypeId = dbo.GetCommentFieldId('TRP')
+LEFT OUTER JOIN VacancyReferralComments WWG ON WWG.VacancyId = v.VacancyId AND WWG.FieldTypeId = dbo.GetCommentFieldId('WWG')
+LEFT OUTER JOIN VacancyReferralComments WWK ON WWK.VacancyId = v.VacancyId AND WWK.FieldTypeId = dbo.GetCommentFieldId('WWK')
+LEFT OUTER JOIN VacancyReferralComments LAD ON LAD.VacancyId = v.VacancyId AND LAD.FieldTypeId = dbo.GetCommentFieldId('LAD')
+LEFT OUTER JOIN VacancyReferralComments ALI ON ALI.VacancyId = v.VacancyId AND ALI.FieldTypeId = dbo.GetCommentFieldId('ALI')
+LEFT OUTER JOIN VacancyReferralComments AED ON AED.VacancyId = v.VacancyId AND AED.FieldTypeId = dbo.GetCommentFieldId('AED')
+LEFT OUTER JOIN VacancyReferralComments AER ON AER.VacancyId = v.VacancyId AND AER.FieldTypeId = dbo.GetCommentFieldId('AER')
+LEFT OUTER JOIN VacancyReferralComments AAE ON AAE.VacancyId = v.VacancyId AND AAE.FieldTypeId = dbo.GetCommentFieldId('AAE')
+WHERE v.VacancyID = @vacancyId";
     }
 }

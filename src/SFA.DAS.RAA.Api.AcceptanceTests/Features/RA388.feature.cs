@@ -93,7 +93,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 13
  testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14
- testRunner.When("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -112,7 +112,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 19
  testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 20
- testRunner.When("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 21
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

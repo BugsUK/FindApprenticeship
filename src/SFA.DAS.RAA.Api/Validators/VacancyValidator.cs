@@ -3,7 +3,7 @@
     using FluentValidation;
     using Models;
 
-    public class VacancyValidator : AbstractValidator<Vacancy>
+    public class VacancyValidator : AbstractValidator<VacancyApiModel>
     {
         public VacancyValidator()
         {

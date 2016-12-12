@@ -4,7 +4,7 @@
     using Validators;
 
     [Validator(typeof(VacancyValidator))]
-    public class Vacancy
+    public class VacancyApiModel
     {
         public int VacancyId { get; set; }
         public int VacancyReferenceNumber { get; set; }

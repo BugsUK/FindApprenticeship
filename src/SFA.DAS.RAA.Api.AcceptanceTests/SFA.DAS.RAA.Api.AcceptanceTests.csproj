@@ -177,6 +177,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Comparers\DbVacancyComparer.cs" />
+    <Compile Include="Comparers\IMultiEqualityComparer.cs" />
+    <Compile Include="Constants\UriFormats.cs" />
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Factories\RaaMockFactory.cs" />

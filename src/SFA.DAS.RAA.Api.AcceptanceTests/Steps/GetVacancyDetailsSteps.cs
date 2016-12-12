@@ -1,14 +1,17 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
-    using System;
     using System.Net.Http.Headers;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Constants;
     using Extensions;
+    using Factories;
     using FluentAssertions;
-    using Models;
+    using Moq;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
     using TechTalk.SpecFlow;
+    using DbVacancy = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy;
 
     [Binding]
     public class GetVacancyDetailsSteps
@@ -16,12 +19,19 @@
         [When(@"I request the vacancy details for the vacancy with id: (.*)")]
         public void WhenIRequestTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {
-            var vacancy = new Fixture().Build<Vacancy>().With(v => v.VacancyId, vacancyId);
+            var vacancy = new Fixture().Build<DbVacancy>()
+                .With(v => v.VacancyId, vacancyId)
+                .With(v => v.VacancyStatusId, (int)VacancyStatus.Live)
+                .Create();
             ScenarioContext.Current.Add($"vacancyId: {vacancyId}", vacancy);
-            
+
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.Query<DbVacancy>(VacancyRepository.SelectByIdSql, It.Is<object>(o => o.GetHashCode() == new {vacancyId }.GetHashCode()), null, null))
+                .Returns(new [] { vacancy });
+
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
 
-            var vacancyUri = $"/vacancy/?vacancyId={vacancyId}";
+            var vacancyUri = string.Format(UriFormats.VacancyUriFormat, vacancyId);
 
             if (ScenarioContext.Current.ContainsKey(ScenarioContextKeys.ApiKey))
             {
@@ -45,12 +55,13 @@
         [Then(@"I see the vacancy details for the vacancy with id: (.*)")]
         public void ThenISeeTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {
-            var vacancy = ScenarioContext.Current.Get<Vacancy>($"vacancyId: {vacancyId}");
-            var vacancyUri = $"/vacancy/?id={vacancyId}";
+            var vacancy = ScenarioContext.Current.Get<Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>($"vacancyId: {vacancyId}");
+            var vacancyUri = string.Format(UriFormats.VacancyUriFormat, vacancyId);
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
 
             vacancy.Should().NotBeNull();
             responseVacancy.Should().NotBeNull();
+            
             vacancy.Equals(responseVacancy).Should().BeTrue();
         }
     }
