@@ -45,6 +45,22 @@ SFA navigation
     }
 }
 
+.sfa-list-nav {
+    margin-bottom: 30px;
+    padding: 0;
+    li {
+        list-style: none;
+        margin-bottom: 10px;
+        @include media(tablet) {
+            display:inline-block;
+            margin-right: 30px;
+        }
+        &.toggle-content {
+            display: none;
+        }
+    }
+}
+
 /* -------------------------------------------------------------------
 Hide element (window size)
 ------------------------------------------------------------------- */
@@ -235,6 +251,10 @@ Misc - TO BE ORGANISED
     text-align:right;
 }
 
+.sfa-align-center {
+    text-align:center;
+}
+
 .sfa-pull-right {
     float: right !important;
 }
@@ -255,8 +275,8 @@ iframe, object, embed {
     padding-bottom: 30px;
 }
 
-.section-bordered {
-    border-bottom: 1px solid #bfc1c3;
+.sfa-section-bordered {
+    border-bottom: 1px solid $grey-2;
 }
 
 .sfa-table {
@@ -285,7 +305,6 @@ iframe, object, embed {
 
 .search-result {
     position: relative;
-    border-bottom: 1px solid $grey-2;
     padding-bottom:30px;
 }
 

@@ -63,7 +63,7 @@ WriteLiteral(" data-bind=\"visible: selectedSection() === \'applyQualifications\
 
 WriteLiteral(">\r\n\r\n    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyQualifications\"");
 
@@ -470,7 +470,7 @@ WriteLiteral(" data-bind=\"value: qualificationYear, attr:{\'name\':\'Candidate.
 
 WriteLiteral(">\r\n                                </td>\r\n                                <td");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n                                    <span");
 
@@ -495,7 +495,7 @@ WriteLiteral(" class=\"fake-link cell-span save-qualification-link\"");
 WriteLiteral(">Save</a></span>\r\n                                </td>\r\n                        " +
 "        <td");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n                                    <i");
 

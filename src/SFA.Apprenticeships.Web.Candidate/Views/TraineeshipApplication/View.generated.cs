@@ -226,7 +226,7 @@ Write(Html.DisplayFor(m => m.Candidate.TrainingCourses, "Application/TrainingCou
             #line hidden
 WriteLiteral("\r\n\r\n<section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <h2");
 
@@ -262,14 +262,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2131), Tuple.Create("\"", 2187)
+WriteAttribute("href", Tuple.Create(" href=\"", 2137), Tuple.Create("\"", 2193)
             
             #line 55 "..\..\Views\TraineeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2138), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2144), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2138), false)
+, 2144), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");

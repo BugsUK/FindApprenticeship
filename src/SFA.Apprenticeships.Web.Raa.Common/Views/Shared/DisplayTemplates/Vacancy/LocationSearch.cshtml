@@ -142,7 +142,7 @@
                                     @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@class = "form-control-small", @maxlength = "5", @id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"})
                                     @Html.ValidationMessage("Addresses[" + i + "].NumberOfPositions")
                                 </td>
-                                <td class="ta-center">
+                                <td class="sfa-align-center">
                                     @{
                                         var buttonName = "RemoveLocation-" + i;
                                     }
@@ -225,7 +225,7 @@
                         <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
                         <input type="hidden" data-bind="value: itemProvinceName, attr:{'name':'Addresses[' + $index() +'].Address.County', 'id':'addresses_'+ $index() + 'address__County' }">
                     </td>
-                    <td class="ta-center">
+                    <td class="sfa-align-center">
                         <a href="#" data-bind="click: $root.removeLocationAddress">remove location</a>
                     </td>
                 </tr>

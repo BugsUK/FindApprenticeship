@@ -26,7 +26,7 @@
       + $field.innerHeight() 
       + 'px; line-height: ' 
       + $field.innerHeight() 
-      + 'px;"><span>' + $aLabel + '</span> <strong></strong></div>' 
+      + 'px;"><span>' + $aLabel + '</span> <span class="bold-small"></span></div>' 
     );
     $editor = $( 
       '<div class="editor" style="width:' 
