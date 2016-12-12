@@ -85,7 +85,7 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 

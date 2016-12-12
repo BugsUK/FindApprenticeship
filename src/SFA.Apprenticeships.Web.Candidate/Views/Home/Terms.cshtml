@@ -3,8 +3,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge">Terms and conditions</h1>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">Terms and conditions</h1>
+    </div>
+</div>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        @Html.Partial("_TermsAndConditions")
+    </div>
 </div>
 
-@Html.Partial("_TermsAndConditions")
+

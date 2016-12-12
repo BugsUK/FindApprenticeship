@@ -5,19 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="grid-row">
-    <div class="column-one-half">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">Verify your mobile number</h1>
     </div>
-    <div class="column-one-half">
-        <p>
-            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
-        </p>
-        @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
-        {
-            <p>
-                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link" })
-            </p>
-        }
+    <div class="column-one-third sfa-align-right-tablet sfa-xlarge-top-margin">
+        <ul class="list">
+            <li>
+                @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link"})
+            </li>
+            @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
+            {
+                <li>
+                    @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link"})
+                </li>
+            }
+        </ul>
     </div>
 </div>
 
