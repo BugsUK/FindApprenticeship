@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Azure.ServiceBus", "SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj", "{BB161A54-EF1A-4611-8296-9A0BE69B4587}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api.Client", "SFA.DAS.RAA.Api.Client\SFA.DAS.RAA.Api.Client.csproj", "{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Demo|Any CPU = Demo|Any CPU
@@ -437,6 +439,18 @@ Global
 		{BB161A54-EF1A-4611-8296-9A0BE69B4587}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{BB161A54-EF1A-4611-8296-9A0BE69B4587}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{BB161A54-EF1A-4611-8296-9A0BE69B4587}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Local|Any CPU.Build.0 = Local|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
