@@ -8,6 +8,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.DependencyResolution
     using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Postcode.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Configuration;
+    using Apprenticeships.Infrastructure.Repositories.Sql.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
     using StructureMap;
 
     public static class IoC
@@ -25,6 +30,12 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.DependencyResolution
             var sqlConfiguration = configurationService.Get<SqlConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();*/
 
+            var sqlConfiguration = new SqlConfiguration
+            {
+                ConnectionString = "ConnectionString",
+                ReportingConnectionString = "ReportingConnectionString"
+            };
+
             return new Container(c =>
             {
                 //c.AddRegistry(new CommonRegistry(cacheConfig));
@@ -32,13 +43,13 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.DependencyResolution
 
                 //c.AddCachingRegistry(cacheConfig);
 
-                //c.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
+                c.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
 
                 //c.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
 
-                //c.AddRegistry<VacancyRepositoryRegistry>();
-                //c.AddRegistry<ProviderRepositoryRegistry>();
-                //c.AddRegistry<EmployerRepositoryRegistry>();
+                c.AddRegistry<VacancyRepositoryRegistry>();
+                c.AddRegistry<ProviderRepositoryRegistry>();
+                c.AddRegistry<EmployerRepositoryRegistry>();
 
                 c.AddRegistry<ProviderServiceRegistry>();
                 c.AddRegistry<EmployerServiceRegistry>();

@@ -177,6 +177,7 @@
   <ItemGroup>
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="Factories\RaaMockFactory.cs" />
     <Compile Include="Steps\AuthorizationSteps.cs" />
     <Compile Include="Constants\ApiKeys.cs" />
     <Compile Include="Constants\ScenarioContextKeys.cs" />
