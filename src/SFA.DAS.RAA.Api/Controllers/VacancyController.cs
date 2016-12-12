@@ -1,10 +1,14 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
     using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
     using System.Web.Http;
     using Apprenticeships.Application.VacancyPosting.Strategies;
+    using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Application.Interfaces;
     using Swashbuckle.Swagger.Annotations;
 
     [Authorize(Roles = Roles.Provider)]
@@ -28,8 +32,20 @@
         [SwaggerOperation("GetOne")]
         public Vacancy Get(int vacancyId)
         {
-            var vacancy = _getVacancyStrategies.GetVacancyById(vacancyId);
-            return vacancy;
+            try
+            {
+                var vacancy = _getVacancyStrategies.GetVacancyById(vacancyId);
+                return vacancy;
+            }
+            catch (CustomException ex)
+            {
+                if (ex.Code == ErrorCodes.ProviderVacancyAuthorisation.Failed)
+                {
+                    var message = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "You are not authorized to view this vacancy" };
+                    throw new HttpResponseException(message);
+                }
+                throw;
+            }
         }
 
         [HttpPost]

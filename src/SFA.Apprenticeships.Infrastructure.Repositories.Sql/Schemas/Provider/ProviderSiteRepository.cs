@@ -13,6 +13,14 @@
 
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
+        public const string SelectByIdSql = "SELECT * FROM dbo.ProviderSite WHERE ProviderSiteId = @providerSiteId";
+        public const string SelectByProviderIdSql = @"
+                SELECT ps.* FROM dbo.ProviderSite ps
+                INNER JOIN dbo.ProviderSiteRelationship psr
+                ON psr.ProviderSiteID = ps.ProviderSiteID
+                WHERE psr.ProviderID = @providerId 
+                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+
         private const int ActivatedEmployerTrainingProviderStatusId = 1;
         private const int OwnerRelationship = 1;
         private const int SubcontractorRelationship = 2;
@@ -35,14 +43,12 @@
         {
             _logger.Debug("Getting provider site with ProviderSiteId={0}", providerSiteId);
 
-            const string sql = "SELECT * FROM dbo.ProviderSite WHERE ProviderSiteId = @providerSiteId";
-
             var sqlParams = new
             {
                 providerSiteId
             };
 
-            var dbProviderSite = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams).SingleOrDefault();
+            var dbProviderSite = _getOpenConnection.Query<Entities.ProviderSite>(SelectByIdSql, sqlParams).SingleOrDefault();
 
             _logger.Debug(dbProviderSite == null
                 ? "Did not find provider site with ProviderSiteId={0}"
@@ -106,12 +112,7 @@
         {
             _logger.Debug("Getting provider sites for provider={0}", providerId);
 
-            var sql = @"
-                SELECT ps.* FROM dbo.ProviderSite ps
-                INNER JOIN dbo.ProviderSiteRelationship psr
-                ON psr.ProviderSiteID = ps.ProviderSiteID
-                WHERE psr.ProviderID = @providerId 
-                AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+            var sql = SelectByProviderIdSql;
 
             var isSubcontractorsFeatureEnabled = _configurationService.Get<FeatureConfiguration>().IsSubcontractorsFeatureEnabled();
             if(!isSubcontractorsFeatureEnabled)

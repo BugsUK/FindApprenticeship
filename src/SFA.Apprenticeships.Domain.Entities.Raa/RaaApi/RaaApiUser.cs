@@ -23,7 +23,7 @@
         /// <summary>
         /// The entities primary identifier in the database
         /// </summary>
-        public Guid ReferencedEntityGuid { get; set; }
+        public Guid? ReferencedEntityGuid { get; set; }
 
         /// <summary>
         /// Can be a UKPRN, EDSURN or other identifier
