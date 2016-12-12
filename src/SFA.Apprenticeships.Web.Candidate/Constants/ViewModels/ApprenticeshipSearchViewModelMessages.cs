@@ -31,5 +31,10 @@
         {
             public const string RequiredErrorText = "Please select a saved search";
         }
+
+        public static class DetailsMessages
+        {
+            public const string ExpiredVacancy = "This apprenticeship is no longer available";
+        }
     }
 }
