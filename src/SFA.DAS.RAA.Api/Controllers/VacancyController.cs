@@ -21,12 +21,12 @@
             _getVacancyStrategies = getVacancyStrategies;
         }
 
-        [Route("vacancies")]
+        /*[Route("vacancies")]
         [SwaggerOperation("GetAll")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
-        }
+        }*/
 
         [Route("vacancy")]
         [SwaggerOperation("GetOne")]
@@ -38,7 +38,8 @@
 
                 if (vacancy == null)
                 {
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                    var message = new HttpResponseMessage(HttpStatusCode.NotFound) { ReasonPhrase = "The requested vacancy has not been found" };
+                    throw new HttpResponseException(message);
                 }
 
                 return vacancy;
@@ -54,12 +55,12 @@
             }
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("vacancy")]
         [SwaggerOperation("Create")]
         public IHttpActionResult Create(Vacancy vacancy)
         {
             return Ok();
-        }
+        }*/
     }
 }
