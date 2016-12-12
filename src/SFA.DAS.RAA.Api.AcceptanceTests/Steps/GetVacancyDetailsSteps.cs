@@ -22,12 +22,12 @@
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
 
             var vacancyUri = $"/vacancy/?vacancyId={vacancyId}";
-            
-            Guid apiKey;
-            if (ScenarioContext.Current.TryGetValue(ScenarioContextKeys.ApiKey, out apiKey))
+
+            if (ScenarioContext.Current.ContainsKey(ScenarioContextKeys.ApiKey))
             {
+                var apiKey = ScenarioContext.Current[ScenarioContextKeys.ApiKey].ToString();
                 ScenarioContext.Current.Remove(ScenarioContextKeys.ApiKey);
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", apiKey.ToString());
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", apiKey);
             }
 
             using (var response = httpClient.GetAsync(vacancyUri).Result)

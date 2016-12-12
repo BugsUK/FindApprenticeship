@@ -47,8 +47,7 @@
                 FindServiceEndpoint = "http://localhost",
                 RetrieveServiceEndpoint = "http://localhost"
             });
-
-
+            
             //Setup mock for unkown user
             MockGetOpenConnection.Setup(m => m.Query<RaaApiUser>(RaaApiUserRepository.SelectSql, It.IsAny<object>(), null, null)).Returns(new List<RaaApiUser>());
 

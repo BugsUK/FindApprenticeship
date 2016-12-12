@@ -9,6 +9,18 @@ Scenario: Get vacancy details without authorization
 	Then The response status is: Unauthorized
 
 @RA388
+Scenario: Get vacancy details with an invalid api key
+	When I authorize my request with an invalid API key
+	When I request the vacancy details for the vacancy with id: 1
+	Then The response status is: Unauthorized
+
+@RA388
+Scenario: Get vacancy details with an unknown api key
+	When I authorize my request with an unknown API key
+	When I request the vacancy details for the vacancy with id: 1
+	Then The response status is: Unauthorized
+
+@RA388
 Scenario: Get vacancy details
 	When I authorize my request with a Provider API key
 	And I request the vacancy details for the vacancy with id: 1
