@@ -35,6 +35,12 @@
             try
             {
                 var vacancy = _getVacancyStrategies.GetVacancyById(vacancyId);
+
+                if (vacancy == null)
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
+
                 return vacancy;
             }
             catch (CustomException ex)
