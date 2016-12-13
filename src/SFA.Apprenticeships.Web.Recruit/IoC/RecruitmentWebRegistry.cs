@@ -98,6 +98,7 @@
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
             For<IApiUserProvider>().Use<ApiUserProvider>();
             For<IVacancyQAProvider>().Use<VacancyProvider>();
+            For<IApiClientProvider>().Use<ApiClientProvider>();
         }
 
         private void RegisterServices()

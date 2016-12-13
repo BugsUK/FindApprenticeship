@@ -28,9 +28,7 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
-    using DAS.RAA.Api.Client.V1;
     using Mappers;
-    using Microsoft.Rest;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -45,7 +43,6 @@
     using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
-    using ApiWage = DAS.RAA.Api.Client.V1.Models.Wage;
     using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
@@ -68,6 +65,7 @@
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
+        private readonly IApiClientProvider _apiClientProvider;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -76,7 +74,7 @@
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService,
             IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
-            IVacancySummaryService vacancySummaryService)
+            IVacancySummaryService vacancySummaryService, IApiClientProvider apiClientProvider)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -94,6 +92,7 @@
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
             _vacancySummaryService = vacancySummaryService;
+            _apiClientProvider = apiClientProvider;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
@@ -689,7 +688,8 @@
 
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
-            var apiClient = new ApiClient(new Uri("http://local-restapi.findapprenticeship.service.gov.uk/"), new TokenCredentials("D359D967-162C-4E53-8389-EBF7B9B69619", "bearer"));
+            //TODO: Config switch for using the API or service directly
+            var apiClient = _apiClientProvider.GetApiClient();
 
             var apiVacancy = apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber).Result.Body;
             var vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);

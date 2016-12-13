@@ -27,5 +27,5 @@
   <IgnoredTests>
     <AllTestsSelector />
   </IgnoredTests>
-  <HiddenWarnings>PreBuildEventDisabled</HiddenWarnings>
+  <HiddenWarnings>PreBuildEventDisabled;AssemblyReferenceToBuildOutputDirectory</HiddenWarnings>
 </ProjectConfiguration>
