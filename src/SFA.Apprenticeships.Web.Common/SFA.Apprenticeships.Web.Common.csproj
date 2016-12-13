@@ -733,6 +733,10 @@
       <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.DAS.RAA.Api.Client.V1\SFA.DAS.RAA.Api.Client.V1.csproj">
+      <Project>{b263f67e-b3ea-410a-ba24-4f3cc2ce0008}</Project>
+      <Name>SFA.DAS.RAA.Api.Client.V1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
       <Name>SFA.Infrastructure</Name>
