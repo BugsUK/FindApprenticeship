@@ -8,6 +8,7 @@ using Swashbuckle.Application;
 namespace SFA.DAS.RAA.Api
 {
     using Services;
+    using Swashbuckle.Swagger;
 
     public class SwaggerConfig
     {
@@ -113,6 +114,8 @@ namespace SFA.DAS.RAA.Api
                         // complex Schema, use a Schema filter.
                         //
                         //c.MapType<ProductType>(() => new Schema { type = "integer", format = "int32" });
+                        c.MapType<decimal>(() => new Schema { type = "number", format = "decimal" });
+                        c.MapType<decimal?>(() => new Schema { type = "number", format = "decimal" });
 
                         // If you want to post-modify "complex" Schemas once they've been generated, across the board or for a
                         // specific type, you can wire up one or more Schema filters.
@@ -141,7 +144,7 @@ namespace SFA.DAS.RAA.Api
                         // enum type. Swashbuckle will honor this change out-of-the-box. However, if you use a different
                         // approach to serialize enums as strings, you can also force Swashbuckle to describe them as strings.
                         // 
-                        //c.DescribeAllEnumsAsStrings();
+                        c.DescribeAllEnumsAsStrings();
 
                         // Similar to Schema filters, Swashbuckle also supports Operation and Document filters:
                         //

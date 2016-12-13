@@ -2259,7 +2259,6 @@ textarea {
   line-height: 1.25;
   width: 100%;
   padding: 5px 4px 4px;
-  color: inherit;
   background-color: transparent;
   border: 2px solid; }
   @media (min-width: 641px) {
@@ -2332,9 +2331,7 @@ textarea.form-control {
   position: relative;
   padding: 8px 10px 9px 50px;
   margin-bottom: 10px;
-  cursor: pointer;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation; }
+  cursor: pointer; }
   @media (min-width: 641px) {
     .block-label {
       float: left;
@@ -2537,13 +2534,13 @@ input[type=number] {
   .breadcrumbs a {
     color: #0b0c0c; }
 
-.phase-banner {
+.phase-banner-alpha {
   padding: 10px 0 8px;
   border-bottom: 1px solid #bfc1c3; }
   @media (min-width: 641px) {
-    .phase-banner {
+    .phase-banner-alpha {
       padding-bottom: 10px; } }
-  .phase-banner p {
+  .phase-banner-alpha p {
     display: table;
     margin: 0;
     color: #000;
@@ -2553,10 +2550,10 @@ input[type=number] {
     font-size: 14px;
     line-height: 1.14286; }
     @media (min-width: 641px) {
-      .phase-banner p {
+      .phase-banner-alpha p {
         font-size: 16px;
         line-height: 1.25; } }
-  .phase-banner .phase-tag {
+  .phase-banner-alpha .phase-tag {
     display: -moz-inline-stack;
     display: inline-block;
     margin: 0 8px 0 0;
@@ -2572,22 +2569,19 @@ input[type=number] {
     color: #fff;
     background-color: #005ea5; }
     @media (min-width: 641px) {
-      .phase-banner .phase-tag {
+      .phase-banner-alpha .phase-tag {
         font-size: 16px;
         line-height: 1.25; } }
-  .phase-banner span {
+  .phase-banner-alpha span {
     display: table-cell;
     vertical-align: baseline; }
 
-.phase-banner-alpha,
 .phase-banner-beta {
   padding: 10px 0 8px;
   border-bottom: 1px solid #bfc1c3; }
   @media (min-width: 641px) {
-    .phase-banner-alpha,
     .phase-banner-beta {
       padding-bottom: 10px; } }
-  .phase-banner-alpha p,
   .phase-banner-beta p {
     display: table;
     margin: 0;
@@ -2598,11 +2592,9 @@ input[type=number] {
     font-size: 14px;
     line-height: 1.14286; }
     @media (min-width: 641px) {
-      .phase-banner-alpha p,
       .phase-banner-beta p {
         font-size: 16px;
         line-height: 1.25; } }
-  .phase-banner-alpha .phase-tag,
   .phase-banner-beta .phase-tag {
     display: -moz-inline-stack;
     display: inline-block;
@@ -2619,11 +2611,9 @@ input[type=number] {
     color: #fff;
     background-color: #005ea5; }
     @media (min-width: 641px) {
-      .phase-banner-alpha .phase-tag,
       .phase-banner-beta .phase-tag {
         font-size: 16px;
         line-height: 1.25; } }
-  .phase-banner-alpha span,
   .phase-banner-beta span {
     display: table-cell;
     vertical-align: baseline; }

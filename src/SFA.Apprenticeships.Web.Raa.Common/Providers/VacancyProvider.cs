@@ -28,6 +28,9 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
+    using DAS.RAA.Api.Client.V1;
+    using Mappers;
+    using Microsoft.Rest;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -42,9 +45,13 @@
     using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
+    using ApiWage = DAS.RAA.Api.Client.V1.Models.Wage;
+    using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
+        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
+
         private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
@@ -61,7 +68,6 @@
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
-
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -683,7 +689,12 @@
 
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var apiClient = new ApiClient(new Uri("http://local-restapi.findapprenticeship.service.gov.uk/"), new TokenCredentials("D359D967-162C-4E53-8389-EBF7B9B69619", "bearer"));
+
+            var apiVacancy = apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber).Result.Body;
+            var vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+
+            //var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (vacancy == null)
                 return null;

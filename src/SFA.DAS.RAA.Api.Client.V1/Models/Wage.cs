@@ -16,7 +16,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the Wage class.
         /// </summary>
-        public Wage(int? type = default(int?), string reasonForType = default(string), double? amount = default(double?), double? amountLowerBound = default(double?), double? amountUpperBound = default(double?), string text = default(string), int? unit = default(int?), double? hoursPerWeek = default(double?))
+        /// <param name="type">Possible values include: 'LegacyText',
+        /// 'LegacyWeekly', 'ApprenticeshipMinimum', 'NationalMinimum',
+        /// 'Custom', 'CustomRange', 'CompetitiveSalary',
+        /// 'ToBeAgreedUponAppointment', 'Unwaged'</param>
+        /// <param name="unit">Possible values include: 'NotApplicable',
+        /// 'Weekly', 'Monthly', 'Annually'</param>
+        public Wage(string type = default(string), string reasonForType = default(string), decimal? amount = default(decimal?), decimal? amountLowerBound = default(decimal?), decimal? amountUpperBound = default(decimal?), string text = default(string), string unit = default(string), decimal? hoursPerWeek = default(decimal?))
         {
             Type = type;
             ReasonForType = reasonForType;
@@ -29,9 +35,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
+        /// Gets possible values include: 'LegacyText', 'LegacyWeekly',
+        /// 'ApprenticeshipMinimum', 'NationalMinimum', 'Custom',
+        /// 'CustomRange', 'CompetitiveSalary', 'ToBeAgreedUponAppointment',
+        /// 'Unwaged'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Type")]
-        public int? Type { get; private set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -41,17 +51,17 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Amount")]
-        public double? Amount { get; private set; }
+        public decimal? Amount { get; private set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AmountLowerBound")]
-        public double? AmountLowerBound { get; private set; }
+        public decimal? AmountLowerBound { get; private set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AmountUpperBound")]
-        public double? AmountUpperBound { get; private set; }
+        public decimal? AmountUpperBound { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -59,14 +69,16 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public string Text { get; private set; }
 
         /// <summary>
+        /// Gets possible values include: 'NotApplicable', 'Weekly',
+        /// 'Monthly', 'Annually'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Unit")]
-        public int? Unit { get; private set; }
+        public string Unit { get; private set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "HoursPerWeek")]
-        public double? HoursPerWeek { get; private set; }
+        public decimal? HoursPerWeek { get; private set; }
 
     }
 }
