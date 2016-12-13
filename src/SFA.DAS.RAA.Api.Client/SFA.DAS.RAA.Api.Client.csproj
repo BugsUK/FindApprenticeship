@@ -70,6 +70,13 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApiClient.cs" />
+    <Compile Include="ApiClientExtensions.cs" />
+    <Compile Include="IApiClient.cs" />
+    <Compile Include="Models\GeoPoint.cs" />
+    <Compile Include="Models\PostalAddress.cs" />
+    <Compile Include="Models\Vacancy.cs" />
+    <Compile Include="Models\Wage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +85,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
