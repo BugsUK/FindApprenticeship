@@ -7,8 +7,8 @@
     <ProjectGuid>{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.DAS.RAA.Api.Client</RootNamespace>
-    <AssemblyName>SFA.DAS.RAA.Api.Client</AssemblyName>
+    <RootNamespace>SFA.DAS.RAA.Api.Client.V1</RootNamespace>
+    <AssemblyName>SFA.DAS.RAA.Api.Client.V1</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
