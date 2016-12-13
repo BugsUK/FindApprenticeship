@@ -688,13 +688,21 @@
 
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
-            //TODO: Config switch for using the API or service directly
-            var apiClient = _apiClientProvider.GetApiClient();
+            Vacancy vacancy;
 
-            var apiVacancy = apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber).Result.Body;
-            var vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+            if (_configurationService.Get<CommonWebConfiguration>().Features.RaaApiEnabled)
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
 
-            //var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+                var apiVacancy =
+                    apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber)
+                        .Result.Body;
+                vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+            }
+            else
+            {
+                vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            }
 
             if (vacancy == null)
                 return null;

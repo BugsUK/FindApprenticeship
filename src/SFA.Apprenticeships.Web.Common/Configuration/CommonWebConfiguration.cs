@@ -35,6 +35,8 @@
         public Features Features { get ; set; }
 
         public int SubCategoriesFullNamesLimit { get; set; }
+
+        public string RaaApiBaseUrl { get; set; }
     }
 
     public class Features
@@ -42,5 +44,7 @@
         public bool SavedSearchesEnabled { get; set; }
 
         public bool SmsEnabled { get; set; }
+
+        public bool RaaApiEnabled { get; set; }
     }
 }
