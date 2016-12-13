@@ -381,6 +381,7 @@
     <None Include="Content\scss\_joyride-styles.scss" />
     <None Include="Content\scss\_link-styles.scss" />
     <None Include="Content\scss\_page-nav.scss" />
+    <None Include="Content\scss\_progress-indicator-styles.scss" />
     <None Include="Content\scss\_select2-styles.scss" />
     <None Include="Content\scss\_sfa-custom-layouts.scss" />
     <None Include="Content\scss\_button-links.scss" />

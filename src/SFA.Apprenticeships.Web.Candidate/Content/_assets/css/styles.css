@@ -30,6 +30,19 @@ SFA navigation
     .sfa-navigation-wrapper.phase-banner .sfa-navigation span {
       display: inline; }
 
+.sfa-list-nav {
+  margin-bottom: 30px;
+  padding: 0; }
+  .sfa-list-nav li {
+    list-style: none;
+    margin-bottom: 10px; }
+    @media (min-width: 641px) {
+      .sfa-list-nav li {
+        display: inline-block;
+        margin-right: 30px; } }
+    .sfa-list-nav li.toggle-content {
+      display: none; }
+
 /* -------------------------------------------------------------------
 Hide element (window size)
 ------------------------------------------------------------------- */
@@ -169,6 +182,9 @@ Misc - TO BE ORGANISED
 
 .sfa-align-right {
   text-align: right; }
+
+.sfa-align-center {
+  text-align: center; }
 
 .sfa-pull-right {
   float: right !important; }
