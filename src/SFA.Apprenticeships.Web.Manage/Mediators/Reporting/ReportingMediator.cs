@@ -1,9 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Reporting
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Application.Interfaces;
     using Common.Constants;
     using Common.Extensions;
@@ -16,7 +12,10 @@
     using Infrastructure.Presentation;
     using Raa.Common.Validators.Report;
     using Raa.Common.ViewModels.Report;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using ViewModels;
 
     public class ReportingMediator : MediatorBase, IReportingMediator
@@ -41,14 +40,14 @@
                 var bytes = GetCsvBytes<ReportVacanciesResultItem, ReportVacanciesResultItemClassMap>(reportResult, "");
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logService.Warn(ex);
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
             }
         }
 
-        public MediatorResponse<T> Validate<T>(T parameters) where T: ReportParameterBase
+        public MediatorResponse<T> Validate<T>(T parameters) where T : ReportParameterBase
         {
             var validationResult = _reportDateRangeValidator.Validate(parameters);
             parameters.IsValid = validationResult.IsValid;
@@ -206,7 +205,7 @@
         public MediatorResponse<ReportRegisteredCandidatesParameters> ValidateRegisteredCandidatesParameters(ReportRegisteredCandidatesParameters parameters)
         {
             var response = GetRegisteredCandidatesReportParams();
-            if(response.Code == ReportingMediatorCodes.ReportCodes.Error)
+            if (response.Code == ReportingMediatorCodes.ReportCodes.Error)
                 return response;
 
             parameters.RegionList = response.ViewModel.RegionList;
@@ -247,6 +246,11 @@
                 _logService.Warn(ex);
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
             }
+        }
+
+        public MediatorResponse<ReportVacancyTrackerParameters> GetActionedVacancies()
+        {
+            throw new NotImplementedException();
         }
 
         private static byte[] GetCsvBytes<T, TClassMap>(IEnumerable<T> items, string header) where T : class where TClassMap : CsvClassMap<T>

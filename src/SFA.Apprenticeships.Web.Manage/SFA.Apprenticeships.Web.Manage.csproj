@@ -400,6 +400,7 @@
     <Compile Include="Mediators\Reporting\IReportingMediator.cs" />
     <Compile Include="Mediators\Reporting\ReportingMediator.cs" />
     <Compile Include="Mediators\Reporting\ReportingMediatorCodes.cs" />
+    <Compile Include="ViewModels\ReportVacancyTrackerParameters.cs" />
     <Compile Include="Mediators\Vacancy\IVacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorCodes.cs" />

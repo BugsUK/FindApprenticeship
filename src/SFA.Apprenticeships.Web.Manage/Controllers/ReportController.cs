@@ -1,17 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Domain.Entities.Raa;
     using Mediators.Reporting;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System.Web.Mvc;
     using ViewModels;
-    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Raa)]
     public class ReportController : ManagementControllerBase
     {
@@ -39,7 +36,6 @@
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
                     return View("VacanciesListCsv", validationResponse.ViewModel);
-                case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
@@ -80,7 +76,6 @@
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
                     return View("SuccessfulCandidatesCsv", validationResponse.ViewModel);
-                case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
@@ -121,7 +116,6 @@
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
                     return View("UnsuccessfulCandidatesCsv", validationResponse.ViewModel);
-                case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
@@ -158,12 +152,11 @@
         public ActionResult ValidateVacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
         {
             var validationResponse = _reportingMediator.Validate(parameters);
-            
+
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
                     return View("VacancyExtensionsCsv", validationResponse.ViewModel);
-                case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
@@ -212,7 +205,6 @@
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
                     return View("RegisteredCandidatesCsv", validationResponse.ViewModel);
-                case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
@@ -237,6 +229,17 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult VacancyTrackerCsv()
+        {
+            var response = _reportingMediator.GetActionedVacancies();
+            if (response.Code != ReportingMediatorCodes.ReportCodes.Ok)
+                RedirectToAction("Index");
+
+            return View(response.ViewModel);
         }
     }
 }
