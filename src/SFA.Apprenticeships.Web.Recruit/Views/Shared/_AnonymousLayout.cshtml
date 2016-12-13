@@ -73,20 +73,20 @@
         </div>
     </header>
     <div class="content-container">
-        <div class="fixed-container">
-            <div class="banner-container">
-                <div class="phase-notice gov-border grid-row">
+        <main role="main" id="main">
+            <div class="phase-banner sfa-navigation-wrapper">
+                <div class="grid-row">
                     <div class="column-one-half">
-                        <strong class="beta__label">Beta</span>
-                        @if (Request.IsAuthenticated)
-                        {
-                            <span>This is a new service – your <a rel="external" href="https://www.surveymonkey.co.uk/r/LB5ZJRM" target="_blank">feedback</a> helps improve it.</span>
-                        }
+                        <p>
+                            <strong class="phase-tag">BETA</strong>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <span>This is a new service - your <a href="https://www.surveymonkey.co.uk/r/LB5ZJRM" target="_blank">feedback</a> helps improve it.</span>
+                            }
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-        <main role="main" id="main">
             @{
                 var controller = ViewContext.Controller as SFA.Apprenticeships.Web.Common.Controllers.ControllerBase;
 

@@ -188,6 +188,23 @@ Custom form elements
     }
 }
 
+.sfa-form-control-after {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 16px;
+    line-height: 1.25;
+    display: block;
+    color: #6f777b;
+    font-weight: normal;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    @include media(tablet){
+        font-size: 19px;
+        line-height: 1.31579;
+    }
+}
+
 /* -------------------------------------------------------------------
 Categories and sub-categories
 ------------------------------------------------------------------- */
@@ -247,8 +264,20 @@ Misc - TO BE ORGANISED
     margin: 0 !important;
 }
 
+.sfa-no-right-margin {
+    margin-right: 0 !important;
+}
+
+.sfa-no-left-margin {
+    margin-left: 0 !important;
+}
+
 .sfa-no-bottom-margin {
     margin-bottom: 0 !important;
+}
+
+.sfa-no-top-margin {
+    margin-top: 0 !important;
 }
 
 .sfa-align-right {

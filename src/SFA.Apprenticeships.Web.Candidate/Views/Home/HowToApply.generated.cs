@@ -2665,49 +2665,41 @@ WriteLiteral(" id=\"disability-prefno\"");
 
 WriteLiteral(" aria-labelledby=\"disability-label\"");
 
-WriteLiteral(">Prefer not to say\r\n        </label>\r\n        <div");
+WriteLiteral(">Prefer not to say\r\n        </label>\r\n        <details>\r\n            <summary><sp" +
+"an");
 
-WriteLiteral(" class=\"text\"");
+WriteLiteral(" class=\"summary\"");
 
-WriteLiteral(">\r\n            <details");
+WriteLiteral(">Why we collect this info</span></summary>\r\n            <div");
 
-WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
-
-WriteLiteral(">\r\n                <summary>Why we collect this info</summary>\r\n                <" +
-"div");
-
-WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(@">
-                    <p>
-                        Employers who are part of the ‘Positive about disabled people’ scheme
-                        will guarantee candidates an interview who meet the apprenticeship
-                        criteria if they have a disability.
-                    </p>
-                    <p>
-                        For this reason we ask you to provide this information so we can
-                        inform the employer and provider.
-                    </p>
-                </div>
-            </details>
-        </div>
+                <p>
+                    Employers who are part of the ‘Positive about disabled people’ scheme
+                    will guarantee candidates an interview who meet the apprenticeship
+                    criteria if they have a disability.
+                </p>
+                <p>
+                    For this reason we ask you to provide this information so we can
+                    inform the employer and provider.
+                </p>
+            </div>
+        </details>
     </div>
     <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" for=\"question4\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(" class=\"form-label-bold\"");
+WriteLiteral(">Is there anything we can do to support your interview?</p>\r\n        <p");
 
-WriteLiteral(">Is there anything we can do to support your interview?</label>\r\n        <span");
+WriteLiteral(" class=\"secondary-text\"");
 
-WriteLiteral(" class=\"form-hint\"");
-
-WriteLiteral(">For example, do you need a signer or information in braille</span>\r\n        <div" +
-"");
+WriteLiteral(">For example, do you need a signer or information in braille</p>\r\n        <div");
 
 WriteLiteral(" class=\"form-group form-group-compound inline\"");
 
@@ -3132,7 +3124,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 710 "..\..\Views\Home\HowToApply.cshtml"
+            #line 708 "..\..\Views\Home\HowToApply.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             

@@ -9,7 +9,7 @@
 }
 
 <div class="form-group">
-    <p class="form-label-bold">Is there anything we can do to support your interview?</p>
+    <p class="heading-small">Is there anything we can do to support your interview?</p>
     @if (Model.RequiresSupportForInterview)
     {
         <span id="@Html.IdFor(m => m.AnythingWeCanDoToSupportYourInterview)" class="form-prepopped prewrap">@Html.DisplayFor(m => m.AnythingWeCanDoToSupportYourInterview)</span>

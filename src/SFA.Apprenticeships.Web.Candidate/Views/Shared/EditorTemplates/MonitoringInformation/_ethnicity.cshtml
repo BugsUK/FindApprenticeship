@@ -1,11 +1,12 @@
 ﻿@model MonitoringInformationViewModel
 
-<div class="form-group inline clearfix">
-    <p class="form-label-bold" id="disability-label">What is your ethnic group?</p>
-    <p class="form-hint text">
-        We need this information to make sure we're giving equal opportunities
-        to all candidates
-    </p>
+<div class="form-group">
+    <label class="form-label-bold" for="@Html.IdFor(m => m.Ethnicity)" id="disability-label">
+        What is your ethnic group?
+        <span class="form-hint">
+            We need this information to make sure we're giving equal opportunities to all candidates
+        </span>
+    </label>
     <select class="form-control" id="@Html.IdFor(m => m.Ethnicity)" name="@Html.NameFor(m => m.Ethnicity)" class="para-btm-margin">
         <option value="0"@(Model != null && Model.Ethnicity == 0 ? " selected" : "")>-- Please select --</option>
         <option value="99"@(Model != null && Model.Ethnicity == 99 ? " selected" : "")>Prefer not to say</option>

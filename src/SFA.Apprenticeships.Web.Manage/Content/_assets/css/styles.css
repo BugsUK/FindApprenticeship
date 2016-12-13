@@ -14,10 +14,10 @@ SFA navigation
         float: right !important;
         font-size: 16px; } }
     .sfa-navigation-wrapper .sfa-navigation .sfa-navigation-items a {
-      padding: 0 5px 0 0; }
+      margin: 0 5px 0 0; }
       @media (min-width: 769px) {
         .sfa-navigation-wrapper .sfa-navigation .sfa-navigation-items a {
-          padding: 0 0 0 5px; } }
+          margin: 0 0 0 5px; } }
     .sfa-navigation-wrapper .sfa-navigation .sfa-user-navigation {
       margin-bottom: 5px; }
       .sfa-navigation-wrapper .sfa-navigation .sfa-user-navigation span {
@@ -57,6 +57,9 @@ Hide element (window size)
   @media (min-width: 769px) {
     .sfa-hide-desktop {
       display: none; } }
+
+.sfa-hide {
+  display: none; }
 
 /* -------------------------------------------------------------------
 Custom margins
@@ -136,6 +139,22 @@ Custom form elements
   .sfa-form-radio input, .sfa-form-checkbox input {
     margin-left: -18px !important; }
 
+.sfa-form-control-after {
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 16px;
+  line-height: 1.25;
+  display: block;
+  color: #6f777b;
+  font-weight: normal;
+  padding-top: 2px;
+  padding-bottom: 2px; }
+  @media (min-width: 641px) {
+    .sfa-form-control-after {
+      font-size: 19px;
+      line-height: 1.31579; } }
+
 /* -------------------------------------------------------------------
 Categories and sub-categories
 ------------------------------------------------------------------- */
@@ -177,11 +196,26 @@ Misc - TO BE ORGANISED
 .no-margins {
   margin: 0 !important; }
 
+.sfa-no-right-margin {
+  margin-right: 0 !important; }
+
+.sfa-no-left-margin {
+  margin-left: 0 !important; }
+
 .sfa-no-bottom-margin {
   margin-bottom: 0 !important; }
 
+.sfa-no-top-margin {
+  margin-top: 0 !important; }
+
 .sfa-align-right {
   text-align: right; }
+  @media (min-width: 641px) {
+    .sfa-align-right-tablet {
+      text-align: right; } }
+
+.sfa-align-center {
+  text-align: center; }
 
 .sfa-align-center {
   text-align: center; }
