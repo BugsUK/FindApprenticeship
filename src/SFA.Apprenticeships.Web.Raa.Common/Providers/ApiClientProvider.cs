@@ -38,7 +38,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                     ukprn = ukprnoverride;
                 }
                 var apiUser = _raaApiUserRepository.GetUser(Convert.ToInt32(ukprn));
-                if (apiUser == null || apiUser == RaaApiUser.UnknownApiUser)
+                if (apiUser == null || ReferenceEquals(apiUser, RaaApiUser.UnknownApiUser))
                 {
                     var message = $"No RAA API key found for current principal {_currentUserService.CurrentUserName}";
                     _logService.Error(message);
