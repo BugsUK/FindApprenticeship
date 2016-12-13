@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace SFA.DAS.RAA.Api.Client
+namespace SFA.DAS.RAA.Api.Client.V1
 {
     using Models;
 
@@ -24,6 +24,12 @@ namespace SFA.DAS.RAA.Api.Client
         /// Gets or sets json deserialization settings.
         /// </summary>
         Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
+
+        /// <summary>
+        /// Subscription credentials which uniquely identify client
+        /// subscription.
+        /// </summary>
+        Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
 
             /// <param name='vacancyId'>

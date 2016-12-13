@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace SFA.DAS.RAA.Api.Client.Models
+namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
