@@ -69,10 +69,7 @@
             _logger.Debug("Calling database to get apprenticeship vacancy with Vacancy Reference Number={0}",
                 vacancyReferenceNumber);
 
-            var vacancyId = _getOpenConnection.QueryCached<int?>(_cacheDuration, @"
-                        SELECT VacancyId
-                        FROM   dbo.Vacancy
-                        WHERE  VacancyReferenceNumber = @vacancyReferenceNumber",
+            var vacancyId = _getOpenConnection.QueryCached<int?>(_cacheDuration, SelectVacancyIdFromReferenceNumberSql,
                     new
                     {
                         vacancyReferenceNumber
@@ -86,10 +83,7 @@
             _logger.Debug("Calling database to get apprenticeship vacancy with VacancyGuid={0}",
                 vacancyGuid);
 
-            var vacancyId = _getOpenConnection.QueryCached<int?>(_cacheDuration, @"
-                        SELECT VacancyId
-                        FROM   dbo.Vacancy
-                        WHERE  VacancyGuid = @vacancyGuid",
+            var vacancyId = _getOpenConnection.QueryCached<int?>(_cacheDuration, SelectVacancyIdFromGuidSql,
                     new
                     {
                         vacancyGuid
@@ -804,5 +798,15 @@ LEFT OUTER JOIN VacancyReferralComments AED ON AED.VacancyId = v.VacancyId AND A
 LEFT OUTER JOIN VacancyReferralComments AER ON AER.VacancyId = v.VacancyId AND AER.FieldTypeId = dbo.GetCommentFieldId('AER')
 LEFT OUTER JOIN VacancyReferralComments AAE ON AAE.VacancyId = v.VacancyId AND AAE.FieldTypeId = dbo.GetCommentFieldId('AAE')
 WHERE v.VacancyID = @vacancyId";
+
+        public static readonly string SelectVacancyIdFromReferenceNumberSql = @"
+SELECT VacancyId
+FROM   dbo.Vacancy
+WHERE  VacancyReferenceNumber = @vacancyReferenceNumber";
+
+        public static readonly string SelectVacancyIdFromGuidSql = @"
+SELECT VacancyId
+FROM   dbo.Vacancy
+WHERE  VacancyGuid = @vacancyGuid";
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -29,12 +30,31 @@
         }*/
 
         [Route("vacancy")]
-        [SwaggerOperation("GetOne")]
-        public Vacancy Get(int vacancyId)
+        [SwaggerOperation("GetVacancy")]
+        public Vacancy Get(int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
+            if (!vacancyId.HasValue && !vacancyReferenceNumber.HasValue && !vacancyGuid.HasValue)
+            {
+                var message = new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = "Please specify either a vacancyId, a vacancyReferenceNumber or a vacancyGuid" };
+                throw new HttpResponseException(message);
+            }
+
             try
             {
-                var vacancy = _getVacancyStrategies.GetVacancyById(vacancyId);
+                Vacancy vacancy;
+
+                if (vacancyId.HasValue)
+                {
+                    vacancy = _getVacancyStrategies.GetVacancyById(vacancyId.Value);
+                }
+                else if (vacancyReferenceNumber.HasValue)
+                {
+                    vacancy = _getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber.Value);
+                }
+                else
+                {
+                    vacancy = _getVacancyStrategies.GetVacancyByGuid(vacancyGuid.Value);
+                }
 
                 if (vacancy == null)
                 {

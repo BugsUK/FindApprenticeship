@@ -65,119 +65,414 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details without authorization")]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details with no identifier")]
         [NUnit.Framework.CategoryAttribute("RA388")]
-        public virtual void GetVacancyDetailsWithoutAuthorization()
+        [NUnit.Framework.CategoryAttribute("GetVacancy")]
+        public virtual void GetVacancyDetailsWithNoIdentifier()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details without authorization", new string[] {
-                        "RA388"});
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details with no identifier", new string[] {
+                        "RA388",
+                        "GetVacancy"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.When("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 9
- testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details with an invalid api key")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        public virtual void GetVacancyDetailsWithAnInvalidApiKey()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details with an invalid api key", new string[] {
-                        "RA388"});
-#line 12
-this.ScenarioSetup(scenarioInfo);
-#line 13
- testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 14
- testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 15
- testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details with an unknown api key")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        public virtual void GetVacancyDetailsWithAnUnknownApiKey()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details with an unknown api key", new string[] {
-                        "RA388"});
-#line 18
-this.ScenarioSetup(scenarioInfo);
-#line 19
- testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
- testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 21
- testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        public virtual void GetVacancyDetails()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details", new string[] {
-                        "RA388"});
-#line 24
-this.ScenarioSetup(scenarioInfo);
-#line 25
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 26
+#line 9
+ testRunner.And("I request the vacancy details for the vacancy with no identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 10
+ testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+ testRunner.And("I do not see the vacancy details for the vacancy with no identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id without authorization")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        public virtual void GetVacancyDetailsByIdWithoutAuthorization()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id without authorization", new string[] {
+                        "RA388",
+                        "GetVacancyById"});
+#line 14
+this.ScenarioSetup(scenarioInfo);
+#line 15
+ testRunner.When("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id with an invalid api key")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        public virtual void GetVacancyDetailsByIdWithAnInvalidApiKey()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an invalid api key", new string[] {
+                        "RA388",
+                        "GetVacancyById"});
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+ testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
  testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 22
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id with an unknown api key")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        public virtual void GetVacancyDetailsByIdWithAnUnknownApiKey()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an unknown api key", new string[] {
+                        "RA388",
+                        "GetVacancyById"});
+#line 25
+this.ScenarioSetup(scenarioInfo);
+#line 26
+ testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 27
- testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 28
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        public virtual void GetVacancyDetailsById()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id", new string[] {
+                        "RA388",
+                        "GetVacancyById"});
+#line 31
+this.ScenarioSetup(scenarioInfo);
+#line 32
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 33
+ testRunner.And("I request the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 34
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 35
  testRunner.And("I see the vacancy details for the vacancy with id: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details for different provider")]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id for different provider")]
         [NUnit.Framework.CategoryAttribute("RA388")]
-        public virtual void GetVacancyDetailsForDifferentProvider()
+        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        public virtual void GetVacancyDetailsByIdForDifferentProvider()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details for different provider", new string[] {
-                        "RA388"});
-#line 31
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id for different provider", new string[] {
+                        "RA388",
+                        "GetVacancyById"});
+#line 38
 this.ScenarioSetup(scenarioInfo);
-#line 32
+#line 39
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 33
+#line 40
  testRunner.And("I request the vacancy details for the vacancy with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 34
+#line 41
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 35
+#line 42
  testRunner.And("I do not see the vacancy details for the vacancy with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy that doesn\'t exist")]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy by id that doesn\'t exist")]
         [NUnit.Framework.CategoryAttribute("RA388")]
-        public virtual void GetVacancyThatDoesnTExist()
+        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        public virtual void GetVacancyByIdThatDoesnTExist()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy that doesn\'t exist", new string[] {
-                        "RA388"});
-#line 38
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by id that doesn\'t exist", new string[] {
+                        "RA388",
+                        "GetVacancyById"});
+#line 45
 this.ScenarioSetup(scenarioInfo);
-#line 39
+#line 46
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 40
+#line 47
  testRunner.And("I request the vacancy details for the vacancy with id: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 41
+#line 48
  testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 42
+#line 49
  testRunner.And("I do not see the vacancy details for the vacancy with id: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number without authorization")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        public virtual void GetVacancyDetailsByReferenceNumberWithoutAuthorization()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number without authorization", new string[] {
+                        "RA388",
+                        "GetVacancyByReferenceNumber"});
+#line 52
+this.ScenarioSetup(scenarioInfo);
+#line 53
+ testRunner.When("I request the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 54
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number with an invalid api key")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        public virtual void GetVacancyDetailsByReferenceNumberWithAnInvalidApiKey()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an invalid api key", new string[] {
+                        "RA388",
+                        "GetVacancyByReferenceNumber"});
+#line 57
+this.ScenarioSetup(scenarioInfo);
+#line 58
+ testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 59
+ testRunner.And("I request the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 60
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number with an unknown api key")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        public virtual void GetVacancyDetailsByReferenceNumberWithAnUnknownApiKey()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an unknown api key", new string[] {
+                        "RA388",
+                        "GetVacancyByReferenceNumber"});
+#line 63
+this.ScenarioSetup(scenarioInfo);
+#line 64
+ testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 65
+ testRunner.And("I request the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 66
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        public virtual void GetVacancyDetailsByReferenceNumber()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number", new string[] {
+                        "RA388",
+                        "GetVacancyByReferenceNumber"});
+#line 69
+this.ScenarioSetup(scenarioInfo);
+#line 70
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 71
+ testRunner.And("I request the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 72
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 73
+ testRunner.And("I see the vacancy details for the vacancy with reference number: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number for different provider")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        public virtual void GetVacancyDetailsByReferenceNumberForDifferentProvider()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number for different provider", new string[] {
+                        "RA388",
+                        "GetVacancyByReferenceNumber"});
+#line 76
+this.ScenarioSetup(scenarioInfo);
+#line 77
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 78
+ testRunner.And("I request the vacancy details for the vacancy with reference number: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 79
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 80
+ testRunner.And("I do not see the vacancy details for the vacancy with reference number: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy by reference number that doesn\'t exist")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        public virtual void GetVacancyByReferenceNumberThatDoesnTExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by reference number that doesn\'t exist", new string[] {
+                        "RA388",
+                        "GetVacancyByReferenceNumber"});
+#line 83
+this.ScenarioSetup(scenarioInfo);
+#line 84
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 85
+ testRunner.And("I request the vacancy details for the vacancy with reference number: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 86
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 87
+ testRunner.And("I do not see the vacancy details for the vacancy with reference number: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid without authorization")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        public virtual void GetVacancyDetailsByGuidWithoutAuthorization()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid without authorization", new string[] {
+                        "RA388",
+                        "GetVacancyByGuid"});
+#line 90
+this.ScenarioSetup(scenarioInfo);
+#line 91
+ testRunner.When("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 92
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid with an invalid api key")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        public virtual void GetVacancyDetailsByGuidWithAnInvalidApiKey()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid with an invalid api key", new string[] {
+                        "RA388",
+                        "GetVacancyByGuid"});
+#line 95
+this.ScenarioSetup(scenarioInfo);
+#line 96
+ testRunner.When("I authorize my request with an invalid API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 97
+ testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 98
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid with an unknown api key")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        public virtual void GetVacancyDetailsByGuidWithAnUnknownApiKey()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid with an unknown api key", new string[] {
+                        "RA388",
+                        "GetVacancyByGuid"});
+#line 101
+this.ScenarioSetup(scenarioInfo);
+#line 102
+ testRunner.When("I authorize my request with an unknown API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 103
+ testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 104
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        public virtual void GetVacancyDetailsByGuid()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid", new string[] {
+                        "RA388",
+                        "GetVacancyByGuid"});
+#line 107
+this.ScenarioSetup(scenarioInfo);
+#line 108
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 109
+ testRunner.And("I request the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 110
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 111
+ testRunner.And("I see the vacancy details for the vacancy with guid: 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid for different provider")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        public virtual void GetVacancyDetailsByGuidForDifferentProvider()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid for different provider", new string[] {
+                        "RA388",
+                        "GetVacancyByGuid"});
+#line 114
+this.ScenarioSetup(scenarioInfo);
+#line 115
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 116
+ testRunner.And("I request the vacancy details for the vacancy with guid: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 117
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 118
+ testRunner.And("I do not see the vacancy details for the vacancy with guid: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get vacancy by guid that doesn\'t exist")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        public virtual void GetVacancyByGuidThatDoesnTExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by guid that doesn\'t exist", new string[] {
+                        "RA388",
+                        "GetVacancyByGuid"});
+#line 121
+this.ScenarioSetup(scenarioInfo);
+#line 122
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 123
+ testRunner.And("I request the vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 124
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 125
+ testRunner.And("I do not see the vacancy details for the vacancy with guid: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
