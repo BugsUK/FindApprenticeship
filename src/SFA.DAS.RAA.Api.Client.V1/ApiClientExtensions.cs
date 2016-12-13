@@ -17,9 +17,13 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// </param>
             /// <param name='vacancyId'>
             /// </param>
-            public static Vacancy GetOne(this IApiClient operations, int vacancyId)
+            /// <param name='vacancyReferenceNumber'>
+            /// </param>
+            /// <param name='vacancyGuid'>
+            /// </param>
+            public static Vacancy GetVacancy(this IApiClient operations, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApiClient)s).GetOneAsync(vacancyId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApiClient)s).GetVacancyAsync(vacancyId, vacancyReferenceNumber, vacancyGuid), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -27,12 +31,16 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// </param>
             /// <param name='vacancyId'>
             /// </param>
+            /// <param name='vacancyReferenceNumber'>
+            /// </param>
+            /// <param name='vacancyGuid'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Vacancy> GetOneAsync(this IApiClient operations, int vacancyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Vacancy> GetVacancyAsync(this IApiClient operations, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetOneWithHttpMessagesAsync(vacancyId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetVacancyWithHttpMessagesAsync(vacancyId, vacancyReferenceNumber, vacancyGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
