@@ -476,6 +476,29 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Edit wage without authorization")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("EditWage")]
+        public virtual void EditWageWithoutAuthorization()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edit wage without authorization", new string[] {
+                        "RA388",
+                        "EditWage"});
+#line 128
+this.ScenarioSetup(scenarioInfo);
+#line 129
+ testRunner.Given("I have a Live vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 130
+ testRunner.When("I request to change the fixed wage for the vacancy with id: 42 to £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 131
+ testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 132
+ testRunner.And("I do not see the vacancy details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

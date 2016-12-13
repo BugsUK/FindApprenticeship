@@ -123,3 +123,10 @@ Scenario: Get vacancy by guid that doesn't exist
 	And I request the vacancy details for the vacancy with guid: 3
 	Then The response status is: NotFound
 	And I do not see the vacancy details for the vacancy with guid: 3
+
+@RA388 @EditWage
+Scenario: Edit wage without authorization
+	Given I have a Live vacancy with id: 42, a fixed wage of £200 Weekly
+	When I request to change the fixed wage for the vacancy with id: 42 to £200 Weekly
+	Then The response status is: Unauthorized
+	And I do not see the vacancy details for the vacancy with id: 42

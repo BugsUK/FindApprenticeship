@@ -182,6 +182,8 @@
     <Compile Include="Constants\UriFormats.cs" />
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="Extensions\HttpClientExtensions.cs" />
+    <Compile Include="Steps\EditWageSteps.cs" />
     <Compile Include="Factories\ProviderFactory.cs" />
     <Compile Include="Factories\RaaMockFactory.cs" />
     <Compile Include="Steps\AuthorizationSteps.cs" />
@@ -206,6 +208,7 @@
     </Compile>
     <Compile Include="Steps\GetVacancyDetailsSteps.cs" />
     <Compile Include="Steps\HttpResponseSteps.cs" />
+    <Compile Include="Steps\SetupVacancySteps.cs" />
     <Compile Include="Steps\SwaggerUiSteps.cs" />
     <Compile Include="TestStartup.cs" />
   </ItemGroup>
