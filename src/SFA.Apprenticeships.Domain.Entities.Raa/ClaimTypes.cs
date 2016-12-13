@@ -4,5 +4,6 @@
     {
         public const string Ukprn = "ukprn";
         public const string UkprnOverride = "ukprnoverride";
+        public const string RaaApiKey = "raaapikey";
     }
 }

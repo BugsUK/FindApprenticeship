@@ -15,5 +15,10 @@
         {
             return ((ClaimsPrincipal)Thread.CurrentPrincipal).Claims.LastOrDefault(c => c.Type == type)?.Value;
         }
+
+        public void AddClaim(Claim claim)
+        {
+            ((ClaimsIdentity)Thread.CurrentPrincipal.Identity).AddClaim(claim);
+        }
     }
 }

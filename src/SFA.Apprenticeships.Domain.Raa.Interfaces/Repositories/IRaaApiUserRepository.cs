@@ -6,5 +6,7 @@
     public interface IRaaApiUserRepository
     {
         RaaApiUser GetUser(Guid apiKey);
+
+        RaaApiUser GetUser(int referencedEntitySurrogateId);
     }
 }
