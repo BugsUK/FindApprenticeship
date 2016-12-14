@@ -11,8 +11,6 @@
     using Apprenticeships.Infrastructure.WebServices.Wcf;
     using Factories;
     using Infrastructure.Interfaces;
-    using Moq;
-    using Services;
     using StructureMap.Configuration.DSL;
 
     public class AcceptanceTestsRegistry : Registry
@@ -38,9 +36,6 @@
             //TODO: Should be registered in the service the strategy belongs to
             For<IMapper>().Singleton().Use<EmployerMappers>().Name = "EmployerMappers";
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
-
-            //Duplicated from RaaRegistry
-            For<IAuthenticationService>().Use<ApiKeyAuthenticationService>();
         }
     }
 }

@@ -1,5 +1,6 @@
 namespace SFA.DAS.RAA.Api.AcceptanceTests.DependencyResolution
 {
+    using Api.DependencyResolution;
     using Apprenticeships.Application.Communication.IoC;
     using Apprenticeships.Application.Employer.IoC;
     using Apprenticeships.Application.Organisation.IoC;
@@ -59,6 +60,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.DependencyResolution
 
                 c.AddRegistry<PostcodeRegistry>();
                 c.AddRegistry<VacancyPostingServiceRegistry>();
+
+                c.AddRegistry<RaaRegistry>();
 
                 c.AddRegistry<AcceptanceTestsRegistry>();
             });

@@ -49,5 +49,18 @@
             responseVacancy.Should().BeNull();
         }
 
+        [Then(@"I see that the fixed wage details for the vacancy with id: (.*) is now £(.*) (.*)")]
+        public void ThenISeeThatTheFixedWageDetailsForTheVacancyWithIdIsNowWeekly(int vacancyId, decimal amount, string unitString)
+        {
+            var wageUnit = (WageUnit)Enum.Parse(typeof(WageUnit), unitString);
+            var editVacancyWageUri = string.Format(UriFormats.EditWageVacancyIdUriFormat, vacancyId);
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(editVacancyWageUri);
+
+            responseVacancy.Should().NotBeNull();
+            var updatedWage = responseVacancy.Wage;
+            updatedWage.Should().NotBeNull();
+            updatedWage.Amount.Should().Be(amount);
+            updatedWage.Unit.Should().Be(wageUnit);
+        }
     }
 }

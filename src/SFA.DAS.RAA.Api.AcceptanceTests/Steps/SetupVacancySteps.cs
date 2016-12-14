@@ -10,6 +10,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Factories;
     using Moq;
     using Ploeh.AutoFixture;
+    using UnitTests.Factories;
     using DbVacancy = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy;
 
     [Binding]
@@ -27,6 +28,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(v => v.VacancyId, vacancyId)
                 .With(v => v.Status, vacancyStatus)
+                .With(v => v.ContractOwnerId, RaaApiUserFactory.SkillsFundingAgencyProviderId)
                 .With(v => v.Wage, wage)
                 .Create();
 
