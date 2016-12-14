@@ -4,6 +4,7 @@
     using System.Net.Http;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies;
+    using Comparers;
     using Constants;
     using Extensions;
     using FluentAssertions;
@@ -31,7 +32,7 @@
                 {
                     var content = httpContent.ReadAsStringAsync().Result;
                     var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(content);
-                    if (responseVacancy != null && responseVacancy.Equals(new Vacancy()))
+                    if (responseVacancy != null && new VacancyComparer().Equals(responseVacancy, new Vacancy()))
                     {
                         responseVacancy = null;
                     }

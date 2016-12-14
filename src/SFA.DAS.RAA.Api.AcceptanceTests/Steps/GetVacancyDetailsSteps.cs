@@ -173,6 +173,10 @@
                 {
                     var content = httpContent.ReadAsStringAsync().Result;
                     var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(content);
+                    if (responseVacancy != null && new VacancyComparer().Equals(responseVacancy, new Vacancy()))
+                    {
+                        responseVacancy = null;
+                    }
                     ScenarioContext.Current.Add(vacancyUri, responseVacancy);
                 }
             }

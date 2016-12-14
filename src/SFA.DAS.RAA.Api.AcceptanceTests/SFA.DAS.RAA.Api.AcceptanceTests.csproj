@@ -179,6 +179,7 @@
   <ItemGroup>
     <Compile Include="Comparers\DbVacancyComparer.cs" />
     <Compile Include="Comparers\IMultiEqualityComparer.cs" />
+    <Compile Include="Comparers\VacancyComparer.cs" />
     <Compile Include="Constants\UriFormats.cs" />
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />

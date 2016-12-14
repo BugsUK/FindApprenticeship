@@ -10,7 +10,111 @@
             if (ReferenceEquals(null, x)) return false;
             if (ReferenceEquals(null, y)) return false;
             if (ReferenceEquals(x, y)) return true;
-            return string.Equals(AdditionalLocationInformation, y.AdditionalLocationInformation) && string.Equals(AdditionalLocationInformationComment, y.AdditionalLocationInformationComment) && string.Equals(ApprenticeshipLevelComment, y.ApprenticeshipLevelComment) && string.Equals(ClosingDateComment, y.ClosingDateComment) && string.Equals(ContactDetailsComment, y.ContactDetailsComment) && string.Equals(ContactEmail, y.ContactEmail) && string.Equals(ContactName, y.ContactName) && string.Equals(ContactNumber, y.ContactNumber) && string.Equals(CreatedByProviderUsername, y.CreatedByProviderUsername) && string.Equals(DesiredQualifications, y.DesiredQualifications) && string.Equals(DesiredQualificationsComment, y.DesiredQualificationsComment) && string.Equals(DesiredSkills, y.DesiredSkills) && string.Equals(DesiredSkillsComment, y.DesiredSkillsComment) && string.Equals(DurationComment, y.DurationComment) && EditedInRaa == y.EditedInRaa && string.Equals(EmployerDescription, y.EmployerDescription) && string.Equals(EmployerDescriptionComment, y.EmployerDescriptionComment) && string.Equals(EmployerWebsiteUrl, y.EmployerWebsiteUrl) && string.Equals(EmployerWebsiteUrlComment, y.EmployerWebsiteUrlComment) && string.Equals(FirstQuestion, y.FirstQuestion) && string.Equals(FirstQuestionComment, y.FirstQuestionComment) && string.Equals(FrameworkCodeNameComment, y.FrameworkCodeNameComment) && string.Equals(FutureProspects, y.FutureProspects) && string.Equals(FutureProspectsComment, y.FutureProspectsComment) && LastEditedById == y.LastEditedById && string.Equals(LocalAuthorityCode, y.LocalAuthorityCode) && string.Equals(LocationAddressesComment, y.LocationAddressesComment) && string.Equals(LongDescription, y.LongDescription) && string.Equals(LongDescriptionComment, y.LongDescriptionComment) && string.Equals(NumberOfPositionsComment, y.NumberOfPositionsComment) && string.Equals(OfflineApplicationInstructions, y.OfflineApplicationInstructions) && string.Equals(OfflineApplicationInstructionsComment, y.OfflineApplicationInstructionsComment) && string.Equals(OfflineApplicationUrl, y.OfflineApplicationUrl) && string.Equals(OfflineApplicationUrlComment, y.OfflineApplicationUrlComment) && OfflineVacancyType == y.OfflineVacancyType && string.Equals(OtherInformation, y.OtherInformation) && string.Equals(PersonalQualities, y.PersonalQualities) && string.Equals(PersonalQualitiesComment, y.PersonalQualitiesComment) && string.Equals(PossibleStartDateComment, y.PossibleStartDateComment) && string.Equals(SecondQuestion, y.SecondQuestion) && string.Equals(SecondQuestionComment, y.SecondQuestionComment) && string.Equals(SectorCodeNameComment, y.SectorCodeNameComment) && string.Equals(ShortDescriptionComment, y.ShortDescriptionComment) && string.Equals(StandardIdComment, y.StandardIdComment) && string.Equals(ThingsToConsider, y.ThingsToConsider) && string.Equals(ThingsToConsiderComment, y.ThingsToConsiderComment) && string.Equals(TitleComment, y.TitleComment) && string.Equals(TrainingProvided, y.TrainingProvided) && string.Equals(TrainingProvidedComment, y.TrainingProvidedComment) && VacancySource == y.VacancySource && string.Equals(WageComment, y.WageComment) && string.Equals(WorkingWeekComment, y.WorkingWeekComment) && string.Equals(AnonymousEmployerDescriptionComment, y.AnonymousEmployerDescriptionComment) && string.Equals(AnonymousEmployerReasonComment, y.AnonymousEmployerReasonComment) && string.Equals(AnonymousAboutTheEmployerComment, y.AnonymousAboutTheEmployerComment) && CreatedDateTime.Equals(y.CreatedDateTime);
+            return string.Equals(x.AdditionalLocationInformation, y.AdditionalLocationInformation) 
+                && string.Equals(x.AdditionalLocationInformationComment, y.AdditionalLocationInformationComment) 
+                && string.Equals(x.ApprenticeshipLevelComment, y.ApprenticeshipLevelComment) 
+                && string.Equals(x.ClosingDateComment, y.ClosingDateComment) 
+                && string.Equals(x.ContactDetailsComment, y.ContactDetailsComment) 
+                && string.Equals(x.ContactEmail, y.ContactEmail) 
+                && string.Equals(x.ContactName, y.ContactName) 
+                && string.Equals(x.ContactNumber, y.ContactNumber) 
+                && string.Equals(x.CreatedByProviderUsername, y.CreatedByProviderUsername) 
+                && string.Equals(x.DesiredQualifications, y.DesiredQualifications) 
+                && string.Equals(x.DesiredQualificationsComment, y.DesiredQualificationsComment) 
+                && string.Equals(x.DesiredSkills, y.DesiredSkills) 
+                && string.Equals(x.DesiredSkillsComment, y.DesiredSkillsComment) 
+                && string.Equals(x.DurationComment, y.DurationComment) 
+                && x.EditedInRaa == y.EditedInRaa 
+                && string.Equals(x.EmployerDescription, y.EmployerDescription) 
+                && string.Equals(x.EmployerDescriptionComment, y.EmployerDescriptionComment) 
+                && string.Equals(x.EmployerWebsiteUrl, y.EmployerWebsiteUrl) 
+                && string.Equals(x.EmployerWebsiteUrlComment, y.EmployerWebsiteUrlComment) 
+                && string.Equals(x.FirstQuestion, y.FirstQuestion) 
+                && string.Equals(x.FirstQuestionComment, y.FirstQuestionComment) 
+                && string.Equals(x.FrameworkCodeNameComment, y.FrameworkCodeNameComment) 
+                && string.Equals(x.FutureProspects, y.FutureProspects) 
+                && string.Equals(x.FutureProspectsComment, y.FutureProspectsComment) 
+                && x.LastEditedById == y.LastEditedById 
+                && string.Equals(x.LocalAuthorityCode, y.LocalAuthorityCode) 
+                && string.Equals(x.LocationAddressesComment, y.LocationAddressesComment) 
+                && string.Equals(x.LongDescription, y.LongDescription) 
+                && string.Equals(x.LongDescriptionComment, y.LongDescriptionComment) 
+                && string.Equals(x.NumberOfPositionsComment, y.NumberOfPositionsComment) 
+                && string.Equals(x.OfflineApplicationInstructions, y.OfflineApplicationInstructions) 
+                && string.Equals(x.OfflineApplicationInstructionsComment, y.OfflineApplicationInstructionsComment) 
+                && string.Equals(x.OfflineApplicationUrl, y.OfflineApplicationUrl) 
+                && string.Equals(x.OfflineApplicationUrlComment, y.OfflineApplicationUrlComment) 
+                && x.OfflineVacancyType == y.OfflineVacancyType 
+                && string.Equals(x.OtherInformation, y.OtherInformation) 
+                && string.Equals(x.PersonalQualities, y.PersonalQualities) 
+                && string.Equals(x.PersonalQualitiesComment, y.PersonalQualitiesComment) 
+                && string.Equals(x.PossibleStartDateComment, y.PossibleStartDateComment) 
+                && string.Equals(x.SecondQuestion, y.SecondQuestion) 
+                && string.Equals(x.SecondQuestionComment, y.SecondQuestionComment) 
+                && string.Equals(x.SectorCodeNameComment, y.SectorCodeNameComment) 
+                && string.Equals(x.ShortDescriptionComment, y.ShortDescriptionComment) 
+                && string.Equals(x.StandardIdComment, y.StandardIdComment) 
+                && string.Equals(x.ThingsToConsider, y.ThingsToConsider) 
+                && string.Equals(x.ThingsToConsiderComment, y.ThingsToConsiderComment) 
+                && string.Equals(x.TitleComment, y.TitleComment) 
+                && string.Equals(x.TrainingProvided, y.TrainingProvided) 
+                && string.Equals(x.TrainingProvidedComment, y.TrainingProvidedComment) 
+                && x.VacancySource == y.VacancySource 
+                && string.Equals(x.WageComment, y.WageComment) 
+                && string.Equals(x.WorkingWeekComment, y.WorkingWeekComment) 
+                && string.Equals(x.AnonymousEmployerDescriptionComment, y.AnonymousEmployerDescriptionComment) 
+                && string.Equals(x.AnonymousEmployerReasonComment, y.AnonymousEmployerReasonComment) 
+                && string.Equals(x.AnonymousAboutTheEmployerComment, y.AnonymousAboutTheEmployerComment) 
+                && x.CreatedDateTime.Equals(y.CreatedDateTime)
+                && Equals(x.Address, y.Address) 
+                && string.Equals(x.AnonymousAboutTheEmployer, y.AnonymousAboutTheEmployer) 
+                && x.ApplicantCount == y.ApplicantCount 
+                && x.ApprenticeshipLevel == y.ApprenticeshipLevel 
+                && x.ClosingDate.Equals(y.ClosingDate) 
+                && x.ContractOwnerId == y.ContractOwnerId 
+                && x.CreatedDate.Equals(y.CreatedDate) 
+                && x.DateFirstSubmitted.Equals(y.DateFirstSubmitted) 
+                && x.DateQAApproved.Equals(y.DateQAApproved) 
+                && x.DateStartedToQA.Equals(y.DateStartedToQA) 
+                && x.DateSubmitted.Equals(y.DateSubmitted) 
+                && x.DeliveryOrganisationId == y.DeliveryOrganisationId 
+                && x.Duration == y.Duration 
+                && x.DurationType == y.DurationType 
+                && string.Equals(x.EmployerAnonymousName, y.EmployerAnonymousName) 
+                && string.Equals(x.EmployerAnonymousReason, y.EmployerAnonymousReason) 
+                && x.EmployerId == y.EmployerId 
+                && string.Equals(x.EmployerLocation, y.EmployerLocation) 
+                && string.Equals(x.EmployerName, y.EmployerName) 
+                && string.Equals(x.ExpectedDuration, y.ExpectedDuration) 
+                && string.Equals(x.FrameworkCodeName, y.FrameworkCodeName) 
+                && x.IsAnonymousEmployer == y.IsAnonymousEmployer 
+                && x.NewApplicationCount == y.NewApplicationCount 
+                && x.NoOfOfflineApplicants == y.NoOfOfflineApplicants 
+                && x.NumberOfPositions == y.NumberOfPositions 
+                && x.OfflineVacancy == y.OfflineVacancy 
+                && x.OriginalContractOwnerId == y.OriginalContractOwnerId 
+                && x.ParentVacancyId == y.ParentVacancyId 
+                && x.PossibleStartDate.Equals(y.PossibleStartDate) 
+                && string.Equals(x.ProviderTradingName, y.ProviderTradingName) 
+                && string.Equals(x.QAUserName, y.QAUserName) 
+                && x.RegionalTeam == y.RegionalTeam 
+                && string.Equals(x.SectorCodeName, y.SectorCodeName) 
+                && string.Equals(x.ShortDescription, y.ShortDescription) 
+                && x.StandardId == y.StandardId 
+                && x.Status == y.Status 
+                && x.SubmissionCount == y.SubmissionCount 
+                && string.Equals(x.Title, y.Title) 
+                && x.TrainingType == y.TrainingType 
+                && x.UpdatedDateTime.Equals(y.UpdatedDateTime) 
+                && x.VacancyGuid.Equals(y.VacancyGuid) 
+                && x.VacancyId == y.VacancyId 
+                && x.VacancyLocationType == y.VacancyLocationType 
+                && x.VacancyManagerId == y.VacancyManagerId 
+                && x.VacancyOwnerRelationshipId == y.VacancyOwnerRelationshipId 
+                && x.VacancyReferenceNumber == y.VacancyReferenceNumber 
+                && x.VacancyType == y.VacancyType 
+                && Equals(x.Wage, y.Wage) 
+                && string.Equals(x.WorkingWeek, y.WorkingWeek);
         }
 
         public int GetHashCode(Vacancy obj)
@@ -71,55 +175,55 @@
             hashCode = (hashCode * 397) ^ (obj.AnonymousEmployerReasonComment != null ? obj.AnonymousEmployerReasonComment.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (obj.AnonymousAboutTheEmployerComment != null ? obj.AnonymousAboutTheEmployerComment.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ obj.CreatedDateTime.GetHashCode();
-            hashCode = (hashCode * 397) ^ (Address != null ? Address.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (AnonymousAboutTheEmployer != null ? AnonymousAboutTheEmployer.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ ApplicantCount;
-            hashCode = (hashCode * 397) ^ (int)ApprenticeshipLevel;
-            hashCode = (hashCode * 397) ^ ClosingDate.GetHashCode();
-            hashCode = (hashCode * 397) ^ ContractOwnerId;
-            hashCode = (hashCode * 397) ^ CreatedDate.GetHashCode();
-            hashCode = (hashCode * 397) ^ DateFirstSubmitted.GetHashCode();
-            hashCode = (hashCode * 397) ^ DateQAApproved.GetHashCode();
-            hashCode = (hashCode * 397) ^ DateStartedToQA.GetHashCode();
-            hashCode = (hashCode * 397) ^ DateSubmitted.GetHashCode();
-            hashCode = (hashCode * 397) ^ DeliveryOrganisationId.GetHashCode();
-            hashCode = (hashCode * 397) ^ Duration.GetHashCode();
-            hashCode = (hashCode * 397) ^ (int)DurationType;
-            hashCode = (hashCode * 397) ^ (EmployerAnonymousName != null ? EmployerAnonymousName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (EmployerAnonymousReason != null ? EmployerAnonymousReason.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ EmployerId;
-            hashCode = (hashCode * 397) ^ (EmployerLocation != null ? EmployerLocation.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (EmployerName != null ? EmployerName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (ExpectedDuration != null ? ExpectedDuration.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (FrameworkCodeName != null ? FrameworkCodeName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ IsAnonymousEmployer.GetHashCode();
-            hashCode = (hashCode * 397) ^ NewApplicationCount;
-            hashCode = (hashCode * 397) ^ NoOfOfflineApplicants;
-            hashCode = (hashCode * 397) ^ NumberOfPositions.GetHashCode();
-            hashCode = (hashCode * 397) ^ OfflineVacancy.GetHashCode();
-            hashCode = (hashCode * 397) ^ OriginalContractOwnerId;
-            hashCode = (hashCode * 397) ^ ParentVacancyId.GetHashCode();
-            hashCode = (hashCode * 397) ^ PossibleStartDate.GetHashCode();
-            hashCode = (hashCode * 397) ^ (ProviderTradingName != null ? ProviderTradingName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (QAUserName != null ? QAUserName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (int)RegionalTeam;
-            hashCode = (hashCode * 397) ^ (SectorCodeName != null ? SectorCodeName.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (ShortDescription != null ? ShortDescription.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ StandardId.GetHashCode();
-            hashCode = (hashCode * 397) ^ (int)Status;
-            hashCode = (hashCode * 397) ^ SubmissionCount;
-            hashCode = (hashCode * 397) ^ (Title != null ? Title.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (int)TrainingType;
-            hashCode = (hashCode * 397) ^ UpdatedDateTime.GetHashCode();
-            hashCode = (hashCode * 397) ^ VacancyGuid.GetHashCode();
-            hashCode = (hashCode * 397) ^ VacancyId;
-            hashCode = (hashCode * 397) ^ (int)VacancyLocationType;
-            hashCode = (hashCode * 397) ^ VacancyManagerId.GetHashCode();
-            hashCode = (hashCode * 397) ^ VacancyOwnerRelationshipId;
-            hashCode = (hashCode * 397) ^ VacancyReferenceNumber;
-            hashCode = (hashCode * 397) ^ (int)VacancyType;
-            hashCode = (hashCode * 397) ^ (Wage != null ? Wage.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (WorkingWeek != null ? WorkingWeek.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.Address != null ? obj.Address.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.AnonymousAboutTheEmployer != null ? obj.AnonymousAboutTheEmployer.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ obj.ApplicantCount;
+            hashCode = (hashCode * 397) ^ (int)obj.ApprenticeshipLevel;
+            hashCode = (hashCode * 397) ^ obj.ClosingDate.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.ContractOwnerId;
+            hashCode = (hashCode * 397) ^ obj.CreatedDate.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.DateFirstSubmitted.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.DateQAApproved.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.DateStartedToQA.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.DateSubmitted.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.DeliveryOrganisationId.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.Duration.GetHashCode();
+            hashCode = (hashCode * 397) ^ (int)obj.DurationType;
+            hashCode = (hashCode * 397) ^ (obj.EmployerAnonymousName != null ? obj.EmployerAnonymousName.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.EmployerAnonymousReason != null ? obj.EmployerAnonymousReason.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ obj.EmployerId;
+            hashCode = (hashCode * 397) ^ (obj.EmployerLocation != null ? obj.EmployerLocation.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.EmployerName != null ? obj.EmployerName.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.ExpectedDuration != null ? obj.ExpectedDuration.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.FrameworkCodeName != null ? obj.FrameworkCodeName.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ obj.IsAnonymousEmployer.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.NewApplicationCount;
+            hashCode = (hashCode * 397) ^ obj.NoOfOfflineApplicants;
+            hashCode = (hashCode * 397) ^ obj.NumberOfPositions.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.OfflineVacancy.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.OriginalContractOwnerId;
+            hashCode = (hashCode * 397) ^ obj.ParentVacancyId.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.PossibleStartDate.GetHashCode();
+            hashCode = (hashCode * 397) ^ (obj.ProviderTradingName != null ? obj.ProviderTradingName.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.QAUserName != null ? obj.QAUserName.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (int)obj.RegionalTeam;
+            hashCode = (hashCode * 397) ^ (obj.SectorCodeName != null ? obj.SectorCodeName.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.ShortDescription != null ? obj.ShortDescription.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ obj.StandardId.GetHashCode();
+            hashCode = (hashCode * 397) ^ (int)obj.Status;
+            hashCode = (hashCode * 397) ^ obj.SubmissionCount;
+            hashCode = (hashCode * 397) ^ (obj.Title != null ? obj.Title.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (int)obj.TrainingType;
+            hashCode = (hashCode * 397) ^ obj.UpdatedDateTime.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.VacancyGuid.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.VacancyId;
+            hashCode = (hashCode * 397) ^ (int)obj.VacancyLocationType;
+            hashCode = (hashCode * 397) ^ obj.VacancyManagerId.GetHashCode();
+            hashCode = (hashCode * 397) ^ obj.VacancyOwnerRelationshipId;
+            hashCode = (hashCode * 397) ^ obj.VacancyReferenceNumber;
+            hashCode = (hashCode * 397) ^ (int)obj.VacancyType;
+            hashCode = (hashCode * 397) ^ (obj.Wage != null ? obj.Wage.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (obj.WorkingWeek != null ? obj.WorkingWeek.GetHashCode() : 0);
 
             return hashCode;
         }
