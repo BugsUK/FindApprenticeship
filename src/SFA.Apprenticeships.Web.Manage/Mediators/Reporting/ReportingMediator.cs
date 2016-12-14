@@ -47,6 +47,22 @@
             }
         }
 
+        public MediatorResponse<byte[]> GetVacancyTrackerReportBytes(ReportVacanciesParameters parameters)
+        {
+            try
+            {
+                var reportResult = _reportingRepo.ReportVacancyTracker(parameters.FromDate.Date,
+                    parameters.ToDate.Date);
+                var bytes = GetCsvBytes<ReportVacanciesResultItem, ReportVacanciesResultItemClassMap>(reportResult, "");
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+            }
+        }
+
         public MediatorResponse<T> Validate<T>(T parameters) where T : ReportParameterBase
         {
             var validationResult = _reportDateRangeValidator.Validate(parameters);
@@ -246,11 +262,6 @@
                 _logService.Warn(ex);
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
             }
-        }
-
-        public MediatorResponse<ReportVacancyTrackerParameters> GetActionedVacancies()
-        {
-            throw new NotImplementedException();
         }
 
         private static byte[] GetCsvBytes<T, TClassMap>(IEnumerable<T> items, string header) where T : class where TClassMap : CsvClassMap<T>

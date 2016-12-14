@@ -623,5 +623,10 @@
 
             return response.ToList();
         }
+
+        public IEnumerable<ReportVacanciesResultItem> ReportVacancyTracker(DateTime date, DateTime dateTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

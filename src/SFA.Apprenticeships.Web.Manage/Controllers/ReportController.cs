@@ -237,5 +237,31 @@
         {
             return View(new ReportVacanciesParameters());
         }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyTrackerCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ValidateVacancyTrackerCsv(ReportVacanciesParameters parameters)
+        {
+            var validationResponse = _reportingMediator.Validate(parameters);
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return View("VacancyTrackerCsv", validationResponse.ViewModel);
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacancyTrackerCsv", validationResponse.ViewModel);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyTrackerCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadVacancyTrackerCsv(ReportVacanciesParameters parameters)
+        {
+            var response = _reportingMediator.GetVacancyTrackerReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "VacancyTracker.csv");
+        }
     }
 }
