@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
     using Configuration;
     using Entities;
     using Entities.Mongo;
@@ -60,34 +61,34 @@
             _anonymiseData = configuration.AnonymiseData;
         }
 
-        public void Process(CancellationToken cancellationToken)
+        public async Task Process(CancellationToken cancellationToken)
         {
             var syncParams = _syncRepository.GetSyncParams();
             if (syncParams.IsValidForCandidateIncrementalSync)
             {
-                ExecuteIncrementalSync(syncParams, cancellationToken);
+                await ExecuteIncrementalSync(syncParams, cancellationToken);
             }
             else
             {
-                ExecuteFullSync(syncParams, cancellationToken);
+                await ExecuteFullSync(syncParams, cancellationToken);
             }
         }
 
-        private void ExecuteFullSync(SyncParams syncParams, CancellationToken cancellationToken)
+        private async Task ExecuteFullSync(SyncParams syncParams, CancellationToken cancellationToken)
         {
             _logService.Warn($"ExecuteFullSync on candidates collection with LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
 
             //TODO: This delete would have to be done outside of this class as it affects traineeships and apprenticeships at the same time
             //_genericSyncRespository.DeleteAll(_candidateTable);
 
-            var expectedCount = _candidateUserRepository.GetCandidatesCount(cancellationToken).Result;
-            var candidateUsers = _candidateUserRepository.GetAllCandidateUsers(cancellationToken).Result;
+            var expectedCount = await _candidateUserRepository.GetCandidatesCount(cancellationToken);
+            var candidateUsers = await _candidateUserRepository.GetAllCandidateUsers(cancellationToken);
             var vacancyLocalAuthorities = _vacancyRepository.GetAllVacancyLocalAuthorities();
             var localAuthorityCountyIds = _localAuthorityRepository.GetLocalAuthorityCountyIds();
-            ProcessCandidates(candidateUsers, expectedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.Full, cancellationToken);
+            await ProcessCandidates(candidateUsers, expectedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.Full, cancellationToken);
         }
 
-        private void ExecuteIncrementalSync(SyncParams syncParams, CancellationToken cancellationToken)
+        private async Task ExecuteIncrementalSync(SyncParams syncParams, CancellationToken cancellationToken)
         {
             _logService.Info($"ExecutePartialSync on candidates collection with LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
 
@@ -96,20 +97,20 @@
 
             //Inserts
             _logService.Info("Processing new candidates");
-            var expectedCreatedCount = _candidateUserRepository.GetCandidatesCreatedSinceCount(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
-            var createdCursor = _candidateUserRepository.GetAllCandidateUsersCreatedSince(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
-            ProcessCandidates(createdCursor, expectedCreatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.PartialByDateCreated, cancellationToken);
+            var expectedCreatedCount = await _candidateUserRepository.GetCandidatesCreatedSinceCount(syncParams.CandidateLastCreatedDate, cancellationToken);
+            var createdCursor = await _candidateUserRepository.GetAllCandidateUsersCreatedSince(syncParams.CandidateLastCreatedDate, cancellationToken);
+            await ProcessCandidates(createdCursor, expectedCreatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.PartialByDateCreated, cancellationToken);
             _logService.Info("Completed processing new candidates");
 
             //Updates
             _logService.Info("Processing updated candidates");
-            var expectedUpdatedCount = _candidateUserRepository.GetCandidatesUpdatedSinceCount(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
-            var updatedCursor = _candidateUserRepository.GetAllCandidateUsersUpdatedSince(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
-            ProcessCandidates(updatedCursor, expectedUpdatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.PartialByDateUpdated, cancellationToken);
+            var expectedUpdatedCount = await _candidateUserRepository.GetCandidatesUpdatedSinceCount(syncParams.CandidateLastUpdatedDate, cancellationToken);
+            var updatedCursor = await _candidateUserRepository.GetAllCandidateUsersUpdatedSince(syncParams.CandidateLastUpdatedDate, cancellationToken);
+            await ProcessCandidates(updatedCursor, expectedUpdatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, SyncType.PartialByDateUpdated, cancellationToken);
             _logService.Info("Completed processing updated candidates");
         }
 
-        private void ProcessCandidates(IAsyncCursor<Candidate> cursor, long expectedCount, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, SyncType syncType, CancellationToken cancellationToken)
+        private async Task ProcessCandidates(IAsyncCursor<Candidate> cursor, long expectedCount, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, SyncType syncType, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -119,7 +120,7 @@
                 var candidateUsers = new List<CandidateUser>(batch.Count);
 
                 _logService.Info($"Loading {batch.Count} users");
-                var usersCursor = _userRepository.GetUsersByIds(batch.Keys, cancellationToken).Result;
+                var usersCursor = await _userRepository.GetUsersByIds(batch.Keys, cancellationToken);
                 while (usersCursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
                 {
                     candidateUsers.AddRange(usersCursor.Current.Select(user => new CandidateUser {Candidate = batch[user.Id], User = user}));

@@ -38,10 +38,10 @@
         }
 
         [Test]
-        public void ShouldReturnOfflineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOfflineOne()
+        public async Task ShouldReturnOfflineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOfflineOne()
         {
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
-                .Returns(new Task<VacancyViewModel>(() => new VacancyViewModel
+                .Returns(Task.FromResult(new VacancyViewModel
                 {
                     NewVacancyViewModel = new NewVacancyViewModel
                     {
@@ -55,7 +55,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel).Result;
+            var result = await mediator.UpdateVacancy(_viewModel);
 
             result.Should()
                 .Match(
@@ -64,7 +64,7 @@
         }
 
         [Test]
-        public void ShouldReturnOnlineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOnlineOne()
+        public async Task ShouldReturnOnlineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOnlineOne()
         {
             var newVacancyViewModel = new VacancyViewModel
             {
@@ -77,13 +77,13 @@
             var vacancyRequirementsAndProspects = new VacancyRequirementsProspectsViewModel();
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
-                .Returns(new Task<VacancyViewModel>(() => newVacancyViewModel));
+                .Returns(Task.FromResult(newVacancyViewModel));
             VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
                 .Returns(vacancyRequirementsAndProspects);
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel).Result;
+            var result = await mediator.UpdateVacancy(_viewModel);
 
             result.Should()
                 .Match(

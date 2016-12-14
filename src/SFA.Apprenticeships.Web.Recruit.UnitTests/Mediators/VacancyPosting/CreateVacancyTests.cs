@@ -32,12 +32,12 @@
         private const int AnInt = 1234;
 
         [Test]
-        public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
+        public async Task ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AVacancyWithQuestionOneFilled));
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AVacancyWithQuestionOneFilled()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -50,7 +50,7 @@
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
-            }, Ukprn).Result;
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
@@ -58,12 +58,12 @@
         }
 
         [Test]
-        public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionTwo()
+        public async Task ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionTwo()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AVacancyWithQuestionTwoFilled));
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AVacancyWithQuestionTwoFilled()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -76,7 +76,7 @@
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
-            }, Ukprn).Result;
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
@@ -84,12 +84,12 @@
         }
 
         [Test]
-        public void ShouldntWarnUserIfSwitchingFromOnlineToOfflineVacancyWithoutHavingAnyQuestionFilled()
+        public async Task ShouldntWarnUserIfSwitchingFromOnlineToOfflineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AVacancyWithNoQuestionsFilled));
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AVacancyWithNoQuestionsFilled()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -101,19 +101,19 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            }, Ukprn).Result;
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
         }
 
         [Test]
-        public void ShouldntWarnUserIfTheVacancyWasAlreadyOffline()
+        public async Task ShouldntWarnUserIfTheVacancyWasAlreadyOffline()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AnOfflineVacancy));
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AnOfflineVacancy()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -125,19 +125,19 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            }, Ukprn).Result;
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
         }
 
         [Test]
-        public void ShouldntWarnUserIfSwitchingFromOfflineToOnlineVacancyWithoutHavingAnyQuestionFilled()
+        public async Task ShouldntWarnUserIfSwitchingFromOfflineToOnlineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AnOfflineVacancy));
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AnOfflineVacancy()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -149,14 +149,14 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            }, Ukprn).Result;
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
         }
 
         [Test]
-        public void ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError()
+        public async Task ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError()
         {
             var numberOfPositions = 5;
             var viewModel = new VacancyOwnerRelationshipViewModel
@@ -181,14 +181,14 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.ConfirmEmployer(viewModel, Ukprn).Result;
+            var result = await mediator.ConfirmEmployer(viewModel, Ukprn);
             result.ViewModel.VacancyLocationType.Should()
                 .Be(VacancyLocationType.SpecificLocation);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
         }
 
         [Test]
-        public void ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError_NationwideVacancy()
+        public async Task ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError_NationwideVacancy()
         {
             var numberOfPositions = 5;
             var numberOfPositionsNw = 1;
@@ -215,7 +215,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.ConfirmEmployer(viewModel, Ukprn).Result;
+            var result = await mediator.ConfirmEmployer(viewModel, Ukprn);
             result.ViewModel.VacancyLocationType.Should()
                 .Be(VacancyLocationType.Nationwide);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositionsNw);
@@ -301,7 +301,7 @@
         }
 
         [Test]
-        public void ShouldReturnErrorIfFailsGeocodingTheVacancy()
+        public async Task ShouldReturnErrorIfFailsGeocodingTheVacancy()
         {
             // Arrange
             const string ukprn = "1234";
@@ -336,7 +336,7 @@
 
             // Act.
             var mediator = GetMediator();
-            var result = mediator.ConfirmEmployer(viewModel, ukprn).Result;
+            var result = await mediator.ConfirmEmployer(viewModel, ukprn);
 
             // Assert.
             result.AssertMessage(VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);

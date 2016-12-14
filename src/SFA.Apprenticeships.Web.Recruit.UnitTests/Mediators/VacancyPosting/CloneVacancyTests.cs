@@ -12,14 +12,14 @@
     public class CloneVacancyTests : TestsBase
     {
         [Test]
-        public void ShouldReturnVacancyInIncorrectStateErrorCodeIfVacancyIsInReferredStatus()
+        public async Task ShouldReturnVacancyInIncorrectStateErrorCodeIfVacancyIsInReferredStatus()
         {
             const int vacancyReferenceNumber = 1;
 
-            VacancyPostingProvider.Setup(p => p.GetVacancy(vacancyReferenceNumber)).Returns(new Task<VacancyViewModel>(() => new VacancyViewModel {Status = VacancyStatus.Referred}));
+            VacancyPostingProvider.Setup(p => p.GetVacancy(vacancyReferenceNumber)).Returns(Task.FromResult(new VacancyViewModel {Status = VacancyStatus.Referred}));
             var mediator = GetMediator();
 
-            var result = mediator.CloneVacancy(vacancyReferenceNumber).Result;
+            var result = await mediator.CloneVacancy(vacancyReferenceNumber);
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState);
         }
