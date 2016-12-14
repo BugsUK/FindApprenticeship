@@ -1,8 +1,10 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
     using System;
+    using System.Net;
     using System.Net.Http;
     using System.Text;
+    using Api.Models;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies;
     using Comparers;
@@ -36,6 +38,12 @@
                 using (var httpContent = response.Content)
                 {
                     var content = httpContent.ReadAsStringAsync().Result;
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var responseMessage = JsonConvert.DeserializeObject<ResponseMessage>(content);
+                        ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
+                    }
+
                     var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(content);
                     if (responseVacancy != null && new VacancyComparer().Equals(responseVacancy, new Vacancy()))
                     {

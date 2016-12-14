@@ -184,6 +184,7 @@
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
+    <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Steps\EditWageSteps.cs" />
     <Compile Include="Factories\ProviderFactory.cs" />
     <Compile Include="Factories\RaaMockFactory.cs" />

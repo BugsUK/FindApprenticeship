@@ -478,12 +478,12 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Edit wage without authorization")]
+        [NUnit.Framework.DescriptionAttribute("Increase fixed wage by £20 per week without authorization")]
         [NUnit.Framework.CategoryAttribute("RA388")]
         [NUnit.Framework.CategoryAttribute("EditWage")]
-        public virtual void EditWageWithoutAuthorization()
+        public virtual void IncreaseFixedWageBy20PerWeekWithoutAuthorization()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edit wage without authorization", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week without authorization", new string[] {
                         "RA388",
                         "EditWage"});
 #line 128
@@ -491,9 +491,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 129
  testRunner.Given("I have a Live vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 130
- testRunner.When("I request to change the fixed wage for the vacancy with id: 42 to £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 131
- testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The response status is: Unauthorized with response message: Authorization has bee" +
+                    "n denied for this request.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 132
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -543,7 +544,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 146
  testRunner.And("I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 147
- testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The response status is: BadRequest with response message: You can only edit the w" +
+                    "age of a vacancy that is live or closed.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 148
  testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
