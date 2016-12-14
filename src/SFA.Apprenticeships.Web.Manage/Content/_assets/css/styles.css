@@ -374,43 +374,6 @@ iframe, object, embed {
   display: block;
   clear: both; }
 
-.button-link {
-  font-family: "nta",Arial,sans-serif;
-  font-size: 19px;
-  line-height: 1.31579;
-  font-weight: 400;
-  text-transform: none;
-  background: none;
-  border: none;
-  color: #005ea5;
-  cursor: pointer;
-  display: inline-block;
-  line-height: 1.4;
-  margin: 0 15px 15px 0;
-  padding: .526315em .789473em .263157em;
-  text-decoration: underline;
-  vertical-align: top;
-  -webkit-font-smoothing: antialiased; }
-
-@media (max-width: 640px) {
-  .button-link {
-    font-size: 16px;
-    line-height: 1.25; } }
-
-.inline-button .button-link {
-  margin-bottom: 0; }
-
-.inline-text .button-link {
-  margin: 0;
-  padding: 0;
-  line-height: 1.3; }
-
-.button-link:hover {
-  color: #2e8aca; }
-
-.button-link:focus {
-  outline: 3px solid #ffbf47; }
-
 .sfa-button-secondary {
   background-color: transparent;
   position: relative;
