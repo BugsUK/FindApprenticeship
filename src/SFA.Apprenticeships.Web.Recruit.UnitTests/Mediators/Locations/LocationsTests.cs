@@ -1,11 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Locations
 {
-    using System;
-    using System.Collections.Generic;
     using Apprenticeships.Application.Interfaces.Locations;
     using Common.Constants;
     using Common.UnitTests.Mediators;
-    using Common.ViewModels.Locations;
     using Constants.Messages;
     using Domain.Entities.Exceptions;
     using FluentAssertions;
@@ -14,6 +11,7 @@
     using Ploeh.AutoFixture;
     using Raa.Common.ViewModels.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
+    using System;
 
     [TestFixture]
     [Parallelizable]
@@ -30,7 +28,7 @@
             VacancyPostingProvider.Setup(
                 p =>
                     p.LocationAddressesViewModel(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(),
-                        It.IsAny<Guid>())).Returns(new LocationSearchViewModel());
+                        It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new LocationSearchViewModel());
 
             var mediator = GetMediator();
 
