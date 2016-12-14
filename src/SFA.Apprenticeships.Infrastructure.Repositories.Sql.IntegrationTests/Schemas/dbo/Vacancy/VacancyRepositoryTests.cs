@@ -105,8 +105,6 @@
                     .Excluding(x => x.CreatedByProviderUsername)
                     .Excluding(x => x.VacancyLocationType)
                     .Excluding(x => x.OtherInformation)
-                    .Excluding(x => x.LiveClosingDate)
-                    .Excluding(x => x.SyntheticUpdatedDateTime)
                     .Excluding(x => x.EmployerName));
 
             entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");

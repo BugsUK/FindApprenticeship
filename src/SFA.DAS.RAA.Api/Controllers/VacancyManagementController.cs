@@ -1,6 +1,8 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
     using System;
+    using System.Net;
+    using System.Net.Http;
     using System.Web.Http;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
@@ -25,6 +27,11 @@
         public Vacancy EditWage(WageUpdate wage, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
             var vacancy = _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
+            if (vacancy.Status != VacancyStatus.Live && vacancy.Status != VacancyStatus.Closed)
+            {
+                var message = new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = "You can only edit the wage of a vacancy that is live or closed" };
+                throw new HttpResponseException(message);
+            }
             //TODO: Loads of validation
             vacancy.Wage.Amount = wage.Amount;
             vacancy.Wage.Unit = wage.Unit;
