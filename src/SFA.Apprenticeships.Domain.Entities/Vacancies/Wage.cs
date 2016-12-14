@@ -18,21 +18,21 @@
             Unit = CorrectWageUnit(type, unit);
         }
 
-        public WageType Type { get; private set; }
+        public WageType Type { get; set; }
 
-        public string ReasonForType { get; private set; }
+        public string ReasonForType { get; set; }
 
-        public decimal? Amount { get; private set; }
+        public decimal? Amount { get; set; }
 
-        public decimal? AmountLowerBound { get; private set; }
+        public decimal? AmountLowerBound { get; set; }
 
-        public decimal? AmountUpperBound { get; private set; }
+        public decimal? AmountUpperBound { get; set; }
 
-        public string Text { get; private set; }
+        public string Text { get; set; }
 
-        public WageUnit Unit { get; private set; }
+        public WageUnit Unit { get; set; }
 
-        public decimal? HoursPerWeek { get; private set; }
+        public decimal? HoursPerWeek { get; set; }
 
         private static WageUnit CorrectWageUnit(WageType type, WageUnit unit)
         {

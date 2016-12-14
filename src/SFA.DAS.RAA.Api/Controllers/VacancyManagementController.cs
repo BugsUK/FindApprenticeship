@@ -4,6 +4,7 @@
     using System.Web.Http;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Models;
     using Providers;
     using Swashbuckle.Swagger.Annotations;
 
@@ -21,9 +22,13 @@
         [Route("wage")]
         [SwaggerOperation("EditVacancyWage")]
         [HttpPut]
-        public Vacancy EditWage(int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
+        public Vacancy EditWage(WageUpdate wage, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
-            return _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
+            var vacancy = _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
+            //TODO: Loads of validation
+            vacancy.Wage.Amount = wage.Amount;
+            vacancy.Wage.Unit = wage.Unit;
+            return vacancy;
         }
     }
 }
