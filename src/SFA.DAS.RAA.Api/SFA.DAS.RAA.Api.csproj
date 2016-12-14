@@ -243,6 +243,7 @@
     </Compile>
     <Compile Include="Handlers\AiExceptionLogger.cs" />
     <Compile Include="Handlers\ApiKeyHandler.cs" />
+    <Compile Include="Handlers\GlobalExceptionHandler.cs" />
     <Compile Include="Models\VacancyApiModel.cs" />
     <Compile Include="Models\WageUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

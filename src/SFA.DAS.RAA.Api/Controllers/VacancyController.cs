@@ -3,7 +3,6 @@
     using System;
     using System.Web.Http;
     using Apprenticeships.Domain.Entities.Raa;
-    using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Providers;
     using Swashbuckle.Swagger.Annotations;
 
@@ -26,9 +25,9 @@
 
         [Route("vacancy")]
         [SwaggerOperation("GetVacancy")]
-        public Vacancy Get(int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
+        public IHttpActionResult Get(int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
-            return _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
+            return Ok(_vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid));
         }
 
         /*[HttpPost]

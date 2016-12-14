@@ -22,8 +22,7 @@
         {
             if (!vacancyId.HasValue && !vacancyReferenceNumber.HasValue && !vacancyGuid.HasValue)
             {
-                var message = new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = "Please specify either a vacancyId, a vacancyReferenceNumber or a vacancyGuid" };
-                throw new HttpResponseException(message);
+                throw new ArgumentException("Please specify either a vacancyId, a vacancyReferenceNumber or a vacancyGuid.");
             }
 
             try
