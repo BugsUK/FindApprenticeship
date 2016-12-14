@@ -273,7 +273,7 @@ WriteLiteral(" value=\"VerifyMobile\"");
 
 WriteLiteral(">Verify number</button>\r\n                <button");
 
-WriteLiteral(" class=\"button hide-button\"");
+WriteLiteral(" class=\"button sfa-hide-button\"");
 
 WriteLiteral(" type=\"submit\"");
 
@@ -295,22 +295,10 @@ WriteLiteral(" class=\"sfa-button-secondary\"");
 
 WriteLiteral(" value=\"Resend\"");
 
-WriteLiteral(" formnovalidate>Resend code</button>\r\n                <a");
-
-WriteLiteral(" id=\"ResendMobileVerificationCodeLink\"");
-
-WriteLiteral(" type=\"submit\"");
-
-WriteLiteral(" name=\"VerifyMobileAction\"");
-
-WriteLiteral(" class=\"sfa-button-secondary\"");
-
-WriteLiteral(" value=\"Resend\"");
-
-WriteLiteral(" formnovalidate>Resend code</a>\r\n            </div>\r\n");
+WriteLiteral(" formnovalidate>Resend code</button>\r\n            </div>\r\n");
 
             
-            #line 55 "..\..\Views\Account\VerifyMobile.cshtml"
+            #line 54 "..\..\Views\Account\VerifyMobile.cshtml"
         }
 
             
