@@ -235,11 +235,7 @@
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult VacancyTrackerCsv()
         {
-            var response = _reportingMediator.GetActionedVacancies();
-            if (response.Code != ReportingMediatorCodes.ReportCodes.Ok)
-                RedirectToAction("Index");
-
-            return View(response.ViewModel);
+            return View(new ReportVacanciesParameters());
         }
     }
 }

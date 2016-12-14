@@ -1279,6 +1279,7 @@
     <Content Include="Content\_assets\js\ckeditor\README.md" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\readme.md" />
     <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
+    <Content Include="Views\Report\VacancyTrackerCsv.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
