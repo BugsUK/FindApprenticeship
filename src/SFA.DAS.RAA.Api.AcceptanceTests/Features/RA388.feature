@@ -38,14 +38,14 @@ Scenario: Get vacancy details by id
 Scenario: Get vacancy details by id for different provider
 	When I authorize my request with a Provider API key
 	And I request the vacancy details for the vacancy with id: 2
-	Then The response status is: Unauthorized
+	Then The response status is: Unauthorized with response message: You are not authorized to view or edit this vacancy.
 	And I do not see the vacancy details for the vacancy with id: 2
 
 @RA388 @GetVacancyById
 Scenario: Get vacancy by id that doesn't exist
 	When I authorize my request with a Provider API key
 	And I request the vacancy details for the vacancy with id: 3
-	Then The response status is: NotFound
+	Then The response status is: NotFound with response message: The requested vacancy has not been found.
 	And I do not see the vacancy details for the vacancy with id: 3
 
 @RA388 @GetVacancyByReferenceNumber

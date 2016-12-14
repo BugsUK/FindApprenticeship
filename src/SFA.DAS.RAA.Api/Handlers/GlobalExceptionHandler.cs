@@ -1,8 +1,10 @@
 ﻿namespace SFA.DAS.RAA.Api.Handlers
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
+    using System.Security;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
@@ -29,12 +31,21 @@
 
         public override Task HandleAsync(ExceptionHandlerContext context, CancellationToken cancellationToken)
         {
-            var argumentException = context.Exception as ArgumentException;
-            if (argumentException != null)
+            if (context.Exception is ArgumentException)
             {
-                context.Result = new ErrorResponseActionResult(context.Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError(argumentException.Message)));
+                context.Result = new ErrorResponseActionResult(context.Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError(context.Exception.Message)));
             }
-            
+
+            if (context.Exception is KeyNotFoundException)
+            {
+                context.Result = new ErrorResponseActionResult(context.Request.CreateErrorResponse(HttpStatusCode.NotFound, new HttpError(context.Exception.Message)));
+            }
+
+            if (context.Exception is SecurityException)
+            {
+                context.Result = new ErrorResponseActionResult(context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new HttpError(context.Exception.Message)));
+            }
+
             return base.HandleAsync(context, cancellationToken);
         }
 

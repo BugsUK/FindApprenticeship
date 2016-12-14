@@ -1,9 +1,8 @@
 ﻿namespace SFA.DAS.RAA.Api.Providers
 {
     using System;
-    using System.Net;
-    using System.Net.Http;
-    using System.Web.Http;
+    using System.Collections.Generic;
+    using System.Security;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Exceptions;
@@ -44,8 +43,7 @@
 
                 if (vacancy == null)
                 {
-                    var message = new HttpResponseMessage(HttpStatusCode.NotFound) { ReasonPhrase = "The requested vacancy has not been found" };
-                    throw new HttpResponseException(message);
+                    throw new KeyNotFoundException("The requested vacancy has not been found.");
                 }
 
                 return vacancy;
@@ -54,8 +52,7 @@
             {
                 if (ex.Code == ErrorCodes.ProviderVacancyAuthorisation.Failed)
                 {
-                    var message = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "You are not authorized to view or edit this vacancy" };
-                    throw new HttpResponseException(message);
+                    throw new SecurityException("You are not authorized to view or edit this vacancy.");
                 }
                 throw;
             }

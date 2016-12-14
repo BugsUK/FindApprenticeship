@@ -188,7 +188,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 40
  testRunner.And("I request the vacancy details for the vacancy with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 41
- testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The response status is: Unauthorized with response message: You are not authorize" +
+                    "d to view or edit this vacancy.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 42
  testRunner.And("I do not see the vacancy details for the vacancy with id: 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -211,7 +212,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 47
  testRunner.And("I request the vacancy details for the vacancy with id: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 48
- testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The response status is: NotFound with response message: The requested vacancy has" +
+                    " not been found.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 49
  testRunner.And("I do not see the vacancy details for the vacancy with id: 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
