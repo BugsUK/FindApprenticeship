@@ -10,6 +10,7 @@
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Application.Interfaces;
+    using Models;
     using Swashbuckle.Swagger.Annotations;
 
     [Authorize(Roles = Roles.Provider)]
@@ -78,7 +79,7 @@
         /*[HttpPost]
         [Route("vacancy")]
         [SwaggerOperation("Create")]
-        public IHttpActionResult Create(Vacancy vacancy)
+        public IHttpActionResult Create(VacancyApiModel vacancy)
         {
             return Ok();
         }*/

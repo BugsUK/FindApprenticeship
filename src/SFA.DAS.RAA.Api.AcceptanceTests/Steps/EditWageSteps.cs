@@ -6,6 +6,7 @@
     using Apprenticeships.Domain.Entities.Vacancies;
     using Constants;
     using Extensions;
+    using FluentAssertions;
     using Newtonsoft.Json;
     using TechTalk.SpecFlow;
 
@@ -30,9 +31,22 @@
                 {
                     var content = httpContent.ReadAsStringAsync().Result;
                     var responseVacancy = JsonConvert.DeserializeObject<Vacancy>(content);
+                    if (responseVacancy != null && responseVacancy.Equals(new Vacancy()))
+                    {
+                        responseVacancy = null;
+                    }
                     ScenarioContext.Current.Add(editVacancyWageUri, responseVacancy);
                 }
             }
         }
+
+        [Then(@"I do not see the edited vacancy wage details for the vacancy with id: (.*)")]
+        public void ThenIDoNotSeeTheEditedVacancyWageDetailsForTheVacancyWithId(int vacancyId)
+        {
+            var editVacancyWageUri = string.Format(UriFormats.EditWageVacancyIdUriFormat, vacancyId);
+            var responseVacancy = ScenarioContext.Current.Get<Vacancy>(editVacancyWageUri);
+            responseVacancy.Should().BeNull();
+        }
+
     }
 }

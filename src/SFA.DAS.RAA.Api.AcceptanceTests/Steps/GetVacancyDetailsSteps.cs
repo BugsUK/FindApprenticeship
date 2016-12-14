@@ -1,7 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
     using System;
-    using System.Net.Http.Headers;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Comparers;

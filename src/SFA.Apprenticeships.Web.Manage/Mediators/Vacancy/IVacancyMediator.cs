@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Common.Mediators;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
@@ -62,7 +63,7 @@
 
         MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
 
-        MediatorResponse<VacancyViewModel> GetVacancyViewModel(int vacancyReferenceNumber);
+        Task<MediatorResponse<VacancyViewModel>> GetVacancyViewModel(int vacancyReferenceNumber);
 
         MediatorResponse UnReserveVacancyForQA(int vacancyReferenceNumber);
     }

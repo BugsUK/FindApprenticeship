@@ -27,6 +27,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Mappers;
     using ViewModels;
@@ -686,7 +687,7 @@
             _vacancyPostingService.UpdateVacancy(vacancy);
         }
 
-        public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
+        public async Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber)
         {
             Vacancy vacancy;
 
@@ -694,9 +695,8 @@
             {
                 var apiClient = _apiClientProvider.GetApiClient();
 
-                var apiVacancy =
-                    apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber)
-                        .Result.Body;
+                var apiVacancyResult = await apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber);
+                var apiVacancy = apiVacancyResult.Body;
                 vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
             }
             else

@@ -225,6 +225,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\ValidateModelStateFilter.cs" />
+    <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
     <Compile Include="Controllers\VacancySummaryController.cs" />
     <Compile Include="DependencyResolution\RaaRegistry.cs" />

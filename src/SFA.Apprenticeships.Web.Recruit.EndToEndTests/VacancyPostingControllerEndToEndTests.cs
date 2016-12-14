@@ -37,7 +37,7 @@
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
             // Act
-            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
+            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber).Result;
 
 
             // Assert
@@ -97,7 +97,7 @@
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            vacancyPostingController.ConfirmEmployer(viewModel);
+            vacancyPostingController.ConfirmEmployer(viewModel).Wait();
 
             var vacancy = Collection.FindOneById(vacancyGuid);
             vacancy.VacancyLocationType.Should().Be(VacancyLocationType.SpecificLocation);
@@ -122,7 +122,7 @@
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            var result = vacancyPostingController.ConfirmEmployer(viewModel);
+            var result = vacancyPostingController.ConfirmEmployer(viewModel).Result;
             result.Should().BeOfType<RedirectToRouteResult>();
             var redirection = result as RedirectToRouteResult;
             redirection.RouteName.Should().Be("AddLocations");
@@ -271,7 +271,7 @@
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
             // Act
-            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
+            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber).Result;
 
 
             // Assert

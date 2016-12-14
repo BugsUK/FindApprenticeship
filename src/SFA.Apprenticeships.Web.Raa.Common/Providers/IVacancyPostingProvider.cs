@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -37,7 +38,7 @@
 
         VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
 
-        VacancyViewModel GetVacancy(int vacancyReferenceNumber);
+        Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber);
 
         List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(int vacancyReferenceNumber);
 

@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using System.Threading.Tasks;
     using Builders;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.ViewModels.Vacancy;
     using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
@@ -16,11 +18,11 @@
         {
             var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Apprenticeship);
 
-            VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(new Task<VacancyViewModel>(() => vvm));
             VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<int>())).Returns(vvm);
             var mediator = GetMediator();
 
-            var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, false);
+            var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, false).Result;
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.SubmitVacancy.SubmitOk);
         }
@@ -31,11 +33,11 @@
             var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Referred, VacancyType.Apprenticeship);
             vvm.ResubmitOption = true;
 
-            VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(new Task<VacancyViewModel>(() => vvm));
             VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<int>())).Returns(vvm);
             var mediator = GetMediator();
 
-            var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, true);
+            var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, true).Result;
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.SubmitVacancy.ResubmitOk);
         }
@@ -46,10 +48,10 @@
             var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Referred, VacancyType.Apprenticeship);
             vvm.ResubmitOption = false;
 
-            VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(new Task<VacancyViewModel>(() => vvm));
             var mediator = GetMediator();
 
-            var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, false);
+            var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, false).Result;
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation);
             result.ValidationResult.Errors.Should().NotBeNull();

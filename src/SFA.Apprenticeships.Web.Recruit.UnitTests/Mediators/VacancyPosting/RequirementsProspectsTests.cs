@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using System.Threading.Tasks;
     using Common.Mediators;
     using FluentAssertions;
     using Moq;
@@ -40,13 +41,13 @@
         public void ShouldReturnOfflineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOfflineOne()
         {
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
-                .Returns(new VacancyViewModel
+                .Returns(new Task<VacancyViewModel>(() => new VacancyViewModel
                 {
                     NewVacancyViewModel = new NewVacancyViewModel
-                    { 
+                    {
                         OfflineVacancy = true
                     }
-                });
+                }));
 
             var vacancyRequirementsAndProspects = new VacancyRequirementsProspectsViewModel();
             VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
@@ -54,7 +55,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel);
+            var result = mediator.UpdateVacancy(_viewModel).Result;
 
             result.Should()
                 .Match(
@@ -76,13 +77,13 @@
             var vacancyRequirementsAndProspects = new VacancyRequirementsProspectsViewModel();
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
-                .Returns(newVacancyViewModel);
+                .Returns(new Task<VacancyViewModel>(() => newVacancyViewModel));
             VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
                 .Returns(vacancyRequirementsAndProspects);
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel);
+            var result = mediator.UpdateVacancy(_viewModel).Result;
 
             result.Should()
                 .Match(

@@ -20,6 +20,7 @@
     using Raa.Common.ViewModels.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
     using System;
+    using System.Threading.Tasks;
 
     [TestFixture]
     [Parallelizable]
@@ -33,7 +34,7 @@
         [Test]
         public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithQuestionOneFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AVacancyWithQuestionOneFilled));
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -49,7 +50,7 @@
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
-            }, Ukprn);
+            }, Ukprn).Result;
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
@@ -59,7 +60,7 @@
         [Test]
         public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionTwo()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithQuestionTwoFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AVacancyWithQuestionTwoFilled));
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -75,7 +76,7 @@
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
-            }, Ukprn);
+            }, Ukprn).Result;
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
@@ -85,7 +86,7 @@
         [Test]
         public void ShouldntWarnUserIfSwitchingFromOnlineToOfflineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithNoQuestionsFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AVacancyWithNoQuestionsFilled));
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -100,7 +101,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            }, Ukprn);
+            }, Ukprn).Result;
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
@@ -109,7 +110,7 @@
         [Test]
         public void ShouldntWarnUserIfTheVacancyWasAlreadyOffline()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AnOfflineVacancy());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AnOfflineVacancy));
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -124,7 +125,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            }, Ukprn);
+            }, Ukprn).Result;
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
@@ -133,7 +134,7 @@
         [Test]
         public void ShouldntWarnUserIfSwitchingFromOfflineToOnlineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AnOfflineVacancy);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(new Task<VacancyViewModel>(AnOfflineVacancy));
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -148,7 +149,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            }, Ukprn);
+            }, Ukprn).Result;
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
@@ -180,7 +181,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.ConfirmEmployer(viewModel, Ukprn);
+            var result = mediator.ConfirmEmployer(viewModel, Ukprn).Result;
             result.ViewModel.VacancyLocationType.Should()
                 .Be(VacancyLocationType.SpecificLocation);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
@@ -214,7 +215,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.ConfirmEmployer(viewModel, Ukprn);
+            var result = mediator.ConfirmEmployer(viewModel, Ukprn).Result;
             result.ViewModel.VacancyLocationType.Should()
                 .Be(VacancyLocationType.Nationwide);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositionsNw);
@@ -335,7 +336,7 @@
 
             // Act.
             var mediator = GetMediator();
-            var result = mediator.ConfirmEmployer(viewModel, ukprn);
+            var result = mediator.ConfirmEmployer(viewModel, ukprn).Result;
 
             // Assert.
             result.AssertMessage(VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);

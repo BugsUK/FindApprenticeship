@@ -1,14 +1,15 @@
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
+    using System.Security.Claims;
     using Application.Interfaces;
     using DAS.RAA.Api.Client.V1;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Raa;
     using Domain.Entities.Raa.RaaApi;
     using Domain.Raa.Interfaces.Repositories;
     using Microsoft.Rest;
     using Web.Common.Configuration;
+    using ClaimTypes = Domain.Entities.Raa.ClaimTypes;
 
     public class ApiClientProvider : IApiClientProvider
     {
@@ -45,7 +46,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                     throw new CustomException(message);
                 }
                 apiKey = apiUser.PrimaryApiKey.ToString();
-
+                _currentUserService.AddClaim(new Claim(ClaimTypes.RaaApiKey, apiKey));
             }
             var apiClient = new ApiClient(new Uri(baseUrl), new TokenCredentials(apiKey, "bearer"));
             return apiClient;
