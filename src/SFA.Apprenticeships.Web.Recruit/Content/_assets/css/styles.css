@@ -1,4 +1,9 @@
 @charset "UTF-8";
+.grid-row:after, #content:after, .notice:after, .panel:after, fieldset:after, .form-section:after, .form-group:after, .form-block:after, .breadcrumbs ol:after {
+  content: "";
+  display: block;
+  clear: both; }
+
 /* -------------------------------------------------------------------
 SFA navigation
 ------------------------------------------------------------------- */
@@ -182,8 +187,20 @@ Tabbed content
     display: inline-block !important; }
 
 /* -------------------------------------------------------------------
+Saved searches
+------------------------------------------------------------------- */
+.sfa-saved-search:last-child {
+  margin-bottom: 0 !important; }
+
+/* -------------------------------------------------------------------
 Custom Typography
 ------------------------------------------------------------------- */
+.sfa-table-basic {
+  width: auto; }
+  .sfa-table-basic th, .sfa-table-basic td {
+    border-bottom: none;
+    padding: 0 0.75em 0.75em 0; }
+
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
@@ -343,6 +360,11 @@ iframe, object, embed {
 .govuk-related-items ul li.related-items-more {
   font-weight: bold; }
 
+.grid-row:after, #content:after, .notice:after, .panel:after, fieldset:after, .form-section:after, .form-group:after, .form-block:after, .breadcrumbs ol:after {
+  content: "";
+  display: block;
+  clear: both; }
+
 .button-link {
   font-family: "nta",Arial,sans-serif;
   font-size: 19px;
@@ -356,7 +378,7 @@ iframe, object, embed {
   display: inline-block;
   line-height: 1.4;
   margin: 0 15px 15px 0;
-  padding: 7px 10px 5px 0;
+  padding: .526315em .789473em .263157em;
   text-decoration: underline;
   vertical-align: top;
   -webkit-font-smoothing: antialiased; }
@@ -379,6 +401,93 @@ iframe, object, embed {
 
 .button-link:focus {
   outline: 3px solid #ffbf47; }
+
+.sfa-button-secondary {
+  background-color: transparent;
+  position: relative;
+  display: -moz-inline-stack;
+  display: inline-block;
+  padding: .526315em .789473em .263157em;
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -webkit-box-shadow: 0 2px 0 transparent;
+  -moz-box-shadow: 0 2px 0 transparent;
+  box-shadow: 0 2px 0 transparent;
+  font-size: 1em;
+  line-height: 1.25;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  color: #fff;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: top;
+  color: #005ea5;
+  text-decoration: underline; }
+  .sfa-button-secondary:visited {
+    background-color: transparent; }
+  .sfa-button-secondary:hover, .sfa-button-secondary:focus {
+    background-color: transparent; }
+  .sfa-button-secondary:active {
+    top: 2px;
+    -webkit-box-shadow: 0 0 0 transparent;
+    -moz-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent; }
+  .sfa-button-secondary.disabled, .sfa-button-secondary[disabled="disabled"], .sfa-button-secondary[disabled] {
+    zoom: 1;
+    filter: alpha(opacity=50);
+    opacity: 0.5; }
+    .sfa-button-secondary.disabled:hover, .sfa-button-secondary[disabled="disabled"]:hover, .sfa-button-secondary[disabled]:hover {
+      cursor: default;
+      background-color: transparent; }
+    .sfa-button-secondary.disabled:active, .sfa-button-secondary[disabled="disabled"]:active, .sfa-button-secondary[disabled]:active {
+      top: 0;
+      -webkit-box-shadow: 0 2px 0 transparent;
+      -moz-box-shadow: 0 2px 0 transparent;
+      box-shadow: 0 2px 0 transparent; }
+  .sfa-button-secondary:link, .sfa-button-secondary:hover, .sfa-button-secondary:focus, .sfa-button-secondary:visited {
+    color: #fff; }
+  .sfa-button-secondary:before {
+    content: "";
+    height: 110%;
+    width: 100%;
+    display: block;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .sfa-button-secondary:active:before {
+    top: -10%;
+    height: 120%; }
+  @media (max-width: 640px) {
+    .sfa-button-secondary {
+      width: 100%;
+      text-align: center;
+      margin-top: 0.75em; } }
+  .sfa-button-secondary:focus {
+    outline: 3px solid #ffbf47;
+    -webkit-box-shadow: 0 2px 0 #ffbf47;
+    -moz-box-shadow: 0 2px 0 #ffbf47;
+    box-shadow: 0 2px 0 #ffbf47; }
+  .sfa-button-secondary:visited {
+    color: #005ea5; }
+  .sfa-button-secondary:hover {
+    color: #2b8cc4; }
+  .sfa-button-secondary:active {
+    top: 0;
+    color: #2b8cc4;
+    background: #ffbf47; }
+
+.sfa-button-secondary[disabled="disabled"] {
+  background: #00823b; }
+  .sfa-button-secondary[disabled="disabled"]:focus {
+    outline: none; }
+  .sfa-button-secondary[disabled="disabled"]:hover {
+    color: #005ea5; }
 
 .tabbed-nav {
   border-bottom: 1px solid #bfc1c3; }

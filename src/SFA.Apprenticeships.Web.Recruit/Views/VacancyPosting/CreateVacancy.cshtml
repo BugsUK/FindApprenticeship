@@ -21,7 +21,7 @@
 
     <div class="form-group">
         <button id="createVacancyButton" type="submit" class="button no-autosave" name="CreateVacancy" value="@saveButtonValue">@saveButtonText</button>
-        <button id="createVacancyAndExit" type="submit" class="button-link no-autosave" name="CreateVacancy" value="CreateVacancyAndExit">Save and exit</button>
+        <button id="createVacancyAndExit" type="submit" class=".sfa-button-secondary no-autosave" name="CreateVacancy" value="CreateVacancyAndExit">Save and exit</button>
         @if (Model.ComeFromPreview)
         {
             @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" })

@@ -13,8 +13,8 @@
             @foreach (var savedSearch in Model.SavedSearches)
             {
                 <li>
-                    <label id="saved-search-label-@savedSearch.Id" for="saved-search-@savedSearch.Id" class="form-radio sfa-form-radio">
-                        <input type="radio" name="SavedSearchId" id="saved-search-@savedSearch.Id" value="@savedSearch.Id">
+                    <label id="-label-@savedSearch.Id" for="-@savedSearch.Id" class="form-radio sfa-form-radio">
+                        <input type="radio" name="SavedSearchId" id="-@savedSearch.Id" value="@savedSearch.Id">
                         @savedSearch.Name
                     </label>
                     @if (savedSearch.DateProcessed.HasValue)
@@ -26,14 +26,14 @@
                     @if (savedSearch.ApprenticeshipLevel != "All")
                     {
                         <p class="font-xsmall sfa-no-bottom-margin">
-                            <b>Apprenticeship level:</b> <span id="saved-search-apprenticeship-level-@savedSearch.Id">@savedSearch.ApprenticeshipLevel</span>
+                            <b>Apprenticeship level:</b> <span id="-apprenticeship-level-@savedSearch.Id">@savedSearch.ApprenticeshipLevel</span>
                         </p>
                     }
 
                     @if (!string.IsNullOrWhiteSpace(savedSearch.SubCategoriesFullNames))
                     {
                         <p class="font-xsmall sfa-no-bottom-margin">
-                            <b>Sub-categories:</b> <span id="saved-search-subcategories-@savedSearch.Id">@savedSearch.SubCategoriesFullNames</span>
+                            <b>Sub-categories:</b> <span id="-subcategories-@savedSearch.Id">@savedSearch.SubCategoriesFullNames</span>
                         </p>
                     }
                 </li>

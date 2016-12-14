@@ -1,4 +1,8 @@
-﻿.button-link {
+﻿@import '_colours';
+@import '_buttons';
+@import '_conditionals';
+
+.button-link {
     font-family: "nta",Arial,sans-serif;
     font-size: 19px;
     line-height: 1.31579;
@@ -11,7 +15,7 @@
     display: inline-block;
     line-height: 1.4;
     margin: 0 15px 15px 0;
-    padding: 7px 10px 5px 0;
+    padding: .526315em .789473em .263157em;
     text-decoration: underline;
     vertical-align: top;
     -webkit-font-smoothing: antialiased
@@ -40,4 +44,55 @@
 
 .button-link:focus {
     outline: 3px solid #ffbf47
+}
+
+
+
+
+
+
+.sfa-button-secondary {
+    @include button (transparent);
+    @include box-sizing (border-box);
+    vertical-align: top;
+
+    color: $link-colour;
+    text-decoration: underline;
+
+    @include media (mobile) {
+    width: 100%;
+    text-align: center;
+    margin-top:0.75em;
+    }
+
+    &:focus {
+      outline: 3px solid $focus-colour;
+      @include box-shadow(0 2px 0 $focus-colour);
+    }
+
+    &:visited {
+      color:$link-colour;
+    }
+
+    &:hover {
+      color:$link-hover-colour;
+    }
+
+    &:active {
+      top:0;
+      color:$link-hover-colour;
+      background:$focus-colour;
+    }
+}
+
+// Disabled buttons
+.sfa-button-secondary[disabled="disabled"] {
+    background: $button-colour;
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      color:$link-colour;
+    }
 }
