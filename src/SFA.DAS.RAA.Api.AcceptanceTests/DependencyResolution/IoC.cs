@@ -9,6 +9,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.DependencyResolution
     using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Postcode.IoC;
+    using Apprenticeships.Infrastructure.Raa.IoC;
     using Apprenticeships.Infrastructure.Repositories.Sql.Configuration;
     using Apprenticeships.Infrastructure.Repositories.Sql.IoC;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
@@ -62,6 +63,8 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.DependencyResolution
                 c.AddRegistry<VacancyPostingServiceRegistry>();
 
                 c.AddRegistry<RaaRegistry>();
+
+                c.AddRegistry<RaaApiRegistry>();
 
                 c.AddRegistry<AcceptanceTestsRegistry>();
             });

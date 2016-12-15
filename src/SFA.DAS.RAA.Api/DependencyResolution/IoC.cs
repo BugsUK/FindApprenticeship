@@ -3,7 +3,6 @@ namespace SFA.DAS.RAA.Api.DependencyResolution
     using Apprenticeships.Application.Communication.IoC;
     using Apprenticeships.Application.Employer.IoC;
     using Apprenticeships.Application.Interfaces;
-    using Apprenticeships.Application.Location.IoC;
     using Apprenticeships.Application.Organisation.IoC;
     using Apprenticeships.Application.Provider.IoC;
     using Apprenticeships.Application.VacancyPosting.IoC;
@@ -14,6 +13,7 @@ namespace SFA.DAS.RAA.Api.DependencyResolution
     using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Postcode.IoC;
+    using Apprenticeships.Infrastructure.Raa.IoC;
     using Apprenticeships.Infrastructure.Repositories.Sql.Configuration;
     using Apprenticeships.Infrastructure.Repositories.Sql.IoC;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
@@ -61,6 +61,8 @@ namespace SFA.DAS.RAA.Api.DependencyResolution
                 c.AddRegistry<VacancyPostingServiceRegistry>();
 
                 c.AddRegistry<RaaRegistry>();
+
+                c.AddRegistry<RaaApiRegistry>();
             });
         }
     }

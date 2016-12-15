@@ -1,6 +1,7 @@
 namespace SFA.DAS.RAA.Api.DependencyResolution
 {
     using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Vacancy;
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Infrastructure.Raa.Mappers;
     using Apprenticeships.Infrastructure.Raa.Strategies;
@@ -8,9 +9,9 @@ namespace SFA.DAS.RAA.Api.DependencyResolution
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
 
-    public class RaaRegistry : Registry
+    public class RaaApiRegistry : Registry
     {
-        public RaaRegistry()
+        public RaaApiRegistry()
         {
             Scan(
                 scan =>
@@ -20,6 +21,7 @@ namespace SFA.DAS.RAA.Api.DependencyResolution
                 });
 
             For<IAuthenticationService>().Use<ApiKeyAuthenticationService>();
+            For<IVacancySummaryService>().Use<VacancySummaryService>();
 
             For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
         }

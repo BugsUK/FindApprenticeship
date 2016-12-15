@@ -7,6 +7,7 @@
     using Entities;
     using Newtonsoft.Json;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Vacancy = Entities.Vacancy;
@@ -25,6 +26,60 @@
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
         private const string StatusChangeText = "Status Change";
+
+        private static readonly IDictionary<string, int> VacancyTextFieldValues = new Dictionary<string, int>
+        {
+            {"TBP", 1},
+            {"QR", 2},
+            {"SR", 3},
+            {"PQ", 4},
+            {"OII", 5},
+            {"FP", 6},
+            {"RC", 7}
+        };
+
+        private static readonly IDictionary<string, int> VacancyReferalCommentsFieldType = new Dictionary<string, int>
+        {
+            {"TIT", 1},
+            {"SDE", 2},
+            {"FDE", 3},
+            {"WWK", 4},
+            {"WWG", 5},
+            {"FUT", 6},
+            {"CFS", 7},
+            {"EAN", 8},
+            {"EDE", 9},
+            {"EWB", 10},
+            {"APO", 11},
+            {"APF", 12},
+            {"VTP", 13},
+            {"TRP", 14},
+            {"EAD", 15},
+            {"SKL", 16},
+            {"QUA", 17},
+            {"PER", 18},
+            {"REA", 19},
+            {"IOI", 20},
+            {"QU1", 21},
+            {"QU2", 22},
+            {"CLD", 23},
+            {"ISF", 24},
+            {"PSD", 25},
+            {"EAI", 26},
+            {"AWA", 27},
+            {"DRA", 28},
+            {"NPO", 29},
+            {"OAI", 30},
+            {"OAU", 31},
+            {"SID", 32},
+            {"ALE", 33},
+            {"CDE", 34},
+            {"LAD", 35},
+            {"ALI", 36},
+            {"AED", 37},
+            {"AER", 38},
+            {"AAE", 39}
+        };
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
             ILogService logger, ICurrentUserService currentUserService)
@@ -351,46 +406,49 @@ WHERE  FullName = @CountyFullName",
             }
         }
 
-        private void PopulateVacancyLocationTypeId(DomainVacancy entity, Vacancy dbVacancy)
+        private static void PopulateVacancyLocationTypeId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            string vacancyLocationTypeCodeName = string.Empty;
             // A vacancy is multilocation if IsEmployerAddressMainAddress is set to false
             if (entity.VacancyLocationType == VacancyLocationType.SpecificLocation)
-                vacancyLocationTypeCodeName = "STD";
+                dbVacancy.VacancyLocationTypeId = 1;
             else if (entity.VacancyLocationType == VacancyLocationType.MultipleLocations)
-                vacancyLocationTypeCodeName = "MUL";
+                dbVacancy.VacancyLocationTypeId = 2;
             else if (entity.VacancyLocationType == VacancyLocationType.Nationwide)
-                vacancyLocationTypeCodeName = "NAT";
-
-            dbVacancy.VacancyLocationTypeId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
-SELECT VacancyLocationTypeId
-FROM   dbo.VacancyLocationType
-WHERE  CodeName = @VacancyLocationTypeCodeName",
-                new
-                {
-                    VacancyLocationTypeCodeName = vacancyLocationTypeCodeName
-                }).Single();
+                dbVacancy.VacancyLocationTypeId = 3;
         }
 
         private void PopulateApprenticeshipTypeId(DomainVacancy entity, Vacancy dbVacancy)
         {
             if (entity.VacancyType == VacancyType.Traineeship)
             {
-                dbVacancy.ApprenticeshipType = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
-SELECT ApprenticeshipTypeId
-FROM   dbo.ApprenticeshipType
-WHERE  CodeName = 'TRA'").Single();
+                dbVacancy.ApprenticeshipType = 4;
                 return;
             }
 
-            dbVacancy.ApprenticeshipType = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
-SELECT ApprenticeshipTypeId
-FROM   dbo.ApprenticeshipType at JOIN Reference.EducationLevel el ON at.EducationLevelId = el.EducationLevelId
-WHERE  el.CodeName = @EducationLevel",
-                new
-                {
-                    EducationLevel = (int)entity.ApprenticeshipLevel
-                }).Single(); // There's a better way to do this?
+            switch (entity.ApprenticeshipLevel)
+            {
+                case ApprenticeshipLevel.Unknown:
+                    dbVacancy.ApprenticeshipType = 0;
+                    return;
+                case ApprenticeshipLevel.Intermediate:
+                    dbVacancy.ApprenticeshipType = 1;
+                    return;
+                case ApprenticeshipLevel.Advanced:
+                    dbVacancy.ApprenticeshipType = 2;
+                    return;
+                case ApprenticeshipLevel.Higher:
+                    dbVacancy.ApprenticeshipType = 3;
+                    return;
+                case ApprenticeshipLevel.FoundationDegree:
+                    dbVacancy.ApprenticeshipType = 5;
+                    return;
+                case ApprenticeshipLevel.Degree:
+                    dbVacancy.ApprenticeshipType = 6;
+                    return;
+                case ApprenticeshipLevel.Masters:
+                    dbVacancy.ApprenticeshipType = 7;
+                    return;
+            }
         }
 
         private void SaveTextFieldsFor(int vacancyId, DomainVacancy entity)
@@ -439,13 +497,11 @@ when not matched then
 
         private void UpsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
         {
-            var vacancyTextFieldValueId =
-                _getOpenConnection.Query<int>(
-                    $@"
-	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
-	WHERE CodeName = '{
-                        vacancyTextFieldCodeName}'
-").Single(); // TODO: Hardcode the ID?
+            if (!VacancyTextFieldValues.ContainsKey(vacancyTextFieldCodeName))
+            {
+                throw new ArgumentException($"{vacancyTextFieldCodeName} was not recognised as a valid vacancy text field code name");
+            }
+            var vacancyTextFieldValueId = VacancyTextFieldValues[vacancyTextFieldCodeName];
 
             var sql = @"
 merge dbo.VacancyTextField as target
@@ -516,13 +572,12 @@ when not matched then
 
         private void UpsertComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName, string comment)
         {
-            var vacancyReferralCommentsFieldTypeId =
-                _getOpenConnection.Query<int>(
-                    $@"
-	SELECT TOP 1 VacancyReferralCommentsFieldTypeId FROM dbo.VacancyReferralCommentsFieldType
-	WHERE CodeName = '{
-                        vacancyReferralCommentsFieldTypeCodeName}'
-").Single(); // TODO: Hardcode the ID?
+            if(!VacancyReferalCommentsFieldType.ContainsKey(vacancyReferralCommentsFieldTypeCodeName))
+            {
+                throw new ArgumentException($"{vacancyReferralCommentsFieldTypeCodeName} was not recognised as a valid vacancy referral comments field type code name");
+            }
+
+            var vacancyReferralCommentsFieldTypeId = VacancyReferalCommentsFieldType[vacancyReferralCommentsFieldTypeCodeName];
 
             const string sql = @"
 merge dbo.VacancyReferralComments as target

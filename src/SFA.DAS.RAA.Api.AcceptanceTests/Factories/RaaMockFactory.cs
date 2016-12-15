@@ -1,5 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Factories
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using Apprenticeships.Application.Interfaces;
@@ -13,6 +14,7 @@
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider.Entities;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.RaaApi;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities;
     using Apprenticeships.Infrastructure.WebServices.Wcf;
     using Constants;
@@ -81,6 +83,15 @@
 
             //Setup mock for unknown vacancies
             MockGetOpenConnection.Setup(m => m.Query<Vacancy>(It.IsAny<string>(), It.IsAny<object>(), null, null)).Returns(new List<Vacancy>());
+
+            //Setup mocks for generic id lookups (should overwrite in any tests that rely on specifics)
+            MockGetOpenConnection.Setup(
+                m => m.QueryCached<int?>(It.IsAny<TimeSpan>(), It.IsAny<string>(), It.IsAny<object>(), null, null))
+                .Returns(new int?[] { 0 });
+
+            MockGetOpenConnection.Setup(
+                m => m.QueryCached<int>(It.IsAny<TimeSpan>(), It.IsAny<string>(), It.IsAny<object>(), null, null))
+                .Returns(new int[] { 0 });
         }
 
         public static Mock<IConfigurationService> GetMockConfigurationService() { return MockConfigurationService; }
