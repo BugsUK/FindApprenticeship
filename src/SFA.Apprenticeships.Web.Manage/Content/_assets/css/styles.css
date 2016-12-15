@@ -373,7 +373,7 @@ iframe, object, embed {
     -webkit-box-shadow: 0 2px 0 #ffbf47;
     -moz-box-shadow: 0 2px 0 #ffbf47;
     box-shadow: 0 2px 0 #ffbf47; }
-  .button.sfa-button-secondary:visited {
+  .button.sfa-button-secondary:visited, .button.sfa-button-secondary:link {
     background: transparent;
     color: #005ea5; }
   .button.sfa-button-secondary:hover {
@@ -383,12 +383,15 @@ iframe, object, embed {
     top: 0;
     color: #2b8cc4;
     background: #ffbf47; }
-  .button.sfa-button-secondary[disabled="disabled"] {
+  .button.sfa-button-secondary.disabled, .button.sfa-button-secondary[disabled="disabled"], .button.sfa-button-secondary[disabled] {
     background: transparent; }
-    .button.sfa-button-secondary[disabled="disabled"]:focus {
+    .button.sfa-button-secondary.disabled:focus, .button.sfa-button-secondary[disabled="disabled"]:focus, .button.sfa-button-secondary[disabled]:focus {
       outline: none; }
-    .button.sfa-button-secondary[disabled="disabled"]:hover {
-      color: #005ea5; }
+    .button.sfa-button-secondary.disabled:hover, .button.sfa-button-secondary.disabled:link, .button.sfa-button-secondary.disabled:visited, .button.sfa-button-secondary.disabled:active, .button.sfa-button-secondary[disabled="disabled"]:hover, .button.sfa-button-secondary[disabled="disabled"]:link, .button.sfa-button-secondary[disabled="disabled"]:visited, .button.sfa-button-secondary[disabled="disabled"]:active, .button.sfa-button-secondary[disabled]:hover, .button.sfa-button-secondary[disabled]:link, .button.sfa-button-secondary[disabled]:visited, .button.sfa-button-secondary[disabled]:active {
+      background: transparent;
+      color: #005ea5;
+      text-decoration: underline;
+      box-shadow: none; }
 
 .sfa-hide-button {
   background: transparent !important;

@@ -21,7 +21,7 @@ $secondary-button-bg: transparent;
       @include box-shadow(0 2px 0 $focus-colour);
     }
 
-    &:visited {
+    &:visited, &:link {
       background:$secondary-button-bg;
       color:$link-colour;
     }
@@ -37,13 +37,18 @@ $secondary-button-bg: transparent;
       background:$focus-colour;
     }
     // Disabled buttons
-    &[disabled="disabled"] {
+    &.disabled,
+    &[disabled="disabled"],
+    &[disabled]{
         background: $secondary-button-bg;
         &:focus {
           outline: none;
         }
-        &:hover {
-          color:$link-colour;
+        &:hover, &:link, &:visited, &:active{
+            background:$secondary-button-bg;
+            color: $link-colour;
+            text-decoration: underline;
+            box-shadow:none;
         }
     }
 }

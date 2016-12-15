@@ -174,7 +174,7 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" name=\"LoginAction\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
 
 WriteLiteral(" value=\"Resend\"");
 
