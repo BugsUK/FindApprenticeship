@@ -103,7 +103,8 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployer(int providerSiteId, string edsUrn, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
+        public ActionResult ConfirmEmployer(int providerSiteId, string edsUrn, Guid vacancyGuid, bool? comeFromPreview,
+            bool? useEmployerLocation)
         {
             var response = _vacancyPostingMediator.GetEmployer(providerSiteId, edsUrn, vacancyGuid, comeFromPreview, useEmployerLocation);
 
@@ -192,7 +193,14 @@
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { vacancyOwnerRelationshipId = response.ViewModel.VacancyOwnerRelationshipId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }
 
-                    return RedirectToRoute(RecruitmentRouteNames.AddLocations, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid, comeFromPreview = viewModel.ComeFromPreview });
+                    return RedirectToRoute(RecruitmentRouteNames.AddLocations, new
+                    {
+                        providerSiteId = response.ViewModel.ProviderSiteId,
+                        employerId = response.ViewModel.Employer.EmployerId,
+                        vacancyGuid = response.ViewModel.VacancyGuid,
+                        comeFromPreview = viewModel.ComeFromPreview,
+                        isAnonymousEmployer = response.ViewModel.IsAnonymousEmployer
+                    });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -988,9 +996,10 @@
         }
 
         [HttpGet]
-        public ActionResult Locations(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview)
+        public ActionResult Locations(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview, bool? isAnonymousEmployer)
         {
-            var response = _vacancyPostingMediator.GetLocationAddressesViewModel(providerSiteId, employerId, User.GetUkprn(), vacancyGuid, comeFromPreview);
+            var response = _vacancyPostingMediator.GetLocationAddressesViewModel(providerSiteId, employerId, User.GetUkprn(), vacancyGuid,
+                comeFromPreview, isAnonymousEmployer);
 
             switch (response.Code)
             {
