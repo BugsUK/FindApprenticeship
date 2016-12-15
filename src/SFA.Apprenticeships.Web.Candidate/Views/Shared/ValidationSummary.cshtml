@@ -2,12 +2,12 @@
 
 <div id="error-summary" class='error-summary @(Model.IsValid ? "sfa-hide" : "")' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
     <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
-        Message to alert the user to a problem goes here
+        Please fix these errors
     </h1>
 
-    <p>
+    <!--<p>
         Optional description of the errors and how to correct them
-    </p>
+    </p>-->
 
     <ul class="error-summary-list">
         @foreach (var modelKey in Model.Keys)

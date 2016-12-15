@@ -140,7 +140,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                 switch (response.Code)
                 {
                     case AccountMediatorCodes.Settings.ValidationError:
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
                     case AccountMediatorCodes.Settings.SaveError:
                         SetUserMessage(response.Message.Text, response.Message.Level);

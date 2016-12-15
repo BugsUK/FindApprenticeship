@@ -1,6 +1,7 @@
 ﻿@import "_colours";
 @import "_conditionals";
-
+@import '_shims';
+@import '_css3';
 
 /* -------------------------------------------------------------------
 SFA navigation
@@ -82,10 +83,6 @@ Hide element (window size)
             display:none;
         }
     }
-}
-
-.sfa-hide {
-    display:none;   
 }
 
 /* -------------------------------------------------------------------
@@ -188,6 +185,23 @@ Custom form elements
     }
 }
 
+.sfa-form-control-after {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 16px;
+    line-height: 1.25;
+    display: block;
+    color: #6f777b;
+    font-weight: normal;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    @include media(tablet){
+        font-size: 19px;
+        line-height: 1.31579;
+    }
+}
+
 /* -------------------------------------------------------------------
 Categories and sub-categories
 ------------------------------------------------------------------- */
@@ -227,9 +241,25 @@ Tabbed content
 }
 
 /* -------------------------------------------------------------------
+Saved searches
+------------------------------------------------------------------- */
+.sfa-saved-search {
+    &:last-child {
+        margin-bottom:0 !important;
+    }
+}
+
+/* -------------------------------------------------------------------
 Custom Typography
 ------------------------------------------------------------------- */
 
+.sfa-table-basic {
+    width:auto;
+    th, td {
+        border-bottom:none;
+        padding:0 0.75em 0.75em 0;
+    }
+}
 
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
@@ -247,8 +277,20 @@ Misc - TO BE ORGANISED
     margin: 0 !important;
 }
 
+.sfa-no-right-margin {
+    margin-right: 0 !important;
+}
+
+.sfa-no-left-margin {
+    margin-left: 0 !important;
+}
+
 .sfa-no-bottom-margin {
     margin-bottom: 0 !important;
+}
+
+.sfa-no-top-margin {
+    margin-top: 0 !important;
 }
 
 .sfa-align-right {

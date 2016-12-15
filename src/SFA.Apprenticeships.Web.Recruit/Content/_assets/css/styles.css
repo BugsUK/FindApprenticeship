@@ -1,4 +1,9 @@
 @charset "UTF-8";
+.grid-row:after, #content:after, .notice:after, .panel:after, fieldset:after, .form-section:after, .form-group:after, .form-block:after, .breadcrumbs ol:after {
+  content: "";
+  display: block;
+  clear: both; }
+
 /* -------------------------------------------------------------------
 SFA navigation
 ------------------------------------------------------------------- */
@@ -57,9 +62,6 @@ Hide element (window size)
   @media (min-width: 769px) {
     .sfa-hide-desktop {
       display: none; } }
-
-.sfa-hide {
-  display: none; }
 
 /* -------------------------------------------------------------------
 Custom margins
@@ -139,6 +141,22 @@ Custom form elements
   .sfa-form-radio input, .sfa-form-checkbox input {
     margin-left: -18px !important; }
 
+.sfa-form-control-after {
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 16px;
+  line-height: 1.25;
+  display: block;
+  color: #6f777b;
+  font-weight: normal;
+  padding-top: 2px;
+  padding-bottom: 2px; }
+  @media (min-width: 641px) {
+    .sfa-form-control-after {
+      font-size: 19px;
+      line-height: 1.31579; } }
+
 /* -------------------------------------------------------------------
 Categories and sub-categories
 ------------------------------------------------------------------- */
@@ -166,8 +184,20 @@ Tabbed content
     display: inline-block !important; }
 
 /* -------------------------------------------------------------------
+Saved searches
+------------------------------------------------------------------- */
+.sfa-saved-search:last-child {
+  margin-bottom: 0 !important; }
+
+/* -------------------------------------------------------------------
 Custom Typography
 ------------------------------------------------------------------- */
+.sfa-table-basic {
+  width: auto; }
+  .sfa-table-basic th, .sfa-table-basic td {
+    border-bottom: none;
+    padding: 0 0.75em 0.75em 0; }
+
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
@@ -180,8 +210,17 @@ Misc - TO BE ORGANISED
 .no-margins {
   margin: 0 !important; }
 
+.sfa-no-right-margin {
+  margin-right: 0 !important; }
+
+.sfa-no-left-margin {
+  margin-left: 0 !important; }
+
 .sfa-no-bottom-margin {
   margin-bottom: 0 !important; }
+
+.sfa-no-top-margin {
+  margin-top: 0 !important; }
 
 .sfa-align-right {
   text-align: right; }
@@ -315,42 +354,53 @@ iframe, object, embed {
 .govuk-related-items ul li.related-items-more {
   font-weight: bold; }
 
-.button-link {
-  font-family: "nta",Arial,sans-serif;
-  font-size: 19px;
-  line-height: 1.31579;
-  font-weight: 400;
-  text-transform: none;
-  background: none;
-  border: none;
+.grid-row:after, #content:after, .notice:after, .panel:after, fieldset:after, .form-section:after, .form-group:after, .form-block:after, .breadcrumbs ol:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+.button.sfa-button-secondary {
+  background: transparent;
   color: #005ea5;
-  cursor: pointer;
-  display: inline-block;
-  line-height: 1.4;
-  margin: 0 15px 15px 0;
-  padding: 7px 10px 5px 0;
   text-decoration: underline;
-  vertical-align: top;
-  -webkit-font-smoothing: antialiased; }
+  box-shadow: none; }
+  @media (max-width: 640px) {
+    .button.sfa-button-secondary {
+      margin-top: 0.75em; } }
+  .button.sfa-button-secondary:focus {
+    background: transparent;
+    color: #005ea5;
+    -webkit-box-shadow: 0 2px 0 #ffbf47;
+    -moz-box-shadow: 0 2px 0 #ffbf47;
+    box-shadow: 0 2px 0 #ffbf47; }
+  .button.sfa-button-secondary:visited {
+    background: transparent;
+    color: #005ea5; }
+  .button.sfa-button-secondary:hover {
+    background: transparent;
+    color: #2b8cc4; }
+  .button.sfa-button-secondary:active {
+    top: 0;
+    color: #2b8cc4;
+    background: #ffbf47; }
+  .button.sfa-button-secondary[disabled="disabled"] {
+    background: transparent; }
+    .button.sfa-button-secondary[disabled="disabled"]:focus {
+      outline: none; }
+    .button.sfa-button-secondary[disabled="disabled"]:hover {
+      color: #005ea5; }
 
-@media (max-width: 640px) {
-  .button-link {
-    font-size: 16px;
-    line-height: 1.25; } }
-
-.inline-button .button-link {
-  margin-bottom: 0; }
-
-.inline-text .button-link {
-  margin: 0;
-  padding: 0;
-  line-height: 1.3; }
-
-.button-link:hover {
-  color: #2e8aca; }
-
-.button-link:focus {
-  outline: 3px solid #ffbf47; }
+.sfa-hide-button {
+  background: transparent !important;
+  border: 0 !important;
+  border: none !important;
+  color: transparent !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important; }
 
 .tabbed-nav {
   border-bottom: 1px solid #bfc1c3; }

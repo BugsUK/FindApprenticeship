@@ -119,7 +119,39 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n            <span");
+WriteLiteral("</span>\r\n");
+
+            
+            #line 24 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 24 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+              
+                var hint = Model.GetMetadata(m => m).DisplayName;
+            
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 27 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 27 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+             if (!string.IsNullOrEmpty(hint))
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
@@ -128,18 +160,25 @@ WriteLiteral(" id=\"example-dob-hint\"");
 WriteLiteral(">");
 
             
-            #line 24 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
-                                                     Write(Model.GetMetadata(m => m).DisplayName);
+            #line 29 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+                                                         Write(hint);
 
             
             #line default
             #line hidden
 WriteLiteral("</span>\r\n");
 
+            
+            #line 30 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
 WriteLiteral("            ");
 
             
-            #line 25 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 31 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m, Html.GetValidationType(m => m)));
 
             
@@ -150,7 +189,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 26 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 32 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m.Day, Html.GetValidationType(m => m.Day)));
 
             
@@ -161,7 +200,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 27 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 33 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m.Month, Html.GetValidationType(m => m.Month)));
 
             
@@ -172,7 +211,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 28 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 34 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
        Write(Html.ValidationMessageWithSeverityFor(m => m.Year, Html.GetValidationType(m => m.Year)));
 
             
@@ -197,7 +236,7 @@ WriteLiteral(">Day</label>\r\n");
 WriteLiteral("                ");
 
             
-            #line 33 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 39 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
            Write(Html.TextBoxFor(m => m.Day, new { name = Html.NameFor(m => m).ToString().Replace(".", "_").ToLower(), type = "number", pattern = "[0-9]*", min = "0", max = "31", @class = "form-control" }));
 
             
@@ -220,7 +259,7 @@ WriteLiteral(">Month</label>\r\n");
 WriteLiteral("                ");
 
             
-            #line 38 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 44 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
            Write(Html.TextBoxFor(m => m.Month, new { pattern = "[0-9]*", min = "0", max = "12", @class = "form-control" }));
 
             
@@ -243,7 +282,7 @@ WriteLiteral(">Year</label>\r\n");
 WriteLiteral("                ");
 
             
-            #line 43 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 49 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
            Write(Html.TextBoxFor(m => m.Year, new { pattern = "[0-9]*", min = "0", @class = "form-control" }));
 
             

@@ -79,9 +79,8 @@ WriteLiteral(" class=\"heading-medium error-summary-heading\"");
 
 WriteLiteral(" id=\"error-summary-heading-example-1\"");
 
-WriteLiteral(">\r\n        Message to alert the user to a problem goes here\r\n    </h1>\r\n\r\n    <p>" +
-"\r\n        Optional description of the errors and how to correct them\r\n    </p>\r\n" +
-"\r\n    <ul");
+WriteLiteral(">\r\n        Please fix these errors\r\n    </h1>\r\n\r\n    <!--<p>\r\n        Optional de" +
+"scription of the errors and how to correct them\r\n    </p>-->\r\n\r\n    <ul");
 
 WriteLiteral(" class=\"error-summary-list\"");
 
@@ -129,15 +128,15 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                    <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 976), Tuple.Create("\"", 1007)
-, Tuple.Create(Tuple.Create("", 983), Tuple.Create("#", 983), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 958), Tuple.Create("\"", 989)
+, Tuple.Create(Tuple.Create("", 965), Tuple.Create("#", 965), true)
             
             #line 25 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 984), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+, Tuple.Create(Tuple.Create("", 966), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 984), false)
+, 966), false)
 );
 
 WriteLiteral(">");

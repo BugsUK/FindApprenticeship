@@ -459,26 +459,24 @@
         <label for="disability-prefno" class="block-label selection-button-radio">
             <input name="disability" type="radio" id="disability-prefno" aria-labelledby="disability-label">Prefer not to say
         </label>
-        <div class="text">
-            <details class="sfa-medium-bottom-margin">
-                <summary>Why we collect this info</summary>
-                <div class="detail-content panel panel-border-narrow">
-                    <p>
-                        Employers who are part of the ‘Positive about disabled people’ scheme
-                        will guarantee candidates an interview who meet the apprenticeship
-                        criteria if they have a disability.
-                    </p>
-                    <p>
-                        For this reason we ask you to provide this information so we can
-                        inform the employer and provider.
-                    </p>
-                </div>
-            </details>
-        </div>
+        <details>
+            <summary><span class="summary">Why we collect this info</span></summary>
+            <div class="panel panel-border-narrow">
+                <p>
+                    Employers who are part of the ‘Positive about disabled people’ scheme
+                    will guarantee candidates an interview who meet the apprenticeship
+                    criteria if they have a disability.
+                </p>
+                <p>
+                    For this reason we ask you to provide this information so we can
+                    inform the employer and provider.
+                </p>
+            </div>
+        </details>
     </div>
     <div class="form-group">
-        <label for="question4" class="form-label-bold">Is there anything we can do to support your interview?</label>
-        <span class="form-hint">For example, do you need a signer or information in braille</span>
+        <p class="heading-small">Is there anything we can do to support your interview?</p>
+        <p class="secondary-text">For example, do you need a signer or information in braille</p>
         <div class="form-group form-group-compound inline">
             <label data-target="support-panel" for="support-yes" class="block-label selection-button-radio">
                 <input name="support" type="radio" id="support-yes" aria-controls="support-panel"
@@ -509,7 +507,7 @@
         </div>
     </div>
     <p id="saveApplication">
-        <a href="#" class="button-link saveADraft">Save</a>
+        <a href="#" class=".sfa-button-secondary saveADraft">Save</a>
     </p>
     <!--   <p id="applicationSaved">
         Saved at 10:20 to <a href="dashboard.html">my applications</a>

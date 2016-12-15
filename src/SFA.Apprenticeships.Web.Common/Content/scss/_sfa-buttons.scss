@@ -1,0 +1,63 @@
+﻿@import '_colours';
+@import '_buttons';
+@import '_conditionals';
+
+$secondary-button-bg: transparent;
+
+// An extension of the GDS button class which creates a secondary button style that looks like a normal link
+.button.sfa-button-secondary {
+    background:$secondary-button-bg;
+    color: $link-colour;
+    text-decoration: underline;
+    box-shadow:none;
+
+    @include media (mobile) {
+        margin-top:0.75em;
+    }
+
+    &:focus {
+      background:$secondary-button-bg;
+      color: $link-colour;
+      @include box-shadow(0 2px 0 $focus-colour);
+    }
+
+    &:visited {
+      background:$secondary-button-bg;
+      color:$link-colour;
+    }
+
+    &:hover {
+      background:$secondary-button-bg;
+      color:$link-hover-colour;
+    }
+
+    &:active {
+      top:0;
+      color:$link-hover-colour;
+      background:$focus-colour;
+    }
+    // Disabled buttons
+    &[disabled="disabled"] {
+        background: $secondary-button-bg;
+        &:focus {
+          outline: none;
+        }
+        &:hover {
+          color:$link-colour;
+        }
+    }
+}
+
+// Hide buttons when duplicates for different use cases
+.sfa-hide-button {
+    background: transparent!important;
+    border: 0!important;
+    border: none!important;
+    color: transparent!important;
+    display: none!important;
+    width: 0!important;
+    height: 0!important;
+    margin: 0!important;
+    overflow: visible!important;
+    padding: 0!important;
+}
