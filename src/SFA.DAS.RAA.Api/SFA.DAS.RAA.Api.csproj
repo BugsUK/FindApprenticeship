@@ -225,6 +225,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\ValidateModelStateFilter.cs" />
+    <Compile Include="Attributes\ExceptionToErrorResponseFilterAttribute.cs" />
     <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
     <Compile Include="Controllers\VacancySummaryController.cs" />
@@ -243,7 +244,6 @@
     </Compile>
     <Compile Include="Handlers\AiExceptionLogger.cs" />
     <Compile Include="Handlers\ApiKeyHandler.cs" />
-    <Compile Include="Handlers\GlobalExceptionHandler.cs" />
     <Compile Include="Models\VacancyApiModel.cs" />
     <Compile Include="Models\WageUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -255,6 +255,7 @@
     <Compile Include="Strategies\EditWageStrategy.cs" />
     <Compile Include="Strategies\IEditWageStrategy.cs" />
     <Compile Include="Validators\VacancyValidator.cs" />
+    <Compile Include="Validators\WageUpdateValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\settings.config" />

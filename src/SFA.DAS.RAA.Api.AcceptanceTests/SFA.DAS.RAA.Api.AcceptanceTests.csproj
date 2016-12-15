@@ -210,6 +210,7 @@
     </Compile>
     <Compile Include="Steps\GetVacancyDetailsSteps.cs" />
     <Compile Include="Steps\HttpResponseSteps.cs" />
+    <Compile Include="Steps\ResponseMessageSteps.cs" />
     <Compile Include="Steps\SetupVacancySteps.cs" />
     <Compile Include="Steps\SwaggerUiSteps.cs" />
     <Compile Include="TestStartup.cs" />

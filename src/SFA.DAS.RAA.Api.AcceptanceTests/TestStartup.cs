@@ -1,7 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests
 {
     using System.Web.Http;
-    using System.Web.Http.ExceptionHandling;
     using Api.DependencyResolution;
     using Handlers;
     using Owin;
@@ -23,7 +22,6 @@
             config.MessageHandlers.Add(new ApiKeyHandler(container.GetInstance<IAuthenticationService>()));
 
             WebApiConfig.Register(config);
-            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
             app.UseWebApi(config);
         }

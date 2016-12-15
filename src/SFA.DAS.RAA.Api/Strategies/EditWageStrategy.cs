@@ -4,6 +4,8 @@
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Models;
     using Providers;
+    using Validators;
+    using FluentValidation;
 
     public class EditWageStrategy : IEditWageStrategy
     {
@@ -21,9 +23,19 @@
             {
                 throw new ArgumentException("You can only edit the wage of a vacancy that is live or closed.");
             }
+            wage.ExistingAmount = vacancy.Wage.Amount;
+
             //TODO: Loads of validation
+            var validator = new WageUpdateValidator();
+            var validationResult = validator.Validate(wage, ruleSet: "CompareWithExisting");
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
             vacancy.Wage.Amount = wage.Amount;
             vacancy.Wage.Unit = wage.Unit;
+
             return vacancy;
         }
     }

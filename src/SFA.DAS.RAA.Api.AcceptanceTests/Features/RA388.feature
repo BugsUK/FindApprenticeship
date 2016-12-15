@@ -154,3 +154,14 @@ Scenario: Increase fixed wage by £20 per week
 	And I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly
 	Then The response status is: OK
 	And I see that the fixed wage details for the vacancy with id: 42 is now £220 Weekly
+
+@RA388 @EditWage
+Scenario: Decrease fixed wage by £20 per week
+	Given I have a Live vacancy with id: 42, a fixed wage of £200 Weekly
+	When I authorize my request with a Provider API key
+	And I request to change the fixed wage for the vacancy with id: 42 to £180 Weekly
+	Then The response status is: BadRequest
+	And The validation errors contain:
+		| Property | Error                                            |
+		| Amount   | Amount must be greater than the existing amount. |
+	And I do not see the edited vacancy wage details for the vacancy with id: 42

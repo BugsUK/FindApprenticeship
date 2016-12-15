@@ -3,6 +3,7 @@
     using System;
     using System.Web.Http;
     using Apprenticeships.Domain.Entities.Raa;
+    using Attributes;
     using Models;
     using Strategies;
     using Swashbuckle.Swagger.Annotations;

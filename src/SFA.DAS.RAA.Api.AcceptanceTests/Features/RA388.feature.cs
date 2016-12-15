@@ -579,6 +579,40 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Decrease fixed wage by £20 per week")]
+        [NUnit.Framework.CategoryAttribute("RA388")]
+        [NUnit.Framework.CategoryAttribute("EditWage")]
+        public virtual void DecreaseFixedWageBy20PerWeek()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Decrease fixed wage by £20 per week", new string[] {
+                        "RA388",
+                        "EditWage"});
+#line 159
+this.ScenarioSetup(scenarioInfo);
+#line 160
+ testRunner.Given("I have a Live vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 161
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 162
+ testRunner.And("I request to change the fixed wage for the vacancy with id: 42 to £180 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 163
+ testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Property",
+                        "Error"});
+            table1.AddRow(new string[] {
+                        "Amount",
+                        "Amount must be greater than the existing amount."});
+#line 164
+ testRunner.And("The validation errors contain:", ((string)(null)), table1, "And ");
+#line 167
+ testRunner.And("I do not see the edited vacancy wage details for the vacancy with id: 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
