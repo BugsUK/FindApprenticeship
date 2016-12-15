@@ -4,12 +4,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge">Find a traineeship</h1>
-    <p class="heading-secondary ">Search and apply for a traineeship in England</p>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Find a traineeship
+            <span class="heading-secondary ">Search and apply for a traineeship in England</span>
+        </h1>
+        
+    </div>
 </div>
 <div class="grid-row">
-
     <div class="grid-row controls-3-4">
         <section class="column-two-thirds">
             @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
