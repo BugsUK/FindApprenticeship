@@ -3,20 +3,19 @@
     using System;
     using System.Web.Http;
     using Apprenticeships.Domain.Entities.Raa;
-    using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Models;
-    using Providers;
+    using Strategies;
     using Swashbuckle.Swagger.Annotations;
 
     [Authorize(Roles = Roles.Provider)]
     [RoutePrefix("vacancy")]
     public class VacancyManagementController : ApiController
     {
-        private readonly IVacancyProvider _vacancyProvider;
+        private readonly IEditWageStrategy _editWageStrategy;
 
-        public VacancyManagementController(IVacancyProvider vacancyProvider)
+        public VacancyManagementController(IEditWageStrategy editWageStrategy)
         {
-            _vacancyProvider = vacancyProvider;
+            _editWageStrategy = editWageStrategy;
         }
 
         [Route("wage")]
@@ -24,15 +23,7 @@
         [HttpPut]
         public IHttpActionResult EditWage(WageUpdate wage, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
-            var vacancy = _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
-            if (vacancy.Status != VacancyStatus.Live && vacancy.Status != VacancyStatus.Closed)
-            {
-                return BadRequest("You can only edit the wage of a vacancy that is live or closed.");
-            }
-            //TODO: Loads of validation
-            vacancy.Wage.Amount = wage.Amount;
-            vacancy.Wage.Unit = wage.Unit;
-            return Ok(vacancy);
+            return Ok(_editWageStrategy.EditWage(wage, vacancyId, vacancyReferenceNumber, vacancyGuid));
         }
     }
 }

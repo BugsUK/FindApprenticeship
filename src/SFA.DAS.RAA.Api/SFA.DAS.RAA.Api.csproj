@@ -252,6 +252,8 @@
     <Compile Include="Services\ApiKeyAuthenticationService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Strategies\EditWageStrategy.cs" />
+    <Compile Include="Strategies\IEditWageStrategy.cs" />
     <Compile Include="Validators\VacancyValidator.cs" />
   </ItemGroup>
   <ItemGroup>
