@@ -36,9 +36,23 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 
             var dbVacancy = VacancyMappers.Map<Vacancy, DbVacancy>(vacancy);
 
+            //Setup return of the existing vacancy
             RaaMockFactory.GetMockGetOpenConnection().Setup(
                 m => m.Query<DbVacancy>(VacancyRepository.SelectByIdSql, It.Is<object>(o => o.GetHashCode() == new { vacancyId }.GetHashCode()), null, null))
                 .Returns(new[] { dbVacancy });
+
+            //When that vacancy is updated, setup the return of the updated vacancy
+            RaaMockFactory.GetMockGetOpenConnection().Setup(
+                m => m.UpdateSingle(It.Is<DbVacancy>(v => v.VacancyId == vacancyId), null)).Callback<DbVacancy, int?>(
+                    (v, to) =>
+                    {
+                        RaaMockFactory.GetMockGetOpenConnection().Setup(
+                            m =>
+                                m.Query<DbVacancy>(VacancyRepository.SelectByIdSql,
+                                    It.Is<object>(o => o.GetHashCode() == new {vacancyId}.GetHashCode()), null, null))
+                            .Returns(new[] {v});
+                    }
+                );
         }
     }
 }
