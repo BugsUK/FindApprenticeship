@@ -345,6 +345,10 @@
       <Project>{abd48d09-c35e-42ce-8a4d-81550c2b8554}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Raa\SFA.Apprenticeships.Infrastructure.Raa.csproj">
+      <Project>{1F4776F3-884B-4B00-BA97-22BFA06C034E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Raa</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
