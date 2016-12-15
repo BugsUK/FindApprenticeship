@@ -127,6 +127,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
+      <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>

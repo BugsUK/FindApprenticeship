@@ -24,6 +24,7 @@
             var unit = (WageUnit)Enum.Parse(typeof(WageUnit), unitString);
             var wageUpdate = new WageUpdate
             {
+                Type = WageType.Custom,
                 Amount = amount,
                 Unit = unit
             };
