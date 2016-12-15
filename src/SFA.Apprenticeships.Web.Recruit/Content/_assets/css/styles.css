@@ -63,18 +63,6 @@ Hide element (window size)
     .sfa-hide-desktop {
       display: none; } }
 
-.sfa-hide-button {
-  background: transparent !important;
-  border: 0 !important;
-  border: none !important;
-  color: transparent !important;
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  margin: 0 !important;
-  overflow: visible !important;
-  padding: 0 !important; }
-
 /* -------------------------------------------------------------------
 Custom margins
 ------------------------------------------------------------------- */
@@ -374,92 +362,48 @@ iframe, object, embed {
   display: block;
   clear: both; }
 
-.sfa-button-secondary {
-  background-color: transparent;
-  position: relative;
-  display: -moz-inline-stack;
-  display: inline-block;
-  padding: .526315em .789473em .263157em;
-  border: none;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  -webkit-appearance: none;
-  -webkit-box-shadow: 0 2px 0 transparent;
-  -moz-box-shadow: 0 2px 0 transparent;
-  box-shadow: 0 2px 0 transparent;
-  font-size: 1em;
-  line-height: 1.25;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  cursor: pointer;
-  color: #fff;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  vertical-align: top;
+.button.sfa-button-secondary {
+  background: transparent;
   color: #005ea5;
-  text-decoration: underline; }
-  .sfa-button-secondary:visited {
-    background-color: transparent; }
-  .sfa-button-secondary:hover, .sfa-button-secondary:focus {
-    background-color: transparent; }
-  .sfa-button-secondary:active {
-    top: 2px;
-    -webkit-box-shadow: 0 0 0 transparent;
-    -moz-box-shadow: 0 0 0 transparent;
-    box-shadow: 0 0 0 transparent; }
-  .sfa-button-secondary.disabled, .sfa-button-secondary[disabled="disabled"], .sfa-button-secondary[disabled] {
-    zoom: 1;
-    filter: alpha(opacity=50);
-    opacity: 0.5; }
-    .sfa-button-secondary.disabled:hover, .sfa-button-secondary[disabled="disabled"]:hover, .sfa-button-secondary[disabled]:hover {
-      cursor: default;
-      background-color: transparent; }
-    .sfa-button-secondary.disabled:active, .sfa-button-secondary[disabled="disabled"]:active, .sfa-button-secondary[disabled]:active {
-      top: 0;
-      -webkit-box-shadow: 0 2px 0 transparent;
-      -moz-box-shadow: 0 2px 0 transparent;
-      box-shadow: 0 2px 0 transparent; }
-  .sfa-button-secondary:link, .sfa-button-secondary:hover, .sfa-button-secondary:focus, .sfa-button-secondary:visited {
-    color: #fff; }
-  .sfa-button-secondary:before {
-    content: "";
-    height: 110%;
-    width: 100%;
-    display: block;
-    background: transparent;
-    position: absolute;
-    top: 0;
-    left: 0; }
-  .sfa-button-secondary:active:before {
-    top: -10%;
-    height: 120%; }
+  text-decoration: underline;
+  box-shadow: none; }
   @media (max-width: 640px) {
-    .sfa-button-secondary {
-      width: 100%;
-      text-align: center;
+    .button.sfa-button-secondary {
       margin-top: 0.75em; } }
-  .sfa-button-secondary:focus {
-    outline: 3px solid #ffbf47;
+  .button.sfa-button-secondary:focus {
+    background: transparent;
+    color: #005ea5;
     -webkit-box-shadow: 0 2px 0 #ffbf47;
     -moz-box-shadow: 0 2px 0 #ffbf47;
     box-shadow: 0 2px 0 #ffbf47; }
-  .sfa-button-secondary:visited {
+  .button.sfa-button-secondary:visited {
+    background: transparent;
     color: #005ea5; }
-  .sfa-button-secondary:hover {
+  .button.sfa-button-secondary:hover {
+    background: transparent;
     color: #2b8cc4; }
-  .sfa-button-secondary:active {
+  .button.sfa-button-secondary:active {
     top: 0;
     color: #2b8cc4;
     background: #ffbf47; }
+  .button.sfa-button-secondary[disabled="disabled"] {
+    background: transparent; }
+    .button.sfa-button-secondary[disabled="disabled"]:focus {
+      outline: none; }
+    .button.sfa-button-secondary[disabled="disabled"]:hover {
+      color: #005ea5; }
 
-.sfa-button-secondary[disabled="disabled"] {
-  background: #00823b; }
-  .sfa-button-secondary[disabled="disabled"]:focus {
-    outline: none; }
-  .sfa-button-secondary[disabled="disabled"]:hover {
-    color: #005ea5; }
+.sfa-hide-button {
+  background: transparent !important;
+  border: 0 !important;
+  border: none !important;
+  color: transparent !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important; }
 
 .tabbed-nav {
   border-bottom: 1px solid #bfc1c3; }
