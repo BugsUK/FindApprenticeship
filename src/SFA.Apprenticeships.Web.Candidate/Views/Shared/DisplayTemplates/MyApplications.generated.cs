@@ -560,7 +560,7 @@ WriteLiteral(">Remove from my applications</span></a>\r\n                       
             #line hidden
 WriteLiteral("                                </tbody>\r\n                                <tbody");
 
-WriteLiteral(" class=\"tbody-expandrows\"");
+WriteLiteral(" class=\"tbody-expandrows sfa-hide\"");
 
 WriteLiteral(">\r\n                                    <tr");
 
@@ -783,7 +783,7 @@ WriteLiteral("\r\n                                            </td>\r\n         
             #line hidden
 WriteLiteral("                                </tbody>\r\n                                <tbody");
 
-WriteLiteral(" class=\"tbody-expandrows\"");
+WriteLiteral(" class=\"tbody-expandrows sfa-hide\"");
 
 WriteLiteral(">\r\n                                    <tr");
 
@@ -1021,14 +1021,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black archive-unsuccessful\"");
 
-WriteAttribute("href", Tuple.Create("\r\n                                                   href=\"", 12736), Tuple.Create("\"", 12885)
+WriteAttribute("href", Tuple.Create("\r\n                                                   href=\"", 12754), Tuple.Create("\"", 12903)
             
             #line 195 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-, Tuple.Create(Tuple.Create("", 12795), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new {id = application.VacancyId})
+, Tuple.Create(Tuple.Create("", 12813), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new {id = application.VacancyId})
             
             #line default
             #line hidden
-, 12795), false)
+, 12813), false)
 );
 
 WriteLiteral(">\r\n                                                    <i");
@@ -1052,7 +1052,7 @@ WriteLiteral(">Remove from my applications</span>\r\n                           
             #line hidden
 WriteLiteral("                                </tbody>\r\n                                <tbody");
 
-WriteLiteral(" class=\"tbody-expandrows\"");
+WriteLiteral(" class=\"tbody-expandrows sfa-hide\"");
 
 WriteLiteral(">\r\n                                    <tr");
 
@@ -1358,29 +1358,29 @@ WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n                                                <a");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 18265), Tuple.Create("\"", 18289)
-, Tuple.Create(Tuple.Create("", 18270), Tuple.Create("delete-draft-", 18270), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 18292), Tuple.Create("\"", 18316)
+, Tuple.Create(Tuple.Create("", 18297), Tuple.Create("delete-draft-", 18297), true)
             
             #line 275 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-, Tuple.Create(Tuple.Create("", 18283), Tuple.Create<System.Object, System.Int32>(index
+, Tuple.Create(Tuple.Create("", 18310), Tuple.Create<System.Object, System.Int32>(index
             
             #line default
             #line hidden
-, 18283), false)
+, 18310), false)
 );
 
 WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 18358), Tuple.Create("\"", 18456)
+WriteAttribute("href", Tuple.Create(" href=\"", 18385), Tuple.Create("\"", 18483)
             
             #line 275 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                     , Tuple.Create(Tuple.Create("", 18365), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
+                                                                     , Tuple.Create(Tuple.Create("", 18392), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 18365), false)
+, 18392), false)
 );
 
 WriteLiteral("><i");
@@ -1579,7 +1579,7 @@ WriteLiteral("\r\n                                        </td>\r\n             
             #line hidden
 WriteLiteral("                            </tbody>\r\n                            <tbody");
 
-WriteLiteral(" class=\"tbody-expandrows\"");
+WriteLiteral(" class=\"tbody-expandrows sfa-hide\"");
 
 WriteLiteral(">\r\n                                <tr");
 
