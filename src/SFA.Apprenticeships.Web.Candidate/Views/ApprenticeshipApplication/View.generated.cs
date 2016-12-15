@@ -142,15 +142,13 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n        </div>\r\n        <p");
 
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(" id=\"vacancy-summary\"");
+WriteLiteral("  id=\"vacancy-summary\"");
 
 WriteLiteral(">");
 
             
             #line 28 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-                                        Write(Model.VacancyDetail.Description);
+                            Write(Model.VacancyDetail.Description);
 
             
             #line default
@@ -221,14 +219,14 @@ WriteLiteral(">\r\n                <a");
 
 WriteLiteral(" id=\"return-to-my-feedback\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1793), Tuple.Create("\"", 1863)
+WriteAttribute("href", Tuple.Create(" href=\"", 1781), Tuple.Create("\"", 1851)
             
             #line 42 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1800), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback)
+, Tuple.Create(Tuple.Create("", 1788), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback)
             
             #line default
             #line hidden
-, 1800), false)
+, 1788), false)
 );
 
 WriteLiteral(">Return to your feedback</a>\r\n            </p>\r\n");
@@ -359,14 +357,14 @@ WriteLiteral(">\r\n        <p>\r\n            <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2992), Tuple.Create("\"", 3048)
+WriteAttribute("href", Tuple.Create(" href=\"", 2980), Tuple.Create("\"", 3036)
             
             #line 70 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2999), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2987), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2999), false)
+, 2987), false)
 );
 
 WriteLiteral(" class=\"button\"");

@@ -69,10 +69,6 @@ WriteLiteral(">\r\n    <section");
 
 WriteLiteral(" class=\"column-two-thirds\"");
 
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"inner-block-padr\"");
-
 WriteLiteral(">\r\n            <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
@@ -99,7 +95,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 20 "..\..\Views\Home\Index.cshtml"
+            #line 19 "..\..\Views\Home\Index.cshtml"
            Write(Html.RouteLink("Start now", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "vacancysearch", @class = "button" }));
 
             
@@ -175,7 +171,7 @@ WriteLiteral(">nationalhelpdesk@findapprenticeship.service.gov.uk</a></p>\r\n\r\
 
 WriteLiteral(" href=\"https://www.gov.uk/performance/bis-apprenticeship-vacancies-applications\"");
 
-WriteLiteral(">service is performing</a>.</p>\r\n        </div>\r\n    </section>\r\n    <section");
+WriteLiteral(">service is performing</a>.</p>\r\n    </section>\r\n    <section");
 
 WriteLiteral(" class=\"column-one-third gov-border\"");
 

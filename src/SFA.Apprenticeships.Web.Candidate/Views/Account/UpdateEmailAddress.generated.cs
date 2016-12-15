@@ -92,12 +92,8 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    To change your email address we\'ll need to send you a code to verify it\'s\r" +
-"\n    yours.\r\n</p>\r\n");
+WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<p >\r\n    To change your " +
+"email address we\'ll need to send you a code to verify it\'s\r\n    yours.\r\n</p>\r\n");
 
             
             #line 23 "..\..\Views\Account\UpdateEmailAddress.cshtml"

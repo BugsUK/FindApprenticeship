@@ -87,17 +87,14 @@ WriteLiteral("                ");
 
             
             #line 14 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-           Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" }));
+           Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    You\'ve been sent a code to your new email address, enter your code to veri" +
-"fy\r\n    your address.\r\n</p>\r\n\r\n");
+WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<p >\r\n    You\'ve been sen" +
+"t a code to your new email address, enter your code to verify\r\n    your address." +
+"\r\n</p>\r\n\r\n");
 
             
             #line 24 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
@@ -187,14 +184,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1559), Tuple.Create("\"", 1629)
+WriteAttribute("href", Tuple.Create(" href=\"", 1538), Tuple.Create("\"", 1608)
             
             #line 35 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-, Tuple.Create(Tuple.Create("", 1566), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
+, Tuple.Create(Tuple.Create("", 1545), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
             
             #line default
             #line hidden
-, 1566), false)
+, 1545), false)
 );
 
 WriteLiteral(" title=\"Resend code\"");

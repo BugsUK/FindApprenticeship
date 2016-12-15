@@ -27,20 +27,18 @@
                     var open = Model.LocationSearches.Any() ? "open " : "";
                     var hidden = Model.LocationSearches.Any() ? "" : "hidden ";
                 }
-                <div class="form-group">
-                    <details @(open) class="@(open)@(hidden)form-group form-group-compound" id="locationSuggestions">
-                        <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
-                        <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
-                        <div class="detail-content panel panel-border-narrow sfa-scrollable">
-                            <ul id="location-suggestions" class="list">
-                                @foreach (var locationSearch in Model.LocationSearches)
-                                {
-                                    <li><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)">@locationSearch.Location</a></li>
-                                }
-                            </ul>
-                        </div>
-                    </details>
-                </div>
+                <details @(open) class="@(open)@(hidden)form-group" id="locationSuggestions">
+                    <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
+                    <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
+                    <div class="detail-content panel panel-border-narrow sfa-scrollable">
+                        <ul id="location-suggestions" class="list">
+                            @foreach (var locationSearch in Model.LocationSearches)
+                            {
+                                <li><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)">@locationSearch.Location</a></li>
+                            }
+                        </ul>
+                    </div>
+                </details>
 
                 <div class="form-group">
                     <label for="loc-within" class="form-label-bold">Within</label>

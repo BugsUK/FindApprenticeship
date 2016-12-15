@@ -6,7 +6,6 @@
 
 <div class="grid-row">
     <section class="column-two-thirds">
-        <div class="inner-block-padr">
             <h1 class="heading-xlarge">Your feedback</h1>
             @{
                 var reason = string.IsNullOrWhiteSpace(Model.UnsuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnsuccessfulReason;
@@ -20,7 +19,6 @@
                     </span>
                 </div>
             </div>
-        </div>
     </section>
 
     <section class="column-one-third gov-border grey-background">
@@ -61,7 +59,6 @@
 
 
     <section class="column-two-thirds">
-        <div class="inner-block-padr">
             <h2 class="heading-large">Next steps</h2>
             <p>If you require further information please contact the training provider.</p>
             <p>
@@ -71,6 +68,5 @@
             <br />
             <br />
             @Html.RouteLink("Return to my applications", CandidateRouteNames.MyApplications, null, new { @class = "button" })
-        </div>
     </section>
 </div>

@@ -293,11 +293,7 @@ WriteLiteral(">Send</button>\r\n    </div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral("<section >\r\n    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 

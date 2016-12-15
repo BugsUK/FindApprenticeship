@@ -22,7 +22,7 @@
 @if (Model.TraineeshipFeature.ShowTraineeshipsPrompt)
 {
     <div role="alert" aria-live="assertive" id="traineeshipPrompt" class="toggle-content panel-info" style="display: block;">
-        <div class="text">
+        <div>
             <p>
                 Have you considered a traineeship? Traineeships are designed to get someone ready for an apprenticeship.
             </p>
@@ -44,7 +44,7 @@
 @if (Model.ApplicationStatusNotifications.Any())
 {
     <div role="alert" aria-live="assertive" id="statusPrompt" class="toggle-content panel-info" style="display: block;">
-        <div class="text">
+        <div>
             @foreach (var applicationNotification in Model.ApplicationStatusNotifications)
             {
                 var successOrUnsuccessful = applicationNotification.ApplicationStatus == ApplicationStatuses.Successful ? "successful" : "unsuccessful";

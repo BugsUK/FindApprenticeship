@@ -71,11 +71,7 @@ WriteLiteral(" id=\"h1header\"");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Privacy and cookies</h1>\r\n</div>\r\n\r\n<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral(">Privacy and cookies</h1>\r\n</div>\r\n\r\n<section >\r\n    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -100,11 +96,8 @@ WriteLiteral(@">Skills Funding Agency personal information charter</a>.
     </ul>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -112,11 +105,8 @@ WriteLiteral(@">How long we hold your data</h2>
     <p>If you haven’t signed in for 12 months or activated your account within 30 days of registering we’ll delete your account and remove your personal details. You’ll need to register again to use the service.</p>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -136,11 +126,7 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(" href=\"http://www.aboutcookies.org/\"");
 
-WriteLiteral(">edit and delete cookies</a>.</p>\r\n</section>\r\n\r\n<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral(">edit and delete cookies</a>.</p>\r\n</section>\r\n\r\n<section >\r\n    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -155,14 +141,14 @@ WriteLiteral(@">Webtrends analytics cookies</h2>
     </ul>
     <p>Webtrends isn’t allowed to use or share our analytics data with anyone, but you can <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2748), Tuple.Create("\"", 2796)
+WriteAttribute("href", Tuple.Create(" href=\"", 2700), Tuple.Create("\"", 2748)
             
             #line 52 "..\..\Views\Home\Privacy.cshtml"
-                    , Tuple.Create(Tuple.Create("", 2755), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.WebTrendsOptOut)
+                    , Tuple.Create(Tuple.Create("", 2707), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.WebTrendsOptOut)
             
             #line default
             #line hidden
-, 2755), false)
+, 2707), false)
 );
 
 WriteLiteral(">opt out</a> if you wish.</p>\r\n    <table>\r\n        <colgroup>\r\n            <col");
@@ -240,11 +226,8 @@ WriteLiteral(@" />
     </table>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -310,11 +293,8 @@ WriteLiteral(@" />
     </table>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -373,11 +353,8 @@ WriteLiteral(@" />
     </table>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -424,11 +401,8 @@ WriteLiteral(@" />
     </table>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -465,11 +439,7 @@ WriteLiteral(" />\r\n            <col />\r\n        </colgroup>\r\n        <thea
 "\n            </td>\r\n            <td>\r\n                Stores settings used to cu" +
 "stomise the display of search results for your user.\r\n            </td>\r\n       " +
 "     <td>\r\n                Session\r\n            </td>\r\n        </tr>\r\n    </tabl" +
-"e>\r\n</section>\r\n\r\n<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+"e>\r\n</section>\r\n\r\n<section >\r\n    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -541,11 +511,8 @@ WriteLiteral(@" />
     </table>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 

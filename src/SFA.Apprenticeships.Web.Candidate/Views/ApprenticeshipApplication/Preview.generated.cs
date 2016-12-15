@@ -198,7 +198,7 @@ WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"page-link hide-nojs\"");
+WriteLiteral(" class=\"hide-nojs\"");
 
 WriteLiteral(">\r\n                <p>\r\n                    <a");
 
@@ -220,11 +220,7 @@ WriteLiteral("></i>Print this page</a>\r\n                </p>\r\n            </
             
             #line default
             #line hidden
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral("    <div >\r\n");
 
 WriteLiteral("        ");
 
@@ -298,14 +294,14 @@ WriteLiteral(">\r\n            <p><a");
 
 WriteLiteral(" title=\"Return to application form\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2843), Tuple.Create("\"", 2933)
+WriteAttribute("href", Tuple.Create(" href=\"", 2821), Tuple.Create("\"", 2911)
             
             #line 51 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 2850), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {@id = Model.VacancyId})
+, Tuple.Create(Tuple.Create("", 2828), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {@id = Model.VacancyId})
             
             #line default
             #line hidden
-, 2850), false)
+, 2828), false)
 );
 
 WriteLiteral(">Return to application form</a></p>\r\n        </div>\r\n    </div>\r\n");
@@ -416,15 +412,15 @@ WriteLiteral("                <a");
 
 WriteLiteral(" class=\"icon-with-text\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3574), Tuple.Create("\"", 3694)
+WriteAttribute("href", Tuple.Create(" href=\"", 3552), Tuple.Create("\"", 3672)
             
             #line 66 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 3581), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
+, Tuple.Create(Tuple.Create("", 3559), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
             
             #line default
             #line hidden
-, 3581), false)
-, Tuple.Create(Tuple.Create("", 3665), Tuple.Create("#applyEmployerQuestionAnswers", 3665), true)
+, 3559), false)
+, Tuple.Create(Tuple.Create("", 3643), Tuple.Create("#applyEmployerQuestionAnswers", 3643), true)
 );
 
 WriteLiteral(">\r\n                    <i");
@@ -527,14 +523,14 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=", 4804), Tuple.Create("", 4857)
+WriteAttribute("onclick", Tuple.Create(" onclick=", 4782), Tuple.Create("", 4835)
             
             #line 90 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 4813), Tuple.Create<System.Object, System.Int32>(string.Format(AnalyticsTag, "BottomButton")
+, Tuple.Create(Tuple.Create("", 4791), Tuple.Create<System.Object, System.Int32>(string.Format(AnalyticsTag, "BottomButton")
             
             #line default
             #line hidden
-, 4813), false)
+, 4791), false)
 );
 
 WriteLiteral(">Submit application</button>\r\n\r\n");
@@ -568,14 +564,14 @@ WriteLiteral(">Last saved at ");
             #line hidden
 WriteLiteral(" to <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5071), Tuple.Create("\"", 5127)
+WriteAttribute("href", Tuple.Create(" href=\"", 5049), Tuple.Create("\"", 5105)
             
             #line 94 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                                                        , Tuple.Create(Tuple.Create("", 5078), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+                                                        , Tuple.Create(Tuple.Create("", 5056), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 5078), false)
+, 5056), false)
 );
 
 WriteLiteral(" title=\"My Applications\"");

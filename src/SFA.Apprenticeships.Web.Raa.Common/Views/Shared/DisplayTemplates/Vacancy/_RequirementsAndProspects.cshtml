@@ -11,9 +11,8 @@
     <h2 class="heading-large">Requirements and prospects</h2>
     <div class="grid-row">
         <div class="column-one-half">
-            <div class="inner-block-padr">
                 <div class="@editableItemClass">
-                    <div class="text">
+                    <div>
                         <h3 class="heading-small">
                             Desired skills
                             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, Model.RequirementsProspectsLink))
@@ -30,7 +29,7 @@
                     </div>
                 </div>
                 <div class="@editableItemClass">
-                    <div class="text">
+                    <div>
                         <h3 class="heading-small">
                             Personal qualities
                             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, Model.RequirementsProspectsLink))
@@ -47,7 +46,7 @@
                     </div>
                 </div>
                 <div class="@editableItemClass">
-                    <div class="text">
+                    <div>
                         <h3 class="heading-small">
                             Qualifications required
                             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, Model.RequirementsProspectsLink))
@@ -63,13 +62,12 @@
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
                     </div>
                 </div>
-               </div>
         </div>
         <div class="column-one-half">
             @if (Model.VacancyType == VacancyType.Apprenticeship && (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects) || Model.Status.IsStateReviewable()))
             {
                 <div class="@editableItemClass">
-                    <div class="text">
+                    <div>
                         <h3 class="heading-small">
                             Future prospects
                             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))
@@ -89,7 +87,7 @@
             @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider) || Model.Status.IsStateReviewable())
             {
                 <div class="@editableItemClass">
-                    <div class="text">
+                    <div>
                         <h3 class="heading-small">
                             Things to consider
                             @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, Model.RequirementsProspectsLink))

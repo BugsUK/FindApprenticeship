@@ -65,17 +65,9 @@ WriteLiteral("\r\n\r\n<h2");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Next steps</h2>\r\n<div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <p>\r\n        If your application was unsuccessful there are a few things y" +
-"ou can do\r\n        to ensure you have a better chance next time.\r\n    </p>\r\n</di" +
-"v>\r\n<div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <p>\r\n        Read the <a");
+WriteLiteral(">Next steps</h2>\r\n<div >\r\n    <p>\r\n        If your application was unsuccessful t" +
+"here are a few things you can do\r\n        to ensure you have a better chance nex" +
+"t time.\r\n    </p>\r\n</div>\r\n<div >\r\n    <p>\r\n        Read the <a");
 
 WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/advice/courses/typesoflearnin" +
 "g/Pages/apprenticeship-application-help.aspx\"");
@@ -101,11 +93,7 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n<div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h3");
+WriteLiteral("\r\n    </div>\r\n</div>\r\n<div >\r\n    <h3");
 
 WriteLiteral(" class=\"heading-medium heading-with-check\"");
 

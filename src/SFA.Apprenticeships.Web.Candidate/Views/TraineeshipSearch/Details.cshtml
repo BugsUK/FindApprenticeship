@@ -23,13 +23,13 @@
         <div class="column-one-third">
             @if (ViewBag.SearchReturnUrl != null)
             {
-                <a href="@ViewBag.SearchReturnUrl" title="Return to search results" class="page-link" id="lnk-return-search-results">Return to search results</a>
+                <a href="@ViewBag.SearchReturnUrl" title="Return to search results"  id="lnk-return-search-results">Return to search results</a>
             }
             else
             {
-                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "lnk-find-traineeship", @class = "page-link" })
+                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "lnk-find-traineeship", @class = "" })
             }
-            <p class="page-link hide-nojs">
+            <p class="hide-nojs">
                 <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
             </p>
         </div>
@@ -37,11 +37,9 @@
 
     @if (!Model.HasError())
     {
-        <section class=" grid-row">
+        <section class="grid-row">
             <div class="column-two-thirds">
-                <div class="inner-block-padr">
                     <p class="@Model.Description.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description)</p>
-                </div>
             </div>
             <div class="column-one-third">
                 @Html.Partial("_Apply", Model, new ViewDataDictionary() { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top") })
@@ -50,11 +48,9 @@
         <section class="sfa-section-bordered grid-row">
             <h2 class="heading-large">Traineeship details</h2>
             <div class="column-two-thirds">
-                <div class="inner-block-padr">
                     <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription)</p>
                     <h3 class="heading-medium">Training to be provided</h3>
                     <p class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided)</p>
-                </div>
             </div>
             <div class="column-one-third">
                 @if (!Model.IsEmployerAnonymous)
@@ -97,7 +93,6 @@
             <h2 class="heading-large">Employer</h2>
             <div class="grid-row">
                 <div class="column-one-half">
-                    <div class="inner-block-padr">
                         <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
                         @if (Model.IsEmployerAnonymous)
                         {
@@ -132,12 +127,11 @@
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
                                         <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
                                         <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
-                                        <p class="" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                                        <p  itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
                                     </div>
                                 </div>
                             }
                         }
-                    </div>
                 </div>
                 @if (Model.VacancyLocationType != VacancyLocationType.National)
                 {
@@ -172,7 +166,7 @@
             </div>
         </section>
         <section class="sfa-section-bordered grid-row" id="course-info">
-            <div class="text">
+            <div>
                 <h2 class="heading-large">Desired skills and what this will lead to</h2>
                 <h3 class="heading-small">Desired skills and qualities</h3>
                 <p class="@Model.SkillsRequired.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired)</p>
@@ -189,7 +183,7 @@
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {
             <section class="grid-row">
-                <div class="text">
+                <div>
                     <h2 class="heading-large">Other information</h2>
                     <p id="vacany-other-information" class="@Model.OtherInformation.GetPreserveFormattingCssClass()">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.OtherInformation)</p>
                 </div>

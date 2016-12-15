@@ -11,7 +11,6 @@
     @Html.HiddenFor(m => m.ComeFromPreview)
 
     <div class="column-one-half">
-        <div class="inner-block-padr">
             <h3 class="bold-small">Employer</h3>
             <p class="sfa-small-bottom-margin">@Model.Employer.FullName</p>
             <h3 class="bold-small">Address</h3>
@@ -24,7 +23,6 @@
                 <p class="sfa-small-bottom-margin">@Model.Employer.Address.County</p>
             }
             <p class="sfa-small-bottom-margin">@Model.Employer.Address.Postcode</p>
-        </div>
     </div>    
     <div class="column-one-half hide-print">
         <div class="ad-details__map">

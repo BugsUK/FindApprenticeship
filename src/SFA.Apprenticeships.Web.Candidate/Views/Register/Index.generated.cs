@@ -308,9 +308,7 @@ WriteLiteral(">Password strength: <span");
 
 WriteLiteral(" id=\"pass_meter\"");
 
-WriteLiteral(" class=\"\"");
-
-WriteLiteral("></span></p>\r\n        </div>\r\n        \r\n        <div");
+WriteLiteral(" ></span></p>\r\n        </div>\r\n        \r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
