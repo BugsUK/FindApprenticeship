@@ -12,7 +12,7 @@
     Delete @vacancyTitle vacancy
 </h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post, new { id = "delete-vacancy-form" }))
 {
     <div>
         <p>You will not be able to retreive this vacancy once it has been deleted</p>

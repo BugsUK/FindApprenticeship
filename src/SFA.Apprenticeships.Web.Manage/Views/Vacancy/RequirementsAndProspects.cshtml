@@ -3,7 +3,7 @@
 @using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
-@using (Html.BeginRouteForm(ManagementRouteNames.RequirementsAndProspoects, FormMethod.Post))
+@using (Html.BeginRouteForm(ManagementRouteNames.RequirementsAndProspoects, FormMethod.Post, new { id = "vacancy-requirements-and-prospects-form" }))
 {
     @Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
 

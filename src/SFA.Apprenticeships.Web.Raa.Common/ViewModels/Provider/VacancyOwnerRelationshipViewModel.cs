@@ -81,5 +81,6 @@
         public string NumberOfPositionsNationwideComment { get; set; }
 
         public bool IsEmployerAddressValid { get; set; }
+        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
     }
 }

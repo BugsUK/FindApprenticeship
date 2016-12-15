@@ -9,7 +9,7 @@
     ViewBag.Title = "Recruit an Apprentice - Bulk decline candidates";
 }
 @Html.Partial("ValidationSummary", ViewData.ModelState)
-@using (Html.BeginRouteForm(RecruitmentRouteNames.BulkDeclineCandidates, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.BulkDeclineCandidates, FormMethod.Post, new { id = "bulk-decline-candidates-form" }))
 {
     @Html.AntiForgeryToken()
 

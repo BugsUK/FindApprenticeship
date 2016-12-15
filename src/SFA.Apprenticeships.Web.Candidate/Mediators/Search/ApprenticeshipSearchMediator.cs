@@ -2,11 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Web.Mvc;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.ReferenceData;
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Configuration;
@@ -21,7 +17,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Extensions;
     using Infrastructure.VacancySearch.Configuration;
     using Providers;
-    using Apprenticeships.Application.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Web.Mvc;
     using Validators;
     using ViewModels.Account;
     using ViewModels.VacancySearch;
@@ -207,7 +207,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (model.ResultsPerPage == 0)
             {
                 model.ResultsPerPage = GetResultsPerPage();
-            }            
+            }
 
             if (string.IsNullOrEmpty(model.ApprenticeshipLevel))
             {
@@ -216,7 +216,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
             UserDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
             UserDataProvider.Push(CandidateDataItemNames.ApprenticeshipLevel, model.ApprenticeshipLevel.ToString(CultureInfo.InvariantCulture));
-            
+
             if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.NonNational)
             {
                 model.LocationType = VacancyLocationType.NonNational;
@@ -289,7 +289,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             }
 
             UserDataProvider.Push(UserDataItemNames.LastSearchedLocation, string.Join("|", model.Location, model.Latitude, model.Longitude));
-            
+
             RemoveInvalidSubCategories(model);
 
             var searchModel = GetSearchModel(model);
@@ -332,7 +332,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             {
                 SetSavedVacancyStatuses(candidateId.Value, results);
             }
-            
+
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
         }
 
@@ -412,7 +412,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             {
                 return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
-
+            if (vacancyDetailViewModel.CandidateApplicationStatus == ApplicationStatuses.Draft &&
+                vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Expired)
+            {
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.VacancyExpired, vacancyDetailViewModel);
+            }
             if ((!vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
                 (vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
             {
@@ -489,7 +493,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SavedSearch.Ok, savedSearchViewModel);
         }
 
-        
+
 
         #region Helpers
 

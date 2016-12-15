@@ -11,7 +11,7 @@
     @Html.DisplayFor(m => m, "Vacancy/VacancyPreviewHeader")
     @Html.DisplayFor(m => m, VacancyViewModel.PartialView)
 
-    @using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
+    @using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post, new { id = "approve-vacancy-form" }))
     {
         @Html.HiddenFor(m => m.VacancyReferenceNumber)
 

@@ -13,7 +13,7 @@
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyApplications, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyApplications, FormMethod.Post, new { id = "vacancy-applications-form" }))
 {
     @Html.AntiForgeryToken()
 

@@ -12,7 +12,7 @@
 
     <div class="blocklabel-single-container">
         
-        @using (Html.BeginRouteForm(RecruitmentRouteNames.AddEmployer, FormMethod.Get))
+        @using (Html.BeginRouteForm(RecruitmentRouteNames.AddEmployer, FormMethod.Get, new { id = "add-employer-form" }))
         {
             @Html.Partial("ValidationSummary", ViewData.ModelState)
             <div class="form-group inline clearfix blocklabel-single hide-nojs">

@@ -27,7 +27,7 @@ else
 
         <p>This vacancy will now be stored in your archive</p>
 
-    using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmArchiveVacancy, FormMethod.Post))
+    using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmArchiveVacancy, FormMethod.Post, new { id = "confirm-archive-vacancy-form" }))
     {
         @Html.HiddenFor(m => m.VacancyId)
         @Html.HiddenFor(m => m.HasOutstandingActions)

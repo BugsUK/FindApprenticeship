@@ -8,7 +8,7 @@
 
 <p>Adding a new provider site will also link it to @Html.RouteLink("the provider", ManagementRouteNames.AdminViewProvider, new { Model.ProviderId })</p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateProviderSite))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateProviderSite, FormMethod.Post, new { id = "admin-create-provider-site-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

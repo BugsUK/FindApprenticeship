@@ -47,7 +47,9 @@
 
         public int VacancyReferenceNumber { get; set; }
 
-        public VacancyLocationType EmployerApprenticeshipLocation { get; set; }
+        public bool? IsAnonymousEmployer { get; set; }
+
+        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
         public int CurrentPage { get; set; }
 
@@ -62,5 +64,6 @@
         public int VacancyOwnerRelationshipId { get; set; }
 
         public int AutoSaveTimeoutInSeconds { get; set; }
+        public VacancyLocationType EmployerApprenticeshipLocation { get; set; }
     }
 }
