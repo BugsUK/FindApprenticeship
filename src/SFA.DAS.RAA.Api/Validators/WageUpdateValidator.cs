@@ -11,7 +11,8 @@
             {
                 RuleFor(w => w.Amount)
                 .GreaterThan(wu => wu.ExistingAmount)
-                .WithMessage("Amount must be greater than the existing amount.");
+                .WithMessage("Amount must be greater than the existing amount.")
+                .When(wu => wu.ExistingAmount.HasValue);
             });
 
             

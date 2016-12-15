@@ -11,6 +11,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Providers;
+    using VacancyType = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     [Parallelizable]
@@ -34,6 +35,7 @@
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(v => v.VacancyId, vacancyId)
                 .With(v => v.Status, vacancyStatus)
+                .With(v => v.VacancyType, VacancyType.Apprenticeship)
                 .With(v => v.Wage, existingWage)
                 .Create();
             var vacancyProvider = new Mock<IVacancyProvider>();
@@ -70,6 +72,7 @@
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(v => v.VacancyId, vacancyId)
                 .With(v => v.Status, vacancyStatus)
+                .With(v => v.VacancyType, VacancyType.Apprenticeship)
                 .With(v => v.Wage, existingWage)
                 .Create();
             var vacancyProvider = new Mock<IVacancyProvider>();
@@ -104,6 +107,38 @@
             updatedWage.AmountLowerBound.Should().Be(wageUpdate.AmountLowerBound);
             updatedWage.AmountUpperBound.Should().Be(wageUpdate.AmountUpperBound);
             updatedWage.Unit.Should().Be(wageUpdate.Unit);
+        }
+
+        [Test]
+        public void CannotEditATraineeshipWage()
+        {
+            //Arrange
+            const int vacancyId = 1;
+            var vacancy = new Fixture().Build<Vacancy>()
+                .With(v => v.VacancyId, vacancyId)
+                .With(v => v.Status, VacancyStatus.Live)
+                .With(v => v.VacancyType, VacancyType.Traineeship)
+                .Create();
+            var vacancyProvider = new Mock<IVacancyProvider>();
+            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+
+            var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
+
+            var strategy = new EditWageStrategy(vacancyProvider.Object, updateVacancyStrategy.Object);
+
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.Custom,
+                Amount = 220,
+                Unit = WageUnit.Weekly
+            };
+
+            //Act
+            Action editWageAction = () => strategy.EditWage(wageUpdate, vacancyId);
+
+            //Assert
+            editWageAction.ShouldThrow<ArgumentException>().WithMessage("You can only edit the wage of an Apprenticeship vacancy.");
+            updateVacancyStrategy.Verify(s => s.UpdateVacancy(vacancy), Times.Never);
         }
     }
 }

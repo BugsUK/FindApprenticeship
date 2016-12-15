@@ -126,14 +126,14 @@ Scenario: Get vacancy by guid that doesn't exist
 
 @RA388 @EditWage
 Scenario: Increase fixed wage by £20 per week without authorization
-	Given I have a Live vacancy with id: 42, a fixed wage of £200 Weekly
+	Given I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly
 	When I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly
 	Then The response status is: Unauthorized with response message: Authorization has been denied for this request.
 	And I do not see the edited vacancy wage details for the vacancy with id: 42
 
 @RA388 @EditWage
 Scenario: Increase fixed wage by £20 per week on a submitted vacancy
-	Given I have a Submitted vacancy with id: 42, a fixed wage of £200 Weekly
+	Given I have a Submitted Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly
 	When I authorize my request with a Provider API key
 	And I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly
 	Then The response status is: BadRequest
@@ -141,7 +141,7 @@ Scenario: Increase fixed wage by £20 per week on a submitted vacancy
 
 @RA388 @EditWage
 Scenario: Increase fixed wage by £20 per week on a archived vacancy
-	Given I have a Completed vacancy with id: 42, a fixed wage of £200 Weekly
+	Given I have a Completed Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly
 	When I authorize my request with a Provider API key
 	And I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly
 	Then The response status is: BadRequest with response message: You can only edit the wage of a vacancy that is live or closed.
@@ -149,7 +149,7 @@ Scenario: Increase fixed wage by £20 per week on a archived vacancy
 
 @RA388 @EditWage
 Scenario: Increase fixed wage by £20 per week
-	Given I have a Live vacancy with id: 42, a fixed wage of £200 Weekly
+	Given I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly
 	When I authorize my request with a Provider API key
 	And I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly
 	Then The response status is: OK
@@ -157,7 +157,7 @@ Scenario: Increase fixed wage by £20 per week
 
 @RA388 @EditWage
 Scenario: Decrease fixed wage by £20 per week
-	Given I have a Live vacancy with id: 42, a fixed wage of £200 Weekly
+	Given I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly
 	When I authorize my request with a Provider API key
 	And I request to change the fixed wage for the vacancy with id: 42 to £180 Weekly
 	Then The response status is: BadRequest

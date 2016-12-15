@@ -12,22 +12,25 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
     using Ploeh.AutoFixture;
     using UnitTests.Factories;
     using DbVacancy = Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities.Vacancy;
+    using VacancyType = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType;
 
     [Binding]
     public class SetupVacancySteps
     {
         private static readonly IMapper VacancyMappers = new VacancyMappers();
 
-        [Given(@"I have a (.*) vacancy with id: (.*), a fixed wage of £(.*) (.*)")]
-        public void GivenIHaveAVacancyWithAFixedWage(string vacancyStatusString, int vacancyId, decimal amount, string unitString)
+        [Given(@"I have a (.*) (.*) vacancy with id: (.*), a fixed wage of £(.*) (.*)")]
+        public void GivenIHaveAVacancyWithAFixedWage(string vacancyStatusString, string vacancyTypeString, int vacancyId, decimal amount, string unitString)
         {
             var vacancyStatus = (VacancyStatus)Enum.Parse(typeof(VacancyStatus), vacancyStatusString);
+            var vacancyType = (VacancyType) Enum.Parse(typeof(VacancyType), vacancyTypeString);
             var wageUnit = (WageUnit)Enum.Parse(typeof(WageUnit), unitString);
 
             var wage = new Wage(WageType.Custom, amount, null, null, $"£{amount} {wageUnit}", wageUnit, 20, null);
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(v => v.VacancyId, vacancyId)
                 .With(v => v.Status, vacancyStatus)
+                .With(v => v.VacancyType, vacancyType)
                 .With(v => v.ContractOwnerId, RaaApiUserFactory.SkillsFundingAgencyProviderId)
                 .With(v => v.Wage, wage)
                 .Create();

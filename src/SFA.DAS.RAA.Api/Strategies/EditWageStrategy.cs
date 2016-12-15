@@ -22,6 +22,10 @@
         public Vacancy EditWage(WageUpdate wage, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
             var vacancy = _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
+            if (vacancy.VacancyType != VacancyType.Apprenticeship)
+            {
+                throw new ArgumentException("You can only edit the wage of an Apprenticeship vacancy.");
+            }
             if (vacancy.Status != VacancyStatus.Live && vacancy.Status != VacancyStatus.Closed)
             {
                 throw new ArgumentException("You can only edit the wage of a vacancy that is live or closed.");

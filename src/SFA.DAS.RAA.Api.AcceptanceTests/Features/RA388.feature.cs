@@ -492,7 +492,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 128
 this.ScenarioSetup(scenarioInfo);
 #line 129
- testRunner.Given("I have a Live vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 130
  testRunner.When("I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 131
@@ -516,7 +516,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 135
 this.ScenarioSetup(scenarioInfo);
 #line 136
- testRunner.Given("I have a Submitted vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a Submitted Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekl" +
+                    "y", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 137
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 138
@@ -541,7 +542,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 143
 this.ScenarioSetup(scenarioInfo);
 #line 144
- testRunner.Given("I have a Completed vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a Completed Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekl" +
+                    "y", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 145
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 146
@@ -567,7 +569,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 151
 this.ScenarioSetup(scenarioInfo);
 #line 152
- testRunner.Given("I have a Live vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 153
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 154
@@ -592,7 +594,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 159
 this.ScenarioSetup(scenarioInfo);
 #line 160
- testRunner.Given("I have a Live vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 161
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 162
