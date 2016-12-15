@@ -32,7 +32,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.GetLocationAddressesViewModel(providerSiteId, employerId, ukprn, vacancyGuid, false);
+            var result = mediator.GetLocationAddressesViewModel(providerSiteId, employerId, ukprn, vacancyGuid, false,false);
 
             result.ViewModel.CurrentPage.Should().Be(1);
         }
