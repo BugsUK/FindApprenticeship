@@ -2813,7 +2813,7 @@ WriteLiteral(">\r\n        <a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteLiteral(" class=\"button-link saveADraft\"");
+WriteLiteral(" class=\"button sfa-button-secondary saveADraft\"");
 
 WriteLiteral(">Save</a>\r\n    </p>\r\n    <!--   <p id=\"applicationSaved\">\r\n        Saved at 10:20" +
 " to <a href=\"dashboard.html\">my applications</a>\r\n    </p> -->\r\n</div>\r\n\r\n<ol");

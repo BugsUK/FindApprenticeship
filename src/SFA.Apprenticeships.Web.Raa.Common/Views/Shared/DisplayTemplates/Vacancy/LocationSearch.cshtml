@@ -88,7 +88,7 @@
                                     @{
                                         var buttonName = "UseLocation-" + @index + "-" + @Model.PostcodeSearch;
                                     }
-                                    <button id="useLocation" type="submit" class=".sfa-button-secondary use-location-.sfa-button-secondary add-location-link" name="AddLocations" value="@buttonName">add location</button>
+                                    <button id="useLocation" type="submit" class="button sfa-button-secondary use-location-link-button add-location-link" name="AddLocations" value="@buttonName">add location</button>
                                 </td>
                             </tr>
                             index = index+1;
@@ -146,7 +146,7 @@
                                     @{
                                         var buttonName = "RemoveLocation-" + i;
                                     }
-                                    <button id="removeLocation" type="submit" class=".sfa-button-secondary remove-.sfa-button-secondary" name="AddLocations" value="@buttonName">remove location</button>
+                                    <button id="removeLocation" type="submit" class="button sfa-button-secondary remove-link-button" name="AddLocations" value="@buttonName">remove location</button>
                                 </td>
                             </tr>
                         }

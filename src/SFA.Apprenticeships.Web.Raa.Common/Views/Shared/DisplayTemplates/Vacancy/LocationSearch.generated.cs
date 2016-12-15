@@ -483,18 +483,18 @@ WriteLiteral(" id=\"useLocation\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link use-location-button-link add-location-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary use-location-link-button add-location-link\"");
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4355), Tuple.Create("\"", 4374)
+WriteAttribute("value", Tuple.Create(" value=\"", 4371), Tuple.Create("\"", 4390)
             
             #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                                     , Tuple.Create(Tuple.Create("", 4363), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                                                     , Tuple.Create(Tuple.Create("", 4379), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 4363), false)
+, 4379), false)
 );
 
 WriteLiteral(">add location</button>\r\n                                </td>\r\n                  " +
@@ -792,18 +792,18 @@ WriteLiteral(" id=\"removeLocation\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link remove-button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary remove-link-button\"");
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8692), Tuple.Create("\"", 8711)
+WriteAttribute("value", Tuple.Create(" value=\"", 8724), Tuple.Create("\"", 8743)
             
             #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 8700), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                                , Tuple.Create(Tuple.Create("", 8732), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 8700), false)
+, 8732), false)
 );
 
 WriteLiteral(">remove location</button>\r\n                                </td>\r\n               " +
