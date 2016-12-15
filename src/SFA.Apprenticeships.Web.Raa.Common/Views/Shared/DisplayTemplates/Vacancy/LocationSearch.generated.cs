@@ -21,12 +21,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using System.Web.Helpers;
     using System.Web.Mvc;
     using System.Web.Mvc.Ajax;
-    
-    #line 2 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
     using System.Web.Mvc.Html;
-    
-    #line default
-    #line hidden
     using System.Web.Optimization;
     using System.Web.Routing;
     using System.Web.Security;
@@ -38,13 +33,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Raa.Common;
     
-    #line 3 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+    #line 2 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.Extensions;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+    #line 3 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
     
     #line default
@@ -62,7 +57,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
 WriteLiteral("\r\n");
 
             
-            #line 6 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 5 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Add locations";
 
@@ -76,7 +71,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n    Vacancy location(s)\r\n</h1>\r\n\r\n");
 
             
-            #line 14 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 13 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.Ukprn));
 
             
@@ -85,7 +80,7 @@ Write(Html.HiddenFor(m => m.Ukprn));
 WriteLiteral("\r\n");
 
             
-            #line 15 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 14 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.EmployerId));
 
             
@@ -94,7 +89,7 @@ Write(Html.HiddenFor(m => m.EmployerId));
 WriteLiteral("\r\n");
 
             
-            #line 16 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 15 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.EmployerEdsUrn));
 
             
@@ -103,7 +98,7 @@ Write(Html.HiddenFor(m => m.EmployerEdsUrn));
 WriteLiteral("\r\n");
 
             
-            #line 17 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 16 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.ProviderSiteId));
 
             
@@ -112,7 +107,7 @@ Write(Html.HiddenFor(m => m.ProviderSiteId));
 WriteLiteral("\r\n");
 
             
-            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 17 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.VacancyGuid));
 
             
@@ -121,7 +116,7 @@ Write(Html.HiddenFor(m => m.VacancyGuid));
 WriteLiteral("\r\n");
 
             
-            #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.ComeFromPreview));
 
             
@@ -130,7 +125,7 @@ Write(Html.HiddenFor(m => m.ComeFromPreview));
 WriteLiteral("\r\n");
 
             
-            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
@@ -139,7 +134,7 @@ Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 WriteLiteral("\r\n");
 
             
-            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation));
 
             
@@ -148,8 +143,17 @@ Write(Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation));
 WriteLiteral("\r\n");
 
             
-            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
 Write(Html.HiddenFor(m => m.CurrentPage));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+Write(Html.HiddenFor(m => m.IsAnonymousEmployer));
 
             
             #line default
@@ -207,14 +211,14 @@ WriteLiteral("\r\n\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1282), Tuple.Create("\"", 1300)
+WriteAttribute("class", Tuple.Create(" class=\"", 1299), Tuple.Create("\"", 1317)
             
             #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-, Tuple.Create(Tuple.Create("", 1290), Tuple.Create<System.Object, System.Int32>(className
+, Tuple.Create(Tuple.Create("", 1307), Tuple.Create<System.Object, System.Int32>(className
             
             #line default
             #line hidden
-, 1290), false)
+, 1307), false)
 );
 
 WriteLiteral(">\r\n                    <a");
@@ -287,14 +291,14 @@ WriteLiteral("                <details ");
 WriteLiteral(">\r\n                    <summary>Add another location</summary>\r\n                 " +
 "   <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2005), Tuple.Create("\"", 2023)
+WriteAttribute("class", Tuple.Create(" class=\"", 2022), Tuple.Create("\"", 2040)
             
             #line 53 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-, Tuple.Create(Tuple.Create("", 2013), Tuple.Create<System.Object, System.Int32>(className
+, Tuple.Create(Tuple.Create("", 2030), Tuple.Create<System.Object, System.Int32>(className
             
             #line default
             #line hidden
-, 2013), false)
+, 2030), false)
 );
 
 WriteLiteral(">\r\n                        <label");
@@ -487,14 +491,14 @@ WriteLiteral(" class=\"button-link use-location-button-link add-location-link\""
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4360), Tuple.Create("\"", 4379)
+WriteAttribute("value", Tuple.Create(" value=\"", 4377), Tuple.Create("\"", 4396)
             
             #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                                     , Tuple.Create(Tuple.Create("", 4368), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                                     , Tuple.Create(Tuple.Create("", 4385), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 4368), false)
+, 4385), false)
 );
 
 WriteLiteral(">add location</button>\r\n                                </td>\r\n                  " +
@@ -796,14 +800,14 @@ WriteLiteral(" class=\"button-link remove-button-link\"");
 
 WriteLiteral(" name=\"AddLocations\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8671), Tuple.Create("\"", 8690)
+WriteAttribute("value", Tuple.Create(" value=\"", 8688), Tuple.Create("\"", 8707)
             
             #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 8679), Tuple.Create<System.Object, System.Int32>(buttonName
+                                                                , Tuple.Create(Tuple.Create("", 8696), Tuple.Create<System.Object, System.Int32>(buttonName
             
             #line default
             #line hidden
-, 8679), false)
+, 8696), false)
 );
 
 WriteLiteral(">remove location</button>\r\n                                </td>\r\n               " +
@@ -898,17 +902,41 @@ WriteLiteral(" for=\"postcode-search\"");
 
 WriteLiteral(" class=\"form-label bold-small\"");
 
-WriteLiteral(">Enter the vacancy location or postcode</label>\r\n            <div");
+WriteLiteral(">Enter the vacancy location or postcode</label>\r\n");
+
+            
+            #line 172 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 172 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+             if (Model.IsAnonymousEmployer!=null && Model.IsAnonymousEmployer.Value)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
 
 WriteLiteral(" class=\"hgroup-medium\"");
 
-WriteLiteral(">\r\n                <p");
+WriteLiteral(">\r\n                    <p");
 
 WriteLiteral(" class=\"subtitle\"");
 
 WriteLiteral(">You have chosen for this employer to be anonymous. Only the town or city for eac" +
-"h location will be visible to candidates.</p>\r\n            </div>\r\n            <" +
-"input");
+"h location will be visible to candidates.</p>\r\n                </div>\r\n");
+
+            
+            #line 177 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            \r\n            <input");
 
 WriteLiteral(" id=\"postcode-search\"");
 
@@ -1137,7 +1165,7 @@ WriteLiteral(">remove location</a>\r\n                    </td>\r\n             
 WriteLiteral("            ");
 
             
-            #line 234 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 238 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment)));
 
             
@@ -1154,7 +1182,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 238 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 242 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
@@ -1165,7 +1193,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 239 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 243 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment)));
 
             

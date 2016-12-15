@@ -57,7 +57,7 @@
 
         VacancyOwnerRelationshipViewModel CloneVacancy(int vacancyReferenceNumber);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
+        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isAnonymousEmployer = false);
 
         VacancyViewModel GetVacancy(Guid vacancyReferenceNumber);
 
