@@ -148,7 +148,7 @@
                 var listItemLabel = view.GetElementbyId(listItemLabelId);
 
                 listItemLabel.Should().NotBeNull();
-                listItemLabel.InnerText.Should().Be(savedSearchViewModel.Name);
+                listItemLabel.InnerText.Should().Contain(savedSearchViewModel.Name);
             }
         }
 
