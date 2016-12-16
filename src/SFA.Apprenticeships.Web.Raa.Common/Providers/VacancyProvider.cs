@@ -696,7 +696,7 @@
                 var apiClient = _apiClientProvider.GetApiClient();
 
                 var apiVacancyResult = await apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber);
-                var apiVacancy = apiVacancyResult.Body;
+                var apiVacancy = (ApiVacancy)apiVacancyResult.Body;
                 vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
             }
             else
