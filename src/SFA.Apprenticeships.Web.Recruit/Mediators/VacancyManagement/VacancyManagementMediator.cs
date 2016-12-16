@@ -5,6 +5,7 @@
     using Common.Mediators;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyManagement;
     using VacancyPosting;
 
     public class VacancyManagementMediator : MediatorBase, IVacancyManagementMediator

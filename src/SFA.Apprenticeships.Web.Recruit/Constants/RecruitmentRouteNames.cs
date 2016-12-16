@@ -60,6 +60,7 @@
         public const string AutoSaveManageDates = "AutoSaveManageDates";
         public const string ArchiveVacancy = "Archive";
         public const string ConfirmArchiveVacancy = "ConfirmArchive";
+        public const string EditWage = "EditWage";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";

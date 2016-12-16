@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyManagement
 {
     using ProviderUser;
 

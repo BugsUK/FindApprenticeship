@@ -440,6 +440,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VacancyManagement\EditWage.generated.cs">
+      <DependentUpon>EditWage.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\VacancyManagement\Delete.generated.cs">
       <DependentUpon>Delete.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1307,6 +1312,10 @@
     <Content Include="Content\_assets\js\ckeditor\README.md" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\readme.md" />
     <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
+    <Content Include="Views\VacancyManagement\EditWage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditWage.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

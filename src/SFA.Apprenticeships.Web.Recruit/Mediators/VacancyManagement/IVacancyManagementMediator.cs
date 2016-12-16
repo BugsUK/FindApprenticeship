@@ -2,6 +2,7 @@
 {
     using Common.Mediators;
     using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyManagement;
 
     public interface IVacancyManagementMediator
     {

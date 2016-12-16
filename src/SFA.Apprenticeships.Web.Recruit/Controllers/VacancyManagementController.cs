@@ -6,6 +6,7 @@
     using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyManagement;
 
     public class VacancyManagementController : RecruitmentControllerBase
     {

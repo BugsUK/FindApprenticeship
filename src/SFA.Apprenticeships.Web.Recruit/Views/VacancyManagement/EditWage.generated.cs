@@ -21,12 +21,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     using System.Web.Helpers;
     using System.Web.Mvc;
     using System.Web.Mvc.Ajax;
-    
-    #line 2 "..\..\Views\VacancyManagement\Delete.cshtml"
     using System.Web.Mvc.Html;
-    
-    #line default
-    #line hidden
     using System.Web.Optimization;
     using System.Web.Routing;
     using System.Web.Security;
@@ -37,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
-    #line 3 "..\..\Views\VacancyManagement\Delete.cshtml"
+    #line 1 "..\..\Views\VacancyManagement\EditWage.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
     
     #line default
@@ -45,28 +40,25 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 4 "..\..\Views\VacancyManagement\Delete.cshtml"
+    #line 2 "..\..\Views\VacancyManagement\EditWage.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyManagement/Delete.cshtml")]
-    public partial class Delete : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyManagement.DeleteVacancyViewModel>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyManagement/EditWage.cshtml")]
+    public partial class EditWage : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyManagement.EditWageViewModel>
     {
-        public Delete()
+        public EditWage()
         {
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
-
             
-            #line 6 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 5 "..\..\Views\VacancyManagement\EditWage.cshtml"
   
-    ViewBag.Title = "Recruit an Apprentice - Delete a vacancy";
-    var vacancyTitle = string.IsNullOrEmpty(Model.VacancyTitle) ? "(No Title)" : Model.VacancyTitle;
+    ViewBag.Title = "Recruit an Apprentice - Increase vacancy wage";
 
             
             #line default
@@ -75,20 +67,11 @@ WriteLiteral("\r\n\r\n<h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n    Delete ");
+WriteLiteral(">\r\n    Increase vacancy wage\r\n</h1>\r\n\r\n");
 
             
-            #line 12 "..\..\Views\VacancyManagement\Delete.cshtml"
-      Write(vacancyTitle);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" vacancy\r\n</h1>\r\n\r\n");
-
-            
-            #line 15 "..\..\Views\VacancyManagement\Delete.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post, new { id = "delete-vacancy-form" }))
+            #line 13 "..\..\Views\VacancyManagement\EditWage.cshtml"
+ using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, FormMethod.Post, new { id = "edit-wage-form" }))
 {
 
             
@@ -102,13 +85,13 @@ WriteLiteral(" class=\"column-full\"");
 WriteLiteral(">\r\n");
 
             
-            #line 20 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 18 "..\..\Views\VacancyManagement\EditWage.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 18 "..\..\Views\VacancyManagement\EditWage.cshtml"
              foreach (var prop in Model.GetType().GetProperties())
             {
                 var getter = prop.GetGetMethod();
@@ -117,14 +100,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 21 "..\..\Views\VacancyManagement\EditWage.cshtml"
            Write(Html.Hidden(prop.Name, getter.Invoke(Model, new object[] { })));
 
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 21 "..\..\Views\VacancyManagement\EditWage.cshtml"
                                                                                
                 ;
             }
@@ -136,19 +119,19 @@ WriteLiteral("            <button");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(" id=\"confirmDeleteVacancy\"");
+WriteLiteral(" id=\"editWageButton\"");
 
-WriteLiteral(" name=\"ConfirmDeleteVacancy\"");
+WriteLiteral(" name=\"EditWage\"");
 
-WriteLiteral(" value=\"ConfirmDeleteVacancy\"");
+WriteLiteral(" value=\"EditWage\"");
 
-WriteLiteral(">Confirm and return to recruitment home</button>\r\n");
+WriteLiteral(">Save and return</button>\r\n");
 
 WriteLiteral("            ");
 
             
-            #line 27 "..\..\Views\VacancyManagement\Delete.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel));
+            #line 25 "..\..\Views\VacancyManagement\EditWage.cshtml"
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome));
 
             
             #line default
@@ -156,7 +139,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 30 "..\..\Views\VacancyManagement\Delete.cshtml"
+            #line 28 "..\..\Views\VacancyManagement\EditWage.cshtml"
 }
             
             #line default
