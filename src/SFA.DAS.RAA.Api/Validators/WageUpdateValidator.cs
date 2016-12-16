@@ -20,9 +20,6 @@
 
                 Custom(WageTypeValidation);
             });
-
-            
-            //RuleFor(v => v.ShortDescription).NotEmpty().WithMessage("Please enter a short description for the vacancy");
         }
 
         private static ValidationFailure WageTypeValidation(WageUpdate wageUpdate)

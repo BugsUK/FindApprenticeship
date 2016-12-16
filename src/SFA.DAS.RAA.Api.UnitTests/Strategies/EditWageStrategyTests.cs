@@ -64,11 +64,58 @@
 
         [TestCase(VacancyStatus.Live)]
         [TestCase(VacancyStatus.Closed)]
-        public void EditWageUpdatesVacancy(VacancyStatus vacancyStatus)
+        public void EditCustomRangeWageUpdatesVacancy(VacancyStatus vacancyStatus)
         {
             //Arrange
             const int vacancyId = 1;
             var existingWage = new Wage(WageType.Custom, 200, null, null, null, WageUnit.Monthly, 20, null);
+            var vacancy = new Fixture().Build<Vacancy>()
+                .With(v => v.VacancyId, vacancyId)
+                .With(v => v.Status, vacancyStatus)
+                .With(v => v.VacancyType, VacancyType.Apprenticeship)
+                .With(v => v.Wage, existingWage)
+                .Create();
+            var vacancyProvider = new Mock<IVacancyProvider>();
+            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+
+            var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
+            updateVacancyStrategy.Setup(s => s.UpdateVacancy(vacancy)).Returns<Vacancy>(v => v);
+
+            var strategy = new EditWageStrategy(vacancyProvider.Object, updateVacancyStrategy.Object);
+
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.CustomRange,
+                Amount = 220,
+                AmountLowerBound = 200,
+                AmountUpperBound = 240,
+                Unit = WageUnit.Weekly
+            };
+
+            //Act
+            var updatedVacancy = strategy.EditWage(wageUpdate, vacancyId);
+
+            //Assert
+            //Verify that the update call has been made
+            updateVacancyStrategy.Verify(s => s.UpdateVacancy(vacancy), Times.Once);
+            //And that the vacancy has been updated
+            updatedVacancy.Should().NotBeNull();
+            var updatedWage = updatedVacancy.Wage;
+            updatedWage.Should().NotBeNull();
+            updatedWage.Type.Should().Be(wageUpdate.Type);
+            updatedWage.Amount.Should().Be(null);
+            updatedWage.AmountLowerBound.Should().Be(wageUpdate.AmountLowerBound);
+            updatedWage.AmountUpperBound.Should().Be(wageUpdate.AmountUpperBound);
+            updatedWage.Unit.Should().Be(wageUpdate.Unit);
+        }
+
+        [TestCase(VacancyStatus.Live)]
+        [TestCase(VacancyStatus.Closed)]
+        public void EditCustomWageUpdatesVacancy(VacancyStatus vacancyStatus)
+        {
+            //Arrange
+            const int vacancyId = 1;
+            var existingWage = new Wage(WageType.CustomRange, null, 200, 240, null, WageUnit.Monthly, 20, null);
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(v => v.VacancyId, vacancyId)
                 .With(v => v.Status, vacancyStatus)
@@ -104,8 +151,8 @@
             updatedWage.Should().NotBeNull();
             updatedWage.Type.Should().Be(wageUpdate.Type);
             updatedWage.Amount.Should().Be(wageUpdate.Amount);
-            updatedWage.AmountLowerBound.Should().Be(wageUpdate.AmountLowerBound);
-            updatedWage.AmountUpperBound.Should().Be(wageUpdate.AmountUpperBound);
+            updatedWage.AmountLowerBound.Should().Be(null);
+            updatedWage.AmountUpperBound.Should().Be(null);
             updatedWage.Unit.Should().Be(wageUpdate.Unit);
         }
 
@@ -181,6 +228,53 @@
             //Assert
             editWageAction.ShouldThrow<ArgumentException>().WithMessage("You can only edit the wage of an Apprenticeship vacancy.");
             updateVacancyStrategy.Verify(s => s.UpdateVacancy(vacancy), Times.Never);
+        }
+
+        [TestCase(WageType.LegacyWeekly)]
+        [TestCase(WageType.Custom)]
+        public void EditWageUpdatesVacancy(WageType wageType)
+        {
+            //Arrange
+            const int vacancyId = 1;
+            var existingWage = new Wage(WageType.Custom, 200, null, null, null, WageUnit.Monthly, 20, null);
+            var vacancy = new Fixture().Build<Vacancy>()
+                .With(v => v.VacancyId, vacancyId)
+                .With(v => v.Status, VacancyStatus.Live)
+                .With(v => v.VacancyType, VacancyType.Apprenticeship)
+                .With(v => v.Wage, existingWage)
+                .Create();
+            var vacancyProvider = new Mock<IVacancyProvider>();
+            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+
+            var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
+            updateVacancyStrategy.Setup(s => s.UpdateVacancy(vacancy)).Returns<Vacancy>(v => v);
+
+            var strategy = new EditWageStrategy(vacancyProvider.Object, updateVacancyStrategy.Object);
+
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.Custom,
+                Amount = 220,
+                AmountLowerBound = 200,
+                AmountUpperBound = 240,
+                Unit = WageUnit.Weekly
+            };
+
+            //Act
+            var updatedVacancy = strategy.EditWage(wageUpdate, vacancyId);
+
+            //Assert
+            //Verify that the update call has been made
+            updateVacancyStrategy.Verify(s => s.UpdateVacancy(vacancy), Times.Once);
+            //And that the vacancy has been updated
+            updatedVacancy.Should().NotBeNull();
+            var updatedWage = updatedVacancy.Wage;
+            updatedWage.Should().NotBeNull();
+            updatedWage.Type.Should().Be(wageUpdate.Type);
+            updatedWage.Amount.Should().Be(wageUpdate.Amount);
+            updatedWage.AmountLowerBound.Should().Be(null);
+            updatedWage.AmountUpperBound.Should().Be(null);
+            updatedWage.Unit.Should().Be(wageUpdate.Unit);
         }
     }
 }

@@ -3,10 +3,12 @@
     using System;
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Entities.Vacancies;
     using Models;
     using Providers;
     using Validators;
     using FluentValidation;
+    using VacancyType = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class EditWageStrategy : IEditWageStrategy
     {
@@ -45,9 +47,27 @@
             {
                 vacancy.Wage.Type = wage.Type.Value;
             }
-            vacancy.Wage.Amount = wage.Amount;
-            vacancy.Wage.AmountLowerBound = wage.AmountLowerBound;
-            vacancy.Wage.AmountUpperBound = wage.AmountUpperBound;
+
+            if (vacancy.Wage.Type == WageType.LegacyWeekly || vacancy.Wage.Type == WageType.Custom)
+            {
+                vacancy.Wage.Amount = wage.Amount;
+            }
+            else
+            {
+                vacancy.Wage.Amount = null;
+            }
+
+            if (vacancy.Wage.Type == WageType.CustomRange)
+            {
+                vacancy.Wage.AmountLowerBound = wage.AmountLowerBound;
+                vacancy.Wage.AmountUpperBound = wage.AmountUpperBound;
+            }
+            else
+            {
+                vacancy.Wage.AmountLowerBound = null;
+                vacancy.Wage.AmountUpperBound = null;
+            }
+
             if (wage.Unit.HasValue)
             {
                 vacancy.Wage.Unit = wage.Unit.Value;
