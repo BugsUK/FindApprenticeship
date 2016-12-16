@@ -181,17 +181,17 @@ WriteLiteral("</a></li>\r\n");
             #line hidden
 WriteLiteral("    </ul>\r\n\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" id=\"error-summary \"");
+WriteLiteral(" id=\"warning-summary \"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1414), Tuple.Create("\"", 1469)
-, Tuple.Create(Tuple.Create("", 1422), Tuple.Create("error-summary", 1422), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1416), Tuple.Create("\"", 1473)
+, Tuple.Create(Tuple.Create("", 1424), Tuple.Create("warning-summary", 1424), true)
             
             #line 45 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1435), Tuple.Create<System.Object, System.Int32>(!hasWarnings ? "sfa-hide" : ""
+, Tuple.Create(Tuple.Create(" ", 1439), Tuple.Create<System.Object, System.Int32>(!hasWarnings ? "sfa-hide" : ""
             
             #line default
             #line hidden
-, 1436), false)
+, 1440), false)
 );
 
 WriteLiteral(" role=\"group\"");
@@ -259,15 +259,15 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                        <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2529), Tuple.Create("\"", 2560)
-, Tuple.Create(Tuple.Create("", 2536), Tuple.Create("#", 2536), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2533), Tuple.Create("\"", 2564)
+, Tuple.Create(Tuple.Create("", 2540), Tuple.Create("#", 2540), true)
             
             #line 72 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 2537), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+, Tuple.Create(Tuple.Create("", 2541), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 2537), false)
+, 2541), false)
 );
 
 WriteLiteral(">");

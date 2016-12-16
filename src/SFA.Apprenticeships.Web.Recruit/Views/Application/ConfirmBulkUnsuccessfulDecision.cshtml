@@ -6,7 +6,7 @@
     ViewBag.Title = "Recruit an Apprentice - Send Bulk Unsuccessful decision";
 }
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.BulkDeclineCandidates, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.BulkDeclineCandidates, FormMethod.Post, new { id = "confirm-bulk-decline-candidates-form" }))
 {
 
     @Html.HiddenFor(m => m.VacancyApplicationsSearch.VacancyReferenceNumber)

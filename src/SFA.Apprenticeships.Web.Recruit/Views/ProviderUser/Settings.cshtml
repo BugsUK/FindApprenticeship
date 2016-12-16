@@ -31,7 +31,7 @@
         </p>
     </div>
 
-    @using (Html.BeginRouteForm(RecruitmentRouteNames.Settings, FormMethod.Post))
+    @using (Html.BeginRouteForm(RecruitmentRouteNames.Settings, FormMethod.Post, new { id = "settings-form" }))
     {
         @Html.AntiForgeryToken()
         @Html.Partial("ValidationSummary", ViewData.ModelState)

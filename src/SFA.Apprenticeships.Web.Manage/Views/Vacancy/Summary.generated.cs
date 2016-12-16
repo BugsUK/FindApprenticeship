@@ -59,7 +59,7 @@ WriteLiteral("\r\n");
 
             
             #line 5 "..\..\Views\Vacancy\Summary.cshtml"
- using (Html.BeginRouteForm(ManagementRouteNames.Summary, FormMethod.Post))
+ using (Html.BeginRouteForm(ManagementRouteNames.Summary, FormMethod.Post, new { id = "vacancy-summary-form" }))
 {
     
             

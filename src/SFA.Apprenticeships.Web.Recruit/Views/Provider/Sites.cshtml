@@ -11,7 +11,7 @@
         </h1>
     </div>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageProviderSites, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageProviderSites, FormMethod.Post, new { id = "manage-provider-sites-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

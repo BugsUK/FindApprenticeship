@@ -4,7 +4,7 @@
     ViewBag.Title = "ManageVacanciesTransfers";
 }
 <h1 id="heading" class="heading-xlarge">Manage Vacancies Transfers</h1>
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageVacanciesTransfers))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageVacanciesTransfers, FormMethod.Post, new { id = "admin-transfer-vacancies-form" }))
 {
     <p>
         Transferring Vacancies With Vacancy Reference Numbers:

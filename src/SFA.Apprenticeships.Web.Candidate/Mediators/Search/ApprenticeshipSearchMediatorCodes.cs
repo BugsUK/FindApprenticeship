@@ -34,6 +34,7 @@
             public const string VacancyNotFound = "ApprenticeshipSearch.Details.VacancyNotFound";
             public const string VacancyHasError = "ApprenticeshipSearch.Details.VacancyHasError";
             public const string Ok = "ApprenticeshipSearch.Details.Ok";
+            public const string VacancyExpired = "ApprenticeshipSearch.Details.VacancyExpired";
         }
 
         public class SavedSearch

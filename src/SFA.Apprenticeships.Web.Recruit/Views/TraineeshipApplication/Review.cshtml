@@ -9,7 +9,7 @@
     ViewBag.Title = "Recruit an Apprentice - Review application";
 }
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ReviewTraineeshipApplication, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ReviewTraineeshipApplication, FormMethod.Post, new { id = "review-traineeship-application-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

@@ -104,7 +104,7 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 14 "..\..\Views\Vacancy\Review.cshtml"
-     using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
+     using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post, new { id = "approve-vacancy-form" }))
     {
         
             

@@ -25,16 +25,22 @@ else if (Request.IsAuthenticated)
     if (Model.CandidateApplicationStatus.HasValue && Model.CandidateApplicationStatus.Value != ApplicationStatuses.Saved)
     {
         // Candidate has applied for this vacancy.
-        if (Model.CandidateApplicationStatus.Value == ApplicationStatuses.Draft && Model.VacancyStatus == VacancyStatuses.Live)
+        if (Model.CandidateApplicationStatus.Value == ApplicationStatuses.Draft)
         {
-            <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {@id = Model.Id})" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
+            if (Model.VacancyStatus == VacancyStatuses.Live)
+            {
+                <a role="button" id="apply-button" class="button button-with-hint" title="Resume application"
+                   href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = Model.Id})" 
+                   @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", 
+                  ViewData["AnalyticsButtonPosition"]))>Resume application</a>
+            }
         }
         else
         {
             if (Model.DateApplied.HasValue)
             {
                 <p id="date-applied" class="sfa-no-bottom-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
-                <p>@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = Model.Id }, new { @id = "view-application-link" })</p>
+                <p>@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = Model.Id }, new { id = "view-application-link" })</p>
             }
 
             if (Model.VacancyStatus == VacancyStatuses.Live)

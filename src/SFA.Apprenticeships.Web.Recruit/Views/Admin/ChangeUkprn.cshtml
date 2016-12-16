@@ -7,7 +7,7 @@
 
 <h1 id="heading" class="heading-xlarge">Change UKPRN</h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminChangeUkprn))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AdminChangeUkprn, FormMethod.Post, new { id = "admin-change-form" }))
 {
     <div class="form-group">
         <fieldset class="form-group inline-fixed">

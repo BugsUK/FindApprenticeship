@@ -88,7 +88,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 12 "..\..\Views\Login\Index.cshtml"
-         using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post))
+         using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post, new { id = "sign-in-form" }))
         {
             
             
@@ -212,14 +212,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1345), Tuple.Create("\'", 1398)
+WriteAttribute("href", Tuple.Create(" href=\'", 1374), Tuple.Create("\'", 1427)
             
             #line 33 "..\..\Views\Login\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1352), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+, Tuple.Create(Tuple.Create("", 1381), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 1352), false)
+, 1381), false)
 );
 
 WriteLiteral(">I can\'t access my account</a></p>\r\n            </div>\r\n");
