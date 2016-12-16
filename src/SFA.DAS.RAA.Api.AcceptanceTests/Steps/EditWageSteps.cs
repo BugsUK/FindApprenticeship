@@ -29,11 +29,31 @@
                 Unit = unit
             };
 
+            UpdateWage(vacancyId, wageUpdate);
+        }
+
+        [When(@"I request to change the wage type for the vacancy with id: (.*) to (.*)")]
+        public void WhenIRequestToChangeTheWageTypeForTheVacancyWithIdToNationalMinimum(int vacancyId, string typeString)
+        {
+            var type = (WageType)Enum.Parse(typeof(WageType), typeString);
+            var wageUpdate = new WageUpdate
+            {
+                Type = type
+            };
+
+            UpdateWage(vacancyId, wageUpdate);
+        }
+
+        private static void UpdateWage(int vacancyId, WageUpdate wageUpdate)
+        {
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
             httpClient.SetAuthorization();
 
             var editVacancyWageUri = string.Format(UriFormats.EditWageVacancyIdUriFormat, vacancyId);
-            using (var response = httpClient.PutAsync(editVacancyWageUri, new StringContent(JsonConvert.SerializeObject(wageUpdate), Encoding.UTF8, "application/json")).Result)
+            using (
+                var response =
+                    httpClient.PutAsync(editVacancyWageUri,
+                        new StringContent(JsonConvert.SerializeObject(wageUpdate), Encoding.UTF8, "application/json")).Result)
             {
                 ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
                 using (var httpContent = response.Content)
@@ -54,6 +74,7 @@
                 }
             }
         }
+
 
         [Then(@"I do not see the edited vacancy wage details for the vacancy with id: (.*)")]
         public void ThenIDoNotSeeTheEditedVacancyWageDetailsForTheVacancyWithId(int vacancyId)

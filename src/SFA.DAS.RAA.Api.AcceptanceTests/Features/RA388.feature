@@ -132,6 +132,14 @@ Scenario: Increase fixed wage by £20 per week without authorization
 	And I do not see the edited vacancy wage details for the vacancy with id: 42
 
 @RA388 @EditWage
+Scenario: Increase fixed wage by £20 per week on a traineeship vacancy
+	Given I have a Live Traineeship vacancy with id: 42, a fixed wage of £200 Weekly
+	When I authorize my request with a Provider API key
+	And I request to change the fixed wage for the vacancy with id: 42 to £220 Weekly
+	Then The response status is: BadRequest with response message: You can only edit the wage of an Apprenticeship vacancy.
+	And I do not see the edited vacancy wage details for the vacancy with id: 42
+
+@RA388 @EditWage
 Scenario: Increase fixed wage by £20 per week on a submitted vacancy
 	Given I have a Submitted Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly
 	When I authorize my request with a Provider API key
@@ -164,4 +172,15 @@ Scenario: Decrease fixed wage by £20 per week
 	And The validation errors contain:
 		| Property | Error                                            |
 		| Amount   | Amount must be greater than the existing amount. |
+	And I do not see the edited vacancy wage details for the vacancy with id: 42
+
+@RA388 @EditWage
+Scenario: Change fixed wage to national minumum wage
+	Given I have a Live Apprenticeship vacancy with id: 42, a fixed wage of £200 Weekly
+	When I authorize my request with a Provider API key
+	And I request to change the wage type for the vacancy with id: 42 to NationalMinimum
+	Then The response status is: BadRequest
+	And The validation errors contain:
+		| Property | Error                                                                              |
+		| Type     | You can only change the type of a Custom (fixed) wage to CustomRange (wage range). |
 	And I do not see the edited vacancy wage details for the vacancy with id: 42

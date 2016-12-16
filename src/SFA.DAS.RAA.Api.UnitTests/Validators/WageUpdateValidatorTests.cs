@@ -4,6 +4,7 @@
     using Apprenticeships.Domain.Entities.Vacancies;
     using FluentAssertions;
     using FluentValidation;
+    using FluentValidation.TestHelper;
     using Models;
     using NUnit.Framework;
 
@@ -38,6 +39,14 @@
             var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
 
             validationResult.IsValid.Should().Be(expectedIsValid);
+            if (expectedIsValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(wu => wu.Type, wageUpdate, WageUpdateValidator.CompareWithExisting);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(wu => wu.Type, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You can only change the type of a Custom (fixed) wage to CustomRange (wage range).");
+            }
         }
 
         [TestCase(WageType.LegacyText, false)]
@@ -67,6 +76,14 @@
             var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
 
             validationResult.IsValid.Should().Be(expectedIsValid);
+            if (expectedIsValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(wu => wu.Type, wageUpdate, WageUpdateValidator.CompareWithExisting);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(wu => wu.Type, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You can only change the type of a CustomRange (wage range) wage to Custom (fixed).");
+            }
         }
     }
 }

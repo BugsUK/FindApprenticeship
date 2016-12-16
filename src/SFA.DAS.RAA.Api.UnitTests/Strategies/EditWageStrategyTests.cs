@@ -68,7 +68,7 @@
         {
             //Arrange
             const int vacancyId = 1;
-            var existingWage = new Wage(WageType.Custom, 200, null, null, null, WageUnit.Weekly, 20, null);
+            var existingWage = new Wage(WageType.Custom, 200, null, null, null, WageUnit.Monthly, 20, null);
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(v => v.VacancyId, vacancyId)
                 .With(v => v.Status, vacancyStatus)
@@ -107,6 +107,48 @@
             updatedWage.AmountLowerBound.Should().Be(wageUpdate.AmountLowerBound);
             updatedWage.AmountUpperBound.Should().Be(wageUpdate.AmountUpperBound);
             updatedWage.Unit.Should().Be(wageUpdate.Unit);
+        }
+
+        [Test]
+        public void EditWageNullTypeDoesNotChangeType()
+        {
+            //Arrange
+            const int vacancyId = 1;
+            var existingWage = new Wage(WageType.Custom, 200, null, null, null, WageUnit.Weekly, 20, null);
+            var vacancy = new Fixture().Build<Vacancy>()
+                .With(v => v.VacancyId, vacancyId)
+                .With(v => v.Status, VacancyStatus.Live)
+                .With(v => v.VacancyType, VacancyType.Apprenticeship)
+                .With(v => v.Wage, existingWage)
+                .Create();
+            var vacancyProvider = new Mock<IVacancyProvider>();
+            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+
+            var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
+            updateVacancyStrategy.Setup(s => s.UpdateVacancy(vacancy)).Returns<Vacancy>(v => v);
+
+            var strategy = new EditWageStrategy(vacancyProvider.Object, updateVacancyStrategy.Object);
+
+            var wageUpdate = new WageUpdate
+            {
+                Amount = 220
+            };
+
+            //Act
+            var updatedVacancy = strategy.EditWage(wageUpdate, vacancyId);
+
+            //Assert
+            //Verify that the update call has been made
+            updateVacancyStrategy.Verify(s => s.UpdateVacancy(vacancy), Times.Once);
+            //And that the vacancy has been updated
+            updatedVacancy.Should().NotBeNull();
+            var updatedWage = updatedVacancy.Wage;
+            updatedWage.Should().NotBeNull();
+            updatedWage.Type.Should().Be(WageType.Custom);
+            updatedWage.Amount.Should().Be(wageUpdate.Amount);
+            updatedWage.AmountLowerBound.Should().Be(null);
+            updatedWage.AmountUpperBound.Should().Be(null);
+            updatedWage.Unit.Should().Be(WageUnit.Weekly);
         }
 
         [Test]

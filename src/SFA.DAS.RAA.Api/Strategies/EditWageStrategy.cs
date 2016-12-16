@@ -30,6 +30,7 @@
             {
                 throw new ArgumentException("You can only edit the wage of a vacancy that is live or closed.");
             }
+            wage.ExistingType = vacancy.Wage.Type;
             wage.ExistingAmount = vacancy.Wage.Amount;
 
             //TODO: Loads of validation
@@ -40,11 +41,17 @@
                 throw new ValidationException(validationResult.Errors);
             }
 
-            vacancy.Wage.Type = wage.Type;
+            if (wage.Type.HasValue)
+            {
+                vacancy.Wage.Type = wage.Type.Value;
+            }
             vacancy.Wage.Amount = wage.Amount;
             vacancy.Wage.AmountLowerBound = wage.AmountLowerBound;
             vacancy.Wage.AmountUpperBound = wage.AmountUpperBound;
-            vacancy.Wage.Unit = wage.Unit;
+            if (wage.Unit.HasValue)
+            {
+                vacancy.Wage.Unit = wage.Unit.Value;
+            }
 
             var updatedVacancy = _updateVacancyStrategy.UpdateVacancy(vacancy);
 
