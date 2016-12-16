@@ -4,7 +4,7 @@
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies;
-    using Controllers;
+    using Constants;
     using Models;
     using Providers;
     using Validators;
@@ -22,7 +22,7 @@
             _updateVacancyStrategy = updateVacancyStrategy;
         }
 
-        public Vacancy EditWage(WageUpdate wage, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
+        public Vacancy EditWage(WageUpdate wageUpdate, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
             var vacancy = _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
             if (vacancy.VacancyType != VacancyType.Apprenticeship)
@@ -37,29 +37,29 @@
             {
                 throw new ArgumentException(WageUpdateMessages.MissingHoursPerWeek);
             }
-            wage.ExistingType = vacancy.Wage.Type;
-            wage.ExistingAmount = vacancy.Wage.Amount;
-            wage.ExistingAmountLowerBound = vacancy.Wage.AmountLowerBound;
-            wage.ExistingAmountUpperBound = vacancy.Wage.AmountUpperBound;
-            wage.ExistingUnit = vacancy.Wage.Unit;
-            wage.HoursPerWeek = vacancy.Wage.HoursPerWeek;
-            wage.PossibleStartDate = vacancy.PossibleStartDate;
+            wageUpdate.ExistingType = vacancy.Wage.Type;
+            wageUpdate.ExistingAmount = vacancy.Wage.Amount;
+            wageUpdate.ExistingAmountLowerBound = vacancy.Wage.AmountLowerBound;
+            wageUpdate.ExistingAmountUpperBound = vacancy.Wage.AmountUpperBound;
+            wageUpdate.ExistingUnit = vacancy.Wage.Unit;
+            wageUpdate.HoursPerWeek = vacancy.Wage.HoursPerWeek;
+            wageUpdate.PossibleStartDate = vacancy.PossibleStartDate;
 
             var validator = new WageUpdateValidator();
-            var validationResult = validator.Validate(wage, ruleSet: WageUpdateValidator.CompareWithExisting);
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors);
             }
 
-            if (wage.Type.HasValue)
+            if (wageUpdate.Type.HasValue)
             {
-                vacancy.Wage.Type = wage.Type.Value;
+                vacancy.Wage.Type = wageUpdate.Type.Value;
             }
 
             if (vacancy.Wage.Type == WageType.LegacyWeekly || vacancy.Wage.Type == WageType.Custom)
             {
-                vacancy.Wage.Amount = wage.Amount;
+                vacancy.Wage.Amount = wageUpdate.Amount;
             }
             else
             {
@@ -68,8 +68,8 @@
 
             if (vacancy.Wage.Type == WageType.CustomRange)
             {
-                vacancy.Wage.AmountLowerBound = wage.AmountLowerBound ?? wage.ExistingAmountLowerBound;
-                vacancy.Wage.AmountUpperBound = wage.AmountUpperBound ?? wage.ExistingAmountUpperBound;
+                vacancy.Wage.AmountLowerBound = wageUpdate.AmountLowerBound ?? wageUpdate.ExistingAmountLowerBound;
+                vacancy.Wage.AmountUpperBound = wageUpdate.AmountUpperBound ?? wageUpdate.ExistingAmountUpperBound;
             }
             else
             {
@@ -77,9 +77,9 @@
                 vacancy.Wage.AmountUpperBound = null;
             }
 
-            if (wage.Unit.HasValue)
+            if (wageUpdate.Unit.HasValue)
             {
-                vacancy.Wage.Unit = wage.Unit.Value;
+                vacancy.Wage.Unit = wageUpdate.Unit.Value;
             }
 
             var updatedVacancy = _updateVacancyStrategy.UpdateVacancy(vacancy);

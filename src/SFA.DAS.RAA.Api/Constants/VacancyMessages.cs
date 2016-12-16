@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.RAA.Api.Controllers
+﻿namespace SFA.DAS.RAA.Api.Constants
 {
     public class VacancyMessages
     {

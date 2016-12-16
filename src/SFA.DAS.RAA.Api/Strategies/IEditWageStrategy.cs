@@ -6,6 +6,6 @@
 
     public interface IEditWageStrategy
     {
-        Vacancy EditWage(WageUpdate wage, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null);
+        Vacancy EditWage(WageUpdate wageUpdate, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null);
     }
 }

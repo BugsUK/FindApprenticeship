@@ -7,6 +7,7 @@
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Constants;
     using Controllers;
 
     public class VacancyProvider : IVacancyProvider

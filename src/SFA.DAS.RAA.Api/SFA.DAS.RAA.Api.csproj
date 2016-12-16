@@ -198,7 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Constants\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http.Formatting">
@@ -228,9 +227,9 @@
     <Compile Include="Attributes\ExceptionToErrorResponseFilterAttribute.cs" />
     <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
-    <Compile Include="Controllers\VacancyMessages.cs" />
+    <Compile Include="Constants\VacancyMessages.cs" />
     <Compile Include="Controllers\VacancySummaryController.cs" />
-    <Compile Include="Controllers\WageUpdateMessages.cs" />
+    <Compile Include="Constants\WageUpdateMessages.cs" />
     <Compile Include="DependencyResolution\RaaApiRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />

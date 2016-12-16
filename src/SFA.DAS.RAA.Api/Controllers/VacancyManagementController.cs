@@ -22,9 +22,9 @@
         [Route("wage")]
         [SwaggerOperation("EditVacancyWage")]
         [HttpPut]
-        public IHttpActionResult EditWage(WageUpdate wage, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
+        public IHttpActionResult EditWage(WageUpdate wageUpdate, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
-            return Ok(_editWageStrategy.EditWage(wage, vacancyId, vacancyReferenceNumber, vacancyGuid));
+            return Ok(_editWageStrategy.EditWage(wageUpdate, vacancyId, vacancyReferenceNumber, vacancyGuid));
         }
     }
 }
