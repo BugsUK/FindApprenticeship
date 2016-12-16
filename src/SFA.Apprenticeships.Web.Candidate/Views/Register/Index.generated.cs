@@ -124,7 +124,7 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <legend");
 
@@ -174,7 +174,7 @@ WriteLiteral("\r\n    </fieldset>\r\n");
             #line hidden
 WriteLiteral("    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <legend");
 
@@ -236,7 +236,7 @@ WriteLiteral("\r\n\r\n        </div>\r\n    </fieldset>\r\n");
             #line hidden
 WriteLiteral("    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <legend");
 
@@ -274,15 +274,15 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" class=\"inl-block inpage-focus\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2229), Tuple.Create("\"", 2269)
-, Tuple.Create(Tuple.Create("", 2236), Tuple.Create("#", 2236), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2327), Tuple.Create("\"", 2367)
+, Tuple.Create(Tuple.Create("", 2334), Tuple.Create("#", 2334), true)
             
             #line 45 "..\..\Views\Register\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2237), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
+, Tuple.Create(Tuple.Create("", 2335), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
             
             #line default
             #line hidden
-, 2237), false)
+, 2335), false)
 );
 
 WriteLiteral(">Edit your email</a>\r\n        </div>\r\n        \r\n        <div");
@@ -417,7 +417,7 @@ Write(Scripts.Render("~/bundles/nas/passwordstrength"));
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n    <script>\r\n        $(function () {\r\n            $(\'#address-details\').addC" +
-"lass(\'disabled\');\r\n            $(\'input[id=EmailAddress]\').usernameLookup(\'");
+"lass(\'sfa-disabled\');\r\n            $(\'input[id=EmailAddress]\').usernameLookup(\'");
 
             
             #line 77 "..\..\Views\Register\Index.cshtml"

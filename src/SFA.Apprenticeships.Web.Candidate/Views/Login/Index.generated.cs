@@ -288,8 +288,8 @@ WriteLiteral(">\r\n        <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">New to this service?</h2>\r\n        <div >\r\n            <p>\r\n                If y" +
-"ou haven’t used this service before you must\r\n");
+WriteLiteral(">New to this service?</h2>\r\n        <div>\r\n            <p>\r\n                If yo" +
+"u haven’t used this service before you must\r\n");
 
 WriteLiteral("                ");
 

@@ -62,7 +62,7 @@ WriteLiteral("<section");
 
 WriteLiteral(" class=\"column-one-third\"");
 
-WriteLiteral(">\r\n    <div>\r\n        <fieldset");
+WriteLiteral(">\r\n        <fieldset");
 
 WriteLiteral(" class=\"search-filter\"");
 
@@ -81,13 +81,13 @@ WriteLiteral(" id=\"editSearchPanel\"");
 WriteLiteral(">\r\n");
 
             
-            #line 9 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 8 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 8 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                  if (Model.SearchMode == ApprenticeshipSearchMode.Category)
                 {
                     
@@ -95,14 +95,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 10 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.Partial("_categoriesAndSubCategories", Model));
 
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 10 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                                                                        ;
                 }
 
@@ -112,13 +112,13 @@ WriteLiteral(">\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 14 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 13 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 13 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                  if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
                 {
                     
@@ -126,28 +126,28 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 15 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-auto sfa-small-bottom-margin" }));
 
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 15 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                                                                                                                                                                                       
                     
             
             #line default
             #line hidden
             
-            #line 17 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" }, controlHtmlAttributes: new { @class = "form-control form-control-4-4" }));
 
             
             #line default
             #line hidden
             
-            #line 17 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 16 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                                                                                                                                                                                                                                                  
                 }
 
@@ -163,7 +163,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 21 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 20 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "sfa-small-bottom-margin" }, controlHtmlAttributes : new { @class = "form-control form-control-4-4" }));
 
             
@@ -173,20 +173,20 @@ WriteLiteral("\r\n                    <a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteLiteral(" class=\"geolocater inl-block hide-nojs \"");
+WriteLiteral(" class=\"geolocater hide-nojs \"");
 
 WriteLiteral(" id=\"getLocation\"");
 
 WriteLiteral(">Use current location</a>\r\n                </div>\r\n                \r\n\r\n");
 
             
-            #line 26 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 25 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 25 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                   
                     var open = Model.LocationSearches.Any() ? "open " : "";
                     var hidden = Model.LocationSearches.Any() ? "" : "hidden ";
@@ -197,7 +197,7 @@ WriteLiteral(">Use current location</a>\r\n                </div>\r\n           
 WriteLiteral("\r\n                <details ");
 
             
-            #line 30 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 29 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                      Write(open);
 
             
@@ -206,14 +206,14 @@ WriteLiteral("\r\n                <details ");
 WriteLiteral(" class=\"");
 
             
-            #line 30 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 29 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                                     Write(open);
 
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 29 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                                            Write(hidden);
 
             
@@ -225,7 +225,11 @@ WriteLiteral(" tabindex=\"0\"");
 
 WriteLiteral(" aria-describedby=\"locSuggestionsAria\"");
 
-WriteLiteral(">Did you mean:</summary>\r\n                    <p");
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Did you mean:</span></summary>\r\n                    <p");
 
 WriteLiteral(" class=\"visuallyhidden\"");
 
@@ -235,7 +239,7 @@ WriteLiteral(" id=\"locSuggestionsAria\"");
 
 WriteLiteral("></p>\r\n                    <div");
 
-WriteLiteral(" class=\"detail-content panel panel-border-narrow sfa-scrollable\"");
+WriteLiteral(" class=\"panel panel-border-narrow sfa-scrollable\"");
 
 WriteLiteral(">\r\n                        <ul");
 
@@ -246,13 +250,13 @@ WriteLiteral(" class=\"list\"");
 WriteLiteral(">\r\n");
 
             
-            #line 35 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 34 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 35 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 34 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                              foreach (var locationSearch in Model.LocationSearches)
                             {
 
@@ -261,20 +265,20 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2328), Tuple.Create("\"", 2419)
+WriteAttribute("href", Tuple.Create(" href=\"", 2321), Tuple.Create("\"", 2412)
             
-            #line 37 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2335), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
+            #line 36 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+, Tuple.Create(Tuple.Create("", 2328), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)
             
             #line default
             #line hidden
-, 2335), false)
+, 2328), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 36 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                                                                                                                               Write(locationSearch.Location);
 
             
@@ -283,7 +287,7 @@ WriteLiteral(">");
 WriteLiteral("</a></li>\r\n");
 
             
-            #line 38 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 37 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                             }
 
             
@@ -305,7 +309,7 @@ WriteLiteral(">Within</label>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 45 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 44 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control form-control-auto" }));
 
             
@@ -326,7 +330,7 @@ WriteLiteral(">Apprenticeship level</label>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 49 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 48 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control form-control-auto" }));
 
             
@@ -338,7 +342,7 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 
 WriteLiteral(">\r\n                    <button");
 
-WriteLiteral(" class=\"button no-btm-margin\"");
+WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" id=\"search-button\"");
 
@@ -355,7 +359,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 55 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 54 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.RouteLink("Start again", CandidateRouteNames.ApprenticeshipSearch, new { Model.SearchMode, reset = true }, new { @id = "start-again-link" }));
 
             
@@ -376,7 +380,7 @@ WriteLiteral("></div>\r\n                </div>\r\n\r\n");
 WriteLiteral("                ");
 
             
-            #line 61 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 60 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
            Write(Html.HiddenFor(m => m.Latitude));
 
             
@@ -387,7 +391,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 62 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 61 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
            Write(Html.HiddenFor(m => m.Longitude));
 
             
@@ -403,14 +407,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4268), Tuple.Create("\"", 4298)
+WriteAttribute("value", Tuple.Create(" value=\"", 4247), Tuple.Create("\"", 4277)
             
-            #line 64 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 4276), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+            #line 63 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+, Tuple.Create(Tuple.Create("", 4255), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 4276), false)
+, 4255), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -418,7 +422,7 @@ WriteLiteral(" />\r\n");
 WriteLiteral("                ");
 
             
-            #line 65 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 64 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
            Write(Html.HiddenFor(m => m.SearchMode));
 
             
@@ -429,7 +433,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 66 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 65 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
            Write(Html.HiddenFor(m=> m.Category));
 
             
@@ -445,17 +449,17 @@ WriteLiteral(" name=\"LocationType\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4665), Tuple.Create("\"", 4692)
+WriteAttribute("value", Tuple.Create(" value=\"", 4644), Tuple.Create("\"", 4671)
             
-            #line 68 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-  , Tuple.Create(Tuple.Create("", 4673), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+            #line 67 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+  , Tuple.Create(Tuple.Create("", 4652), Tuple.Create<System.Object, System.Int32>(Model.LocationType
             
             #line default
             #line hidden
-, 4673), false)
+, 4652), false)
 );
 
-WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n</section>");
+WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n</section>");
 
         }
     }

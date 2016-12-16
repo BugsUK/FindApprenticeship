@@ -61,22 +61,22 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Error
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div >\r\n    <h1");
+WriteLiteral("\r\n\r\n<div>\r\n    <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Apprenticeship no longer available</h1>\r\n</div>\r\n\r\n<div >\r\n    <p>The apprentice" +
-"ship you’re applying for is no longer available. This could be because it’s alre" +
-"ady been filled or was removed by the employer.</p>\r\n</div>\r\n\r\n<p><a");
+WriteLiteral(">Apprenticeship no longer available</h1>\r\n</div>\r\n\r\n<div>\r\n    <p>The apprentices" +
+"hip you’re applying for is no longer available. This could be because it’s alrea" +
+"dy been filled or was removed by the employer.</p>\r\n</div>\r\n\r\n<p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 407), Tuple.Create("\"", 469)
+WriteAttribute("href", Tuple.Create(" href=\"", 405), Tuple.Create("\"", 467)
             
             #line 14 "..\..\Views\Error\NotFound.cshtml"
-, Tuple.Create(Tuple.Create("", 414), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+, Tuple.Create(Tuple.Create("", 412), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 414), false)
+, 412), false)
 );
 
 WriteLiteral(">Find an apprenticeship</a></p>\r\n");

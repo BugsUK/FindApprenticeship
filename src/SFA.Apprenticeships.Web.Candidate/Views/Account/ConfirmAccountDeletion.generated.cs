@@ -71,7 +71,7 @@ WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"hgroup\"");
 
-WriteLiteral(">\r\n    <div >\r\n        <h1");
+WriteLiteral(">\r\n    <div>\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 

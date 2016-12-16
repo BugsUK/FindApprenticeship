@@ -98,7 +98,7 @@ WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n
 
             
             #line 24 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
- using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {autocomplete = "off"}))
+ using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {id = "verify-updated-email-form", autocomplete = "off"}))
 {
     
             
@@ -184,14 +184,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1538), Tuple.Create("\"", 1608)
+WriteAttribute("href", Tuple.Create(" href=\"", 1572), Tuple.Create("\"", 1642)
             
             #line 35 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-, Tuple.Create(Tuple.Create("", 1545), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
+, Tuple.Create(Tuple.Create("", 1579), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
             
             #line default
             #line hidden
-, 1545), false)
+, 1579), false)
 );
 
 WriteLiteral(" title=\"Resend code\"");

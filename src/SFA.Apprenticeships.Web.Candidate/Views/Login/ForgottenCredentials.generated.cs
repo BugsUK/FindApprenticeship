@@ -103,7 +103,7 @@ Write(Html.AntiForgeryToken());
             
             #line default
             #line hidden
-WriteLiteral("    <section>\r\n        <div >\r\n            <h2");
+WriteLiteral("    <section>\r\n        <div>\r\n            <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -113,9 +113,9 @@ WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 663), Tuple.Create("\"", 715)
-, Tuple.Create(Tuple.Create("", 669), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/img/logo-apprenticeships.png")
-, 669), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 662), Tuple.Create("\"", 714)
+, Tuple.Create(Tuple.Create("", 668), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/img/logo-apprenticeships.png")
+, 668), false)
 );
 
 WriteLiteral(" width=\"133\"");
@@ -131,20 +131,20 @@ WriteLiteral(" align=\"left\"");
 WriteLiteral(" />\r\n                You won\'t be able to sign in using existing \"Apprenticeship " +
 "vacancies\" details.\r\n            </p>\r\n            <p>You must <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1017), Tuple.Create("\"", 1058)
+WriteAttribute("href", Tuple.Create(" href=\"", 1016), Tuple.Create("\"", 1057)
             
             #line 25 "..\..\Views\Login\ForgottenCredentials.cshtml"
-, Tuple.Create(Tuple.Create("", 1024), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.Register)
+, Tuple.Create(Tuple.Create("", 1023), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.Register)
             
             #line default
             #line hidden
-, 1024), false)
+, 1023), false)
 );
 
 WriteLiteral(">create an account</a> to access this new service.</p>\r\n        </div>\r\n    </sec" +
 "tion>\r\n");
 
-WriteLiteral("    <section>\r\n        <div >\r\n            \r\n            <h2");
+WriteLiteral("    <section>\r\n        <div>\r\n            \r\n            <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -181,21 +181,21 @@ WriteLiteral(">Send code</button>\r\n        </div>\r\n    </section>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n<div >\r\n    <h2");
+WriteLiteral("\r\n<div>\r\n    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">If your account is locked</h2>\r\n    <p>\r\n        If your account is locked and y" +
 "ou’ve been sent a code to unlock it, you\r\n        can <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2061), Tuple.Create("\"", 2100)
+WriteAttribute("href", Tuple.Create(" href=\"", 2058), Tuple.Create("\"", 2097)
             
             #line 49 "..\..\Views\Login\ForgottenCredentials.cshtml"
-, Tuple.Create(Tuple.Create("", 2068), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.Unlock)
+, Tuple.Create(Tuple.Create("", 2065), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.Unlock)
             
             #line default
             #line hidden
-, 2068), false)
+, 2065), false)
 );
 
 WriteLiteral(">enter it</a> now.\r\n    </p>\r\n</div>\r\n\r\n");
@@ -223,7 +223,7 @@ Write(Html.AntiForgeryToken());
             
             #line default
             #line hidden
-WriteLiteral("    <div >\r\n        <h2");
+WriteLiteral("    <div>\r\n        <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 

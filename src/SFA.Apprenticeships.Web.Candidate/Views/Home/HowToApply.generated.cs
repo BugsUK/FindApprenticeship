@@ -132,7 +132,7 @@ WriteLiteral("></i>How to apply for an apprenticeship</a>\r\n            <p>(int
 
 WriteLiteral(" class=\"sfa-section-bordered\"");
 
-WriteLiteral(">\r\n    <div >\r\n        <div");
+WriteLiteral(">\r\n    <div>\r\n        <div");
 
 WriteLiteral(" class=\"hgroup-medium\"");
 
@@ -2791,8 +2791,8 @@ WriteLiteral(" class=\"panel-danger toggle-content\"");
 
 WriteLiteral(" id=\"unsavedQuals\"");
 
-WriteLiteral(">\r\n        <div >\r\n            <p>\r\n                You\'ve got unsaved changes in" +
-" your <a");
+WriteLiteral(">\r\n        <div>\r\n            <p>\r\n                You\'ve got unsaved changes in " +
+"your <a");
 
 WriteLiteral(" href=\"#qualifications-panel\"");
 

@@ -202,7 +202,7 @@ Custom Typography
 Custom list
 ------------------------------------------------------------------- */
 dl.sfa-dl .sfa-di {
-  margin-bottom: 5px; }
+  margin-bottom: 20px; }
 
 dl.sfa-dl .dt {
   font-weight: bold;
@@ -211,13 +211,23 @@ dl.sfa-dl .dt {
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
+.sfa-saving-prompt {
+  background: #28a197;
+  border-bottom: 3px solid #1e7871;
+  color: #fff;
+  opacity: .9;
+  position: fixed;
+  bottom: 0;
+  right: 30px;
+  padding: 10px 15px; }
+
 .sfa-disabled {
   opacity: 0.5; }
 
 .force-full-width {
   width: 100% !important; }
 
-.no-margins {
+.sfa-no-margins {
   margin: 0 !important; }
 
 .sfa-no-right-margin {
@@ -243,6 +253,9 @@ Misc - TO BE ORGANISED
 
 .sfa-pull-right {
   float: right !important; }
+  @media (min-width: 641px) {
+    .sfa-pull-right-tablet {
+      float: right !important; } }
 
 .js-enabled .nojs-notice {
   display: none !important; }
@@ -277,7 +290,12 @@ iframe, object, embed {
 
 .search-result {
   position: relative;
-  padding-bottom: 30px; }
+  padding-bottom: 15px;
+  margin-bottom: 15px; }
+  @media (min-width: 641px) {
+    .search-result {
+      padding-bottom: 30px;
+      margin-bottom: 30px; } }
 
 .save-vacancy {
   position: absolute;
@@ -532,9 +550,6 @@ a[rel="external"]:after {
 .toggle-content {
   display: none; }
 
-.page-navigation {
-  padding-top: 10px; }
-
 .page-navigation .description {
   display: block; }
 
@@ -551,7 +566,7 @@ a[rel="external"]:after {
   font-size: 1em;
   margin-right: -4px;
   overflow: hidden;
-  padding: 1.2em .6em;
+  padding: 1.2em .6em 1.2em .6em !important;
   text-decoration: none;
   vertical-align: top;
   width: 50%; }
@@ -561,7 +576,8 @@ a[rel="external"]:after {
   float: left;
   font-size: 3.5em;
   margin-right: 10px;
-  margin-top: -.2em; }
+  margin-top: -.2em;
+  margin-bottom: -.2em; }
 
 .page-navigation__btn.previous {
   text-align: left; }
@@ -2583,6 +2599,7 @@ textarea {
   line-height: 1.25;
   width: 100%;
   padding: 5px 4px 4px;
+  color: inherit;
   background-color: transparent;
   border: 2px solid; }
   @media (min-width: 641px) {
@@ -2655,7 +2672,9 @@ textarea.form-control {
   position: relative;
   padding: 8px 10px 9px 50px;
   margin-bottom: 10px;
-  cursor: pointer; }
+  cursor: pointer;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation; }
   @media (min-width: 641px) {
     .block-label {
       float: left;
@@ -2858,13 +2877,13 @@ input[type=number] {
   .breadcrumbs a {
     color: #0b0c0c; }
 
-.phase-banner-alpha {
+.phase-banner {
   padding: 10px 0 8px;
   border-bottom: 1px solid #bfc1c3; }
   @media (min-width: 641px) {
-    .phase-banner-alpha {
+    .phase-banner {
       padding-bottom: 10px; } }
-  .phase-banner-alpha p {
+  .phase-banner p {
     display: table;
     margin: 0;
     color: #000;
@@ -2874,10 +2893,10 @@ input[type=number] {
     font-size: 14px;
     line-height: 1.14286; }
     @media (min-width: 641px) {
-      .phase-banner-alpha p {
+      .phase-banner p {
         font-size: 16px;
         line-height: 1.25; } }
-  .phase-banner-alpha .phase-tag {
+  .phase-banner .phase-tag {
     display: -moz-inline-stack;
     display: inline-block;
     margin: 0 8px 0 0;
@@ -2891,21 +2910,24 @@ input[type=number] {
     letter-spacing: 1px;
     text-decoration: none;
     color: #fff;
-    background-color: #d53880; }
+    background-color: #005ea5; }
     @media (min-width: 641px) {
-      .phase-banner-alpha .phase-tag {
+      .phase-banner .phase-tag {
         font-size: 16px;
         line-height: 1.25; } }
-  .phase-banner-alpha span {
+  .phase-banner span {
     display: table-cell;
     vertical-align: baseline; }
 
+.phase-banner-alpha,
 .phase-banner-beta {
   padding: 10px 0 8px;
   border-bottom: 1px solid #bfc1c3; }
   @media (min-width: 641px) {
+    .phase-banner-alpha,
     .phase-banner-beta {
       padding-bottom: 10px; } }
+  .phase-banner-alpha p,
   .phase-banner-beta p {
     display: table;
     margin: 0;
@@ -2916,9 +2938,11 @@ input[type=number] {
     font-size: 14px;
     line-height: 1.14286; }
     @media (min-width: 641px) {
+      .phase-banner-alpha p,
       .phase-banner-beta p {
         font-size: 16px;
         line-height: 1.25; } }
+  .phase-banner-alpha .phase-tag,
   .phase-banner-beta .phase-tag {
     display: -moz-inline-stack;
     display: inline-block;
@@ -2933,11 +2957,13 @@ input[type=number] {
     letter-spacing: 1px;
     text-decoration: none;
     color: #fff;
-    background-color: #f47738; }
+    background-color: #005ea5; }
     @media (min-width: 641px) {
+      .phase-banner-alpha .phase-tag,
       .phase-banner-beta .phase-tag {
         font-size: 16px;
         line-height: 1.25; } }
+  .phase-banner-alpha span,
   .phase-banner-beta span {
     display: table-cell;
     vertical-align: baseline; }

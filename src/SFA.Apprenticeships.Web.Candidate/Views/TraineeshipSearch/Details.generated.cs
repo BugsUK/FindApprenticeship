@@ -1044,7 +1044,7 @@ WriteLiteral(" class=\"sfa-section-bordered grid-row\"");
 
 WriteLiteral(" id=\"course-info\"");
 
-WriteLiteral(">\r\n            <div >\r\n                <h2");
+WriteLiteral(">\r\n            <div>\r\n                <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -1054,14 +1054,14 @@ WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">Desired skills and qualities</h3>\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9523), Tuple.Create("\"", 9584)
+WriteAttribute("class", Tuple.Create(" class=\"", 9522), Tuple.Create("\"", 9583)
             
             #line 172 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 9531), Tuple.Create<System.Object, System.Int32>(Model.SkillsRequired.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 9530), Tuple.Create<System.Object, System.Int32>(Model.SkillsRequired.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 9531), false)
+, 9530), false)
 );
 
 WriteLiteral(">");
@@ -1075,14 +1075,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9672), Tuple.Create("\"", 9736)
+WriteAttribute("class", Tuple.Create(" class=\"", 9671), Tuple.Create("\"", 9735)
             
             #line 173 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 9680), Tuple.Create<System.Object, System.Int32>(Model.PersonalQualities.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 9679), Tuple.Create<System.Object, System.Int32>(Model.PersonalQualities.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 9680), false)
+, 9679), false)
 );
 
 WriteLiteral(">");
@@ -1120,14 +1120,14 @@ WriteLiteral("                    <p");
 
 WriteLiteral(" id=\"vacancy-future-prospects\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10030), Tuple.Create("\"", 10092)
+WriteAttribute("class", Tuple.Create(" class=\"", 10029), Tuple.Create("\"", 10091)
             
             #line 178 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 10038), Tuple.Create<System.Object, System.Int32>(Model.FutureProspects.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 10037), Tuple.Create<System.Object, System.Int32>(Model.FutureProspects.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 10038), false)
+, 10037), false)
 );
 
 WriteLiteral(">");
@@ -1163,7 +1163,7 @@ WriteLiteral("            <section");
 
 WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n                <div >\r\n                    <h2");
+WriteLiteral(">\r\n                <div>\r\n                    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -1171,14 +1171,14 @@ WriteLiteral(">Other information</h2>\r\n                    <p");
 
 WriteLiteral(" id=\"vacany-other-information\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10486), Tuple.Create("\"", 10549)
+WriteAttribute("class", Tuple.Create(" class=\"", 10484), Tuple.Create("\"", 10547)
             
             #line 188 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 10494), Tuple.Create<System.Object, System.Int32>(Model.OtherInformation.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 10492), Tuple.Create<System.Object, System.Int32>(Model.OtherInformation.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 10494), false)
+, 10492), false)
 );
 
 WriteLiteral(">");

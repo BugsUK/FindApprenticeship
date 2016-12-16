@@ -350,11 +350,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</h1>\r\n            <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral("</h1>\r\n            <div>\r\n");
 
 WriteLiteral("                ");
 
@@ -445,14 +441,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4959), Tuple.Create("\"", 5000)
+WriteAttribute("src", Tuple.Create(" src=\"", 4946), Tuple.Create("\"", 4987)
             
             #line 92 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 4965), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("govuk-crest-2x.png")
+, Tuple.Create(Tuple.Create("", 4952), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("govuk-crest-2x.png")
             
             #line default
             #line hidden
-, 4965), false)
+, 4952), false)
 );
 
 WriteLiteral(" width=\"125\"");

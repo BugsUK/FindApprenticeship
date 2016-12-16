@@ -268,7 +268,7 @@ Custom list
 // Detail list
 dl.sfa-dl{
     .sfa-di { //detail list item
-        margin-bottom: 5px;
+        margin-bottom: 20px;
     }
     .dt {
         font-weight:bold;
@@ -280,6 +280,17 @@ dl.sfa-dl{
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
 
+.sfa-saving-prompt {
+    background: #28a197;
+    border-bottom: 3px solid #1e7871;
+    color: #fff;
+    opacity: .9;
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+    padding: 10px 15px;
+}
+
 .sfa-disabled {
     opacity:0.5;
 }
@@ -288,7 +299,7 @@ Misc - TO BE ORGANISED
     width: 100% !important;
 }
 
-.no-margins {
+.sfa-no-margins {
     margin: 0 !important;
 }
 
@@ -323,6 +334,11 @@ Misc - TO BE ORGANISED
 
 .sfa-pull-right {
     float: right !important;
+    &-tablet {
+        @include media(tablet){
+            float: right !important;
+        }
+    }
 }
 .js-enabled .nojs-notice {
     display: none !important;
@@ -371,7 +387,12 @@ iframe, object, embed {
 
 .search-result {
     position: relative;
-    padding-bottom:30px;
+    padding-bottom:15px;
+    margin-bottom:15px;
+    @include media(tablet){
+        padding-bottom:30px;
+        margin-bottom:30px;
+    }
 }
 
 .save-vacancy {

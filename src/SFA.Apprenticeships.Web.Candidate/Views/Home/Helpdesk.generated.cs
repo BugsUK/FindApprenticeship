@@ -63,16 +63,20 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n    <h1");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Contact us</h1>\r\n</div>\r\n\r\n");
+WriteLiteral(">Contact us</h1>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 12 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 14 "..\..\Views\Home\Helpdesk.cshtml"
  using (Html.BeginRouteForm(CandidateRouteNames.Helpdesk, FormMethod.Post, new { id = "helpdesk-form" }))
 {
     
@@ -80,21 +84,21 @@ WriteLiteral(">Contact us</h1>\r\n</div>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 16 "..\..\Views\Home\Helpdesk.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 16 "..\..\Views\Home\Helpdesk.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 15 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 17 "..\..\Views\Home\Helpdesk.cshtml"
 Write(Html.FormTextFor(
             m => m.Name,
             containerHtmlAttributes: new { @class = "form-group-compound" },
@@ -104,7 +108,7 @@ Write(Html.FormTextFor(
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 20 "..\..\Views\Home\Helpdesk.cshtml"
                                                                                                 
 
     
@@ -112,7 +116,7 @@ Write(Html.FormTextFor(
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 22 "..\..\Views\Home\Helpdesk.cshtml"
 Write(Html.FormTextFor(
             m => m.Email,
             containerHtmlAttributes: new { @class = "form-group-compound" },
@@ -123,7 +127,7 @@ Write(Html.FormTextFor(
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 26 "..\..\Views\Home\Helpdesk.cshtml"
                                                         
 
 
@@ -145,7 +149,7 @@ WriteLiteral(">Briefly describe your question</label>\r\n");
 WriteLiteral("        ");
 
             
-            #line 28 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 30 "..\..\Views\Home\Helpdesk.cshtml"
    Write(Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs sfa-small-bottom-margin select-inject form-control" }));
 
             
@@ -159,14 +163,14 @@ WriteLiteral(" class=\"selfServe panel panel-border-narrow toggle-content hide-n
 
 WriteLiteral(">\r\n            <p>If you\'d like to change your email address visit the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1368), Tuple.Create("\"", 1412)
+WriteAttribute("href", Tuple.Create(" href=\"", 1491), Tuple.Create("\"", 1535)
             
-            #line 31 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 1375), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.UpdateEmail)
+            #line 33 "..\..\Views\Home\Helpdesk.cshtml"
+, Tuple.Create(Tuple.Create("", 1498), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.UpdateEmail)
             
             #line default
             #line hidden
-, 1375), false)
+, 1498), false)
 );
 
 WriteLiteral(">update email</a> page. If you\'re still having problems contact us using this for" +
@@ -178,14 +182,14 @@ WriteLiteral(" class=\"selfServe panel panel-border-narrow toggle-content hide-n
 
 WriteLiteral(">\r\n            <p>If you\'ve forgotten your email address visit the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1689), Tuple.Create("\"", 1742)
+WriteAttribute("href", Tuple.Create(" href=\"", 1825), Tuple.Create("\"", 1878)
             
-            #line 35 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 1696), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+            #line 37 "..\..\Views\Home\Helpdesk.cshtml"
+, Tuple.Create(Tuple.Create("", 1832), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 1696), false)
+, 1832), false)
 );
 
 WriteLiteral(">forgotten email</a> page. If you\'re still having problems contact us using this " +
@@ -198,14 +202,14 @@ WriteLiteral(" class=\"selfServe panel panel-border-narrow toggle-content hide-n
 WriteLiteral(">\r\n            <p>If you\'re having trouble signing in to your account visit the <" +
 "a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2024), Tuple.Create("\"", 2077)
+WriteAttribute("href", Tuple.Create(" href=\"", 2173), Tuple.Create("\"", 2226)
             
-            #line 39 "..\..\Views\Home\Helpdesk.cshtml"
-      , Tuple.Create(Tuple.Create("", 2031), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
+            #line 41 "..\..\Views\Home\Helpdesk.cshtml"
+      , Tuple.Create(Tuple.Create("", 2180), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
-, 2031), false)
+, 2180), false)
 );
 
 WriteLiteral(">forgotten password</a> page. If you\'re still having problems contact us using th" +
@@ -217,14 +221,14 @@ WriteLiteral(" class=\"selfServe panel panel-border-narrow toggle-content hide-n
 
 WriteLiteral(">\r\n            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2302), Tuple.Create("\"", 2341)
+WriteAttribute("href", Tuple.Create(" href=\"", 2464), Tuple.Create("\"", 2503)
             
-            #line 43 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 2309), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn)
+            #line 45 "..\..\Views\Home\Helpdesk.cshtml"
+, Tuple.Create(Tuple.Create("", 2471), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn)
             
             #line default
             #line hidden
-, 2309), false)
+, 2471), false)
 );
 
 WriteLiteral(@">Activate your account</a> by signing in. You'll need the email address and password you used to create your account.</p>
@@ -237,7 +241,7 @@ WriteLiteral(@">Activate your account</a> by signing in. You'll need the email a
 WriteLiteral("        ");
 
             
-            #line 48 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 50 "..\..\Views\Home\Helpdesk.cshtml"
    Write(Html.FormTextFor(
             m => m.Enquiry,
             containerHtmlAttributes: new { @class = "form-group-compound" },
@@ -249,13 +253,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 53 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 55 "..\..\Views\Home\Helpdesk.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 55 "..\..\Views\Home\Helpdesk.cshtml"
 Write(Html.FormTextAreaFor(m => m.Details,
                 controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", @class = "sfa-small-bottom-margin" },
                 hintHtmlAttributes: new { @class = "text" }));
@@ -264,7 +268,7 @@ Write(Html.FormTextAreaFor(m => m.Details,
             #line default
             #line hidden
             
-            #line 55 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 57 "..\..\Views\Home\Helpdesk.cshtml"
                                                             
 
             
@@ -283,7 +287,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Send</button>\r\n    </div>\r\n");
 
             
-            #line 59 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 61 "..\..\Views\Home\Helpdesk.cshtml"
 }
 
             

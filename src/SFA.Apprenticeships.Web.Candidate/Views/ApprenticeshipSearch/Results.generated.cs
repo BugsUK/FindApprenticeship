@@ -279,13 +279,13 @@ WriteLiteral(">\r\n");
 
             
             #line 105 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-        
+    	
             
             #line default
             #line hidden
             
             #line 105 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-     using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipResults, FormMethod.Get, new { id = "apprenticeship-results-form" }))
+         using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipResults, FormMethod.Get, new { id = "apprenticeship-results-form" }))
         {
             Html.Partial("ValidationSummary", ViewData.ModelState);
             Html.RenderPartial("_searchUpdate", Model.VacancySearch);
@@ -327,7 +327,7 @@ WriteLiteral("\r\n                </div>\r\n            </section>\r\n");
             #line hidden
 WriteLiteral("    </div>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"saving-prompt toggle-content hide-nojs\"");
+WriteLiteral(" class=\"sfa-saving-prompt toggle-content hide-nojs\"");
 
 WriteLiteral(" id=\"ajaxLoading\"");
 

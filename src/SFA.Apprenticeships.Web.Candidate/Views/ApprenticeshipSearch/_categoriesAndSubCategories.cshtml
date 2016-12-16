@@ -24,7 +24,7 @@
                     categoryLabelText = string.Format("{0} ({1})", categoryLabelText, category.Count);
 
                     <li>
-                        <label for="@inputId" class="form-checkbox sfa-form-checkbox no-margins" data-target="@(inputId)-details">
+                        <label for="@inputId" class="form-checkbox sfa-form-checkbox sfa-no-margins" data-target="@(inputId)-details">
                             <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName" />
                             @categoryLabelText
                         </label>
@@ -41,7 +41,7 @@
                                     subcategoryLabelText = string.Format("{0} ({1})", subcategoryLabelText, subCategory.Count);
 
                                     <li>
-                                        <label for="@checkboxId" class="form-checkbox sfa-form-checkbox no-margins">
+                                        <label for="@checkboxId" class="form-checkbox sfa-form-checkbox sfa-no-margins">
                                             <input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName">
                                             @subcategoryLabelText
                                         </label>

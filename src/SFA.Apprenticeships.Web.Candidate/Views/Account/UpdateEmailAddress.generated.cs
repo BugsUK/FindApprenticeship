@@ -97,7 +97,7 @@ WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n
 
             
             #line 23 "..\..\Views\Account\UpdateEmailAddress.cshtml"
- using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { autocomplete = "off" }))
+ using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form", autocomplete = "off" }))
 {
     
             

@@ -140,7 +140,7 @@ WriteLiteral("        </ul>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
             #line 28 "..\..\Views\Account\Settings.cshtml"
- using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post))
+ using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post, new { id = "settings-form" }))
 {
     
             
@@ -243,15 +243,15 @@ Write(Html.HiddenFor(m => m.Mode));
             #line hidden
 WriteLiteral("\r\n\r\n    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2205), Tuple.Create("\"", 2248)
-, Tuple.Create(Tuple.Create("", 2213), Tuple.Create("tabbed-content", 2213), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2235), Tuple.Create("\"", 2278)
+, Tuple.Create(Tuple.Create("", 2243), Tuple.Create("tabbed-content", 2243), true)
             
             #line 49 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create(" ", 2227), Tuple.Create<System.Object, System.Int32>(yourAccountTabClass
+, Tuple.Create(Tuple.Create(" ", 2257), Tuple.Create<System.Object, System.Int32>(yourAccountTabClass
             
             #line default
             #line hidden
-, 2228), false)
+, 2258), false)
 );
 
 WriteLiteral(">\r\n        <div");
@@ -365,14 +365,14 @@ WriteLiteral(" <a");
 
 WriteLiteral(" id=\"settings-change-username\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3596), Tuple.Create("\"", 3640)
+WriteAttribute("href", Tuple.Create(" href=\"", 3626), Tuple.Create("\"", 3670)
             
             #line 68 "..\..\Views\Account\Settings.cshtml"
-                                                 , Tuple.Create(Tuple.Create("", 3603), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.UpdateEmail)
+                                                 , Tuple.Create(Tuple.Create("", 3633), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.UpdateEmail)
             
             #line default
             #line hidden
-, 3603), false)
+, 3633), false)
 );
 
 WriteLiteral(">Change email address</a></dd>\r\n                    </dl>\r\n                </div>" +
@@ -421,14 +421,14 @@ WriteLiteral(" id=\"settings-confirm-username\"");
 
 WriteLiteral(" class=\"inl-block\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4132), Tuple.Create("\"", 4183)
+WriteAttribute("href", Tuple.Create(" href=\"", 4162), Tuple.Create("\"", 4213)
             
             #line 77 "..\..\Views\Account\Settings.cshtml"
-  , Tuple.Create(Tuple.Create("", 4139), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.VerifyUpdatedEmail)
+  , Tuple.Create(Tuple.Create("", 4169), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.VerifyUpdatedEmail)
             
             #line default
             #line hidden
-, 4139), false)
+, 4169), false)
 );
 
 WriteLiteral(">Verify email address</a>\r\n                    </div>\r\n");
@@ -575,7 +575,7 @@ WriteLiteral("                                    ");
             
             #line 116 "..\..\Views\Account\Settings.cshtml"
                                Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaEmail,
-                                        controlHtmlAttributes: new {@class = "no-margins email-input", aria_labelledby = "appStatusLabel", title = "Email notifications when the status of one of your applications changes"}));
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins email-input", aria_labelledby = "appStatusLabel", title = "Email notifications when the status of one of your applications changes"}));
 
             
             #line default
@@ -591,7 +591,7 @@ WriteLiteral("                                    ");
             
             #line 120 "..\..\Views\Account\Settings.cshtml"
                                Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaText,
-                                        controlHtmlAttributes: new {@class = "no-margins text-input", aria_labelledby = "appStatusLabel", title = "Text notifications when the status of one of your applications changes"}));
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins text-input", aria_labelledby = "appStatusLabel", title = "Text notifications when the status of one of your applications changes"}));
 
             
             #line default
@@ -613,7 +613,7 @@ WriteLiteral("                                    ");
             
             #line 129 "..\..\Views\Account\Settings.cshtml"
                                Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaEmail,
-                                        controlHtmlAttributes: new {@class = "no-margins email-input", aria_labelledby = "closingDateStatusLabel", title = "Email notifications when an apprenticeship is approaching its closing date"}));
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins email-input", aria_labelledby = "closingDateStatusLabel", title = "Email notifications when an apprenticeship is approaching its closing date"}));
 
             
             #line default
@@ -629,7 +629,7 @@ WriteLiteral("                                    ");
             
             #line 133 "..\..\Views\Account\Settings.cshtml"
                                Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaText,
-                                        controlHtmlAttributes: new {@class = "no-margins text-input", aria_labelledby = "closingDateStatusLabel", title = "Text notifications when an apprenticeship is approaching its closing date"}));
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins text-input", aria_labelledby = "closingDateStatusLabel", title = "Text notifications when an apprenticeship is approaching its closing date"}));
 
             
             #line default
@@ -651,7 +651,7 @@ WriteLiteral("                                    ");
             
             #line 142 "..\..\Views\Account\Settings.cshtml"
                                Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaEmail,
-                                        controlHtmlAttributes: new {@class = "no-margins email-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Email notifications when we send you updates on news and information"}));
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins email-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Email notifications when we send you updates on news and information"}));
 
             
             #line default
@@ -667,7 +667,7 @@ WriteLiteral("                                    ");
             
             #line 146 "..\..\Views\Account\Settings.cshtml"
                                Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaText,
-                                        controlHtmlAttributes: new {@class = "no-margins text-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Text notifications when we send you updates on news and information"}));
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins text-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Text notifications when we send you updates on news and information"}));
 
             
             #line default
@@ -697,15 +697,15 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Save settings</button>\r\n                </div>\r\n            </div>\r\n        </di" +
 "v>\r\n    </div>\r\n\r\n    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10049), Tuple.Create("\"", 10094)
-, Tuple.Create(Tuple.Create("", 10057), Tuple.Create("tabbed-content", 10057), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 10103), Tuple.Create("\"", 10148)
+, Tuple.Create(Tuple.Create("", 10111), Tuple.Create("tabbed-content", 10111), true)
             
             #line 164 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create(" ", 10071), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
+, Tuple.Create(Tuple.Create(" ", 10125), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
             
             #line default
             #line hidden
-, 10072), false)
+, 10126), false)
 );
 
 WriteLiteral(">\r\n        <div");
@@ -817,14 +817,14 @@ WriteLiteral(" ");
 WriteLiteral(">\r\n                        You currently don\'t have any active saved searches. If" +
 " you <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11543), Tuple.Create("\"", 11605)
+WriteAttribute("href", Tuple.Create(" href=\"", 11597), Tuple.Create("\"", 11659)
             
             #line 187 "..\..\Views\Account\Settings.cshtml"
-           , Tuple.Create(Tuple.Create("", 11550), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+           , Tuple.Create(Tuple.Create("", 11604), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 11550), false)
+, 11604), false)
 );
 
 WriteLiteral(">set up a saved search</a> we can alert you when we find a suitable apprenticeshi" +
@@ -876,26 +876,26 @@ WriteLiteral("                                <div");
 
 WriteLiteral(" class=\"sfa-saved-search sfa-xlarge-bottom-margin\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 12333), Tuple.Create("\"", 12353)
+WriteAttribute("id", Tuple.Create(" id=\"", 12387), Tuple.Create("\"", 12407)
             
             #line 199 "..\..\Views\Account\Settings.cshtml"
-          , Tuple.Create(Tuple.Create("", 12338), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+          , Tuple.Create(Tuple.Create("", 12392), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 12338), false)
+, 12392), false)
 );
 
 WriteLiteral(">\r\n                                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12395), Tuple.Create("\"", 12440)
+WriteAttribute("href", Tuple.Create(" href=\"", 12449), Tuple.Create("\"", 12494)
             
             #line 200 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 12402), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
+, Tuple.Create(Tuple.Create("", 12456), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
             
             #line default
             #line hidden
-, 12402), false)
+, 12456), false)
 );
 
 WriteLiteral(" title=\"Run search\"");
@@ -1047,24 +1047,24 @@ WriteLiteral("                                            ");
 WriteLiteral("\r\n                                        </li>\r\n                                " +
 "        <li>\r\n                                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13926), Tuple.Create("\"", 14034)
+WriteAttribute("href", Tuple.Create(" href=\"", 13980), Tuple.Create("\"", 14088)
             
             #line 219 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 13933), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new {id = savedSearch.Id, isJavascript = false})
+, Tuple.Create(Tuple.Create("", 13987), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new {id = savedSearch.Id, isJavascript = false})
             
             #line default
             #line hidden
-, 13933), false)
+, 13987), false)
 );
 
-WriteAttribute("id", Tuple.Create(" id=\"", 14035), Tuple.Create("\"", 14055)
+WriteAttribute("id", Tuple.Create(" id=\"", 14089), Tuple.Create("\"", 14109)
             
             #line 219 "..\..\Views\Account\Settings.cshtml"
-                                                                               , Tuple.Create(Tuple.Create("", 14040), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                                                                               , Tuple.Create(Tuple.Create("", 14094), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 14040), false)
+, 14094), false)
 );
 
 WriteLiteral(" class=\"link-unimp icon-black delete--link\"");
@@ -1106,15 +1106,15 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Save settings</button>\r\n                </div>\r\n            </div>\r\n        </di" +
 "v>\r\n    </div>\r\n\r\n    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 14713), Tuple.Create("\"", 14758)
-, Tuple.Create(Tuple.Create("", 14721), Tuple.Create("tabbed-content", 14721), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 14767), Tuple.Create("\"", 14812)
+, Tuple.Create(Tuple.Create("", 14775), Tuple.Create("tabbed-content", 14775), true)
             
             #line 236 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create(" ", 14735), Tuple.Create<System.Object, System.Int32>(deleteAccountTabClass
+, Tuple.Create(Tuple.Create(" ", 14789), Tuple.Create<System.Object, System.Int32>(deleteAccountTabClass
             
             #line default
             #line hidden
-, 14736), false)
+, 14790), false)
 );
 
 WriteLiteral(">\r\n        <div");
