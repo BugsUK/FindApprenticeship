@@ -87,7 +87,7 @@
             {
                 Type = WageType.CustomRange,
                 Amount = 220,
-                AmountLowerBound = 200,
+                AmountLowerBound = 220,
                 AmountUpperBound = 240,
                 Unit = WageUnit.Weekly
             };

@@ -179,7 +179,7 @@ Scenario: Decrease fixed wage by £20 per week
 	Then The response status is: BadRequest
 	And The validation errors contain:
 		| Property | Error                                            |
-		| Amount   | Amount must be greater than the existing amount. |
+		| Amount   | The new fixed wage must be higher than the original figure. |
 	And I do not see the edited vacancy wage details for the vacancy with id: 42
 
 @RA388 @EditWage

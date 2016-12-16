@@ -32,10 +32,16 @@
             {
                 throw new ArgumentException("You can only edit the wage of a vacancy that is live or closed.");
             }
+            if (!vacancy.Wage.HoursPerWeek.HasValue)
+            {
+                throw new ArgumentException("You can only edit the wage of a vacancy that has a valid value for hours per week.");
+            }
             wage.ExistingType = vacancy.Wage.Type;
             wage.ExistingAmount = vacancy.Wage.Amount;
+            wage.ExistingAmountLowerBound = vacancy.Wage.AmountLowerBound;
+            wage.ExistingAmountUpperBound = vacancy.Wage.AmountUpperBound;
+            wage.ExistingUnit = vacancy.Wage.Unit;
 
-            //TODO: Loads of validation
             var validator = new WageUpdateValidator();
             var validationResult = validator.Validate(wage, ruleSet: WageUpdateValidator.CompareWithExisting);
             if (!validationResult.IsValid)
@@ -59,8 +65,8 @@
 
             if (vacancy.Wage.Type == WageType.CustomRange)
             {
-                vacancy.Wage.AmountLowerBound = wage.AmountLowerBound;
-                vacancy.Wage.AmountUpperBound = wage.AmountUpperBound;
+                vacancy.Wage.AmountLowerBound = wage.AmountLowerBound ?? wage.ExistingAmountLowerBound;
+                vacancy.Wage.AmountUpperBound = wage.AmountUpperBound ?? wage.ExistingAmountUpperBound;
             }
             else
             {

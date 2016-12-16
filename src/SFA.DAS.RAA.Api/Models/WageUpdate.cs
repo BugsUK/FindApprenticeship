@@ -23,5 +23,17 @@
 
         [JsonIgnore]
         public decimal? ExistingAmount { get; set; }
+
+        [JsonIgnore]
+        public decimal? ExistingAmountLowerBound { get; set; }
+
+        [JsonIgnore]
+        public decimal? ExistingAmountUpperBound { get; set; }
+
+        [JsonIgnore]
+        public WageUnit ExistingUnit { get; set; }
+
+        [JsonIgnore]
+        public decimal? HoursPerWeek { get; set; }
     }
 }

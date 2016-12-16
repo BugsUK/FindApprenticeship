@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Domain.Entities.Vacancies;
     using Entities;
 
     public static class Wages
@@ -36,6 +37,23 @@
                 wageRange = Ranges.Single(r => dateTime >= r.ValidFrom && dateTime < r.ValidTo);
             }
             return wageRange;
+        }
+
+        public static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)
+        {
+            switch (wageUnit)
+            {
+                case WageUnit.Weekly:
+                    return wage / hoursPerWeek;
+                case WageUnit.Annually:
+                    return wage / 52m / hoursPerWeek;
+                case WageUnit.Monthly:
+                    return wage / 52m * 12 / hoursPerWeek;
+                case WageUnit.NotApplicable:
+                    return 0;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(wageUnit), wageUnit, null);
+            }
         }
     }
 }

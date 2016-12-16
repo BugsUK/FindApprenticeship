@@ -10,7 +10,7 @@
 
     [TestFixture]
     [Parallelizable]
-    public class WageUpdateValidatorTests
+    public class WageUpdateValidatorTypeTests
     {
         [TestCase(WageType.LegacyText, false)]
         [TestCase(WageType.LegacyWeekly, false)]

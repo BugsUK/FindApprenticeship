@@ -659,7 +659,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Error"});
             table1.AddRow(new string[] {
                         "Amount",
-                        "Amount must be greater than the existing amount."});
+                        "The new fixed wage must be higher than the original figure."});
 #line 180
  testRunner.And("The validation errors contain:", ((string)(null)), table1, "And ");
 #line 183
