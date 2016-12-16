@@ -43,6 +43,7 @@
             wage.ExistingAmountUpperBound = vacancy.Wage.AmountUpperBound;
             wage.ExistingUnit = vacancy.Wage.Unit;
             wage.HoursPerWeek = vacancy.Wage.HoursPerWeek;
+            wage.PossibleStartDate = vacancy.PossibleStartDate;
 
             var validator = new WageUpdateValidator();
             var validationResult = validator.Validate(wage, ruleSet: WageUpdateValidator.CompareWithExisting);

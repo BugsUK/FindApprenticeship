@@ -24,6 +24,8 @@
             public const string InvalidCustomAmount = "The new fixed wage must be higher than the original figure.";
             public const string InvalidCustomRangeAmount = "The new fixed wage must be higher than the orignal wage range minimum.";
             public const string MissingCustomAmount = "You must specify a valid amount.";
+            public const string InvalidCustomAmountNationalMinimumWage = "The new fixed wage must be higher than £{0:N2}.";
+            public const string InvalidCustomAmountApprenticeMinimumWage = "The new fixed wage must be higher than £{0:N2}.";
         }
 
         public class AmountLowerBound
@@ -31,6 +33,8 @@
             public const string InvalidCustomAmountLowerBound = "The minimum amount must be higher than the original amount.";
             public const string InvalidCustomRangeAmountLowerBound = "The minimum amount must be higher than the original fixed wage.";
             public const string MissingCustomAmountLowerBound = "You must specify a valid minimum amount for the wage range.";
+            public const string InvalidCustomAmountLowerBoundNationalMinimumWage = "The minimum amount must be higher than £{0:N2}.";
+            public const string InvalidCustomAmountLowerBoundApprenticeMinimumWage = "The minimum amount must be higher than £{0:N2}.";
         }
 
         public class AmountUpperBound

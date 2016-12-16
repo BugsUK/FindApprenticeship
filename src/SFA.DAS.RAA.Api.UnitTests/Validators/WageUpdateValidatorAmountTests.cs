@@ -1,5 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.UnitTests.Validators
 {
+    using System;
     using Api.Validators;
     using Apprenticeships.Domain.Entities.Vacancies;
     using FluentAssertions;
@@ -29,6 +30,25 @@
 
             validationResult.IsValid.Should().BeFalse();
             validator.ShouldHaveValidationErrorFor(wu => wu.Amount, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You must specify a valid amount.");
+            validator.ShouldHaveValidationErrorFor(wu => wu.Unit, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You must specify a valid wage unit.");
+        }
+
+        [Test]
+        public void CustomUnitMustBeSpecified()
+        {
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.Custom,
+                Amount = 100,
+                Unit = null,
+                ExistingType = WageType.NationalMinimum
+            };
+
+            var validator = new WageUpdateValidator();
+
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
+
+            validationResult.IsValid.Should().BeFalse();
             validator.ShouldHaveValidationErrorFor(wu => wu.Unit, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You must specify a valid wage unit.");
         }
 
@@ -106,6 +126,26 @@
             validationResult.IsValid.Should().BeFalse();
             validator.ShouldHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You must specify a valid minimum amount for the wage range.");
             validator.ShouldHaveValidationErrorFor(wu => wu.AmountUpperBound, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You must specify a valid maximum amount for the wage range.");
+            validator.ShouldHaveValidationErrorFor(wu => wu.Unit, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You must specify a valid wage unit.");
+        }
+
+        [Test]
+        public void CustomRangeUnitMustBeSpecified()
+        {
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.CustomRange,
+                AmountLowerBound = 100,
+                AmountUpperBound = 120,
+                Unit = null,
+                ExistingType = WageType.NationalMinimum
+            };
+
+            var validator = new WageUpdateValidator();
+
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
+
+            validationResult.IsValid.Should().BeFalse();
             validator.ShouldHaveValidationErrorFor(wu => wu.Unit, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("You must specify a valid wage unit.");
         }
 
@@ -262,6 +302,128 @@
             else
             {
                 validator.ShouldHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("The minimum amount must be higher than the original fixed wage.");
+            }
+        }
+
+        [TestCase(138, false)]
+        [TestCase(139, true)]
+        [TestCase(140, true)]
+        public void CustomWageAmountMustBeGreaterThanOrEqualToNationalMinimum(decimal newAmount, bool expectedIsValid)
+        {
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.Custom,
+                Amount = newAmount,
+                Unit = WageUnit.Weekly,
+                ExistingType = WageType.NationalMinimum,
+                HoursPerWeek = 20,
+                PossibleStartDate = new DateTime(2016, 12, 1)
+            };
+
+            var validator = new WageUpdateValidator();
+
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
+
+            validationResult.IsValid.Should().Be(expectedIsValid);
+            if (expectedIsValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(wu => wu.Amount, wageUpdate, WageUpdateValidator.CompareWithExisting);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(wu => wu.Amount, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("The new fixed wage must be higher than £139.00.");
+            }
+        }
+
+        [TestCase(138, false)]
+        [TestCase(139, true)]
+        [TestCase(140, true)]
+        public void CustomRangeAmountLowerBoundMustBeGreaterThanOrEqualToNationalMinimum(decimal newAmount, bool expectedIsValid)
+        {
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.CustomRange,
+                AmountLowerBound = newAmount,
+                AmountUpperBound = 150,
+                Unit = WageUnit.Weekly,
+                ExistingType = WageType.NationalMinimum,
+                HoursPerWeek = 20,
+                PossibleStartDate = new DateTime(2016, 12, 1)
+            };
+
+            var validator = new WageUpdateValidator();
+
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
+
+            validationResult.IsValid.Should().Be(expectedIsValid);
+            if (expectedIsValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("The minimum amount must be higher than £139.00.");
+            }
+        }
+
+        [TestCase(67, false)]
+        [TestCase(68, true)]
+        [TestCase(69, true)]
+        public void CustomWageAmountMustBeGreaterThanOrEqualToApprenticeshipMinimum(decimal newAmount, bool expectedIsValid)
+        {
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.Custom,
+                Amount = newAmount,
+                Unit = WageUnit.Weekly,
+                ExistingType = WageType.ApprenticeshipMinimum,
+                HoursPerWeek = 20,
+                PossibleStartDate = new DateTime(2016, 12, 1)
+            };
+
+            var validator = new WageUpdateValidator();
+
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
+
+            validationResult.IsValid.Should().Be(expectedIsValid);
+            if (expectedIsValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(wu => wu.Amount, wageUpdate, WageUpdateValidator.CompareWithExisting);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(wu => wu.Amount, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("The new fixed wage must be higher than £68.00.");
+            }
+        }
+
+        [TestCase(67, false)]
+        [TestCase(68, true)]
+        [TestCase(69, true)]
+        public void CustomRangeAmountLowerBoundMustBeGreaterThanOrEqualToApprenticeshipMinimum(decimal newAmount, bool expectedIsValid)
+        {
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.CustomRange,
+                AmountLowerBound = newAmount,
+                AmountUpperBound = 150,
+                Unit = WageUnit.Weekly,
+                ExistingType = WageType.ApprenticeshipMinimum,
+                HoursPerWeek = 20,
+                PossibleStartDate = new DateTime(2016, 12, 1)
+            };
+
+            var validator = new WageUpdateValidator();
+
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
+
+            validationResult.IsValid.Should().Be(expectedIsValid);
+            if (expectedIsValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("The minimum amount must be higher than £68.00.");
             }
         }
     }

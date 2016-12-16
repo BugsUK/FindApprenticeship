@@ -1,5 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.Models
 {
+    using System;
     using Apprenticeships.Domain.Entities.Vacancies;
     using FluentValidation.Attributes;
     using Newtonsoft.Json;
@@ -35,5 +36,8 @@
 
         [JsonIgnore]
         public decimal? HoursPerWeek { get; set; }
+
+        [JsonIgnore]
+        public DateTime? PossibleStartDate { get; set; }
     }
 }
