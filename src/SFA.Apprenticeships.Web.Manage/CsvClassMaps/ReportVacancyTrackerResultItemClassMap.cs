@@ -12,7 +12,7 @@
             Map(m => m.Reference).Name("Reference");
             Map(m => m.ProviderName).Name("Provider_Name");
             Map(m => m.QAUserName).Name("Adviser_Username");
-            Map(m => m.SubmittedDateOrResubmittedDate).Name("Date_Submitted_or_Resubmitted");
+            Map(m => m.DateSubmitted).Name("Date_Submitted_or_Resubmitted");
         }
     }
 }

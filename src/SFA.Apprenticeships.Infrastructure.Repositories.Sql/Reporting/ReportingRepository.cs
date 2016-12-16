@@ -656,7 +656,7 @@
                 {
                     OutComeDate = reader[0].ToString(),
                     ProviderName = reader[1].ToString(),
-                    SubmittedDateOrResubmittedDate = reader[2].ToString(),
+                    DateSubmitted = reader[2].ToString(),
                     Reference = reader[3].ToString(),
                     Outcome = reader[4].ToString(),
                     QAUserName = reader[5].ToString(),

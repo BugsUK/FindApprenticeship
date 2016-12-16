@@ -5,13 +5,45 @@ Description :  Returns Actioned Vacancy by Serco between the given dates.
 History:                  
 --------                  
 Date			Version		Author			Comment
-26-Aug-2008		1.0			Femma Ashraf	first version
-05-Oct-2008		1.1			Ian Emery		removed parameter @type
+16-Dec-2016		1.0			Shoma Gujjar	First version
 ---------------------------------------------------------------------- */ 
 
-CREATE PROCEDURE [dbo].[GetVacancyTracker]
-	@param1 int = 0,
-	@param2 int
+CREATE PROCEDURE [dbo].[ReportGetVacancyTracker]
+	@dateFrom datetime,
+	@dateTo datetime
 AS
-	SELECT @param1, @param2
-RETURN 0
+	set nocount on  
+	set transaction isolation level read uncommitted
+
+	DECLARE @vacancyHistory TABLE( 
+	vacancyId int not null primary key,					
+	historyDate datetime);
+
+	-- date of outcome, whether Live or Referred	
+	INSERT into @vacancyHistory(vacancyId, historyDate)	
+	SELECT vh.VacancyId, MIN(vh.HistoryDate) 
+	FROM  dbo.VacancyHistory vh
+	JOIN dbo.VacancyStatusType vst on vst.VacancyStatusTypeId = vh.VacancyHistoryEventSubTypeId
+	WHERE (vh.VacancyHistoryEventTypeID = 1) AND (vst.CodeName = 'Lve' OR vst.CodeName = 'Ref')
+	GROUP BY vh.VacancyId
+
+	-- remove vacancies out of range
+	SELECT @dateTo = dbo.fngetendOfDay(@dateTo);
+	DELETE FROM @vacancyHistory WHERE historyDate not between @dateFrom and @dateTo;
+
+	SELECT V.QAUserName,
+	V.VacancyReferenceNumber,
+	P.FullName,
+	dbo.GetSubmittedDate(V.VacancyID) AS DateSubmitted,
+	VST.FullName,
+	vh.HistoryDate AS OutComeDate
+	from @vacancyHistory vh 
+	JOIN Vacancy V ON V.VacancyId = vh.VacancyId
+	JOIN VacancyStatusType VST ON V.VacancyStatusId = VST.VacancyStatusTypeId
+	JOIN VacancyOwnerRelationship VOR ON VOR.VacancyOwnerRelationshipId = V.VacancyOwnerRelationshipId
+	JOIN ProviderSiteRelationship PSR ON PSR.ProviderSiteID = VOR.ProviderSiteID
+	JOIN Provider P ON P.ProviderID = PSR.ProviderID
+	WHERE V.VacancyStatusId IN (2,3)
+	ORDER BY V.QAUserName
+
+

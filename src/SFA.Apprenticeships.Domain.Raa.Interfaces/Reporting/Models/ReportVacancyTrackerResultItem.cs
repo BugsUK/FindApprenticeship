@@ -5,7 +5,7 @@
         public string QAUserName { get; set; }
         public string Reference { get; set; }
         public string ProviderName { get; set; }
-        public string SubmittedDateOrResubmittedDate { get; set; }
+        public string DateSubmitted { get; set; }
         public string Outcome { get; set; }
         public string OutComeDate { get; set; }
     }
