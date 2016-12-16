@@ -231,17 +231,15 @@
             }
         }
 
-        [HttpGet]
-        [AuthorizeUser(Roles = Roles.Raa)]
+        [HttpGet, AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult VacancyTrackerCsv()
         {
-            return View(new ReportVacanciesParameters());
+            return View(new ReportVacancyTrackerParameters());
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyTrackerCsv")]
-        [HttpPost]
-        [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult ValidateVacancyTrackerCsv(ReportVacanciesParameters parameters)
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyTrackerCsv"), HttpPost,
+         AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ValidateVacancyTrackerCsv(ReportVacancyTrackerParameters parameters)
         {
             var validationResponse = _reportingMediator.Validate(parameters);
             switch (validationResponse.Code)
@@ -255,10 +253,9 @@
             }
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyTrackerCsv")]
-        [HttpPost]
-        [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult DownloadVacancyTrackerCsv(ReportVacanciesParameters parameters)
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyTrackerCsv"), HttpPost,
+         AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadVacancyTrackerCsv(ReportVacancyTrackerParameters parameters)
         {
             var response = _reportingMediator.GetVacancyTrackerReportBytes(parameters);
             return File(response.ViewModel, "text/csv", "VacancyTracker.csv");

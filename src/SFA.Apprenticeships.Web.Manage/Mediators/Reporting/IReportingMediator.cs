@@ -16,6 +16,6 @@
         MediatorResponse<ReportRegisteredCandidatesParameters> GetRegisteredCandidatesReportParams();
         MediatorResponse<ReportRegisteredCandidatesParameters> ValidateRegisteredCandidatesParameters(ReportRegisteredCandidatesParameters parameters);
         MediatorResponse<byte[]> GetRegisteredCandidatesReportBytes(ReportRegisteredCandidatesParameters parameters);
-        MediatorResponse<byte[]> GetVacancyTrackerReportBytes(ReportVacanciesParameters parameters);
+        MediatorResponse<byte[]> GetVacancyTrackerReportBytes(ReportVacancyTrackerParameters parameters);
     }
 }

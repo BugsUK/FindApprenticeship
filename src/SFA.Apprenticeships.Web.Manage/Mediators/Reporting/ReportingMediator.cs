@@ -47,13 +47,13 @@
             }
         }
 
-        public MediatorResponse<byte[]> GetVacancyTrackerReportBytes(ReportVacanciesParameters parameters)
+        public MediatorResponse<byte[]> GetVacancyTrackerReportBytes(ReportVacancyTrackerParameters parameters)
         {
             try
             {
                 var reportResult = _reportingRepo.ReportVacancyTracker(parameters.FromDate.Date,
                     parameters.ToDate.Date);
-                var bytes = GetCsvBytes<ReportVacanciesResultItem, ReportVacanciesResultItemClassMap>(reportResult, "");
+                var bytes = GetCsvBytes<ReportVacancyTrackerResultItem, ReportVacancyTrackerResultItemClassMap>(reportResult, "");
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
             catch (Exception ex)

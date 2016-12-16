@@ -377,6 +377,7 @@
     <Compile Include="CsvClassMaps\ReportRegisteredCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportSuccessfulCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportUnsuccessfulCandidatesResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\ReportVacancyTrackerResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacancyExtensionsResultItemClassMap.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />

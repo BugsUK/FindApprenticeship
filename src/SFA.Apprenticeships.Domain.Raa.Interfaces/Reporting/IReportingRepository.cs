@@ -18,6 +18,6 @@
         IList<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId);
         InformationRadiatorData GetInformationRadiatorData();
         IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string region, string localAuthority, bool marketMessagesOnly);
-        IEnumerable<ReportVacanciesResultItem> ReportVacancyTracker(DateTime date, DateTime dateTime);
+        IEnumerable<ReportVacancyTrackerResultItem> ReportVacancyTracker(DateTime date, DateTime dateTime);
     }
 }

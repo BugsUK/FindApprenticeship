@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
-    public class ReportVacancyTrackerParameters
+    using Raa.Common.ViewModels.Report;
+
+    public class ReportVacancyTrackerParameters : ReportParameterBase
     {
     }
 }

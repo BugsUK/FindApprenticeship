@@ -624,11 +624,11 @@
             return response.ToList();
         }
 
-        public IEnumerable<ReportVacanciesResultItem> ReportVacancyTracker(DateTime toDate, DateTime fromDate)
+        public IEnumerable<ReportVacancyTrackerResultItem> ReportVacancyTracker(DateTime toDate, DateTime fromDate)
         {
             _logger.Debug($"Executing ReportVacancyTracker report with toDate {toDate} and fromdate {fromDate}...");
 
-            var response = new List<ReportVacanciesResultItem>();
+            var response = new List<ReportVacancyTrackerResultItem>();
 
             var command = new SqlCommand("dbo.ReportVacancyTracker", (SqlConnection)_getOpenConnection.GetOpenConnection());
             command.CommandType = CommandType.StoredProcedure;
@@ -652,28 +652,14 @@
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                response.Add(new ReportVacanciesResultItem()
+                response.Add(new ReportVacancyTrackerResultItem
                 {
-                    vacancyid = reader[0].ToString(),
-                    VacancyTitle = reader[1].ToString(),
-                    VacancyType = reader[2].ToString(),
+                    OutComeDate = reader[0].ToString(),
+                    ProviderName = reader[1].ToString(),
+                    SubmittedDateOrResubmittedDate = reader[2].ToString(),
                     Reference = reader[3].ToString(),
-                    EmployerName = reader[4].ToString(),
-                    EmployerNameActual = reader[5].ToString(),
-                    EmployerAnonymousName = reader[6].ToString(),
-                    IsEmployerAnonymous = reader[7].ToString(),
-                    Postcode = reader[8].ToString(),
-                    Sector = reader[9].ToString(),
-                    Framework = reader[10].ToString(),
-                    FrameworkStatus = reader[11].ToString(),
-                    LearningProvider = reader[12].ToString(),
-                    NumberOfPositions = reader[13].ToString(),
-                    DatePosted = reader[14].ToString(),
-                    ClosingDate = reader[15].ToString(),
-                    NoOfPositionsAvailable = reader[16].ToString(),
-                    NoOfApplications = reader[17].ToString(),
-                    Status = reader[18].ToString(),
-                    DeliverySite = reader[19].ToString()
+                    Outcome = reader[4].ToString(),
+                    QAUserName = reader[5].ToString(),
                 });
             }
 
