@@ -37,5 +37,19 @@
             SetUserMessage(response.Message);
             return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, vacancyViewModel.RouteValues);
         }
+
+        [HttpGet]
+        [ActionName("EditWage")]
+        public ActionResult EditWageGet(int vacancyReferenceNumber)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("EditWage")]
+        public ActionResult EditWagePost(EditWageViewModel editWageViewModel)
+        {
+            return View();
+        }
     }
 }

@@ -36,4 +36,11 @@
             @Html.RouteLink("Respond to candidates", RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary { { "VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber } }, new Dictionary<string, object> { { "class", "disp-block" } })
         </li>
     }
+
+    @if (Model.Status.CanEditWage())
+    {
+        <li>
+            @Html.RouteLink("Increase wage", RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        </li>
+    }
 </ul>

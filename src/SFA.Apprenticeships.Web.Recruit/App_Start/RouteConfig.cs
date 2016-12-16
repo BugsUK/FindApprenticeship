@@ -314,6 +314,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.EditWage,
+               url: "vacancy/editwage",
+               defaults: new { controller = "VacancyManagement", action = "EditWage" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.CloseVacancy,
                url: "vacancy/closeVacancy",
                defaults: new { controller = "VacancyPosting", action = "CloseVacancy" }
