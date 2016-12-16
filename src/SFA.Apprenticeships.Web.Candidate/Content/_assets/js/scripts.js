@@ -47,7 +47,7 @@ $(function() {
   });
 
   $('.collpanel-trigger').on('click', function() {
-    $(this).next('.collpanel').toggleClass('panel-open');
+    $(this).next('.collpanel').toggle();
     $(this).toggleClass('triggered');
     return false;
   });
