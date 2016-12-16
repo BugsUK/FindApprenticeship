@@ -2,7 +2,9 @@
 {
     using System;
     using System.Web.Http;
+    using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Attributes;
     using Models;
     using Strategies;
@@ -20,6 +22,7 @@
         }
 
         [Route("wage")]
+        [ResponseType(typeof(Vacancy))]
         [SwaggerOperation("EditVacancyWage")]
         [HttpPut]
         public IHttpActionResult EditWage(WageUpdate wageUpdate, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)

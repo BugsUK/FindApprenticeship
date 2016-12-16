@@ -21,7 +21,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// </param>
             /// <param name='vacancyGuid'>
             /// </param>
-            public static object GetVacancy(this IApiClient operations, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?))
+            public static Vacancy GetVacancy(this IApiClient operations, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApiClient)s).GetVacancyAsync(vacancyId, vacancyReferenceNumber, vacancyGuid), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -38,7 +38,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<object> GetVacancyAsync(this IApiClient operations, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Vacancy> GetVacancyAsync(this IApiClient operations, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetVacancyWithHttpMessagesAsync(vacancyId, vacancyReferenceNumber, vacancyGuid, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -57,7 +57,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// </param>
             /// <param name='vacancyGuid'>
             /// </param>
-            public static object EditVacancyWage(this IApiClient operations, WageUpdate wageUpdate, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?))
+            public static Vacancy EditVacancyWage(this IApiClient operations, WageUpdate wageUpdate, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApiClient)s).EditVacancyWageAsync(wageUpdate, vacancyId, vacancyReferenceNumber, vacancyGuid), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -76,7 +76,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<object> EditVacancyWageAsync(this IApiClient operations, WageUpdate wageUpdate, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Vacancy> EditVacancyWageAsync(this IApiClient operations, WageUpdate wageUpdate, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.EditVacancyWageWithHttpMessagesAsync(wageUpdate, vacancyId, vacancyReferenceNumber, vacancyGuid, null, cancellationToken).ConfigureAwait(false))
                 {

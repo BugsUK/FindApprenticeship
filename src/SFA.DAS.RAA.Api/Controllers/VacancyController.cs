@@ -2,7 +2,9 @@
 {
     using System;
     using System.Web.Http;
+    using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Providers;
     using Swashbuckle.Swagger.Annotations;
 
@@ -24,6 +26,7 @@
         }*/
 
         [Route("vacancy")]
+        [ResponseType(typeof(Vacancy))]
         [SwaggerOperation("GetVacancy")]
         public IHttpActionResult Get(int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {

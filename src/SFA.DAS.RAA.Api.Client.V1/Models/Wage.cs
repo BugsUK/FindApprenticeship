@@ -35,50 +35,50 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
-        /// Gets possible values include: 'LegacyText', 'LegacyWeekly',
-        /// 'ApprenticeshipMinimum', 'NationalMinimum', 'Custom',
-        /// 'CustomRange', 'CompetitiveSalary', 'ToBeAgreedUponAppointment',
-        /// 'Unwaged'
+        /// Gets or sets possible values include: 'LegacyText',
+        /// 'LegacyWeekly', 'ApprenticeshipMinimum', 'NationalMinimum',
+        /// 'Custom', 'CustomRange', 'CompetitiveSalary',
+        /// 'ToBeAgreedUponAppointment', 'Unwaged'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Type")]
-        public string Type { get; private set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ReasonForType")]
-        public string ReasonForType { get; private set; }
+        public string ReasonForType { get; set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Amount")]
-        public decimal? Amount { get; private set; }
+        public decimal? Amount { get; set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AmountLowerBound")]
-        public decimal? AmountLowerBound { get; private set; }
+        public decimal? AmountLowerBound { get; set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AmountUpperBound")]
-        public decimal? AmountUpperBound { get; private set; }
+        public decimal? AmountUpperBound { get; set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Text")]
-        public string Text { get; private set; }
+        public string Text { get; set; }
 
         /// <summary>
-        /// Gets possible values include: 'NotApplicable', 'Weekly',
+        /// Gets or sets possible values include: 'NotApplicable', 'Weekly',
         /// 'Monthly', 'Annually'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Unit")]
-        public string Unit { get; private set; }
+        public string Unit { get; set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "HoursPerWeek")]
-        public decimal? HoursPerWeek { get; private set; }
+        public decimal? HoursPerWeek { get; set; }
 
     }
 }
