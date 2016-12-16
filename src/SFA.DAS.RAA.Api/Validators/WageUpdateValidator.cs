@@ -5,9 +5,11 @@
 
     public class WageUpdateValidator : AbstractValidator<WageUpdate>
     {
+        public const string CompareWithExisting = "CompareWithExisting";
+
         public WageUpdateValidator()
         {
-            RuleSet("CompareWithExisting", () =>
+            RuleSet(CompareWithExisting, () =>
             {
                 RuleFor(w => w.Amount)
                 .GreaterThan(wu => wu.ExistingAmount)

@@ -19,6 +19,9 @@
         public WageUnit Unit { get; set; }
 
         [JsonIgnore]
+        public WageType ExistingType { get; set; }
+
+        [JsonIgnore]
         public decimal? ExistingAmount { get; set; }
     }
 }

@@ -34,7 +34,7 @@
 
             //TODO: Loads of validation
             var validator = new WageUpdateValidator();
-            var validationResult = validator.Validate(wage, ruleSet: "CompareWithExisting");
+            var validationResult = validator.Validate(wage, ruleSet: WageUpdateValidator.CompareWithExisting);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors);
