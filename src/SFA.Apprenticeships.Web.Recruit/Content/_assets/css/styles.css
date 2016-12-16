@@ -201,10 +201,10 @@ Custom Typography
 /* -------------------------------------------------------------------
 Custom list
 ------------------------------------------------------------------- */
-.sfa-dl .sfa-di {
+dl.sfa-dl .sfa-di {
   margin-bottom: 5px; }
 
-.sfa-dl .dt {
+dl.sfa-dl .dt {
   font-weight: bold;
   font-weight: 700; }
 
