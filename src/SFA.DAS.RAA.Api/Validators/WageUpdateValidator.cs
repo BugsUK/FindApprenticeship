@@ -1,8 +1,8 @@
 ﻿namespace SFA.DAS.RAA.Api.Validators
 {
-    using System;
     using Apprenticeships.Domain.Entities.Vacancies;
     using Apprenticeships.Infrastructure.Presentation.Constants;
+    using Controllers;
     using FluentValidation;
     using FluentValidation.Results;
     using Models;
@@ -36,14 +36,14 @@
             const string propertyName = "Type";
             if (wageUpdate.ExistingType == WageType.LegacyText)
             {
-                return new ValidationFailure(propertyName, "You cannot change the type of a LegacyText wage.");
+                return new ValidationFailure(propertyName, WageUpdateMessages.Type.CannotChangeLegacyTextType);
             }
 
             if (wageUpdate.ExistingType == WageType.LegacyWeekly)
             {
                 if (wageUpdate.Type != WageType.LegacyWeekly && wageUpdate.Type != WageType.Custom && wageUpdate.Type != WageType.CustomRange)
                 {
-                    return new ValidationFailure(propertyName, "You can only change the type of a LegacyWeekly wage to Custom (fixed) or CustomRange (wage range).");
+                    return new ValidationFailure(propertyName, WageUpdateMessages.Type.InvalidLegacyWeeklyTypeChange);
                 }
             }
 
@@ -51,7 +51,7 @@
             {
                 if (wageUpdate.Type != WageType.ApprenticeshipMinimum && wageUpdate.Type != WageType.NationalMinimum && wageUpdate.Type != WageType.Custom && wageUpdate.Type != WageType.CustomRange)
                 {
-                    return new ValidationFailure(propertyName, "You can only change the type of an ApprenticeshipMinimum wage to NationalMinimum, Custom (fixed) or CustomRange (wage range).");
+                    return new ValidationFailure(propertyName, WageUpdateMessages.Type.InvalidApprenticeshipMinimumTypeChange);
                 }
             }
 
@@ -59,7 +59,7 @@
             {
                 if (wageUpdate.Type != WageType.NationalMinimum && wageUpdate.Type != WageType.Custom && wageUpdate.Type != WageType.CustomRange)
                 {
-                    return new ValidationFailure(propertyName, "You can only change the type of a NationalMinimum wage to Custom (fixed) or CustomRange (wage range).");
+                    return new ValidationFailure(propertyName, WageUpdateMessages.Type.InvalidNationalMinimumTypeChange);
                 }
             }
 
@@ -69,26 +69,26 @@
                 {
                     return new ValidationFailure(propertyName,
                         wageUpdate.ExistingType == WageType.Custom
-                            ? "You can only change the type of a Custom (fixed) wage to CustomRange (wage range)."
-                            : "You can only change the type of a CustomRange (wage range) wage to Custom (fixed).");
+                            ? WageUpdateMessages.Type.InvalidCustomTypeChange
+                            : WageUpdateMessages.Type.InvalidCustomRangeTypeChange);
                 }
             }
 
             if (wageUpdate.ExistingType == WageType.CompetitiveSalary)
             {
-                return new ValidationFailure(propertyName, "You cannot change the type of a CompetitiveSalary wage.");
+                return new ValidationFailure(propertyName, WageUpdateMessages.Type.InvalidCompetitiveSalaryTypeChange);
             }
 
             if (wageUpdate.ExistingType == WageType.ToBeAgreedUponAppointment)
             {
-                return new ValidationFailure(propertyName, "You cannot change the type of a ToBeAgreedUponAppointment wage.");
+                return new ValidationFailure(propertyName, WageUpdateMessages.Type.InvalidToBeAgreedUponAppointmentTypeChange);
             }
 
             if (wageUpdate.ExistingType == WageType.Unwaged)
             {
                 if (wageUpdate.Type != WageType.Unwaged && wageUpdate.Type != WageType.ApprenticeshipMinimum && wageUpdate.Type != WageType.NationalMinimum && wageUpdate.Type != WageType.Custom && wageUpdate.Type != WageType.CustomRange)
                 {
-                    return new ValidationFailure(propertyName, "You can only change the type of an Unwaged wage to ApprenticeshipMinimum, NationalMinimum, Custom (fixed) or CustomRange (wage range).");
+                    return new ValidationFailure(propertyName, WageUpdateMessages.Type.InvalidUnwagedTypeChange);
                 }
             }
 
@@ -106,13 +106,13 @@
                 {
                     if (wageUpdate.ExistingType == WageType.Custom)
                     {
-                        return new ValidationFailure("Amount", "The new fixed wage must be higher than the original figure.");
+                        return new ValidationFailure("Amount", WageUpdateMessages.Amount.InvalidCustomAmount);
                     }
                     if (wageUpdate.ExistingType == WageType.CustomRange)
                     {
-                        return new ValidationFailure("Amount", "The new fixed wage must be higher than the orignal wage range minimum.");
+                        return new ValidationFailure("Amount", WageUpdateMessages.Amount.InvalidCustomRangeAmount);
                     }
-                    return new ValidationFailure("Amount", "You must specify a valid amount.");
+                    return new ValidationFailure("Amount", WageUpdateMessages.Amount.MissingCustomAmount);
                 }
             }
 
@@ -130,13 +130,13 @@
                 {
                     if (wageUpdate.ExistingType == WageType.CustomRange)
                     {
-                        return new ValidationFailure("AmountLowerBound", "The minimum amount must be higher than the original amount.");
+                        return new ValidationFailure("AmountLowerBound", WageUpdateMessages.AmountLowerBound.InvalidCustomAmountLowerBound);
                     }
                     if (wageUpdate.ExistingType == WageType.Custom)
                     {
-                        return new ValidationFailure("AmountLowerBound", "The minimum amount must be higher than the original fixed wage.");
+                        return new ValidationFailure("AmountLowerBound", WageUpdateMessages.AmountLowerBound.InvalidCustomRangeAmountLowerBound);
                     }
-                    return new ValidationFailure("AmountLowerBound", "You must specify a valid minimum amount for the wage range.");
+                    return new ValidationFailure("AmountLowerBound", WageUpdateMessages.AmountLowerBound.MissingCustomAmountLowerBound);
                 }
             }
 
@@ -152,7 +152,7 @@
             {
                 if (!amountUpperBound.HasValue)
                 {
-                    return new ValidationFailure("AmountUpperBound", "You must specify a valid maximum amount for the wage range.");
+                    return new ValidationFailure("AmountUpperBound", WageUpdateMessages.AmountUpperBound.MissingCustomAmountUpperBound);
                 }
             }
 
@@ -168,14 +168,14 @@
             {
                 if (wageUnit == 0 || wageUnit == WageUnit.NotApplicable)
                 {
-                    return new ValidationFailure("Unit", "You must specify a valid wage unit.");
+                    return new ValidationFailure("Unit", WageUpdateMessages.Unit.MissingUnit);
                 }
             }
             if (wageType == WageType.CustomRange)
             {
                 if (wageUnit == 0 || wageUnit == WageUnit.NotApplicable)
                 {
-                    return new ValidationFailure("Unit", "You must specify a valid wage unit.");
+                    return new ValidationFailure("Unit", WageUpdateMessages.Unit.MissingUnit);
                 }
             }
 
@@ -200,7 +200,7 @@
 
                         if (newHourlyRate < existingHourlyRate)
                         {
-                            return new ValidationFailure("Amount", "The new fixed wage must be higher than the original figure.");
+                            return new ValidationFailure("Amount", WageUpdateMessages.Amount.InvalidCustomAmount);
                         }
                     }
                 }
@@ -213,7 +213,7 @@
             {
                 if (amountLowerBound.HasValue && amountUpperBound.HasValue && amountUpperBound <= amountLowerBound)
                 {
-                    return new ValidationFailure("AmountUpperBound", "The maximum amount for the wage range must be higher than the minimum amount.");
+                    return new ValidationFailure("AmountUpperBound", WageUpdateMessages.AmountUpperBound.AmountUpperBoundShouldBeGreaterThanAmountLowerBound);
                 }
             }
 

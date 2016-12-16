@@ -7,6 +7,7 @@
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Controllers;
 
     public class VacancyProvider : IVacancyProvider
     {
@@ -21,7 +22,7 @@
         {
             if (!vacancyId.HasValue && !vacancyReferenceNumber.HasValue && !vacancyGuid.HasValue)
             {
-                throw new ArgumentException("Please specify either a vacancyId, a vacancyReferenceNumber or a vacancyGuid.");
+                throw new ArgumentException(VacancyMessages.MissingVacancyIdentifier);
             }
 
             try
@@ -43,7 +44,7 @@
 
                 if (vacancy == null)
                 {
-                    throw new KeyNotFoundException("The requested vacancy has not been found.");
+                    throw new KeyNotFoundException(VacancyMessages.VacancyNotFound);
                 }
 
                 return vacancy;
@@ -52,7 +53,7 @@
             {
                 if (ex.Code == ErrorCodes.ProviderVacancyAuthorisation.Failed)
                 {
-                    throw new SecurityException("You are not authorized to view or edit this vacancy.");
+                    throw new SecurityException(VacancyMessages.UnauthorizedVacancyAccess);
                 }
                 throw;
             }

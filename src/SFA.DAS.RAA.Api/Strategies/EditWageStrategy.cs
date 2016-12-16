@@ -4,6 +4,7 @@
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies;
+    using Controllers;
     using Models;
     using Providers;
     using Validators;
@@ -26,21 +27,22 @@
             var vacancy = _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
             if (vacancy.VacancyType != VacancyType.Apprenticeship)
             {
-                throw new ArgumentException("You can only edit the wage of an Apprenticeship vacancy.");
+                throw new ArgumentException(WageUpdateMessages.CannotEditTraineeshipWage);
             }
             if (vacancy.Status != VacancyStatus.Live && vacancy.Status != VacancyStatus.Closed)
             {
-                throw new ArgumentException("You can only edit the wage of a vacancy that is live or closed.");
+                throw new ArgumentException(WageUpdateMessages.CannotEditNonLiveWage);
             }
             if (!vacancy.Wage.HoursPerWeek.HasValue)
             {
-                throw new ArgumentException("You can only edit the wage of a vacancy that has a valid value for hours per week.");
+                throw new ArgumentException(WageUpdateMessages.MissingHoursPerWeek);
             }
             wage.ExistingType = vacancy.Wage.Type;
             wage.ExistingAmount = vacancy.Wage.Amount;
             wage.ExistingAmountLowerBound = vacancy.Wage.AmountLowerBound;
             wage.ExistingAmountUpperBound = vacancy.Wage.AmountUpperBound;
             wage.ExistingUnit = vacancy.Wage.Unit;
+            wage.HoursPerWeek = vacancy.Wage.HoursPerWeek;
 
             var validator = new WageUpdateValidator();
             var validationResult = validator.Validate(wage, ruleSet: WageUpdateValidator.CompareWithExisting);
