@@ -624,29 +624,16 @@
             return response.ToList();
         }
 
-        public IEnumerable<ReportVacancyTrackerResultItem> ReportVacancyTracker(DateTime toDate, DateTime fromDate)
+        public IEnumerable<ReportVacancyTrackerResultItem> ReportVacancyTracker(DateTime fromDate, DateTime toDate)
         {
             _logger.Debug($"Executing ReportVacancyTracker report with toDate {toDate} and fromdate {fromDate}...");
 
             var response = new List<ReportVacancyTrackerResultItem>();
 
-            var command = new SqlCommand("dbo.ReportVacancyTracker", (SqlConnection)_getOpenConnection.GetOpenConnection());
+            var command = new SqlCommand("dbo.ReportGetVacancyTracker", (SqlConnection)_getOpenConnection.GetOpenConnection());
             command.CommandType = CommandType.StoredProcedure;
-            //command.Parameters.Add("ManagedBy", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("Type", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("lscRegion", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("localauthority", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
-            //command.Parameters.Add("sector", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("framework", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("vacancyType", SqlDbType.Int).Value = -1;
             command.Parameters.Add("dateFrom", SqlDbType.DateTime).Value = fromDate;
             command.Parameters.Add("dateTo", SqlDbType.DateTime).Value = toDate;
-            //command.Parameters.Add("VacancyStatus", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = 0;
-            //command.Parameters.Add("RecAgentID", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("EmployerID", SqlDbType.Int).Value = -1;
-            //command.Parameters.Add("rowcount", SqlDbType.Int).Value = 0;
 
             command.CommandTimeout = 180;
             var reader = command.ExecuteReader();
@@ -654,12 +641,12 @@
             {
                 response.Add(new ReportVacancyTrackerResultItem
                 {
-                    OutComeDate = reader[0].ToString(),
-                    ProviderName = reader[1].ToString(),
-                    DateSubmitted = reader[2].ToString(),
-                    Reference = reader[3].ToString(),
+                    OutComeDate = reader[5].ToString(),
+                    ProviderName = reader[2].ToString(),
+                    DateSubmitted = reader[3].ToString(),
+                    Reference = reader[1].ToString(),
                     Outcome = reader[4].ToString(),
-                    QAUserName = reader[5].ToString(),
+                    QAUserName = reader[0].ToString(),
                 });
             }
 

@@ -7,12 +7,12 @@
     {
         public ReportVacancyTrackerResultItemClassMap()
         {
-            Map(m => m.OutComeDate).Name("Outcome_Date");
-            Map(m => m.Outcome).Name("Outcome");
+            Map(m => m.QAUserName).Name("Adviser_Username");
             Map(m => m.Reference).Name("Reference");
             Map(m => m.ProviderName).Name("Provider_Name");
-            Map(m => m.QAUserName).Name("Adviser_Username");
             Map(m => m.DateSubmitted).Name("Date_Submitted_or_Resubmitted");
+            Map(m => m.Outcome).Name("Outcome");
+            Map(m => m.OutComeDate).Name("Outcome_Date");
         }
     }
 }
