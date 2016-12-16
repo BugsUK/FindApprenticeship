@@ -214,18 +214,6 @@
             {
                 if (wageUpdate.Amount.HasValue)
                 {
-                    if (wageUpdate.ExistingType == WageType.ApprenticeshipMinimum)
-                    {
-                        var wageRange = wageUpdate.PossibleStartDate.GetWageRangeFor();
-
-                        var newHourlyRate = Wages.GetHourRate(wageUpdate.Amount.Value, wageUnit, wageUpdate.HoursPerWeek.Value);
-
-                        if (newHourlyRate < wageRange.ApprenticeMinimumWage)
-                        {
-                            return new ValidationFailure("Amount", string.Format(WageUpdateMessages.Amount.InvalidCustomAmountApprenticeMinimumWage, wageRange.ApprenticeMinimumWage * wageUpdate.HoursPerWeek.Value));
-                        }
-                    }
-
                     if (wageUpdate.ExistingType == WageType.NationalMinimum)
                     {
                         var wageRange = wageUpdate.PossibleStartDate.GetWageRangeFor();
@@ -237,8 +225,7 @@
                             return new ValidationFailure("Amount", string.Format(WageUpdateMessages.Amount.InvalidCustomAmountNationalMinimumWage, wageRange.Over21NationalMinimumWage * wageUpdate.HoursPerWeek.Value));
                         }
                     }
-
-                    if (wageUpdate.ExistingType == WageType.Custom && wageUpdate.ExistingAmount.HasValue)
+                    else if (wageUpdate.ExistingType == WageType.Custom && wageUpdate.ExistingAmount.HasValue)
                     {
                         var existingHourlyRate = Wages.GetHourRate(wageUpdate.ExistingAmount.Value, wageUpdate.ExistingUnit, wageUpdate.HoursPerWeek.Value);
                         var newHourlyRate = Wages.GetHourRate(wageUpdate.Amount.Value, wageUnit, wageUpdate.HoursPerWeek.Value);
@@ -248,8 +235,7 @@
                             return new ValidationFailure("Amount", WageUpdateMessages.Amount.InvalidCustomAmount);
                         }
                     }
-
-                    if (wageUpdate.ExistingType == WageType.CustomRange && wageUpdate.ExistingAmountLowerBound.HasValue)
+                    else if (wageUpdate.ExistingType == WageType.CustomRange && wageUpdate.ExistingAmountLowerBound.HasValue)
                     {
                         var existingHourlyRate = Wages.GetHourRate(wageUpdate.ExistingAmountLowerBound.Value, wageUpdate.ExistingUnit, wageUpdate.HoursPerWeek.Value);
                         var newHourlyRate = Wages.GetHourRate(wageUpdate.Amount.Value, wageUnit, wageUpdate.HoursPerWeek.Value);
@@ -260,6 +246,17 @@
                                 WageUpdateMessages.Amount.InvalidCustomRangeAmount);
                         }
                     }
+                    else
+                    {
+                        var wageRange = wageUpdate.PossibleStartDate.GetWageRangeFor();
+
+                        var newHourlyRate = Wages.GetHourRate(wageUpdate.Amount.Value, wageUnit, wageUpdate.HoursPerWeek.Value);
+
+                        if (newHourlyRate < wageRange.ApprenticeMinimumWage)
+                        {
+                            return new ValidationFailure("Amount", string.Format(WageUpdateMessages.Amount.InvalidCustomAmountApprenticeMinimumWage, wageRange.ApprenticeMinimumWage * wageUpdate.HoursPerWeek.Value));
+                        }
+                    }
                 }
             }
 
@@ -267,18 +264,6 @@
             {
                 if (wageUpdate.AmountLowerBound.HasValue)
                 {
-                    if (wageUpdate.ExistingType == WageType.ApprenticeshipMinimum)
-                    {
-                        var wageRange = wageUpdate.PossibleStartDate.GetWageRangeFor();
-
-                        var newHourlyRate = Wages.GetHourRate(wageUpdate.AmountLowerBound.Value, wageUnit, wageUpdate.HoursPerWeek.Value);
-
-                        if (newHourlyRate < wageRange.ApprenticeMinimumWage)
-                        {
-                            return new ValidationFailure("AmountLowerBound", string.Format(WageUpdateMessages.AmountLowerBound.InvalidCustomAmountLowerBoundApprenticeMinimumWage, wageRange.ApprenticeMinimumWage * wageUpdate.HoursPerWeek.Value));
-                        }
-                    }
-
                     if (wageUpdate.ExistingType == WageType.NationalMinimum)
                     {
                         var wageRange = wageUpdate.PossibleStartDate.GetWageRangeFor();
@@ -290,8 +275,7 @@
                             return new ValidationFailure("AmountLowerBound", string.Format(WageUpdateMessages.AmountLowerBound.InvalidCustomAmountLowerBoundNationalMinimumWage, wageRange.Over21NationalMinimumWage * wageUpdate.HoursPerWeek.Value));
                         }
                     }
-
-                    if (wageUpdate.ExistingType == WageType.CustomRange && wageUpdate.ExistingAmountLowerBound.HasValue)
+                    else if (wageUpdate.ExistingType == WageType.CustomRange && wageUpdate.ExistingAmountLowerBound.HasValue)
                     {
                         var existingHourlyRate = Wages.GetHourRate(wageUpdate.ExistingAmountLowerBound.Value, wageUpdate.ExistingUnit, wageUpdate.HoursPerWeek.Value);
                         var newHourlyRate = Wages.GetHourRate(wageUpdate.AmountLowerBound.Value, wageUnit, wageUpdate.HoursPerWeek.Value);
@@ -301,8 +285,7 @@
                             return new ValidationFailure("AmountLowerBound", WageUpdateMessages.AmountLowerBound.InvalidCustomAmountLowerBound);
                         }
                     }
-
-                    if (wageUpdate.ExistingType == WageType.Custom && wageUpdate.ExistingAmount.HasValue)
+                    else if (wageUpdate.ExistingType == WageType.Custom && wageUpdate.ExistingAmount.HasValue)
                     {
                         var existingHourlyRate = Wages.GetHourRate(wageUpdate.ExistingAmount.Value, wageUpdate.ExistingUnit, wageUpdate.HoursPerWeek.Value);
                         var newHourlyRate = Wages.GetHourRate(wageUpdate.AmountLowerBound.Value, wageUnit, wageUpdate.HoursPerWeek.Value);
@@ -310,6 +293,17 @@
                         if (newHourlyRate < existingHourlyRate)
                         {
                             return new ValidationFailure("AmountLowerBound", WageUpdateMessages.AmountLowerBound.InvalidCustomRangeAmountLowerBound);
+                        }
+                    }
+                    else
+                    {
+                        var wageRange = wageUpdate.PossibleStartDate.GetWageRangeFor();
+
+                        var newHourlyRate = Wages.GetHourRate(wageUpdate.AmountLowerBound.Value, wageUnit, wageUpdate.HoursPerWeek.Value);
+
+                        if (newHourlyRate < wageRange.ApprenticeMinimumWage)
+                        {
+                            return new ValidationFailure("AmountLowerBound", string.Format(WageUpdateMessages.AmountLowerBound.InvalidCustomAmountLowerBoundApprenticeMinimumWage, wageRange.ApprenticeMinimumWage * wageUpdate.HoursPerWeek.Value));
                         }
                     }
                 }

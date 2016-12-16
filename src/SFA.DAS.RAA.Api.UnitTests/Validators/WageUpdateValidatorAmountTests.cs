@@ -426,5 +426,66 @@
                 validator.ShouldHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("The minimum amount must be higher than £68.00.");
             }
         }
+
+        [TestCase(67, false)]
+        [TestCase(68, true)]
+        [TestCase(69, true)]
+        public void CustomWageAmountMustBeGreaterThanOrEqualToApprenticeshipMinimumWhenOriginallyUnwaged(decimal newAmount, bool expectedIsValid)
+        {
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.Custom,
+                Amount = newAmount,
+                Unit = WageUnit.Weekly,
+                ExistingType = WageType.Unwaged,
+                HoursPerWeek = 20,
+                PossibleStartDate = new DateTime(2016, 12, 1)
+            };
+
+            var validator = new WageUpdateValidator();
+
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
+
+            validationResult.IsValid.Should().Be(expectedIsValid);
+            if (expectedIsValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(wu => wu.Amount, wageUpdate, WageUpdateValidator.CompareWithExisting);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(wu => wu.Amount, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("The new fixed wage must be higher than £68.00.");
+            }
+        }
+
+        [TestCase(67, false)]
+        [TestCase(68, true)]
+        [TestCase(69, true)]
+        public void CustomRangeAmountLowerBoundMustBeGreaterThanOrEqualToApprenticeshipMinimumWhenOriginallyUnwaged(decimal newAmount, bool expectedIsValid)
+        {
+            var wageUpdate = new WageUpdate
+            {
+                Type = WageType.CustomRange,
+                AmountLowerBound = newAmount,
+                AmountUpperBound = 150,
+                Unit = WageUnit.Weekly,
+                ExistingType = WageType.Unwaged,
+                HoursPerWeek = 20,
+                PossibleStartDate = new DateTime(2016, 12, 1)
+            };
+
+            var validator = new WageUpdateValidator();
+
+            var validationResult = validator.Validate(wageUpdate, ruleSet: WageUpdateValidator.CompareWithExisting);
+
+            validationResult.IsValid.Should().Be(expectedIsValid);
+            if (expectedIsValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(wu => wu.AmountLowerBound, wageUpdate, WageUpdateValidator.CompareWithExisting).WithErrorMessage("The minimum amount must be higher than £68.00.");
+            }
+        }
     }
 }
