@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Common.Constants.ViewModels
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@using SFA.Apprenticeships.Web.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Common.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
@@ -15,6 +16,38 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, FormMethod.Post, new { id = "edit-wage-form" }))
 {
     <div>
+        @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.NationalMinimum)
+        {
+            <h3 class="bold-small">
+                Current wage
+            </h3>
+            if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+            {
+                <p>National minimum wage for apprentices</p>
+            }
+
+            if (Model.ExistingWage.Type == WageType.NationalMinimum)
+            {
+                <p>National Minimum Wage</p>
+            }
+
+            <h3 class="bold-small">
+                Wage displayed
+            </h3>
+            <p id="vacancy-wage">
+                @WagePresenter.GetDisplayAmount(Model.ExistingWage.Type, Model.ExistingWage.Amount, Model.ExistingWage.AmountLowerBound, Model.ExistingWage.AmountUpperBound, Model.ExistingWage.Text, Model.ExistingWage.HoursPerWeek, Model.PossibleStartDate) (based on @Model.ExistingWage.HoursPerWeek) paid hours per week
+
+                @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+                {
+                    @Html.Partial("_ApprenticeMinimumWageExplained", Model.PossibleStartDate)
+                }
+
+                @if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                {
+                    @Html.Partial("_NationalMinimumWageExplained", Model.PossibleStartDate)
+                }
+            </p>
+        }
 
         <div class="blocklabel-single-container">
             <a name="@Html.NameFor(m => m.Type).ToString().ToLower()"></a>
@@ -39,7 +72,7 @@
                     <div class="panel panel-border-narrow">
                         <fieldset class="form-group inline-fixed">
                             @* ReSharper disable once Html.IdNotResolved *@
-                            <span class="clearfix">Select type</span>
+                            <span class="clearfix">Select an option</span>
                             <label for="custom-wage-fixed" class="block-label selection-button-radio" data-target="custom-wage-fixed-panel">
                                 @Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"})
                                 Fixed wage
