@@ -65,7 +65,7 @@ WriteLiteral(">\r\n    <fieldset");
 
 WriteLiteral(" id=\"applyWorkExperience\"");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <legend");
 
@@ -420,7 +420,7 @@ WriteLiteral(" class=\"work-controls\"");
 
 WriteLiteral(">\r\n                                <div");
 
-WriteLiteral(" class=\"work-edit ta-center\"");
+WriteLiteral(" class=\"work-edit sfa-align-center\"");
 
 WriteLiteral(">\r\n\r\n                                    <a");
 
@@ -441,7 +441,7 @@ WriteLiteral(" data-bind=\"ifnot: showEditButton,click: $parent.saveWorkExperien
 WriteLiteral(">Save</a>\r\n                                </div>\r\n                              " +
 "  <div");
 
-WriteLiteral(" class=\"work-delete ta-center\"");
+WriteLiteral(" class=\"work-delete sfa-align-center\"");
 
 WriteLiteral(">\r\n                                    <span");
 

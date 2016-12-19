@@ -347,7 +347,7 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -355,11 +355,11 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">My applications</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"column-one-third sfa-align-right-tablet sfa-xlarge-top-margin\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n        <ul");
 
-WriteLiteral(" class=\"page-link\"");
+WriteLiteral(" class=\"list\"");
 
 WriteLiteral(">\r\n");
 
@@ -377,23 +377,19 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                <ul");
-
-WriteLiteral(" class=\"list-text sfa-small-bottom-margin\"");
-
-WriteLiteral(">\r\n                    <li>");
+WriteLiteral("                <li>");
 
             
-            #line 76 "..\..\Views\Account\Index.cshtml"
-                   Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new {id = "find-apprenticeship-link", @class = "link-unimp"}));
+            #line 75 "..\..\Views\Account\Index.cshtml"
+               Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "link-unimp" }));
 
             
             #line default
             #line hidden
-WriteLiteral("</li>\r\n                </ul>\r\n");
+WriteLiteral("</li>\r\n");
 
             
-            #line 78 "..\..\Views\Account\Index.cshtml"
+            #line 76 "..\..\Views\Account\Index.cshtml"
             }
 
             
@@ -402,41 +398,37 @@ WriteLiteral("</li>\r\n                </ul>\r\n");
 WriteLiteral("            ");
 
             
-            #line 79 "..\..\Views\Account\Index.cshtml"
+            #line 77 "..\..\Views\Account\Index.cshtml"
              if (Model.TraineeshipFeature.ShowTraineeshipsLink)
             {
 
             
             #line default
             #line hidden
-WriteLiteral("                <ul");
+WriteLiteral("                <li>\r\n");
 
-WriteLiteral(" class=\"list-text\"");
-
-WriteLiteral(">\r\n                    <li>\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral("                    ");
 
             
-            #line 83 "..\..\Views\Account\Index.cshtml"
-                   Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new {id = "find-traineeship-link", @class = "link-unimp"}));
+            #line 80 "..\..\Views\Account\Index.cshtml"
+               Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "link-unimp" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </li>\r\n                </ul>\r\n");
+WriteLiteral("\r\n                </li>\r\n");
 
             
-            #line 86 "..\..\Views\Account\Index.cshtml"
+            #line 82 "..\..\Views\Account\Index.cshtml"
             }
 
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n    </div>\r\n</div>\r\n\r\n");
+WriteLiteral("        </ul>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 91 "..\..\Views\Account\Index.cshtml"
+            #line 87 "..\..\Views\Account\Index.cshtml"
 Write(Html.DisplayFor(m => m, MyApplicationsViewModel.PartialView));
 
             

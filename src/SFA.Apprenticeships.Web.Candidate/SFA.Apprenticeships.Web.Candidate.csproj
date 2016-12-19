@@ -1194,7 +1194,7 @@
     </Content>
     <Content Include="Views\Account\Settings.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Settings.generated.cs</LastGenOutput>
+      <LastGenOutput>Settings1.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\Privacy.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1723,15 +1723,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Account\Settings.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Settings.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Account\ConfirmAccountDeletion.generated.cs">
       <DependentUpon>ConfirmAccountDeletion.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Account\Settings1.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApprenticeshipSearch\_wage.generated.cs">
       <DependentUpon>_wage.cshtml</DependentUpon>

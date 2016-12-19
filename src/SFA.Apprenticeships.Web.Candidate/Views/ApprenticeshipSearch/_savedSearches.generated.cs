@@ -97,7 +97,6 @@ WriteLiteral(">\r\n");
      if (Model.SavedSearches != null && Model.SavedSearches.Any())
     {
 
-
             
             #line default
             #line hidden
@@ -105,101 +104,107 @@ WriteLiteral("        <ul");
 
 WriteLiteral(" id=\"saved-searches-list\"");
 
-WriteLiteral(" class=\"list-text list-checkradio\"");
+WriteLiteral(" class=\"list list-checkradio\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 14 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
+            #line 13 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
+            #line 13 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
              foreach (var savedSearch in Model.SavedSearches)
             {
 
             
             #line default
             #line hidden
-WriteLiteral("                <li>\r\n                    <input");
+WriteLiteral("                <li>\r\n                    <label");
+
+WriteLiteral(" name=\"SavedSearchId\"");
+
+WriteAttribute("id", Tuple.Create(" id=\"", 566), Tuple.Create("\"", 605)
+, Tuple.Create(Tuple.Create("", 571), Tuple.Create("saved-search-label-", 571), true)
+            
+            #line 16 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
+, Tuple.Create(Tuple.Create("", 590), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+            
+            #line default
+            #line hidden
+, 590), false)
+);
+
+WriteAttribute("for", Tuple.Create(" for=\"", 606), Tuple.Create("\"", 640)
+, Tuple.Create(Tuple.Create("", 612), Tuple.Create("saved-search-", 612), true)
+            
+            #line 16 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
+                           , Tuple.Create(Tuple.Create("", 625), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+            
+            #line default
+            #line hidden
+, 625), false)
+);
+
+WriteLiteral(" class=\"form-radio sfa-form-radio\"");
+
+WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"SavedSearchId\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 586), Tuple.Create("\"", 619)
-, Tuple.Create(Tuple.Create("", 591), Tuple.Create("saved-search-", 591), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 742), Tuple.Create("\"", 775)
+, Tuple.Create(Tuple.Create("", 747), Tuple.Create("saved-search-", 747), true)
             
             #line 17 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-, Tuple.Create(Tuple.Create("", 604), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+   , Tuple.Create(Tuple.Create("", 760), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 604), false)
+, 760), false)
 );
 
-WriteAttribute("value", Tuple.Create(" value=\"", 620), Tuple.Create("\"", 643)
+WriteAttribute("value", Tuple.Create(" value=\"", 776), Tuple.Create("\"", 799)
             
             #line 17 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                       , Tuple.Create(Tuple.Create("", 628), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                           , Tuple.Create(Tuple.Create("", 784), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 628), false)
+, 784), false)
 );
 
-WriteLiteral(">\r\n                    <div>\r\n                        <label");
+WriteLiteral(">\r\n");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 704), Tuple.Create("\"", 743)
-, Tuple.Create(Tuple.Create("", 709), Tuple.Create("saved-search-label-", 709), true)
-            
-            #line 19 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-, Tuple.Create(Tuple.Create("", 728), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
-            
-            #line default
-            #line hidden
-, 728), false)
-);
-
-WriteAttribute("for", Tuple.Create(" for=\"", 744), Tuple.Create("\"", 778)
-, Tuple.Create(Tuple.Create("", 750), Tuple.Create("saved-search-", 750), true)
-            
-            #line 19 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-          , Tuple.Create(Tuple.Create("", 763), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
-            
-            #line default
-            #line hidden
-, 763), false)
-);
-
-WriteLiteral(">");
+WriteLiteral("                        ");
 
             
-            #line 19 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                                                                                                     Write(savedSearch.Name);
+            #line 18 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
+                   Write(savedSearch.Name);
 
             
             #line default
             #line hidden
-WriteLiteral("</label>\r\n");
+WriteLiteral("\r\n                    </label>\r\n");
 
             
             #line 20 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                        
+                    
             
             #line default
             #line hidden
             
             #line 20 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                         if (savedSearch.DateProcessed.HasValue)
-                        {
+                     if (savedSearch.DateProcessed.HasValue)
+                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <span");
+WriteLiteral("                        <span");
 
 WriteLiteral(" class=\"inl-block font-xsmall\"");
 
@@ -207,7 +212,7 @@ WriteLiteral(">(New matches: ");
 
             
             #line 22 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                                                                         Write(savedSearch.DateProcessed.Value.ToFriendlyDaysAgo());
+                                                                     Write(savedSearch.DateProcessed.Value.ToFriendlyDaysAgo());
 
             
             #line default
@@ -216,12 +221,12 @@ WriteLiteral(")</span>\r\n");
 
             
             #line 23 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                        }
+                    }
 
             
             #line default
             #line hidden
-WriteLiteral("                    </div>\r\n                    \r\n");
+WriteLiteral("\r\n\r\n");
 
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
@@ -243,15 +248,15 @@ WriteLiteral(" class=\"font-xsmall sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <b>Apprenticeship level:</b> <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1340), Tuple.Create("\"", 1394)
-, Tuple.Create(Tuple.Create("", 1345), Tuple.Create("saved-search-apprenticeship-level-", 1345), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 1347), Tuple.Create("\"", 1401)
+, Tuple.Create(Tuple.Create("", 1352), Tuple.Create("saved-search-apprenticeship-level-", 1352), true)
             
             #line 29 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-                     , Tuple.Create(Tuple.Create("", 1379), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                     , Tuple.Create(Tuple.Create("", 1386), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 1379), false)
+, 1386), false)
 );
 
 WriteLiteral(">");
@@ -272,7 +277,7 @@ WriteLiteral("</span>\r\n                        </p>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                    \r\n");
+WriteLiteral("\r\n");
 
             
             #line 33 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
@@ -294,15 +299,15 @@ WriteLiteral(" class=\"font-xsmall sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n                            <b>Sub-categories:</b> <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1751), Tuple.Create("\"", 1798)
-, Tuple.Create(Tuple.Create("", 1756), Tuple.Create("saved-search-subcategories-", 1756), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 1738), Tuple.Create("\"", 1785)
+, Tuple.Create(Tuple.Create("", 1743), Tuple.Create("saved-search-subcategories-", 1743), true)
             
             #line 36 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-        , Tuple.Create(Tuple.Create("", 1783), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+        , Tuple.Create(Tuple.Create("", 1770), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 1783), false)
+, 1770), false)
 );
 
 WriteLiteral(">");

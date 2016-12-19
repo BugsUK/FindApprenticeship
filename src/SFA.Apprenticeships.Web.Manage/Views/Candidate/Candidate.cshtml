@@ -22,7 +22,7 @@
 }
 else
 {
-    <ul class="list-nav">
+    <ul class="sfa-list-nav">
         @if (Model.SuccessfulApprenticeshipApplications.Any())
         {
             <li>
@@ -84,15 +84,15 @@ else
                                                     @Html.RouteLink(application.Title + " with " + application.EmployerName, ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
-                                            <td class="ta-center"></td>
+                                            <td class="sfa-align-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
+                                            <td class="sfa-align-center"></td>
                                         </tr>
                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -124,8 +124,8 @@ else
                                                     @Html.RouteLink(application.Title + " with " + application.EmployerName, ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
-                                            <td class="ta-center">
+                                            <td class="sfa-align-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
+                                            <td class="sfa-align-center">
                                                 Applied<br />
                                                 @{
                                                     if (application.DateApplied.HasValue)
@@ -138,10 +138,10 @@ else
                                         </tr>
                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -182,16 +182,16 @@ else
                                             </td>
                                             @if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
                                             {
-                                                <td class="ta-center">@Html.RouteLink("Read feedback", ManagementRouteNames.ViewCandidateApprenticeshipApplicationFeedback, new {applicationId = application.ApplicationId})</td>
+                                                <td class="sfa-align-center">@Html.RouteLink("Read feedback", ManagementRouteNames.ViewCandidateApprenticeshipApplicationFeedback, new {applicationId = application.ApplicationId})</td>
                                             }
-                                            <td class="ta-center"></td>
+                                            <td class="sfa-align-center"></td>
                                         </tr>                                        
                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -235,11 +235,11 @@ else
                                                 if (application.VacancyStatus == VacancyStatuses.Live)
                                                 {
                                                     <br />
-                                                    <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                                    <span class="bold-xsmall">Closing date:</span> @application.ClosingDate.ToFriendlyClosingWeek()
                                                 }
                                             }
                                         </td>
-                                        <td class="ta-center">
+                                        <td class="sfa-align-center">
                                             @if (application.ApplicationStatus == ApplicationStatuses.Draft && application.VacancyStatus == VacancyStatuses.Live)
                                             {
                                                 @Html.RouteLink("View draft", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })
@@ -261,7 +261,7 @@ else
                                                 }
                                             }
                                         </td>
-                                        <td class="ta-center"></td>
+                                        <td class="sfa-align-center"></td>
                                     </tr>
                                 }
                             </tbody>
@@ -292,18 +292,18 @@ else
                                                 @Html.RouteLink(application.Title + " with " + application.EmployerName, ManagementRouteNames.ViewCandidateTraineeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                             }
                                         </td>
-                                        <td class="ta-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateTraineeshipApplication, new { applicationId = application.ApplicationId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
-                                        <td class="ta-center">
+                                        <td class="sfa-align-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateTraineeshipApplication, new { applicationId = application.ApplicationId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
+                                        <td class="sfa-align-center">
                                             Applied<br />
                                             @Html.DisplayFor(m => application.DateApplied)
                                         </td>
                                     </tr>
                                 }
                             </tbody>
-                            <tbody class="tbody-expandrows">
+                            <tbody class="tbody-expandrows sfa-hide">
                                 <tr class="no-btm-border">
                                     <td colspan="2"></td>
-                                    <td class="no-wrap ta-center">
+                                    <td class="no-wrap sfa-align-center">
                                         <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                     </td>
                                 </tr>

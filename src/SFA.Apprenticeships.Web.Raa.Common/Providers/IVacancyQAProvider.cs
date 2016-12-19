@@ -20,7 +20,7 @@
         VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
         VacancyViewModel ReviewVacancy(int vacancyReferenceNumber);
-        
+
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
@@ -51,7 +51,7 @@
 
         NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel existingVacancy);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
+        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isAnonymousEmployer = false);
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 

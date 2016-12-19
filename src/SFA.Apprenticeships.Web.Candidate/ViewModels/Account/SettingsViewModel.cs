@@ -42,6 +42,7 @@
         [Display(Name = SettingsViewModelMessages.PasswordMessages.LabelText)]
         public string Password { get; set; }
 
+        [Display(Name = SettingsViewModelMessages.DateOfBirthMessages.LabelText)]
         public DateViewModel DateOfBirth { get; set; }
 
         public AddressViewModel Address { get; set; }

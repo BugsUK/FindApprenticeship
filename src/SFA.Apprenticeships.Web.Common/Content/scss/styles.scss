@@ -2,7 +2,7 @@
 @import "_govuk-custom"; 
 @import "conditionals";
 
-@import "_button-links";
+@import "_sfa-buttons";
 @import "_tabbed-nav";
 @import "_inline-search";
 @import "_link-styles";
@@ -10,6 +10,8 @@
 
 @import "_select2-styles";
 @import "_address-service-styles";
+
+@import "_joyride-styles";
 
 $path: "/Content/_assets/img/";
 $warning-colour: #2b8cc4;

@@ -203,10 +203,10 @@
                 }
             }
 
-            if (useEmployerLocation.HasValue && useEmployerLocation.Value)
-            {
-                viewModel.VacancyLocationType = VacancyLocationType.SpecificLocation;
-            }
+            //if (useEmployerLocation.HasValue && useEmployerLocation.Value)
+            //{
+            //    viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
+            //}
 
             try
             {
@@ -303,8 +303,10 @@
         {
             newViewModel.VacancyGuid = viewModel.VacancyGuid;
             newViewModel.VacancyLocationType = viewModel.VacancyLocationType;
+            newViewModel.IsEmployerLocationMainApprenticeshipLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation;
             newViewModel.NumberOfPositions = viewModel.NumberOfPositions;
             newViewModel.VacancyReferenceNumber = viewModel.VacancyReferenceNumber;
+            newViewModel.IsAnonymousEmployer = viewModel.IsAnonymousEmployer;
         }
 
         private void CreateNewVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn)
@@ -854,10 +856,10 @@
         }
 
         public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int providerSiteId,
-            int employerId, string ukprn, Guid vacancyGuid, bool? comeFromPreview)
+            int employerId, string ukprn, Guid vacancyGuid, bool? comeFromPreview, bool? isAnonymousEmployer)
         {
             var locationSearchViewModel = _vacancyPostingProvider.LocationAddressesViewModel(ukprn, providerSiteId,
-                employerId, vacancyGuid);
+                employerId, vacancyGuid, isAnonymousEmployer ?? false);
             locationSearchViewModel.CurrentPage = 1;
             locationSearchViewModel.ComeFromPreview = comeFromPreview ?? false;
 

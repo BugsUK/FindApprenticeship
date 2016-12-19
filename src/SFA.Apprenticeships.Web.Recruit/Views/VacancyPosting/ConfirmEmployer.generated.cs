@@ -85,7 +85,7 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -145,7 +145,7 @@ WriteLiteral("        ");
 
             
             #line 28 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
+   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button sfa-button-secondary" }));
 
             
             #line default

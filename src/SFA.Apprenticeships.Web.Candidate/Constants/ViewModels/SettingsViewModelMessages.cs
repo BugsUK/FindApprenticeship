@@ -36,6 +36,11 @@
             public const string InvalidErrorText = "Please enter a valid email address and password";
         }
 
+        public static class DateOfBirthMessages
+        {
+            public const string LabelText = "Date of birth";
+        }
+
         public static class PhoneNumberMessages
         {
             public const string LabelText = "Phone";

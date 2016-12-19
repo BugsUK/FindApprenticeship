@@ -140,7 +140,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                 switch (response.Code)
                 {
                     case AccountMediatorCodes.Settings.ValidationError:
-                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
                     case AccountMediatorCodes.Settings.SaveError:
                         SetUserMessage(response.Message.Text, response.Message.Level);
@@ -321,26 +320,28 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public async Task<ActionResult> UpdateEmailAddress(EmailViewModel model)
+        public ActionResult UpdateEmailAddress(EmailViewModel model)
         {
-            return await Task.Run<ActionResult>(() =>
+            ModelState.Clear();
+
+            var response = _accountMediator.UpdateEmailAddress(UserContext.CandidateId, model);
+
+            switch (response.Code)
             {
-                var response = _accountMediator.UpdateEmailAddress(UserContext.CandidateId, model);
+                case AccountMediatorCodes.UpdateEmailAddress.Ok:
+                    SetUserMessage(response.Message.Text);
+                    return RedirectToRoute(RouteNames.VerifyUpdatedEmail);
+                case AccountMediatorCodes.UpdateEmailAddress.HasError:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    break;
+                case AccountMediatorCodes.UpdateEmailAddress.ValidationError:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    break;
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
 
-                switch (response.Code)
-                {
-                    case AccountMediatorCodes.UpdateEmailAddress.Ok:
-                        SetUserMessage(response.Message.Text);
-                        return RedirectToRoute(RouteNames.VerifyUpdatedEmail);
-                    case AccountMediatorCodes.UpdateEmailAddress.HasError:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        break;
-                    default:
-                        throw new InvalidMediatorCodeException(response.Code);
-                }
-
-                return View(response.ViewModel);
-            });
+            return View(response.ViewModel);
         }
 
         [HttpGet]

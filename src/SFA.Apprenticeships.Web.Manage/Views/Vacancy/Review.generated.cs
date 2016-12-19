@@ -147,7 +147,7 @@ WriteLiteral(" id=\"btnReject\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
 
 WriteLiteral(" name=\"VacancyQAAction\"");
 
@@ -159,7 +159,7 @@ WriteLiteral(" id=\"btnUnReserve\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
 
 WriteLiteral(" name=\"VacancyQAAction\"");
 

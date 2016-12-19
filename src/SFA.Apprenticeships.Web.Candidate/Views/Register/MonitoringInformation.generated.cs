@@ -189,7 +189,7 @@ WriteAttribute("href", Tuple.Create(" href=\"", 976), Tuple.Create("\"", 1034)
 
 WriteLiteral(" id=\"skip-link\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
 
 WriteLiteral(" title=\"Skip telling us more\"");
 

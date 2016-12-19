@@ -205,7 +205,7 @@
             }
         }
 
-        public LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid)
+        public LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isEmployerAnonymous = false)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
             var providerSite = _providerService.GetProviderSite(providerSiteId);
@@ -227,7 +227,8 @@
                     LocationAddressesComment = vacancy.LocationAddressesComment,
                     AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment,
                     AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds,
-                    ProviderSiteId = providerSite.ProviderSiteId
+                    ProviderSiteId = providerSite.ProviderSiteId,
+                    IsAnonymousEmployer = isEmployerAnonymous
                 };
 
                 var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
@@ -252,20 +253,18 @@
 
                 return viewModel;
             }
-            else
+            return new LocationSearchViewModel
             {
-                return new LocationSearchViewModel
-                {
-                    ProviderSiteId = providerSite.ProviderSiteId,
-                    ProviderSiteEdsUrn = providerSite.EdsUrn,
-                    EmployerId = employer.EmployerId,
-                    EmployerEdsUrn = employer.EdsUrn,
-                    VacancyGuid = vacancyGuid,
-                    Ukprn = ukprn,
-                    Addresses = new List<VacancyLocationAddressViewModel>(),
-                    AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
-                };
-            }
+                ProviderSiteId = providerSite.ProviderSiteId,
+                ProviderSiteEdsUrn = providerSite.EdsUrn,
+                EmployerId = employer.EmployerId,
+                EmployerEdsUrn = employer.EdsUrn,
+                VacancyGuid = vacancyGuid,
+                Ukprn = ukprn,
+                Addresses = new List<VacancyLocationAddressViewModel>(),
+                AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds,
+                IsAnonymousEmployer = isEmployerAnonymous
+            };
         }
 
         public VacancyMinimumData UpdateVacancy(VacancyMinimumData vacancyMinimumData)

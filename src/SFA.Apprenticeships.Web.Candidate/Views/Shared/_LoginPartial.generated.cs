@@ -114,7 +114,7 @@ WriteLiteral(" class=\"fa fa-sign-out\"");
 
 WriteLiteral("></i>Sign out</a>\r\n        </div>\r\n        <div");
 
-WriteLiteral(" class=\"sfa-navigation-links\"");
+WriteLiteral(" class=\"sfa-navigation-items\"");
 
 WriteLiteral(">\r\n            <a");
 

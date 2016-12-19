@@ -387,7 +387,7 @@
             var tagCount = new TagBuilder("span");
             var tagText = new TagBuilder("span");
 
-            tagHint.Attributes.Add("class", "form-hint hide-nojs");
+            tagHint.Attributes.Add("class", "sfa-form-control-after hide-nojs");
             tagCount.Attributes.Add("class", "maxchar-count");
             tagText.Attributes.Add("class", "maxchar-text");
 

@@ -15,14 +15,14 @@
     //Hidden password input to disable autocomplete
     <input title="Hidden password field" type="password" class="sfa-hide" />
 
-    <fieldset class="fieldset-with-border">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered">
         <legend class="heading-large">Your details</legend>
         @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
         @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
         @Html.EditorFor(r => r.DateOfBirth)
     </fieldset>
 
-    <fieldset class="fieldset-with-border">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered">
         <legend class="heading-large">Contact details</legend>
         <div class="form-group">
 
@@ -35,7 +35,7 @@
         </div>
     </fieldset>
 
-    <fieldset class="fieldset-with-border">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered">
         <legend class="heading-large">Sign in details</legend>
         <div class="form-group">
             <p class="form-label-bold">Email address</p>
@@ -73,7 +73,7 @@
 
     <script>
         $(function () {
-            $('#address-details').addClass('disabled');
+            $('#address-details').addClass('sfa-disabled');
             $('input[id=EmailAddress]').usernameLookup('@Url.RouteUrl(RouteNames.CheckUsername)');
         });
 

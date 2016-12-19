@@ -1,5 +1,4 @@
 ﻿@model LocationSearchViewModel
-@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 
@@ -20,6 +19,9 @@
 @Html.HiddenFor(m => m.VacancyReferenceNumber)
 @Html.HiddenFor(m => m.EmployerApprenticeshipLocation)
 @Html.HiddenFor(m => m.CurrentPage)
+@Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation)
+@Html.HiddenFor(m => m.CurrentPage)
+@Html.HiddenFor(m => m.IsAnonymousEmployer)
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
@@ -88,7 +90,7 @@
                                     @{
                                         var buttonName = "UseLocation-" + @index + "-" + @Model.PostcodeSearch;
                                     }
-                                    <button id="useLocation" type="submit" class="button-link use-location-button-link add-location-link" name="AddLocations" value="@buttonName">add location</button>
+                                    <button id="useLocation" type="submit" class="button sfa-button-secondary use-location-link-button add-location-link" name="AddLocations" value="@buttonName">add location</button>
                                 </td>
                             </tr>
                             index = index+1;
@@ -142,11 +144,11 @@
                                     @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@class = "form-control-small", @maxlength = "5", @id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"})
                                     @Html.ValidationMessage("Addresses[" + i + "].NumberOfPositions")
                                 </td>
-                                <td class="ta-center">
+                                <td class="sfa-align-center">
                                     @{
                                         var buttonName = "RemoveLocation-" + i;
                                     }
-                                    <button id="removeLocation" type="submit" class="button-link remove-button-link" name="AddLocations" value="@buttonName">remove location</button>
+                                    <button id="removeLocation" type="submit" class="button sfa-button-secondary remove-link-button" name="AddLocations" value="@buttonName">remove location</button>
                                 </td>
                             </tr>
                         }
@@ -168,10 +170,14 @@
 <div class="hide-nojs" id="locationAddressesTable">
     <div id="address-lookup">
         <div class="form-group form-group-compound" id="addressInputWrapper">
-            <label for="postcode-search" class="form-label-bold bold-small">Enter the vacancy location or postcode</label>
-            <div class="hgroup-medium">
-                <p class="subtitle">You have chosen for this employer to be anonymous. Only the town or city for each location will be visible to candidates.</p>
-            </div>
+            <label for="postcode-search" class="form-label bold-small">Enter the vacancy location or postcode</label>
+            @if (Model.IsAnonymousEmployer!=null && Model.IsAnonymousEmployer.Value)
+            {
+                <div class="hgroup-medium">
+                    <p class="subtitle">You have chosen for this employer to be anonymous. Only the town or city for each location will be visible to candidates.</p>
+                </div>
+            }
+            
             <input id="postcode-search" type="text" class="form-control form-control-1-3" spellcheck="false" autocorrect="off" data-bind="style: {'display': addModeOn() }"/>
             <a href="#" id="add-new-location" data-bind="style: {'display': addModeOff() }, click: addNewLocation">Add another location </a>
             <span class="visuallyhidden" id="ariaAddressEntered" aria-live="polite"></span>
@@ -225,7 +231,7 @@
                         <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
                         <input type="hidden" data-bind="value: itemProvinceName, attr:{'name':'Addresses[' + $index() +'].Address.County', 'id':'addresses_'+ $index() + 'address__County' }">
                     </td>
-                    <td class="ta-center">
+                    <td class="sfa-align-center">
                         <a href="#" data-bind="click: $root.removeLocationAddress">remove location</a>
                     </td>
                 </tr>

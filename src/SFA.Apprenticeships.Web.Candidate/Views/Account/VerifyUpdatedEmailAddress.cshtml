@@ -5,13 +5,15 @@
 }
 
 <div class="grid-row">
-    <div class="column-one-half">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">Verify your email address</h1>
     </div>
-    <div class="column-one-half">
-        <p>
-            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
-        </p>
+    <div class="column-one-third sfa-align-right-tablet sfa-xlarge-top-margin">
+        <ul class="list">
+            <li>
+                @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
+            </li>
+        </ul>
     </div>
 </div>
 <p class="text">

@@ -82,7 +82,7 @@
 
                     <div id="multiple-offline-application-urls-div" style="@offlineMultiUrlDivStyle">
                         @Html.LabelFor(m => m.OfflineApplicationUrl)
-                        <p id="single-offline-application-url-para" class="inline-text" style="@offlineSingleUrlParaStyle">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button-link no-autosave no-validation" name="@ViewData["OfflineUrlButtonName"]" value="SingleOfflineApplicationUrl">@NewVacancyViewModelMessages.SingleOfflineUrlButtonText</button>
+                        <p id="single-offline-application-url-para" class="inline-text" style="@offlineSingleUrlParaStyle">Alternatively, <button id="single-offline-application-url-button" type="submit" class="button sfa-button-secondary no-autosave no-validation" name="@ViewData["OfflineUrlButtonName"]" value="SingleOfflineApplicationUrl">@NewVacancyViewModelMessages.SingleOfflineUrlButtonText</button>
                         </p>
                         <table id="multiple-offline-application-urls-table">
                             <colgroup>
@@ -133,7 +133,7 @@
 
                     <div id="single-offline-application-url-div" style="@offlineSingleUrlDivStyle" class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.OfflineApplicationUrl)))">
                         @Html.LabelFor(m => m.OfflineApplicationUrl)
-                        <p id="multiple-offline-application-urls-para" class="inline-text" style="@offlineMultiUrlParaStyle">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button-link no-autosave no-validation" name="@ViewData["OfflineUrlButtonName"]" value="MultipleOfflineApplicationUrls">@NewVacancyViewModelMessages.MultiOfflineUrlsButtonText</button>
+                        <p id="multiple-offline-application-urls-para" class="inline-text" style="@offlineMultiUrlParaStyle">Alternatively, you can <button id="multiple-offline-application-urls-button" type="submit" class="button sfa-button-secondary no-autosave no-validation" name="@ViewData["OfflineUrlButtonName"]" value="MultipleOfflineApplicationUrls">@NewVacancyViewModelMessages.MultiOfflineUrlsButtonText</button>
                         </p>
                         @Html.TextBoxFor(m => m.OfflineApplicationUrl, new {@class = "form-control-3-4 beepboop form-control", type = "text", size = 12, id = "apprenticeship-offline-application-url"})
                         @Html.ValidationMessageFor(m => m.OfflineApplicationUrl)

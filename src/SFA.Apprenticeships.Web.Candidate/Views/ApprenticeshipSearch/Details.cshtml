@@ -61,7 +61,7 @@
                 @Html.Partial("_Apply", Model, new ViewDataDictionary {new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top")})
             </div>
         </section>
-        <section class="section-border grid-row" id="vacancy-info">
+        <section class="sfa-section-bordered grid-row" id="vacancy-info">
             <h2 class="column-full heading-large">Apprenticeship summary</h2>
             <div class="column-one-third">
                 <div class="inner-block-padr">
@@ -123,7 +123,7 @@
             || !string.IsNullOrWhiteSpace(Model.FutureProspects)
             || !string.IsNullOrWhiteSpace(Model.RealityCheck))
         {
-            <section class="section-border grid-row" id="course-info">
+            <section class="sfa-section-bordered grid-row" id="course-info">
                 <h2 class="heading-large">Requirements and prospects</h2>
                 <div class="column-one-half">
                     <div class="inner-block-padr">
@@ -163,7 +163,7 @@
                 </div>
             </section>
         }
-        <section class="section-border" id="employer-info">
+        <section class="sfa-section-bordered" id="employer-info">
             <h2 class="heading-large">About the employer</h2>
             <div class="grid-row">
                 <div class="column-two-thirds">
@@ -278,7 +278,7 @@
                 }
             </div>
         </section>
-        <section class="section-border grid-row" id="provider-info">
+        <section class="sfa-section-bordered grid-row" id="provider-info">
             <div class="column-full">
         <h2 class="heading-large">Training provider</h2>
             </div>
@@ -330,7 +330,7 @@
         </section>
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {
-            <section id="other-information" class="section-border">
+            <section id="other-information" class="sfa-section-bordered">
                 <div class="text">
                     <h2 class="heading-large collpanel-trigger">Other information</h2>
                     <div class="collpanel toggle-content">
@@ -341,7 +341,7 @@
         }
         if (Model.ApplyViaEmployerWebsite && !string.IsNullOrWhiteSpace(Model.ApplicationInstructions))
         {
-            <section id="application-instructions-container" class="section-border">
+            <section id="application-instructions-container" class="sfa-section-bordered">
                 <h2 class="heading-large">Employer's Application Instructions</h2>
                 <div class="text">
                     <p id="application-instructions" class="@Model.ApplicationInstructions.GetPreserveFormattingCssClass()">@Model.ApplicationInstructions</p>

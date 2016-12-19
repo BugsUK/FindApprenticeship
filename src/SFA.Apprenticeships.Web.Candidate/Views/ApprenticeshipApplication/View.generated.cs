@@ -81,15 +81,15 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Your application</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"column-one-third\"");
+WriteLiteral(" class=\"column-one-third sfa-align-right-tablet sfa-xlarge-top-margin\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n        <ul");
 
-WriteLiteral(" class=\"page-link hide-nojs\"");
+WriteLiteral(" class=\"list\"");
 
-WriteLiteral(">\r\n            <p>\r\n                <a");
+WriteLiteral(">\r\n            <li>\r\n                <a");
 
-WriteLiteral(" class=\"print-trigger\"");
+WriteLiteral(" class=\"print-trigger hide-nojs\"");
 
 WriteLiteral(" href=\"\"");
 
@@ -97,7 +97,7 @@ WriteLiteral("><i");
 
 WriteLiteral(" class=\"fa fa-print\"");
 
-WriteLiteral("></i>Print this page</a>\r\n            </p>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r" +
+WriteLiteral("></i>Print this page</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r" +
 "\n<div");
 
 WriteLiteral(" class=\"grid-row\"");
@@ -221,14 +221,14 @@ WriteLiteral(">\r\n                <a");
 
 WriteLiteral(" id=\"return-to-my-feedback\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1753), Tuple.Create("\"", 1823)
+WriteAttribute("href", Tuple.Create(" href=\"", 1793), Tuple.Create("\"", 1863)
             
             #line 42 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1760), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback)
+, Tuple.Create(Tuple.Create("", 1800), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback)
             
             #line default
             #line hidden
-, 1760), false)
+, 1800), false)
 );
 
 WriteLiteral(">Return to your feedback</a>\r\n            </p>\r\n");
@@ -323,7 +323,7 @@ Write(Html.DisplayFor(m => m.Candidate.AboutYou));
             #line hidden
 WriteLiteral("\r\n\r\n    <section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n        <h2");
 
@@ -359,14 +359,14 @@ WriteLiteral(">\r\n        <p>\r\n            <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2946), Tuple.Create("\"", 3002)
+WriteAttribute("href", Tuple.Create(" href=\"", 2992), Tuple.Create("\"", 3048)
             
             #line 70 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2953), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2999), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2953), false)
+, 2999), false)
 );
 
 WriteLiteral(" class=\"button\"");

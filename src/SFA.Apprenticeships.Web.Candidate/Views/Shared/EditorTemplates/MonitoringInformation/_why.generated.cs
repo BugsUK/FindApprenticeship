@@ -54,12 +54,15 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"text\"");
+WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n    <details>\r\n        <summary>Why are we asking all these questions?</summar" +
-"y>\r\n        <div");
+WriteLiteral(">\r\n    <details>\r\n        <summary><span");
 
-WriteLiteral(" class=\"detail-content\"");
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Why are we asking all these questions?</span></summary>\r\n        <div");
+
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(@">
             <p>

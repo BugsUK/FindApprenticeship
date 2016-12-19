@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider
 {
     using AutoMapper;
-    using Domain.Entities.Users;
     using Infrastructure.Common.Mappers;
     using DatabaseProvider = Entities.Provider;
     using DomainProvider = Domain.Entities.Raa.Parties.Provider;
@@ -43,7 +42,7 @@
                     opt => opt.ResolveUsing<StringToIntConverter>().FromMember(source => source.Ukprn))
                 .ForMember(dest => dest.ProviderToUseFAA, opt => opt.ResolveUsing<BoolToProviderToUseFaa>().FromMember(src => src.IsMigrated))
                 .ForMember(dest => dest.IsContracted, opt => opt.UseValue(true))
-                .ForMember(dest => dest.ProviderStatusTypeId, opt => opt.UseValue(ProviderStatuses.Activated))
+                .ForMember(dest => dest.ProviderStatusTypeId, opt => opt.MapFrom(src => src.ProviderStatusType))
                 .ForMember(dest => dest.IsNasProvider, opt => opt.UseValue(false));
         }
     }

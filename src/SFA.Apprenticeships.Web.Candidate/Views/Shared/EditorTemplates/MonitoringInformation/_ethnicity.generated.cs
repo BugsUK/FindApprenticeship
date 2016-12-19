@@ -54,41 +54,51 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"form-group inline clearfix\"");
+WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n    <p");
+WriteLiteral(">\r\n    <label");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
+WriteAttribute("for", Tuple.Create(" for=\"", 101), Tuple.Create("\"", 136)
+            
+            #line 4 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+, Tuple.Create(Tuple.Create("", 107), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.Ethnicity)
+            
+            #line default
+            #line hidden
+, 107), false)
+);
+
 WriteLiteral(" id=\"disability-label\"");
 
-WriteLiteral(">What is your ethnic group?</p>\r\n    <p");
+WriteLiteral(">\r\n        What is your ethnic group?\r\n        <span");
 
-WriteLiteral(" class=\"form-hint text\"");
+WriteLiteral(" class=\"form-hint\"");
 
-WriteLiteral(">\r\n        We need this information to make sure we\'re giving equal opportunities" +
-"\r\n        to all candidates\r\n    </p>\r\n    <select");
+WriteLiteral(">\r\n            We need this information to make sure we\'re giving equal opportuni" +
+"ties to all candidates\r\n        </span>\r\n    </label>\r\n    <select");
 
 WriteLiteral(" class=\"form-control\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 349), Tuple.Create("\"", 383)
+WriteAttribute("id", Tuple.Create(" id=\"", 397), Tuple.Create("\"", 431)
             
-            #line 9 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
-, Tuple.Create(Tuple.Create("", 354), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.Ethnicity)
+            #line 10 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+, Tuple.Create(Tuple.Create("", 402), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.Ethnicity)
             
             #line default
             #line hidden
-, 354), false)
+, 402), false)
 );
 
-WriteAttribute("name", Tuple.Create(" name=\"", 384), Tuple.Create("\"", 422)
+WriteAttribute("name", Tuple.Create(" name=\"", 432), Tuple.Create("\"", 470)
             
-            #line 9 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
-, Tuple.Create(Tuple.Create("", 391), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Ethnicity)
+            #line 10 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+, Tuple.Create(Tuple.Create("", 439), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Ethnicity)
             
             #line default
             #line hidden
-, 391), false)
+, 439), false)
 );
 
 WriteLiteral(" class=\"para-btm-margin\"");
@@ -98,7 +108,7 @@ WriteLiteral(">\r\n        <option");
 WriteLiteral(" value=\"0\"");
 
             
-            #line 10 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 11 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                      Write(Model != null && Model.Ethnicity == 0 ? " selected" : "");
 
             
@@ -109,7 +119,7 @@ WriteLiteral(">-- Please select --</option>\r\n        <option");
 WriteLiteral(" value=\"99\"");
 
             
-            #line 11 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 12 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                       Write(Model != null && Model.Ethnicity == 99 ? " selected" : "");
 
             
@@ -124,7 +134,7 @@ WriteLiteral(">\r\n            <option");
 WriteLiteral(" value=\"31\"");
 
             
-            #line 13 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 14 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 31 ? " selected" : "");
 
             
@@ -136,7 +146,7 @@ WriteLiteral(">English / Welsh / Scottish / Northern Irish / British</option>\r\
 WriteLiteral(" value=\"32\"");
 
             
-            #line 14 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 15 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 32 ? " selected" : "");
 
             
@@ -147,7 +157,7 @@ WriteLiteral(">Irish</option>\r\n            <option");
 WriteLiteral(" value=\"33\"");
 
             
-            #line 15 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 16 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 33 ? " selected" : "");
 
             
@@ -158,7 +168,7 @@ WriteLiteral(">Gypsy or Irish Traveller</option>\r\n            <option");
 WriteLiteral(" value=\"34\"");
 
             
-            #line 16 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 17 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 34 ? " selected" : "");
 
             
@@ -173,7 +183,7 @@ WriteLiteral(">\r\n            <option");
 WriteLiteral(" value=\"35\"");
 
             
-            #line 19 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 20 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 35 ? " selected" : "");
 
             
@@ -184,7 +194,7 @@ WriteLiteral(">White and Black Caribbean</option>\r\n            <option");
 WriteLiteral(" value=\"36\"");
 
             
-            #line 20 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 21 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 36 ? " selected" : "");
 
             
@@ -195,7 +205,7 @@ WriteLiteral(">White and Black African</option>\r\n            <option");
 WriteLiteral(" value=\"37\"");
 
             
-            #line 21 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 22 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 37 ? " selected" : "");
 
             
@@ -206,7 +216,7 @@ WriteLiteral(">White and Asian</option>\r\n            <option");
 WriteLiteral(" value=\"38\"");
 
             
-            #line 22 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 23 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 38 ? " selected" : "");
 
             
@@ -222,7 +232,7 @@ WriteLiteral(">\r\n            <option");
 WriteLiteral(" value=\"39\"");
 
             
-            #line 25 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 26 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 39 ? " selected" : "");
 
             
@@ -233,7 +243,7 @@ WriteLiteral(">Indian</option>\r\n            <option");
 WriteLiteral(" value=\"40\"");
 
             
-            #line 26 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 27 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 40 ? " selected" : "");
 
             
@@ -244,7 +254,7 @@ WriteLiteral(">Pakistani</option>\r\n            <option");
 WriteLiteral(" value=\"41\"");
 
             
-            #line 27 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 28 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 41 ? " selected" : "");
 
             
@@ -255,7 +265,7 @@ WriteLiteral(">Bangladeshi</option>\r\n            <option");
 WriteLiteral(" value=\"42\"");
 
             
-            #line 28 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 29 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 42 ? " selected" : "");
 
             
@@ -266,7 +276,7 @@ WriteLiteral(">Chinese</option>\r\n            <option");
 WriteLiteral(" value=\"43\"");
 
             
-            #line 29 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 30 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 43 ? " selected" : "");
 
             
@@ -281,7 +291,7 @@ WriteLiteral(">\r\n            <option");
 WriteLiteral(" value=\"44\"");
 
             
-            #line 32 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 33 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 44 ? " selected" : "");
 
             
@@ -292,7 +302,7 @@ WriteLiteral(">African</option>\r\n            <option");
 WriteLiteral(" value=\"45\"");
 
             
-            #line 33 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 34 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 45 ? " selected" : "");
 
             
@@ -303,7 +313,7 @@ WriteLiteral(">Caribbean</option>\r\n            <option");
 WriteLiteral(" value=\"46\"");
 
             
-            #line 34 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 35 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 46 ? " selected" : "");
 
             
@@ -319,7 +329,7 @@ WriteLiteral(">\r\n            <option");
 WriteLiteral(" value=\"47\"");
 
             
-            #line 37 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 38 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 47 ? " selected" : "");
 
             
@@ -330,7 +340,7 @@ WriteLiteral(">Arab</option>\r\n            <option");
 WriteLiteral(" value=\"98\"");
 
             
-            #line 38 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
+            #line 39 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml"
                           Write(Model != null && Model.Ethnicity == 98 ? " selected" : "");
 
             
