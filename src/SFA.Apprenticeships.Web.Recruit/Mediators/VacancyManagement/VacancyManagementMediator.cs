@@ -5,11 +5,11 @@
     using Apprenticeships.Application.Vacancy;
     using Common.Constants;
     using Common.Mediators;
-    using Domain.Entities.Raa.Vacancies;
     using Mappers;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.VacancyManagement;
     using VacancyPosting;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class VacancyManagementMediator : MediatorBase, IVacancyManagementMediator
     {
@@ -59,7 +59,8 @@
             var serviceResult = _vacancyManagementProvider.FindSummaryByReferenceNumber(vacancyReferenceNumber);
             if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.Ok)
             {
-                var viewModel = RecruitMappers.Map<VacancySummary, EditWageViewModel>(serviceResult.Result);
+                var vacancySummary = serviceResult.Result;
+                var viewModel = RecruitMappers.Map<VacancySummary, EditWageViewModel>(vacancySummary);
                 return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Ok, viewModel);
             }
             if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.NotFound)
