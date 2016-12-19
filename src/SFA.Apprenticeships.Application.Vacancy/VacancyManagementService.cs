@@ -37,5 +37,16 @@
 
             return new ServiceResult<VacancySummary>(VacancyManagementServiceCodes.FindSummary.Ok, vacancySummary);
         }
+
+        public IServiceResult<VacancySummary> FindSummaryByReferenceNumber(int vacancyReferenceNumber)
+        {
+            var vacancySummary = _vacancySummaryService.GetByReferenceNumber(vacancyReferenceNumber);
+            if (vacancySummary == null)
+            {
+                return new ServiceResult<VacancySummary>(VacancyManagementServiceCodes.FindSummary.NotFound, null);
+            }
+
+            return new ServiceResult<VacancySummary>(VacancyManagementServiceCodes.FindSummary.Ok, vacancySummary);
+        }
     }
 }

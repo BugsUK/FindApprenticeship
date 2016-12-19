@@ -7,6 +7,8 @@
     using Infrastructure.Presentation;
     using Raa.Common.Mappers;
     using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyManagement;
     using ViewModels.Home;
 
     public class RecruitMappers : RaaCommonWebMappers
@@ -38,6 +40,15 @@
                 .ForMember(c => c.UserId, opt => opt.Ignore())
                 .ForMember(c => c.DateCreated, opt => opt.Ignore())
                 .ForMember(c => c.DateUpdated, opt => opt.Ignore());
+
+            Mapper.CreateMap<VacancySummary, EditWageViewModel>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Wage.Type))
+                .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Wage.Amount))
+                .ForMember(dest => dest.AmountLowerBound, opt => opt.MapFrom(src => src.Wage.AmountLowerBound))
+                .ForMember(dest => dest.AmountUpperBound, opt => opt.MapFrom(src => src.Wage.AmountUpperBound))
+                .ForMember(dest => dest.Unit, opt => opt.MapFrom(src => src.Wage.Unit))
+                .ForMember(dest => dest.ExistingWage, opt => opt.MapFrom(src => src.Wage))
+                .ForMember(dest => dest.VacancyApplicationsState, opt => opt.MapFrom(src => src.ApplicantCount > 0 ? VacancyApplicationsState.HasApplications : VacancyApplicationsState.NoApplications));
         }
     }
 }

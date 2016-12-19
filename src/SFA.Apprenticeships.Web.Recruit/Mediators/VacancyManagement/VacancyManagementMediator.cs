@@ -1,15 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyManagement
 {
     using System;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Vacancy;
     using Common.Constants;
     using Common.Mediators;
+    using Domain.Entities.Raa.Vacancies;
+    using Mappers;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.VacancyManagement;
     using VacancyPosting;
 
     public class VacancyManagementMediator : MediatorBase, IVacancyManagementMediator
     {
+        private static readonly IMapper RecruitMappers = new RecruitMappers();
+
         private readonly IVacancyManagementProvider _vacancyManagementProvider;
 
         public VacancyManagementMediator(IVacancyManagementProvider vacancyManagementProvider)
@@ -51,18 +56,18 @@
 
         public MediatorResponse<EditWageViewModel> EditWage(int vacancyReferenceNumber)
         {
-            var viewModel = new EditWageViewModel
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber
-            };
-
-            var serviceResult = _vacancyManagementProvider.FindSummary(vacancyReferenceNumber);
+            var serviceResult = _vacancyManagementProvider.FindSummaryByReferenceNumber(vacancyReferenceNumber);
             if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.Ok)
             {
+                var viewModel = RecruitMappers.Map<VacancySummary, EditWageViewModel>(serviceResult.Result);
                 return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Ok, viewModel);
             }
             if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.NotFound)
             {
+                var viewModel = new EditWageViewModel
+                {
+                    VacancyReferenceNumber = vacancyReferenceNumber
+                };
                 return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.NotFound, viewModel);
             }
 

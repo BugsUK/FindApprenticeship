@@ -22,5 +22,10 @@
         {
             return _vacancyManagementService.FindSummary(vacancyId);
         }
+
+        public IServiceResult<VacancySummary> FindSummaryByReferenceNumber(int vacancyReferenceNumber)
+        {
+            return _vacancyManagementService.FindSummaryByReferenceNumber(vacancyReferenceNumber);
+        }
     }
 }

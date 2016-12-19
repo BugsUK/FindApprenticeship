@@ -17,6 +17,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
     {
         private readonly IGetOpenConnection _getOpenConnection;
         private static readonly VacancyMappers Mapper = new VacancyMappers();
+        private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
         private const string CoreQuery = @"SELECT COUNT(*) OVER () AS TotalResultCount,
 		                    v.VacancyId,
@@ -396,6 +397,17 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             var summary = GetByIds(new[] { vacancyId });
 
             return summary.Any() ? summary.Single() : null;
+        }
+
+        public VacancySummary GetByReferenceNumber(int vacancyReferenceNumber)
+        {
+            var vacancyId = _getOpenConnection.QueryCached<int?>(_cacheDuration, VacancyRepository.SelectVacancyIdFromReferenceNumberSql,
+                    new
+                    {
+                        vacancyReferenceNumber
+                    }).SingleOrDefault();
+
+            return vacancyId == null ? null : GetById(vacancyId.Value);
         }
 
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
