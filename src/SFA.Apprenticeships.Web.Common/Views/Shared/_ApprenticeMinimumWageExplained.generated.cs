@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Common.Views.Shared
     using System.Web.WebPages;
     
     #line 1 "..\..\Views\Shared\_ApprenticeMinimumWageExplained.cshtml"
-    using SFA.Apprenticeships.Infrastructure.Presentation.Constants;
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
     
     #line default
     #line hidden

@@ -1,11 +1,10 @@
-﻿namespace SFA.DAS.RAA.Api.Validators
+﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.Validation
 {
-    using Apprenticeships.Domain.Entities.Vacancies;
-    using Apprenticeships.Infrastructure.Presentation.Constants;
+    using Vacancies;
     using Constants;
+    using Entities.Vacancies;
     using FluentValidation;
     using FluentValidation.Results;
-    using Models;
 
     public class WageUpdateValidator : AbstractValidator<WageUpdate>
     {

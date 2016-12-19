@@ -198,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http.Formatting">
@@ -228,7 +229,6 @@
     <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
     <Compile Include="Constants\VacancyMessages.cs" />
-    <Compile Include="Constants\WageUpdateMessages.cs" />
     <Compile Include="DependencyResolution\RaaApiRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
@@ -244,7 +244,6 @@
     </Compile>
     <Compile Include="Handlers\AiExceptionLogger.cs" />
     <Compile Include="Handlers\ApiKeyHandler.cs" />
-    <Compile Include="Models\WageUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IVacancyProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
@@ -253,7 +252,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Strategies\EditWageStrategy.cs" />
     <Compile Include="Strategies\IEditWageStrategy.cs" />
-    <Compile Include="Validators\WageUpdateValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\settings.config" />

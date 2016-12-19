@@ -3,11 +3,11 @@
     using System;
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies.Validation;
     using Apprenticeships.Domain.Entities.Vacancies;
     using Constants;
-    using Models;
     using Providers;
-    using Validators;
     using FluentValidation;
     using VacancyType = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType;
 

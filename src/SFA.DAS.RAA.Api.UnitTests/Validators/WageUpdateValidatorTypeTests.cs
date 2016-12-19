@@ -1,11 +1,11 @@
 ﻿namespace SFA.DAS.RAA.Api.UnitTests.Validators
 {
-    using Api.Validators;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies.Validation;
     using Apprenticeships.Domain.Entities.Vacancies;
     using FluentAssertions;
     using FluentValidation;
     using FluentValidation.TestHelper;
-    using Models;
     using NUnit.Framework;
 
     [TestFixture]

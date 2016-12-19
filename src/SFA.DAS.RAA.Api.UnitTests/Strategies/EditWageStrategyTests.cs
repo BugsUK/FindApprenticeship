@@ -6,7 +6,6 @@
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies;
     using FluentAssertions;
-    using Models;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

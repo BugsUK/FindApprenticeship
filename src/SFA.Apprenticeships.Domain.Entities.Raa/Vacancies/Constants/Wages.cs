@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Presentation.Constants
+﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.Constants
 {
     using System;
     using System.Linq;
-    using Domain.Entities.Vacancies;
-    using Entities;
+    using Vacancies;
+    using Entities.Vacancies;
 
     public static class Wages
     {

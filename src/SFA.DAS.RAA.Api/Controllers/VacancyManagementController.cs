@@ -6,7 +6,6 @@
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Attributes;
-    using Models;
     using Strategies;
     using Swashbuckle.Swagger.Annotations;
 

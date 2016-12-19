@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.RAA.Api.Constants
+﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.Constants
 {
     public class WageUpdateMessages
     {

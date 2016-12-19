@@ -2,7 +2,6 @@
 {
     using System;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Models;
 
     public interface IEditWageStrategy
     {

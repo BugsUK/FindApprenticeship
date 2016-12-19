@@ -93,12 +93,10 @@
     </Compile>
     <Compile Include="AddressPresenter.cs" />
     <Compile Include="ApplicantIdPresenter.cs" />
-    <Compile Include="Constants\Wages.cs" />
     <Compile Include="CsvPresenter.cs" />
     <Compile Include="DatePresenter.cs" />
     <Compile Include="DistancePresenter.cs" />
     <Compile Include="DurationPresenter.cs" />
-    <Compile Include="Entities\WageRange.cs" />
     <Compile Include="FullNameFormatter.cs" />
     <Compile Include="NamePresenter.cs" />
     <Compile Include="ProviderVacancyStatusPresenter.cs" />
@@ -123,6 +121,10 @@
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Constants\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

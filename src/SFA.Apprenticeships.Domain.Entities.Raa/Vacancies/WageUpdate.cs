@@ -1,10 +1,10 @@
-﻿namespace SFA.DAS.RAA.Api.Models
+﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
     using System;
-    using Apprenticeships.Domain.Entities.Vacancies;
+    using Entities.Vacancies;
     using FluentValidation.Attributes;
     using Newtonsoft.Json;
-    using Validators;
+    using Validation;
 
     [Validator(typeof(WageUpdateValidator))]
     public class WageUpdate

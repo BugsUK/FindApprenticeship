@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Presentation.Entities
+﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
     using System;
 
