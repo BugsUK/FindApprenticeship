@@ -8,6 +8,7 @@
     using ApiPostalAddress = DAS.RAA.Api.Client.V1.Models.PostalAddress;
     using ApiWage = DAS.RAA.Api.Client.V1.Models.Wage;
     using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
+    using ApiWageUpdate = DAS.RAA.Api.Client.V1.Models.WageUpdate;
 
     public class ApiClientMappers : MapperEngine
     {
@@ -17,6 +18,7 @@
             Mapper.CreateMap<ApiPostalAddress, PostalAddress>();
             Mapper.CreateMap<ApiWage, Wage>();
             Mapper.CreateMap<ApiVacancy, Vacancy>();
+            Mapper.CreateMap<WageUpdate, ApiWageUpdate>();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyManagement
 {
     using System;
+    using System.Threading.Tasks;
     using FluentValidation;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Vacancy;
@@ -81,7 +82,7 @@
             throw new ArgumentException($"serviceResult: {serviceResult} from _vacancyManagementProvider.FindSummary({vacancyReferenceNumber}); was not recognised");
         }
 
-        public MediatorResponse<EditWageViewModel> EditWage(EditWageViewModel editWageViewModel)
+        public async Task<MediatorResponse<EditWageViewModel>> EditWage(EditWageViewModel editWageViewModel)
         {
             var serviceResult = _vacancyManagementProvider.FindSummaryByReferenceNumber(editWageViewModel.VacancyReferenceNumber);
             if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.Ok)
@@ -96,7 +97,12 @@
                 var validationResult = _wageUpdateValidator.Validate(editWageViewModel, ruleSet: WageUpdateValidator.CompareWithExisting);
                 if (validationResult.IsValid)
                 {
-                    return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Ok, editWageViewModel);
+                    var editResult = await _vacancyManagementProvider.EditWage(editWageViewModel);
+                    if (editResult.Code == VacancyManagementServiceCodes.EditWage.Ok)
+                    {
+                        return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Ok, editResult.Result);
+                    }
+                    return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Failure, editWageViewModel);
                 }
                 return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.FailedValidation, editWageViewModel, validationResult);
             }

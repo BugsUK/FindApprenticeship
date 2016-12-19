@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Application.Interfaces;
     using Constants;
@@ -52,9 +53,9 @@
 
         [HttpPost]
         [ActionName("EditWage")]
-        public ActionResult EditWagePost(EditWageViewModel editWageViewModel)
+        public async Task<ActionResult> EditWagePost(EditWageViewModel editWageViewModel)
         {
-            var result = _vacancyManagementMediator.EditWage(editWageViewModel);
+            var result = await _vacancyManagementMediator.EditWage(editWageViewModel);
             if (result.Code == VacancyManagementMediatorCodes.EditWage.NotFound)
             {
                 return HttpNotFound();
