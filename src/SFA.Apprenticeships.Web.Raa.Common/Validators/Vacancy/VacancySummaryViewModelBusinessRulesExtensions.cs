@@ -6,10 +6,10 @@
     using Constants.ViewModels;
     using Domain.Entities.Extensions;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Raa.Vacancies.Constants;
     using Domain.Entities.Vacancies;
     using Extensions;
     using FluentValidation.Results;
-    using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Web.Common.ViewModels;
