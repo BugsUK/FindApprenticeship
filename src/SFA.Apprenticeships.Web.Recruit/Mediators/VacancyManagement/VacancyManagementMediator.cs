@@ -1,10 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyManagement
 {
     using System;
+    using FluentValidation;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Vacancy;
     using Common.Constants;
+    using Common.Mappers.Resolvers;
     using Common.Mediators;
+    using Common.ViewModels;
+    using Domain.Entities.Raa.Vacancies.Validation;
     using Mappers;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.VacancyManagement;
@@ -14,6 +18,8 @@
     public class VacancyManagementMediator : MediatorBase, IVacancyManagementMediator
     {
         private static readonly IMapper RecruitMappers = new RecruitMappers();
+
+        private readonly WageUpdateValidator _wageUpdateValidator = new WageUpdateValidator();
 
         private readonly IVacancyManagementProvider _vacancyManagementProvider;
 
@@ -73,6 +79,33 @@
             }
 
             throw new ArgumentException($"serviceResult: {serviceResult} from _vacancyManagementProvider.FindSummary({vacancyReferenceNumber}); was not recognised");
+        }
+
+        public MediatorResponse<EditWageViewModel> EditWage(EditWageViewModel editWageViewModel)
+        {
+            var serviceResult = _vacancyManagementProvider.FindSummaryByReferenceNumber(editWageViewModel.VacancyReferenceNumber);
+            if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.Ok)
+            {
+                var vacancySummary = serviceResult.Result;
+                var viewModel = RecruitMappers.Map<VacancySummary, EditWageViewModel>(vacancySummary);
+
+                editWageViewModel.ExistingWage = viewModel.ExistingWage;
+                editWageViewModel.Type = WageViewModelToWageConverter.GetWageType(editWageViewModel.Classification, editWageViewModel.CustomType, PresetText.NotApplicable);
+                editWageViewModel.Unit = WageViewModelToWageConverter.GetWageUnit(editWageViewModel.Classification, editWageViewModel.CustomType, editWageViewModel.Unit ?? editWageViewModel.ExistingWage.Unit, editWageViewModel.RangeUnit);
+
+                var validationResult = _wageUpdateValidator.Validate(editWageViewModel, ruleSet: WageUpdateValidator.CompareWithExisting);
+                if (validationResult.IsValid)
+                {
+                    return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Ok, editWageViewModel);
+                }
+                return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.FailedValidation, editWageViewModel, validationResult);
+            }
+            if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.NotFound)
+            {
+                return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.NotFound, editWageViewModel);
+            }
+
+            throw new ArgumentException($"serviceResult: {serviceResult} from _vacancyManagementProvider.FindSummary({editWageViewModel.VacancyReferenceNumber}); was not recognised");
         }
     }
 }

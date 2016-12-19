@@ -19,12 +19,17 @@
 
         private static WageType GetWageType(WageViewModel source)
         {
-            switch (source.Classification)
+            return GetWageType(source.Classification, source.CustomType, source.PresetText);
+        }
+
+        public static WageType GetWageType(WageClassification classification, CustomWageType customType, PresetText presetText)
+        {
+            switch (classification)
             {
                 case WageClassification.ApprenticeshipMinimum:
                     return WageType.ApprenticeshipMinimum;
                 case WageClassification.Custom:
-                    switch (source.CustomType)
+                    switch (customType)
                     {
                         case CustomWageType.Fixed:
                             return WageType.Custom;
@@ -38,7 +43,7 @@
                 case WageClassification.NationalMinimum:
                     return WageType.NationalMinimum;
                 case WageClassification.PresetText:
-                    switch (source.PresetText)
+                    switch (presetText)
                     {
                         case PresetText.CompetitiveSalary:
                             return WageType.CompetitiveSalary;
@@ -60,10 +65,15 @@
 
         private static WageUnit GetWageUnit(WageViewModel source)
         {
-            if (source.Classification == WageClassification.Custom && source.CustomType == CustomWageType.Ranged)
-                return source.RangeUnit;
+            return GetWageUnit(source.Classification, source.CustomType, source.Unit, source.RangeUnit);
+        }
 
-            return source.Unit;
+        public static WageUnit GetWageUnit(WageClassification classification, CustomWageType customType, WageUnit unit, WageUnit rangeUnit)
+        {
+            if (classification == WageClassification.Custom && customType == CustomWageType.Ranged)
+                return rangeUnit;
+
+            return unit;
         }
     }
 }

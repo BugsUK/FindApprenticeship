@@ -18,6 +18,7 @@
         {
             public const string Ok = "VacancyPosting.EditWage.Ok";
             public const string NotFound = "VacancyManagement.EditWage.NotFound";
+            public const string FailedValidation = "VacancyPosting.EditWage.FailedValidation";
             public const string Failure = "VacancyPosting.EditWage.Failure";
         }
     }

@@ -8,5 +8,6 @@
         MediatorResponse<DeleteVacancyViewModel> Delete(DeleteVacancyViewModel vacancyViewModel);
         MediatorResponse<DeleteVacancyViewModel> ConfirmDelete(DeleteVacancyViewModel vacancyViewModel);
         MediatorResponse<EditWageViewModel> EditWage(int vacancyReferenceNumber);
+        MediatorResponse<EditWageViewModel> EditWage(EditWageViewModel editWageViewModel);
     }
 }

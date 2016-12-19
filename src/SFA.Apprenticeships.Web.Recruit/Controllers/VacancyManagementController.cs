@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using Application.Interfaces;
     using Constants;
+    using FluentValidation.Mvc;
     using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.VacancyManagement;
@@ -53,7 +54,18 @@
         [ActionName("EditWage")]
         public ActionResult EditWagePost(EditWageViewModel editWageViewModel)
         {
-            return View();
+            var result = _vacancyManagementMediator.EditWage(editWageViewModel);
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.NotFound)
+            {
+                return HttpNotFound();
+            }
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.FailedValidation)
+            {
+                ModelState.Clear();
+                result.ValidationResult.AddToModelState(ModelState, string.Empty);
+                return View(result.ViewModel);
+            }
+            return View(result.ViewModel);
         }
     }
 }
