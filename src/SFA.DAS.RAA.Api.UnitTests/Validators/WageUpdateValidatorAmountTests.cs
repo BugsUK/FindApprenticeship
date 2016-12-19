@@ -21,7 +21,7 @@
                 Type = WageType.Custom,
                 Amount = null,
                 Unit = null,
-                ExistingType = WageType.ApprenticeshipMinimum
+                ExistingWage = new Wage { Type = WageType.ApprenticeshipMinimum }
             };
 
             var validator = new WageUpdateValidator();
@@ -41,7 +41,7 @@
                 Type = WageType.Custom,
                 Amount = 100,
                 Unit = null,
-                ExistingType = WageType.NationalMinimum
+                ExistingWage = new Wage { Type = WageType.NationalMinimum }
             };
 
             var validator = new WageUpdateValidator();
@@ -61,7 +61,7 @@
                 Type = WageType.Custom,
                 Amount = null,
                 Unit = WageUnit.Weekly,
-                ExistingType = existingType
+                ExistingWage = new Wage { Type = existingType }
             };
 
             var validator = new WageUpdateValidator();
@@ -89,7 +89,7 @@
                 AmountLowerBound = null,
                 AmountUpperBound = 110,
                 Unit = WageUnit.Weekly,
-                ExistingType = existingType
+                ExistingWage = new Wage { Type = existingType }
             };
 
             var validator = new WageUpdateValidator();
@@ -116,7 +116,7 @@
                 AmountLowerBound = null,
                 AmountUpperBound = null,
                 Unit = null,
-                ExistingType = WageType.ApprenticeshipMinimum
+                ExistingWage = new Wage { Type = WageType.ApprenticeshipMinimum }
             };
 
             var validator = new WageUpdateValidator();
@@ -138,7 +138,7 @@
                 AmountLowerBound = 100,
                 AmountUpperBound = 120,
                 Unit = null,
-                ExistingType = WageType.NationalMinimum
+                ExistingWage = new Wage { Type = WageType.NationalMinimum }
             };
 
             var validator = new WageUpdateValidator();
@@ -160,7 +160,7 @@
                 AmountLowerBound = newAmountLowerBound,
                 AmountUpperBound = newAmountUpperBound,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.CustomRange
+                ExistingWage = new Wage { Type = WageType.CustomRange }
             };
 
             var validator = new WageUpdateValidator();
@@ -188,10 +188,13 @@
                 Type = WageType.Custom,
                 Amount = newAmount,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.Custom,
-                ExistingAmount = 100,
-                ExistingUnit = WageUnit.Weekly,
-                HoursPerWeek = 20
+                ExistingWage = new Wage
+                {
+                    Type = WageType.Custom,
+                    Amount = 100,
+                    Unit = WageUnit.Weekly,
+                    HoursPerWeek = 20
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -219,11 +222,14 @@
                 Type = WageType.Custom,
                 Amount = newAmount,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.CustomRange,
-                ExistingAmountLowerBound = 100,
-                ExistingAmountUpperBound = 110,
-                ExistingUnit = WageUnit.Weekly,
-                HoursPerWeek = 20
+                ExistingWage = new Wage
+                {
+                    Type = WageType.CustomRange,
+                    AmountLowerBound = 100,
+                    AmountUpperBound = 110,
+                    Unit = WageUnit.Weekly,
+                    HoursPerWeek = 20
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -251,11 +257,14 @@
                 Type = WageType.CustomRange,
                 AmountLowerBound = newAmount,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.CustomRange,
-                ExistingAmountLowerBound = 100,
-                ExistingAmountUpperBound = 110,
-                ExistingUnit = WageUnit.Weekly,
-                HoursPerWeek = 20
+                ExistingWage = new Wage
+                {
+                    Type = WageType.CustomRange,
+                    AmountLowerBound = 100,
+                    AmountUpperBound = 110,
+                    Unit = WageUnit.Weekly,
+                    HoursPerWeek = 20
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -284,10 +293,13 @@
                 AmountLowerBound = newAmount,
                 AmountUpperBound = 110,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.Custom,
-                ExistingAmount = 100,
-                ExistingUnit = WageUnit.Weekly,
-                HoursPerWeek = 20
+                ExistingWage = new Wage
+                {
+                    Type = WageType.Custom,
+                    Amount = 100,
+                    Unit = WageUnit.Weekly,
+                    HoursPerWeek = 20
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -315,8 +327,11 @@
                 Type = WageType.Custom,
                 Amount = newAmount,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.NationalMinimum,
-                HoursPerWeek = 20,
+                ExistingWage = new Wage
+                {
+                    Type = WageType.NationalMinimum,
+                    HoursPerWeek = 20
+                },
                 PossibleStartDate = new DateTime(2016, 12, 1)
             };
 
@@ -346,8 +361,11 @@
                 AmountLowerBound = newAmount,
                 AmountUpperBound = 150,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.NationalMinimum,
-                HoursPerWeek = 20,
+                ExistingWage = new Wage
+                {
+                    Type = WageType.NationalMinimum,
+                    HoursPerWeek = 20
+                },
                 PossibleStartDate = new DateTime(2016, 12, 1)
             };
 
@@ -376,8 +394,11 @@
                 Type = WageType.Custom,
                 Amount = newAmount,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.ApprenticeshipMinimum,
-                HoursPerWeek = 20,
+                ExistingWage = new Wage
+                {
+                    Type = WageType.ApprenticeshipMinimum,
+                    HoursPerWeek = 20
+                },
                 PossibleStartDate = new DateTime(2016, 12, 1)
             };
 
@@ -407,8 +428,11 @@
                 AmountLowerBound = newAmount,
                 AmountUpperBound = 150,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.ApprenticeshipMinimum,
-                HoursPerWeek = 20,
+                ExistingWage = new Wage
+                {
+                    Type = WageType.ApprenticeshipMinimum,
+                    HoursPerWeek = 20
+                },
                 PossibleStartDate = new DateTime(2016, 12, 1)
             };
 
@@ -437,8 +461,11 @@
                 Type = WageType.Custom,
                 Amount = newAmount,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.Unwaged,
-                HoursPerWeek = 20,
+                ExistingWage = new Wage
+                {
+                    Type = WageType.Unwaged,
+                    HoursPerWeek = 20
+                },
                 PossibleStartDate = new DateTime(2016, 12, 1)
             };
 
@@ -468,8 +495,11 @@
                 AmountLowerBound = newAmount,
                 AmountUpperBound = 150,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.Unwaged,
-                HoursPerWeek = 20,
+                ExistingWage = new Wage
+                {
+                    Type = WageType.ApprenticeshipMinimum,
+                    HoursPerWeek = 20
+                },
                 PossibleStartDate = new DateTime(2016, 12, 1)
             };
 

@@ -5,7 +5,6 @@
     using Constants;
     using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
-    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyManagement;
 
     public class VacancyManagementController : RecruitmentControllerBase
@@ -42,7 +41,12 @@
         [ActionName("EditWage")]
         public ActionResult EditWageGet(int vacancyReferenceNumber)
         {
-            return View();
+            var result = _vacancyManagementMediator.EditWage(vacancyReferenceNumber);
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.NotFound)
+            {
+                return HttpNotFound();
+            }
+            return View(result.ViewModel);
         }
 
         [HttpPost]

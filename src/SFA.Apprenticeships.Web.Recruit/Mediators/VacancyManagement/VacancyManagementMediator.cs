@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyManagement
 {
+    using System;
     using Apprenticeships.Application.Vacancy;
     using Common.Constants;
     using Common.Mediators;
     using Raa.Common.Providers;
-    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyManagement;
     using VacancyPosting;
 
@@ -47,6 +47,26 @@
             }
 
             return GetMediatorResponse(serviceResult.Code, vacancyViewModel);
+        }
+
+        public MediatorResponse<EditWageViewModel> EditWage(int vacancyReferenceNumber)
+        {
+            var viewModel = new EditWageViewModel
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber
+            };
+
+            var serviceResult = _vacancyManagementProvider.FindSummary(vacancyReferenceNumber);
+            if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.Ok)
+            {
+                return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Ok, viewModel);
+            }
+            if (serviceResult.Code == VacancyManagementServiceCodes.FindSummary.NotFound)
+            {
+                return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.NotFound, viewModel);
+            }
+
+            throw new ArgumentException($"serviceResult: {serviceResult} from _vacancyManagementProvider.FindSummary({vacancyReferenceNumber}); was not recognised");
         }
     }
 }

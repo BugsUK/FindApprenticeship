@@ -13,5 +13,12 @@
             public const string Ok = "VacancyPosting.DeleteVacancy.Ok";
             public const string Failure = "VacancyPosting.DeleteVacancy.Failure";
         }
+
+        public class EditWage
+        {
+            public const string Ok = "VacancyPosting.EditWage.Ok";
+            public const string NotFound = "VacancyManagement.EditWage.NotFound";
+            public const string Failure = "VacancyPosting.EditWage.Failure";
+        }
     }
 }

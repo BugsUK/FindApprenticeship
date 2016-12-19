@@ -37,10 +37,16 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     
     #line default
     #line hidden
+    
+    #line 2 "..\..\Views\VacancyManagement\EditWage.cshtml"
+    using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 2 "..\..\Views\VacancyManagement\EditWage.cshtml"
+    #line 3 "..\..\Views\VacancyManagement\EditWage.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
@@ -56,7 +62,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
         public override void Execute()
         {
             
-            #line 5 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 6 "..\..\Views\VacancyManagement\EditWage.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Increase vacancy wage";
 
@@ -70,54 +76,22 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n    Increase vacancy wage\r\n</h1>\r\n\r\n");
 
             
-            #line 13 "..\..\Views\VacancyManagement\EditWage.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, FormMethod.Post, new { id = "edit-wage-form" }))
+            #line 14 "..\..\Views\VacancyManagement\EditWage.cshtml"
+ using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, new RouteValueDictionary { { "vacancyReferenceNumber", Model.VacancyReferenceNumber } }, FormMethod.Post, new { id = "edit-wage-form" }))
 {
 
             
             #line default
             #line hidden
-WriteLiteral("    <div>\r\n        <p>You will not be able to retreive this vacancy once it has b" +
-"een deleted</p>\r\n        <div");
+WriteLiteral("    <div>\r\n        <div");
 
-WriteLiteral(" class=\"column-full\"");
+WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n");
-
-            
-            #line 18 "..\..\Views\VacancyManagement\EditWage.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 18 "..\..\Views\VacancyManagement\EditWage.cshtml"
-             foreach (var prop in Model.GetType().GetProperties())
-            {
-                var getter = prop.GetGetMethod();
-                
-            
-            #line default
-            #line hidden
-            
-            #line 21 "..\..\Views\VacancyManagement\EditWage.cshtml"
-           Write(Html.Hidden(prop.Name, getter.Invoke(Model, new object[] { })));
-
-            
-            #line default
-            #line hidden
-            
-            #line 21 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                                                                               
-                ;
-            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <button");
+WriteLiteral(">\r\n            <button");
 
 WriteLiteral(" class=\"button\"");
+
+WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" id=\"editWageButton\"");
 
@@ -125,21 +99,43 @@ WriteLiteral(" name=\"EditWage\"");
 
 WriteLiteral(" value=\"EditWage\"");
 
-WriteLiteral(">Save and return</button>\r\n");
-
-WriteLiteral("            ");
+WriteLiteral(">Save and return</button>\r\n\r\n");
 
             
-            #line 25 "..\..\Views\VacancyManagement\EditWage.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome));
+            #line 20 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 20 "..\..\Views\VacancyManagement\EditWage.cshtml"
+              
+                var routeName = Model.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
+                    RecruitmentRouteNames.VacancyApplications :
+                    RecruitmentRouteNames.PreviewVacancy;
 
+                
+            
+            #line default
+            #line hidden
+            
+            #line 25 "..\..\Views\VacancyManagement\EditWage.cshtml"
+           Write(Html.RouteLink("Cancel", routeName, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 25 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                                                                   
+            
             
             #line default
             #line hidden
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 28 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 29 "..\..\Views\VacancyManagement\EditWage.cshtml"
 }
             
             #line default

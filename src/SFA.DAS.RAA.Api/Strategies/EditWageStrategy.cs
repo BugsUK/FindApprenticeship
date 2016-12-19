@@ -37,12 +37,7 @@
             {
                 throw new ArgumentException(WageUpdateMessages.MissingHoursPerWeek);
             }
-            wageUpdate.ExistingType = vacancy.Wage.Type;
-            wageUpdate.ExistingAmount = vacancy.Wage.Amount;
-            wageUpdate.ExistingAmountLowerBound = vacancy.Wage.AmountLowerBound;
-            wageUpdate.ExistingAmountUpperBound = vacancy.Wage.AmountUpperBound;
-            wageUpdate.ExistingUnit = vacancy.Wage.Unit;
-            wageUpdate.HoursPerWeek = vacancy.Wage.HoursPerWeek;
+            wageUpdate.ExistingWage = vacancy.Wage;
             wageUpdate.PossibleStartDate = vacancy.PossibleStartDate;
 
             var validator = new WageUpdateValidator();
@@ -68,8 +63,8 @@
 
             if (vacancy.Wage.Type == WageType.CustomRange)
             {
-                vacancy.Wage.AmountLowerBound = wageUpdate.AmountLowerBound ?? wageUpdate.ExistingAmountLowerBound;
-                vacancy.Wage.AmountUpperBound = wageUpdate.AmountUpperBound ?? wageUpdate.ExistingAmountUpperBound;
+                vacancy.Wage.AmountLowerBound = wageUpdate.AmountLowerBound ?? wageUpdate.ExistingWage.AmountLowerBound;
+                vacancy.Wage.AmountUpperBound = wageUpdate.AmountUpperBound ?? wageUpdate.ExistingWage.AmountUpperBound;
             }
             else
             {

@@ -1,4 +1,5 @@
 ﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyManagement.EditWageViewModel
 
@@ -10,19 +11,19 @@
     Increase vacancy wage
 </h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, FormMethod.Post, new { id = "edit-wage-form" }))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, new RouteValueDictionary { { "vacancyReferenceNumber", Model.VacancyReferenceNumber } }, FormMethod.Post, new { id = "edit-wage-form" }))
 {
     <div>
-        <p>You will not be able to retreive this vacancy once it has been deleted</p>
-        <div class="column-full">
-            @foreach (var prop in Model.GetType().GetProperties())
-            {
-                var getter = prop.GetGetMethod();
-                @Html.Hidden(prop.Name, getter.Invoke(Model, new object[] { }))
-                ;
+        <div class="form-group">
+            <button class="button" type="submit" id="editWageButton" name="EditWage" value="EditWage">Save and return</button>
+
+            @{
+                var routeName = Model.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
+                    RecruitmentRouteNames.VacancyApplications :
+                    RecruitmentRouteNames.PreviewVacancy;
+
+                @Html.RouteLink("Cancel", routeName, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
             }
-            <button class="button" id="editWageButton" name="EditWage" value="EditWage">Save and return</button>
-            @Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome)
         </div>
     </div>
 }

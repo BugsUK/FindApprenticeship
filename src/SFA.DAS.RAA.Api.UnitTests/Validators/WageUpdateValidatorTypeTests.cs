@@ -30,8 +30,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.LegacyText,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.LegacyText,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -67,8 +70,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.LegacyWeekly,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.LegacyWeekly,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -104,8 +110,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.ApprenticeshipMinimum,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.ApprenticeshipMinimum,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -141,8 +150,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.NationalMinimum,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.NationalMinimum,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -178,8 +190,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.Custom,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.Custom,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -215,8 +230,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.CustomRange,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.CustomRange,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -252,8 +270,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.CompetitiveSalary,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.CompetitiveSalary,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -289,8 +310,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.ToBeAgreedUponAppointment,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.ToBeAgreedUponAppointment,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
@@ -326,8 +350,11 @@
                 AmountLowerBound = 110,
                 AmountUpperBound = 120,
                 Unit = WageUnit.Weekly,
-                ExistingType = WageType.Unwaged,
-                ExistingAmount = 100
+                ExistingWage = new Wage
+                {
+                    Type = WageType.Unwaged,
+                    Amount = 100
+                }
             };
 
             var validator = new WageUpdateValidator();
