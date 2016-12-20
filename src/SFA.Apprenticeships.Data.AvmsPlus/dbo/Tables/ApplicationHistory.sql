@@ -23,3 +23,8 @@ CREATE NONCLUSTERED INDEX [idx_ApplicationHistory_ApplicationId_ApplicationHisto
     ON [dbo].[ApplicationHistory]([ApplicationId] ASC, [ApplicationHistoryEventSubTypeId] ASC)
     INCLUDE([ApplicationHistoryEventTypeId], [ApplicationHistoryId], [ApplicationHistoryEventDate]);
 
+
+GO
+CREATE NONCLUSTERED INDEX [nci_wi_ApplicationHistory_2633970E04D19806D013301CA74FD167] 
+    ON [dbo].[ApplicationHistory]([ApplicationHistoryEventSubTypeId] ASC,[ApplicationHistoryEventTypeId] ASC)
+    INCLUDE ([ApplicationHistoryEventDate],	[ApplicationId])
