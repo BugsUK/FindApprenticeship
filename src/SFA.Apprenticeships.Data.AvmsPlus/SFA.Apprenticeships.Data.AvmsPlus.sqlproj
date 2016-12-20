@@ -1292,6 +1292,7 @@
     <Build Include="RaaApi\RaaApi.User.sql" />
     <Build Include="RaaApi\RaaApi.UserType.sql" />
     <None Include="Scripts\Data\RaaApi.UserType.Upsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetVacancyTracker.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

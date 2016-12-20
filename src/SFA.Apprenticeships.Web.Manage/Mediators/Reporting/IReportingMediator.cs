@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Reporting
 {
-    using System;
     using Common.Mediators;
     using Raa.Common.ViewModels.Report;
     using ViewModels;
@@ -17,5 +16,6 @@
         MediatorResponse<ReportRegisteredCandidatesParameters> GetRegisteredCandidatesReportParams();
         MediatorResponse<ReportRegisteredCandidatesParameters> ValidateRegisteredCandidatesParameters(ReportRegisteredCandidatesParameters parameters);
         MediatorResponse<byte[]> GetRegisteredCandidatesReportBytes(ReportRegisteredCandidatesParameters parameters);
+        MediatorResponse<byte[]> GetVacancyTrackerReportBytes(ReportVacancyTrackerParameters parameters);
     }
 }

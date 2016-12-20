@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Reporting
 {
-    using System;
-    using System.Collections.Generic;
     using Entities.Raa.Reporting;
     using Models;
+    using System;
+    using System.Collections.Generic;
 
     public interface IReportingRepository
     {
@@ -18,5 +18,6 @@
         IList<CandidatesWithApplicationsResultItem> GetCandidatesWithApplicationsResultItems(DateTime dateFrom, DateTime dateTo, int providerSiteId);
         InformationRadiatorData GetInformationRadiatorData();
         IList<ReportRegisteredCandidatesResultItem> ReportRegisteredCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string region, string localAuthority, bool marketMessagesOnly);
+        IEnumerable<ReportVacancyTrackerResultItem> ReportVacancyTracker(DateTime date, DateTime dateTime);
     }
 }

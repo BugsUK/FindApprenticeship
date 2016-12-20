@@ -623,5 +623,36 @@
 
             return response.ToList();
         }
+
+        public IEnumerable<ReportVacancyTrackerResultItem> ReportVacancyTracker(DateTime fromDate, DateTime toDate)
+        {
+            _logger.Debug($"Executing ReportVacancyTracker report with toDate {toDate} and fromdate {fromDate}...");
+
+            var response = new List<ReportVacancyTrackerResultItem>();
+
+            var command = new SqlCommand("dbo.ReportGetVacancyTracker", (SqlConnection)_getOpenConnection.GetOpenConnection());
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("dateFrom", SqlDbType.DateTime).Value = fromDate;
+            command.Parameters.Add("dateTo", SqlDbType.DateTime).Value = toDate;
+
+            command.CommandTimeout = 180;
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(new ReportVacancyTrackerResultItem
+                {
+                    OutComeDate = reader[5].ToString(),
+                    ProviderName = reader[2].ToString(),
+                    DateSubmitted = reader[3].ToString(),
+                    Reference = reader[1].ToString(),
+                    Outcome = reader[4].ToString(),
+                    QAUserName = reader[0].ToString(),
+                });
+            }
+
+            _logger.Debug($"Done executing VacancyTracker report with toDate {toDate} and fromdate {fromDate}.");
+
+            return response;
+        }
     }
 }

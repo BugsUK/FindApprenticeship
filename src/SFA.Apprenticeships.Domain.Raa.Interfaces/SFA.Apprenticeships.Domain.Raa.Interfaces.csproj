@@ -89,6 +89,7 @@
     <Compile Include="Reporting\Models\ReportRegisteredCandidatesResultItem.cs" />
     <Compile Include="Reporting\Models\ReportSuccessfulCandidatesResultItem.cs" />
     <Compile Include="Reporting\Models\ReportUnsuccessfulCandidatesResultItem.cs" />
+    <Compile Include="Reporting\Models\ReportVacancyTrackerResultItem.cs" />
     <Compile Include="Reporting\Models\ReportVacanciesResultItem.cs" />
     <Compile Include="Reporting\Models\ReportVacancyExtensionsResultItem.cs" />
     <Compile Include="Repositories\IAgencyUserRepository.cs" />
