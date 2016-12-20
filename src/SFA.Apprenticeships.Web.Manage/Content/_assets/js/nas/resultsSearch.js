@@ -66,8 +66,8 @@ $(function () {
             method: 'GET'
         }).done(function (response) {
 
-            var main = $(response).find("#pagedList");
-            $("#pagedList").html(main.html());
+            var main = $(response).find("#main");
+            $("#main").html(main.html());
             $(window).trigger('resultsReloaded');
             $(document).trigger("setRefineSearch");
             if (addHistory) {
@@ -79,6 +79,9 @@ $(function () {
             setDetailsView();
             $("#Location").locationMatch({ url: locationUrl, longitude: '#Longitude', latitude: '#Latitude', latlonhash: '#Hash' });
             Webtrends.multiTrack({ argsa: ["DCS.dcsqry", window.location.search] });
+
+            if (setupCategorySelectors)
+                setupCategorySelectors();
         }).fail(function () {
         });
     }

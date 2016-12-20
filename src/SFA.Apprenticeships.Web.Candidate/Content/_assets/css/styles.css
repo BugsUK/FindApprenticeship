@@ -199,15 +199,35 @@ Custom Typography
     padding: 0 0.75em 0.75em 0; }
 
 /* -------------------------------------------------------------------
+Custom list
+------------------------------------------------------------------- */
+dl.sfa-dl .sfa-di {
+  margin-bottom: 20px; }
+
+dl.sfa-dl .dt {
+  font-weight: bold;
+  font-weight: 700; }
+
+/* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
 ------------------------------------------------------------------- */
+.sfa-saving-prompt {
+  background: #28a197;
+  border-bottom: 3px solid #1e7871;
+  color: #fff;
+  opacity: .9;
+  position: fixed;
+  bottom: 0;
+  right: 30px;
+  padding: 10px 15px; }
+
 .sfa-disabled {
   opacity: 0.5; }
 
 .force-full-width {
   width: 100% !important; }
 
-.no-margins {
+.sfa-no-margins {
   margin: 0 !important; }
 
 .sfa-no-right-margin {
@@ -233,6 +253,9 @@ Misc - TO BE ORGANISED
 
 .sfa-pull-right {
   float: right !important; }
+  @media (min-width: 641px) {
+    .sfa-pull-right-tablet {
+      float: right !important; } }
 
 .js-enabled .nojs-notice {
   display: none !important; }
@@ -267,7 +290,12 @@ iframe, object, embed {
 
 .search-result {
   position: relative;
-  padding-bottom: 30px; }
+  padding-bottom: 15px;
+  margin-bottom: 15px; }
+  @media (min-width: 641px) {
+    .search-result {
+      padding-bottom: 30px;
+      margin-bottom: 30px; } }
 
 .save-vacancy {
   position: absolute;
@@ -522,9 +550,6 @@ a[rel="external"]:after {
 .toggle-content {
   display: none; }
 
-.page-navigation {
-  padding-top: 10px; }
-
 .page-navigation .description {
   display: block; }
 
@@ -541,7 +566,7 @@ a[rel="external"]:after {
   font-size: 1em;
   margin-right: -4px;
   overflow: hidden;
-  padding: 1.2em .6em;
+  padding: 1.2em .6em 1.2em .6em !important;
   text-decoration: none;
   vertical-align: top;
   width: 50%; }
@@ -551,7 +576,8 @@ a[rel="external"]:after {
   float: left;
   font-size: 3.5em;
   margin-right: 10px;
-  margin-top: -.2em; }
+  margin-top: -.2em;
+  margin-bottom: -.2em; }
 
 .page-navigation__btn.previous {
   text-align: left; }

@@ -22,31 +22,31 @@ else
                 @if (Model.SuccessfulApprenticeshipApplications.Any())
                 {
                     <li>
-                        <span id="successful-applications-count" class="bold-medium">@Model.SuccessfulApprenticeshipApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
+                        <span id="successful-applications-count" class="bold-medium">@Model.SuccessfulApprenticeshipApplications.Count()</span>  <a  href="#dashSuccessful">Successful</a>
                     </li>
                 }
                 @if (Model.SubmittedApprenticeshipApplications.Any())
                 {
                     <li>
-                        <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApprenticeshipApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
+                        <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApprenticeshipApplications.Count()</span>  <a  href="#dashSubmitted">Submitted</a>
                     </li>
                 }
                 @if (Model.UnsuccessfulApplications.Any())
                 {
                     <li>
-                        <span id="unsuccessful-applications-count" class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
+                        <span id="unsuccessful-applications-count" class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a  href="#dashUnsuccessful">Unsuccessful</a>
                     </li>
                 }
                 @if (Model.DraftApprenticeshipApplications.Any())
                 {
                     <li>
-                        <span id="draft-applications-count" class="bold-medium">@Model.DraftApprenticeshipApplications.Count()</span>  <a class="" href="#dashDrafts">Saved</a>
+                        <span id="draft-applications-count" class="bold-medium">@Model.DraftApprenticeshipApplications.Count()</span>  <a  href="#dashDrafts">Saved</a>
                     </li>
                 }
                 @if (Model.TraineeshipApplications.Any())
                 {
                     <li>
-                        <span id="traineeship-applications-count" class="bold-medium">@Model.TraineeshipApplications.Count()</span>  <a class="" href="#dashTraineeships">Traineeships</a>
+                        <span id="traineeship-applications-count" class="bold-medium">@Model.TraineeshipApplications.Count()</span>  <a  href="#dashTraineeships">Traineeships</a>
                     </li>
                 }
             </ul>
@@ -57,7 +57,6 @@ else
         @if (Model.SuccessfulApprenticeshipApplications.Any() || Model.UnsuccessfulApplications.Any() || Model.SubmittedApprenticeshipApplications.Any())
         {
             <div class="column-one-half">
-                <div class="inner-block-padr">
                     <section class="clearfix">
                         @if (Model.SuccessfulApprenticeshipApplications.Any())
                         {
@@ -210,7 +209,6 @@ else
                             </table>
                         }
                     </section>
-                </div>
             </div>
         }
         @if (Model.DraftApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())

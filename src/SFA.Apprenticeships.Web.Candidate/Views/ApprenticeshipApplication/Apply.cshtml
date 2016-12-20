@@ -20,7 +20,7 @@
 
 <noscript>
     <div class="panel-warning">
-        <div class="text">
+        <div>
             <h2 class="heading-large"><i class="fa fa-info-circle"></i>Save your application regularly</h2>
             <p>For security reasons you'll be signed out after 60 minutes.</p>
             <p>Save your application after you complete each section to ensure you don't lose any of your application.</p>
@@ -37,14 +37,14 @@
             <h1 class="heading-xlarge" id="appTourStart">Application form</h1>
         </div>
         <div class="column-one-third">
-            <div class="page-link hide-nojs">
+            <div class="hide-nojs">
                 <a href="#" id="runApplyTour"><i class="fa fa-question-circle"></i>How to apply for an apprenticeship</a>
                 <p>(interactive walkthrough)</p>
             </div>
         </div>
     </div>
     <section class="sfa-section-bordered">
-        <div class="text">
+        <div>
             <div class="hgroup-medium">
                 @Html.HiddenFor(m => m.VacancyDetail.Title)
                 <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
@@ -106,7 +106,7 @@
 
 }
 
-<div class="saving-prompt toggle-content hide-nojs" id="savedNotification">
+<div class="sfa-saving-prompt toggle-content hide-nojs" id="savedNotification">
     Saved
 </div>
 

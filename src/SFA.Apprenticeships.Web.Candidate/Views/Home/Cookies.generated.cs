@@ -65,11 +65,7 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h1");
+WriteLiteral("\r\n\r\n<div>\r\n    <h1");
 
 WriteLiteral(" id=\"h1header\"");
 
@@ -91,14 +87,14 @@ WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 611), Tuple.Create("\"", 636)
+WriteAttribute("href", Tuple.Create(" href=\"", 598), Tuple.Create("\"", 623)
             
             #line 18 "..\..\Views\Home\Cookies.cshtml"
-, Tuple.Create(Tuple.Create("", 618), Tuple.Create<System.Object, System.Int32>(ViewBag.ReturnUrl
+, Tuple.Create(Tuple.Create("", 605), Tuple.Create<System.Object, System.Int32>(ViewBag.ReturnUrl
             
             #line default
             #line hidden
-, 618), false)
+, 605), false)
 );
 
 WriteLiteral(">Re-check your browser settings</a>\r\n</div>");

@@ -2,7 +2,7 @@
 
 @if (Model != null && (!string.IsNullOrWhiteSpace(Model.Vacancy.FirstQuestion) || !string.IsNullOrWhiteSpace(Model.Vacancy.SecondQuestion)))
 {
-    <div class="text">
+    <div>
         @if (!string.IsNullOrWhiteSpace(Model.Vacancy.FirstQuestion))
         {
             <div class="form-group">

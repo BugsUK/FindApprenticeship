@@ -23,7 +23,6 @@
         }
     </h2>
     <div class="column-one-third">
-        <div class="inner-block-padr">
 
             @if (Model.VacancyType == VacancyType.Traineeship)
             {
@@ -141,7 +140,6 @@
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
                 </div>
             }
-        </div>
     </div>
     <div class="column-two-thirds">
         <div class="text @editableItemClass" itemprop="responsibilities">
@@ -173,7 +171,7 @@
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
             </div>
             <div class="@editableItemClass">
-                <div class="text">
+                <div>
                     <h3 class="heading-small">
                         Future prospects
                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))

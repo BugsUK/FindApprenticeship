@@ -187,20 +187,16 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            <p");
+WriteLiteral("            <p >\r\n                <a");
 
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n                <a");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 1555), Tuple.Create("\"", 1586)
+WriteAttribute("href", Tuple.Create(" href=\"", 1543), Tuple.Create("\"", 1574)
             
             #line 35 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1562), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
+, Tuple.Create(Tuple.Create("", 1550), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
             
             #line default
             #line hidden
-, 1562), false)
+, 1550), false)
 );
 
 WriteLiteral(" title=\"Return to search results\"");
@@ -222,14 +218,14 @@ WriteLiteral(" class=\"text form-group\"");
 
 WriteLiteral(">\r\n    <p>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1787), Tuple.Create("\"", 1814)
+WriteAttribute("href", Tuple.Create(" href=\"", 1775), Tuple.Create("\"", 1802)
             
             #line 43 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1794), Tuple.Create<System.Object, System.Int32>(ViewBag.FeedbackUrl
+, Tuple.Create(Tuple.Create("", 1782), Tuple.Create<System.Object, System.Int32>(ViewBag.FeedbackUrl
             
             #line default
             #line hidden
-, 1794), false)
+, 1782), false)
 );
 
 WriteLiteral(" target=\"_blank\"");

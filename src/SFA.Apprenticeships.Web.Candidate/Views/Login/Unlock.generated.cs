@@ -67,12 +67,8 @@ WriteLiteral(" id=\"account-unlock-h1\"");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">Account locked</h1>\r\n<p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">You should receive a 6-character code in your email. Enter the code to unlock yo" +
-"ur account.</p>\r\n\r\n");
+WriteLiteral(">Account locked</h1>\r\n<p >You should receive a 6-character code in your email. En" +
+"ter the code to unlock your account.</p>\r\n\r\n");
 
             
             #line 11 "..\..\Views\Login\Unlock.cshtml"

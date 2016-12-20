@@ -32,16 +32,14 @@
             </div>
             <div class="grid-wrapper">
                 <div class="grid grid-2-3">
-                    <div class="inner-block-padr">
                         <div>
-                            <div class="text" itemprop="description">
+                            <div  itemprop="description">
                                 <p id="vacancy-description" class="@Model.ShortDescription.GetPreserveFormattingCssClass()">@Model.ShortDescription</p>
                                 <p>
                                     <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber})" class="disp-block">View @(Model.VacancyType == VacancyType.Traineeship ? "traineeship" : "apprenticeship")</a>
                                 </p>
                             </div>
                         </div>
-                    </div>
                 </div>
                 <div class="grid grid-1-3">
                     <p class="sfa-small-bottom-margin">
@@ -379,7 +377,7 @@
     }
 }
 
-<div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+<div class="sfa-saving-prompt toggle-content hide-nojs" id="ajaxLoading">
     Loading
 </div>
 

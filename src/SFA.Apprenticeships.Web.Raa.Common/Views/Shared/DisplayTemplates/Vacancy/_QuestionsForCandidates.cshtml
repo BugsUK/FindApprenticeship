@@ -11,8 +11,7 @@
     <section class="sfa-section-bordered grid-row" id="course-info">
         <h2 class="heading-large column-full">Questions for candidates</h2>
         <div class="column-one-half">
-            <div class="inner-block-padr">
-                <div class="text">
+                <div>
                     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
                     {
                         <div class="@editableItemClass">
@@ -36,7 +35,6 @@
                         </div>
                     }
                 </div>
-            </div>
         </div>
     </section>
 }

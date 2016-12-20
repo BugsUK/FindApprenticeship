@@ -45,14 +45,12 @@
             <a class="inl-block inpage-focus" href="#@Html.IdFor(m => m.EmailAddress)">Edit your email</a>
         </div>
         
-        <div class="form-group">
-            @Html.FormPasswordFor(m => m.Password, containerHtmlAttributes: new { @class = "form-group-compound" }, hintHtmlAttributes: new { id = "passwordHint" }, controlHtmlAttributes: new { aria_describedby = "passwordHint", autocomplete = "off" })
-            <p class="form-hint strength-indicator hide-nojs">Password strength: <span id="pass_meter" class=""></span></p>
-        </div>
+        @using (Html.FormPasswordWithContentFor(m => m.Password, hintHtmlAttributes: new { id = "passwordHint" }, controlHtmlAttributes: new { aria_describedby = "passwordHint", autocomplete = "off" }))
+        {
+            <span class="sfa-form-control-after strength-indicator hide-nojs">Password strength: <span id="pass_meter"></span></span>
+        }
         
-        <div class="form-group">
-            @Html.FormPasswordFor(m => m.ConfirmPassword, controlHtmlAttributes: new { autocomplete = "off" })
-        </div>
+        @Html.FormPasswordFor(m => m.ConfirmPassword, controlHtmlAttributes: new { autocomplete = "off" })
     </fieldset>
     
     <div class="form-group">

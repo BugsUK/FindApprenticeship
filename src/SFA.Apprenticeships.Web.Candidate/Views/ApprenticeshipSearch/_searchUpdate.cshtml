@@ -2,7 +2,6 @@
 @model ApprenticeshipSearchViewModel
 
 <section class="column-one-third">
-    <div>
         <fieldset class="search-filter">
             <legend class="heading-medium mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
             <div class="mob-collpanel toggle-content--mob" id="editSearchPanel">
@@ -19,7 +18,7 @@
 
                 <div class="form-group">
                     @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "sfa-small-bottom-margin" }, controlHtmlAttributes : new { @class = "form-control form-control-4-4" })
-                    <a href="#" class="geolocater inl-block hide-nojs " id="getLocation">Use current location</a>
+                    <a href="#" class="geolocater hide-nojs " id="getLocation">Use current location</a>
                 </div>
                 
 
@@ -27,20 +26,18 @@
                     var open = Model.LocationSearches.Any() ? "open " : "";
                     var hidden = Model.LocationSearches.Any() ? "" : "hidden ";
                 }
-                <div class="form-group">
-                    <details @(open) class="@(open)@(hidden)form-group form-group-compound" id="locationSuggestions">
-                        <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
-                        <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
-                        <div class="detail-content panel panel-border-narrow sfa-scrollable">
-                            <ul id="location-suggestions" class="list">
-                                @foreach (var locationSearch in Model.LocationSearches)
-                                {
-                                    <li><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)">@locationSearch.Location</a></li>
-                                }
-                            </ul>
-                        </div>
-                    </details>
-                </div>
+                <details @(open) class="@(open)@(hidden)form-group" id="locationSuggestions">
+                    <summary tabindex="0" aria-describedby="locSuggestionsAria"><span class="summary">Did you mean:</span></summary>
+                    <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
+                    <div class="panel panel-border-narrow sfa-scrollable">
+                        <ul id="location-suggestions" class="list">
+                            @foreach (var locationSearch in Model.LocationSearches)
+                            {
+                                <li><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)">@locationSearch.Location</a></li>
+                            }
+                        </ul>
+                    </div>
+                </details>
 
                 <div class="form-group">
                     <label for="loc-within" class="form-label-bold">Within</label>
@@ -51,7 +48,7 @@
                     @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control form-control-auto" })
                 </div>
                 <div class="form-group form-group-compound">
-                    <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
+                    <button class="button" id="search-button" name="SearchAction" value="Search">Update results</button>
                 </div>
                 <div class="form-group">
                     @Html.RouteLink("Start again", CandidateRouteNames.ApprenticeshipSearch, new { Model.SearchMode, reset = true }, new { @id = "start-again-link" })
@@ -70,5 +67,4 @@
                 <input id="LocationType" name="LocationType" type="hidden" value="@Model.LocationType" />
             </div>
         </fieldset>
-    </div>
 </section>

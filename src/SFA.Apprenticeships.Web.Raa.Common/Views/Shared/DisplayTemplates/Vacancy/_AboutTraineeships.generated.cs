@@ -70,10 +70,6 @@ WriteLiteral(">About traineeships</h2>\r\n        <div");
 
 WriteLiteral(" class=\"column-two-thirds\"");
 
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"inner-block-padr\"");
-
 WriteLiteral(@">
                 <p>
                     A traineeship is a course with work experience that gets you ready for work or an apprenticeship. It can last up to 6 months.<br />
@@ -92,13 +88,12 @@ WriteLiteral(@">
                     </ul>
                 </p>
                 <p>You won’t be paid, but you may be given expenses for things like travel and meals.</p>
-            </div>
         </div>
     </section>
 ");
 
             
-            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.cshtml"
+            #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.cshtml"
 }
             
             #line default

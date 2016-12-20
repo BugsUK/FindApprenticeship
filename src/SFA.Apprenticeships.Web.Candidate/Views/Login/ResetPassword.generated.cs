@@ -128,19 +128,12 @@ WriteLiteral(" />\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    <fieldset");
-
-WriteLiteral(" class=\"inner-block-padr\"");
-
-WriteLiteral(">\r\n        <legend");
+WriteLiteral("    <fieldset>\r\n        <legend");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">Password reset</legend>\r\n\r\n        <p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">Enter your 6-character code to reset your password</p>\r\n        <div");
+WriteLiteral(">Password reset</legend>\r\n\r\n        <p >Enter your 6-character code to reset your" +
+" password</p>\r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -208,9 +201,7 @@ WriteLiteral(">Password strength: <span");
 
 WriteLiteral(" id=\"pass_meter\"");
 
-WriteLiteral(" class=\"\"");
-
-WriteLiteral("></span></p>\r\n        </div>\r\n\r\n        <div");
+WriteLiteral(" ></span></p>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 

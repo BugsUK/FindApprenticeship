@@ -78,13 +78,9 @@ WriteLiteral(">\r\n            Find a traineeship\r\n            <span");
 WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(">Search and apply for a traineeship in England</span>\r\n        </h1>\r\n        \r\n " +
-"   </div>\r\n</div>\r\n<div");
+"   </div>\r\n</div>\r\n    <div");
 
 WriteLiteral(" class=\"grid-row\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"grid-row controls-3-4\"");
 
 WriteLiteral(">\r\n        <section");
 
@@ -93,13 +89,13 @@ WriteLiteral(" class=\"column-two-thirds\"");
 WriteLiteral(">\r\n");
 
             
-            #line 19 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 18 "..\..\Views\TraineeshipSearch\Index.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 18 "..\..\Views\TraineeshipSearch\Index.cshtml"
              using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
             {
                 
@@ -107,14 +103,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 20 "..\..\Views\TraineeshipSearch\Index.cshtml"
            Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 20 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                                        
 
                 
@@ -122,14 +118,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 22 "..\..\Views\TraineeshipSearch\Index.cshtml"
            Write(Html.FormTextFor(m => m.Location, hintHtmlAttributes: new { id = "geoLocateContainer" }));
 
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 22 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                                                                          
 
                
@@ -137,14 +133,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 24 "..\..\Views\TraineeshipSearch\Index.cshtml"
           Write(Html.FormTextFor(m=>m.ReferenceNumber, controlHtmlAttributes: new { type = "text" }));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 24 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                                                                     
 
 
@@ -164,70 +160,70 @@ WriteLiteral(" id=\"search-button\"");
 WriteLiteral(">Search</button>\r\n                </div>\r\n");
 
             
-            #line 30 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 29 "..\..\Views\TraineeshipSearch\Index.cshtml"
 
                 
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 30 "..\..\Views\TraineeshipSearch\Index.cshtml"
            Write(Html.HiddenFor(m => m.WithinDistance));
 
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 30 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                       ;
                 
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 31 "..\..\Views\TraineeshipSearch\Index.cshtml"
            Write(Html.HiddenFor(m => m.SortType));
 
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 31 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                 ;
                 
             
             #line default
             #line hidden
             
-            #line 33 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 32 "..\..\Views\TraineeshipSearch\Index.cshtml"
            Write(Html.HiddenFor(m => m.Latitude));
 
             
             #line default
             #line hidden
             
-            #line 33 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 32 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                 
                 
             
             #line default
             #line hidden
             
-            #line 34 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 33 "..\..\Views\TraineeshipSearch\Index.cshtml"
            Write(Html.HiddenFor(m => m.Longitude));
 
             
             #line default
             #line hidden
             
-            #line 34 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 33 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                  
                 
             
             #line default
             #line hidden
             
-            #line 35 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 34 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                                                                                                                                                         
 
             
@@ -241,33 +237,33 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1548), Tuple.Create("\"", 1578)
+WriteAttribute("value", Tuple.Create(" value=\"", 1511), Tuple.Create("\"", 1541)
             
-            #line 36 "..\..\Views\TraineeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1556), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+            #line 35 "..\..\Views\TraineeshipSearch\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 1519), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 1556), false)
+, 1519), false)
 );
 
 WriteLiteral(" />\r\n");
 
             
-            #line 37 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 36 "..\..\Views\TraineeshipSearch\Index.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 36 "..\..\Views\TraineeshipSearch\Index.cshtml"
            Write(Html.HiddenFor(m=> m.ResultsPerPage));
 
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 36 "..\..\Views\TraineeshipSearch\Index.cshtml"
                                                      ;
             }
 
@@ -278,13 +274,9 @@ WriteLiteral("        </section>\r\n        <aside");
 
 WriteLiteral(" class=\"column-one-third\"");
 
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"inner-block\"");
-
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"gov-border\"");
+WriteLiteral(" class=\"govuk-related-items\"");
 
 WriteLiteral(">\r\n                    <h2");
 
@@ -292,26 +284,24 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Help</h2>\r\n                    <ul");
 
-WriteLiteral(" class=\"list-text\"");
+WriteLiteral(" class=\"list\"");
 
-WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
-"");
+WriteLiteral(">\r\n                        <li>\r\n                            0800 015 0400\r\n     " +
+"                   </li>\r\n                        <li>\r\n                        " +
+"    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1978), Tuple.Create("\'", 2028)
+WriteAttribute("href", Tuple.Create(" href=\'", 1992), Tuple.Create("\'", 2042)
             
-            #line 46 "..\..\Views\TraineeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1985), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+            #line 47 "..\..\Views\TraineeshipSearch\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 1999), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 1985), false)
+, 1999), false)
 );
 
-WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    <ul");
-
-WriteLiteral(" class=\"list-text\"");
-
-WriteLiteral(">\r\n                        <li>\r\n                            <a");
+WriteLiteral(">Contact us</a>\r\n                        </li>\r\n                        <li>\r\n   " +
+"                         <a");
 
 WriteLiteral(" href=\"https://www.gov.uk/find-traineeship\"");
 
@@ -322,13 +312,13 @@ WriteLiteral("                            ");
 
             
             #line 53 "..\..\Views\TraineeshipSearch\Index.cshtml"
-                       Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link" }));
+                       Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new {id = "find-apprenticeship-link"}));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                        </li>\r\n                    </ul>\r\n                </div" +
-">\r\n            </div>\r\n        </aside>\r\n    </div>\r\n</div>\r\n\r\n");
+">\r\n        </aside>\r\n</div>\r\n\r\n");
 
 DefineSection("scripts", () => {
 
@@ -337,7 +327,7 @@ WriteLiteral("   \r\n");
 WriteLiteral("    ");
 
             
-            #line 64 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 62 "..\..\Views\TraineeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/locationsearch"));
 
             
@@ -346,7 +336,7 @@ Write(Scripts.Render("~/bundles/nas/locationsearch"));
 WriteLiteral("\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r\n            url: \'");
 
             
-            #line 67 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 65 "..\..\Views\TraineeshipSearch\Index.cshtml"
              Write(Url.RouteUrl(CandidateRouteNames.LocationSearch));
 
             
@@ -355,7 +345,7 @@ WriteLiteral("\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r\n  
 WriteLiteral("\',\r\n            longitude: \'#");
 
             
-            #line 68 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 66 "..\..\Views\TraineeshipSearch\Index.cshtml"
                      Write(Html.IdFor(m => m.Longitude));
 
             
@@ -364,7 +354,7 @@ WriteLiteral("\',\r\n            longitude: \'#");
 WriteLiteral("\',\r\n            latitude: \'#");
 
             
-            #line 69 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 67 "..\..\Views\TraineeshipSearch\Index.cshtml"
                     Write(Html.IdFor(m => m.Latitude));
 
             
@@ -373,7 +363,7 @@ WriteLiteral("\',\r\n            latitude: \'#");
 WriteLiteral("\',\r\n            latlonhash: \'#");
 
             
-            #line 70 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 68 "..\..\Views\TraineeshipSearch\Index.cshtml"
                       Write(Html.IdFor(m => m.Hash));
 
             
@@ -384,7 +374,7 @@ WriteLiteral("\'\r\n        });\r\n    </script>\r\n");
 WriteLiteral("    ");
 
             
-            #line 73 "..\..\Views\TraineeshipSearch\Index.cshtml"
+            #line 71 "..\..\Views\TraineeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/geoLocater"));
 
             

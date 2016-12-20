@@ -60,20 +60,20 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
         {
 WriteLiteral("\r\n");
 
-WriteLiteral("<div>\r\n    <h3");
+WriteLiteral("    <dt");
 
 WriteLiteral(" class=\"bold-small\"");
 
 WriteLiteral(">");
 
             
-            #line 6 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 5 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
                       Write(Model.Wage.Unit.GetHeaderDisplayText());
 
             
             #line default
             #line hidden
-WriteLiteral("</h3>\r\n    <p");
+WriteLiteral("</dt>\r\n    <dd");
 
 WriteLiteral(" id=\"vacancy-wage\"");
 
@@ -82,16 +82,16 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 8 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 7 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
    Write(WagePresenter.GetDisplayAmount(Model.Wage.Type, Model.Wage.Amount, Model.Wage.AmountLowerBound, Model.Wage.AmountUpperBound, Model.Wage.Text, Model.Wage.HoursPerWeek, Model.StartDate));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </p>\r\n</div>\r\n\r\n");
+WriteLiteral("\r\n    </dd>\r\n\r\n\r\n");
 
             
-            #line 12 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 11 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
  if (Model.Wage.Type == WageType.ApprenticeshipMinimum)
 {
     
@@ -99,14 +99,14 @@ WriteLiteral("\r\n    </p>\r\n</div>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 13 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
 Write(Html.Partial("_ApprenticeMinimumWageExplained", Model.StartDate));
 
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 13 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
                                                                      
 }
 
@@ -116,7 +116,7 @@ Write(Html.Partial("_ApprenticeMinimumWageExplained", Model.StartDate));
 WriteLiteral("\r\n");
 
             
-            #line 17 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 16 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
  if (Model.Wage.Type == WageType.NationalMinimum)
 {
     
@@ -124,14 +124,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 18 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
 Write(Html.Partial("_NationalMinimumWageExplained", Model.StartDate));
 
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 18 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
                                                                    
 }
 

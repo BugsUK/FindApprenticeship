@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Web;
@@ -32,17 +33,84 @@
                     object controlHtmlAttributes = null,
                     bool verified = false)
         {
-            return BuildFormControl(helper, 
-                                    expression, 
-                                    helper.TextBoxFor, 
-                                    labelText, 
-                                    hintText, 
-                                    false, 
-                                    containerHtmlAttributes, 
-                                    labelHtmlAttributes,
-                                    hintHtmlAttributes,
-                                    controlHtmlAttributes,
-                                    verified);
+            using (var stream = new MemoryStream())
+            {
+
+                var writer = new StreamWriter(stream);
+                
+                var group = BuildFormControl(helper,
+                    expression,
+                    helper.TextBoxFor,
+                    writer,
+                    labelText,
+                    hintText,
+                    false,
+                    containerHtmlAttributes,
+                    labelHtmlAttributes,
+                    hintHtmlAttributes,
+                    controlHtmlAttributes,
+                    verified);
+
+                group.EndFormGroup();
+
+                writer.Flush();
+                stream.Position = 0;
+
+                return new MvcHtmlString(new StreamReader(stream).ReadToEnd());
+            }
+        }
+
+        public static MvcFormGroup FormTextWithContentFor<TModel, TProperty>(
+                    this HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, TProperty>> expression,
+                    string labelText = null,
+                    string hintText = null,
+                    object containerHtmlAttributes = null,
+                    object labelHtmlAttributes = null,
+                    object hintHtmlAttributes = null,
+                    object controlHtmlAttributes = null,
+                    bool verified = false)
+        {
+            return BuildFormControl(helper,
+                    expression,
+                    helper.TextBoxFor,
+                    helper.ViewContext.Writer,
+                    labelText,
+                    hintText,
+                    false,
+                    containerHtmlAttributes,
+                    labelHtmlAttributes,
+                    hintHtmlAttributes,
+                    controlHtmlAttributes,
+                    verified);
+        }
+
+        /// <summary>
+        /// Creates the NAS form element with the appropriate classes.
+        /// </summary>
+        /// <returns>The html to render</returns>
+        public static MvcFormGroup FormPasswordWithContentFor<TModel, TProperty>(
+                    this HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, TProperty>> expression,
+                    string labelText = null,
+                    string hintText = null,
+                    object containerHtmlAttributes = null,
+                    object labelHtmlAttributes = null,
+                    object hintHtmlAttributes = null,
+                    object controlHtmlAttributes = null)
+        {
+            return BuildFormControl(helper,
+                expression,
+                helper.PasswordFor,
+                helper.ViewContext.Writer,
+                labelText,
+                hintText,
+                false,
+                containerHtmlAttributes,
+                labelHtmlAttributes,
+                hintHtmlAttributes,
+                controlHtmlAttributes,
+                disposable: true);
         }
 
         /// <summary>
@@ -59,16 +127,30 @@
                     object hintHtmlAttributes = null,
                     object controlHtmlAttributes = null)
         {
-            return BuildFormControl(helper,
-                                    expression,
-                                    helper.PasswordFor,
-                                    labelText,
-                                    hintText,
-                                    false,
-                                    containerHtmlAttributes,
-                                    labelHtmlAttributes,
-                                    hintHtmlAttributes,
-                                    controlHtmlAttributes);
+            using (var stream = new MemoryStream())
+            {
+
+                var writer = new StreamWriter(stream);
+
+                var group = BuildFormControl(helper,
+                    expression,
+                    helper.PasswordFor,
+                    writer,
+                    labelText,
+                    hintText,
+                    false,
+                    containerHtmlAttributes,
+                    labelHtmlAttributes,
+                    hintHtmlAttributes,
+                    controlHtmlAttributes);
+
+                group.EndFormGroup();
+
+                writer.Flush();
+                stream.Position = 0;
+
+                return new MvcHtmlString(new StreamReader(stream).ReadToEnd());
+            }
         }
 
         /// <summary>
@@ -85,22 +167,37 @@
                     object hintHtmlAttributes = null,
                     object controlHtmlAttributes = null)
         {
-            return BuildFormControl(helper, 
-                                    expression, 
-                                    helper.TextAreaFor, 
-                                    labelText, 
-                                    hintText, 
-                                    true, 
-                                    containerHtmlAttributes, 
-                                    labelHtmlAttributes,
-                                    hintHtmlAttributes,
-                                    controlHtmlAttributes);
+            using (var stream = new MemoryStream())
+            {
+
+                var writer = new StreamWriter(stream);
+
+                var group = BuildFormControl(helper,
+                    expression,
+                    helper.TextAreaFor,
+                    writer,
+                    labelText,
+                    hintText,
+                    true,
+                    containerHtmlAttributes,
+                    labelHtmlAttributes,
+                    hintHtmlAttributes,
+                    controlHtmlAttributes);
+
+                group.EndFormGroup();
+
+                writer.Flush();
+                stream.Position = 0;
+
+                return new MvcHtmlString(new StreamReader(stream).ReadToEnd());
+            }
         }
 
-        private static MvcHtmlString BuildFormControl<TModel, TProperty>(
+        private static MvcFormGroup BuildFormControl<TModel, TProperty>(
                     HtmlHelper<TModel> helper,
                     Expression<Func<TModel, TProperty>> expression,
                     Func<Expression<Func<TModel, TProperty>>, IDictionary<string, object>, MvcHtmlString> controlFunc,
+                    TextWriter writer,
                     string labelText = null,
                     string hintText = null,
                     bool addMaxLengthCounter = false,
@@ -108,7 +205,9 @@
                     object labelHtmlAttributes = null,
                     object hintHtmlAttributes = null,
                     object controlHtmlAttributes = null,
-                    bool verified = false)
+                    bool verified = false,
+                    bool disposable = false
+                    )
         {
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
@@ -123,7 +222,7 @@
 
             var fieldContent = verified ? VerifiedControl(controlFunc, expression, controlAttributes) : controlFunc(expression, controlAttributes);
 
-            return FormText(
+            return new MvcFormGroup(
                 helper.LabelFor(expression, labelText, labelAttributes),
                 helper.HintFor(expression, hintText, hintAttributes),
                 fieldContent,
@@ -132,32 +231,12 @@
                 addMaxLengthCounter ? CharactersLeftFor(helper, expression) : null,
                 addMaxLengthCounter ? ScreenReaderSpan(helper, expression) : null,
                 containerAttributes,
-                validationType
+                validationType,
+                writer
                 );
         }
 
-        private static MvcHtmlString FormText(MvcHtmlString labelContent,
-                                    MvcHtmlString hintContent,
-                                    MvcHtmlString fieldContent,
-                                    MvcHtmlString validationMessage,
-                                    MvcHtmlString anchorTag,
-                                    MvcHtmlString maxLengthSpan,
-                                    MvcHtmlString ariaLimitVisuallyHidden,
-                                    RouteValueDictionary containerHtmlAttributes,
-                                    ValidationType validationType
-                                    )
-        {
-            var container = new TagBuilder("div");
-            container.MergeAttributes(containerHtmlAttributes);
-
-            AddValidationCssClass(validationType, container);
-
-            container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, validationMessage, fieldContent, maxLengthSpan, ariaLimitVisuallyHidden);
-
-            return MvcHtmlString.Create(container.ToString());
-        }
-
-        private static void AddValidationCssClass(ValidationType validationType, TagBuilder container)
+        public static void AddValidationCssClass(ValidationType validationType, TagBuilder container)
         {
             if (validationType == ValidationType.Error)
             {
@@ -212,7 +291,7 @@
             var container = new TagBuilder("div");
 
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
-            
+
             var validationType = GetValidationType(helper, expression);
             var validator = helper.ValidationMessageWithSeverityFor(expression, null, validationType);
             var anchorTag = AnchorFor(helper, expression);
@@ -284,7 +363,7 @@
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             var subContainerAttributes = MergeAttributes("form-group form-group-compound", subContainerHtmlAttributes);
             var labelAttributes = MergeAttributes("form-label-bold", labelHtmlAttributes);
-            
+
             var yesLabelAttributes = MergeAttributes("block-label" + (value ? " selected" : ""), labelHtmlAttributes);
             var noLabelAttributes = MergeAttributes("block-label" + (!value ? " selected" : ""), labelHtmlAttributes);
 
@@ -314,9 +393,9 @@
         {
             if (value == field)
             {
-                return new {id, @checked = "checked"};
+                return new { id, @checked = "checked" };
             }
-            return new {id};
+            return new { id };
         }
 
         #endregion
@@ -367,7 +446,7 @@
 
             var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
             var elementId = helper.ViewData.TemplateInfo.GetFullHtmlFieldId(metadata.PropertyName);
-            
+
             if (string.IsNullOrWhiteSpace(elementId))
             {
                 return MvcHtmlString.Empty;
@@ -382,7 +461,7 @@
         {
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
-            
+
             var tagHint = new TagBuilder("span");
             var tagCount = new TagBuilder("span");
             var tagText = new TagBuilder("span");
@@ -488,5 +567,71 @@
         }
 
         #endregion
+    }
+
+    public class MvcFormGroup : IDisposable
+    {
+        private MvcHtmlString labelContent;
+        private MvcHtmlString hintContent;
+        private MvcHtmlString fieldContent;
+        private MvcHtmlString validationMessage;
+        private MvcHtmlString anchorTag;
+        private MvcHtmlString maxLengthSpan;
+        private MvcHtmlString ariaLimitVisuallyHidden;
+        private RouteValueDictionary containerHtmlAttributes;
+        private ValidationType validationType;
+
+        private TagBuilder container;
+
+        private readonly TextWriter _writer;
+
+        public MvcFormGroup(MvcHtmlString labelContent,
+                                    MvcHtmlString hintContent,
+                                    MvcHtmlString fieldContent,
+                                    MvcHtmlString validationMessage,
+                                    MvcHtmlString anchorTag,
+                                    MvcHtmlString maxLengthSpan,
+                                    MvcHtmlString ariaLimitVisuallyHidden,
+                                    RouteValueDictionary containerHtmlAttributes,
+                                    ValidationType validationType,
+                                    TextWriter writer)
+        {
+            this.labelContent = labelContent;
+            this.hintContent = hintContent;
+            this.fieldContent = fieldContent;
+            this.validationMessage = validationMessage;
+            this.anchorTag = anchorTag;
+            this.maxLengthSpan = maxLengthSpan;
+            this.ariaLimitVisuallyHidden = ariaLimitVisuallyHidden;
+            this.containerHtmlAttributes = containerHtmlAttributes;
+            this.validationType = validationType;
+
+            _writer = writer;
+
+            this.BeginFormGroup();
+        }
+
+        public void BeginFormGroup()
+        {
+            this.container = new TagBuilder("div");
+            container.MergeAttributes(containerHtmlAttributes);
+
+            HtmlExtensions.AddValidationCssClass(validationType, container);
+
+            var contentHtml = string.Concat(anchorTag, labelContent, hintContent, validationMessage, fieldContent, maxLengthSpan, ariaLimitVisuallyHidden);
+
+            _writer.Write(container.ToString(TagRenderMode.StartTag));
+            _writer.Write(contentHtml);
+        }
+
+        public void EndFormGroup()
+        {
+            _writer.Write(container.ToString(TagRenderMode.EndTag));
+        }
+
+        public void Dispose()
+        {
+            this.EndFormGroup();
+        }
     }
 }

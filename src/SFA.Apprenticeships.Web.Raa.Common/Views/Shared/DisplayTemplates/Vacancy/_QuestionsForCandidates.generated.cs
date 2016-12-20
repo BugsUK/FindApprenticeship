@@ -86,24 +86,16 @@ WriteLiteral(">Questions for candidates</h2>\r\n        <div");
 
 WriteLiteral(" class=\"column-one-half\"");
 
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"inner-block-padr\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n                <div>\r\n");
 
             
-            #line 16 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 15 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 15 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                      if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
                     {
 
@@ -112,14 +104,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 792), Tuple.Create("\"", 818)
+WriteAttribute("class", Tuple.Create(" class=\"", 735), Tuple.Create("\"", 761)
             
-            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 800), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 17 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+, Tuple.Create(Tuple.Create("", 743), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 800), false)
+, 743), false)
 );
 
 WriteLiteral(">\r\n                            <h3");
@@ -131,7 +123,7 @@ WriteLiteral(">\r\n                                First question\r\n");
 WriteLiteral("                                ");
 
             
-            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                            Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, Model.QuestionsLink)));
 
             
@@ -139,20 +131,20 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                            </h3>\r\n                            <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1228), Tuple.Create("\"", 1314)
+WriteAttribute("class", Tuple.Create(" class=\"", 1171), Tuple.Create("\"", 1257)
             
-            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 1236), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.FirstQuestion.GetPreserveFormattingCssClass()
+            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+, Tuple.Create(Tuple.Create("", 1179), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.FirstQuestion.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 1236), false)
+, 1179), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                                                                                                                   Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.FirstQuestion));
 
             
@@ -163,7 +155,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment)));
 
             
@@ -172,7 +164,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n");
 
             
-            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                     }
 
             
@@ -181,7 +173,7 @@ WriteLiteral("\r\n                        </div>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                      if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
                     {
 
@@ -190,14 +182,14 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1891), Tuple.Create("\"", 1917)
+WriteAttribute("class", Tuple.Create(" class=\"", 1834), Tuple.Create("\"", 1860)
             
-            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 1899), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+, Tuple.Create(Tuple.Create("", 1842), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1899), false)
+, 1842), false)
 );
 
 WriteLiteral(">\r\n                            <h3");
@@ -209,7 +201,7 @@ WriteLiteral(">\r\n                                Second question\r\n");
 WriteLiteral("                                ");
 
             
-            #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                            Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, Model.QuestionsLink)));
 
             
@@ -217,20 +209,20 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                            </h3>\r\n                            <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2330), Tuple.Create("\"", 2417)
+WriteAttribute("class", Tuple.Create(" class=\"", 2273), Tuple.Create("\"", 2360)
             
-            #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
-, Tuple.Create(Tuple.Create("", 2338), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()
+            #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+, Tuple.Create(Tuple.Create("", 2281), Tuple.Create<System.Object, System.Int32>(Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 2338), false)
+, 2281), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                                                                                                                    Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.SecondQuestion));
 
             
@@ -241,7 +233,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 35 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment)));
 
             
@@ -250,16 +242,16 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n");
 
             
-            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
                     }
 
             
             #line default
             #line hidden
-WriteLiteral("                </div>\r\n            </div>\r\n        </div>\r\n    </section>\r\n");
+WriteLiteral("                </div>\r\n        </div>\r\n    </section>\r\n");
 
             
-            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
+            #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml"
 }
             
             #line default

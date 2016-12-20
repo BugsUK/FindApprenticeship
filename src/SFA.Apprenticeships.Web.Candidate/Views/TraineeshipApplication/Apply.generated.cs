@@ -115,11 +115,7 @@ WriteLiteral("    <section");
 
 WriteLiteral(" class=\"sfa-section-bordered\"");
 
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n        <div>\r\n            <div");
 
 WriteLiteral(" class=\"hgroup-medium\"");
 
@@ -190,14 +186,14 @@ WriteLiteral("\r\n            <p");
 
 WriteLiteral(" id=\"vacancy-summary\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1151), Tuple.Create("\"", 1223)
+WriteAttribute("class", Tuple.Create(" class=\"", 1138), Tuple.Create("\"", 1210)
             
             #line 22 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1159), Tuple.Create<System.Object, System.Int32>(Model.VacancyDetail.Description.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 1146), Tuple.Create<System.Object, System.Int32>(Model.VacancyDetail.Description.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 1159), false)
+, 1146), false)
 );
 
 WriteLiteral(">");
@@ -211,14 +207,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1298), Tuple.Create("\"", 1388)
+WriteAttribute("href", Tuple.Create(" href=\"", 1285), Tuple.Create("\"", 1375)
             
             #line 24 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1305), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
+, Tuple.Create(Tuple.Create("", 1292), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
             
             #line default
             #line hidden
-, 1305), false)
+, 1292), false)
 );
 
 WriteLiteral(">View traineeship</a>\r\n            </p>\r\n        </div>\r\n    </section>\r\n");

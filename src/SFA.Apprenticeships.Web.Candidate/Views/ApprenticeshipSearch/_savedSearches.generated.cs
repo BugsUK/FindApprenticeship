@@ -350,9 +350,7 @@ WriteLiteral("        </ul>\r\n");
             #line hidden
 WriteLiteral("        <p");
 
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(" id=\"saved-searches-prompt\"");
+WriteLiteral("  id=\"saved-searches-prompt\"");
 
 WriteLiteral(">\r\n            You can run your saved searches from here. When you search using k" +
 "eyword or category, you can save this search by clicking “Receive alerts for thi" +

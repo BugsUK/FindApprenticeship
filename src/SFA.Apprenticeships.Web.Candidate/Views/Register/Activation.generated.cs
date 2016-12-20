@@ -91,11 +91,7 @@ Write(Html.AntiForgeryToken());
             
             #line default
             #line hidden
-WriteLiteral("    <p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n        An email has been sent to <b");
+WriteLiteral("    <p >\r\n        An email has been sent to <b");
 
 WriteLiteral(" class=\"email-address\"");
 
