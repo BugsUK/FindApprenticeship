@@ -17,38 +17,42 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.2.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("RA388")]
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
     public partial class RA388Feature
     {
         
-        private TechTalk.SpecFlow.ITestRunner testRunner;
+        private static TechTalk.SpecFlow.ITestRunner testRunner;
         
 #line 1 "RA388.feature"
 #line hidden
         
-        [NUnit.Framework.OneTimeSetUpAttribute()]
-        public virtual void FeatureSetup()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
+        public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
-            testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
+            testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "RA388", "\tIn order to attract more candidates\r\n\tAs a vacancy manager\r\n\tI want to be able t" +
                     "o increase the wage of a vacancy", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
-        [NUnit.Framework.OneTimeTearDownAttribute()]
-        public virtual void FeatureTearDown()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute()]
+        public static void FeatureTearDown()
         {
             testRunner.OnFeatureEnd();
             testRunner = null;
         }
         
-        [NUnit.Framework.SetUpAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute()]
         public virtual void TestInitialize()
         {
+            if (((testRunner.FeatureContext != null) 
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "RA388")))
+            {
+                global::SFA.DAS.RAA.Api.AcceptanceTests.Features.RA388Feature.FeatureSetup(null);
+            }
         }
         
-        [NUnit.Framework.TearDownAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute()]
         public virtual void ScenarioTearDown()
         {
             testRunner.OnScenarioEnd();
@@ -64,10 +68,11 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Features
             testRunner.CollectScenarioErrors();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details with no identifier")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancy")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details with no identifier")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancy")]
         public virtual void GetVacancyDetailsWithNoIdentifier()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details with no identifier", new string[] {
@@ -88,10 +93,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id without authorization")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id without authorization")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyById")]
         public virtual void GetVacancyDetailsByIdWithoutAuthorization()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id without authorization", new string[] {
@@ -107,10 +113,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id with an invalid api key")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id with an invalid api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyById")]
         public virtual void GetVacancyDetailsByIdWithAnInvalidApiKey()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an invalid api key", new string[] {
@@ -128,10 +135,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id with an unknown api key")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id with an unknown api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyById")]
         public virtual void GetVacancyDetailsByIdWithAnUnknownApiKey()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id with an unknown api key", new string[] {
@@ -149,10 +157,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyById")]
         public virtual void GetVacancyDetailsById()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id", new string[] {
@@ -172,10 +181,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by id for different provider")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by id for different provider")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyById")]
         public virtual void GetVacancyDetailsByIdForDifferentProvider()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by id for different provider", new string[] {
@@ -196,10 +206,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy by id that doesn\'t exist")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyById")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy by id that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyById")]
         public virtual void GetVacancyByIdThatDoesntExist()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by id that doesn\'t exist", new string[] {
@@ -220,10 +231,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number without authorization")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number without authorization")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
         public virtual void GetVacancyDetailsByReferenceNumberWithoutAuthorization()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number without authorization", new string[] {
@@ -239,10 +251,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number with an invalid api key")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number with an invalid api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
         public virtual void GetVacancyDetailsByReferenceNumberWithAnInvalidApiKey()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an invalid api key", new string[] {
@@ -260,10 +273,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number with an unknown api key")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number with an unknown api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
         public virtual void GetVacancyDetailsByReferenceNumberWithAnUnknownApiKey()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number with an unknown api key", new string[] {
@@ -281,10 +295,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
         public virtual void GetVacancyDetailsByReferenceNumber()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number", new string[] {
@@ -304,10 +319,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by reference number for different provider")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by reference number for different provider")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
         public virtual void GetVacancyDetailsByReferenceNumberForDifferentProvider()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by reference number for different provider", new string[] {
@@ -327,10 +343,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy by reference number that doesn\'t exist")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByReferenceNumber")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy by reference number that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByReferenceNumber")]
         public virtual void GetVacancyByReferenceNumberThatDoesntExist()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by reference number that doesn\'t exist", new string[] {
@@ -350,10 +367,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid without authorization")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid without authorization")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
         public virtual void GetVacancyDetailsByGuidWithoutAuthorization()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid without authorization", new string[] {
@@ -369,10 +387,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid with an invalid api key")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid with an invalid api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
         public virtual void GetVacancyDetailsByGuidWithAnInvalidApiKey()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid with an invalid api key", new string[] {
@@ -390,10 +409,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid with an unknown api key")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid with an unknown api key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
         public virtual void GetVacancyDetailsByGuidWithAnUnknownApiKey()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid with an unknown api key", new string[] {
@@ -411,10 +431,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
         public virtual void GetVacancyDetailsByGuid()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid", new string[] {
@@ -434,10 +455,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy details by guid for different provider")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy details by guid for different provider")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
         public virtual void GetVacancyDetailsByGuidForDifferentProvider()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy details by guid for different provider", new string[] {
@@ -457,10 +479,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get vacancy by guid that doesn\'t exist")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("GetVacancyByGuid")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get vacancy by guid that doesn\'t exist")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("GetVacancyByGuid")]
         public virtual void GetVacancyByGuidThatDoesntExist()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get vacancy by guid that doesn\'t exist", new string[] {
@@ -480,10 +503,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Increase fixed wage by £20 per week without authorization")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("EditWage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Increase fixed wage by £20 per week without authorization")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
         public virtual void IncreaseFixedWageBy20PerWeekWithoutAuthorization()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week without authorization", new string[] {
@@ -504,10 +528,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Increase fixed wage by £20 per week on a traineeship vacancy")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("EditWage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Increase fixed wage by £20 per week on a traineeship vacancy")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
         public virtual void IncreaseFixedWageBy20PerWeekOnATraineeshipVacancy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a traineeship vacancy", new string[] {
@@ -530,10 +555,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Increase fixed wage by £20 per week on a submitted vacancy")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("EditWage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Increase fixed wage by £20 per week on a submitted vacancy")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
         public virtual void IncreaseFixedWageBy20PerWeekOnASubmittedVacancy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a submitted vacancy", new string[] {
@@ -556,10 +582,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Increase fixed wage by £20 per week on a archived vacancy")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("EditWage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Increase fixed wage by £20 per week on a archived vacancy")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
         public virtual void IncreaseFixedWageBy20PerWeekOnAArchivedVacancy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week on a archived vacancy", new string[] {
@@ -583,10 +610,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Increase fixed wage by £20 per week")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("EditWage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Increase fixed wage by £20 per week")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
         public virtual void IncreaseFixedWageBy20PerWeek()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Increase fixed wage by £20 per week", new string[] {
@@ -608,10 +636,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Change fixed wage to wage range and increase by £20 per week")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("EditWage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Change fixed wage to wage range and increase by £20 per week")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
         public virtual void ChangeFixedWageToWageRangeAndIncreaseBy20PerWeek()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Change fixed wage to wage range and increase by £20 per week", new string[] {
@@ -634,10 +663,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Decrease fixed wage by £20 per week")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("EditWage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Decrease fixed wage by £20 per week")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
         public virtual void DecreaseFixedWageBy20PerWeek()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Decrease fixed wage by £20 per week", new string[] {
@@ -668,10 +698,11 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Change fixed wage to national minumum wage")]
-        [NUnit.Framework.CategoryAttribute("RA388")]
-        [NUnit.Framework.CategoryAttribute("EditWage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Change fixed wage to national minumum wage")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA388")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("EditWage")]
         public virtual void ChangeFixedWageToNationalMinumumWage()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Change fixed wage to national minumum wage", new string[] {
