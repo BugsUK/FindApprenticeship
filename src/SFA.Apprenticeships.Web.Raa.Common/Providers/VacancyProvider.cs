@@ -30,6 +30,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Mappers;
+    using Microsoft.Rest;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -694,9 +695,17 @@
             {
                 var apiClient = _apiClientProvider.GetApiClient();
 
-                var apiVacancyResult = await apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber);
-                var apiVacancy = apiVacancyResult.Body;
-                vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+                try
+                {
+                    var apiVacancyResult = await apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber);
+                    var apiVacancy = apiVacancyResult.Body;
+                    vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Info(ex.ToString());
+                    return null;
+                }
             }
             else
             {
