@@ -13,7 +13,7 @@
     var detailsOpen = noResults && (!string.IsNullOrWhiteSpace(edsErnSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected)) ? "class=open open" : "";
 }
 <div class="grid-row">
-    <div class="column-two-thirds">
+    <div class="column-full">
         <h1 class="heading-xlarge">
             Select an employer for your vacancy
         </h1>
@@ -23,7 +23,7 @@
 
     @if (noResults)
     {
-        <div class="no-employers-found">
+        <div class="no-employers-found column-full">
             <p>No employers matched your search:</p>
             <ul>
                 @if (!string.IsNullOrWhiteSpace(edsErnSearchSelected))
@@ -41,7 +41,7 @@
         </div>
     }
 
-    <section class="clearfix">
+    <section class="clearfix column-full">
         @if (noResults == false)
         {
             <a class="select-employer-link-to-new" href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
