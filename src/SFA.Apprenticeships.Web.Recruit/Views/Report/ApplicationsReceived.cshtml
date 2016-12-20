@@ -14,16 +14,14 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <div>
-        <fieldset class="form-group inline-fixed date-input">
+        <fieldset>
             <a name="@Html.NameFor(m => m.FromDate).ToString().Replace(".", "_").ToLower()"></a>
-            <legend class="form-label-bold">@Model.GetMetadata(m => m.FromDate).DisplayName</legend>
             @Html.EditorFor(m => m.FromDate)
             @Html.ValidationMessageFor(m => m.FromDate)
         </fieldset>
 
-        <fieldset class="form-group inline-fixed date-input">
+        <fieldset>
             <a name="@Html.NameFor(m => m.ToDate).ToString().Replace(".", "_").ToLower()"></a>
-            <legend class="form-label-bold">@Model.GetMetadata(m => m.ToDate).DisplayName</legend>
             @Html.EditorFor(m => m.ToDate)
             @Html.ValidationMessageFor(m => m.ToDate)
         </fieldset>
