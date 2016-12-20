@@ -4,7 +4,7 @@
 
     /// <summary>
     /// The rationale behind the creation of this class is that we will eventually move from the existing Address entity,
-    /// to this entity, throughout the entirety of the solution (RAA & FAA).
+    /// to this entity, throughout the entirety of the solution (RAA &amp; FAA).
     /// TODO: Remove the existing Address entity, in favour of using this one.  This should be carried out after the DB migration
     /// and private Beta release
     /// </summary>

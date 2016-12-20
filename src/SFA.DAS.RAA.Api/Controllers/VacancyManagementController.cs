@@ -5,7 +5,6 @@
     using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
-    using Attributes;
     using Strategies;
     using Swashbuckle.Swagger.Annotations;
 
@@ -20,6 +19,16 @@
             _editWageStrategy = editWageStrategy;
         }
 
+        /// <summary>
+        /// Endpoint for changing the wage of a Live or Closed vacancy. The wage can only be increased from its current level.
+        /// You must supply either the vacancyId, vacancyReferenceNumber or vacancyGuid as query string parameters to identify the vacancy you would like to change.
+        /// The API key used must be authorized to modify the vacancy
+        /// </summary>
+        /// <param name="wageUpdate">Defines the changes to be made to a vacancies wage</param>
+        /// <param name="vacancyId">The vacancies primary identifier</param>
+        /// <param name="vacancyReferenceNumber">The vacancies secondary reference number identifier</param>
+        /// <param name="vacancyGuid">The vacancies secondary GUID identifier</param>
+        /// <returns></returns>
         [Route("wage")]
         [ResponseType(typeof(Vacancy))]
         [SwaggerOperation("EditVacancyWage")]

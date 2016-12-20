@@ -7,6 +7,10 @@ using Swashbuckle.Application;
 
 namespace SFA.DAS.RAA.Api
 {
+    using System;
+    using System.IO;
+    using System.Reflection;
+    using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Services;
     using Swashbuckle.Swagger;
 
@@ -35,7 +39,16 @@ namespace SFA.DAS.RAA.Api
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "SFA.DAS.RAA.Api");
+                        c.SingleApiVersion("v1", "SFA.DAS.RAA.Api")
+                        .Description(
+@"##Getting started##
+The following Swagger test area will help you understand how to call the Recruit an Apprentice REST API.
+
+All calls follow the standard HTTP protocol and require only an API key for identification purposes.
+
+The API key will be supplied by an administrator and should be passed as a header parameter in each request.
+
+The format is: `Authorization: bearer YOUR_API_KEY`");
 
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
@@ -100,7 +113,8 @@ namespace SFA.DAS.RAA.Api
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+                        c.IncludeXmlComments(GetModelXmlCommentsPath());
+                        c.IncludeXmlComments(GetXmlCommentsPath());
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -246,6 +260,22 @@ namespace SFA.DAS.RAA.Api
                         //
                         c.EnableApiKeySupport(ApiKeyAuthenticationService.ApiKeyKey, "header");
                     });
+        }
+
+        private static string GetModelXmlCommentsPath()
+        {
+            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var commentsFileName = typeof(Vacancy).Assembly.GetName().Name + ".XML";
+            var commentsFile = Path.Combine(baseDirectory, "bin", commentsFileName);
+            return commentsFile;
+        }
+
+        private static string GetXmlCommentsPath()
+        {
+            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".XML";
+            var commentsFile = Path.Combine(baseDirectory, "bin", commentsFileName);
+            return commentsFile;
         }
     }
 }
