@@ -22,31 +22,31 @@
     public class GetVacancyDetailsSteps
     {
         [When(@"I request the vacancy details for the vacancy with id: (.*)")]
-        public void WhenIRequestTheVacancyDetailsForTheVacancyWithId(int vacancyId)
+        public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {
             var vacancyUri = string.Format(UriFormats.VacancyIdUriFormat, vacancyId);
-            GetVacancy(vacancyUri, vacancyId, 0, Guid.Empty).Wait();
+            await GetVacancy(vacancyUri, vacancyId, 0, Guid.Empty);
         }
 
         [When(@"I request the vacancy details for the vacancy with reference number: (.*)")]
-        public void WhenIRequestTheVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
+        public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
         {
             var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber);
-            GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber, Guid.Empty).Wait();
+            await GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber, Guid.Empty);
         }
 
         [When(@"I request the vacancy details for the vacancy with guid: (.*)")]
-        public void WhenIRequestTheVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
+        public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
         {
             var vacancyUri = string.Format(UriFormats.VacancyGuidUriFormat, vacancyGuid);
             var vacancyId = Convert.ToInt32(vacancyGuid.ToString().Substring(0, 1));
-            GetVacancy(vacancyUri, vacancyId, 0, vacancyGuid).Wait();
+            await GetVacancy(vacancyUri, vacancyId, 0, vacancyGuid);
         }
 
         [When(@"I request the vacancy details for the vacancy with no identifier")]
-        public void WhenIRequestTheVacancyDetailsForTheVacancyWithNoIdentifier()
+        public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithNoIdentifier()
         {
-            GetVacancy("/vacancy", 0, 0, Guid.Empty).Wait();
+            await GetVacancy("/vacancy", 0, 0, Guid.Empty);
         }
 
         [Then(@"I see the vacancy details for the vacancy with id: (.*)")]

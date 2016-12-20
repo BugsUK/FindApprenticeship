@@ -19,7 +19,7 @@
     public class EditWageSteps
     {
         [When(@"I request to change the wage for the vacancy with id: (.*) to (.*)")]
-        public void WhenIRequestToChangeTheWageTypeForTheVacancyWithIdToNationalMinimum(int vacancyId, string wageString)
+        public async Task WhenIRequestToChangeTheWageTypeForTheVacancyWithIdToNationalMinimum(int vacancyId, string wageString)
         {
             var wageStrings = wageString.Split(' ');
             var type = (WageType)Enum.Parse(typeof(WageType), wageStrings[0]);
@@ -41,7 +41,7 @@
                 wageUpdate.Unit = (WageUnit)Enum.Parse(typeof(WageUnit), wageStrings[4]);
             }
 
-            UpdateWage(vacancyId, wageUpdate).Wait();
+            await UpdateWage(vacancyId, wageUpdate);
         }
 
         private static async Task UpdateWage(int vacancyId, WageUpdate wageUpdate)
