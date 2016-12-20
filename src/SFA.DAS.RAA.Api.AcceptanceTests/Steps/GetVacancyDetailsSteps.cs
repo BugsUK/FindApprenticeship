@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net;
+    using System.Threading.Tasks;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy;
     using Comparers;
@@ -21,31 +22,31 @@
     public class GetVacancyDetailsSteps
     {
         [When(@"I request the vacancy details for the vacancy with id: (.*)")]
-        public void WhenIRequestTheVacancyDetailsForTheVacancyWithId(int vacancyId)
+        public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithId(int vacancyId)
         {
             var vacancyUri = string.Format(UriFormats.VacancyIdUriFormat, vacancyId);
-            GetVacancy(vacancyUri, vacancyId, 0, Guid.Empty);
+            await GetVacancy(vacancyUri, vacancyId, 0, Guid.Empty);
         }
 
         [When(@"I request the vacancy details for the vacancy with reference number: (.*)")]
-        public void WhenIRequestTheVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
+        public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
         {
             var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber);
-            GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber, Guid.Empty);
+            await GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber, Guid.Empty);
         }
 
         [When(@"I request the vacancy details for the vacancy with guid: (.*)")]
-        public void WhenIRequestTheVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
+        public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithGuid(Guid vacancyGuid)
         {
             var vacancyUri = string.Format(UriFormats.VacancyGuidUriFormat, vacancyGuid);
             var vacancyId = Convert.ToInt32(vacancyGuid.ToString().Substring(0, 1));
-            GetVacancy(vacancyUri, vacancyId, 0, vacancyGuid);
+            await GetVacancy(vacancyUri, vacancyId, 0, vacancyGuid);
         }
 
         [When(@"I request the vacancy details for the vacancy with no identifier")]
-        public void WhenIRequestTheVacancyDetailsForTheVacancyWithNoIdentifier()
+        public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithNoIdentifier()
         {
-            GetVacancy("/vacancy", 0, 0, Guid.Empty);
+            await GetVacancy("/vacancy", 0, 0, Guid.Empty);
         }
 
         [Then(@"I see the vacancy details for the vacancy with id: (.*)")]
@@ -121,7 +122,7 @@
             responseVacancy.Should().BeNull();
         }
 
-        private void GetVacancy(string vacancyUri, int vacancyId, int vacancyReferenceNumber, Guid vacancyGuid)
+        private static async Task GetVacancy(string vacancyUri, int vacancyId, int vacancyReferenceNumber, Guid vacancyGuid)
         {
             var vacancy1 = new Fixture().Build<DbVacancy>()
                 .With(v => v.VacancyId, 1)
@@ -168,12 +169,12 @@
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
             httpClient.SetAuthorization();
 
-            using (var response = httpClient.GetAsync(vacancyUri).Result)
+            using (var response = await httpClient.GetAsync(vacancyUri))
             {
                 ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseStatusCode, response.StatusCode);
                 using (var httpContent = response.Content)
                 {
-                    var content = httpContent.ReadAsStringAsync().Result;
+                    var content = await httpContent.ReadAsStringAsync();
                     if (response.StatusCode != HttpStatusCode.OK)
                     {
                         var responseMessage = JsonConvert.DeserializeObject<ResponseMessage>(content);
