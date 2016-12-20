@@ -377,6 +377,7 @@
     <Compile Include="CsvClassMaps\ReportRegisteredCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportSuccessfulCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportUnsuccessfulCandidatesResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\ReportVacancyTrackerResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacancyExtensionsResultItemClassMap.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -400,6 +401,7 @@
     <Compile Include="Mediators\Reporting\IReportingMediator.cs" />
     <Compile Include="Mediators\Reporting\ReportingMediator.cs" />
     <Compile Include="Mediators\Reporting\ReportingMediatorCodes.cs" />
+    <Compile Include="ViewModels\ReportVacancyTrackerParameters.cs" />
     <Compile Include="Mediators\Vacancy\IVacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorCodes.cs" />
@@ -1278,6 +1280,7 @@
     <Content Include="Content\_assets\js\ckeditor\README.md" />
     <Content Include="Content\_assets\js\ckeditor\skins\bootstrapck\readme.md" />
     <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
+    <Content Include="Views\Report\VacancyTrackerCsv.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
