@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using System.Threading.Tasks;
     using Common.Mediators;
     using FluentAssertions;
     using Moq;
@@ -37,16 +38,16 @@
         }
 
         [Test]
-        public void ShouldReturnOfflineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOfflineOne()
+        public async Task ShouldReturnOfflineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOfflineOne()
         {
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
-                .Returns(new VacancyViewModel
+                .Returns(Task.FromResult(new VacancyViewModel
                 {
                     NewVacancyViewModel = new NewVacancyViewModel
-                    { 
+                    {
                         OfflineVacancy = true
                     }
-                });
+                }));
 
             var vacancyRequirementsAndProspects = new VacancyRequirementsProspectsViewModel();
             VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
@@ -54,7 +55,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel);
+            var result = await mediator.UpdateVacancy(_viewModel);
 
             result.Should()
                 .Match(
@@ -63,7 +64,7 @@
         }
 
         [Test]
-        public void ShouldReturnOnlineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOnlineOne()
+        public async Task ShouldReturnOnlineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOnlineOne()
         {
             var newVacancyViewModel = new VacancyViewModel
             {
@@ -76,13 +77,13 @@
             var vacancyRequirementsAndProspects = new VacancyRequirementsProspectsViewModel();
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
-                .Returns(newVacancyViewModel);
+                .Returns(Task.FromResult(newVacancyViewModel));
             VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
                 .Returns(vacancyRequirementsAndProspects);
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel);
+            var result = await mediator.UpdateVacancy(_viewModel);
 
             result.Should()
                 .Match(

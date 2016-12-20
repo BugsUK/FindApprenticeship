@@ -27,7 +27,9 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Mappers;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -42,9 +44,12 @@
     using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
+    using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
+        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
+
         private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
@@ -61,7 +66,7 @@
         private readonly IGeoCodeLookupService _geoCodingService;
         private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
         private readonly IVacancySummaryService _vacancySummaryService;
-
+        private readonly IApiClientProvider _apiClientProvider;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
@@ -70,7 +75,7 @@
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
             ICurrentUserService currentUserService, IUserProfileService userProfileService,
             IGeoCodeLookupService geocodingService, ILocalAuthorityLookupService localAuthLookupService,
-            IVacancySummaryService vacancySummaryService)
+            IVacancySummaryService vacancySummaryService, IApiClientProvider apiClientProvider)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -88,6 +93,7 @@
             _geoCodingService = geocodingService;
             _localAuthorityLookupService = localAuthLookupService;
             _vacancySummaryService = vacancySummaryService;
+            _apiClientProvider = apiClientProvider;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions)
@@ -680,9 +686,22 @@
             _vacancyPostingService.UpdateVacancy(vacancy);
         }
 
-        public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
+        public async Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            Vacancy vacancy;
+
+            if (_configurationService.Get<CommonWebConfiguration>().Features.RaaApiEnabled)
+            {
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                var apiVacancyResult = await apiClient.GetVacancyWithHttpMessagesAsync(vacancyReferenceNumber: vacancyReferenceNumber);
+                var apiVacancy = apiVacancyResult.Body;
+                vacancy = ApiClientMappers.Map<ApiVacancy, Vacancy>(apiVacancy);
+            }
+            else
+            {
+                vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            }
 
             if (vacancy == null)
                 return null;

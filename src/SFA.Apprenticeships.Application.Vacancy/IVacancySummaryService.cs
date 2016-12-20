@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SFA.Apprenticeships.Application.Vacancy
 {
-    using System.Collections;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories.Models;
@@ -18,6 +13,7 @@ namespace SFA.Apprenticeships.Application.Vacancy
         IList<VacancySummary> GetWithStatus(VacancySummaryByStatusQuery query, out int totalRecords);
         IList<RegionalTeamMetrics> GetRegionalTeamMetrics(VacancySummaryByStatusQuery query);
         VacancySummary GetById(int vacancyId);
+        VacancySummary GetByReferenceNumber(int vacancyReferenceNumber);
         IList<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
         IList<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int resultCount);
     }

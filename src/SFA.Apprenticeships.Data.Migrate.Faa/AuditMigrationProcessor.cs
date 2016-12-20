@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
     using Application.Interfaces;
     using Entities.Mongo;
     using Entities.Sql;
@@ -31,34 +32,34 @@
             _applicationRepository = new ApplicationRepository(targetDatabase);
         }
 
-        public void Process(CancellationToken cancellationToken)
+        public async Task Process(CancellationToken cancellationToken)
         {
             var syncParams = _syncRepository.GetSyncParams();
             if (syncParams.IsValidForAuditIncrementalSync)
             {
-                ExecuteIncrementalSync(syncParams, cancellationToken);
+                await ExecuteIncrementalSync(syncParams, cancellationToken);
             }
             else
             {
-                ExecuteFullSync(syncParams, cancellationToken);
+                await ExecuteFullSync(syncParams, cancellationToken);
             }
         }
 
-        private void ExecuteFullSync(SyncParams syncParams, CancellationToken cancellationToken)
+        private async Task ExecuteFullSync(SyncParams syncParams, CancellationToken cancellationToken)
         {
             _logService.Warn($"ExecuteFullSync on audits collection with LastAuditEventDate: {syncParams.LastAuditEventDate}");
 
-            var expectedCount = _auditRepository.GetAuditItemsCount(cancellationToken).Result;
-            var auditItems = _auditRepository.GetAllAuditItems(cancellationToken).Result;
+            var expectedCount = await _auditRepository.GetAuditItemsCount(cancellationToken);
+            var auditItems = await _auditRepository.GetAllAuditItems(cancellationToken);
             ProcessCandidates(auditItems, expectedCount, cancellationToken);
         }
 
-        private void ExecuteIncrementalSync(SyncParams syncParams, CancellationToken cancellationToken)
+        private async Task ExecuteIncrementalSync(SyncParams syncParams, CancellationToken cancellationToken)
         {
             _logService.Info($"ExecutePartialSync on candidates collection with LastAuditEventDate: {syncParams.LastAuditEventDate}");
 
-            var expectedCreatedCount = _auditRepository.GetAuditItemsCreatedSinceCount(syncParams.LastAuditEventDate, cancellationToken).Result;
-            var createdCursor = _auditRepository.GetAllAuditItemsCreatedSince(syncParams.LastAuditEventDate, cancellationToken).Result;
+            var expectedCreatedCount = await _auditRepository.GetAuditItemsCreatedSinceCount(syncParams.LastAuditEventDate, cancellationToken);
+            var createdCursor = await _auditRepository.GetAllAuditItemsCreatedSince(syncParams.LastAuditEventDate, cancellationToken);
             ProcessCandidates(createdCursor, expectedCreatedCount, cancellationToken);
         }
 

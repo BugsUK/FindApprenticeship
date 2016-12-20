@@ -20,6 +20,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class VacancyMediator : MediatorBase, IVacancyMediator
     {
@@ -267,9 +268,9 @@
             return GetMediatorResponse(VacancyMediatorCodes.SelectStandardAsTrainingType.Ok, viewModel);
         }
 
-        public MediatorResponse<VacancyViewModel> GetVacancyViewModel(int vacancyReferenceNumber)
+        public async Task<MediatorResponse<VacancyViewModel>> GetVacancyViewModel(int vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyQaProvider.GetVacancy(vacancyReferenceNumber);
+            var vacancyViewModel = await _vacancyQaProvider.GetVacancy(vacancyReferenceNumber);
             vacancyViewModel.IsEditable = false;
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }

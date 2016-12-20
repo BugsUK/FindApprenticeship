@@ -1,13 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mappers
 {
+    using Common.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
+    using Domain.Entities.Vacancies;
     using Infrastructure.Presentation;
     using Raa.Common.Mappers;
     using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyManagement;
     using ViewModels.Home;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class RecruitMappers : RaaCommonWebMappers
     {
@@ -38,6 +43,19 @@
                 .ForMember(c => c.UserId, opt => opt.Ignore())
                 .ForMember(c => c.DateCreated, opt => opt.Ignore())
                 .ForMember(c => c.DateUpdated, opt => opt.Ignore());
+
+            Mapper.CreateMap<VacancySummary, EditWageViewModel>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Wage.Type))
+                .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Wage.Amount))
+                .ForMember(dest => dest.AmountLowerBound, opt => opt.MapFrom(src => src.Wage.AmountLowerBound))
+                .ForMember(dest => dest.AmountUpperBound, opt => opt.MapFrom(src => src.Wage.AmountUpperBound))
+                .ForMember(dest => dest.Unit, opt => opt.MapFrom(src => src.Wage.Unit))
+                .ForMember(dest => dest.ExistingWage, opt => opt.MapFrom(src => src.Wage))
+                .ForMember(dest => dest.VacancyApplicationsState, opt => opt.MapFrom(src => src.ApplicantCount > 0 ? VacancyApplicationsState.HasApplications : VacancyApplicationsState.NoApplications))
+                .ForMember(dest => dest.Classification, opt => opt.MapFrom(src => Map<Wage, WageViewModel>(src.Wage).Classification))
+                .ForMember(dest => dest.CustomType, opt => opt.MapFrom(src => Map<Wage, WageViewModel>(src.Wage).CustomType))
+                .ForMember(dest => dest.RangeUnit, opt => opt.MapFrom(src => Map<Wage, WageViewModel>(src.Wage).RangeUnit))
+                .ForMember(dest => dest.WageUnits, opt => opt.Ignore());
         }
     }
 }

@@ -111,8 +111,8 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog">
@@ -715,6 +715,10 @@
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
+      <Project>{E3F2F285-16EB-49C5-9668-8D8E1DB6C610}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
@@ -734,6 +738,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
       <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.DAS.RAA.Api.Client.V1\SFA.DAS.RAA.Api.Client.V1.csproj">
+      <Project>{b263f67e-b3ea-410a-ba24-4f3cc2ce0008}</Project>
+      <Name>SFA.DAS.RAA.Api.Client.V1</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>

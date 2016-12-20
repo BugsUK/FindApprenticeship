@@ -14,18 +14,13 @@
             config.EnableSystemDiagnosticsTracing();
             config.Services.Add(typeof(IExceptionLogger), new AiExceptionLogger());
             config.Filters.Add(new ValidateModelStateFilter());
+            config.Filters.Add(new ExceptionToErrorResponseFilterAttribute());
 
             // configure FluentValidation model validator provider
             FluentValidationModelValidatorProvider.Configure(config);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
         }
     }
 }

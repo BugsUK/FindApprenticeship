@@ -53,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyManagement/Delete.cshtml")]
-    public partial class Delete : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.DeleteVacancyViewModel>
+    public partial class Delete : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyManagement.DeleteVacancyViewModel>
     {
         public Delete()
         {

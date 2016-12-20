@@ -159,6 +159,7 @@
     <Compile Include="Converters\ApprenticeshipVacancyConverterTests.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverterTests.cs" />
     <Compile Include="Mappers\AddressToAddressViewModelTests.cs" />
+    <Compile Include="Mappers\ApiClientMappersTests.cs" />
     <Compile Include="Mappers\ApiUserMappersTest.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyDatesViewModelMapperTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyViewModelMapperTests.cs" />
@@ -267,6 +268,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
       <Project>{700d41dd-527a-42bd-94d2-fd49a5f00a18}</Project>
       <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.DAS.RAA.Api.Client.V1\SFA.DAS.RAA.Api.Client.V1.csproj">
+      <Project>{b263f67e-b3ea-410a-ba24-4f3cc2ce0008}</Project>
+      <Name>SFA.DAS.RAA.Api.Client.V1</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>

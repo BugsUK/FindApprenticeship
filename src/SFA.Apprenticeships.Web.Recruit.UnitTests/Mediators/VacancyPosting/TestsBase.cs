@@ -99,7 +99,8 @@
                 _mockUserProfileService.Object,
                 MockGeoCodingService.Object,
                 MockLocalAuthorityService.Object,
-                _mockVacancySummaryService.Object);
+                _mockVacancySummaryService.Object,
+                new Mock<IApiClientProvider>().Object);
         }
 
         protected IVacancyPostingMediator GetMediator()

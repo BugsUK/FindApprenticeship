@@ -109,12 +109,16 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.4\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
@@ -123,6 +127,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -152,6 +160,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xml" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
@@ -208,12 +217,14 @@
     <Compile Include="Extensions\CandidateSearchExtensions.cs" />
     <Compile Include="Extensions\VacancyDatesViewModelExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Mappers\ApiClientMappers.cs" />
     <Compile Include="Mappers\Resolvers\ApiEndpointConverter.cs" />
     <Compile Include="Mappers\Resolvers\ApiEndpointViewModelConverter.cs" />
     <Compile Include="Mappers\ApiUserMappers.cs" />
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mappers\ProviderMappers.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
+    <Compile Include="Mappers\Resolvers\ApiWageToWageResolver.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToVacancyDatesViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToFurtherVacancyDetailsViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToVacancySummaryViewModelConverter.cs" />
@@ -223,6 +234,8 @@
     <Compile Include="Mediators\Admin\AdminMediator.cs" />
     <Compile Include="Mediators\Admin\AdminMediatorCodes.cs" />
     <Compile Include="Mediators\Admin\IAdminMediator.cs" />
+    <Compile Include="Providers\ApiClientProvider.cs" />
+    <Compile Include="Providers\IApiClientProvider.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelMessages.cs" />
     <Compile Include="Validators\VacancyStatus\BulkDeclineCandidatesViewModelValidator.cs" />
@@ -341,7 +354,8 @@
     <Compile Include="ViewModels\Provider\ProviderSiteSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportParameterBase.cs" />
     <Compile Include="ViewModels\Application\BulkDeclineCandidatesViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\DeleteVacancyViewModel.cs" />
+    <Compile Include="ViewModels\VacancyManagement\EditWageViewModel.cs" />
+    <Compile Include="ViewModels\VacancyManagement\DeleteVacancyViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\VacancyMinimumData.cs" />
     <Compile Include="ViewModels\VacancyStatus\ArchiveVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
@@ -700,6 +714,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.DAS.RAA.Api.Client.V1\SFA.DAS.RAA.Api.Client.V1.csproj">
+      <Project>{b263f67e-b3ea-410a-ba24-4f3cc2ce0008}</Project>
+      <Name>SFA.DAS.RAA.Api.Client.V1</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>

@@ -130,6 +130,10 @@
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.1.0\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -140,6 +144,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
@@ -190,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http.Formatting">
@@ -216,9 +225,11 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\ValidateModelStateFilter.cs" />
-    <Compile Include="Constants\Roles.cs" />
-    <Compile Include="Controllers\VacancySummaryController.cs" />
-    <Compile Include="DependencyResolution\RaaRegistry.cs" />
+    <Compile Include="Attributes\ExceptionToErrorResponseFilterAttribute.cs" />
+    <Compile Include="Controllers\VacancyManagementController.cs" />
+    <Compile Include="Controllers\VacancyController.cs" />
+    <Compile Include="Constants\VacancyMessages.cs" />
+    <Compile Include="DependencyResolution\RaaApiRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyResolver.cs" />
@@ -233,12 +244,14 @@
     </Compile>
     <Compile Include="Handlers\AiExceptionLogger.cs" />
     <Compile Include="Handlers\ApiKeyHandler.cs" />
-    <Compile Include="Models\Vacancy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IVacancyProvider.cs" />
+    <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Services\ApiKeyAuthenticationService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
-    <Compile Include="Strategies\IAuthenticationStrategy.cs" />
-    <Compile Include="Validators\VacancyValidator.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Strategies\EditWageStrategy.cs" />
+    <Compile Include="Strategies\IEditWageStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\settings.config" />
@@ -268,25 +281,81 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">
+      <Project>{c91e4093-3348-43ed-b386-cf70000ffcb3}</Project>
+      <Name>SFA.Apprenticeships.Application.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj">
+      <Project>{dd096f97-415d-4676-9f90-7aee60213f49}</Project>
+      <Name>SFA.Apprenticeships.Application.Employer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{a64fc67f-c873-4422-93dd-fbd8a6370ec3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1b92e84d-f15a-4521-bdb9-2be321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
+      <Project>{920f5834-459d-4e20-9b17-aad52d2cc8fe}</Project>
+      <Name>SFA.Apprenticeships.Application.Provider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
+      <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
+      <Project>{ce04b708-ff21-41d4-b796-a36edce2960d}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
+      <Project>{bb161a54-ef1a-4611-8296-9a0be69b4587}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
+      <Project>{c7cb47e8-c024-4dc0-9bdc-e325d3bfeadc}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{abd48d09-c35e-42ce-8a4d-81550c2b8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
+      <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Raa\SFA.Apprenticeships.Infrastructure.Raa.csproj">
+      <Project>{1F4776F3-884B-4B00-BA97-22BFA06C034E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Raa</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>

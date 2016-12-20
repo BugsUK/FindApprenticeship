@@ -7,6 +7,7 @@
     using Raa.Common.ViewModels.VacancyPosting;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IVacancyPostingMediator
     {
@@ -18,7 +19,7 @@
 
         MediatorResponse<VacancyOwnerRelationshipViewModel> GetEmployer(int providerSiteId, string edsUrn, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation);
 
-        MediatorResponse<VacancyOwnerRelationshipViewModel> ConfirmEmployer(VacancyOwnerRelationshipViewModel viewModel, string ukprn);
+        Task<MediatorResponse<VacancyOwnerRelationshipViewModel>> ConfirmEmployer(VacancyOwnerRelationshipViewModel viewModel, string ukprn);
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(int vacancyOwnerRelationshipId, Guid vacancyGuid, int? numberOfPositions);
 
@@ -26,7 +27,7 @@
 
         MediatorResponse<NewVacancyViewModel> CreateVacancyAndExit(NewVacancyViewModel newVacancyViewModel, string ukprn);
 
-        MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn);
+        Task<MediatorResponse<NewVacancyViewModel>> CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn);
 
         MediatorResponse<TrainingDetailsViewModel> GetTrainingDetailsViewModel(int vacancyReferenceNumber, bool validate, bool? comeFromPreview);
 
@@ -42,7 +43,7 @@
 
         MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber, bool validate, bool? comeFromPreview);
 
-        MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
+        Task<MediatorResponse<VacancyRequirementsProspectsViewModel>> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
 
         MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancyAndExit(VacancyRequirementsProspectsViewModel viewModel);
 
@@ -52,15 +53,15 @@
 
         MediatorResponse<VacancyQuestionsViewModel> UpdateVacancyAndExit(VacancyQuestionsViewModel viewModel);
 
-        MediatorResponse<VacancyViewModel> SubmitVacancy(int vacancyReferenceNumber, bool resubmitOptin);
+        Task<MediatorResponse<VacancyViewModel>> SubmitVacancy(int vacancyReferenceNumber, bool resubmitOptin);
 
-        MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(int vacancyReferenceNumber, bool resubmitted);
+        Task<MediatorResponse<SubmittedVacancyViewModel>> GetSubmittedVacancyViewModel(int vacancyReferenceNumber, bool resubmitted);
 
         MediatorResponse<EmployerSearchViewModel> SelectNewEmployer(EmployerSearchViewModel viewModel);
 
-        MediatorResponse<VacancyViewModel> GetPreviewVacancyViewModel(int vacancyReferenceNumber);
+        Task<MediatorResponse<VacancyViewModel>> GetPreviewVacancyViewModel(int vacancyReferenceNumber);
 
-        MediatorResponse<VacancyOwnerRelationshipViewModel> CloneVacancy(int vacancyReferenceNumber);
+        Task<MediatorResponse<VacancyOwnerRelationshipViewModel>> CloneVacancy(int vacancyReferenceNumber);
 
         MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel newVacancyViewModel, string ukprn);
 

@@ -22,14 +22,14 @@
 
         public void Authorise(Vacancy vacancy)
         {
-            if (!_currentUserService.IsInRole(Roles.Faa))
+            if (!_currentUserService.IsInRole(Roles.Faa) && !_currentUserService.IsInRole(Roles.Api))
             {
                 // Only Provider Users require authorisation (QA users are always authorised).
                 return;
             }
 
-            var ukprn = _currentUserService.GetClaimValue("ukprn");
-            var ukprnoverride = _currentUserService.GetClaimValue("ukprnoverride");
+            var ukprn = _currentUserService.GetClaimValue(ClaimTypes.Ukprn);
+            var ukprnoverride = _currentUserService.GetClaimValue(ClaimTypes.UkprnOverride);
             if (!string.IsNullOrEmpty(ukprnoverride))
             {
                 ukprn = ukprnoverride;

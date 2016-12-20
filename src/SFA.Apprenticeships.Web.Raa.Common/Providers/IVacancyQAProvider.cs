@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
@@ -58,7 +59,7 @@
 
         VacancyViewModel GetVacancy(Guid vacancyGuid);
 
-        VacancyViewModel GetVacancy(int vacancyReferenceNumber);
+        Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber);
 
         List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(int vacancyReferenceNumber);
 

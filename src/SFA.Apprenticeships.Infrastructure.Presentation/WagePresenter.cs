@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
     using System;
-    using Constants;
+    using Domain.Entities.Raa.Vacancies.Constants;
     using Domain.Entities.Vacancies;
 
     public static class WagePresenter

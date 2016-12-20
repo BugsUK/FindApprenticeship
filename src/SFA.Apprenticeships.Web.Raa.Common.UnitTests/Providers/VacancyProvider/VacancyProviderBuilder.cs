@@ -64,7 +64,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
                 _userProfileService.Object,
                 _mockGeoCodeLookupService.Object,
                 _mockLocalAuthorityLookupService.Object,
-                _mockVacancySummaryService.Object);
+                _mockVacancySummaryService.Object,
+                new Mock<IApiClientProvider>().Object);
         }
 
         public IVacancyPostingProvider BuildVacancyPostingProvider()
@@ -84,7 +85,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
                 _userProfileService.Object,
                 _mockGeoCodeLookupService.Object,
                 _mockLocalAuthorityLookupService.Object,
-                _mockVacancySummaryService.Object);
+                _mockVacancySummaryService.Object,
+                new Mock<IApiClientProvider>().Object);
         }
 
         public Mock<IVacancyPostingService> VacancyPostingService => _vacancyPostingService;

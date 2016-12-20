@@ -80,7 +80,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
                 _mockUserProfileService.Object,
                 MockGeocodeService.Object,
                 MockLocalAuthorityLookupService.Object,
-                _mockVacancySummaryService.Object);
+                _mockVacancySummaryService.Object,
+                new Mock<IApiClientProvider>().Object);
         }
     }
 }

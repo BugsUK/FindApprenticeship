@@ -13,6 +13,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
@@ -24,7 +25,7 @@
         //TODO: Alter these acceptance tests to use SQL repo
 
         [Test]
-        public void CloneAVacancyShouldCreateANewOneWithSomeFieldsReset()
+        public async Task CloneAVacancyShouldCreateANewOneWithSomeFieldsReset()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -37,7 +38,7 @@
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
             // Act
-            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
+            var result = await vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
 
 
             // Assert
@@ -97,7 +98,7 @@
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            vacancyPostingController.ConfirmEmployer(viewModel);
+            vacancyPostingController.ConfirmEmployer(viewModel).Wait();
 
             var vacancy = Collection.FindOneById(vacancyGuid);
             vacancy.VacancyLocationType.Should().Be(VacancyLocationType.SpecificLocation);
@@ -105,7 +106,7 @@
         }
 
         [Test]
-        public void ConfirmEmployerWithLocationTypeAsDifferentFromEmployerLocationShouldRedirectToLocationView()
+        public async Task ConfirmEmployerWithLocationTypeAsDifferentFromEmployerLocationShouldRedirectToLocationView()
         {
             const int providerSiteId = 101282923;
             const int employerId = 100608868;
@@ -122,7 +123,7 @@
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            var result = vacancyPostingController.ConfirmEmployer(viewModel);
+            var result = await vacancyPostingController.ConfirmEmployer(viewModel);
             result.Should().BeOfType<RedirectToRouteResult>();
             var redirection = result as RedirectToRouteResult;
             redirection.RouteName.Should().Be("AddLocations");
@@ -258,7 +259,7 @@
         }
 
         [Test]
-        public void CloneAVacancyInDeferredStateShouldNotCreateNewVacancyAndReturnToDashboard()
+        public async Task CloneAVacancyInDeferredStateShouldNotCreateNewVacancyAndReturnToDashboard()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -271,7 +272,7 @@
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
             // Act
-            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
+            var result = await vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
 
 
             // Assert

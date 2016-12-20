@@ -13,6 +13,7 @@
     using Recruit.Mediators.VacancyPosting;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
@@ -21,7 +22,7 @@
     {
         //IVacancyPostingMediator.GetPreviewVacancyViewModel 
         [Test]
-        public void ClosingDateWarnings()
+        public async Task ClosingDateWarnings()
         {
             //Arrange
             var yesterday = DateTime.Today.AddDays(-1);
@@ -36,11 +37,11 @@
                 Wage = new WageViewModel()
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(vacancyViewModel));
             var mediator = GetMediator();
 
             //Act
-            var result = mediator.GetPreviewVacancyViewModel(0);
+            var result = await mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
             result.Code.Should().Be(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.FailedValidation);
@@ -52,16 +53,16 @@
         [TestCase(VacancyStatus.Closed, false)]
         [TestCase(VacancyStatus.Completed, true)]
         [TestCase(VacancyStatus.Withdrawn, false)]
-        public void CanHaveApplications_NoApplicationsRouteTest(VacancyStatus status, bool shouldHaveArchiveMessage)
+        public async Task CanHaveApplications_NoApplicationsRouteTest(VacancyStatus status, bool shouldHaveArchiveMessage)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.ApplicationCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(vacancyViewModel));
             var mediator = GetMediator();
 
             //Act
-            var result = mediator.GetPreviewVacancyViewModel(0);
+            var result = await mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
             if (shouldHaveArchiveMessage)
@@ -81,16 +82,16 @@
         [TestCase(VacancyStatus.Closed, false)]
         [TestCase(VacancyStatus.Completed, false)]
         [TestCase(VacancyStatus.Withdrawn, true)]
-        public void CanHaveApplications_OneApplicationRouteTest(VacancyStatus status, bool messageShouldBeNull)
+        public async Task CanHaveApplications_OneApplicationRouteTest(VacancyStatus status, bool messageShouldBeNull)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.ApplicationCount = 1;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(vacancyViewModel));
             var mediator = GetMediator();
 
             //Act
-            var result = mediator.GetPreviewVacancyViewModel(0);
+            var result = await mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
             result.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, false, messageShouldBeNull);
@@ -101,15 +102,15 @@
         [TestCase(VacancyStatus.Submitted)]
         [TestCase(VacancyStatus.ReservedForQA)]
         [TestCase(VacancyStatus.Referred)]
-        public void CannotHaveApplications(VacancyStatus status)
+        public async Task CannotHaveApplications(VacancyStatus status)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(vacancyViewModel));
             var mediator = GetMediator();
 
             //Act
-            var result = mediator.GetPreviewVacancyViewModel(0);
+            var result = await mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
             result.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
@@ -119,17 +120,17 @@
         [TestCase(VacancyStatus.Closed, false)]
         [TestCase(VacancyStatus.Completed, true)]
         [TestCase(VacancyStatus.Withdrawn, false)]
-        public void CanHaveClickThroughs_NoClickThroughsRouteTest(VacancyStatus status, bool shouldHaveArchiveMessage)
+        public async Task CanHaveClickThroughs_NoClickThroughsRouteTest(VacancyStatus status, bool shouldHaveArchiveMessage)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
             vacancyViewModel.OfflineApplicationClickThroughCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(vacancyViewModel));
             var mediator = GetMediator();
 
             //Act
-            var result = mediator.GetPreviewVacancyViewModel(0);
+            var result = await mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
             if (shouldHaveArchiveMessage)
@@ -150,18 +151,18 @@
         [TestCase(VacancyStatus.Closed, false)]
         [TestCase(VacancyStatus.Completed, false)]
         [TestCase(VacancyStatus.Withdrawn, true)]
-        public void CanHaveClickThroughs_OneClickThroughRouteTest(VacancyStatus status, bool messageShouldBeNull)
+        public async Task CanHaveClickThroughs_OneClickThroughRouteTest(VacancyStatus status, bool messageShouldBeNull)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
             vacancyViewModel.OfflineApplicationClickThroughCount = 1;
             vacancyViewModel.ApplicationCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(vacancyViewModel));
             var mediator = GetMediator();
 
             //Act
-            var result = mediator.GetPreviewVacancyViewModel(0);
+            var result = await mediator.GetPreviewVacancyViewModel(0);
 
             //Assert
             result.AssertCodeAndMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, false, messageShouldBeNull);

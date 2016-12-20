@@ -74,6 +74,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -85,6 +93,7 @@
     <Compile Include="Api\ApiEmployeeType.cs" />
     <Compile Include="Api\ApiEndpoint.cs" />
     <Compile Include="Api\ApiUser.cs" />
+    <Compile Include="ClaimTypes.cs" />
     <Compile Include="RaaApi\RaaApiUser.cs" />
     <Compile Include="RaaApi\RaaApiUserType.cs" />
     <Compile Include="ICreatableEntity.cs" />
@@ -122,6 +131,8 @@
     <Compile Include="Users\ProviderUserStatus.cs" />
     <Compile Include="Users\Role.cs" />
     <Compile Include="Vacancies\ApprenticeshipLevel.cs" />
+    <Compile Include="Vacancies\Constants\Wages.cs" />
+    <Compile Include="Vacancies\Constants\WageUpdateMessages.cs" />
     <Compile Include="Vacancies\Duration.cs" />
     <Compile Include="Vacancies\DurationType.cs" />
     <Compile Include="Vacancies\StandardSubjectAreaTierOne.cs" />
@@ -135,12 +146,18 @@
     <Compile Include="Vacancies\Vacancy.cs" />
     <Compile Include="Vacancies\VacancySummary.cs" />
     <Compile Include="Vacancies\VacancyType.cs" />
+    <Compile Include="Vacancies\Validation\WageUpdateValidator.cs" />
+    <Compile Include="Vacancies\WageRange.cs" />
+    <Compile Include="Vacancies\WageUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

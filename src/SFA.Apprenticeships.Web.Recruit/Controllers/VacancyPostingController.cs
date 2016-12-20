@@ -19,6 +19,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     //TODO: Split this class by code region
@@ -163,9 +164,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
         [HttpPost]
-        public ActionResult ConfirmEmployer(VacancyOwnerRelationshipViewModel viewModel)
+        public async Task<ActionResult> ConfirmEmployer(VacancyOwnerRelationshipViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.ConfirmEmployer(viewModel, User.GetUkprn());
 
             switch (response.Code)
             {
@@ -253,9 +254,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
         [HttpPost]
-        public ActionResult CreateVacancyAndPreview(NewVacancyViewModel viewModel)
+        public async Task<ActionResult> CreateVacancyAndPreview(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                 new
@@ -279,9 +280,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
         [HttpPost]
-        public ActionResult CreateVacancy(NewVacancyViewModel viewModel)
+        public async Task<ActionResult> CreateVacancy(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.TrainingDetails,
                 new
@@ -293,10 +294,10 @@
         }
 
         [HttpPost]
-        public JsonResult AutoSaveCreateVacancy(NewVacancyViewModel viewModel)
+        public async Task<JsonResult> AutoSaveCreateVacancy(NewVacancyViewModel viewModel)
         {
             // Call autosave instead of CreateVacancy?
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
 
             switch (response.Code)
             {
@@ -657,9 +658,9 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyRequirementsProspects")]
         [HttpPost]
-        public ActionResult VacancyRequirementsProspects(VacancyRequirementsProspectsViewModel viewModel)
+        public async Task<ActionResult> VacancyRequirementsProspects(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel);
 
             return HandleVacancyRequirementsProspects(response);
         }
@@ -674,9 +675,9 @@
         }
 
         [HttpPost]
-        public JsonResult AutoSaveRequirementsProspects(VacancyRequirementsProspectsViewModel viewModel)
+        public async Task<JsonResult> AutoSaveRequirementsProspects(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = await _vacancyPostingMediator.UpdateVacancy(viewModel);
 
             switch (response.Code)
             {
@@ -832,9 +833,9 @@
 
         [HttpGet]
         [OutputCache(Duration = 0)]
-        public ActionResult PreviewVacancy(int vacancyReferenceNumber, string mode)
+        public async Task<ActionResult> PreviewVacancy(int vacancyReferenceNumber, string mode)
         {
-            var response = _vacancyPostingMediator.GetPreviewVacancyViewModel(vacancyReferenceNumber);
+            var response = await _vacancyPostingMediator.GetPreviewVacancyViewModel(vacancyReferenceNumber);
 
             var vacancyViewModel = response.ViewModel;
 
@@ -870,9 +871,9 @@
         }
 
         [HttpPost]
-        public ActionResult SubmitVacancy(int vacancyReferenceNumber, bool resubmitoption)
+        public async Task<ActionResult> SubmitVacancy(int vacancyReferenceNumber, bool resubmitoption)
         {
-            var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoption);
+            var response = await _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoption);
             var vacancyViewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -900,9 +901,9 @@
         }
 
         [HttpGet]
-        public ActionResult VacancySubmitted(int vacancyReferenceNumber, bool resubmitted)
+        public async Task<ActionResult> VacancySubmitted(int vacancyReferenceNumber, bool resubmitted)
         {
-            var response = _vacancyPostingMediator.GetSubmittedVacancyViewModel(vacancyReferenceNumber, resubmitted);
+            var response = await _vacancyPostingMediator.GetSubmittedVacancyViewModel(vacancyReferenceNumber, resubmitted);
             var viewModel = response.ViewModel;
 
             return View(viewModel);
@@ -950,9 +951,9 @@
         }
 
         [HttpPost]
-        public ActionResult ConfirmNewEmployer(VacancyOwnerRelationshipViewModel viewModel)
+        public async Task<ActionResult> ConfirmNewEmployer(VacancyOwnerRelationshipViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel, User.GetUkprn());
+            var response = await _vacancyPostingMediator.ConfirmEmployer(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 
@@ -980,9 +981,9 @@
             }
         }
 
-        public ActionResult CloneVacancy(int vacancyReferenceNumber)
+        public async Task<ActionResult> CloneVacancy(int vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.CloneVacancy(vacancyReferenceNumber);
+            var response = await _vacancyPostingMediator.CloneVacancy(vacancyReferenceNumber);
 
             switch (response.Code)
             {

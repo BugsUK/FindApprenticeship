@@ -50,9 +50,9 @@
         public void SimpleGetTest()
         {
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -105,8 +105,6 @@
                     .Excluding(x => x.CreatedByProviderUsername)
                     .Excluding(x => x.VacancyLocationType)
                     .Excluding(x => x.OtherInformation)
-                    .Excluding(x => x.LiveClosingDate)
-                    .Excluding(x => x.SyntheticUpdatedDateTime)
                     .Excluding(x => x.EmployerName));
 
             entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");
@@ -119,9 +117,9 @@
             _dateTimeService.Setup(ds => ds.UtcNow).Returns(now);
 
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -163,7 +161,7 @@
         public void SimpleSaveAndUpdateTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -197,7 +195,7 @@
         public void FindTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancySummaryRepository summaryRepository = new VacancySummaryRepository(_connection);
 
             const string title = "Vacancy title";
@@ -287,9 +285,9 @@
         public void GetByIdsTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             var summaryRepository = new VacancySummaryRepository(_connection);
 
             var vacancy1 = CreateValidDomainVacancy();
@@ -324,9 +322,9 @@
         public void GetMultiLocationTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             IVacancyLocationWriteRepository locationWriteRepository = new VacancyLocationRepository(_connection, _mapper,
                 _logger.Object);
@@ -379,9 +377,9 @@
         public void IncrementNumberOfClickThroughs()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object, _currentUserService.Object, _configurationService.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
 
             var vacancy = CreateValidDomainVacancy();

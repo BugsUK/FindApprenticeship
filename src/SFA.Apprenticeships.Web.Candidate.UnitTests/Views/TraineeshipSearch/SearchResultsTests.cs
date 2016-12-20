@@ -32,7 +32,7 @@
 
             foreach (var vacancy in viewModel.Vacancies)
             {
-                var id = string.Format("posted-date-{0}", vacancy.Id);
+                var id = $"posted-date-{vacancy.Id}";
 
                 var element = result.GetElementbyId(id);
 

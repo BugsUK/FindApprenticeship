@@ -2,8 +2,8 @@
 {
     using System;
     using System.Linq;
-    using Infrastructure.Presentation.Constants;
-    using Infrastructure.Presentation.Entities;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Raa.Vacancies.Constants;
     using ViewModels.Vacancy;
 
     public static class VacancyDatesViewModelExtensions

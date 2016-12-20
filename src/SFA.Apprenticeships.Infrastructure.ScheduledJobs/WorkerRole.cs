@@ -25,13 +25,13 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Repositories.Mongo.Applications.IoC;
     using Repositories.Mongo.Candidates.IoC;
     using Repositories.Mongo.Communication.IoC;
-    using Repositories.Mongo.Employers.IoC;
-    using Repositories.Mongo.Providers.IoC;
     using Repositories.Mongo.Users.IoC;
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
     using Application.Interfaces;
+    using Repositories.Sql.Schemas.Employer.IoC;
+    using Repositories.Sql.Schemas.Provider.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;

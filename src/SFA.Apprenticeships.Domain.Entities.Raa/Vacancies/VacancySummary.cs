@@ -50,36 +50,12 @@
         public RegionalTeam RegionalTeam { get; set; }
         public VacancyLocationType VacancyLocationType { get; set; }
         public int EmployerId { get; set; }
-
-        public DateTime LiveClosingDate
-        {
-            get
-            {
-                if (Status != VacancyStatus.Live && Status != VacancyStatus.Closed && Status != VacancyStatus.Completed)
-                    throw new InvalidOperationException(Status.ToString());
-                if (ClosingDate == null)
-                    throw new InvalidOperationException($"Null closing date found for live vacancy {VacancyId}");
-                return ClosingDate.Value;
-            }
-        }
-
-        public DateTime SyntheticUpdatedDateTime
-        {
-            get
-            {
-                return UpdatedDateTime ?? new DateTime(2016, 6, 30, 0, 0, 0, DateTimeKind.Utc);
-            }
-        }
-
         public string EmployerName { get; set; }
         public string EmployerLocation { get; set; }
-
         public int NewApplicationCount { get; set; }
         public int ApplicantCount { get; set; }
-
         public string ProviderTradingName { get; set; }
         public DateTime CreatedDate { get; set; }
-
         public Wage Wage { get; set; }
     }
 }

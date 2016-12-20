@@ -40,6 +40,11 @@
             return _vacancySummaryRepository.GetById(vacancyId);
         }
 
+        public VacancySummary GetByReferenceNumber(int vacancyReferenceNumber)
+        {
+            return _vacancySummaryRepository.GetByReferenceNumber(vacancyReferenceNumber);
+        }
+
         public IList<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
             return _vacancySummaryRepository.GetByIds(vacancyIds);
