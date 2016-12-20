@@ -67,7 +67,7 @@ WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -75,28 +75,29 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Verify your email address</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"column-one-third sfa-align-right-tablet sfa-xlarge-top-margin\"");
 
-WriteLiteral(">\r\n        <p>\r\n");
+WriteLiteral(">\r\n        <ul");
 
-WriteLiteral("            ");
+WriteLiteral(" class=\"list\"");
+
+WriteLiteral(">\r\n            <li>\r\n");
+
+WriteLiteral("                ");
 
             
-            #line 13 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-       Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" }));
+            #line 14 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+           Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </p>\r\n    </div>\r\n</div>\r\n<p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    You\'ve been sent a code to your new email address, enter your code to veri" +
-"fy\r\n    your address.\r\n</p>\r\n\r\n");
+WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<p >\r\n    You\'ve been sen" +
+"t a code to your new email address, enter your code to verify\r\n    your address." +
+"\r\n</p>\r\n\r\n");
 
             
-            #line 22 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 24 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
  using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {id = "verify-updated-email-form", autocomplete = "off"}))
 {
     
@@ -104,28 +105,28 @@ WriteLiteral(">\r\n    You\'ve been sent a code to your new email address, enter
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 26 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 26 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 27 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 27 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
                                                            
 
             
@@ -156,21 +157,21 @@ WriteLiteral(" class=\"sfa-hide\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 28 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 30 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 29 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 31 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
 Write(Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { spellcheck = "false", autofocus = "autofocus", autocomplete = "off" }, labelText: "Enter code", containerHtmlAttributes: new { @class = "form-group-withlink" }));
 
             
             #line default
             #line hidden
             
-            #line 29 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 31 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
                                                                                                                                                                                                                                                
     
 
@@ -183,14 +184,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1463), Tuple.Create("\"", 1533)
+WriteAttribute("href", Tuple.Create(" href=\"", 1572), Tuple.Create("\"", 1642)
             
-            #line 33 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-, Tuple.Create(Tuple.Create("", 1470), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
+            #line 35 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+, Tuple.Create(Tuple.Create("", 1579), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)
             
             #line default
             #line hidden
-, 1470), false)
+, 1579), false)
 );
 
 WriteLiteral(" title=\"Resend code\"");
@@ -198,21 +199,21 @@ WriteLiteral(" title=\"Resend code\"");
 WriteLiteral(">Resend code</a>\r\n        </p>\r\n    </div>\r\n");
 
             
-            #line 36 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 38 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
     
     
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 39 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
 Write(Html.FormPasswordFor(m => m.VerifyPassword, controlHtmlAttributes: new { autocomplete = "off" }));
 
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 39 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
                                                                                                      
     
 
@@ -232,7 +233,7 @@ WriteLiteral(" id=\"verify-email-button\"");
 WriteLiteral(">Verify email</button>\r\n    </div>\r\n");
 
             
-            #line 42 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
+            #line 44 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
 }
 
             

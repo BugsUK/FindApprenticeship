@@ -15,14 +15,14 @@
     //Hidden password input to disable autocomplete
     <input title="Hidden password field" type="password" class="sfa-hide" />
 
-    <fieldset class="fieldset-with-border">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered">
         <legend class="heading-large">Your details</legend>
         @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
         @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
         @Html.EditorFor(r => r.DateOfBirth)
     </fieldset>
 
-    <fieldset class="fieldset-with-border">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered">
         <legend class="heading-large">Contact details</legend>
         <div class="form-group">
 
@@ -35,7 +35,7 @@
         </div>
     </fieldset>
 
-    <fieldset class="fieldset-with-border">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered">
         <legend class="heading-large">Sign in details</legend>
         <div class="form-group">
             <p class="form-label-bold">Email address</p>
@@ -45,14 +45,12 @@
             <a class="inl-block inpage-focus" href="#@Html.IdFor(m => m.EmailAddress)">Edit your email</a>
         </div>
         
-        <div class="form-group">
-            @Html.FormPasswordFor(m => m.Password, containerHtmlAttributes: new { @class = "form-group-compound" }, hintHtmlAttributes: new { id = "passwordHint" }, controlHtmlAttributes: new { aria_describedby = "passwordHint", autocomplete = "off" })
-            <p class="form-hint strength-indicator hide-nojs">Password strength: <span id="pass_meter" class=""></span></p>
-        </div>
+        @using (Html.FormPasswordWithContentFor(m => m.Password, hintHtmlAttributes: new { id = "passwordHint" }, controlHtmlAttributes: new { aria_describedby = "passwordHint", autocomplete = "off" }))
+        {
+            <span class="sfa-form-control-after strength-indicator hide-nojs">Password strength: <span id="pass_meter"></span></span>
+        }
         
-        <div class="form-group">
-            @Html.FormPasswordFor(m => m.ConfirmPassword, controlHtmlAttributes: new { autocomplete = "off" })
-        </div>
+        @Html.FormPasswordFor(m => m.ConfirmPassword, controlHtmlAttributes: new { autocomplete = "off" })
     </fieldset>
     
     <div class="form-group">
@@ -73,7 +71,7 @@
 
     <script>
         $(function () {
-            $('#address-details').addClass('disabled');
+            $('#address-details').addClass('sfa-disabled');
             $('input[id=EmailAddress]').usernameLookup('@Url.RouteUrl(RouteNames.CheckUsername)');
         });
 

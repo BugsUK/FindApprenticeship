@@ -73,16 +73,20 @@ WriteLiteral(">Confirmation email sent</legend>\r\n    <div");
 
 WriteLiteral(" class=\"form-group text\"");
 
-WriteLiteral(">\r\n        <p>\r\n            Your confirmation email has been sent to <strong>");
+WriteLiteral(">\r\n        <p>\r\n            Your confirmation email has been sent to <span");
+
+WriteLiteral(" class=\"bold-small\"");
+
+WriteLiteral(">");
 
             
             #line 12 "..\..\Views\Register\Complete.cshtml"
-                                                        Write(Model);
+                                                                         Write(Model);
 
             
             #line default
             #line hidden
-WriteLiteral("</strong>\r\n        </p>\r\n    </div>\r\n    <div");
+WriteLiteral("</span>\r\n        </p>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"form-group\"");
 

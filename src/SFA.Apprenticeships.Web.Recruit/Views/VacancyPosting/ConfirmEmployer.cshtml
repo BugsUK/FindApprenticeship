@@ -12,7 +12,7 @@
 }
 
 <div class="grid-row">
-    <div class="hgroup">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">
             Check employer information
         </h1>
@@ -25,7 +25,7 @@
 
     <div class="column-full">
         <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
-        @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" })
+        @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button sfa-button-secondary" })
         @if (Model.ComeFromPreview)
         {
             @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })

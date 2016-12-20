@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates.Applic
         {
 WriteLiteral("<section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <h2");
 
@@ -80,15 +80,15 @@ WriteLiteral("            <a");
 
 WriteLiteral(" class=\"icon-with-text\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 228), Tuple.Create("\"", 340)
+WriteAttribute("href", Tuple.Create(" href=\"", 234), Tuple.Create("\"", 346)
             
             #line 8 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-, Tuple.Create(Tuple.Create("", 235), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
+, Tuple.Create(Tuple.Create("", 241), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
             
             #line default
             #line hidden
-, 235), false)
-, Tuple.Create(Tuple.Create("", 319), Tuple.Create("#applyTrainingCourses", 319), true)
+, 241), false)
+, Tuple.Create(Tuple.Create("", 325), Tuple.Create("#applyTrainingCourses", 325), true)
 );
 
 WriteLiteral(">\r\n                <i");

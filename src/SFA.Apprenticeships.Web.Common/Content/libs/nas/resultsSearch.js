@@ -79,6 +79,9 @@
             setDetailsView();
             $("#Location").locationMatch({ url: locationUrl, longitude: '#Longitude', latitude: '#Latitude', latlonhash: '#Hash' });
             Webtrends.multiTrack({ argsa: ["DCS.dcsqry", window.location.search] });
+
+            if (setupCategorySelectors)
+                setupCategorySelectors();
         }).fail(function () {
         });
     }

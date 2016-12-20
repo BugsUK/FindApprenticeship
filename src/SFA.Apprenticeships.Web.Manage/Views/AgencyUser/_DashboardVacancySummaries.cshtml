@@ -4,9 +4,8 @@
 @model DashboardVacancySummariesViewModel
 
 <div class="column-full">
-    <div class="inner-block-padr">
         <section>
-            <div >
+            <div>
                 <table class="sfa-table">
                     <colgroup>
                         <col>
@@ -125,7 +124,7 @@
                                     <td class="reactive-header" data-label="Closing date">
                                         @vacancy.ClosingDate.ToFriendlyClosingToday()
                                     </td>
-                                    <td class="ta-center reactive-header" data-label="Submission count">
+                                    <td class="sfa-align-center reactive-header" data-label="Submission count">
                                         @vacancy.SubmissionCount
                                     </td>
                                     <td>
@@ -145,5 +144,4 @@
                 </table>
             </div>
         </section>
-    </div>
 </div>

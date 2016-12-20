@@ -54,11 +54,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Home
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h1");
+WriteLiteral("\r\n\r\n<div>\r\n    <h1");
 
 WriteLiteral(" id=\"h1header\"");
 
@@ -80,14 +76,14 @@ WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 613), Tuple.Create("\"", 638)
+WriteAttribute("href", Tuple.Create(" href=\"", 600), Tuple.Create("\"", 625)
             
             #line 17 "..\..\Views\Home\Cookies.cshtml"
-, Tuple.Create(Tuple.Create("", 620), Tuple.Create<System.Object, System.Int32>(ViewBag.ReturnUrl
+, Tuple.Create(Tuple.Create("", 607), Tuple.Create<System.Object, System.Int32>(ViewBag.ReturnUrl
             
             #line default
             #line hidden
-, 620), false)
+, 607), false)
 );
 
 WriteLiteral(">Re-check your browser settings</a>\r\n</div>");

@@ -52,12 +52,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
         }
         public override void Execute()
         {
-WriteLiteral("<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <p>By using this service you agree to these terms and conditions.</p>\r\n\r\n " +
-"   <h3");
+WriteLiteral("<section>\r\n    <p>By using this service you agree to these terms and conditions.<" +
+"/p>\r\n\r\n    <h3");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -80,11 +76,8 @@ WriteLiteral(@">
     </ul>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h3");
+<section>
+    <h3");
 
 WriteLiteral(" class=\"heading-large\"");
 

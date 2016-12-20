@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="column-one-third">
-        <p class="page-link hide-nojs">
+        <p class="hide-nojs">
             <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
         </p>
     </div>
@@ -18,11 +18,9 @@
 
 <section class="grid-row">
     <div class="column-two-thirds">
-        <div class="inner-block-padr">
-            <div class="text" itemprop="description">
+            <div  itemprop="description">
                 <p id="vacancy-description">@Model.Vacancy.NewVacancyViewModel.ShortDescription</p>
             </div>
-        </div>
     </div>
     <div class="column-one-third">
         @Html.Partial("_Apply", Model)

@@ -1,20 +1,23 @@
 ﻿@model MonitoringInformationViewModel
 
-<div class="form-group inline clearfix">
-    <p class="form-label-bold" id="gender-label">Are you?</p>
-    <label for="gender-male" class="block-label selection-button-radio">
-        @Html.RadioButtonFor(m => m.Gender, 1, new { id = "gender-male", aria_labelledby = "gender-label" }) Male
-    </label>
+<div class="form-group">
+    <fieldset class="inline">
+        <legend class="form-label-bold sfa-small-bottom-margin" id="gender-label">Are you?</legend>
 
-    <label for="gender-female" class="block-label selection-button-radio">
-        @Html.RadioButtonFor(m => m.Gender, 2, new { id = "gender-female", aria_labelledby = "gender-label" }) Female
-    </label>
+        <label for="gender-male" class="block-label selection-button-radio">
+            @Html.RadioButtonFor(m => m.Gender, 1, new { id = "gender-male", aria_labelledby = "gender-label" }) Male
+        </label>
 
-    <label for="gender-other" class="block-label selection-button-radio">
-        @Html.RadioButtonFor(m => m.Gender, 3, new { id = "gender-other", aria_labelledby = "gender-label" }) Other
-    </label>
+        <label for="gender-female" class="block-label selection-button-radio">
+            @Html.RadioButtonFor(m => m.Gender, 2, new { id = "gender-female", aria_labelledby = "gender-label" }) Female
+        </label>
 
-    <label for="gender-prefer-not-to-say" id="gender-prefer-not-to-say-label" class="block-label selection-button-radio">
-        @Html.RadioButtonFor(m => m.Gender, 4, new { id = "gender-prefer-not-to-say", aria_labelledby = "gender-prefer-not-to-say-label" }) Prefer not to say
-    </label>
+        <label for="gender-other" class="block-label selection-button-radio">
+            @Html.RadioButtonFor(m => m.Gender, 3, new { id = "gender-other", aria_labelledby = "gender-label" }) Other
+        </label>
+
+        <label for="gender-prefer-not-to-say" id="gender-prefer-not-to-say-label" class="block-label selection-button-radio">
+            @Html.RadioButtonFor(m => m.Gender, 4, new { id = "gender-prefer-not-to-say", aria_labelledby = "gender-prefer-not-to-say-label" }) Prefer not to say
+        </label>
+    </fieldset>
 </div>

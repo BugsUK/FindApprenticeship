@@ -61,11 +61,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication.Disp
             
             #line default
             #line hidden
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral("    <div>\r\n");
 
             
             #line 6 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
@@ -87,16 +83,16 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 352), Tuple.Create("\"", 442)
-, Tuple.Create(Tuple.Create("", 360), Tuple.Create("form-label-bold", 360), true)
-, Tuple.Create(Tuple.Create(" ", 375), Tuple.Create("text", 376), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 339), Tuple.Create("\"", 429)
+, Tuple.Create(Tuple.Create("", 347), Tuple.Create("form-label-bold", 347), true)
+, Tuple.Create(Tuple.Create(" ", 362), Tuple.Create("text", 363), true)
             
             #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-, Tuple.Create(Tuple.Create(" ", 380), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion1.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 367), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion1.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 381), false)
+, 368), false)
 );
 
 WriteLiteral(">");
@@ -146,16 +142,16 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 902), Tuple.Create("\"", 992)
-, Tuple.Create(Tuple.Create("", 910), Tuple.Create("form-label-bold", 910), true)
-, Tuple.Create(Tuple.Create(" ", 925), Tuple.Create("text", 926), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 889), Tuple.Create("\"", 979)
+, Tuple.Create(Tuple.Create("", 897), Tuple.Create("form-label-bold", 897), true)
+, Tuple.Create(Tuple.Create(" ", 912), Tuple.Create("text", 913), true)
             
             #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-, Tuple.Create(Tuple.Create(" ", 930), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 917), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 931), false)
+, 918), false)
 );
 
 WriteLiteral(">");

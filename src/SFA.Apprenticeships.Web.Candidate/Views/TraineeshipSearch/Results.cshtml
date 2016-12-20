@@ -11,15 +11,19 @@
     <meta name="WT.oss_r" content="@Model.TotalHits" />
 }
 
-<div class="search-results-wrapper grid-row">
-    <div class="hgroup column-full">
-        <h1 class="heading-xlarge sfa-no-bottom-margin">Search results</h1>
-        <div id="vacancy-result-summary">
-            <p class="sfa-small-bottom-margin">We've found <b id="total-hits-count" class="bold-medium">@Model.TotalHits</b> traineeships in your selected area.</p>
+<div class="search-results-wrapper">
+    <div class="grid-row sfa-xxlarge-bottom-margin">
+        <div class="column-full">
+            <h1 class="heading-xlarge sfa-no-bottom-margin">Search results</h1>
+            <div id="vacancy-result-summary">
+                <p class="sfa-small-bottom-margin">We've found <b id="total-hits-count" class="bold-medium">@Model.TotalHits</b> traineeships in your selected area.
+                </p>
+            </div>
         </div>
     </div>
-
-    @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get, new { id = "traineeship-results-form" }))
+    
+    <div class="grid-row">
+    @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get, new {id = "traineeship-results-form"}))
     {
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);
@@ -29,9 +33,10 @@
             </div>
         </section>
     }
+    </div>
 </div>
 
-<div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+<div class="sfa-saving-prompt toggle-content hide-nojs" id="ajaxLoading">
     Loading
 </div>
 

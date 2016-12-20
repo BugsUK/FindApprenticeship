@@ -5,53 +5,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="grid-row">
-    <div class="column-one-half">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">Verify your mobile number</h1>
     </div>
-    <div class="column-one-half">
-        <p>
-            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
-        </p>
-        @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
-        {
-            <p>
-                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link" })
-            </p>
-        }
+    <div class="column-one-third sfa-align-right-tablet sfa-xlarge-top-margin">
+        <ul class="list">
+            <li>
+                @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link"})
+            </li>
+            @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
+            {
+                <li>
+                    @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link"})
+                </li>
+            }
+        </ul>
     </div>
 </div>
 
-
-<p class="text">To receive notifications via text message, you'll need to verify your mobile number by entering the code that was sent to your mobile phone.</p>
-
-
-@using (Html.BeginRouteForm(CandidateRouteNames.VerifyMobile, FormMethod.Post, new { @id = "verify-mobile-form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
-
-    <fieldset>
-
-        <div class="form-group">
-            <p class="form-label-bold">Mobile number</p>
-            <span class="form-prepopped" id="phoneNumber">@Model.PhoneNumber</span>
-            @Html.HiddenFor(m => m.PhoneNumber)
-            @Html.HiddenFor(m => m.ReturnUrl)
-        </div>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <p>To receive notifications via text message, you'll need to verify your mobile number by entering the code that was sent to your mobile phone.</p>
 
 
-        @Html.FormTextFor(
+        @using (Html.BeginRouteForm(CandidateRouteNames.VerifyMobile, FormMethod.Post, new { @id = "verify-mobile-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+                <div class="form-group">
+                    <label class="form-label-bold">Mobile number</label>
+                    <span class="form-prepopped" id="phoneNumber">@Model.PhoneNumber</span>
+                    
+                    @Html.HiddenFor(m => m.PhoneNumber)
+                    @Html.HiddenFor(m => m.ReturnUrl)
+                </div>
+
+
+                @Html.FormTextFor(
         m => m.VerifyMobileCode,
         controlHtmlAttributes: new { @maxlength = "4", autofocus = "autofocus" },
         containerHtmlAttributes: new { @class = "form-group-withlink" })
-    </fieldset>
-    <div class="form-group">
-        <button class="button hide-button" type="submit" name="VerifyMobileAction" value="VerifyMobile" tabindex="-1">Verify number</button>
-        <button id="ResendMobileVerificationCodeLink" type="submit" name="VerifyMobileAction" class="button-link" value="Resend" formnovalidate>Resend code</button>
-        <p>
-            <button class="button" id="verify-code-button" type="submit" name="VerifyMobileAction" value="VerifyMobile">Verify number</button>
-        </p>
+            <div class="form-group">
+                <button class="button" id="verify-code-button" type="submit" name="VerifyMobileAction" value="VerifyMobile">Verify number</button>
+                <button class="button sfa-hide-button" type="submit" name="VerifyMobileAction" value="VerifyMobile" tabindex="-1">Verify number</button>
+                <button id="ResendMobileVerificationCodeLink" type="submit" name="VerifyMobileAction" class="button sfa-button-secondary" value="Resend" formnovalidate>Resend code</button>
+            </div>
+        }
     </div>
-}
-
+</div>
 

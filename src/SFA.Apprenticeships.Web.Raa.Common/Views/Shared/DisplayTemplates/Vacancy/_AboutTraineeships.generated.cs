@@ -58,7 +58,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
             #line hidden
 WriteLiteral("    <section");
 
-WriteLiteral(" class=\"section-border grid-row\"");
+WriteLiteral(" class=\"sfa-section-bordered grid-row\"");
 
 WriteLiteral(" id=\"about-traineeships\"");
 
@@ -69,10 +69,6 @@ WriteLiteral(" class=\"heading-large\"");
 WriteLiteral(">About traineeships</h2>\r\n        <div");
 
 WriteLiteral(" class=\"column-two-thirds\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(@">
                 <p>
@@ -92,13 +88,12 @@ WriteLiteral(@">
                     </ul>
                 </p>
                 <p>You won’t be paid, but you may be given expenses for things like travel and meals.</p>
-            </div>
         </div>
     </section>
 ");
 
             
-            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.cshtml"
+            #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.cshtml"
 }
             
             #line default

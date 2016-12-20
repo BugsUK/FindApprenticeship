@@ -671,7 +671,7 @@ $.extend($.validator, {
 				// title is never undefined, so handle empty string as undefined
 				!this.settings.ignoreTitle && element.title || undefined,
 				$.validator.messages[method],
-				"<strong>Warning: No message defined for " + element.name + "</strong>"
+				"<span class="bold-small">Warning: No message defined for " + element.name + "</span>"
 			);
 		},
 		

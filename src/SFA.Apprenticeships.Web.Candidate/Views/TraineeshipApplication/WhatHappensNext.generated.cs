@@ -102,7 +102,7 @@ WriteLiteral(" - ");
             #line hidden
 WriteLiteral("</h2>\r\n    </div>\r\n</div>\r\n<section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <p>\r\n        <i");
 
@@ -111,7 +111,7 @@ WriteLiteral(" class=\"fa fa-envelope-o\"");
 WriteLiteral("></i>We\'ve sent you an email confirming your application\r\n    </p>\r\n</section>\r\n<" +
 "section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <h2");
 
@@ -124,14 +124,14 @@ WriteLiteral(" class=\"text form-group\"");
 WriteLiteral(">\r\n        <p>\r\n            You’ll be contacted if you’re eligible for a trainees" +
 "hip. You can see the applications you\'ve made by visiting <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1002), Tuple.Create("\"", 1058)
+WriteAttribute("href", Tuple.Create(" href=\"", 1014), Tuple.Create("\"", 1070)
             
             #line 23 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 1009), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+                                                    , Tuple.Create(Tuple.Create("", 1021), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 1009), false)
+, 1021), false)
 );
 
 WriteLiteral(">my applications</a>.\r\n        </p>\r\n        <h3");
@@ -157,14 +157,14 @@ WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1310), Tuple.Create("\'", 1369)
+WriteAttribute("href", Tuple.Create(" href=\'", 1322), Tuple.Create("\'", 1381)
             
             #line 29 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1317), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+, Tuple.Create(Tuple.Create("", 1329), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 1317), false)
+, 1329), false)
 );
 
 WriteLiteral(">Find a traineeship</a>\r\n    </div>\r\n    <div");
@@ -187,11 +187,7 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            <p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n                <a");
+WriteLiteral("            <p >\r\n                <a");
 
 WriteAttribute("href", Tuple.Create(" href=\"", 1543), Tuple.Create("\"", 1574)
             

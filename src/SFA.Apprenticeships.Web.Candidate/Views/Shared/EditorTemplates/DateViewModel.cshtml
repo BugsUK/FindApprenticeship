@@ -21,7 +21,13 @@
     <fieldset>
         <legend>
             <span class="form-label-bold">@Html.DisplayNameFor(m => m)</span>
-            <span class="form-hint" id="example-dob-hint">@Model.GetMetadata(m => m).DisplayName</span>
+            @{
+                var hint = Model.GetMetadata(m => m).DisplayName;
+            }
+            @if (!string.IsNullOrEmpty(hint))
+            {
+                <span class="form-hint" id="example-dob-hint">@hint</span>
+            }
             @Html.ValidationMessageWithSeverityFor(m => m, Html.GetValidationType(m => m))
             @Html.ValidationMessageWithSeverityFor(m => m.Day, Html.GetValidationType(m => m.Day))
             @Html.ValidationMessageWithSeverityFor(m => m.Month, Html.GetValidationType(m => m.Month))

@@ -22,7 +22,7 @@
 @if (Model.TraineeshipFeature.ShowTraineeshipsPrompt)
 {
     <div role="alert" aria-live="assertive" id="traineeshipPrompt" class="toggle-content panel-info" style="display: block;">
-        <div class="text">
+        <div>
             <p>
                 Have you considered a traineeship? Traineeships are designed to get someone ready for an apprenticeship.
             </p>
@@ -44,7 +44,7 @@
 @if (Model.ApplicationStatusNotifications.Any())
 {
     <div role="alert" aria-live="assertive" id="statusPrompt" class="toggle-content panel-info" style="display: block;">
-        <div class="text">
+        <div>
             @foreach (var applicationNotification in Model.ApplicationStatusNotifications)
             {
                 var successOrUnsuccessful = applicationNotification.ApplicationStatus == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
@@ -65,26 +65,22 @@
 }
 
 <div class="grid-row">
-    <div class="column-one-half">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">My applications</h1>
     </div>
-    <div class="column-one-half">
-        <div class="page-link">
+    <div class="column-one-third sfa-align-right-tablet sfa-xlarge-top-margin">
+        <ul class="list">
             @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
             {
-                <ul class="list-text sfa-small-bottom-margin">
-                    <li>@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new {id = "find-apprenticeship-link", @class = "link-unimp"})</li>
-                </ul>
+                <li>@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "link-unimp" })</li>
             }
             @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
             {
-                <ul class="list-text">
-                    <li>
-                        @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new {id = "find-traineeship-link", @class = "link-unimp"})
-                    </li>
-                </ul>
+                <li>
+                    @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "link-unimp" })
+                </li>
             }
-        </div>
+        </ul>
     </div>
 </div>
 

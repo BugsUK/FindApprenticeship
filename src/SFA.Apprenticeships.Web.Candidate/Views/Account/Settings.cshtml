@@ -7,16 +7,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="grid-row">
-    <div class="column-one-half">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">Settings</h1>
     </div>
-    <div class="column-one-half">
-        @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link sfa-small-bottom-margin" })
-
-        @if (Model!=null && Model.TraineeshipFeature!=null && Model.TraineeshipFeature.ShowTraineeshipsLink)
-        {
-            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link sfa-small-bottom-margin" })
-        }
+    <div class="column-one-third sfa-align-right-tablet sfa-xlarge-top-margin">
+        <ul class="list">
+            <li>
+                @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link" })
+            </li>
+            @if (Model != null && Model.TraineeshipFeature != null && Model.TraineeshipFeature.ShowTraineeshipsLink)
+            {
+                <li>
+                    @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link" })
+                </li>
+            }
+        </ul>
     </div>
 </div>
 
@@ -27,211 +32,232 @@
 
     <fieldset>
 
-        @{
-            var yourAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.YourAccount ? " active" : "";
-            var savedSearchesTabClass = Model.Mode == SettingsViewModel.SettingsMode.SavedSearches ? " active" : "";
-            var deleteAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.DeleteAccount ? " active" : "";
-        }
+    @{
+        var yourAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.YourAccount ? " active" : "";
+        var savedSearchesTabClass = Model.Mode == SettingsViewModel.SettingsMode.SavedSearches ? " active" : "";
+        var deleteAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.DeleteAccount ? " active" : "";
+    }
 
-        <nav class="tabbed-nav">
-            @Html.RouteLink("Your account", CandidateRouteNames.Settings, null, new { @id = "your-account-tab-control", @class = "tabbed-tab" + yourAccountTabClass, tab = "#tab1" })
-            @Html.RouteLink("Saved searches", CandidateRouteNames.SavedSearchesSettings, null, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabClass, tab = "#tab2" })
-            @Html.RouteLink("Delete your account", CandidateRouteNames.DeleteAccountSettings, null, new { @id = "delete-account-tab-control", @class = "tabbed-tab" + deleteAccountTabClass, tab = "#tab3" })
-        </nav>
+    <nav class="tabbed-nav">
+        @Html.RouteLink("Your account", CandidateRouteNames.Settings, null, new { @id = "your-account-tab-control", @class = "tabbed-tab" + yourAccountTabClass, tab = "#tab1" })
+        @Html.RouteLink("Saved searches", CandidateRouteNames.SavedSearchesSettings, null, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabClass, tab = "#tab2" })
+        @Html.RouteLink("Delete your account", CandidateRouteNames.DeleteAccountSettings, null, new { @id = "delete-account-tab-control", @class = "tabbed-tab" + deleteAccountTabClass, tab = "#tab3" })
+    </nav>
 
-        @Html.HiddenFor(m => m.Mode)
+    @Html.HiddenFor(m => m.Mode)
 
-        <div class="tabbed-content @yourAccountTabClass">
+    <div class="tabbed-content @yourAccountTabClass">
+        <div class="grid-row">
+            <div class="column-full">
+                <h2 class="heading-large sfa-no-top-margin">Personal details</h2>
 
-            <legend class="heading-large">Personal details</legend>
+                <div class="panel panel-border-wide">
+                    <p>Any changes you make will be seen on draft or new applications. Submitted applications will continue to show your old details.</p>
+                </div>
 
-            <div class="panel panel-border-narrow">
-                <p class="text">Any changes you make will be seen on draft or new applications. Submitted applications will continue to show your old details.</p>
-            </div>
+                @Html.HiddenFor(m => m.IsJavascript, new {@id = "hidden-flag-javascript"})
+                @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new {@class = "form-group-compound"}, controlHtmlAttributes: new {type = "text", autocorrect = "off"})
+                @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new {type = "text", autocorrect = "off"})
+                @Html.EditorFor(r => r.DateOfBirth)
+                @Html.EditorFor(a => a.Address, new {AnalyticsDSCUri = "/settings/findaddress"})
+                @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new {@class = "form-control", type = "tel"}, verified: Model.VerifiedMobile)
 
-            @Html.HiddenFor(m => m.IsJavascript, new { @id = "hidden-flag-javascript" })
-            @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
-            @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
-            @Html.EditorFor(r => r.DateOfBirth)
-            @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/settings/findaddress" })
-            @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" }, verified: Model.VerifiedMobile)
-
-            <div class="form-group">
-                <p class="form-label-bold">Email</p>
-                <span class="form-prepopped" id="settings-username">@Model.Username</span>
-                <a id="settings-change-username" class="inl-block" href="@Url.RouteUrl(RouteNames.UpdateEmail)">Change email address</a>
-            </div>
-
-            @if (!string.IsNullOrWhiteSpace(Model.PendingUsername))
-            {
                 <div class="form-group">
-                    <p class="form-label-bold">Pending email address</p>
-                    <span class="form-prepopped" id="settings-pending-username">@Model.PendingUsername</span>
-                    <a id="settings-confirm-username" class="inl-block" href="@Url.RouteUrl(RouteNames.VerifyUpdatedEmail)">Verify email address</a>
+                    <dl>
+                        <dt class="form-label-bold">Email</dt>
+                        <dd class="secondary-text" id="settings-username">@Model.Username <a id="settings-change-username" href="@Url.RouteUrl(RouteNames.UpdateEmail)">Change email address</a></dd>
+                    </dl>
                 </div>
-            }
 
-            <details>
-                <summary id="equality-diversity-summary-link">Your equality and diversity information</summary>
-                <div class="detail-content">
-                    @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_gender")
-                    @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_disability")
-                    @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_ethnicity")
-                    @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_why")
-                </div>
-            </details>
+                @if (!string.IsNullOrWhiteSpace(Model.PendingUsername))
+                {
+                    <div class="form-group">
+                        <p class="form-label-bold">Pending email address</p>
+                        <span class="form-prepopped" id="settings-pending-username">@Model.PendingUsername</span>
+                        <a id="settings-confirm-username" class="inl-block" href="@Url.RouteUrl(RouteNames.VerifyUpdatedEmail)">Verify email address</a>
+                    </div>
+                }
 
-            <div id="accountSettings2">
-                <h3 class="heading-large">How we contact you</h3>
-                <div class="text para-btm-margin">
-                    <p class="sfa-small-bottom-margin">
-                        Choose to be notified by <i class="fa fa-envelope-o no-right-margin"></i> email or <i class="icon-sms"></i> text when:
+                <details>
+                    <summary id="equality-diversity-summary-link"><span class="summary">Your equality and diversity information</span></summary>
+                    <div class="panel panel-border-narrow">
+                        @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_gender")
+                        @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_disability")
+                        @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_ethnicity")
+                        @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_why")
+                    </div>
+                </details>
+
+                <div id="accountSettings2">
+                    <h3 class="heading-large">How we contact you</h3>
+                    <p>
+                        Choose to be notified by <span class="bold-small">email</span> or <span class="bold-small">text</span> when:
                     </p>
-                    <div class="display-table">
-                        <div class="display-table__row va-bottom">
-                            <a href="#" id="emailToggle" title="Email notifications" class="display-table__cell ta-center font-black">
-                                <span class="notification-pulltop"><i class="fa fa-envelope-o no-right-margin"></i></span>
-                            </a>
-                            <a href="#" id="textToggle" title="Text notifications" class="display-table__cell ta-center">
-                                <i class="icon-sms"></i>
-                            </a>
-                            <span class="display-table__cell ta-left">
-                            </span>
-                        </div>
-                        <div class="display-table__row">
-                            <span class="display-table__cell ta-center">
-                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaEmail,
-                                    controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "appStatusLabel", title = "Email notifications when the status of one of your applications changes" })
-                            </span>
-                            <span class="display-table__cell ta-center">
-                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaText,
-                                    controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "appStatusLabel", title = "Text notifications when the status of one of your applications changes" })
-                            </span>
-                            <span class="display-table__cell ta-left" id="appStatusLabel">
-                                the status of one of your applications changes
-                            </span>
-                        </div>
-                        <div class="display-table__row">
-                            <span class="display-table__cell ta-center">
-                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaEmail,
-                                    controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "closingDateStatusLabel", title = "Email notifications when an apprenticeship is approaching its closing date" })
-                            </span>
-                            <span class="display-table__cell ta-center">
-                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaText,
-                                    controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "closingDateStatusLabel", title = "Text notifications when an apprenticeship is approaching its closing date" })
-                            </span>
-                            <span class="display-table__cell ta-left" id="closingDateStatusLabel">
-                                an apprenticeship is approaching its closing date
-                            </span>
-                        </div>
-                        <div class="display-table__row">
-                            <span class="display-table__cell ta-center">
-                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaEmail,
-                                    controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Email notifications when we send you updates on news and information" })
-                            </span>
-                            <span class="display-table__cell ta-center">
-                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaText,
-                                    controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Text notifications when we send you updates on news and information" })
-                            </span>
-                            <span class="display-table__cell ta-left" id="marketingUpdatesStatusLabel">
-                                we send you updates on news and information
-                            </span>
-                        </div>
+                    <div class="form-group">
+                        <table class="sfa-table-basic">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="sfa-align-center">
+                                    <a href="#" id="emailToggle" title="Email notifications">
+                                        <span class="notification-pulltop">Email</span>
+                                    </a>
+                                </th>
+                                <th scope="col" class="sfa-align-center">
+                                    <a href="#" id="textToggle" title="Text notifications">
+                                        Text
+                                    </a>
+                                </th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="sfa-align-center">
+                                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaEmail,
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins email-input", aria_labelledby = "appStatusLabel", title = "Email notifications when the status of one of your applications changes"})
+                                </td>
+                                <td class="sfa-align-center">
+                                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaText,
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins text-input", aria_labelledby = "appStatusLabel", title = "Text notifications when the status of one of your applications changes"})
+                                </td>
+                                <td id="appStatusLabel">
+                                    the status of one of your applications changes
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="sfa-align-center">
+                                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaEmail,
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins email-input", aria_labelledby = "closingDateStatusLabel", title = "Email notifications when an apprenticeship is approaching its closing date"})
+                                </td>
+                                <td class="sfa-align-center">
+                                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaText,
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins text-input", aria_labelledby = "closingDateStatusLabel", title = "Text notifications when an apprenticeship is approaching its closing date"})
+                                </td>
+                                <td id="closingDateStatusLabel">
+                                    an apprenticeship is approaching its closing date
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="sfa-align-center">
+                                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaEmail,
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins email-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Email notifications when we send you updates on news and information"})
+                                </td>
+                                <td class="sfa-align-center">
+                                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaText,
+                                        controlHtmlAttributes: new {@class = "sfa-no-margins text-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Text notifications when we send you updates on news and information"})
+                                </td>
+                                <td id="marketingUpdatesStatusLabel">
+                                    we send you updates on news and information
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <button id="update-details-button" class="button">Save settings</button>
-            </div>
-        </div>
-
-        <div class="tabbed-content @savedSearchesTabClass">
-            <h2 class="heading-large" id="savedSearchHeading">Saved searches</h2>
-            <div class="form-group form-group-compound">
-                <p class="form-label-bold">Receive notifications?</p>
-                <span class="form-hint text">If you don't select an option you won't receive notifications</span>
-                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox allowSavedComms" })
-                @if (Model.SmsEnabled)
-                {
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox allowSavedComms" })
-                }
-            </div>
-
-            <div class="form-group" id="savedSearch">
-                @{
-                    var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
-                }
-
-                <p class="savedInitalText text" id="noSavedSearchesText" @Html.Raw(noSavedSearchesTextStyle)>
-                    You currently don't have any active saved searches. If you <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">set up a saved search</a> we can alert you when we find a suitable apprenticeship.
-                </p>
-
-                @if (Model.SavedSearches != null)
-                {
-                    <div id="savedSearches" class="toggle-content text" style="display: block;">
-                        @for (var i = 0; i < Model.SavedSearches.Count; i++)
-                        {
-                            var index = i;
-                            var savedSearch = Model.SavedSearches[i];
-                            var checkedListItemClass = savedSearch.AlertsEnabled ? "class=\"selected\"" : "";
-
-                            <div class="para-btm-margin saved-search" id="@savedSearch.Id">
-                                <a href="@Html.Raw(savedSearch.SearchUrl.Value)" title="Run search">@savedSearch.Name</a>
-                                @if (savedSearch.DateProcessed.HasValue)
-                                {
-                                    <span class="inl-block font-xsmall">(Last alert: @savedSearch.DateProcessed.Value.ToFriendlyDaysAgo())</span>
-                                }
-                                <ul class="list-text">
-                                    @if (!string.IsNullOrEmpty(savedSearch.SubCategoriesFullNames))
-                                    {
-                                        <li><b>Sub-categories:</b> @savedSearch.SubCategoriesFullNames</li>
-                                    }
-                                    @if (savedSearch.ApprenticeshipLevel != "All")
-                                    {
-                                        <li><b>Apprenticeship level:</b> @savedSearch.ApprenticeshipLevel</li>
-                                    }
-                                    <li @Html.Raw(checkedListItemClass)>
-                                        @Html.HiddenFor(m => m.SavedSearches[index].Id)
-                                        @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new { @class = "no-left-margin" })
-                                    </li>
-                                    <li>
-                                        <a href="@Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new {id = savedSearch.Id, isJavascript = false})" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
-                                            <i class="fa fa-times-circle"></i>Delete saved search
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        }
-                    </div>
-                }
-
                 <div class="form-group">
                     <button id="update-details-button" class="button">Save settings</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="tabbed-content @deleteAccountTabClass">
-            <h2 class="heading-large" id="deleteAccountHeading">Delete your account</h2>
-            <div class="panel panel-border-narrow">
-                <p class="text">If you are no longer interested in applying for apprenticeships or traineeship, you can delete your account here.</p>
+    <div class="tabbed-content @savedSearchesTabClass">
+        <div class="grid-row">
+            <div class="column-full">
+                <h2 class="heading-large sfa-no-top-margin" id="savedSearchHeading">Saved searches</h2>
+                <div class="form-group">
+                    <legned class="form-label-bold sfa-medium-bottom-margin">
+                        Receive notifications?
+                        <span class="form-hint">If you don't select an option you won't receive notifications</span>
+                    </legned>
+
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new {@class = "block-label selection-button-checkbox allowSavedComms"})
+                    @if (Model.SmsEnabled)
+                    {
+                        @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new {@class = "block-label selection-button-checkbox allowSavedComms"})
+                    }
+                </div>
+
+                <div class="form-group" id="savedSearch">
+                    @{
+                        var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
+                    }
+
+                    <p class="savedInitalText" id="noSavedSearchesText" @Html.Raw(noSavedSearchesTextStyle)>
+                        You currently don't have any active saved searches. If you <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">set up a saved search</a> we can alert you when we find a suitable apprenticeship.
+                    </p>
+
+                    @if (Model.SavedSearches != null)
+                    {
+                        <div id="savedSearches" class="toggle-content" style="display: block;">
+                            @for (var i = 0; i < Model.SavedSearches.Count; i++)
+                            {
+                                var index = i;
+                                var savedSearch = Model.SavedSearches[i];
+                                var checkedListItemClass = savedSearch.AlertsEnabled ? "class=\"selected\"" : "";
+
+                                <div class="sfa-saved-search sfa-xlarge-bottom-margin" id="@savedSearch.Id">
+                                    <a href="@Html.Raw(savedSearch.SearchUrl.Value)" title="Run search">@savedSearch.Name</a>
+                                    @if (savedSearch.DateProcessed.HasValue)
+                                    {
+                                        <span class="font-xsmall">(Last alert: @savedSearch.DateProcessed.Value.ToFriendlyDaysAgo())</span>
+                                    }
+                                    <ul class="list-text">
+                                        @if (!string.IsNullOrEmpty(savedSearch.SubCategoriesFullNames))
+                                        {
+                                            <li><b>Sub-categories:</b> @savedSearch.SubCategoriesFullNames</li>
+                                        }
+                                        @if (savedSearch.ApprenticeshipLevel != "All")
+                                        {
+                                            <li><b>Apprenticeship level:</b> @savedSearch.ApprenticeshipLevel</li>
+                                        }
+                                        <li @Html.Raw(checkedListItemClass)>
+                                            @Html.HiddenFor(m => m.SavedSearches[index].Id)
+                                            @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new {@class = "sfa-no-left-margin"})
+                                        </li>
+                                        <li>
+                                            <a href="@Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new {id = savedSearch.Id, isJavascript = false})" id="@savedSearch.Id" class="link-unimp icon-black delete--link">
+                                                <i class="fa fa-times-circle"></i>Delete saved search
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="form-group">
+                    <button id="update-details-button" class="button">Save settings</button>
+                </div>
             </div>
-            @Html.FormTextFor(
-                m => m.EmailAddress,
-                containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { @class = "form-control", type = "email", autofocus = "autofocus", spellcheck = "false" })
-
-            <div class="form-group">
-                <a id="password"></a>
-                @Html.LabelFor(m => m.Password, new { @class = "form-label-bold" })
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password, null)
-            </div>
-
-            <div class="form-group">
-                <button class="button" id="delete-account-button">Delete account</button>
-            </div>                        
         </div>
+    </div>
+
+    <div class="tabbed-content @deleteAccountTabClass">
+        <div class="grid-row">
+            <div class="column-full">
+                <h2 class="heading-large sfa-no-top-margin" id="deleteAccountHeading">Delete your account</h2>
+                <div class="panel panel-border-wide">
+                    <p>If you are no longer interested in applying for apprenticeships or traineeship, you can delete your account here.</p>
+                </div>
+                @Html.FormTextFor(
+                    m => m.EmailAddress,
+                    containerHtmlAttributes: new {@class = "form-group-compound"},
+                    controlHtmlAttributes: new {@class = "form-control", type = "email", autofocus = "autofocus", spellcheck = "false"})
+
+                <div class="form-group">
+                    <a id="password"></a>
+                    @Html.LabelFor(m => m.Password, new {@class = "form-label-bold"})
+                    @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.Password, null)
+                </div>
+
+                <div class="form-group">
+                    <button class="button" id="delete-account-button">Delete account</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </fieldset>
 }
 
@@ -239,11 +265,10 @@
 {
     @Scripts.Render("~/bundles/nas/account")
 
-
     <script>
         $(function () {
 
-            $(".delete-saved-search-link").on('click', function () {
+            $(".delete--link").on('click', function () {
                 var $this = $(this),
                     $href = $this.attr('href').replace("isJavascript=False", "isJavascript=true").replace("isJavascript=false", "isJavascript=true"),
                     $id = $this.attr('id');
@@ -255,7 +280,7 @@
                         if (result.status == 200) {
                             $("#" + $id).hide();
 
-                            if ($(".saved-search:visible").length == 0) {
+                            if ($(".:visible").length == 0) {
                                 $("#noSavedSearchesText").show();
                             }
                         }
@@ -266,7 +291,7 @@
             });
 
             $('#emailToggle').on('click', function () {
-                var theTable = $(this).closest('.display-table');
+                var theTable = $(this).closest('table');
 
                 if (theTable.find('.email-input:checked').length == 3) {
                     theTable.find('.email-input:checked').click();
@@ -281,7 +306,7 @@
             });
 
             $('#textToggle').on('click', function () {
-                var theTable = $(this).closest('.display-table');
+                var theTable = $(this).closest('table');
 
                 if (theTable.find('.text-input:checked').length == 3) {
                     theTable.find('.text-input:checked').click();

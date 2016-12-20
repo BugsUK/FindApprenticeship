@@ -54,15 +54,19 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"form-group inline clearfix\"");
+WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n    <p");
+WriteLiteral(">\r\n    <fieldset");
 
-WriteLiteral(" class=\"form-label-bold\"");
+WriteLiteral(" class=\"inline\"");
+
+WriteLiteral(">\r\n        <legend");
+
+WriteLiteral(" class=\"form-label-bold sfa-small-bottom-margin\"");
 
 WriteLiteral(" id=\"gender-label\"");
 
-WriteLiteral(">Are you?</p>\r\n    <label");
+WriteLiteral(">Are you?</legend>\r\n\r\n        <label");
 
 WriteLiteral(" for=\"gender-male\"");
 
@@ -70,16 +74,16 @@ WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 6 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
-   Write(Html.RadioButtonFor(m => m.Gender, 1, new { id = "gender-male", aria_labelledby = "gender-label" }));
+            #line 8 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
+       Write(Html.RadioButtonFor(m => m.Gender, 1, new { id = "gender-male", aria_labelledby = "gender-label" }));
 
             
             #line default
             #line hidden
-WriteLiteral(" Male\r\n    </label>\r\n\r\n    <label");
+WriteLiteral(" Male\r\n        </label>\r\n\r\n        <label");
 
 WriteLiteral(" for=\"gender-female\"");
 
@@ -87,16 +91,16 @@ WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 10 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
-   Write(Html.RadioButtonFor(m => m.Gender, 2, new { id = "gender-female", aria_labelledby = "gender-label" }));
+            #line 12 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
+       Write(Html.RadioButtonFor(m => m.Gender, 2, new { id = "gender-female", aria_labelledby = "gender-label" }));
 
             
             #line default
             #line hidden
-WriteLiteral(" Female\r\n    </label>\r\n\r\n    <label");
+WriteLiteral(" Female\r\n        </label>\r\n\r\n        <label");
 
 WriteLiteral(" for=\"gender-other\"");
 
@@ -104,16 +108,16 @@ WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 14 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
-   Write(Html.RadioButtonFor(m => m.Gender, 3, new { id = "gender-other", aria_labelledby = "gender-label" }));
+            #line 16 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
+       Write(Html.RadioButtonFor(m => m.Gender, 3, new { id = "gender-other", aria_labelledby = "gender-label" }));
 
             
             #line default
             #line hidden
-WriteLiteral(" Other\r\n    </label>\r\n\r\n    <label");
+WriteLiteral(" Other\r\n        </label>\r\n\r\n        <label");
 
 WriteLiteral(" for=\"gender-prefer-not-to-say\"");
 
@@ -123,16 +127,16 @@ WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 18 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
-   Write(Html.RadioButtonFor(m => m.Gender, 4, new { id = "gender-prefer-not-to-say", aria_labelledby = "gender-prefer-not-to-say-label" }));
+            #line 20 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
+       Write(Html.RadioButtonFor(m => m.Gender, 4, new { id = "gender-prefer-not-to-say", aria_labelledby = "gender-prefer-not-to-say-label" }));
 
             
             #line default
             #line hidden
-WriteLiteral(" Prefer not to say\r\n    </label>\r\n</div>");
+WriteLiteral(" Prefer not to say\r\n        </label>\r\n    </fieldset>\r\n</div>");
 
         }
     }

@@ -7,11 +7,10 @@
     var editableItemClass = ViewData["editableItemClass"];
 }
 
-<section class="section-border" id="employer-info">
+<section class="sfa-section-bordered" id="employer-info">
     <h2 class="heading-large">About the employer</h2>
     <div class="grid-row">
         <div class="column-two-thirds">
-            <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">Employer</h3>
                     @if (Model.IsManageReviewerView && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
@@ -29,12 +28,10 @@
                     }
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AnonymousEmployerReason, Model.EmployerLink, Model.NewVacancyViewModel.AnonymousEmployerReasonComment))
                 </div>
-            </div>
         </div>
     </div>
     <div class="grid-row">
         <div class="column-two-thirds">
-            <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
                     {
@@ -55,7 +52,6 @@
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                     }
                 </div>
-            </div>
         </div>
     </div>
 
@@ -68,7 +64,6 @@
             }
         }
         <div class="@gridClass">
-            <div class="inner-block-padr">
                 @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && !Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value && Common.IsValidUrl(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl))
                 {
                     var employerWebsiteUri = new UriBuilder(Model.NewVacancyViewModel.VacancyOwnerRelationship.EmployerWebsiteUrl).Uri;
@@ -85,7 +80,6 @@
                     </div>
                 }
                 <div>
-                    <div class="inner-block-padr">
                         @if (Model.IsSingleLocation)
                         {
                             <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -178,7 +172,6 @@
                                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
                                     </h3>
                                     <div class="column-one-half">
-                                        <div class="inner-block-padr">
                                             <table class="locations-table" id="leftLocationAddressesTable">
                                                 <colgroup>
                                                     <col class="t50">
@@ -227,7 +220,6 @@
                                                     }
                                                     </tbody>
                                                 </table>
-                                            </div>
                                         </div>
                                     <div class="column-one-half">
                                             <table class="locations-table" id="rightLocationAddressesTable">
@@ -297,9 +289,7 @@
                                 }
                             }
                         }
-                    </div>
                 </div>
-            </div>
         </div>
         <div class="column-one-half hide-print">
             @if (Model.IsSingleLocation)

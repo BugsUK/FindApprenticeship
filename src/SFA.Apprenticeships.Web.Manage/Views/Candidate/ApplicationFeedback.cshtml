@@ -9,25 +9,22 @@
 
 <div class="grid-row">
     <section class="column-two-thirds">
-        <div class="inner-block-padr">
-            <h1 class="heading-xlarge">Your feedback (@Model.ApplicantDetails.Name)</h1>
-            @{
-                var reason = string.IsNullOrWhiteSpace(Model.UnSuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnSuccessfulReason;
-            }
-            <div class="form-group">
-                <div class="detail-content qa-comment">
-                    <div class="blocklabel-single-container">@reason</div>
-                    <br />
-                    <span class="form-prepopped font-xsmall">
-                        Sent @(Model.UnsuccessfulDateTime.HasValue ? Model.UnsuccessfulDateTime.Value.ToString("dd MMM yyyy") : "")
-                    </span>
-                </div>
+        <h1 class="heading-xlarge">Your feedback (@Model.ApplicantDetails.Name)</h1>
+        @{
+            var reason = string.IsNullOrWhiteSpace(Model.UnSuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnSuccessfulReason;
+        }
+        <div class="form-group">
+            <div class="detail-content qa-comment">
+                <div class="blocklabel-single-container">@reason</div>
+                <br />
+                <span class="form-prepopped font-xsmall">
+                    Sent @(Model.UnsuccessfulDateTime.HasValue ? Model.UnsuccessfulDateTime.Value.ToString("dd MMM yyyy") : "")
+                </span>
             </div>
         </div>
     </section>
     <section class="column-one-third gov-border grey-background">
         <br />
-        <div class="inner-block">
             <div class="hgroup-small">
                 <h2 class="heading-medium">@Model.Vacancy.Title</h2>
                 <p class="heading-secondary ">@Model.Vacancy.EmployerName</p>
@@ -40,7 +37,7 @@
         </div>
     </section>
 
-    <section class="section-border grid-row" id="provider-info">
+    <section class="sfa-section-bordered grid-row" id="provider-info">
         <div class="grid-two-thirds">
             <h2 class="heading-large">Provider details</h2>
             
@@ -65,7 +62,6 @@
 
     <section class="grid-row">
     	<div class="column-two-thirds">
-	        <div class="inner-block-padr">
 	            <h2 class="heading-large">Next steps</h2>
 	            <p>If you require further information please contact the training provider.</p>
 	            <p>
@@ -75,7 +71,5 @@
 	            <br />
 	            <br />
 	            @Html.RouteLink("Return to my applications", ManagementRouteNames.ViewCandidate, new { id = Model.ApplicantDetails.CandidateId }, new { @class = "button" })
-	        </div>
-	</div>
     </section>
 </div>

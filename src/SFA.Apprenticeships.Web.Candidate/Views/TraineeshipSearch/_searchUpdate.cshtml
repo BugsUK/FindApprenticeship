@@ -1,27 +1,25 @@
 ﻿@model TraineeshipSearchViewModel
 
 <section class="column-one-third">
-    <div>
         <fieldset class="search-filter">
-
             <legend class="heading-medium mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
             <div class="mob-collpanel toggle-content--mob" id="editSearchPanel">
 
-                <div class="para-btm-margin">
-                    @Html.FormTextFor(m=>m.ReferenceNumber, "Reference number")
-                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new {@class = "sfa-small-bottom-margin"})
-                    <a href="#" class="geolocater inl-block hide-nojs " id="getLocation">Use current location</a>
-                </div>
                 
+                    @Html.FormTextFor(m=>m.ReferenceNumber, "Reference number", controlHtmlAttributes: new { @class = "form-control-4-4" })
+                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-4-4" })
+                    <div class="form-group">
+                        <a href="#" class="geolocater hide-nojs " id="getLocation">Use current location</a>
+                    </div>
                 @{
                     var open = Model.LocationSearches.Any() ? "open " : "";
                     var hidden = Model.LocationSearches.Any() ? "" : "hidden ";
                 }
-                <details @(open) class="@(open)@(hidden)form-group form-group-compound" id="locationSuggestions">
-                    <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
+                <details @(open) class="@(open)@(hidden)form-group" id="locationSuggestions">
+                    <summary tabindex="0" aria-describedby="locSuggestionsAria"><span class="summary">Did you mean:</span></summary>
                     <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
-                    <div class="detail-content panel panel-border-narrow">
-                        <ul id="location-suggestions" class="list-text list-max-11">
+                    <div class="panel panel-border-narrow sfa-scrollable">
+                        <ul id="location-suggestions" class="list">
                             @foreach (var locationSearch in Model.LocationSearches)
                             {
                                 <li><a href="@Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)">@locationSearch.Location</a></li>
@@ -32,10 +30,10 @@
 
                 <div class="form-group">
                     <label for="loc-within" class="form-label-bold">Within</label>
-                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control" })
+                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control form-control-auto" })
                 </div>
                 <div class="form-group">
-                    <button class="button sfa-no-bottom-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
+                    <button class="button" id="search-button" name="SearchAction" value="Search">Update results</button>
                 </div>
                 <div class="form-group map-container hide-nojs">
                     <div id="map-canvas" style="width: 100%; height: 250px"></div>
@@ -48,7 +46,4 @@
 
             </div>
         </fieldset>
-    </div>
-    
-
 </section>

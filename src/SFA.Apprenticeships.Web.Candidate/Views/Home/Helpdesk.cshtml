@@ -5,8 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge">Contact us</h1>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">Contact us</h1>
+    </div>
 </div>
 
 @using (Html.BeginRouteForm(CandidateRouteNames.Helpdesk, FormMethod.Post, new { id = "helpdesk-form" }))
@@ -57,7 +59,7 @@
         <button id="send-contact-form-button" class="button">Send</button>
     </div>
 }
-<section class="text">
+<section >
     <h2 class="heading-medium">Apprenticeship helpline</h2>
     <p>
         Contact the helpline if you’d prefer to speak to somebody, or if

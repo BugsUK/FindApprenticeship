@@ -9,11 +9,10 @@
 
 @if (Model.VacancyType == VacancyType.Apprenticeship)
 {
-    <section class="section-border grid-row" id="provider-info">
+    <section class="sfa-section-bordered grid-row" id="provider-info">
         <h2 class="heading-large">Training provider</h2>
         <div class="column-two-thirds">
-            <div class="inner-block-padr">
-                <div class="text">
+                <div>
                     <div class="@editableItemClass">
                         @if (!Model.IsCandidateView)
                         {
@@ -53,10 +52,9 @@
                         }
                     </div>
                 </div>
-            </div>
         </div>
         <div class="column-one-third">
-            <div class="text">
+            <div>
                 <h3 class="bold-small">Training provider</h3>
                 <p id="vacancy-provider-name">@Model.Provider.TradingName</p>
             </div>

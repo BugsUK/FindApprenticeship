@@ -105,10 +105,10 @@
             @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship).RouteValues, new { @class = "tabbed-tab no-js" + traineeshipsTabControlClass })
         </nav>
 
-        <section class="section-bordered">
+        <section class="sfa-section-bordered">
             <div class="grid-row grid-row-padded">
                 <div class="column-one-half">
-                    <h2 class="heading-large no-margins">
+                    <h2 class="heading-large sfa-no-margins">
                         Your @vacanciesLabel
                         @if (filterType != VacanciesSummaryFilterTypes.All || !string.IsNullOrEmpty(searchString))
                         {
@@ -131,7 +131,7 @@
                                 </i><span>Reset search</span>
                             </a>
                         }
-                        <button id="search-vacancies-button" type="submit" class="button search-btn no-margins" name="SearchVacanciesAction" value="SearchVacancies">
+                        <button id="search-vacancies-button" type="submit" class="button search-btn sfa-no-margins" name="SearchVacanciesAction" value="SearchVacancies">
                             <i class="icon icon-search"></i><span>Search</span>
                         </button>
                     </div>
@@ -139,7 +139,7 @@
             </div>
         </section>
 
-        <section class="sfa-medium-bottom-padding sfa-xlarge-top-padding section-bordered">
+        <section class="sfa-medium-bottom-padding sfa-xlarge-top-padding sfa-section-bordered">
             @{
                 var newApplicationsCount = Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount;
             }
@@ -563,7 +563,7 @@
                             }
                         }
 
-<div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+<div class="sfa-saving-prompt toggle-content hide-nojs" id="ajaxLoading">
     Loading
 </div>
 

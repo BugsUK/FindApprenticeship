@@ -159,7 +159,7 @@ WriteLiteral(" id=\"createVacancyAndExit\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link no-autosave\"");
+WriteLiteral(" class=\"button sfa-button-secondary no-autosave\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 

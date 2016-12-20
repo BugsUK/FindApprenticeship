@@ -5,11 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge">
-        Find an apprenticeship
-        <span class="heading-secondary">Search and apply for an apprenticeship in England</span>
-    </h1>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Find an apprenticeship
+            <span class="heading-secondary">Search and apply for an apprenticeship in England</span>
+        </h1>
+    </div>
 </div>  
 <div class="grid-row" id="searchHome">
     <section class="column-two-thirds">
@@ -70,12 +72,12 @@
                
                 <div class="form-group tabbed-element searchtab @keywordTabControlClass @categoriesTabClass @elementControlClass">
                     <label for="loc-within" class="form-label-bold">Within</label>
-                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control" })
+                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control form-control-auto" })
                 </div>
 
                 <div class="form-group tabbed-element searchtab @keywordTabControlClass @categoriesTabClass @elementControlClass">
                     <label for="apprenticeship-level" class="form-label-bold">Apprenticeship level</label>
-                    @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control" })
+                    @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control form-control-auto" })
                 </div>
 
                 <div class="form-group">

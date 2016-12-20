@@ -115,7 +115,7 @@ WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"page-link hide-nojs\"");
+WriteLiteral(" class=\"hide-nojs\"");
 
 WriteLiteral(">\r\n            <a");
 
@@ -130,13 +130,9 @@ WriteLiteral(" class=\"fa fa-question-circle\"");
 WriteLiteral("></i>How to apply for an apprenticeship</a>\r\n            <p>(interactive walkthro" +
 "ugh)</p>\r\n        </div>\r\n    </div>\r\n</div>\r\n<section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n    <div>\r\n        <div");
 
 WriteLiteral(" class=\"hgroup-medium\"");
 
@@ -165,7 +161,7 @@ WriteLiteral(" href=\"search-details.html\"");
 
 WriteLiteral(">View apprenticeship</a>\r\n        </p>\r\n    </div>\r\n</section>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border grid-row\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered grid-row\"");
 
 WriteLiteral(">\r\n    <legend");
 
@@ -275,7 +271,7 @@ WriteLiteral(" id=\"phoneInputPre\"");
 
 WriteLiteral(">07954 389421</span>\r\n        </div>\r\n    </div>\r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyEducation\"");
 
@@ -357,7 +353,7 @@ WriteLiteral("\r\n                    maxlength=\"4\"");
 
 WriteLiteral(">\r\n        </div>\r\n    </div>\r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyQualifications\"");
 
@@ -742,7 +738,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -750,7 +746,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -812,7 +808,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -820,7 +816,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -882,7 +878,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -890,7 +886,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -952,7 +948,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -960,7 +956,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1022,7 +1018,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1030,7 +1026,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1092,7 +1088,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1100,7 +1096,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1229,7 +1225,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1237,7 +1233,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1299,7 +1295,7 @@ WriteLiteral(" readonly=\"\"");
 
 WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"td-qualEdit ta-center\"");
+WriteLiteral(" class=\"td-qualEdit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1307,7 +1303,7 @@ WriteLiteral(" class=\"fake-link cell-span\"");
 
 WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"qualRemove ta-center\"");
+WriteLiteral(" class=\"qualRemove sfa-align-center\"");
 
 WriteLiteral("><i");
 
@@ -1324,7 +1320,7 @@ WriteLiteral(" class=\"visuallyhidden\"");
 WriteLiteral(">Remove</i></i></td></tr></tbody></table></div>\r\n            </div>\r\n        </di" +
 "v>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyWorkExperience\"");
 
@@ -1699,7 +1695,7 @@ WriteLiteral(" class=\"work-controls\"");
 
 WriteLiteral("><div");
 
-WriteLiteral(" class=\"work-edit ta-center\"");
+WriteLiteral(" class=\"work-edit sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1707,7 +1703,7 @@ WriteLiteral(" class=\"cell-span fake-link\"");
 
 WriteLiteral(">Edit</span></div><div");
 
-WriteLiteral(" class=\"work-delete ta-center\"");
+WriteLiteral(" class=\"work-delete sfa-align-center\"");
 
 WriteLiteral("><span");
 
@@ -1997,7 +1993,7 @@ WriteLiteral(" class=\"cell-span editable-work work-to-span work-year\"");
 WriteLiteral(">Current</span></td><td></td><td></td></tr></tbody></table></div></div>\r\n        " +
 "    </div>\r\n        </div>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyTraining\"");
 
@@ -2325,7 +2321,7 @@ WriteLiteral(" class=\"training-wrapper grid-3-4\"");
 
 WriteLiteral(">\r\n            </div>\r\n        </div>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyAboutYou\"");
 
@@ -2511,7 +2507,7 @@ WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral("></span>\r\n    </div>\r\n</fieldset>\r\n<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyAdditional\"");
 
@@ -2665,49 +2661,41 @@ WriteLiteral(" id=\"disability-prefno\"");
 
 WriteLiteral(" aria-labelledby=\"disability-label\"");
 
-WriteLiteral(">Prefer not to say\r\n        </label>\r\n        <div");
+WriteLiteral(">Prefer not to say\r\n        </label>\r\n        <details>\r\n            <summary><sp" +
+"an");
 
-WriteLiteral(" class=\"text\"");
+WriteLiteral(" class=\"summary\"");
 
-WriteLiteral(">\r\n            <details");
+WriteLiteral(">Why we collect this info</span></summary>\r\n            <div");
 
-WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
-
-WriteLiteral(">\r\n                <summary>Why we collect this info</summary>\r\n                <" +
-"div");
-
-WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(@">
-                    <p>
-                        Employers who are part of the ‘Positive about disabled people’ scheme
-                        will guarantee candidates an interview who meet the apprenticeship
-                        criteria if they have a disability.
-                    </p>
-                    <p>
-                        For this reason we ask you to provide this information so we can
-                        inform the employer and provider.
-                    </p>
-                </div>
-            </details>
-        </div>
+                <p>
+                    Employers who are part of the ‘Positive about disabled people’ scheme
+                    will guarantee candidates an interview who meet the apprenticeship
+                    criteria if they have a disability.
+                </p>
+                <p>
+                    For this reason we ask you to provide this information so we can
+                    inform the employer and provider.
+                </p>
+            </div>
+        </details>
     </div>
     <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" for=\"question4\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(" class=\"form-label-bold\"");
+WriteLiteral(">Is there anything we can do to support your interview?</p>\r\n        <p");
 
-WriteLiteral(">Is there anything we can do to support your interview?</label>\r\n        <span");
+WriteLiteral(" class=\"secondary-text\"");
 
-WriteLiteral(" class=\"form-hint\"");
-
-WriteLiteral(">For example, do you need a signer or information in braille</span>\r\n        <div" +
-"");
+WriteLiteral(">For example, do you need a signer or information in braille</p>\r\n        <div");
 
 WriteLiteral(" class=\"form-group form-group-compound inline\"");
 
@@ -2803,11 +2791,8 @@ WriteLiteral(" class=\"panel-danger toggle-content\"");
 
 WriteLiteral(" id=\"unsavedQuals\"");
 
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n            <p>\r\n                You\'ve got unsaved changes in your <a");
+WriteLiteral(">\r\n        <div>\r\n            <p>\r\n                You\'ve got unsaved changes in " +
+"your <a");
 
 WriteLiteral(" href=\"#qualifications-panel\"");
 
@@ -2821,7 +2806,7 @@ WriteLiteral(">\r\n        <a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteLiteral(" class=\"button-link saveADraft\"");
+WriteLiteral(" class=\"button sfa-button-secondary saveADraft\"");
 
 WriteLiteral(">Save</a>\r\n    </p>\r\n    <!--   <p id=\"applicationSaved\">\r\n        Saved at 10:20" +
 " to <a href=\"dashboard.html\">my applications</a>\r\n    </p> -->\r\n</div>\r\n\r\n<ol");
@@ -3132,7 +3117,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 710 "..\..\Views\Home\HowToApply.cshtml"
+            #line 708 "..\..\Views\Home\HowToApply.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             

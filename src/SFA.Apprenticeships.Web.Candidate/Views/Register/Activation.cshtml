@@ -10,7 +10,7 @@
 @using (Html.BeginRouteForm(RouteNames.Activate, FormMethod.Post, new { @id = "activation-form" }))
 {
     @Html.AntiForgeryToken()
-    <p class="text">
+    <p >
         An email has been sent to <b class="email-address">@Html.DisplayFor(m => m.EmailAddress)</b>.
         It’ll contain a 6-character code that you’ll need to activate your account.
     </p>

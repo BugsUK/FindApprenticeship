@@ -15,42 +15,42 @@
 
 @if (!(Model.CandidateApprenticeshipApplications.Any() || Model.CandidateTraineeshipApplications.Any()))
 {
-    <div class="text">
+    <div>
         <p id="empty-application-history-text">Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
         <p>Once you start, applications will be recorded and you’ll be able to track your progress.</p>
     </div>
 }
 else
 {
-    <ul class="list-nav">
+    <ul class="sfa-list-nav">
         @if (Model.SuccessfulApprenticeshipApplications.Any())
         {
             <li>
-                <span id="successful-applications-count" class="bold-medium">@Model.SuccessfulApprenticeshipApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
+                <span id="successful-applications-count" class="bold-medium">@Model.SuccessfulApprenticeshipApplications.Count()</span>  <a  href="#dashSuccessful">Successful</a>
             </li>
         }
         @if (Model.SubmittedApprenticeshipApplications.Any())
         {
             <li>
-                <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApprenticeshipApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
+                <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApprenticeshipApplications.Count()</span>  <a  href="#dashSubmitted">Submitted</a>
             </li>
         }
         @if (Model.UnsuccessfulApplications.Any())
         {
             <li>
-                <span id="unsuccessful-applications-count" class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
+                <span id="unsuccessful-applications-count" class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a  href="#dashUnsuccessful">Unsuccessful</a>
             </li>
         }
         @if (Model.DraftApprenticeshipApplications.Any())
         {
             <li>
-                <span id="draft-applications-count" class="bold-medium">@Model.DraftApprenticeshipApplications.Count()</span>  <a class="" href="#dashDrafts">Saved</a>
+                <span id="draft-applications-count" class="bold-medium">@Model.DraftApprenticeshipApplications.Count()</span>  <a  href="#dashDrafts">Saved</a>
             </li>
         }
         @if (Model.CandidateTraineeshipApplications.Any())
         {
             <li>
-                <span id="traineeship-applications-count" class="bold-medium">@Model.CandidateTraineeshipApplications.Count()</span>  <a class="" href="#dashTraineeships">Traineeships</a>
+                <span id="traineeship-applications-count" class="bold-medium">@Model.CandidateTraineeshipApplications.Count()</span>  <a  href="#dashTraineeships">Traineeships</a>
             </li>
         }
     </ul>
@@ -58,7 +58,6 @@ else
         @if (Model.SuccessfulApprenticeshipApplications.Any() || Model.UnsuccessfulApplications.Any() || Model.SubmittedApprenticeshipApplications.Any())
         {
             <div class="column-one-half">
-                <div class="inner-block-padr">
                     <section class="clearfix">
                         @if (Model.SuccessfulApprenticeshipApplications.Any())
                         {
@@ -84,15 +83,15 @@ else
                                                     @Html.RouteLink(application.Title + " with " + application.EmployerName, ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
-                                            <td class="ta-center"></td>
+                                            <td class="sfa-align-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
+                                            <td class="sfa-align-center"></td>
                                         </tr>
                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -124,8 +123,8 @@ else
                                                     @Html.RouteLink(application.Title + " with " + application.EmployerName, ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
-                                            <td class="ta-center">
+                                            <td class="sfa-align-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
+                                            <td class="sfa-align-center">
                                                 Applied<br />
                                                 @{
                                                     if (application.DateApplied.HasValue)
@@ -138,10 +137,10 @@ else
                                         </tr>
                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -182,16 +181,16 @@ else
                                             </td>
                                             @if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
                                             {
-                                                <td class="ta-center">@Html.RouteLink("Read feedback", ManagementRouteNames.ViewCandidateApprenticeshipApplicationFeedback, new {applicationId = application.ApplicationId})</td>
+                                                <td class="sfa-align-center">@Html.RouteLink("Read feedback", ManagementRouteNames.ViewCandidateApprenticeshipApplicationFeedback, new {applicationId = application.ApplicationId})</td>
                                             }
-                                            <td class="ta-center"></td>
+                                            <td class="sfa-align-center"></td>
                                         </tr>                                        
                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -199,7 +198,6 @@ else
                             </table>
                         }
                     </section>
-                </div>
             </div>
         }
 
@@ -235,11 +233,11 @@ else
                                                 if (application.VacancyStatus == VacancyStatuses.Live)
                                                 {
                                                     <br />
-                                                    <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                                    <span class="bold-xsmall">Closing date:</span> @application.ClosingDate.ToFriendlyClosingWeek()
                                                 }
                                             }
                                         </td>
-                                        <td class="ta-center">
+                                        <td class="sfa-align-center">
                                             @if (application.ApplicationStatus == ApplicationStatuses.Draft && application.VacancyStatus == VacancyStatuses.Live)
                                             {
                                                 @Html.RouteLink("View draft", ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })
@@ -261,7 +259,7 @@ else
                                                 }
                                             }
                                         </td>
-                                        <td class="ta-center"></td>
+                                        <td class="sfa-align-center"></td>
                                     </tr>
                                 }
                             </tbody>
@@ -292,18 +290,18 @@ else
                                                 @Html.RouteLink(application.Title + " with " + application.EmployerName, ManagementRouteNames.ViewCandidateTraineeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                             }
                                         </td>
-                                        <td class="ta-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateTraineeshipApplication, new { applicationId = application.ApplicationId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
-                                        <td class="ta-center">
+                                        <td class="sfa-align-center">@Html.RouteLink("View application", ManagementRouteNames.ViewCandidateTraineeshipApplication, new { applicationId = application.ApplicationId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
+                                        <td class="sfa-align-center">
                                             Applied<br />
                                             @Html.DisplayFor(m => application.DateApplied)
                                         </td>
                                     </tr>
                                 }
                             </tbody>
-                            <tbody class="tbody-expandrows">
+                            <tbody class="tbody-expandrows sfa-hide">
                                 <tr class="no-btm-border">
                                     <td colspan="2"></td>
-                                    <td class="no-wrap ta-center">
+                                    <td class="no-wrap sfa-align-center">
                                         <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                     </td>
                                 </tr>

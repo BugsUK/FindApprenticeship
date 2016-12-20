@@ -211,13 +211,11 @@ WriteLiteral("</p>\r\n                <p");
 
 WriteLiteral(" id=\"national-results-message\"");
 
-WriteLiteral(" class=\"\"");
-
-WriteLiteral(">");
+WriteLiteral(" >");
 
             
             #line 91 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                                                     Write(Html.Raw(nationalResultsMessage));
+                                             Write(Html.Raw(nationalResultsMessage));
 
             
             #line default
@@ -246,14 +244,14 @@ WriteLiteral(">\r\n                        <a");
 
 WriteLiteral(" id=\"receiveSaveSearchAlert\"");
 
-WriteAttribute("href", Tuple.Create("\r\n                           href=\"", 4702), Tuple.Create("\"", 4887)
+WriteAttribute("href", Tuple.Create("\r\n                           href=\"", 4694), Tuple.Create("\"", 4879)
             
             #line 96 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4737), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
+, Tuple.Create(Tuple.Create("", 4729), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipSearchSaveSearch, new ApprenticeshipSearchViewModel(Model.VacancySearch))
             
             #line default
             #line hidden
-, 4737), false)
+, 4729), false)
 );
 
 WriteLiteral("\r\n                           onclick=\"Webtrends.multiTrack({ element: this, argsa" +
@@ -281,13 +279,13 @@ WriteLiteral(">\r\n");
 
             
             #line 105 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-        
+    	
             
             #line default
             #line hidden
             
             #line 105 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-     using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipResults, FormMethod.Get, new { id = "apprenticeship-results-form" }))
+         using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipResults, FormMethod.Get, new { id = "apprenticeship-results-form" }))
         {
             Html.Partial("ValidationSummary", ViewData.ModelState);
             Html.RenderPartial("_searchUpdate", Model.VacancySearch);
@@ -329,7 +327,7 @@ WriteLiteral("\r\n                </div>\r\n            </section>\r\n");
             #line hidden
 WriteLiteral("    </div>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"saving-prompt toggle-content hide-nojs\"");
+WriteLiteral(" class=\"sfa-saving-prompt toggle-content hide-nojs\"");
 
 WriteLiteral(" id=\"ajaxLoading\"");
 

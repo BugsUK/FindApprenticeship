@@ -24,13 +24,13 @@
                     categoryLabelText = string.Format("{0} ({1})", categoryLabelText, category.Count);
 
                     <li>
-                        <label for="@inputId" class="form-checkbox sfa-form-checkbox no-margins" data-target="@(inputId)-details">
+                        <label for="@inputId" class="form-checkbox sfa-form-checkbox sfa-no-margins" data-target="@(inputId)-details">
                             <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName" />
                             @categoryLabelText
                         </label>
                         <details @openAttr class="@openAttr blocklabel-content sfa-hide" id="@(inputId)-details">
                             <summary><span class="summary">@subCategories.Count sub-categories</span></summary>
-                            <ul id="@subCategoryListId" class="list-checkradio list panel panel-border-narrow">
+                            <ul id="@subCategoryListId" class="list-checkradio list panel panel-border-narrow sfa-scrollable">
                                 @foreach (var subCategory in subCategories)
                                 {
                                     checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
@@ -41,7 +41,7 @@
                                     subcategoryLabelText = string.Format("{0} ({1})", subcategoryLabelText, subCategory.Count);
 
                                     <li>
-                                        <label for="@checkboxId" class="form-checkbox sfa-form-checkbox no-margins">
+                                        <label for="@checkboxId" class="form-checkbox sfa-form-checkbox sfa-no-margins">
                                             <input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName">
                                             @subcategoryLabelText
                                         </label>

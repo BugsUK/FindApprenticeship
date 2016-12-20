@@ -65,12 +65,9 @@ WriteLiteral("\r\n\r\n<h2");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Tell us more about you</h2>\r\n<p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    Please give us a little more information about you. This will help us to\r\n" +
-"    understand how effective the service is.\r\n</p>\r\n\r\n");
+WriteLiteral(">Tell us more about you</h2>\r\n<p >\r\n    Please give us a little more information " +
+"about you. This will help us to\r\n    understand how effective the service is.\r\n<" +
+"/p>\r\n\r\n");
 
             
             #line 14 "..\..\Views\Register\MonitoringInformation.cshtml"
@@ -177,19 +174,19 @@ WriteLiteral(" id=\"save-continue-button\"");
 
 WriteLiteral(">Save and continue</button>\r\n        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 976), Tuple.Create("\"", 1034)
+WriteAttribute("href", Tuple.Create(" href=\"", 964), Tuple.Create("\"", 1022)
             
             #line 25 "..\..\Views\Register\MonitoringInformation.cshtml"
-, Tuple.Create(Tuple.Create("", 983), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SkipMonitoringInformation)
+, Tuple.Create(Tuple.Create("", 971), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SkipMonitoringInformation)
             
             #line default
             #line hidden
-, 983), false)
+, 971), false)
 );
 
 WriteLiteral(" id=\"skip-link\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
 
 WriteLiteral(" title=\"Skip telling us more\"");
 

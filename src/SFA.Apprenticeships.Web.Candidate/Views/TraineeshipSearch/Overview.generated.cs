@@ -61,23 +61,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n        <h1");
+WriteLiteral("\r\n\r\n<section >\r\n    <div>\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Are you eligible for a traineeship?</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(" id=\"tshipAbout\"");
+WriteLiteral("  id=\"tshipAbout\"");
 
 WriteLiteral(@">
         <section>
@@ -171,14 +161,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"prompt-traineeship-search-link\"");
 
-WriteAttribute("href", Tuple.Create(" href=", 2552), Tuple.Create("", 2610)
+WriteAttribute("href", Tuple.Create(" href=", 2515), Tuple.Create("", 2573)
             
             #line 61 "..\..\Views\TraineeshipSearch\Overview.cshtml"
-, Tuple.Create(Tuple.Create("", 2558), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+, Tuple.Create(Tuple.Create("", 2521), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 2558), false)
+, 2521), false)
 );
 
 WriteLiteral(" class=\"button\"");

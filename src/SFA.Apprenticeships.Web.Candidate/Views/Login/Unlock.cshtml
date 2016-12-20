@@ -6,7 +6,7 @@
 }
 
 <h1 id="account-unlock-h1" class="heading-large">Account locked</h1>
-<p class="text">You should receive a 6-character code in your email. Enter the code to unlock your account.</p>
+<p >You should receive a 6-character code in your email. Enter the code to unlock your account.</p>
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
@@ -29,7 +29,7 @@
     
     <div class="form-group">
         <button class="button hide-button" type="submit" name="LoginAction" value="Unlock" tabindex="-1">Unlock account</button>
-        <button id="ResendAccountUnlockCodeLink" type="submit" name="LoginAction" class="button-link" value="Resend" formnovalidate>Resend code</button>
+        <button id="ResendAccountUnlockCodeLink" type="submit" name="LoginAction" class="button sfa-button-secondary" value="Resend" formnovalidate>Resend code</button>
         <p>
             <button class="button" id="verify-code-button" type="submit" name="LoginAction" value="Unlock">Unlock account</button>
         </p>

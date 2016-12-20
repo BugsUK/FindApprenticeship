@@ -6,51 +6,57 @@
 
 @if (!(Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any()))
 {
-    <div class="text">
-        <p id="empty-application-history-text">Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
-        <p>Once you start, applications will be recorded and you’ll be able to track your progress.</p>
-        <div class="get-started">@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-button", @class = "button" })</div>
+    <div class="grid-row">
+        <div class="text column-two-thirds">
+            <p id="empty-application-history-text">Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
+            <p>Once you start, applications will be recorded and you’ll be able to track your progress.</p>
+            <div class="get-started">@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-button", @class = "button" })</div>
+        </div>
     </div>
 }
 else
 {
-    <ul class="list-nav">
-        @if (Model.SuccessfulApprenticeshipApplications.Any())
-        {
-            <li>
-                <span id="successful-applications-count" class="bold-medium">@Model.SuccessfulApprenticeshipApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
-            </li>
-        }
-        @if (Model.SubmittedApprenticeshipApplications.Any())
-        {
-            <li>
-                <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApprenticeshipApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
-            </li>
-        }
-        @if (Model.UnsuccessfulApplications.Any())
-        {
-            <li>
-                <span id="unsuccessful-applications-count" class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
-            </li>
-        }
-        @if (Model.DraftApprenticeshipApplications.Any())
-        {
-            <li>
-                <span id="draft-applications-count" class="bold-medium">@Model.DraftApprenticeshipApplications.Count()</span>  <a class="" href="#dashDrafts">Saved</a>
-            </li>
-        }
-        @if (Model.TraineeshipApplications.Any())
-        {
-            <li>
-                <span id="traineeship-applications-count" class="bold-medium">@Model.TraineeshipApplications.Count()</span>  <a class="" href="#dashTraineeships">Traineeships</a>
-            </li>
-        }
-    </ul>
+    <div class="grid-row">
+        <div class="column-full">
+            <ul class="sfa-list-nav">
+                @if (Model.SuccessfulApprenticeshipApplications.Any())
+                {
+                    <li>
+                        <span id="successful-applications-count" class="bold-medium">@Model.SuccessfulApprenticeshipApplications.Count()</span>  <a  href="#dashSuccessful">Successful</a>
+                    </li>
+                }
+                @if (Model.SubmittedApprenticeshipApplications.Any())
+                {
+                    <li>
+                        <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApprenticeshipApplications.Count()</span>  <a  href="#dashSubmitted">Submitted</a>
+                    </li>
+                }
+                @if (Model.UnsuccessfulApplications.Any())
+                {
+                    <li>
+                        <span id="unsuccessful-applications-count" class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a  href="#dashUnsuccessful">Unsuccessful</a>
+                    </li>
+                }
+                @if (Model.DraftApprenticeshipApplications.Any())
+                {
+                    <li>
+                        <span id="draft-applications-count" class="bold-medium">@Model.DraftApprenticeshipApplications.Count()</span>  <a  href="#dashDrafts">Saved</a>
+                    </li>
+                }
+                @if (Model.TraineeshipApplications.Any())
+                {
+                    <li>
+                        <span id="traineeship-applications-count" class="bold-medium">@Model.TraineeshipApplications.Count()</span>  <a  href="#dashTraineeships">Traineeships</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    
     <div class="grid-row proto-dashboard">
         @if (Model.SuccessfulApprenticeshipApplications.Any() || Model.UnsuccessfulApplications.Any() || Model.SubmittedApprenticeshipApplications.Any())
         {
             <div class="column-one-half">
-                <div class="inner-block-padr">
                     <section class="clearfix">
                         @if (Model.SuccessfulApprenticeshipApplications.Any())
                         {
@@ -77,17 +83,17 @@ else
                                                     @Html.ActionLink(application.Title + " with " + application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new {id = application.VacancyId}, new {@class = "link-unimp"})
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
-                                            <td class="ta-center">
+                                            <td class="sfa-align-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
+                                            <td class="sfa-align-center">
                                                 <a title="Remove from my applications" class="icon-black archive-successful" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })"><i class="font-xsmall fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -98,7 +104,7 @@ else
                         @if (Model.SubmittedApprenticeshipApplications.Any())
                         {
                             <h2 class="heading-medium" id="dashSubmitted">Submitted</h2>
-                            <table class="vert-middle">
+                            <table class="vert-middle table-font-xsmall">
                                 <colgroup>
                                     <col class="t50">
                                     <col class="t25">
@@ -119,8 +125,8 @@ else
                                                     @Html.ActionLink(application.Title + " with " + application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
-                                            <td class="ta-center">
+                                            <td class="sfa-align-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
+                                            <td class="sfa-align-center">
                                                 Applied<br />
                                                 @{
                                                     if (application.DateApplied.HasValue)
@@ -133,10 +139,10 @@ else
                                         </tr>
                                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -153,7 +159,7 @@ else
                                     <p>Some of your applications have been unsuccessful. Please contact the training provider for further information.</p>
                                 </div>
                             }
-                            <table class="vert-middle">
+                            <table class="vert-middle table-font-xsmall">
                                 <colgroup>
                                     <col class="t50">
                                     <col class="t25">
@@ -178,12 +184,12 @@ else
                                             </td>
                                             @if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
                                             {
-                                                <td class="ta-center">
+                                                <td class="sfa-align-center">
                                                     @Html.RouteLink("Read feedback",
                                                                  CandidateRouteNames.CandidateApplicationFeedback, new { id = application.VacancyId })
                                                 </td>
                                             }
-                                            <td class="ta-center">
+                                            <td class="sfa-align-center">
                                                 <a title="Remove from my applications" class="icon-black archive-unsuccessful"
                                                    href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new {id = application.VacancyId})">
                                                     <i class="font-xsmall fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span>
@@ -192,10 +198,10 @@ else
                                         </tr>
                                     }
                                 </tbody>
-                                <tbody class="tbody-expandrows">
+                                <tbody class="tbody-expandrows sfa-hide">
                                     <tr class="no-btm-border">
                                         <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
+                                        <td class="no-wrap sfa-align-center">
                                             <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                         </td>
                                     </tr>
@@ -203,7 +209,6 @@ else
                             </table>
                         }
                     </section>
-                </div>
             </div>
         }
         @if (Model.DraftApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
@@ -213,7 +218,7 @@ else
                     @if (Model.DraftApprenticeshipApplications.Any())
                     {
                         <h2 class="heading-medium" id="dashDrafts">Saved</h2>
-                        <table class="vert-middle">
+                        <table class="vert-middle table-font-xsmall">
                             <colgroup>
                                 <col class="t70">
                                 <col class="t20">
@@ -238,11 +243,11 @@ else
                                                     if (application.VacancyStatus == VacancyStatuses.Live)
                                                     {
                                                         <br />
-                                                        <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                                        <span class="bold-xsmall">Closing date:</span> @application.ClosingDate.ToFriendlyClosingWeek()
                                                     }
                                                 }
                                             </td>
-                                            <td class="ta-center">
+                                            <td class="sfa-align-center">
                                                 @if (application.ApplicationStatus == ApplicationStatuses.Draft && application.VacancyStatus == VacancyStatuses.Live)
                                                 {
                                                     @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" })
@@ -264,7 +269,7 @@ else
                                                     }
                                                 }
                                             </td>
-                                            <td class="ta-center">
+                                            <td class="sfa-align-center">
                                                 <a id="delete-draft-@index" title="Remove from my applications" class="icon-black delete-draft" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })"><i class="font-xsmall fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                             </td>
                                         </tr>
@@ -278,7 +283,7 @@ else
                     @if (Model.TraineeshipApplications.Any())
                     {
                         <h2 class="heading-medium" id="dashTraineeships">Traineeships</h2>
-                        <table id="traineeships-table" class="vert-middle">
+                        <table id="traineeships-table" class="vert-middle table-font-xsmall">
                             <colgroup>
                                 <col class="t60">
                                 <col class="t20">
@@ -299,18 +304,18 @@ else
                                                 @Html.ActionLink(application.Title + " with " + application.EmployerName, "TraineeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
                                         </td>
-                                        <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
-                                        <td class="ta-center">
+                                        <td class="sfa-align-center">@Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
+                                        <td class="sfa-align-center">
                                             Applied<br />
                                             @Html.DisplayFor(m => application.DateApplied)
                                         </td>
                                     </tr>
                                 }
                             </tbody>
-                            <tbody class="tbody-expandrows">
+                            <tbody class="tbody-expandrows sfa-hide">
                                 <tr class="no-btm-border">
                                     <td colspan="2"></td>
-                                    <td class="no-wrap ta-center">
+                                    <td class="no-wrap sfa-align-center">
                                         <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
                                     </td>
                                 </tr>
