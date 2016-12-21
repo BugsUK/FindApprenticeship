@@ -84,6 +84,33 @@ this.ScenarioSetup(scenarioInfo);
                     "ntified with EDSURN: 987654321", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
  testRunner.Then("The response status is: Unauthorized", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+ testRunner.And("I do not see the employer link for the employer identified with EDSURN: 123456789" +
+                    " and the provider site identified with EDSURN: 987654321", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Link an employer to a provider site")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA607")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA607")]
+        public virtual void LinkAnEmployerToAProviderSite()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Link an employer to a provider site", new string[] {
+                        "RA607"});
+#line 13
+this.ScenarioSetup(scenarioInfo);
+#line 14
+ testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+ testRunner.And("I request to link employer identified with EDSURN: 123456789 to provider site ide" +
+                    "ntified with EDSURN: 987654321", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 17
+ testRunner.And("I see the employer link for the employer identified with EDSURN: 123456789 and th" +
+                    "e provider site identified with EDSURN: 987654321", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
