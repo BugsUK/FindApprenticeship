@@ -65,7 +65,7 @@
                 ProviderSiteId = 9,
                 ProviderSiteEdsUrn = providerSiteEdsUrn,
                 EmployerDescription = "The description",
-                EmployerWebsite = "http://www.test.com"
+                EmployerWebsiteUrl = "http://www.test.com"
             };
 
             responseEmployerProviderSiteLink.Equals(expectedLink).Should().BeTrue();

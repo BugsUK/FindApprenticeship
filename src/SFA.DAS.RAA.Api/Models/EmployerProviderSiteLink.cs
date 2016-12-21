@@ -30,11 +30,11 @@
         /// <summary>
         /// The employer's website for this link (optional)
         /// </summary>
-        public string EmployerWebsite { get; set; }
+        public string EmployerWebsiteUrl { get; set; }
 
         protected bool Equals(EmployerProviderSiteLink other)
         {
-            return string.Equals(EmployerDescription, other.EmployerDescription) && EmployerEdsUrn == other.EmployerEdsUrn && EmployerId == other.EmployerId && string.Equals(EmployerWebsite, other.EmployerWebsite) && ProviderSiteEdsUrn == other.ProviderSiteEdsUrn && ProviderSiteId == other.ProviderSiteId;
+            return string.Equals(EmployerDescription, other.EmployerDescription) && EmployerEdsUrn == other.EmployerEdsUrn && EmployerId == other.EmployerId && string.Equals(EmployerWebsiteUrl, other.EmployerWebsiteUrl) && ProviderSiteEdsUrn == other.ProviderSiteEdsUrn && ProviderSiteId == other.ProviderSiteId;
         }
 
         public override bool Equals(object obj)
@@ -52,7 +52,7 @@
                 var hashCode = (EmployerDescription != null ? EmployerDescription.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ EmployerEdsUrn.GetHashCode();
                 hashCode = (hashCode*397) ^ EmployerId.GetHashCode();
-                hashCode = (hashCode*397) ^ (EmployerWebsite != null ? EmployerWebsite.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (EmployerWebsiteUrl != null ? EmployerWebsiteUrl.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ ProviderSiteEdsUrn.GetHashCode();
                 hashCode = (hashCode*397) ^ ProviderSiteId.GetHashCode();
                 return hashCode;
