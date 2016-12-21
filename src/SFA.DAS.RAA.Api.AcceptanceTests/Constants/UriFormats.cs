@@ -7,5 +7,7 @@
         public const string VacancyGuidUriFormat = "/vacancy/?vacancyGuid={0}";
 
         public const string EditWageVacancyIdUriFormat = "/vacancy/wage/?vacancyId={0}";
+
+        public const string LinkEmployerEdsUrnUriFormat = "/employer/link?edsUrn={0}";
     }
 }

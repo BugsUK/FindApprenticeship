@@ -185,6 +185,11 @@
     <Compile Include="DependencyResolution\AcceptanceTestsRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
+    <Compile Include="Features\RA607.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RA607.feature</DependentUpon>
+    </Compile>
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Steps\EditWageSteps.cs" />
     <Compile Include="Factories\ProviderFactory.cs" />
@@ -211,6 +216,7 @@
     </Compile>
     <Compile Include="Steps\GetVacancyDetailsSteps.cs" />
     <Compile Include="Steps\HttpResponseSteps.cs" />
+    <Compile Include="Steps\LinkEmployerSteps.cs" />
     <Compile Include="Steps\ResponseMessageSteps.cs" />
     <Compile Include="Steps\SetupVacancySteps.cs" />
     <Compile Include="Steps\SwaggerUiSteps.cs" />
@@ -245,6 +251,10 @@
     <None Include="Features\RA551.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RA551.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\RA607.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RA607.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />

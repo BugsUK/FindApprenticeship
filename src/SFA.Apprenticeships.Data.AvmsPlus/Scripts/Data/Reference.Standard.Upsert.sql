@@ -154,12 +154,8 @@ USING (VALUES
   (152, 13, 0, N'Advanced Dairy Technologist', 15),
   (153, 36, 0, N'Healthcare Science Associate', 13), 
   (154, 36, 0, N'Senior Healthcare Support Worker', 12),
-  (155, 5, 0, N'Butcher', 12),
-  (156, 12, 0, N'Advanced Credit Controller / Debt Collection Specialist', 12),
-  (157, 13, 0, N'Advanced Dairy Technologist', 15),
-  (158, 36, 0, N'Healthcare Science Associate', 13),
-  (159, 36, 0, N'Senior Healthcare Support Worker', 12),
-  (160, 12, 0, N'Financial Adviser', 13)
+  (155, 5, 0, N'Advanced Butcher', 12),
+  (156, 12, 0, N'Financial Adviser', 13)
 ) 
 AS Source (StandardId, StandardSectorId, LarsCode, FullName, EducationLevelId) 
 ON Target.StandardId = Source.StandardId 
