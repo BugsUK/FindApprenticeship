@@ -2,15 +2,19 @@
 {
     using System.Web.Http;
     using Apprenticeships.Domain.Entities.Raa;
-    using FluentValidation.WebApi;
     using Models;
+    using Strategies;
     using Swashbuckle.Swagger.Annotations;
-    using Validators;
 
     [Authorize(Roles = Roles.Provider)]
     public class EmployerController : ApiController
     {
-        private readonly EmployerProviderSiteLinkValidator _employerProviderSiteLinkValidator = new EmployerProviderSiteLinkValidator();
+        private readonly ILinkEmployerStrategy _linkEmployerStrategy;
+
+        public EmployerController(ILinkEmployerStrategy linkEmployerStrategy)
+        {
+            _linkEmployerStrategy = linkEmployerStrategy;
+        }
 
         /// <summary>
         /// Endpoint for linking an employer to a provider site.
@@ -24,18 +28,7 @@
         [SwaggerOperation("LinkEmployer")]
         public IHttpActionResult LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int? employerId = null, int? edsUrn = null)
         {
-            //Doing validation here rather than on object as the object requires populating before validation
-            employerProviderSiteLink.EmployerId = employerProviderSiteLink.EmployerId ?? employerId;
-            employerProviderSiteLink.EmployerEdsUrn = employerProviderSiteLink.EmployerEdsUrn ?? edsUrn;
-
-            var result = _employerProviderSiteLinkValidator.Validate(employerProviderSiteLink);
-            if (!result.IsValid)
-            {
-                result.AddToModelState(ModelState, "");
-                return BadRequest(ModelState);
-            }
-
-            return Ok();
+            return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLink, employerId, edsUrn));
         }
     }
 }
