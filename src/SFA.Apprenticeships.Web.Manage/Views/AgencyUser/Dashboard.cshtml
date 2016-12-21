@@ -57,7 +57,7 @@
             <div class="column-one-half">
                 &nbsp;
             </div>
-            <div class="column-one-half">
+            <div class="column-one-half sfa-xlarge-bottom-margin">
                 <label class="form-label" style="margin-top: 10px">Search your team's vacancies</label>
                 <div class="search-bar">
                     @Html.DropDownListFor(m => m.VacancySummaries.SearchViewModel.SearchMode, Model.VacancySummaries.SearchViewModel.SearchModes, new { @class = "form-control" })
@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid-row">
+        <div id="data" class="grid-row">
             <div class="column-full">
                 <nav class="tabbed-nav">
                     @Html.RouteLink(reviewTitle + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(dashboardVacancySummariesSearchViewModel, DashboardVacancySummariesMode.Review), new { @class = "tabbed-tab no-js" + reviewTabControlClass })

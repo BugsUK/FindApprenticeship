@@ -41,10 +41,10 @@
     $(document).on('click', '.tabbed-tab', function (e) {
         e.preventDefault();
         var searchQueryUrl = $(this).attr('href');
-        loadResults(searchQueryUrl, true, false, 'GET');
+        loadResults(searchQueryUrl, true, false, 'GET', null, 'data');
     });
 
-    function loadResults(searchQueryUrl, addHistory, scrollTop, method, data) {
+    function loadResults(searchQueryUrl, addHistory, scrollTop, method, data, elementId) {
 
         $('.search-results').addClass('disabled');
         $('#ajaxLoading').show();
@@ -55,8 +55,10 @@
             data: data
         }).done(function (response) {
 
-            var main = $(response).find("#main");
-            $("#main").html(main.html());
+            if (!elementId) elementId = "#main";
+
+            var main = $(response).find(elementId);
+            $(elementId).html(main.html());
             if (addHistory) {
                 history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
             }

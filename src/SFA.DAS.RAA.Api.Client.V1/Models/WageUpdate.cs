@@ -6,6 +6,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Defines the changes to be made to a vacancies wage
+    /// </summary>
     public partial class WageUpdate
     {
         /// <summary>
@@ -16,12 +19,22 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the WageUpdate class.
         /// </summary>
-        /// <param name="type">Possible values include: 'LegacyText',
-        /// 'LegacyWeekly', 'ApprenticeshipMinimum', 'NationalMinimum',
-        /// 'Custom', 'CustomRange', 'CompetitiveSalary',
+        /// <param name="type">The new type of the wage. Possible values
+        /// include: 'LegacyText', 'LegacyWeekly', 'ApprenticeshipMinimum',
+        /// 'NationalMinimum', 'Custom', 'CustomRange', 'CompetitiveSalary',
         /// 'ToBeAgreedUponAppointment', 'Unwaged'</param>
-        /// <param name="unit">Possible values include: 'NotApplicable',
-        /// 'Weekly', 'Monthly', 'Annually'</param>
+        /// <param name="amount">The new amount of the wage. Only required for
+        /// a Custom wage tpe and must be higher than the existing
+        /// amount</param>
+        /// <param name="amountLowerBound">The new lower amount of the wage
+        /// range. Only required for a CustomRange wage tpe and must be
+        /// higher than the existing lower amount</param>
+        /// <param name="amountUpperBound">The new upper amount of the wage
+        /// range. Only required for a CustomRange wage tpe and must be
+        /// higher than the lower amount</param>
+        /// <param name="unit">The freqency the wage is quoted in. Possible
+        /// values include: 'NotApplicable', 'Weekly', 'Monthly',
+        /// 'Annually'</param>
         public WageUpdate(string type = default(string), decimal? amount = default(decimal?), decimal? amountLowerBound = default(decimal?), decimal? amountUpperBound = default(decimal?), string unit = default(string))
         {
             Type = type;
@@ -32,32 +45,40 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         }
 
         /// <summary>
-        /// Gets or sets possible values include: 'LegacyText',
-        /// 'LegacyWeekly', 'ApprenticeshipMinimum', 'NationalMinimum',
-        /// 'Custom', 'CustomRange', 'CompetitiveSalary',
+        /// Gets or sets the new type of the wage. Possible values include:
+        /// 'LegacyText', 'LegacyWeekly', 'ApprenticeshipMinimum',
+        /// 'NationalMinimum', 'Custom', 'CustomRange', 'CompetitiveSalary',
         /// 'ToBeAgreedUponAppointment', 'Unwaged'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Type")]
         public string Type { get; set; }
 
         /// <summary>
+        /// Gets or sets the new amount of the wage. Only required for a
+        /// Custom wage tpe and must be higher than the existing amount
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Amount")]
         public decimal? Amount { get; set; }
 
         /// <summary>
+        /// Gets or sets the new lower amount of the wage range. Only required
+        /// for a CustomRange wage tpe and must be higher than the existing
+        /// lower amount
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AmountLowerBound")]
         public decimal? AmountLowerBound { get; set; }
 
         /// <summary>
+        /// Gets or sets the new upper amount of the wage range. Only required
+        /// for a CustomRange wage tpe and must be higher than the lower
+        /// amount
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "AmountUpperBound")]
         public decimal? AmountUpperBound { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'NotApplicable', 'Weekly',
-        /// 'Monthly', 'Annually'
+        /// Gets or sets the freqency the wage is quoted in. Possible values
+        /// include: 'NotApplicable', 'Weekly', 'Monthly', 'Annually'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "Unit")]
         public string Unit { get; set; }

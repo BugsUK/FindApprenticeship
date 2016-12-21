@@ -7,6 +7,19 @@ namespace SFA.DAS.RAA.Api.Client.V1
     using Microsoft.Rest;
     using Models;
 
+    /// <summary>
+    /// ##Getting started##
+    /// The following Swagger test area will help you understand how to call
+    /// the Recruit an Apprentice REST API.
+    /// 
+    /// All calls follow the standard HTTP protocol and require only an API
+    /// key for identification purposes.
+    /// 
+    /// The API key will be supplied by an administrator and should be passed
+    /// as a header parameter in each request.
+    /// 
+    /// The format is: `Authorization: bearer YOUR_API_KEY`
+    /// </summary>
     public partial class ApiClient : Microsoft.Rest.ServiceClient<ApiClient>, IApiClient
     {
         /// <summary>
@@ -405,13 +418,25 @@ namespace SFA.DAS.RAA.Api.Client.V1
             return _result;
         }
 
+        /// <summary>
+        /// Endpoint for changing the wage of a Live or Closed vacancy. The wage can
+        /// only be increased from its current level.
+        /// You must supply either the vacancyId, vacancyReferenceNumber or
+        /// vacancyGuid as query string parameters to identify the vacancy you would
+        /// like to change.
+        /// The API key used must be authorized to modify the vacancy
+        /// </summary>
         /// <param name='wageUpdate'>
+        /// Defines the changes to be made to a vacancies wage
         /// </param>
         /// <param name='vacancyId'>
+        /// The vacancies primary identifier
         /// </param>
         /// <param name='vacancyReferenceNumber'>
+        /// The vacancies secondary reference number identifier
         /// </param>
         /// <param name='vacancyGuid'>
+        /// The vacancies secondary GUID identifier
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

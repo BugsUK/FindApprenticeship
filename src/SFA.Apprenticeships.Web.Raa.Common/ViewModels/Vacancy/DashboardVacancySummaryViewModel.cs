@@ -30,6 +30,7 @@
 
         public VacancyType VacancyType { get; set; }
         public AddressViewModel Location { get; set; }
-        public VacancyViewModel VacancyViewModel { get; set; }
+        public bool? IsAnonymousEmployer { get; set; }
+        public bool? IsMultiLocation { get; set; }
     }
 }

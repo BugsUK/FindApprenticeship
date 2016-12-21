@@ -7,6 +7,17 @@ namespace SFA.DAS.RAA.Api.Client.V1
     using Models;
 
     /// <summary>
+    /// ##Getting started##
+    /// The following Swagger test area will help you understand how to call
+    /// the Recruit an Apprentice REST API.
+    /// 
+    /// All calls follow the standard HTTP protocol and require only an API
+    /// key for identification purposes.
+    /// 
+    /// The API key will be supplied by an administrator and should be passed
+    /// as a header parameter in each request.
+    /// 
+    /// The format is: `Authorization: bearer YOUR_API_KEY`
     /// </summary>
     public partial interface IApiClient : System.IDisposable
     {
@@ -46,13 +57,25 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// </param>
         System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<Vacancy>> GetVacancyWithHttpMessagesAsync(int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
+        /// <summary>
+        /// Endpoint for changing the wage of a Live or Closed vacancy. The
+        /// wage can only be increased from its current level.
+        /// You must supply either the vacancyId, vacancyReferenceNumber or
+        /// vacancyGuid as query string parameters to identify the vacancy
+        /// you would like to change.
+        /// The API key used must be authorized to modify the vacancy
+        /// </summary>
         /// <param name='wageUpdate'>
+        /// Defines the changes to be made to a vacancies wage
         /// </param>
         /// <param name='vacancyId'>
+        /// The vacancies primary identifier
         /// </param>
         /// <param name='vacancyReferenceNumber'>
+        /// The vacancies secondary reference number identifier
         /// </param>
         /// <param name='vacancyGuid'>
+        /// The vacancies secondary GUID identifier
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

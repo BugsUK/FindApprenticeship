@@ -17,13 +17,11 @@
         <fieldset>
             <a name="@Html.NameFor(m => m.FromDate).ToString().Replace(".", "_").ToLower()"></a>
             @Html.EditorFor(m => m.FromDate)
-            @Html.ValidationMessageFor(m => m.FromDate)
         </fieldset>
 
         <fieldset>
             <a name="@Html.NameFor(m => m.ToDate).ToString().Replace(".", "_").ToLower()"></a>
             @Html.EditorFor(m => m.ToDate)
-            @Html.ValidationMessageFor(m => m.ToDate)
         </fieldset>
 
         <div class="column-one-half">

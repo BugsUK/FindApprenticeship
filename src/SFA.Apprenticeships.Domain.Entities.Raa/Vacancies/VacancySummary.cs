@@ -57,5 +57,6 @@
         public string ProviderTradingName { get; set; }
         public DateTime CreatedDate { get; set; }
         public Wage Wage { get; set; }
+        public bool? IsMultiLocation { get; set; }
     }
 }
