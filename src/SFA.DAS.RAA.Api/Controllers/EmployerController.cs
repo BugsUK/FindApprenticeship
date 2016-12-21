@@ -20,7 +20,6 @@
 
         /// <summary>
         /// Endpoint for linking an employer to a provider site.
-        /// You must supply either the employerId or edsUrn to identify the employer you would like to link
         /// </summary>
         /// <param name="employerProviderSiteLink">Defines the provider site to link to as well as additional employer information. Note that you can specify the employer identifier in either the URL or the POST body</param>
         /// <param name="edsUrn">The employer's secondary identifier.</param>
