@@ -1,7 +1,9 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
+    using System.Security.Claims;
     using System.Web.Http;
     using Apprenticeships.Domain.Entities.Raa;
+    using Apprenticeships.Web.Common.Extensions;
     using Models;
     using Strategies;
     using Swashbuckle.Swagger.Annotations;
@@ -28,7 +30,7 @@
         [SwaggerOperation("LinkEmployer")]
         public IHttpActionResult LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int? employerId = null, int? edsUrn = null)
         {
-            return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLink, employerId, edsUrn));
+            return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLink, employerId, edsUrn, User.GetUkprn()));
         }
     }
 }

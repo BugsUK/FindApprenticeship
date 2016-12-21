@@ -18,21 +18,23 @@
         private readonly EmployerProviderSiteLinkValidator _employerProviderSiteLinkValidator = new EmployerProviderSiteLinkValidator();
 
         private readonly IGetByEdsUrnStrategy _getByEdsUrnStrategy;
+        private readonly IProviderReadRepository _providerReadRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
         private readonly IGetOwnedProviderSitesStrategy _getOwnedProviderSitesStrategy;
         private readonly IGetVacancyOwnerRelationshipStrategy _getVacancyOwnerRelationshipStrategy;
         private readonly IVacancyOwnerRelationshipWriteRepository _vacancyOwnerRelationshipWriteRepository;
 
-        public LinkEmployerStrategy(IGetByEdsUrnStrategy getByEdsUrnStrategy, IProviderSiteReadRepository providerSiteReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IGetVacancyOwnerRelationshipStrategy getVacancyOwnerRelationshipStrategy, IVacancyOwnerRelationshipWriteRepository vacancyOwnerRelationshipWriteRepository)
+        public LinkEmployerStrategy(IGetByEdsUrnStrategy getByEdsUrnStrategy, IProviderReadRepository providerReadRepository, IProviderSiteReadRepository providerSiteReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IGetVacancyOwnerRelationshipStrategy getVacancyOwnerRelationshipStrategy, IVacancyOwnerRelationshipWriteRepository vacancyOwnerRelationshipWriteRepository)
         {
             _getByEdsUrnStrategy = getByEdsUrnStrategy;
+            _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
             _getOwnedProviderSitesStrategy = getOwnedProviderSitesStrategy;
             _getVacancyOwnerRelationshipStrategy = getVacancyOwnerRelationshipStrategy;
             _vacancyOwnerRelationshipWriteRepository = vacancyOwnerRelationshipWriteRepository;
         }
 
-        public EmployerProviderSiteLink LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int? employerId, int? edsUrn, int providerId)
+        public EmployerProviderSiteLink LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int? employerId, int? edsUrn, string ukprn)
         {
             //Doing validation here rather than on object as the object requires populating before validation
             employerProviderSiteLink.EmployerId = employerProviderSiteLink.EmployerId ?? employerId;
@@ -71,7 +73,12 @@
                 throw new ValidationException(validationResult.Errors);
             }
 
-            var ownedProviderSites = _getOwnedProviderSitesStrategy.GetOwnedProviderSites(providerId);
+            var provider = _providerReadRepository.GetByUkprn(ukprn, false);
+            if (provider == null)
+            {
+                throw new SecurityException(EmployerProviderSiteLinkMessages.UnauthorizedProviderSiteAccess);
+            }
+            var ownedProviderSites = _getOwnedProviderSitesStrategy.GetOwnedProviderSites(provider.ProviderId);
             if (ownedProviderSites.All(ps => ps.ProviderSiteId != providerSite.ProviderSiteId))
             {
                 throw new SecurityException(EmployerProviderSiteLinkMessages.UnauthorizedProviderSiteAccess);
