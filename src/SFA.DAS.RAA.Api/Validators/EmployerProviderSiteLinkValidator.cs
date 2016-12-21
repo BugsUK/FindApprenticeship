@@ -9,11 +9,6 @@
     {
         public EmployerProviderSiteLinkValidator()
         {
-            RuleFor(el => el.EmployerId)
-                .NotEmpty()
-                .When(el => !el.EmployerEdsUrn.HasValue)
-                .WithMessage(EmployerProviderSiteLinkMessages.MissingEmployerIdentifier);
-
             RuleFor(el => el.EmployerEdsUrn)
                 .NotEmpty()
                 .When(el => !el.EmployerId.HasValue)
