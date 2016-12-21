@@ -23,14 +23,13 @@
         /// You must supply either the employerId or edsUrn to identify the employer you would like to link
         /// </summary>
         /// <param name="employerProviderSiteLink">Defines the provider site to link to as well as additional employer information. Note that you can specify the employer identifier in either the URL or the POST body</param>
-        /// <param name="employerId">The employer's primary identifier. You must supply this or the employer's EDSURN</param>
-        /// <param name="edsUrn">The employer's secondary identifier. You must supply this or the employer's ID</param>
+        /// <param name="edsUrn">The employer's secondary identifier.</param>
         /// <returns></returns>
-        [Route("employer/link")]
+        [Route("employer/{edsUrn}/link")]
         [SwaggerOperation("LinkEmployer")]
-        public IHttpActionResult LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int? employerId = null, int? edsUrn = null)
+        public IHttpActionResult LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int edsUrn)
         {
-            return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLink, employerId, edsUrn, User.GetUkprn()));
+            return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLink, edsUrn, User.GetUkprn()));
         }
     }
 }

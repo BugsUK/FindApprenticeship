@@ -12,17 +12,15 @@ Scenario: Link an employer to a provider site without authorization
 @RA607
 Scenario: Link an employer to a provider site no description and bad url
 	When I authorize my request with a Provider API key
-	And I request to link employer identified with EDSURN: 0 to provider site identified with EDSURN: 0 with description: null and website: test
+	And I request to link employer identified with EDSURN: 123456789 to provider site identified with EDSURN: 0 with description: null and website: test
 	Then The response status is: BadRequest
 	And The validation errors contain:
 		| Property            | Error                                                     |
-		| EmployerId          | You must specify either the employer's ID or EDSURN.      |
-		| EmployerEdsUrn      | You must specify either the employer's ID or EDSURN.      |
 		| ProviderSiteId      | You must specify either the provider site's ID or EDSURN. |
 		| ProviderSiteEdsUrn  | You must specify either the provider site's ID or EDSURN. |
 		| EmployerDescription | Please supply a description for the employer.             |
 		| EmployerWebsiteUrl  | Please supply a valid website url for the employer.       |
-	And I do not see the employer link for the employer identified with EDSURN: 0 and the provider site identified with EDSURN: 0
+	And I do not see the employer link for the employer identified with EDSURN: 123456789 and the provider site identified with EDSURN: 0
 
 #@RA607
 #Scenario: Link an employer to a provider site

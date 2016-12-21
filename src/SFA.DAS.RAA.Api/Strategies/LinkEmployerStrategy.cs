@@ -34,10 +34,9 @@
             _vacancyOwnerRelationshipWriteRepository = vacancyOwnerRelationshipWriteRepository;
         }
 
-        public EmployerProviderSiteLink LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int? employerId, int? edsUrn, string ukprn)
+        public EmployerProviderSiteLink LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int edsUrn, string ukprn)
         {
             //Doing validation here rather than on object as the object requires populating before validation
-            employerProviderSiteLink.EmployerId = employerProviderSiteLink.EmployerId ?? employerId;
             employerProviderSiteLink.EmployerEdsUrn = employerProviderSiteLink.EmployerEdsUrn ?? edsUrn;
 
             var validationResult = _employerProviderSiteLinkValidator.Validate(employerProviderSiteLink);

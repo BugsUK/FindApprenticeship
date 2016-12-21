@@ -1,8 +1,6 @@
 ﻿namespace SFA.DAS.RAA.Api.UnitTests.Validators
 {
-    using System;
     using Api.Validators;
-    using FluentAssertions;
     using FluentValidation.TestHelper;
     using Models;
     using NUnit.Framework;
@@ -22,8 +20,7 @@
 
             var validator = new EmployerProviderSiteLinkValidator();
 
-            validator.ShouldHaveValidationErrorFor(el => el.EmployerId, employerProviderSiteLink).WithErrorMessage("You must specify either the employer's ID or EDSURN.");
-            validator.ShouldHaveValidationErrorFor(el => el.EmployerEdsUrn, employerProviderSiteLink).WithErrorMessage("You must specify either the employer's ID or EDSURN.");
+            validator.ShouldHaveValidationErrorFor(el => el.EmployerEdsUrn, employerProviderSiteLink).WithErrorMessage("You must specify the employer's EDSURN.");
         }
 
         [Test]
