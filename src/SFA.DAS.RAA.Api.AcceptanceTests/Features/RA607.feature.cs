@@ -139,31 +139,6 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Link an employer to a provider site")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "RA607")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("RA607")]
-        public virtual void LinkAnEmployerToAProviderSite()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Link an employer to a provider site", new string[] {
-                        "RA607"});
-#line 28
-this.ScenarioSetup(scenarioInfo);
-#line 29
- testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 30
- testRunner.And("I request to link employer identified with EDSURN: 123456789 to provider site ide" +
-                    "ntified with EDSURN: 987654321 with description: <p>Employer description</p> and" +
-                    " website: test.com", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 31
- testRunner.Then("The response status is: OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 32
- testRunner.And("I see the employer link for the employer identified with EDSURN: 123456789 and th" +
-                    "e provider site identified with EDSURN: 987654321", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
     }
 }
 #pragma warning restore
