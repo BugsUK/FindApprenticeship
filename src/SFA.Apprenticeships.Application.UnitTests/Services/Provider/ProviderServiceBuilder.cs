@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Provider
 {
     using Apprenticeships.Application.Provider;
+    using Apprenticeships.Application.Provider.Strategies;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces;
     using Interfaces.Employers;
@@ -34,7 +35,7 @@
         {
             var provider = new ProviderService(_providerReadRepository, _providerSiteReadRepository,
                 _vacancyOwnerRelationshipReadRepository, _vacancyOwnerRelationshipWriteRepository, _logService,
-                _employerService, _providerWriteRepository, _providerSiteWriteRepository);
+                _employerService, _providerWriteRepository, _providerSiteWriteRepository, new GetOwnedProviderSitesStrategy(_providerSiteReadRepository), new GetVacancyOwnerRelationshipStrategy(_employerService, _logService, _vacancyOwnerRelationshipReadRepository, _vacancyOwnerRelationshipWriteRepository));
             return provider;
         }
 
