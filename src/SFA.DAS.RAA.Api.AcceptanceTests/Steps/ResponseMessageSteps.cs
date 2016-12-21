@@ -18,6 +18,7 @@ namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
             {
                 var property = tableRow["Property"];
                 var error = tableRow["Error"];
+                message.ModelState.ContainsKey(property).Should().BeTrue("ModelState error for property {0} was expected to be found", property);
                 message.ModelState[property][0].Should().Be(error);
             }
         }

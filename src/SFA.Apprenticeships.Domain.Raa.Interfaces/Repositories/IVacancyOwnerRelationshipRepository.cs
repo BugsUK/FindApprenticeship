@@ -5,7 +5,7 @@
 
     public interface IVacancyOwnerRelationshipReadRepository
     {
-        VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId);
+        VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId, bool liveOnly = true);
 
         IEnumerable<VacancyOwnerRelationship> GetByIds(IEnumerable<int> vacancyOwnerRelationshipIds, bool currentOnly = true); // TODO: Return IDictionary<int, VacancyOwnerRelationship>
 

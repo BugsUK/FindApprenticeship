@@ -26,13 +26,17 @@
             _logger = logger;
         }
 
-        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
+        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId, bool liveOnly = true)
         {
-            const string sql = @"
+            var sql = @"
                 SELECT * FROM dbo.VacancyOwnerRelationship
                 WHERE ProviderSiteID = @ProviderSiteId
-                AND EmployerId = @EmployerId
-                AND StatusTypeId = @StatusTypeId";
+                AND EmployerId = @EmployerId";
+
+            if (liveOnly)
+            {
+                sql += " AND StatusTypeId = @StatusTypeId";
+            }
 
             var sqlParams = new
             {
