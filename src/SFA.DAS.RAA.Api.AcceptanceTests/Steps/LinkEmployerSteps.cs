@@ -1,6 +1,5 @@
 ﻿namespace SFA.DAS.RAA.Api.AcceptanceTests.Steps
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using System.Text;
@@ -16,14 +15,16 @@
     [Binding]
     public class LinkEmployerSteps
     {
-        [When(@"I request to link employer identified with EDSURN: (.*) to provider site identified with EDSURN: (.*)")]
-        public async Task WhenIRequestToLinkEmployerIdentifiedWithEdsUrnToProviderSiteIdentifiedWithEdsUrn(int employerEdsUrn, int providerSiteEdsUrn)
+        [When(@"I request to link employer identified with EDSURN: (.*) to provider site identified with EDSURN: (.*) with description: (.*) and website: (.*)")]
+        public async Task WhenIRequestToLinkEmployerIdentifiedWithEdsUrnToProviderSiteIdentifiedWithEdsUrn(int employerEdsUrn, int providerSiteEdsUrn, string description, string website)
         {
-            var linkEmployerUri = string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
+            var linkEmployerUri = employerEdsUrn == 0 ? UriFormats.LinkEmployerUri : string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
 
             var employerProviderSiteLink = new EmployerProviderSiteLink
             {
-                ProviderSiteEdsUrn = providerSiteEdsUrn
+                ProviderSiteEdsUrn = providerSiteEdsUrn == 0 ? (int?)null : providerSiteEdsUrn,
+                EmployerDescription = description == "null" ? null : description,
+                EmployerWebsiteUrl = website == "null" ? null : website
             };
 
             var httpClient = FeatureContext.Current.TestServer().HttpClient;
@@ -54,7 +55,7 @@
         [Then(@"I see the employer link for the employer identified with EDSURN: (.*) and the provider site identified with EDSURN: (.*)")]
         public void ThenISeeTheEmployerLinkForTheEmployerIdentifiedWithEdsUrnAndTheProviderSiteIdentifiedWithEdsUrn(int employerEdsUrn, int providerSiteEdsUrn)
         {
-            var linkEmployerUri = string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
+            var linkEmployerUri = employerEdsUrn == 0 ? UriFormats.LinkEmployerUri : string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
             var responseEmployerProviderSiteLink = ScenarioContext.Current.Get<EmployerProviderSiteLink>(linkEmployerUri);
             responseEmployerProviderSiteLink.Should().NotBeNull();
 
@@ -75,7 +76,7 @@
         [Then(@"I do not see the employer link for the employer identified with EDSURN: (.*) and the provider site identified with EDSURN: (.*)")]
         public void ThenIDoNotSeeTheEmployerLinkForTheEmployerIdentifiedWithEdsUrnAndTheProviderSiteIdentifiedWithEdsUrn(int employerEdsUrn, int providerSiteEdsUrn)
         {
-            var linkEmployerUri = string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
+            var linkEmployerUri = employerEdsUrn == 0 ? UriFormats.LinkEmployerUri : string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
             var responseEmployerProviderSiteLink = ScenarioContext.Current.Get<EmployerProviderSiteLink>(linkEmployerUri);
             responseEmployerProviderSiteLink.Should().BeNull();
         }
