@@ -27,7 +27,7 @@
             _logger = logger;
         }
 
-        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
+        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId, bool liveOnly = true)
         {
             _logger.Debug("Called Mongodb to get provider site employer link with providerSiteErn={0}, edsUrn={1}", providerSiteId, employerId);
 
