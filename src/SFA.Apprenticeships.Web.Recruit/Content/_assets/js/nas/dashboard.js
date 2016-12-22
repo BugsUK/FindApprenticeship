@@ -41,7 +41,7 @@ $(function () {
     $(document).on('click', '.tabbed-tab', function (e) {
         e.preventDefault();
         var searchQueryUrl = $(this).attr('href');
-        loadResults(searchQueryUrl, true, false, 'GET', null, 'data');
+        loadResults(searchQueryUrl, true, false, 'GET', null, '#data');
     });
 
     function loadResults(searchQueryUrl, addHistory, scrollTop, method, data, elementId) {
@@ -65,7 +65,10 @@ $(function () {
             if (scrollTop) {
                 $(document).scrollTop(0);
             }
+
+            $('#ajaxLoading').hide();
         }).fail(function () {
+            $('#ajaxLoading').hide();
         });
     }
 });

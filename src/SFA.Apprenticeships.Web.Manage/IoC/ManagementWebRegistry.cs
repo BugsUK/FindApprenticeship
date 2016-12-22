@@ -38,6 +38,7 @@
     using Raa.Common.Providers;
     using Application.Interfaces;
     using Application.Interfaces.Security;
+    using Application.Provider.Strategies;
     using Application.Vacancy;
     using Infrastructure.Security;
     using Raa.Common.Mediators.Admin;
@@ -130,6 +131,9 @@
             For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
 
             For<Application.UserAccount.Strategies.ProviderUserAccount.ISubmitContactMessageStrategy>().Use<Application.UserAccount.Strategies.ProviderUserAccount.SubmitContactMessageStrategy>();
+
+            For<IGetOwnedProviderSitesStrategy>().Use<GetOwnedProviderSitesStrategy>();
+            For<IGetVacancyOwnerRelationshipStrategy>().Use<GetVacancyOwnerRelationshipStrategy>();
         }
 
         private void RegisterMediators()
