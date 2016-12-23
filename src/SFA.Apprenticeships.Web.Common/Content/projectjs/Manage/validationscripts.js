@@ -1,4 +1,4 @@
-$(document).ready(function() {
+﻿$(document).ready(function() {
 
     $("form").each(function () {
         var validator = $.data(this, 'validator');
@@ -9,17 +9,11 @@ $(document).ready(function() {
         var oldErrorFunction = settings.errorPlacement;
         var oldSuccessFunction = settings.success;
         settings.errorPlacement = function (error, element) {
-            $(element).removeClass('error');
-
-            if ($(element).parents('.form-date').length === 0)
-                $(element).parent('.form-group').addClass("error");
-            else
-                $(element).parents('form-group').last().addClass('error');
-
+            $(element).parent().addClass("input-validation-error");
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
-            $(element).parent('.form-group').removeClass("error");
+            $(element).parent().removeClass("input-validation-error");
             oldSuccessFunction(label, element);
 
         };
@@ -34,10 +28,10 @@ $(document).ready(function() {
             $thisParent = $this.closest('.inline-fixed');
 
         setTimeout(function () {    
-            if ($thisParent.find('.error-message').length > 0) {
-                $thisParent.addClass('error');
+            if ($thisParent.find('.field-validation-error').length > 0) {
+                $thisParent.addClass('input-validation-error');
             } else {
-                $thisParent.removeClass('error');
+                $thisParent.removeClass('input-validation-error');
             }
         }, 10);
     });
@@ -96,7 +90,7 @@ $(document).ready(function () {
         });
     }
 
-    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn').on('click', function () {
+    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn, .vacancy-filter, .vacancy-order, .search-btn').on('click', function () {
         var $this     = $(this),
             $thisText = $this.text();
 
@@ -107,9 +101,12 @@ $(document).ready(function () {
         }
 
         setTimeout(function () {
-            if($('.form-group.error').length > 0) {
+            if ($this.hasClass('no-validation')) {
+                return;
+            }
+            if($('.form-group.input-validation-error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
-            } else if($('.block-label.error').length > 0) {
+            } else if($('.block-label.input-validation-error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
             }
             $this.attr('disabled');

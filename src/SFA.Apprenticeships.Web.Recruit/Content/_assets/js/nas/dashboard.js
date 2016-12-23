@@ -41,10 +41,10 @@ $(function () {
     $(document).on('click', '.tabbed-tab', function (e) {
         e.preventDefault();
         var searchQueryUrl = $(this).attr('href');
-        loadResults(searchQueryUrl, true, false, 'GET', null, '#data');
+        loadResults(searchQueryUrl, true, false, 'GET');
     });
 
-    function loadResults(searchQueryUrl, addHistory, scrollTop, method, data, elementId) {
+    function loadResults(searchQueryUrl, addHistory, scrollTop, method, data) {
 
         $('.search-results').addClass('disabled');
         $('#ajaxLoading').show();
@@ -55,20 +55,15 @@ $(function () {
             data: data
         }).done(function (response) {
 
-            if (!elementId) elementId = "#main";
-
-            var main = $(response).find(elementId);
-            $(elementId).html(main.html());
+            var main = $(response).find("#main");
+            $("#main").html(main.html());
             if (addHistory) {
                 history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
             }
             if (scrollTop) {
                 $(document).scrollTop(0);
             }
-
-            $('#ajaxLoading').hide();
         }).fail(function () {
-            $('#ajaxLoading').hide();
         });
     }
 });
