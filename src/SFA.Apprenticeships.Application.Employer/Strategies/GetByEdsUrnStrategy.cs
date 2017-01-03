@@ -1,6 +1,8 @@
 namespace SFA.Apprenticeships.Application.Employer.Strategies
 {
+    using System.Data.SqlClient;
     using System.Linq;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
@@ -43,7 +45,15 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
 
                 PatchCountyAndTown(employer, organisationSummary.Address);
 
-                employer = _employerWriteRepository.Save(employer);
+                try
+                {
+                    employer = _employerWriteRepository.Save(employer);
+                }
+                catch (SqlException ex)
+                {
+                    _logService.Warn($"Attempting to save employer with edsurn {employer.EdsUrn} threw exception", ex);
+                    throw new CustomException(Application.Employer.ErrorCodes.InvalidAddress);
+                }
             }
 
             return employer;

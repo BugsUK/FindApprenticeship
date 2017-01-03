@@ -5,6 +5,7 @@
     using System.Security;
     using Apprenticeships.Application.Employer.Strategies;
     using Apprenticeships.Application.Provider.Strategies;
+    using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Constants;
@@ -45,10 +46,25 @@
                 throw new ValidationException(validationResult.Errors);
             }
 
-            var employer = _getByEdsUrnStrategy.Get(employerProviderSiteLink.EmployerEdsUrn.ToString());
-            if (employer == null)
+            Employer employer = null;
+            try
             {
-                validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerNotFoundFormat, employerProviderSiteLink.EmployerEdsUrn)));
+                employer = _getByEdsUrnStrategy.Get(employerProviderSiteLink.EmployerEdsUrn.ToString());
+                if (employer == null)
+                {
+                    validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerNotFoundFormat, employerProviderSiteLink.EmployerEdsUrn)));
+                }
+            }
+            catch (CustomException ex)
+            {
+                if (ex.Code == Apprenticeships.Application.Employer.ErrorCodes.InvalidAddress)
+                {
+                    validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerAddressNotValid, employerProviderSiteLink.EmployerEdsUrn)));
+                }
+                else
+                {
+                    throw;
+                }
             }
             //TODO: Validate geocoding for employer. Use Google as a fallback
 
