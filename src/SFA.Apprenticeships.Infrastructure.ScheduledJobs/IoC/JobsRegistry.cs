@@ -22,6 +22,7 @@
     using Application.Location;
     using Application.Organisation;
     using Application.Provider;
+    using Application.Provider.Strategies;
     using Application.ReferenceData;
     using Application.Vacancies;
     using Consumers;
@@ -101,6 +102,8 @@
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
             For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
+            For<IGetOwnedProviderSitesStrategy>().Use<GetOwnedProviderSitesStrategy>();
+            For<IGetVacancyOwnerRelationshipStrategy>().Use<GetVacancyOwnerRelationshipStrategy>();
         }
     }
 }
