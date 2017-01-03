@@ -66,15 +66,25 @@
             canBeReserved.Should().BeFalse();
         }
 
-        [Test]
-        public void ShouldBeAbleToReserveForQAIfTheVacancyIsReservedByMe()
+        [TestCase(VacancyStatus.Unknown, false)]
+        [TestCase(VacancyStatus.Draft, false)]
+        [TestCase(VacancyStatus.Live, false)]
+        [TestCase(VacancyStatus.Referred, false)]
+        [TestCase(VacancyStatus.Deleted, false)]
+        [TestCase(VacancyStatus.Submitted, true)]
+        [TestCase(VacancyStatus.Closed, false)]
+        [TestCase(VacancyStatus.Withdrawn, false)]
+        [TestCase(VacancyStatus.Completed, false)]
+        [TestCase(VacancyStatus.PostedInError, false)]
+        [TestCase(VacancyStatus.ReservedForQA, true)]
+        public void ShouldBeAbleToReserveForQAIfTheVacancyIsReservedByMe(VacancyStatus currentVacancyStatus, bool expectedCanBeReserved)
         {
-            var vacancySummary = new VacancySummary {Status = VacancyStatus.ReservedForQA, QAUserName = UserName};
+            var vacancySummary = new VacancySummary {Status = currentVacancyStatus, QAUserName = UserName};
 
             var canBeReserved = new VacancyLockingServiceBuilder().Build()
                 .IsVacancyAvailableToQABy(UserName, vacancySummary);
 
-            canBeReserved.Should().BeTrue();
+            canBeReserved.Should().Be(expectedCanBeReserved);
         }
 
         [Test]
@@ -88,14 +98,23 @@
             canBeReserved.Should().BeTrue();
         }
 
-        [Test]
-        public void ShouldNotBeAbleToReserveForQAIfAnotherUserHasLockedTheVacancy()
+        [TestCase(VacancyStatus.Unknown)]
+        [TestCase(VacancyStatus.Draft)]
+        [TestCase(VacancyStatus.Live)]
+        [TestCase(VacancyStatus.Referred)]
+        [TestCase(VacancyStatus.Deleted)]
+        [TestCase(VacancyStatus.Closed)]
+        [TestCase(VacancyStatus.Withdrawn)]
+        [TestCase(VacancyStatus.Completed)]
+        [TestCase(VacancyStatus.PostedInError)]
+        [TestCase(VacancyStatus.ReservedForQA)]
+        public void ShouldNotBeAbleToReserveForQAIfAnotherUserHasLockedTheVacancy(VacancyStatus currentVacancyStatus)
         {
             // Arrange
             var vacancySummary = new VacancySummary
             {
                 QAUserName = AnotherUserName,
-                Status = VacancyStatus.ReservedForQA,
+                Status = currentVacancyStatus,
                 DateStartedToQA = _utcNow.AddMinutes(-SmallerTimeout)
             };
 
@@ -105,8 +124,18 @@
             canBeReserved.Should().BeFalse();
         }
 
-        [Test]
-        public void ShouldBeAbleToReserveForQAIfAnotherUserHasLockedTheVacancyButHasLeftItUnattended()
+        [TestCase(VacancyStatus.Unknown, false)]
+        [TestCase(VacancyStatus.Draft, false)]
+        [TestCase(VacancyStatus.Live, false)]
+        [TestCase(VacancyStatus.Referred, false)]
+        [TestCase(VacancyStatus.Deleted, false)]
+        [TestCase(VacancyStatus.Submitted, true)]
+        [TestCase(VacancyStatus.Closed, false)]
+        [TestCase(VacancyStatus.Withdrawn, false)]
+        [TestCase(VacancyStatus.Completed, false)]
+        [TestCase(VacancyStatus.PostedInError, false)]
+        [TestCase(VacancyStatus.ReservedForQA, true)]
+        public void ShouldBeAbleToReserveForQAIfAnotherUserHasLockedTheVacancyButHasLeftItUnattended(VacancyStatus currentVacancyStatus, bool expectedCanBeReserved)
         {
             // Arrange
             
@@ -114,7 +143,7 @@
             {
                 QAUserName = AnotherUserName,
                 DateStartedToQA = _utcNow.AddMinutes(-GreaterTimeout),
-                Status = VacancyStatus.ReservedForQA
+                Status = currentVacancyStatus
             };
 
             var vacancyLockingService = GetVacancyLockingServiceWith(Timeout, _utcNow);
@@ -123,7 +152,7 @@
             var canBeReserved = vacancyLockingService.IsVacancyAvailableToQABy(UserName, vacancySummary);
 
             //Assert
-            canBeReserved.Should().BeTrue();
+            canBeReserved.Should().Be(expectedCanBeReserved);
         }
 
         [Test]
