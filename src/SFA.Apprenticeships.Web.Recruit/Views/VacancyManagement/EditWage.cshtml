@@ -1,5 +1,4 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
-@using SFA.Apprenticeships.Web.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Common.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
@@ -16,19 +15,28 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, FormMethod.Post, new { id = "edit-wage-form" }))
 {
     <div>
-        @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.NationalMinimum)
+        @if (Model.ExistingWage.Type != WageType.Custom && Model.ExistingWage.Type != WageType.CustomRange)
         {
             <h3 id="current-wage-header" class="bold-small">Current wage</h3>
-            if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
-            {
-                <p id="current-wage-name">National minimum wage for apprentices</p>
-            }
+        }
 
-            if (Model.ExistingWage.Type == WageType.NationalMinimum)
-            {
-                <p id="current-wage-name">National Minimum Wage</p>
-            }
+        @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+        {
+            <p id="current-wage-name">National minimum wage for apprentices</p>
+        }
 
+        @if (Model.ExistingWage.Type == WageType.NationalMinimum)
+        {
+            <p id="current-wage-name">National Minimum Wage</p>
+        }
+
+        @if (Model.ExistingWage.Type == WageType.Unwaged)
+        {
+            <p id="current-wage-name">Unwaged</p>
+        }
+
+        @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.NationalMinimum)
+        {
             <h3 id="vacancy-wage-header" class="bold-small">Wage displayed</h3>
             <p id="vacancy-wage">
                 @WagePresenter.GetDisplayAmount(Model.ExistingWage.Type, Model.ExistingWage.Amount, Model.ExistingWage.AmountLowerBound, Model.ExistingWage.AmountUpperBound, Model.ExistingWage.Text, Model.ExistingWage.HoursPerWeek, Model.PossibleStartDate) (based on @Model.ExistingWage.HoursPerWeek paid hours per week)
@@ -47,36 +55,36 @@
 
         <div class="blocklabel-single-container">
             <a name="@Html.NameFor(m => m.Type).ToString().ToLower()"></a>
-            @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+            @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
             {
                 <label id="wage-type-label" class="form-label-bold">Change wage type</label>
             }
             <div class="form-group @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Type))">
                 @* ReSharper disable once Html.IdNotResolved *@
-                <label id="national-minimum-wage-radio-label" for="national-minimum-wage" class="block-label selection-button-radio @(Model.ExistingWage.Type == WageType.ApprenticeshipMinimum ? "" : "hidden")">
+                <label id="national-minimum-wage-radio-label" for="national-minimum-wage" class="block-label selection-button-radio @(Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged ? "" : "hidden")">
                     @Html.RadioButtonFor(model => model.Classification, WageClassification.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
                     National Minimum Wage
                 </label>
                 @* ReSharper disable once Html.IdNotResolved *@
-                <!--<label id="apprenticeship-minimum-wage-radio-label" for="apprenticeship-minimum-wage" class="block-label selection-button-radio">
+                <label id="apprenticeship-minimum-wage-radio-label" for="apprenticeship-minimum-wage" class="block-label selection-button-radio @(Model.ExistingWage.Type == WageType.Unwaged ? "" : "hidden")">
                     @Html.RadioButtonFor(model => model.Classification, WageClassification.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
                     National Minimum Wage for apprentices
-                </label>-->
+                </label>
                 @* ReSharper disable once Html.IdNotResolved *@
-                <label id="custom-wage-radio-label" for="custom-wage" class="block-label selection-button-radio @(Model.ExistingWage.Type == WageType.ApprenticeshipMinimum ? "" : "hidden")" data-target="custom-wage-panel">
+                <label id="custom-wage-radio-label" for="custom-wage" class="block-label selection-button-radio @(Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged ? "" : "hidden")" data-target="custom-wage-panel">
                     @Html.RadioButtonFor(model => model.Classification, WageClassification.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
                     Custom wage
                 </label>
                 <div id="custom-wage-panel" class="toggle-content blocklabel-content nested-panel-1 clearfix">
                     <div class="panel panel-border-narrow">
                         <fieldset class="form-group inline-fixed">
-                            @if (Model.ExistingWage.Type == WageType.NationalMinimum || Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+                            @if (Model.ExistingWage.Type == WageType.NationalMinimum || Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
                             {
                                 if (Model.ExistingWage.Type == WageType.NationalMinimum)
                                 {
                                     <span id="custom-wage-label" class="clearfix">Select a custom wage option</span>
                                 }
-                                else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+                                else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
                                 {
                                     <span id="custom-wage-label" class="clearfix">Select an option</span>
                                 }
@@ -110,12 +118,12 @@
                                 <span id="custom-wage-label" class="clearfix">Keep as wage range?</span>
                                 @* ReSharper disable once Html.IdNotResolved *@
                                 <label id="custom-wage-range-label" for="custom-wage-range" class="block-label selection-button-radio" data-target="custom-wage-range-panel">
-                                    @Html.RadioButtonFor(model => model.CustomType, CustomWageType.Ranged, new { id = "custom-wage-range", aria_controls = "custom-wage-panel" })
+                                    @Html.RadioButtonFor(model => model.CustomType, CustomWageType.Ranged, new {id = "custom-wage-range", aria_controls = "custom-wage-panel"})
                                     <span id="custom-wage-range-label-text">Yes</span>
                                 </label>
                                 @* ReSharper disable once Html.IdNotResolved *@
                                 <label id="custom-wage-fixed-label" for="custom-wage-fixed" class="block-label selection-button-radio" data-target="custom-wage-fixed-panel">
-                                    @Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new { id = "custom-wage-fixed", aria_controls = "custom-wage-panel" })
+                                    @Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"})
                                     <span id="custom-wage-fixed-label-text">No, change to fixed wage</span>
                                 </label>
                             }
@@ -137,7 +145,7 @@
                                     {
                                         <span id="custom-wage-fixed-hint-text" class="clearfix form-hint">The new increased wage must be more than @WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
                                     }
-                                    else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+                                    else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
                                     {
                                         <span id="custom-wage-fixed-hint-text" class="clearfix form-hint">The new increased wage must be more than @WagePresenter.GetWeeklyApprenticeshipMinimumWage(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
                                     }
@@ -164,7 +172,7 @@
                                     {
                                         <span id="custom-wage-range-hint-text" class="clearfix form-hint">The minimum amount in the wage range must be more than @WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
                                     }
-                                    else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+                                    else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
                                     {
                                         <span id="custom-wage-range-hint-text" class="clearfix form-hint">The minimum amount in the wage range must be more than @WagePresenter.GetWeeklyApprenticeshipMinimumWage(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
                                     }

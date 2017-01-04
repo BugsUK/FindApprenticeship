@@ -7,6 +7,9 @@
     using RazorGenerator.Testing;
     using Recruit.Views.VacancyManagement;
 
+    /// <summary>
+    /// See https://skillsfundingagency.atlassian.net/wiki/display/FAA/Edit+wage+of+Live+vacancy for wireframes these tests are based on
+    /// </summary>
     [TestFixture]
     public class EditWageTests : ViewUnitTest
     {
@@ -28,7 +31,9 @@
             var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
             nationalMinimumWage.Should().NotBeNull();
             nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            view.GetElementbyId("apprenticeship-minimum-wage-radio-label").Should().BeNull();
+            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
+            apprenticeshipMinimumWage.Should().NotBeNull();
+            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
             var customWage = view.GetElementbyId("custom-wage-radio-label");
             customWage.Should().NotBeNull();
             customWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
@@ -97,7 +102,9 @@
             var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
             nationalMinimumWage.Should().NotBeNull();
             nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            view.GetElementbyId("apprenticeship-minimum-wage-radio-label").Should().BeNull();
+            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
+            apprenticeshipMinimumWage.Should().NotBeNull();
+            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
             var customWage = view.GetElementbyId("custom-wage-radio-label");
             customWage.Should().NotBeNull();
             customWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
@@ -175,7 +182,9 @@
             var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
             nationalMinimumWage.Should().NotBeNull();
             nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            view.GetElementbyId("apprenticeship-minimum-wage-radio-label").Should().BeNull();
+            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
+            apprenticeshipMinimumWage.Should().NotBeNull();
+            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
             var customWage = view.GetElementbyId("custom-wage-radio-label");
             customWage.Should().NotBeNull();
             customWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
@@ -254,7 +263,86 @@
             var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
             nationalMinimumWage.Should().NotBeNull();
             nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeFalse();
-            view.GetElementbyId("apprenticeship-minimum-wage-radio-label").Should().BeNull();
+            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
+            apprenticeshipMinimumWage.Should().NotBeNull();
+            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
+            var customWage = view.GetElementbyId("custom-wage-radio-label");
+            customWage.Should().NotBeNull();
+            customWage.Attributes["class"].Value.Contains("hidden").Should().BeFalse();
+
+            var customWagePanel = view.GetElementbyId("custom-wage-panel");
+            customWagePanel.Should().NotBeNull();
+
+            var customWageLabel = view.GetElementbyId("custom-wage-label");
+            customWageLabel.Should().NotBeNull();
+            customWageLabel.InnerText.Should().Be("Select an option");
+
+            var customWageFixed = view.GetElementbyId("custom-wage-fixed");
+            customWageFixed.Should().NotBeNull();
+            customWageFixed.Attributes["checked"].Should().BeNull();
+            var customWageWageFixedLabelText = view.GetElementbyId("custom-wage-fixed-label-text");
+            customWageWageFixedLabelText.Should().NotBeNull();
+            customWageWageFixedLabelText.InnerText.Should().Be("Fixed wage");
+
+            var customWageRange = view.GetElementbyId("custom-wage-range");
+            customWageRange.Should().NotBeNull();
+            customWageRange.Attributes["checked"].Should().BeNull();
+            var customWageRangeLabelText = view.GetElementbyId("custom-wage-range-label-text");
+            customWageRangeLabelText.Should().NotBeNull();
+            customWageRangeLabelText.InnerText.Should().Be("Wage range");
+
+            var customWageFixedHelpText = view.GetElementbyId("custom-wage-fixed-help-text");
+            customWageFixedHelpText.Should().BeNull();
+            var customWageFixedHintText = view.GetElementbyId("custom-wage-fixed-hint-text");
+            customWageFixedHintText.Should().NotBeNull();
+            customWageFixedHintText.InnerText.Should().Be("The new increased wage must be more than &#163;102.00");
+
+            var customWageRangeHelpText = view.GetElementbyId("custom-wage-range-help-text");
+            customWageRangeHelpText.Should().BeNull();
+            var customWageRangeHintText = view.GetElementbyId("custom-wage-range-hint-text");
+            customWageRangeHintText.Should().NotBeNull();
+            customWageRangeHintText.InnerText.Should().Be("The minimum amount in the wage range must be more than &#163;102.00");
+
+            var amountInput = view.GetElementbyId("Amount");
+            amountInput.Should().NotBeNull();
+            amountInput.Attributes["value"].Value.Should().Be("");
+
+            var amountLowerBoundInput = view.GetElementbyId("AmountLowerBound");
+            amountLowerBoundInput.Should().NotBeNull();
+            amountLowerBoundInput.Attributes["value"].Value.Should().Be("");
+
+            var amountUpperBoundInput = view.GetElementbyId("AmountUpperBound");
+            amountUpperBoundInput.Should().NotBeNull();
+            amountUpperBoundInput.Attributes["value"].Value.Should().Be("");
+        }
+
+        [Test]
+        public void EditUnwagedChoices()
+        {
+            var viewModel = new EditWageViewModelBuilder(WageType.Unwaged).Build();
+
+            var view = new EditWage().RenderAsHtml(viewModel);
+
+            //Current wage description should be visible
+            var currentWageHeader = view.GetElementbyId("current-wage-header");
+            currentWageHeader.Should().NotBeNull();
+            currentWageHeader.InnerText.Should().Be("Current wage");
+            var currentWageName = view.GetElementbyId("current-wage-name");
+            currentWageName.Should().NotBeNull();
+            currentWageName.InnerText.Should().Be("Unwaged");
+            view.GetElementbyId("vacancy-wage-header").Should().BeNull();
+            view.GetElementbyId("vacancy-wage").Should().BeNull();
+
+            //Wage choices should be visible
+            var wageTypeLabel = view.GetElementbyId("wage-type-label");
+            wageTypeLabel.Should().NotBeNull();
+            wageTypeLabel.InnerText.Should().Be("Change wage type");
+            var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
+            nationalMinimumWage.Should().NotBeNull();
+            nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeFalse();
+            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
+            apprenticeshipMinimumWage.Should().NotBeNull();
+            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeFalse();
             var customWage = view.GetElementbyId("custom-wage-radio-label");
             customWage.Should().NotBeNull();
             customWage.Attributes["class"].Value.Contains("hidden").Should().BeFalse();
