@@ -641,9 +641,9 @@
             {
                 response.Add(new ReportVacancyTrackerResultItem
                 {
-                    OutComeDate = reader["OutComeDate"].ToString(),
+                    OutComeDate = Convert.ToDateTime(reader["OutComeDate"]).ToString("dd/MM/yyy HH:mm"),
                     ProviderName = reader["FullName"].ToString(),
-                    DateSubmitted = reader["DateSubmitted"].ToString(),
+                    DateSubmitted = Convert.ToDateTime(reader["DateSubmitted"]).ToString("dd/MM/yyy"),
                     Reference = reader["VacancyReferenceNumber"].ToString(),
                     Outcome = reader["Outcome"].ToString(),
                     QAUserName = reader["QAUserName"].ToString(),
