@@ -124,7 +124,7 @@
             return $"£{higherRange}";
         }
 
-        private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek, DateTime? possibleStartDate)
+        public static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek, DateTime? possibleStartDate)
         {
             var wageRange = possibleStartDate.GetWageRangeFor();
 

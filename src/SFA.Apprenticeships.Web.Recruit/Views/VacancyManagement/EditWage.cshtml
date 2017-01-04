@@ -47,29 +47,39 @@
 
         <div class="blocklabel-single-container">
             <a name="@Html.NameFor(m => m.Type).ToString().ToLower()"></a>
-            <!--<label id="wage-type-label" class="form-label-bold">Wage</label>-->
+            @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+            {
+                <label id="wage-type-label" class="form-label-bold">Change wage type</label>
+            }
             <div class="form-group @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Type))">
                 @* ReSharper disable once Html.IdNotResolved *@
-                <!--<label id="national-minimum-wage-radio-label" for="national-minimum-wage" class="block-label selection-button-radio vertically-stacked">
+                <label id="national-minimum-wage-radio-label" for="national-minimum-wage" class="block-label selection-button-radio @(Model.ExistingWage.Type == WageType.ApprenticeshipMinimum ? "" : "hidden")">
                     @Html.RadioButtonFor(model => model.Classification, WageClassification.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
                     National Minimum Wage
-                </label>-->
+                </label>
                 @* ReSharper disable once Html.IdNotResolved *@
-                <!--<label id="apprenticeship-minimum-wage-radio-label" for="apprenticeship-minimum-wage" class="block-label selection-button-radio vertically-stacked">
+                <!--<label id="apprenticeship-minimum-wage-radio-label" for="apprenticeship-minimum-wage" class="block-label selection-button-radio">
                     @Html.RadioButtonFor(model => model.Classification, WageClassification.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
                     National Minimum Wage for apprentices
                 </label>-->
                 @* ReSharper disable once Html.IdNotResolved *@
-                <label id="custom-wage-radio-label" for="custom-wage" class="block-label selection-button-radio vertically-stacked hidden" data-target="custom-wage-panel">
+                <label id="custom-wage-radio-label" for="custom-wage" class="block-label selection-button-radio @(Model.ExistingWage.Type == WageType.ApprenticeshipMinimum ? "" : "hidden")" data-target="custom-wage-panel">
                     @Html.RadioButtonFor(model => model.Classification, WageClassification.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
                     Custom wage
                 </label>
                 <div id="custom-wage-panel" class="toggle-content blocklabel-content nested-panel-1 clearfix">
                     <div class="panel panel-border-narrow">
                         <fieldset class="form-group inline-fixed">
-                            @if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                            @if (Model.ExistingWage.Type == WageType.NationalMinimum || Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
                             {
-                                <span id="custom-wage-label" class="clearfix">Select a custom wage option</span>
+                                if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                                {
+                                    <span id="custom-wage-label" class="clearfix">Select a custom wage option</span>
+                                }
+                                else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+                                {
+                                    <span id="custom-wage-label" class="clearfix">Select an option</span>
+                                }
                                 @* ReSharper disable once Html.IdNotResolved *@
                                 <label id="custom-wage-fixed-label" for="custom-wage-fixed" class="block-label selection-button-radio" data-target="custom-wage-fixed-panel">
                                     @Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"})
@@ -121,9 +131,16 @@
                                 {
                                     <span id="custom-wage-fixed-hint-text" class="clearfix form-hint">The wage must not be less than the minimum amount set in the original wage range</span>
                                 }
-                                @if (Model.ExistingWage.Type == WageType.NationalMinimum && Model.ExistingWage.HoursPerWeek.HasValue)
+                                @if (Model.ExistingWage.HoursPerWeek.HasValue)
                                 {
-                                    <span id="custom-wage-fixed-hint-text" class="clearfix form-hint">The new increased wage must be more than @WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
+                                    if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                                    {
+                                        <span id="custom-wage-fixed-hint-text" class="clearfix form-hint">The new increased wage must be more than @WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
+                                    }
+                                    else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+                                    {
+                                        <span id="custom-wage-fixed-hint-text" class="clearfix form-hint">The new increased wage must be more than @WagePresenter.GetWeeklyApprenticeshipMinimumWage(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
+                                    }
                                 }
                                 £
                                 @Html.FormTextFor(m => m.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
@@ -141,9 +158,16 @@
                                     <span id="custom-wage-range-help-text" class="clearfix">Enter increased wage range</span>
                                     <span id="custom-wage-range-hint-text" class="clearfix form-hint">You can increase one or both of these figures</span>
                                 }
-                                @if (Model.ExistingWage.Type == WageType.NationalMinimum && Model.ExistingWage.HoursPerWeek.HasValue)
+                                @if (Model.ExistingWage.HoursPerWeek.HasValue)
                                 {
-                                    <span id="custom-wage-range-hint-text" class="clearfix form-hint">The minimum amount in the wage range must be more than @WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
+                                    if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                                    {
+                                        <span id="custom-wage-range-hint-text" class="clearfix form-hint">The minimum amount in the wage range must be more than @WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
+                                    }
+                                    else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+                                    {
+                                        <span id="custom-wage-range-hint-text" class="clearfix form-hint">The minimum amount in the wage range must be more than @WagePresenter.GetWeeklyApprenticeshipMinimumWage(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
+                                    }
                                 }
                                 £
                                 @Html.FormTextFor(m => m.AmountLowerBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12, placeholder = "min"})
