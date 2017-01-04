@@ -5,7 +5,7 @@
     public class EmployerProviderSiteLinkMessages
     {
         public const string MissingEmployerIdentifier = "You must specify the employer's EDSURN.";
-        public const string MissingProviderSiteIdentifier = "You must specify either the provider site's ID or EDSURN.";
+        public const string MissingProviderSiteIdentifier = "You must specify the provider site's EDSURN.";
 
         public const string EmployerNotFoundFormat = "No employer was found matching EDSURN {0}.";
         public const string ProviderSiteNotFoundIdFormat = "No provider site was found matching ID {0}.";

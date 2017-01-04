@@ -17,7 +17,7 @@
 
     public class LinkEmployerStrategy : ILinkEmployerStrategy
     {
-        private readonly EmployerProviderSiteLinkValidator _employerProviderSiteLinkValidator = new EmployerProviderSiteLinkValidator();
+        private readonly EmployerProviderSiteLinkRequestValidator _employerProviderSiteLinkValidator = new EmployerProviderSiteLinkRequestValidator();
 
         private readonly ILogService _logService;
 
@@ -39,10 +39,10 @@
             _logService = logService;
         }
 
-        public EmployerProviderSiteLink LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int edsUrn, string ukprn)
+        public EmployerProviderSiteLinkResponse LinkEmployer(EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn, string ukprn)
         {
             //Doing validation here rather than on object as the object requires populating before validation
-            employerProviderSiteLink.EmployerEdsUrn = employerProviderSiteLink.EmployerEdsUrn ?? edsUrn;
+            employerProviderSiteLink.EmployerEdsUrn = edsUrn;
 
             var validationResult = _employerProviderSiteLinkValidator.Validate(employerProviderSiteLink);
             if (!validationResult.IsValid)
@@ -84,15 +84,7 @@
             }
 
             ProviderSite providerSite = null;
-            if (employerProviderSiteLink.ProviderSiteId.HasValue)
-            {
-                providerSite = _providerSiteReadRepository.GetById(employerProviderSiteLink.ProviderSiteId.Value);
-                if (employer == null)
-                {
-                    validationResult.Errors.Add(new ValidationFailure("ProviderSiteId", string.Format(EmployerProviderSiteLinkMessages.ProviderSiteNotFoundIdFormat, employerProviderSiteLink.ProviderSiteId)));
-                }
-            }
-            else if(employerProviderSiteLink.ProviderSiteEdsUrn.HasValue)
+            if(employerProviderSiteLink.ProviderSiteEdsUrn.HasValue)
             {
                 providerSite = _providerSiteReadRepository.GetByEdsUrn(employerProviderSiteLink.ProviderSiteEdsUrn.ToString());
                 if (employer == null)
@@ -128,14 +120,17 @@
 
             vacancyOwnerRelationship = _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship);
 
-            employerProviderSiteLink.ProviderSiteId = providerSite.ProviderSiteId;
-            employerProviderSiteLink.ProviderSiteEdsUrn = Convert.ToInt32(providerSite.EdsUrn);
-            employerProviderSiteLink.EmployerId = employer.EmployerId;
-            employerProviderSiteLink.EmployerEdsUrn = Convert.ToInt32(employer.EdsUrn);
-            employerProviderSiteLink.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
-            employerProviderSiteLink.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
+            var employerProviderSiteLinkResponse = new EmployerProviderSiteLinkResponse
+            {
+                ProviderSiteId = providerSite.ProviderSiteId,
+                ProviderSiteEdsUrn = Convert.ToInt32(providerSite.EdsUrn),
+                EmployerId = employer.EmployerId,
+                EmployerEdsUrn = Convert.ToInt32(employer.EdsUrn),
+                EmployerDescription = vacancyOwnerRelationship.EmployerDescription,
+                EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl,
+            };
 
-            return employerProviderSiteLink;
+            return employerProviderSiteLinkResponse;
         }
     }
 }

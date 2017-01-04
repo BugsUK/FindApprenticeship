@@ -20,7 +20,7 @@
         {
             var linkEmployerUri = employerEdsUrn == 0 ? UriFormats.LinkEmployerUri : string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
 
-            var employerProviderSiteLink = new EmployerProviderSiteLink
+            var employerProviderSiteLink = new EmployerProviderSiteLinkRequest
             {
                 ProviderSiteEdsUrn = providerSiteEdsUrn == 0 ? (int?)null : providerSiteEdsUrn,
                 EmployerDescription = description == "null" ? null : description,
@@ -42,8 +42,8 @@
                         ScenarioContext.Current.Add(ScenarioContextKeys.HttpResponseMessage, responseMessage);
                     }
 
-                    var responseEmployerProviderSiteLink = JsonConvert.DeserializeObject<EmployerProviderSiteLink>(content);
-                    if (Equals(responseEmployerProviderSiteLink, new EmployerProviderSiteLink()))
+                    var responseEmployerProviderSiteLink = JsonConvert.DeserializeObject<EmployerProviderSiteLinkRequest>(content);
+                    if (Equals(responseEmployerProviderSiteLink, new EmployerProviderSiteLinkRequest()))
                     {
                         responseEmployerProviderSiteLink = null;
                     }
@@ -56,14 +56,12 @@
         public void ThenISeeTheEmployerLinkForTheEmployerIdentifiedWithEdsUrnAndTheProviderSiteIdentifiedWithEdsUrn(int employerEdsUrn, int providerSiteEdsUrn)
         {
             var linkEmployerUri = employerEdsUrn == 0 ? UriFormats.LinkEmployerUri : string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
-            var responseEmployerProviderSiteLink = ScenarioContext.Current.Get<EmployerProviderSiteLink>(linkEmployerUri);
+            var responseEmployerProviderSiteLink = ScenarioContext.Current.Get<EmployerProviderSiteLinkRequest>(linkEmployerUri);
             responseEmployerProviderSiteLink.Should().NotBeNull();
 
-            var expectedLink = new EmployerProviderSiteLink
+            var expectedLink = new EmployerProviderSiteLinkRequest
             {
-                EmployerId = 1,
                 EmployerEdsUrn = employerEdsUrn,
-                ProviderSiteId = 9,
                 ProviderSiteEdsUrn = providerSiteEdsUrn,
                 EmployerDescription = "The description",
                 EmployerWebsiteUrl = "http://www.test.com"
@@ -77,7 +75,7 @@
         public void ThenIDoNotSeeTheEmployerLinkForTheEmployerIdentifiedWithEdsUrnAndTheProviderSiteIdentifiedWithEdsUrn(int employerEdsUrn, int providerSiteEdsUrn)
         {
             var linkEmployerUri = employerEdsUrn == 0 ? UriFormats.LinkEmployerUri : string.Format(UriFormats.LinkEmployerEdsUrnUriFormat, employerEdsUrn);
-            var responseEmployerProviderSiteLink = ScenarioContext.Current.Get<EmployerProviderSiteLink>(linkEmployerUri);
+            var responseEmployerProviderSiteLink = ScenarioContext.Current.Get<EmployerProviderSiteLinkRequest>(linkEmployerUri);
             responseEmployerProviderSiteLink.Should().BeNull();
         }
     }

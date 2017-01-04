@@ -4,6 +4,6 @@
 
     public interface ILinkEmployerStrategy
     {
-        EmployerProviderSiteLink LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int edsUrn, string ukprn);
+        EmployerProviderSiteLinkResponse LinkEmployer(EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn, string ukprn);
     }
 }
