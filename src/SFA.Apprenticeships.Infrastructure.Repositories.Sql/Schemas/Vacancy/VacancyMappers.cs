@@ -120,6 +120,7 @@
                 .IgnoreMember(v => v.MaxNumberofApplications)
                 .IgnoreMember(v => v.NewApplicantCount)
                 .IgnoreMember(v => v.SectorId)
+                .IgnoreMember(v => v.IsMultiLocation)
                 .MapMemberFrom(v => v.VacancyLocationTypeId, av => av.VacancyLocationType) // DB Lookup                
                 .MapMemberFrom(v => v.AdditionalLocationInformation, av => av.AdditionalLocationInformation)
                 .MapMemberFrom(v => v.AdditionalLocationInformationComment, av => av.AdditionalLocationInformationComment)
@@ -331,6 +332,8 @@
                 .MapMemberFrom(v => v.WageComment, v => v.WageComment)
                 .MapMemberFrom(v => v.WorkingWeek, v => v.WorkingWeek)
                 .MapMemberFrom(v => v.WorkingWeekComment, v => v.WorkingWeekComment)
+                .ForMember(av => av.IsAnonymousEmployer, opt => opt.ResolveUsing(src => !string.IsNullOrEmpty(src.EmployerAnonymousName)))
+                .MapMemberFrom(av => av.IsMultiLocation, v => v.IsMultiLocation)
                 .IgnoreMember(dvl => dvl.IsAnonymousEmployer)
                 .IgnoreMember(dvl => dvl.Address)
 
@@ -433,6 +436,8 @@
                 .MapMemberFrom(av => av.VacancyOwnerRelationshipId, v => v.VacancyOwnerRelationshipId)
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
                 .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
+                .ForMember(av => av.IsAnonymousEmployer, opt => opt.ResolveUsing(src => !string.IsNullOrEmpty(src.EmployerAnonymousName)))
+                .MapMemberFrom(av => av.IsMultiLocation, v => v.IsMultiLocation)
                 .IgnoreMember(dvl => dvl.Address)
                 .IgnoreMember(dvl => dvl.EmployerAnonymousReason)
                 .IgnoreMember(dvl => dvl.IsAnonymousEmployer)

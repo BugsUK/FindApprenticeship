@@ -105,8 +105,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
  testRunner.When("I authorize my request with a Provider API key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
- testRunner.And("I request to link employer identified with EDSURN: 0 to provider site identified " +
-                    "with EDSURN: 0 with description: null and website: test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I request to link employer identified with EDSURN: 123456789 to provider site ide" +
+                    "ntified with EDSURN: 0 with description: null and website: test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
  testRunner.Then("The response status is: BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -114,17 +114,8 @@ this.ScenarioSetup(scenarioInfo);
                         "Property",
                         "Error"});
             table1.AddRow(new string[] {
-                        "EmployerId",
-                        "You must specify either the employer\'s ID or EDSURN."});
-            table1.AddRow(new string[] {
-                        "EmployerEdsUrn",
-                        "You must specify either the employer\'s ID or EDSURN."});
-            table1.AddRow(new string[] {
-                        "ProviderSiteId",
-                        "You must specify either the provider site\'s ID or EDSURN."});
-            table1.AddRow(new string[] {
                         "ProviderSiteEdsUrn",
-                        "You must specify either the provider site\'s ID or EDSURN."});
+                        "You must specify the provider site\'s EDSURN."});
             table1.AddRow(new string[] {
                         "EmployerDescription",
                         "Please supply a description for the employer."});
@@ -133,9 +124,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Please supply a valid website url for the employer."});
 #line 17
  testRunner.And("The validation errors contain:", ((string)(null)), table1, "And ");
-#line 25
- testRunner.And("I do not see the employer link for the employer identified with EDSURN: 0 and the" +
-                    " provider site identified with EDSURN: 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 22
+ testRunner.And("I do not see the employer link for the employer identified with EDSURN: 123456789" +
+                    " and the provider site identified with EDSURN: 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

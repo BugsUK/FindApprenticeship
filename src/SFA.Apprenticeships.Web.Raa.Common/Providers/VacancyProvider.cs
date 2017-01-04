@@ -1221,7 +1221,8 @@
                 SubmissionCount = vacancy.SubmissionCount,
                 VacancyType = vacancy.VacancyType,
                 Location = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
-                VacancyViewModel = GetVacancy(vacancy.VacancyGuid)
+                IsAnonymousEmployer = vacancy.IsAnonymousEmployer,
+                IsMultiLocation = vacancy.IsMultiLocation
             };
         }
 

@@ -247,6 +247,7 @@
     <Compile Include="Controllers\VacancyManagementController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
     <Compile Include="Constants\VacancyMessages.cs" />
+    <Compile Include="Controllers\VacancySummaryController.cs" />
     <Compile Include="DependencyResolution\RaaApiRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
@@ -262,7 +263,8 @@
     </Compile>
     <Compile Include="Handlers\AiExceptionLogger.cs" />
     <Compile Include="Handlers\ApiKeyHandler.cs" />
-    <Compile Include="Models\EmployerProviderSiteLink.cs" />
+    <Compile Include="Models\EmployerProviderSiteLinkResponse.cs" />
+    <Compile Include="Models\EmployerProviderSiteLinkRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IVacancyProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
@@ -273,7 +275,7 @@
     <Compile Include="Strategies\IEditWageStrategy.cs" />
     <Compile Include="Strategies\ILinkEmployerStrategy.cs" />
     <Compile Include="Strategies\LinkEmployerStrategy.cs" />
-    <Compile Include="Validators\EmployerProviderSiteLinkValidator.cs" />
+    <Compile Include="Validators\EmployerProviderSiteLinkRequestValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\settings.config" />

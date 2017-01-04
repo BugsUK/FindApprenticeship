@@ -74,5 +74,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public int? GeocodeEasting { get; set; }
         public int? GeocodeNorthing { get; set; }
         public DateTime? UpdatedDateTime { get; set; }
+        public bool? IsMultiLocation { get; set; }
     }
 }

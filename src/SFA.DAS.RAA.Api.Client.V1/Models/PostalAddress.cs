@@ -6,6 +6,15 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// The rationale behind the creation of this class is that we will
+    /// eventually move from the existing Address entity,
+    /// to this entity, throughout the entirety of the solution (RAA &amp;amp;
+    /// FAA).
+    /// TODO: Remove the existing Address entity, in favour of using this one.
+    /// This should be carried out after the DB migration
+    /// and private Beta release
+    /// </summary>
     public partial class PostalAddress
     {
         /// <summary>
@@ -16,6 +25,16 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// <summary>
         /// Initializes a new instance of the PostalAddress class.
         /// </summary>
+        /// <param name="validationSourceCode">AKA ValidationSourceKeyName.
+        /// As at 13/01/2015, the SFA Data Standard for Postal Addresses list
+        /// valid validating bodies as:
+        /// 1. Royal Mail PAF file
+        /// 2. GeoPlace data
+        /// 3. PCA product (uses a PAF file source)</param>
+        /// <param name="validationSourceKeyValue">For PAF, this is the Unique
+        /// Delivery Point Reference Number (UDPRN)
+        /// For GeoPlace, this is the Unique Property ReferenceNumber (UPRN)
+        /// PostCode anywhere uses PAF data, so this is the UDPRN.</param>
         public PostalAddress(int? postalAddressId = default(int?), string addressLine1 = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string addressLine4 = default(string), string addressLine5 = default(string), string town = default(string), string postcode = default(string), string validationSourceCode = default(string), string validationSourceKeyValue = default(string), System.DateTime? dateValidated = default(System.DateTime?), string county = default(string), GeoPoint geoPoint = default(GeoPoint))
         {
             PostalAddressId = postalAddressId;
@@ -74,11 +93,21 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         public string Postcode { get; set; }
 
         /// <summary>
+        /// Gets or sets AKA ValidationSourceKeyName.
+        /// As at 13/01/2015, the SFA Data Standard for Postal Addresses list
+        /// valid validating bodies as:
+        /// 1. Royal Mail PAF file
+        /// 2. GeoPlace data
+        /// 3. PCA product (uses a PAF file source)
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ValidationSourceCode")]
         public string ValidationSourceCode { get; set; }
 
         /// <summary>
+        /// Gets or sets for PAF, this is the Unique Delivery Point Reference
+        /// Number (UDPRN)
+        /// For GeoPlace, this is the Unique Property ReferenceNumber (UPRN)
+        /// PostCode anywhere uses PAF data, so this is the UDPRN.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ValidationSourceKeyValue")]
         public string ValidationSourceKeyValue { get; set; }

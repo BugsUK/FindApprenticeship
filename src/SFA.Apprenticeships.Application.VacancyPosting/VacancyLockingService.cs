@@ -58,7 +58,7 @@
         private bool VacancyIsUnattended(VacancySummary vacancySummary)
         {
             var timeout = _configurationService.Get<VacancyPostingConfiguration>().QAVacancyTimeout; // In minutes
-            return vacancySummary.DateStartedToQA.HasValue &&
+            return vacancySummary.Status == VacancyStatus.ReservedForQA && vacancySummary.DateStartedToQA.HasValue &&
                    (_dateTimeService.UtcNow - vacancySummary.DateStartedToQA.Value).TotalMinutes > timeout;
         }
     }

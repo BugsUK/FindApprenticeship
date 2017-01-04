@@ -16,9 +16,15 @@ var govuk_elements_sass_root = repo_root + 'node_modules/govuk-elements-sass/pub
 var buildDir = './build/';  
 
 var outputPaths = [
-    repo_root + '../SFA.Apprenticeships.Web.Recruit/Content/_assets/',
-    repo_root + '../SFA.Apprenticeships.Web.Manage/Content/_assets/',
-    repo_root + '../SFA.Apprenticeships.Web.Candidate/Content/_assets/'
+    { key: 'recruit', path: repo_root + '../SFA.Apprenticeships.Web.Recruit/Content/_assets/' },
+    { key: 'manage', path: repo_root + '../SFA.Apprenticeships.Web.Manage/Content/_assets/' },
+    { key: 'find', path: repo_root + '../SFA.Apprenticeships.Web.Candidate/Content/_assets/' }
+];
+
+var projectJsPaths = [
+    { key: 'recruit', path: repo_root + 'Content/projectJs/Recruit/*' },
+    { key: 'manage', path: repo_root + 'Content/projectJs/Manage/*' },
+    { key: 'find', path: repo_root + 'Content/projectJs/Find/*' }
 ];
 
 gulp.task('default', ['clean', 'cleantarget', 'styles', 'merge-base', 'merge-font-awesome', 'copy']);
@@ -72,7 +78,7 @@ gulp.task('cleantarget', function () {
     var merged = merge();
 
     for (var i = 0; i < outputPaths.length; i++) {
-        merged.add(gulp.src(outputPaths[i], { read: false })
+        merged.add(gulp.src(outputPaths[i].path, { read: false })
             .pipe(clean({force:true})));
     }
 
@@ -84,7 +90,16 @@ gulp.task('copy', ['clean', 'cleantarget', 'styles', 'merge-base', 'merge-font-a
     var merged = merge(pipe);
 
     for (var i = 0; i < outputPaths.length; i++) {
-        merged.add(pipe.pipe(gulp.dest(outputPaths[i])));
+        merged.add(pipe.pipe(gulp.dest(outputPaths[i].path)));
+    }
+
+    for (var i = 0; i < outputPaths.length; i++) {
+        for (var p = 0; p < projectJsPaths.length; p++) {
+            if (outputPaths.key === projectJsPaths.key) {
+                merged.add(gulp.src(projectJsPaths[p].path).pipe(gulp.dest(outputPaths[i].path + '/js/nas')));
+                break;
+            }
+        }
     }
 
     return merged;

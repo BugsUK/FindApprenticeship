@@ -3,6 +3,7 @@
     using Application.Application;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Provider.Strategies;
     using Application.Vacancies;
     using Application.Vacancy;
     using Domain.Entities.Vacancies;
@@ -17,6 +18,8 @@
             // Strategies
             For<IGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<GetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
             For<IGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<GetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
+            For<IGetOwnedProviderSitesStrategy>().Use<GetOwnedProviderSitesStrategy>();
+            For<IGetVacancyOwnerRelationshipStrategy>().Use<GetVacancyOwnerRelationshipStrategy>();
 
             // Application status provider -> it's not exactly related with vacancy sources...
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();

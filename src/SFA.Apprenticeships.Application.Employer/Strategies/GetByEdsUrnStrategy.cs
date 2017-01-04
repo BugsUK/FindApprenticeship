@@ -1,6 +1,8 @@
 namespace SFA.Apprenticeships.Application.Employer.Strategies
 {
+    using System.Data.SqlClient;
     using System.Linq;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
@@ -42,6 +44,11 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
                 employer = _mapper.Map<VerifiedOrganisationSummary, Employer>(organisationSummary);
 
                 PatchCountyAndTown(employer, organisationSummary.Address);
+
+                if (employer.Address.AddressLine1 == null)
+                {
+                    throw new CustomException(Application.Employer.ErrorCodes.InvalidAddress);
+                }
 
                 employer = _employerWriteRepository.Save(employer);
             }

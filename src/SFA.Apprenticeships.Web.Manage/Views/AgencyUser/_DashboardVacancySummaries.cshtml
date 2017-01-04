@@ -100,7 +100,7 @@
                                             @vacancy.VacancyType.ToString().Substring(0, 3)
                                     </td>
                                         <td>
-                                            @if (vacancy.VacancyViewModel != null && vacancy.VacancyViewModel.LocationAddresses != null && vacancy.VacancyViewModel.LocationAddresses.Count > 1)
+                                            @if (vacancy.IsMultiLocation == true)
                                             {
                                                 <div class="hgroup-small">
                                                     <p class="subtitle">Multiple locations</p>
@@ -109,7 +109,7 @@
                                             else
                                             {
                                                 @vacancy.Location.Town<br />
-                                                if(vacancy.VacancyViewModel !=null && !vacancy.VacancyViewModel.IsEmployerAnonymous)
+                                                if(vacancy.IsAnonymousEmployer == true)
                                                 {
                                                     <div class="hgroup-small">
                                                         <p class="subtitle">@vacancy.Location.Postcode</p>

@@ -96,7 +96,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             v.GeocodeEasting,
                             v.GeocodeNorthing,
                             v.EmployerAnonymousName,
-                            v.UpdatedDateTime
+                            v.UpdatedDateTime,
+                            CAST(CASE WHEN dbo.GetVacancyLocationCount(v.VacancyId) > 1 THEN 1 ELSE 0 END AS bit) AS IsMultiLocation
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
