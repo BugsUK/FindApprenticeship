@@ -18,24 +18,20 @@
     <div>
         @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.NationalMinimum)
         {
-            <h3 class="bold-small">
-                Current wage
-            </h3>
+            <h3 id="current-wage-header" class="bold-small">Current wage</h3>
             if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
             {
-                <p>National minimum wage for apprentices</p>
+                <p id="current-wage-name">National minimum wage for apprentices</p>
             }
 
             if (Model.ExistingWage.Type == WageType.NationalMinimum)
             {
-                <p>National Minimum Wage</p>
+                <p id="current-wage-name">National Minimum Wage</p>
             }
 
-            <h3 class="bold-small">
-                Wage displayed
-            </h3>
+            <h3 id="vacancy-wage-header" class="bold-small">Wage displayed</h3>
             <p id="vacancy-wage">
-                @WagePresenter.GetDisplayAmount(Model.ExistingWage.Type, Model.ExistingWage.Amount, Model.ExistingWage.AmountLowerBound, Model.ExistingWage.AmountUpperBound, Model.ExistingWage.Text, Model.ExistingWage.HoursPerWeek, Model.PossibleStartDate) (based on @Model.ExistingWage.HoursPerWeek) paid hours per week
+                @WagePresenter.GetDisplayAmount(Model.ExistingWage.Type, Model.ExistingWage.Amount, Model.ExistingWage.AmountLowerBound, Model.ExistingWage.AmountUpperBound, Model.ExistingWage.Text, Model.ExistingWage.HoursPerWeek, Model.PossibleStartDate) (based on @Model.ExistingWage.HoursPerWeek paid hours per week)
 
                 @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
                 {
@@ -71,6 +67,20 @@
                 <div id="custom-wage-panel" class="toggle-content blocklabel-content nested-panel-1 clearfix">
                     <div class="panel panel-border-narrow">
                         <fieldset class="form-group inline-fixed">
+                            @if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                            {
+                                <span id="custom-wage-label" class="clearfix">Select a custom wage option</span>
+                                @* ReSharper disable once Html.IdNotResolved *@
+                                <label id="custom-wage-fixed-label" for="custom-wage-fixed" class="block-label selection-button-radio" data-target="custom-wage-fixed-panel">
+                                    @Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"})
+                                    <span id="custom-wage-fixed-label-text">Fixed wage</span>
+                                </label>
+                                @* ReSharper disable once Html.IdNotResolved *@
+                                <label id="custom-wage-range-label" for="custom-wage-range" class="block-label selection-button-radio" data-target="custom-wage-range-panel">
+                                    @Html.RadioButtonFor(model => model.CustomType, CustomWageType.Ranged, new {id = "custom-wage-range", aria_controls = "custom-wage-panel"})
+                                    <span id="custom-wage-range-label-text">Wage range</span>
+                                </label>
+                            }
                             @if (Model.ExistingWage.Type == WageType.Custom)
                             {
                                 <span id="custom-wage-label" class="clearfix">Keep as fixed wage?</span>
@@ -111,6 +121,10 @@
                                 {
                                     <span id="custom-wage-fixed-hint-text" class="clearfix form-hint">The wage must not be less than the minimum amount set in the original wage range</span>
                                 }
+                                @if (Model.ExistingWage.Type == WageType.NationalMinimum && Model.ExistingWage.HoursPerWeek.HasValue)
+                                {
+                                    <span id="custom-wage-fixed-hint-text" class="clearfix form-hint">The new increased wage must be more than @WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
+                                }
                                 £
                                 @Html.FormTextFor(m => m.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
                                 @Html.DropDownListFor(m => m.Unit, Model.WageUnits, new {@class = "form-control"})
@@ -126,6 +140,10 @@
                                 {
                                     <span id="custom-wage-range-help-text" class="clearfix">Enter increased wage range</span>
                                     <span id="custom-wage-range-hint-text" class="clearfix form-hint">You can increase one or both of these figures</span>
+                                }
+                                @if (Model.ExistingWage.Type == WageType.NationalMinimum && Model.ExistingWage.HoursPerWeek.HasValue)
+                                {
+                                    <span id="custom-wage-range-hint-text" class="clearfix form-hint">The minimum amount in the wage range must be more than @WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate)</span>
                                 }
                                 £
                                 @Html.FormTextFor(m => m.AmountLowerBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12, placeholder = "min"})

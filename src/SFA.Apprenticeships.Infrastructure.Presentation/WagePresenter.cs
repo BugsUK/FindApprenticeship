@@ -115,6 +115,15 @@
             return $"£{lowerRange} - £{higherRange}";
         }
 
+        public static string GetWeeklyNationalMinimumWageMaximum(decimal hoursPerWeek, DateTime? possibleStartDate)
+        {
+            var wageRange = possibleStartDate.GetWageRangeFor();
+
+            var higherRange = (wageRange.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+
+            return $"£{higherRange}";
+        }
+
         private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek, DateTime? possibleStartDate)
         {
             var wageRange = possibleStartDate.GetWageRangeFor();
