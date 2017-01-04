@@ -20,9 +20,11 @@
             if (_wageType == WageType.Custom)
             {
                 _amount = 200;
+                _amountLowerBound = 200;
             }
             if (_wageType == WageType.CustomRange)
             {
+                _amount = 200;
                 _amountLowerBound = 200;
                 _amountUpperBound = 220;
             }
