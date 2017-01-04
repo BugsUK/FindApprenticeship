@@ -66,6 +66,10 @@
                     {
                         ewvm.Amount = ewvm.AmountLowerBound;
                     }
+                    if (ewvm.Classification == WageClassification.NationalMinimum)
+                    {
+                        ewvm.Classification = WageClassification.Custom;
+                    }
                 });
         }
     }

@@ -34,9 +34,7 @@
             var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
             apprenticeshipMinimumWage.Should().NotBeNull();
             apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            var customWage = view.GetElementbyId("custom-wage-radio-label");
-            customWage.Should().NotBeNull();
-            customWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
+            view.GetElementbyId("custom-wage-radio-label").Should().BeNull();
 
             var customWagePanel = view.GetElementbyId("custom-wage-panel");
             customWagePanel.Should().NotBeNull();
@@ -105,9 +103,7 @@
             var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
             apprenticeshipMinimumWage.Should().NotBeNull();
             apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            var customWage = view.GetElementbyId("custom-wage-radio-label");
-            customWage.Should().NotBeNull();
-            customWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
+            view.GetElementbyId("custom-wage-radio-label").Should().BeNull();
 
             var customWagePanel = view.GetElementbyId("custom-wage-panel");
             customWagePanel.Should().NotBeNull();
@@ -185,9 +181,7 @@
             var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
             apprenticeshipMinimumWage.Should().NotBeNull();
             apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            var customWage = view.GetElementbyId("custom-wage-radio-label");
-            customWage.Should().NotBeNull();
-            customWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
+            view.GetElementbyId("custom-wage-radio-label").Should().BeNull();
 
             var customWagePanel = view.GetElementbyId("custom-wage-panel");
             customWagePanel.Should().NotBeNull();
