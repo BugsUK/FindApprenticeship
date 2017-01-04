@@ -202,11 +202,89 @@ Custom Typography
 Custom list
 ------------------------------------------------------------------- */
 dl.sfa-dl .sfa-di {
-  margin-bottom: 20px; }
+  margin-bottom: 5px; }
 
 dl.sfa-dl .dt {
   font-weight: bold;
   font-weight: 700; }
+
+/* -------------------------------------------------------------------
+Text editor generated text
+------------------------------------------------------------------- */
+.sfa-if-first:first-child .heading-small:first-child {
+  margin-top: 0.3125em; }
+  @media (min-width: 641px) {
+    .sfa-if-first:first-child .heading-small:first-child {
+      margin-top: 0.26316em; } }
+
+/*
+.sfa-remove-heading-small-top-margin {
+    div:first-of-type {
+        .heading-small:first-of-type {
+            margin-top: 0.3125em;
+            @include media (tablet){
+                margin-top: 0.26316em
+            }
+        }
+    }
+}
+*/
+.sfa-text-editor-generated ul, .sfa-text-editor-generated ol {
+  padding: 0;
+  margin-top: 5px;
+  margin-bottom: 20px; }
+  .sfa-text-editor-generated ul li, .sfa-text-editor-generated ol li {
+    margin-bottom: 5px; }
+
+.sfa-text-editor-generated ul {
+  list-style-type: disc;
+  padding-left: 20px; }
+
+.sfa-text-editor-generated ol {
+  list-style-type: decimal;
+  padding-left: 20px; }
+
+.sfa-text-editor-generated strong {
+  font-weight: 700; }
+
+/* -------------------------------------------------------------------
+Forced Margin and Padding
+------------------------------------------------------------------- */
+.sfa-p-margin-bottom {
+  margin-bottom: 1.05263em; }
+
+.sfa-no-margins {
+  margin: 0 !important; }
+
+.sfa-no-right-margin {
+  margin-right: 0 !important; }
+
+.sfa-no-left-margin {
+  margin-left: 0 !important; }
+
+.sfa-no-bottom-margin {
+  margin-bottom: 0 !important; }
+
+.sfa-no-top-margin {
+  margin-top: 0 !important; }
+
+/* -------------------------------------------------------------------
+Alignment
+------------------------------------------------------------------- */
+.sfa-align-right {
+  text-align: right; }
+  @media (min-width: 641px) {
+    .sfa-align-right-tablet {
+      text-align: right; } }
+
+.sfa-align-center {
+  text-align: center; }
+
+.sfa-pull-right {
+  float: right !important; }
+  @media (min-width: 641px) {
+    .sfa-pull-right-tablet {
+      float: right !important; } }
 
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
@@ -227,43 +305,13 @@ Misc - TO BE ORGANISED
 .force-full-width {
   width: 100% !important; }
 
-.sfa-no-margins {
-  margin: 0 !important; }
-
-.sfa-no-right-margin {
-  margin-right: 0 !important; }
-
-.sfa-no-left-margin {
-  margin-left: 0 !important; }
-
-.sfa-no-bottom-margin {
-  margin-bottom: 0 !important; }
-
-.sfa-no-top-margin {
-  margin-top: 0 !important; }
-
-.sfa-align-right {
-  text-align: right; }
-  @media (min-width: 641px) {
-    .sfa-align-right-tablet {
-      text-align: right; } }
-
-.sfa-align-center {
-  text-align: center; }
-
-.sfa-pull-right {
-  float: right !important; }
-  @media (min-width: 641px) {
-    .sfa-pull-right-tablet {
-      float: right !important; } }
-
 .js-enabled .nojs-notice {
   display: none !important; }
 
 iframe, object, embed {
   max-width: 100%; }
 
-.preserve-formatting {
+.preserve-formatting p, .preserve-formatting li, .preserve-formatting span {
   white-space: pre-line; }
 
 .grid-row-padded {
@@ -386,6 +434,12 @@ iframe, object, embed {
   content: "";
   display: block;
   clear: both; }
+
+.inline .button.sfa-button-secondary {
+  padding-left: 0px; }
+
+.inline .button:nth-child(2).sfa-button-secondary {
+  padding-left: .789473em; }
 
 .button.sfa-button-secondary {
   background: transparent;

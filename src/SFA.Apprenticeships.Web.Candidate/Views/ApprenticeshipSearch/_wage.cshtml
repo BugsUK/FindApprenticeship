@@ -2,10 +2,10 @@
 
 @model ApprenticeshipVacancyDetailViewModel
 
-    <dt class="bold-small">@Model.Wage.Unit.GetHeaderDisplayText()</dt>
-    <dd id="vacancy-wage">
+    <h3 class="heading-small">@Model.Wage.Unit.GetHeaderDisplayText()</h3>
+    <p id="vacancy-wage">
         @WagePresenter.GetDisplayAmount(Model.Wage.Type, Model.Wage.Amount, Model.Wage.AmountLowerBound, Model.Wage.AmountUpperBound, Model.Wage.Text, Model.Wage.HoursPerWeek, Model.StartDate)
-    </dd>
+    </p>
 
 
 @if (Model.Wage.Type == WageType.ApprenticeshipMinimum)

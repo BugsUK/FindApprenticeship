@@ -81,11 +81,11 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Your application</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"column-one-third sfa-align-right-tablet sfa-xlarge-top-margin\"");
+WriteLiteral(" class=\"column-one-third\"");
 
 WriteLiteral(">\r\n        <ul");
 
-WriteLiteral(" class=\"list\"");
+WriteLiteral(" class=\"list sfa-align-right-tablet sfa-xlarge-top-margin\"");
 
 WriteLiteral(">\r\n            <li>\r\n                <a");
 

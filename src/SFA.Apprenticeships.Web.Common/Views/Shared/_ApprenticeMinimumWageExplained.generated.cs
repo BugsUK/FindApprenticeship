@@ -47,9 +47,13 @@ namespace SFA.Apprenticeships.Web.Common.Views.Shared
         }
         public override void Execute()
         {
-WriteLiteral("<details>\r\n    <summary>Wages explained</summary>\r\n    <div");
+WriteLiteral("<details>\r\n    <summary><span");
 
-WriteLiteral(" class=\"detail-content\"");
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Wages explained</span></summary>\r\n    <div");
+
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n");
 
@@ -67,9 +71,8 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            ");
-
-WriteLiteral("\r\n                The current National Minimum Wage (NMW) for apprentices is £");
+WriteLiteral("            <p>\r\n                The current National Minimum Wage (NMW) for appr" +
+"entices is £");
 
             
             #line 10 "..\..\Views\Shared\_ApprenticeMinimumWageExplained.cshtml"
@@ -87,12 +90,9 @@ WriteLiteral(" per hour. This will increase to £");
             
             #line default
             #line hidden
-WriteLiteral(" on the 1 Oct 2016. This rate applies to apprentices aged 16 to 18 and those aged" +
-" 19 or over who are in their first year. Apprentices must be paid at least the N" +
-"MW for their age if they\'re aged 19 or over and have completed their first year\r" +
-"\n            ");
-
-WriteLiteral("\r\n");
+WriteLiteral(@" on the 1 Oct 2016. This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year. Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year
+            </p>
+");
 
             
             #line 12 "..\..\Views\Shared\_ApprenticeMinimumWageExplained.cshtml"
@@ -103,9 +103,8 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            ");
-
-WriteLiteral("\r\n                The current National Minimum Wage for an apprentice is £");
+WriteLiteral("            <p>\r\n                The current National Minimum Wage for an apprent" +
+"ice is £");
 
             
             #line 16 "..\..\Views\Shared\_ApprenticeMinimumWageExplained.cshtml"
@@ -136,9 +135,7 @@ WriteLiteral(" an hour for 18-20 year olds and £");
             #line hidden
 WriteLiteral(" for anyone aged 21 and over.<br />\r\n                Apprentices are paid for the" +
 "ir normal working hours and training that’s part of their apprenticeship (usuall" +
-"y one day per week).\r\n            ");
-
-WriteLiteral("\r\n");
+"y one day per week).\r\n            </p>\r\n");
 
             
             #line 21 "..\..\Views\Shared\_ApprenticeMinimumWageExplained.cshtml"

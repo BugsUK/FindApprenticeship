@@ -265,16 +265,126 @@ Custom Typography
 Custom list
 ------------------------------------------------------------------- */
 
-// Detail list
+// Detail list mimic GDS .list ul and li pattern
 dl.sfa-dl{
     .sfa-di { //detail list item
-        margin-bottom: 20px;
+        margin-bottom: 5px;
     }
     .dt {
         font-weight:bold;
         font-weight:700;
     }
 }
+
+/* -------------------------------------------------------------------
+Text editor generated text
+------------------------------------------------------------------- */
+
+.sfa-if-first:first-child { // Apply class to the wrapper elements which share the same level and each contain an element that should only be styled only if its within the first wrapper element
+    .heading-small:first-child {
+        margin-top: 0.3125em;
+        @include media (tablet){
+            margin-top: 0.26316em
+        }
+    }
+}
+
+/*
+.sfa-remove-heading-small-top-margin {
+    div:first-of-type {
+        .heading-small:first-of-type {
+            margin-top: 0.3125em;
+            @include media (tablet){
+                margin-top: 0.26316em
+            }
+        }
+    }
+}
+*/
+
+// Class to be applied to containers of content output by text editor to style bullet and number points
+.sfa-text-editor-generated {
+    // Mimics GDS .list class
+    ul, ol {
+        padding: 0;
+        margin-top: 5px;
+        margin-bottom: 20px;
+
+        li {
+          margin-bottom: 5px; 
+        }
+    }
+    // Mimics GDS .list-bullet
+    ul {
+        list-style-type: disc;
+        padding-left: 20px; 
+    }
+    // Mimics GDS .list-numbeer 
+    ol {
+        list-style-type: decimal;
+        padding-left: 20px; 
+    }
+    strong {
+        font-weight:700;
+    }
+}
+
+
+/* -------------------------------------------------------------------
+Forced Margin and Padding
+------------------------------------------------------------------- */
+
+.sfa-p-margin-bottom {
+    margin-bottom: 1.05263em;
+}
+
+.sfa-no-margins {
+    margin: 0 !important;
+}
+
+.sfa-no-right-margin {
+    margin-right: 0 !important;
+}
+
+.sfa-no-left-margin {
+    margin-left: 0 !important;
+}
+
+.sfa-no-bottom-margin {
+    margin-bottom: 0 !important;
+}
+
+.sfa-no-top-margin {
+    margin-top: 0 !important;
+}
+
+
+/* -------------------------------------------------------------------
+Alignment
+------------------------------------------------------------------- */
+
+.sfa-align-right {
+    text-align:right;
+    &-tablet {
+        @include media(tablet){
+            text-align:right;
+        }
+    }
+}
+
+.sfa-align-center {
+    text-align:center;
+}
+
+.sfa-pull-right {
+    float: right !important;
+    &-tablet {
+        @include media(tablet){
+            float: right !important;
+        }
+    }
+}
+
 
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
@@ -299,47 +409,6 @@ Misc - TO BE ORGANISED
     width: 100% !important;
 }
 
-.sfa-no-margins {
-    margin: 0 !important;
-}
-
-.sfa-no-right-margin {
-    margin-right: 0 !important;
-}
-
-.sfa-no-left-margin {
-    margin-left: 0 !important;
-}
-
-.sfa-no-bottom-margin {
-    margin-bottom: 0 !important;
-}
-
-.sfa-no-top-margin {
-    margin-top: 0 !important;
-}
-
-.sfa-align-right {
-    text-align:right;
-    &-tablet {
-        @include media(tablet){
-            text-align:right;
-        }
-    }
-}
-
-.sfa-align-center {
-    text-align:center;
-}
-
-.sfa-pull-right {
-    float: right !important;
-    &-tablet {
-        @include media(tablet){
-            float: right !important;
-        }
-    }
-}
 .js-enabled .nojs-notice {
     display: none !important;
 }
@@ -349,7 +418,9 @@ iframe, object, embed {
 }
 
 .preserve-formatting {
-    white-space: pre-line;
+    p, li, span { 
+        white-space: pre-line;
+    }
 }
 
 .grid-row-padded {
@@ -357,7 +428,7 @@ iframe, object, embed {
     padding-bottom: 30px;
 }
 
-.sfa-section-bordered {
+.sfa-section-bordered { 
     border-bottom: 1px solid $grey-2;
 }
 

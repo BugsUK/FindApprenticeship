@@ -1,8 +1,6 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyLinksViewModel
 
-<ul class="list">
-
 	@if (Model.Status.CanCloseVacancy())
 	{
 	    <li>
@@ -43,4 +41,3 @@
             @Html.RouteLink("Increase wage", RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
         </li>
     }
-</ul>
