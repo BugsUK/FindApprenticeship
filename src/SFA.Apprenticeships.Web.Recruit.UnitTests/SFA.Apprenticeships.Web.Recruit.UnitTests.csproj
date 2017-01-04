@@ -158,6 +158,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\EditWageViewModelBuilder.cs" />
     <Compile Include="Builders\VacancyViewModelBuilder.cs" />
     <Compile Include="Mappers\RecruitMappersTests.cs" />
     <Compile Include="Mediators\Application\ApplicationMediatorTests.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelServerValidatorTests.cs" />
     <Compile Include="Views\Shared\ValidationSummaryViewModel.cs" />
+    <Compile Include="Views\VacancyManagement\EditWageTests.cs" />
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
     <Compile Include="Views\VacancyPosting\RequirementsProspectsTests.cs" />
     <Compile Include="Views\VacancyPosting\PreviewVacancyTests.cs" />
