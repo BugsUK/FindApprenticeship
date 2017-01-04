@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Security;
     using Apprenticeships.Application.Employer.Strategies;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Provider.Strategies;
     using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Parties;
@@ -18,6 +19,8 @@
     {
         private readonly EmployerProviderSiteLinkValidator _employerProviderSiteLinkValidator = new EmployerProviderSiteLinkValidator();
 
+        private readonly ILogService _logService;
+
         private readonly IGetByEdsUrnStrategy _getByEdsUrnStrategy;
         private readonly IProviderReadRepository _providerReadRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
@@ -25,7 +28,7 @@
         private readonly IGetVacancyOwnerRelationshipStrategy _getVacancyOwnerRelationshipStrategy;
         private readonly IVacancyOwnerRelationshipWriteRepository _vacancyOwnerRelationshipWriteRepository;
 
-        public LinkEmployerStrategy(IGetByEdsUrnStrategy getByEdsUrnStrategy, IProviderReadRepository providerReadRepository, IProviderSiteReadRepository providerSiteReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IGetVacancyOwnerRelationshipStrategy getVacancyOwnerRelationshipStrategy, IVacancyOwnerRelationshipWriteRepository vacancyOwnerRelationshipWriteRepository)
+        public LinkEmployerStrategy(IGetByEdsUrnStrategy getByEdsUrnStrategy, IProviderReadRepository providerReadRepository, IProviderSiteReadRepository providerSiteReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IGetVacancyOwnerRelationshipStrategy getVacancyOwnerRelationshipStrategy, IVacancyOwnerRelationshipWriteRepository vacancyOwnerRelationshipWriteRepository, ILogService logService)
         {
             _getByEdsUrnStrategy = getByEdsUrnStrategy;
             _providerReadRepository = providerReadRepository;
@@ -33,6 +36,7 @@
             _getOwnedProviderSitesStrategy = getOwnedProviderSitesStrategy;
             _getVacancyOwnerRelationshipStrategy = getVacancyOwnerRelationshipStrategy;
             _vacancyOwnerRelationshipWriteRepository = vacancyOwnerRelationshipWriteRepository;
+            _logService = logService;
         }
 
         public EmployerProviderSiteLink LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int edsUrn, string ukprn)
@@ -54,19 +58,30 @@
                 {
                     validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerNotFoundFormat, employerProviderSiteLink.EmployerEdsUrn)));
                 }
+                //TODO: Validate geocoding for employer. Use Google as a fallback
             }
             catch (CustomException ex)
             {
+                _logService.Warn($"Error when linking to employer with EDSURN {employerProviderSiteLink.EmployerEdsUrn}", ex);
+
                 if (ex.Code == Apprenticeships.Application.Employer.ErrorCodes.InvalidAddress)
                 {
                     validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerAddressNotValid, employerProviderSiteLink.EmployerEdsUrn)));
                 }
+                else if (ex.Code == Apprenticeships.Infrastructure.EmployerDataService.ErrorCodes.GetByReferenceNumberFailed)
+                {
+                    validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerGetByReferenceNumberFailed, employerProviderSiteLink.EmployerEdsUrn)));
+                }
                 else
                 {
-                    throw;
+                    validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerUnknownError, employerProviderSiteLink.EmployerEdsUrn)));
                 }
             }
-            //TODO: Validate geocoding for employer. Use Google as a fallback
+            catch (Exception ex)
+            {
+                _logService.Warn($"Error when linking to employer with EDSURN {employerProviderSiteLink.EmployerEdsUrn}", ex);
+                validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerUnknownError, employerProviderSiteLink.EmployerEdsUrn)));
+            }
 
             ProviderSite providerSite = null;
             if (employerProviderSiteLink.ProviderSiteId.HasValue)
