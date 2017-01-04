@@ -12,6 +12,50 @@ namespace SFA.DAS.RAA.Api.Client.V1
     /// </summary>
     public static partial class ApiClientExtensions
     {
+            /// <summary>
+            /// Endpoint for linking an employer to a provider site.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='employerProviderSiteLink'>
+            /// Defines the provider site to link to as well as additional employer
+            /// information. Note that you can specify the employer identifier in either
+            /// the URL or the POST body
+            /// </param>
+            /// <param name='edsUrn'>
+            /// The employer's secondary identifier.
+            /// </param>
+            public static EmployerProviderSiteLinkResponse LinkEmployer(this IApiClient operations, EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApiClient)s).LinkEmployerAsync(employerProviderSiteLink, edsUrn), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Endpoint for linking an employer to a provider site.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='employerProviderSiteLink'>
+            /// Defines the provider site to link to as well as additional employer
+            /// information. Note that you can specify the employer identifier in either
+            /// the URL or the POST body
+            /// </param>
+            /// <param name='edsUrn'>
+            /// The employer's secondary identifier.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<EmployerProviderSiteLinkResponse> LinkEmployerAsync(this IApiClient operations, EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.LinkEmployerWithHttpMessagesAsync(employerProviderSiteLink, edsUrn, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -103,6 +147,44 @@ namespace SFA.DAS.RAA.Api.Client.V1
             public static async System.Threading.Tasks.Task<Vacancy> EditVacancyWageAsync(this IApiClient operations, WageUpdate wageUpdate, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.EditVacancyWageWithHttpMessagesAsync(wageUpdate, vacancyId, vacancyReferenceNumber, vacancyGuid, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filterType'>
+            /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
+            /// 'ClosingSoon', 'Closed', 'Draft', 'NewApplications', 'Withdrawn',
+            /// 'Completed', 'SubmittedToday', 'SubmittedYesterday',
+            /// 'SubmittedMoreThan48Hours', 'Resubmitted'
+            /// </param>
+            /// <param name='page'>
+            /// </param>
+            public static System.Collections.Generic.IList<VacancySummary> GetAll(this IApiClient operations, string filterType = default(string), int? page = default(int?))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApiClient)s).GetAllAsync(filterType, page), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filterType'>
+            /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
+            /// 'ClosingSoon', 'Closed', 'Draft', 'NewApplications', 'Withdrawn',
+            /// 'Completed', 'SubmittedToday', 'SubmittedYesterday',
+            /// 'SubmittedMoreThan48Hours', 'Resubmitted'
+            /// </param>
+            /// <param name='page'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<System.Collections.Generic.IList<VacancySummary>> GetAllAsync(this IApiClient operations, string filterType = default(string), int? page = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetAllWithHttpMessagesAsync(filterType, page, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
